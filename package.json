@@ -1,0 +1,19 @@
+{
+  "private": true,
+  "name": "hotcake",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "antlr4 MonkeyX.g4 -o gen && javac gen/MonkeyX*.java"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "antlr4": "4.7.1"
+  },
+  "devDependencies": {
+    "@types/node": "10.5.2"
+  }
+}
