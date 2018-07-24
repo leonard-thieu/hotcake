@@ -1,13 +1,12 @@
 grammar MonkeyX;
 
 // Should/can preprocessor directives be handled separately?
-// Same for comments?
 
 /*
  * Parser Rules
  */
 
-module : moduleMember+ EOF ;
+module : moduleMember* EOF ;
 
 moduleMember
     : Strict
@@ -17,7 +16,6 @@ moduleMember
     | functionDeclaration
     | constDeclaration
     | globalDeclaration
-    | Comment
     | Private
     | Public
     | Extern
@@ -39,7 +37,6 @@ classMember
     | functionDeclaration #classFunction
     | Private #classPrivate
     | Public #classPublic
-    | Comment #classComment
     ;
 
 interfaceDeclaration :
@@ -71,7 +68,7 @@ classMethodDeclaration :
     // Is abstract property allowed?
     Method Identifier ':' typeIdentifier '(' dataDeclarations? ')' Property? (Abstract | (
         statement*
-    End Method ));
+    End Method? ));
 
 interfaceMethodDeclaration :
     Method Identifier ':' typeIdentifier '(' dataDeclarations? ')' ;
@@ -97,7 +94,6 @@ statement
     | constDeclaration
     | Exit
     | Continue
-    | Comment // Comment shouldn't really be here but it's convenient for now.
     ;
 
 // TODO: Determine if module paths have looser naming rules.
@@ -189,7 +185,13 @@ expression
     | FloatLiteral #floatLiteral
     | IntLiteral #intLiteral
     | '[' (expression (',' expression)*)? ']' #arrayLiteral
-    | Identifier #identifierExpression
+    | (   String
+        | Bool
+        | Float
+        | Int
+        | Object
+        | Identifier
+      ) #identifierExpression
 
     | expression '.' (New | Identifier) #scopedIdentifierExpression
     | expression invokeOperator #invokeExpression
@@ -227,7 +229,7 @@ expression
     | expression Or expression #conditionalOrExpression
     ;
 
-newExpression : New typeIdentifier invokeOperator ;
+newExpression : New typeIdentifier invokeOperator? ;
 
 invokeOperator: '(' invokeArguments* ')' ;
 invokeArguments : expression (',' expression)* ;
@@ -363,4 +365,7 @@ IntLiteral : Numeric+ | '$' (Numeric | [A-Fa-f])+ ;
 
 Identifier : (Alpha | ('_' Alpha)) (Alphanumeric | '_')* ;
 
-Comment : '\'' ~([\r\n])* ;
+Comment : '\'' ~([\r\n])* -> skip;
+
+fragment EndDirective : '#' E N D ;
+RemDirective : '#' R E M ~'#'+ EndDirective -> skip ;
