@@ -1,6 +1,7 @@
 grammar MonkeyX;
 
 // Should/can preprocessor directives be handled separately?
+// Same for comments?
 
 /*
  * Parser Rules
@@ -16,49 +17,29 @@ moduleMember
     | functionDeclaration
     | constDeclaration
     | globalDeclaration
-    | directive
     | Comment
     | Private
     | Public
     | Extern
     ;
 
-directive
-    : ifDirective
-    | errorDirective
-    | assignmentDirective
-    ;
-
-ifDirective :
-    '#' If expression
-        (statement | moduleMember)*
-    ('#' (ElseIf | (Else If)) expression
-        (statement | moduleMember)*)*
-    ('#' Else
-        (statement | moduleMember)*)?
-    '#' (EndIf | End | (End If)) ;
-
-errorDirective : '#' Error StringLiteral ;
-
-assignmentDirective : '#' Identifier ('+=' | '=') expression ;
-
 /* Declarations */
 
 classDeclaration :
-    Class '@'? Identifier ('<' Identifier (',' Identifier)* '>')? (Extends (typeIdentifier | Null))? (Implements typeIdentifier (',' typeIdentifier)*)? Abstract? ('=' StringLiteral)?
+    Class Identifier ('<' Identifier (',' Identifier)* '>')? (Extends typeIdentifier)? (Implements typeIdentifier (',' typeIdentifier)*)? Abstract?
         classMember*
     End Class? ;
 
 classMember
     : fieldDeclaration #classField
-    | methodDeclaration #classMethod
+    | constructorDeclaration #classConstructor
+    | classMethodDeclaration #classMethod
     | constDeclaration #classConstant
     | globalDeclaration #classGlobal
     | functionDeclaration #classFunction
     | Private #classPrivate
     | Public #classPublic
     | Comment #classComment
-    | directive #classDirective
     ;
 
 interfaceDeclaration :
@@ -68,36 +49,35 @@ interfaceDeclaration :
 
 interfaceMember
     : constDeclaration #interfaceConstant
-    | methodDeclaration #interfaceMethod
+    | interfaceMethodDeclaration #interfaceMethod
     ;
-
-typeIdentifier : (String | Bool | Float | Int | Object | Void | (scopedIdentifier ('<' typeIdentifier (',' typeIdentifier)* '>')?)) ('[' expression? ']')? ;
 
 globalDeclaration : Global dataDeclarations ;
 fieldDeclaration : Field dataDeclarations ;
 constDeclaration : Const dataDeclarations ;
 localDeclaration : Local dataDeclarations ;
 
-methodDeclaration :
-    // Is abstract property allowed?
-    Method (New | Identifier) (shorthandType | (':' typeIdentifier))? '(' dataDeclarations? ')' Property? (Abstract | ('=' StringLiteral) | (
-        (statement | directive)*
-    End Method? ))?;
-
 functionDeclaration :
-    Function Identifier (shorthandType | (':' typeIdentifier))? '(' dataDeclarations? ')' (('=' StringLiteral)? | (
+    Function Identifier ':' typeIdentifier '(' dataDeclarations? ')' (
         statement*
-    End Function? ));
+    End Function?)? ;
+
+constructorDeclaration :
+    Method New '(' dataDeclarations? ')'
+        statement*
+    End Method? ;
+
+classMethodDeclaration :
+    // Is abstract property allowed?
+    Method Identifier ':' typeIdentifier '(' dataDeclarations? ')' Property? (Abstract | (
+        statement*
+    End Method ));
+
+interfaceMethodDeclaration :
+    Method Identifier ':' typeIdentifier '(' dataDeclarations? ')' ;
 
 dataDeclarations : dataDeclaration (',' dataDeclaration)* ;
-dataDeclaration : Identifier (shorthandType | (shorthandType '=' expression) | (':' typeIdentifier ('=' expression)?) | (':' '=' expression) | ('=' expression))? ;
-
-shorthandType
-    : '?'
-    | '%'
-    | '#'
-    | '$'
-    ;
+dataDeclaration : Identifier ':' typeIdentifier? ('=' expression)? ;
 
 /* Statements */
 
@@ -117,21 +97,22 @@ statement
     | constDeclaration
     | Exit
     | Continue
-    | Comment
+    | Comment // Comment shouldn't really be here but it's convenient for now.
     ;
 
 // TODO: Determine if module paths have looser naming rules.
 importStatement : Import ((Identifier ('.' Identifier)*) | StringLiteral) ;
 
-ifStatement :
-    (If expression Then?
-         statement*
-     ((ElseIf | (Else If)) expression Then?
-         statement*)*
-     (Else
-         statement*)?
-     (EndIf | End | (End If))) |
-    (If expression Then? statement (Else statement)?);
+ifStatement
+    : (If expression Then?
+           statement*
+      ((ElseIf | Else If) expression Then?
+          statement*)*
+      (Else
+          statement*)?
+      (EndIf | End If?))
+    | (If expression Then? statement (Else statement)?)
+    ;
 
 selectStatement :
     Select expression
@@ -169,84 +150,99 @@ forEachinLoopStatement :
 
 throwStatement : Throw expression ;
 
-assignmentStatement : varExpression assignmentOperator expression ;
-varExpression : scopedIdentifier ;
-assignmentOperator
-    : '='
-    | '*='
-    | '/='
-    | Shl '='
-    | Shr '='
-    | Mod '='
-    | '+='
-    | '-='
-    | '&='
-    | '~='
-    | '|='
+assignmentStatement
+    : expression
+      (   '='
+        | '*='
+        | '/='
+        | Shl '='
+        | Shr '='
+        | Mod '='
+        | '+='
+        | '-='
+        | '&='
+        | '~='
+        | '|='
+      )
+      expression
     ;
 
 expressionStatement
-    : chainedFunctionCallExpression
-    | New Identifier '(' functionCallArguments? ')'
+    : expression invokeOperator
+    | newExpression
     ;
 
 returnStatement : Return expression? ;
 
 /* Expressions */
 
-chainedFunctionCallExpression : (functionCallExpression '.')* functionCallExpression ;
-functionCallExpression : scopedIdentifier invokeOperator ;
-invokeOperator: ('(' functionCallArguments* ')') | functionCallArguments* ;
-functionCallArguments : expression (',' expression)* ;
-
 expression
     : '(' expression+ ')' #groupingExpression
-    | New typeIdentifier invokeOperator #newExpression
+
+    | newExpression #newExpression_
     | Null #nullExpression
     | True #trueExpression
     | False #falseExpression
     | Self #selfExpression
-    | Super #superExpression
-    | literal #literalExpression
-    | typeIdentifier '(' expression ')' #castExpression
-    | scopedIdentifier #identifierExpression
-    | (invokeExpression '.')* invokeExpression #chainedInvokeExpression
+    | Super #superExpresson
+    | StringLiteral #stringLiteral
+    | FloatLiteral #floatLiteral
+    | IntLiteral #intLiteral
+    | '[' (expression (',' expression)*)? ']' #arrayLiteral
+    | Identifier #identifierExpression
+
+    | expression '.' (New | Identifier) #scopedIdentifierExpression
+    | expression invokeOperator #invokeExpression
+    | expression indexOperator #indexExpression
+    | typeIdentifier invokeOperator #castExpression
+
     | '+' expression #unaryPlusExpression
     | '-' expression #unaryMinusExpression
     | '~' expression #bitwiseComplementExpression
     | Not expression #booleanInverseExpression
+
     | expression '*' expression #multiplicationExpression
     | expression '/' expression #divisionExpression
     | expression Mod expression #modulusExpression
     | expression Shl expression #bitwiseShiftLeftExpression
     | expression Shr expression #bitwiseShiftRightExpression
+
     | expression '+' expression #additionExpression
     | expression '-' expression #subtractionExpression
+
     | expression '&' expression #bitwiseAndExpression
     | expression '~' expression #bitwiseXorExpression
+
     | expression '|' expression #bitwiseOrExpression
+
     | expression '=' expression #equalsExpression
     | expression '<' expression #lessThanExpression
     | expression '>' expression #greaterThanExpression
-    | expression '<' '=' expression #lessThanOrEqualsExpression
-    | expression '>' '=' expression #greaterThanOrEqualsExpression
-    | expression '<' '>' expression #notEqualsExpression
+    | expression '<=' expression #lessThanOrEqualsExpression
+    | expression '>=' expression #greaterThanOrEqualsExpression
+    | expression '<>' expression #notEqualsExpression
+
     | expression And expression #conditionalAndExpression
+
     | expression Or expression #conditionalOrExpression
     ;
 
-invokeExpression : scopedIdentifier invokeOperator ;
+newExpression : New typeIdentifier invokeOperator ;
 
-scopedIdentifier : (Self | Super | identifier) ('.' identifier)* ;
-identifier : (New | Error | Identifier) indexOperator? ;
-indexOperator : '[' (expression | (expression? '.' '.' expression?)) ']' ;
+invokeOperator: '(' invokeArguments* ')' ;
+invokeArguments : expression (',' expression)* ;
 
-literal
-    : StringLiteral #stringLiteral
-    | BoolLiteral   #boolLiteral
-    | FloatLiteral  #floatLiteral
-    | IntLiteral    #intLiteral
-    | '[' (expression (',' expression)*)? ']' #arrayLiteral
+indexOperator : '[' (expression | expression? '..' expression?) ']' ;
+
+typeIdentifier
+    : (   String
+        | Bool
+        | Float
+        | Int
+        | Object
+        | Void
+        | Identifier ('.' Identifier)? ('<' typeIdentifier (',' typeIdentifier)* '>')?
+      ) ('[' expression? ']')?
     ;
 
 /*
@@ -284,8 +280,8 @@ fragment Lowercase    : [a-z] ;
 fragment Uppercase    : [A-Z] ;
 fragment Numeric      : [0-9] ;
 
-fragment Alpha        : (Lowercase | Uppercase) ;
-fragment Alphanumeric : (Alpha | Numeric) ;
+fragment Alpha        : Lowercase | Uppercase ;
+fragment Alphanumeric : Alpha | Numeric ;
 
 Whitespace            : (' ' | '\t')+ -> skip ;
 Newline               : ('\r'? '\n' | '\r')+ -> skip ;
@@ -359,18 +355,11 @@ Inline : I N L I N E ;
 Throw : T H R O W ;
 
 Null : N U L L ;
-Error : E R R O R ;
 
-EscapeQuotationMark : '~' 'q' ;
-EscapeNewline : '~' 'n' ;
-EscapeReturn : '~' 'r' ;
-EscapeTab : '~' 't' ;
-EscapeNull : '~' 'z' ;
-EscapeTilde  : '~' '~' ;
-StringLiteral : '"' (EscapeQuotationMark | EscapeNewline | EscapeReturn | EscapeTab | EscapeNull | EscapeTilde | ~'"')* '"';
-BoolLiteral : (False | True) ;
-FloatLiteral : Numeric? '.' Numeric+ ;
-IntLiteral : (Numeric+ | '$' (Numeric | [A-Fa-f])+) ;
+StringLiteral : '"' (~'"')* '"';
+BoolLiteral : False | True ;
+FloatLiteral : Numeric* '.' Numeric+ ;
+IntLiteral : Numeric+ | '$' (Numeric | [A-Fa-f])+ ;
 
 Identifier : (Alpha | ('_' Alpha)) (Alphanumeric | '_')* ;
 

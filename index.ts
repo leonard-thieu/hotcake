@@ -1,35 +1,40 @@
-import antlr4 = require('antlr4');
-import {
-    CommonTokenStream,
-    InputStream,
-} from 'antlr4';
-import {
-    createServer,
-    IncomingMessage,
-    ServerResponse,
-} from 'http';
+import { spawn } from 'child_process';
+import glob = require('glob');
 
-const { ChatLexer } = require('./ChatLexer');
-const { ChatParser } = require('./ChatParser');
-const { HtmlChatListener } = require('./HtmlChatListener');
+const inputFilesDir = 'S:\\Projects\\_GitHub\\leonard-thieu\\ndref\\src\\*.monkey';
 
-createServer((req: IncomingMessage, res: ServerResponse) => {
-    res.writeHead(200, {
-        'Content-Type': 'text/html',
-    });
+glob(inputFilesDir, async (err, items) => {
+    const paths = items;
+    for (let i = 0; i < paths.length; i++) {
+        const p = paths[i];
+        console.log(`Parsing ${p}...`);
 
-    res.write('<html><head><meta charset="UTF-8"/></head><body>');
+        const proc = new Promise((resolve, reject) => {
+            const grun = spawn('cmd.exe', [
+                '/c',
+                'grun.bat',
+                'MonkeyX',
+                'module',
+                p,
+            ], {
+                cwd: 'gen',
+            });
 
-    const input = 'john SHOUTS: hello @michael /pink/this will work/ :-) \n';
-    const chars = new InputStream(input);
-    const lexer = new ChatLexer(chars);
-    const tokens = new CommonTokenStream(lexer);
-    const parser = new ChatParser(tokens);
-    parser.buildParseTrees = true;
-    const tree = parser.chat();
-    const htmlChat = new HtmlChatListener(res);
-    antlr4.tree.ParseTreeWalker.DEFAULT.walk(htmlChat, tree);
+            grun.stdout.on('data', (data) => {
+                console.log(data.toString());
+            });
 
-    res.write('</body></html>');
-    res.end();
-}).listen(1337);
+            grun.stderr.on('data', (data) => {
+                console.log(data.toString());
+            });
+
+            grun.on('exit', (code) => {
+                console.log(`Child exited with code ${code}`);
+
+                resolve();
+            });
+        });
+
+        await proc;
+    }
+});

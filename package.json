@@ -5,15 +5,18 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "antlr4 MonkeyX.g4 -o gen && javac gen/MonkeyX*.java"
+    "build": "antlr4 MonkeyX.g4 -o gen && javac gen/MonkeyX*.java",
+    "test": "tsc && node index"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "antlr4": "4.7.1"
+    "antlr4": "4.7.1",
+    "glob": "7.1.2"
   },
   "devDependencies": {
+    "@types/glob": "5.0.35",
     "@types/node": "10.5.2"
   }
 }
