@@ -140,7 +140,7 @@ numericForLoopStatement :
     (Next | End For?) ;
 
 forEachinLoopStatement :
-    For Local? Identifier ':' typeIdentifier? '=' Eachin expression
+    For (Local Identifier ':' typeIdentifier? '=' | Identifier '=') Eachin expression
         statement*
     (Next | End For?) ;
 

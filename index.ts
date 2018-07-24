@@ -1,7 +1,7 @@
 import { spawn } from 'child_process';
 import glob = require('glob');
 
-const inputFilesDir = 'S:\\Projects\\_GitHub\\leonard-thieu\\ndref\\src\\*.monkey';
+const inputFilesDir = 'S:\\Projects\\_GitHub\\leonard-thieu\\ndref\\src\\**\\*.monkey';
 
 glob(inputFilesDir, async (err, items) => {
     const paths = items;
