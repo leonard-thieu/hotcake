@@ -5,14 +5,16 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "antlr4 MonkeyX.g4 -o gen && javac gen/MonkeyX*.java",
-    "test": "tsc && node index"
+    "build": "antlr4 MonkeyXLexer.g4 -o gen && antlr4 MonkeyXParser.g4 -o gen -lib gen && javac gen/MonkeyX*.java",
+    "test": "tsc && node index \"S:\\Projects\\_GitHub\\leonard-thieu\\ndref\\src\\**\\*.monkey\"",
+    "test-monkeyx": "tsc && node index \"S:\\Projects\\_GitHub\\blitz-research\\monkey\\modules\\**\\*.monkey\""
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
     "antlr4": "4.7.1",
+    "commondir": "1.0.1",
     "glob": "7.1.2"
   },
   "devDependencies": {
