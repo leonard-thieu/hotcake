@@ -1,24 +1,24 @@
 {
   "private": true,
   "name": "hotcake",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "description": "",
   "main": "index.js",
   "scripts": {
     "build": "antlr4 MonkeyXLexer.g4 -o gen && antlr4 MonkeyXParser.g4 -o gen -lib gen && javac gen/MonkeyX*.java",
-    "test": "tsc && node index \"S:\\Projects\\_GitHub\\leonard-thieu\\ndref\\src\\**\\*.monkey\"",
-    "test-monkeyx": "tsc && node index \"S:\\Projects\\_GitHub\\blitz-research\\monkey\\modules\\**\\*.monkey\""
+    "test:ndref": "tsc && node test \"S:\\Projects\\_GitHub\\leonard-thieu\\ndref\\src\\**\\*.monkey\"",
+    "test:monkeyx": "tsc && node test \"S:\\Projects\\_GitHub\\blitz-research\\monkey\\modules\\**\\*.monkey\""
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "author": "Leonard Thieu",
+  "license": "MIT",
   "dependencies": {
-    "antlr4": "4.7.1",
-    "commondir": "1.0.1",
-    "glob": "7.1.2"
+    "antlr4": "4.7.1"
   },
   "devDependencies": {
+    "@types/commondir": "1.0.0",
     "@types/glob": "5.0.35",
-    "@types/node": "10.5.2"
+    "@types/node": "10.5.2",
+    "commondir": "1.0.1",
+    "glob": "7.1.2"
   }
 }

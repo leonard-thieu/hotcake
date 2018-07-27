@@ -6,29 +6,48 @@ options
 }
 
 // Should/can preprocessor directives be handled separately?
+// Should Strict introduce its own mode?
+// Should Extern [Private] introduce its own mode?
 
 moduleDeclaration
-    :   directive?
-        (     Strict
+    :
+        (
+              Strict
+              // Beginning of file directive (no leading newline)
+            | directive
+        )?
+        // Import section
+        (   
+              Private
+            | Public
             | importStatement
+            | aliasDirective
+            | directive
+        )*
+        // Main body
+        (     Private
+            | Public
+            | Extern
             | classDeclaration
             | interfaceDeclaration
             | functionDeclaration
             | constDeclaration
             | globalDeclaration
-            | Private
-            | Public
-            | Extern
             | directive
-            | aliasDirective
         )*
         EOF
     ;
 
 // TODO: Determine if module paths have looser naming rules.
-importStatement : Import (Identifier (FullStop Identifier)* | StringLiteral) ;
+importStatement : Import (modulePath | StringLiteral) ;
 
-aliasDirective : Alias Identifier EqualsSign Identifier (FullStop Identifier)* ;
+aliasDirective : Alias Identifier EqualsSign modulePath FullStop Identifier ;
+
+modulePath : Identifier (FullStop Identifier)* ;
+
+/*
+ * Directives
+ */
 
 directive
     : ifDirective
@@ -126,6 +145,8 @@ dataDeclaration : Identifier (typeDeclaration? (EqualsSign expression)? | InferA
 
 statement :
     (
+        Exit |
+        Continue |
         ifStatement |
         selectStatement |
         whileLoopStatement |
@@ -136,8 +157,6 @@ statement :
         returnStatement |
         localDeclaration |
         constDeclaration |
-        Exit |
-        Continue |
         expressionStatement |
         assignmentStatement
     ) Semicolon? |

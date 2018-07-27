@@ -154,6 +154,7 @@ Throw : T H R O W ;
 
 Null : N U L L ;
 Alias : A L I A S ;
+// Undocumented
 Protected : P R O T E C T E D ;
 
 StringShorthandType : '$' ;
@@ -177,6 +178,7 @@ ElseDirectiveStart : DirectiveCommon E L S E ;
 EndIfDirectiveStart : DirectiveCommon E N D I F ;
 ErrorDirectiveStart : DirectiveCommon E R R O R ;
 PrintDirectiveStart : DirectiveCommon P R I N T ;
+// TODO: Ensure #Rem can handle nesting.
 RemDirectiveStart : DirectiveCommon R E M .*? EndDirectiveStart -> skip ;
 EndDirectiveStart : DirectiveCommon E N D ;
 
