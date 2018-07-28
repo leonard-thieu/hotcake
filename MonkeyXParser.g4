@@ -9,33 +9,23 @@ options
 // Should Strict introduce its own mode?
 // Should Extern [Private] introduce its own mode?
 
-moduleDeclaration
-    :
-        (
-              Strict
-              // Beginning of file directive (no leading newline)
-            | directive
-        )?
-        // Import section
-        (   
-              Private
-            | Public
-            | importStatement
-            | aliasDirective
-            | directive
-        )*
-        // Main body
-        (     Private
-            | Public
-            | Extern
-            | classDeclaration
-            | interfaceDeclaration
-            | functionDeclaration
-            | constDeclaration
-            | globalDeclaration
-            | directive
-        )*
-        EOF
+moduleDeclaration :
+    (
+        Strict |
+        Private |
+        Public |
+        Extern |
+        classDeclaration |
+        interfaceDeclaration |
+        functionDeclaration |
+        constDeclaration |
+        globalDeclaration |
+        importStatement |
+        aliasDirective |
+        directive |
+        Newline
+    )*
+    EOF
     ;
 
 // TODO: Determine if module paths have looser naming rules.
@@ -49,15 +39,15 @@ modulePath : Identifier (FullStop Identifier)* ;
  * Directives
  */
 
-directive
-    : ifDirective
-    | elseIfDirective
-    | elseDirective
-    | endIfDirective
-    | endDirective
-    | printDirective
-    | errorDirective
-    | assignmentDirective
+directive :
+    ifDirective |
+    elseIfDirective |
+    elseDirective |
+    endIfDirective |
+    endDirective |
+    printDirective |
+    errorDirective |
+    assignmentDirective
     ;
 
 ifDirective : IfDirectiveStart expression ;
@@ -76,9 +66,9 @@ assignmentDirective : NumberSign Identifier assignmentOperator expression ;
 classDeclaration :
     Class CommercialAt? Identifier
       (LessThanSign Identifier (Comma Identifier)* GreaterThanSign)?
-      (Extends typeReference)?
+      (Extends (Null | typeReference))?
       (Implements typeReference (Comma typeReference)*)?
-      Abstract?
+      (Abstract | Final)?
       (EqualsSign StringLiteral)?
         (
             Private |
@@ -90,17 +80,21 @@ classDeclaration :
             constructorDeclaration |
             fieldDeclaration |
             classMethodDeclaration |
-            directive
+            directive |
+            Newline
         )*
-    End Class? ;
+    End Class?
+    ;
 
 interfaceDeclaration :
-    Interface Identifier (Extends typeReference)?
+    Interface Identifier (Extends typeReference (',' typeReference)*)?
         (
             constDeclaration |
-            interfaceMethodDeclaration
+            interfaceMethodDeclaration |
+            Newline
         )*
-    End Interface? ;
+    End Interface?
+    ;
 
 globalDeclaration : Global dataDeclarations ;
 fieldDeclaration : Field dataDeclarations ;
@@ -113,7 +107,8 @@ functionDeclaration :
             directive |
             statement
         )*
-    End Function?)? ;
+    End Function?)?
+    ;
 
 constructorDeclaration :
     Method New LeftParenthesis dataDeclarations? RightParenthesis
@@ -121,7 +116,8 @@ constructorDeclaration :
             directive |
             statement
         )*
-    End Method? ;
+    End Method?
+    ;
 
 classMethodDeclaration :
     // Is abstract property allowed?
@@ -131,10 +127,12 @@ classMethodDeclaration :
             directive |
             statement
         )*
-    End Method? )? ;
+    End Method? )?
+    ;
 
 interfaceMethodDeclaration :
-    Method Identifier typeDeclaration? LeftParenthesis dataDeclarations? RightParenthesis ;
+    Method Identifier typeDeclaration? LeftParenthesis dataDeclarations? RightParenthesis
+    ;
 
 dataDeclarations : dataDeclaration (Comma dataDeclaration)* ;
 dataDeclaration : Identifier (typeDeclaration? (EqualsSign expression)? | InferAssignmentOperator expression) ;
@@ -144,69 +142,78 @@ dataDeclaration : Identifier (typeDeclaration? (EqualsSign expression)? | InferA
  */
 
 statement :
-    (
-        Exit |
-        Continue |
-        ifStatement |
-        selectStatement |
-        whileLoopStatement |
-        repeatLoopStatement |
-        numericForLoopStatement |
-        forEachinLoopStatement |
-        throwStatement |
-        returnStatement |
-        localDeclaration |
-        constDeclaration |
-        expressionStatement |
-        assignmentStatement
-    ) Semicolon? |
+    inlineStatement? (Newline | Semicolon) |
     directive
     ;
 
-ifStatement
-    : (If expression Then?
-          statement*
-      ((ElseIf | Else If) expression Then?
-          statement*)*
-      (Else
-          statement*)?
-      (EndIf | End If?))
-    | (If expression Then? statement (Else statement)?)
+inlineStatement :
+    Exit |
+    Continue |
+    ifStatement |
+    selectStatement |
+    whileLoopStatement |
+    repeatLoopStatement |
+    numericForLoopStatement |
+    forEachinLoopStatement |
+    throwStatement |
+    returnStatement |
+    localDeclaration |
+    constDeclaration |
+    expressionStatement |
+    assignmentStatement
+    ;
+
+ifStatement :
+    If expression Then? inlineStatement (Else inlineStatement)? #singleLineIfStatement |
+    If expression Then? Newline
+        statement*
+    ((ElseIf | Else If) expression Then? Newline
+        statement*)*
+    (Else Newline
+        statement*)?
+    (EndIf | End If?) #multiLineIfStatement
     ;
 
 selectStatement :
-    Select expression
+    Select expression Newline+
         caseStatement*
         defaultStatement?
-    End Select? ;
+    End Select?
+    ;
 
 caseStatement :
-    Case expression (Comma expression)*
-        statement* ;
+    Case expression (Comma expression)* Newline?
+        statement*
+    ;
 
 defaultStatement :
-    Default
-        statement* ;
+    Default Newline?
+        statement*
+    ;
 
 whileLoopStatement :
-    While expression
+    While expression Newline
         statement*
-    (Wend | End While?) ;
+    (Wend | End While?)
+    ;
 
 repeatLoopStatement :
-    Repeat
+    Repeat Newline
         statement*
-    (Until expression | Forever) ;
+    (Until expression | Forever)
+    ;
 
 numericForLoopStatement :
-    For (localDeclaration | assignmentStatement) (To | Until) expression (Step expression)?
+    For (localDeclaration | assignmentStatement) (To | Until) expression (Step expression)? Newline
         statement*
-    (Next | End For?) ;
+    (Next | End For?)
+    ;
 
 forEachinLoopStatement :
-    For (Local Identifier (typeDeclaration? EqualsSign | InferAssignmentOperator) | Identifier EqualsSign) Eachin expression
+    For (Local Identifier (typeDeclaration? EqualsSign | InferAssignmentOperator) | Identifier EqualsSign) Eachin expression Newline
         statement*
-    (Next | End For?) ;
+    (Next | End For?)
+    ;
 
 throwStatement : Throw expression ;
 
@@ -246,29 +253,29 @@ returnStatement : Return expression? ;
  */
 
 expression :
-    groupingExpression |
+    Newline* groupingExpression |
 
-    newExpression |
-    Null |
-    True |
-    False |
-    Self |
-    Super |
-    stringLiteral |
-    FloatLiteral |
-    IntLiteral |
-    arrayLiteral |
-    identifierExpression |
+    Newline* newExpression |
+    Newline* Null |
+    Newline* True |
+    Newline* False |
+    Newline* Self |
+    Newline* Super |
+    Newline* stringLiteral |
+    Newline* FloatLiteral |
+    Newline* IntLiteral |
+    Newline* arrayLiteral |
+    Newline* identifierExpression |
 
-    dottableExpression FullStop Identifier |
-    FullStop Identifier |
-    invokableExpression invokeOperator |
-    indexableExpression indexOperator  |
+    Newline* dottableExpression FullStop Identifier |
+    Newline* FullStop Identifier |
+    Newline* invokableExpression invokeOperator |
+    Newline* indexableExpression indexOperator  |
 
-    PlusSign expression |
-    HyphenMinus expression |
-    Tilde expression |
-    Not expression |
+    Newline* PlusSign expression |
+    Newline* HyphenMinus expression |
+    Newline* Tilde expression |
+    Newline* Not expression |
 
     expression Asterisk expression |
     expression Solidus expression |
@@ -296,11 +303,11 @@ expression :
     expression Or expression
     ;
 
-newExpression : New typeReference (invokeOperator | indexOperator)? ;
+newExpression : New typeReference ;
 
 dottableExpression :
     groupingExpression |
-    newExpression |
+    newExpression invokeOperator? |
     Self |
     Super |
     stringLiteral |
@@ -313,7 +320,7 @@ dottableExpression :
     ;
 
 invokableExpression :
-    New typeReference |
+    newExpression |
     dottableExpression FullStop identifierExpression |
     FullStop identifierExpression |
     identifierExpression |
@@ -324,7 +331,14 @@ indexableExpression :
     stringLiteral |
     arrayLiteral |
     identifierExpression |
-    (Self | identifierExpression) FullStop identifierExpression |
+    (
+        Self |
+        Super |
+    ) FullStop identifierExpression |
+    FullStop? identifierExpression (FullStop identifierExpression)* |
+    newExpression |
+    indexableExpression indexOperator FullStop identifierExpression |
+    indexableExpression indexOperator |
     (
         identifierExpression |
         typeReference
@@ -342,7 +356,7 @@ arrayLiteral : LeftSquareBracket (expression (Comma expression)*)? RightSquareBr
 identifierExpression : Identifier ;
 
 invokeOperator: LeftParenthesis invokeArguments? RightParenthesis ;
-invokeArguments : expression (Comma expression)* ;
+invokeArguments : expression (Comma expression?)* ;
 
 indexOperator : LeftSquareBracket (expression | expression? SliceOperator expression?) RightSquareBracket ;
 
@@ -355,8 +369,8 @@ typeDeclaration :
             IntShorthandType
         ) |
         Colon Identifier ('.' Identifier)*
-    ) (LessThanSign typeReference (Comma typeReference)* GreaterThanSign)? (LeftSquareBracket expression? RightSquareBracket)? |
-    LeftSquareBracket RightSquareBracket
+    ) (LessThanSign typeReference (Comma typeReference)* GreaterThanSign)? (LeftSquareBracket expression? RightSquareBracket)* |
+    (LeftSquareBracket expression? RightSquareBracket)+
     ;
 
 typeReference :
@@ -365,9 +379,10 @@ typeReference :
         BoolShorthandType |
         NumberSign |
         IntShorthandType |
-        identifier ('.' Identifier)*
-    ) (LessThanSign typeReference (Comma typeReference)* GreaterThanSign)? (LeftSquareBracket RightSquareBracket)? |
-    LeftSquareBracket RightSquareBracket
+        modulePath '.' Identifier |
+        Identifier
+    ) (LessThanSign typeReference (Comma typeReference)* GreaterThanSign)? (LeftSquareBracket expression? RightSquareBracket)* |
+    (LeftSquareBracket expression? RightSquareBracket)+
     ;
 
 identifier :

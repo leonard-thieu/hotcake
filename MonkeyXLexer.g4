@@ -66,18 +66,15 @@ BitwiseXorUpdateAssignmentOperator : '~=' ;
 BitwiseOrUpdateAssignmentOperator : '|=' ;
 
 LessThanOrEqualsOperator : '<=' ;
-
-// TODO: Investigate the proper way to handle this.
 // Disabled because it takes priority over assignment to generic type.
 //     Field _head:Node<T>=New HeadNode<T>
 //GreaterThanOrEqualsOperator : '>=' ;
-
 NotEqualsOperator : '<>' ;
 
 SliceOperator : '..' ;
 
 Whitespace : (' ' | '\t')+ -> skip ;
-Newline : ('\r'? '\n' | '\r')+ -> skip ;
+Newline : ('\r'? '\n' | '\r')+ ;
 
 /*
  * Language keywords and reserved identifiers
@@ -168,7 +165,7 @@ IntLiteral : Numeric+ | '$' Hexadecimal+ ;
 
 Identifier : (Alpha | ('_' Alpha)) (Alphanumeric | '_')* ;
 
-Comment : '\'' .*? Newline -> skip;
+Comment : '\'' ~[\r\n]* -> skip;
 
 DirectiveCommon : NumberSign ;
 
@@ -179,7 +176,7 @@ EndIfDirectiveStart : DirectiveCommon E N D I F ;
 ErrorDirectiveStart : DirectiveCommon E R R O R ;
 PrintDirectiveStart : DirectiveCommon P R I N T ;
 // TODO: Ensure #Rem can handle nesting.
-RemDirectiveStart : DirectiveCommon R E M .*? EndDirectiveStart -> skip ;
+RemDirectiveStart : Whitespace* DirectiveCommon R E M .*? Whitespace* EndDirectiveStart -> skip ;
 EndDirectiveStart : DirectiveCommon E N D ;
 
 ErrorCharacter : . -> channel(HIDDEN) ;

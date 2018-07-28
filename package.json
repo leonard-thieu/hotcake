@@ -7,7 +7,7 @@
   "scripts": {
     "build": "antlr4 MonkeyXLexer.g4 -o gen && antlr4 MonkeyXParser.g4 -o gen -lib gen && javac gen/MonkeyX*.java",
     "test:ndref": "tsc && node test \"S:\\Projects\\_GitHub\\leonard-thieu\\ndref\\src\\**\\*.monkey\"",
-    "test:monkeyx": "tsc && node test \"S:\\Projects\\_GitHub\\blitz-research\\monkey\\modules\\**\\*.monkey\""
+    "test:monkeyx": "tsc && node test \"S:\\Projects\\_GitHub\\blitz-research\\monkey\\**\\*.monkey\""
   },
   "author": "Leonard Thieu",
   "license": "MIT",
