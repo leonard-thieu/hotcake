@@ -384,9 +384,3 @@ typeReference :
     ) (LessThanSign typeReference (Comma typeReference)* GreaterThanSign)? (LeftSquareBracket expression? RightSquareBracket)* |
     (LeftSquareBracket expression? RightSquareBracket)+
     ;
-
-identifier :
-    Null |
-    Alias |
-    Identifier
-    ;
