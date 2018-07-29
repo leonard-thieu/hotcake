@@ -1,0 +1,26 @@
+{
+    "name": "hotcake",
+    "displayName": "hotcake",
+    "description": "",
+    "version": "0.0.1",
+    "publisher": "leonard-thieu",
+    "engines": {
+        "vscode": "^1.25.0"
+    },
+    "categories": [
+        "Programming Languages"
+    ],
+    "contributes": {
+        "languages": [{
+            "id": "monkeyx",
+            "aliases": ["Monkey X", "monkeyx"],
+            "extensions": [".monkey"],
+            "configuration": "./language-configuration.json"
+        }],
+        "grammars": [{
+            "language": "monkeyx",
+            "scopeName": "source.monkeyx",
+            "path": "./syntaxes/monkeyx.tmLanguage.json"
+        }]
+    }
+}
