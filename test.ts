@@ -12,8 +12,18 @@ const NO_BANANAS = false;
 const inputFilesPattern = process.argv[2];
 
 glob(inputFilesPattern, async (err, items) => {
+    function getErrors(path: string): PathErrors {
+        if (!errors.get(path)) {
+            errors.set(path, []);
+        }
+
+        return errors.get(path)!;
+    }
+
     const totalStartTime = performance.now();
     let totalFiles = 0;
+
+    const errors: Map<string, PathErrors> = new Map();
 
     const paths = items;
     const cDir = commondir(paths);
@@ -66,19 +76,22 @@ glob(inputFilesPattern, async (err, items) => {
             });
 
             grun.stderr.on('data', (data) => {
-                console.log(data.toString());
+                const d = data.toString();
+
+                console.log(d);
+                getErrors(rPath).push(d);
             });
 
             grun.on('exit', (code) => {
                 const endTime = performance.now();
                 const duration = Math.round(endTime - startTime);
 
-                // Only log on error or
-                // execution time exceeds limit.
-                if (code !== 0 ||
-                    duration > 500 + OVERHEAD) {
-                    console.log(`Child exited with code ${code} after ${duration} ms.`);
+                if (code !== 0) {
+                    console.log(`Exited with code ${code}.`);
                 }
+
+                getErrors(rPath).exitCode = code;
+                getErrors(rPath).executionTime = duration;
 
                 clearTimeout(timeout);
 
@@ -89,6 +102,25 @@ glob(inputFilesPattern, async (err, items) => {
         await proc;
     }
 
+    for (let [path, pathErrors] of errors) {
+        if (pathErrors.length > 0) {
+            console.log(` -- ${path}`);
+
+            if (pathErrors.exitCode !== 0) {
+                console.log(`Exited with code ${pathErrors.exitCode}.`);
+            }
+
+            if (pathErrors.executionTime! > 500 + OVERHEAD) {
+                console.log(`Execution took ${pathErrors.executionTime} ms.`);
+            }
+
+            for (let i = 0; i < pathErrors.length; i++) {
+                const pathError = pathErrors[i];
+                console.log(pathError);
+            }
+        }
+    }
+
     const totalEndTime = performance.now();
     const totalDuration = Math.round((totalEndTime - totalStartTime) / 1000);
     // Exclude overhead that would not be incurred in a real application.
@@ -97,3 +129,8 @@ glob(inputFilesPattern, async (err, items) => {
 
     console.log(`Project parsed in ${totalDuration} s (${totalDurationWithoutOverhead} s without overhead).`);
 });
+
+interface PathErrors extends Array<string> {
+    exitCode?: number;
+    executionTime?: number;
+}

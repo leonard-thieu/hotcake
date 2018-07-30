@@ -28,7 +28,6 @@ moduleDeclaration :
     EOF
     ;
 
-// TODO: Determine if module paths have looser naming rules.
 importStatement : Import (modulePath | StringLiteral) ;
 
 aliasDirective : Alias Identifier EqualsSign modulePath FullStop Identifier ;
@@ -87,7 +86,7 @@ classDeclaration :
     ;
 
 interfaceDeclaration :
-    Interface Identifier (Extends typeReference (',' typeReference)*)?
+    Interface Identifier (Extends typeReference (Comma typeReference)*)?
         (
             constDeclaration |
             interfaceMethodDeclaration |
@@ -127,7 +126,7 @@ classMethodDeclaration :
             directive |
             statement
         )*
-    End Method? )?
+    End Method?)?
     ;
 
 interfaceMethodDeclaration :
@@ -219,12 +218,10 @@ throwStatement : Throw expression ;
 
 assignmentStatement : assignableExpression assignmentOperator expression ;
 assignableExpression :
-    (
-        indexableExpression indexOperator |
-        dottableExpression FullStop Identifier |
-        FullStop Identifier |
-        Identifier
-    ) (LeftSquareBracket expression RightSquareBracket)?
+    indexableExpression indexOperator |
+    dottableExpression FullStop Identifier |
+    FullStop Identifier |
+    Identifier
     ;
 
 assignmentOperator :
@@ -267,10 +264,10 @@ expression :
     Newline* arrayLiteral |
     Newline* identifierExpression |
 
-    Newline* dottableExpression FullStop Identifier |
+    Newline* dottableExpression FullStop identifierExpression |
     Newline* FullStop Identifier |
     Newline* invokableExpression invokeOperator |
-    Newline* indexableExpression indexOperator  |
+    Newline* indexableExpression indexOperator |
 
     Newline* PlusSign expression |
     Newline* HyphenMinus expression |
@@ -349,38 +346,42 @@ indexableExpression :
 // Undocumented
 groupingExpression : LeftParenthesis expression RightParenthesis ;
 
+identifierExpression : Identifier ;
+
 stringLiteral : StringLiteral ;
 
 arrayLiteral : LeftSquareBracket (expression (Comma expression)*)? RightSquareBracket ;
 
-identifierExpression : Identifier ;
-
-invokeOperator: LeftParenthesis invokeArguments? RightParenthesis ;
-invokeArguments : expression (Comma expression?)* ;
+invokeOperator : LeftParenthesis invokeArguments? RightParenthesis ;
+invokeArguments : (Comma | expression) (Comma expression?)* ;
 
 indexOperator : LeftSquareBracket (expression | expression? SliceOperator expression?) RightSquareBracket ;
 
 typeDeclaration :
-    (
-        (
-            StringShorthandType |
-            BoolShorthandType |
-            NumberSign |
-            IntShorthandType
-        ) |
-        Colon Identifier ('.' Identifier)*
-    ) (LessThanSign typeReference (Comma typeReference)* GreaterThanSign)? (LeftSquareBracket expression? RightSquareBracket)* |
-    (LeftSquareBracket expression? RightSquareBracket)+
+    shorthandTypeReference arrayTypeReference* |
+    arrayTypeReference+ |
+    Colon longhandTypeReference arrayTypeReference*
     ;
 
 typeReference :
-    (
-        StringShorthandType |
-        BoolShorthandType |
-        NumberSign |
-        IntShorthandType |
-        modulePath '.' Identifier |
-        Identifier
-    ) (LessThanSign typeReference (Comma typeReference)* GreaterThanSign)? (LeftSquareBracket expression? RightSquareBracket)* |
-    (LeftSquareBracket expression? RightSquareBracket)+
+    shorthandTypeReference arrayTypeReference* |
+    arrayTypeReference+ |
+    longhandTypeReference arrayTypeReference*
+    ;
+
+longhandTypeReference : (modulePath FullStop)? Identifier genericTypeReference? ;
+
+shorthandTypeReference :
+    DollarSign |
+    QuestionMark |
+    NumberSign |
+    PercentSign
+    ;
+
+genericTypeReference : LessThanSign typeReference (Comma typeReference)* GreaterThanSign ;
+
+arrayTypeReference :
+    // Undocumented?
+    LeftSquareBracket expression RightSquareBracket |
+    LeftSquareBracket RightSquareBracket
     ;

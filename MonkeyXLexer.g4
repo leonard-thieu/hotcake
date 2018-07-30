@@ -1,5 +1,10 @@
 lexer grammar MonkeyXLexer;
 
+channels
+{
+    WhitespaceChannel
+}
+
 fragment A : [aA];
 fragment B : [bB];
 fragment C : [cC];
@@ -54,7 +59,10 @@ Colon : ':' ;
 VerticalBar : '|' ;
 Semicolon : ';' ;
 CommercialAt : '@' ;
+DollarSign : '$' ;
+QuestionMark : '?' ;
 NumberSign : '#' ;
+PercentSign : '%' ;
 
 InferAssignmentOperator : ':=' ;
 MultiplicationUpdateAssignmentOperator : '*=' ;
@@ -73,7 +81,7 @@ NotEqualsOperator : '<>' ;
 
 SliceOperator : '..' ;
 
-Whitespace : (' ' | '\t')+ -> skip ;
+Whitespace : [ \t]+ -> channel(WhitespaceChannel) ;
 Newline : ('\r'? '\n' | '\r')+ ;
 
 /*
@@ -154,14 +162,10 @@ Alias : A L I A S ;
 // Undocumented
 Protected : P R O T E C T E D ;
 
-StringShorthandType : '$' ;
-BoolShorthandType : '?' ;
-IntShorthandType : '%' ;
-
-StringLiteral : '"' .*? '"';
+StringLiteral : '"' .*? '"' ;
 // Negative numbers are handled by the parser.
-FloatLiteral : Numeric* '.' Numeric+ ;
-IntLiteral : Numeric+ | '$' Hexadecimal+ ;
+FloatLiteral : Numeric* FullStop Numeric+ ;
+IntLiteral : Numeric+ | DollarSign Hexadecimal+ ;
 
 Identifier : (Alpha | ('_' Alpha)) (Alphanumeric | '_')* ;
 
