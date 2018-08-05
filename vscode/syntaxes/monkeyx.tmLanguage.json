@@ -7,7 +7,7 @@
       "include": "#comment"
     },
     {
-      "include": "#rem-directive"
+      "include": "#preprocessor-directive"
     },
     {
       "include": "#strict-directive"
@@ -41,16 +41,13 @@
     },
     {
       "include": "#class-declaration"
-    },
-    {
-      "include": "#debug-invalid"
     }
   ],
   "repository": {
     "comment": {
       "patterns": [
         {
-          "begin": "(^\\s+)?(?=')",
+          "begin": "\\s*(?=')",
           "beginCaptures": {
             "1": {
               "name": "punctuation.whitespace.comment.leading.monkeyx"
@@ -72,24 +69,192 @@
         }
       ]
     },
-    "rem-directive": {
+
+    "preprocessor-directive": {
       "patterns": [
         {
-          "name": "comment.block.monkeyx",
-          "begin": "^\\s*#(?i:Rem)",
-          "end": "^\\s*#(?i:End)",
+          "include": "#if-directive"
+        },
+        {
+          "include": "#elseif-directive"
+        },
+        {
+          "include": "#else-directive"
+        },
+        {
+          "include": "#end-directive"
+        },
+        {
+          "include": "#rem-directive"
+        },
+        {
+          "include": "#print-directive"
+        },
+        {
+          "include": "#error-directive"
+        },
+        {
+          "include": "#assignment-directive"
+        }
+      ],
+      "repository": {
+        "if-directive": {
           "patterns": [
             {
-              "include": "#rem-directive"
+              "match": "^\\s*(#(?i)(?:If))\\s+([^']+)",
+              "captures": {
+                "1": {
+                  "name": "meta.preprocessor.if.monkeyx"
+                },
+                "2": {
+                  "patterns": [
+                    {
+                      "include": "#expression"
+                    }
+                  ]
+                }
+              }
+            }
+          ]
+        },
+        "elseif-directive": {
+          "patterns": [
+            {
+              "match": "^\\s*(#(?i)(?:Else\\s*If))\\s+([^']+)",
+              "captures": {
+                "1": {
+                  "name": "meta.preprocessor.elseif.monkeyx"
+                },
+                "2": {
+                  "patterns": [
+                    {
+                      "include": "#expression"
+                    }
+                  ]
+                }
+              }
+            }
+          ]
+        },
+        "else-directive": {
+          "patterns": [
+            {
+              "match": "^\\s*(#(?i)(?:Else))\\s*",
+              "captures": {
+                "1": {
+                  "name": "meta.preprocessor.else.monkeyx"
+                }
+              }
+            }
+          ]
+        },
+        "end-directive": {
+          "patterns": [
+            {
+              "match": "^\\s*(#(?i)(?:End(If)?))\\s*",
+              "captures": {
+                "1": {
+                  "name": "meta.preprocessor.end.monkeyx"
+                }
+              }
+            }
+          ]
+        },
+        "rem-directive": {
+          "patterns": [
+            {
+              "name": "comment.block.monkeyx",
+              "begin": "^\\s*(#(?i)(?:Rem))",
+              "beginCaptures": {
+                "1": {
+                  "name": "meta.preprocessor.rem.monkeyx"
+                }
+              },
+              "end": "^\\s*(#(?i)(?:End))",
+              "endCaptures": {
+                "1": {
+                  "name": "meta.preprocessor.end.monkeyx"
+                }
+              },
+              "patterns": [
+                {
+                  "include": "#rem-directive"
+                }
+              ]
+            }
+          ]
+        },
+        "print-directive": {
+          "patterns": [
+            {
+              "match": "^\\s*(#(?i)(?:Print))\\s+(.+)",
+              "captures": {
+                "1": {
+                  "name": "meta.preprocessor.print.monkeyx"
+                },
+                "2": {
+                  "patterns": [
+                    {
+                      "include": "#expression"
+                    }
+                  ]
+                }
+              }
+            }
+          ]
+        },
+        "error-directive": {
+          "patterns": [
+            {
+              "match": "^\\s*(#(?i)(?:Error))\\s+(.+)",
+              "captures": {
+                "1": {
+                  "name": "meta.preprocessor.error.monkeyx"
+                },
+                "2": {
+                  "patterns": [
+                    {
+                      "include": "#expression"
+                    }
+                  ]
+                }
+              }
+            }
+          ]
+        },
+        "assignment-directive": {
+          "patterns": [
+            {
+              "match": "^\\s*(#(?:[A-Za-z]|_[A-Za-z])[_A-Za-z0-9]*)\\s*(.+?)\\s*([^']+)",
+              "captures": {
+                "1": {
+                  "name": "meta.preprocessor.variable.name.monkeyx"
+                },
+                "2": {
+                  "patterns": [
+                    {
+                      "include": "#assignment-operator"
+                    }
+                  ]
+                },
+                "3": {
+                  "patterns": [
+                    {
+                      "include": "#expression"
+                    }
+                  ]
+                }
+              }
             }
           ]
         }
-      ]
+      }
     },
+
     "strict-directive": {
       "patterns": [
         {
-          "match": "\\b(?i)(Strict)\\b\\s*",
+          "match": "\\s*\\b(?i)(Strict)\\b\\s*",
           "captures": {
             "1": {
               "name": "keyword.other.strict.monkeyx"
@@ -101,7 +266,7 @@
     "import-statement": {
       "patterns": [
         {
-          "begin": "\\b(?i)(Import)\\b\\s*",
+          "begin": "\\s*\\b(?i)(Import)\\b\\s*",
           "beginCaptures": {
             "1": {
               "name": "keyword.other.import.monkeyx"
@@ -123,7 +288,7 @@
       "patterns": [
         {
           "name": "storage.modifier.private.monkeyx",
-          "match": "\\b(?i)(Private)\\b\\s*"
+          "match": "\\s*\\b(?i)(Private)\\b\\s*"
         }
       ]
     },
@@ -131,7 +296,7 @@
       "patterns": [
         {
           "name": "storage.modifier.public.monkeyx",
-          "match": "\\b(?i)(Public)\\b\\s*"
+          "match": "\\s*\\b(?i)(Public)\\b\\s*"
         }
       ]
     },
@@ -139,14 +304,278 @@
       "patterns": [
         {
           "name": "storage.modifier.extern.monkeyx",
-          "match": "\\b(?i)(Extern(?:\\s+Private)?)\\b\\s*"
+          "begin": "\\s*\\b(?i)(Extern(?:\\s+Private)?)\\b\\s*",
+          "end": "(?=\\s*\\b(?i)(Public|Private)\\b\\s*)",
+          "patterns": [
+            {
+              "include": "#comment"
+            },
+            {
+              "include": "#preprocessor-directive"
+            },
+            {
+              "include": "#extern-function-declaration"
+            },
+            {
+              "include": "#extern-class-declaration"
+            }
+          ]
         }
-      ]
+      ],
+      "repository": {
+        "extern-function-declaration": {
+          "patterns": [
+            {
+              "match": "\\s*\\b(?i)(Function)\\b\\s*((?:[A-Za-z]|_[A-Za-z])[_A-Za-z0-9]*)([^\\(]*)([^\\)]+\\))\\s*(?:(=)\\s*(.+))?",
+              "captures": {
+                "1": {
+                  "name": "keyword.other.function.monkeyx"
+                },
+                "2": {
+                  "patterns": [
+                    {
+                      "include": "#identifier"
+                    }
+                  ]
+                },
+                "3": {
+                  "patterns": [
+                    {
+                      "include": "#type-declaration"
+                    }
+                  ]
+                },
+                "4": {
+                  "patterns": [
+                    {
+                      "include": "#bracketed-parameter-list"
+                    }
+                  ]
+                },
+                "5": {
+                  "patterns": [
+                    {
+                      "include": "#assignment-operator"
+                    }
+                  ]
+                },
+                "6": {
+                  "patterns": [
+                    {
+                      "include": "#string-literal"
+                    }
+                  ]
+                }
+              }
+            }
+          ]
+        },
+        "extern-class-declaration": {
+          "patterns": [
+            {
+              "begin": "\\s*\\b(?i)(Class)\\b\\s*(@?(?:[A-Za-z]|_[A-Za-z])[_A-Za-z0-9]*)\\s*(<[^>]+>)?\\s*(.+)?",
+              "beginCaptures": {
+                "1": {
+                  "name": "keyword.other.class.monkeyx"
+                },
+                "2": {
+                  "patterns": [
+                    {
+                      "include": "#type-identifier"
+                    }
+                  ]
+                },
+                "3": {
+                  "patterns": [
+                    {
+                      "include": "#generic-type-parameters"
+                    }
+                  ]
+                },
+                "4": {
+                  "patterns": [
+                    {
+                      "match": "\\b(?i)(Extends)\\b\\s*(.+?(?=(?i:Implements)|=|$))",
+                      "captures": {
+                        "1": {
+                          "name": "keyword.other.extends.monkeyx"
+                        },
+                        "2": {
+                          "patterns": [
+                            {
+                              "include": "#type-reference"
+                            }
+                          ]
+                        }
+                      }
+                    },
+                    {
+                      "match": "\\b(?i)(Implements)\\b\\s*(.+?(?==|$))",
+                      "captures": {
+                        "1": {
+                          "name": "keyword.other.implements.monkeyx"
+                        },
+                        "2": {
+                          "patterns": [
+                            {
+                              "include": "#type-references"
+                            }
+                          ]
+                        }
+                      }
+                    },
+                    {
+                      "match": "\\s*(=)\\s*(.+)",
+                      "captures": {
+                        "1": {
+                          "patterns": [
+                            {
+                              "include": "#assignment-operator"
+                            }
+                          ]
+                        },
+                        "2": {
+                          "patterns": [
+                            {
+                              "include": "#string-literal"
+                            }
+                          ]
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "end": "\\s*\\b(?i)(End\\s+Class|End)\\b\\s*",
+              "endCaptures": {
+                "1": {
+                  "name": "keyword.other.class.monkeyx"
+                }
+              },
+              "patterns": [
+                {
+                  "include": "#comment"
+                },
+                {
+                  "include": "#preprocessor-directive"
+                },
+                {
+                  "include": "#private-directive"
+                },
+                {
+                  "include": "#public-directive"
+                },
+                {
+                  "include": "#extern-function-declaration"
+                },
+                {
+                  "include": "#extern-field-declaration"
+                },
+                {
+                  "include": "#extern-class-method-declaration"
+                }
+              ]
+            }
+          ],
+          "repository": {
+            "extern-field-declaration": {
+              "patterns": [
+                {
+                  "match": "\\s*\\b(?i)(Field)\\b\\s*((?:[A-Za-z]|_[A-Za-z])[_A-Za-z0-9]*)([^=']+)(?:(=)\\s*(.+))?",
+                  "captures": {
+                    "1": {
+                      "name": "keyword.declaration.field.monkeyx"
+                    },
+                    "2": {
+                      "patterns": [
+                        {
+                          "include": "#identifier"
+                        }
+                      ]
+                    },
+                    "3": {
+                      "patterns": [
+                        {
+                          "include": "#type-declaration"
+                        }
+                      ]
+                    },
+                    "4": {
+                      "patterns": [
+                        {
+                          "include": "#assignment-operator"
+                        }
+                      ]
+                    },
+                    "5": {
+                      "patterns": [
+                        {
+                          "include": "#string-literal"
+                        }
+                      ]
+                    }
+                  }
+                }
+              ]
+            },
+            "extern-class-method-declaration": {
+              "patterns": [
+                {
+                  "match": "\\s*\\b(?i)(Method)\\b\\s*((?:[A-Za-z]|_[A-Za-z])[_A-Za-z0-9]*)([^\\(]*)([^\\)]+\\))(?:\\s*\\b(?i)(Property)\\b\\s*)?(?:\\s*(=)\\s*(.+))?",
+                  "captures": {
+                    "1": {
+                      "name": "keyword.other.method.monkeyx"
+                    },
+                    "2": {
+                      "patterns": [
+                        {
+                          "include": "#identifier"
+                        }
+                      ]
+                    },
+                    "3": {
+                      "patterns": [
+                        {
+                          "include": "#type-declaration"
+                        }
+                      ]
+                    },
+                    "4": {
+                      "patterns": [
+                        {
+                          "include": "#bracketed-parameter-list"
+                        }
+                      ]
+                    },
+                    "5": {
+                      "name": "storage.modifier.property.monkeyx"
+                    },
+                    "6": {
+                      "patterns": [
+                        {
+                          "include": "#assignment-operator"
+                        }
+                      ]
+                    },
+                    "7": {
+                      "patterns": [
+                        {
+                          "include": "#string-literal"
+                        }
+                      ]
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        }
+      }
     },
     "alias-directive": {
       "patterns": [
         {
-          "match": "\\b(?i)(Alias)\\b\\s*([^\\s=]+)\\s*(=)(.+)",
+          "match": "\\s*\\b(?i)(Alias)\\b\\s*([^\\s=]+)\\s*(=)([^']+(?<!\\s))",
           "captures": {
             "1": {
               "name": "keyword.declaration.alias.monkeyx"
@@ -176,7 +605,7 @@
     "const-declaration": {
       "patterns": [
         {
-          "begin": "\\b(?i)(Const)\\b\\s*",
+          "begin": "\\s*\\b(?i)(Const)\\b\\s*",
           "beginCaptures": {
             "1": {
               "name": "keyword.other.const.monkeyx"
@@ -194,25 +623,26 @@
     "global-declaration": {
       "patterns": [
         {
-          "begin": "\\b(?i)(Global)\\b\\s*",
-          "beginCaptures": {
+          "match": "\\s*\\b(?i)(Global)\\b\\s*([^']+(?<!\\s))",
+          "captures": {
             "1": {
               "name": "keyword.other.global.monkeyx"
+            },
+            "2": {
+              "patterns": [
+                {
+                  "include": "#data-declarations"
+                }
+              ]
             }
-          },
-          "end": "(?=$)",
-          "patterns": [
-            {
-              "include": "#data-declarations"
-            }
-          ]
+          }
         }
       ]
     },
     "function-declaration": {
       "patterns": [
         {
-          "begin": "\\b(?i)(Function)\\b\\s*((?:[A-Za-z]|_[A-Za-z])[_A-Za-z0-9]*)([^\\(]*)([^\\)]+\\))\\s*",
+          "begin": "\\s*\\b(?i)(Function)\\b\\s*((?:[A-Za-z]|_[A-Za-z])[_A-Za-z0-9]*)([^\\(]*)([^\\)]+\\))\\s*",
           "beginCaptures": {
             "1": {
               "name": "keyword.other.function.monkeyx"
@@ -239,7 +669,7 @@
               ]
             }
           },
-          "end": "\\b(?i)(End\\s+Function|End)\\b\\s*",
+          "end": "\\s*\\b(?i)(End\\s+Function|End)\\b\\s*",
           "endCaptures": {
             "1": {
               "name": "keyword.other.function.monkeyx"
@@ -256,7 +686,7 @@
     "interface-declaration": {
       "patterns": [
         {
-          "begin": "\\b(?i)(Interface)\\b\\s*([^\\s]+)\\s*(?:\\b(?i)(Extends)\\b\\s*(.+))?",
+          "begin": "\\s*\\b(?i)(Interface)\\b\\s*((?:[A-Za-z]|_[A-Za-z])[_A-Za-z0-9]*)\\s*(?:\\b(?i)(Extends)\\b\\s*(.+))?",
           "beginCaptures": {
             "1": {
               "name": "keyword.other.interface.monkeyx"
@@ -279,7 +709,7 @@
               ]
             }
           },
-          "end": "\\b(?i)(End\\s+Interface|End)\\b\\s*",
+          "end": "\\s*\\b(?i)(End\\s+Interface|End)\\b\\s*",
           "endCaptures": {
             "1": {
               "name": "keyword.other.interface.monkeyx"
@@ -299,7 +729,7 @@
         "interface-method-declaration": {
           "patterns": [
             {
-              "match": "(?i:\\b(Method)\\b\\s*([_[:alpha:]][_[:alnum:]]*)([^\\(]*))([^\\)]+\\))",
+              "match": "(?i:\\b(Method)\\b\\s*((?:[A-Za-z]|_[A-Za-z])[_A-Za-z0-9]*)([^\\(]*))([^\\)]+\\))",
               "captures": {
                 "1": {
                   "name": "keyword.other.method.monkeyx"
@@ -330,7 +760,7 @@
     "class-declaration": {
       "patterns": [
         {
-          "begin": "\\b(?i)(Class)\\b\\s*((?:[A-Za-z]|_[A-Za-z])[_A-Za-z0-9]*)\\s*(<[^>]+>)?\\s*(\\b(?i:Extends)\\b\\s*.+(?=\\s*Implements))?\\s*(\\b(?i:Implements)\\b\\s*.+)?",
+          "begin": "\\s*\\b(?i)(Class)\\b\\s*((?:[A-Za-z]|_[A-Za-z])[_A-Za-z0-9]*)\\s*(<[^>]+>)?\\s*(.+)?",
           "beginCaptures": {
             "1": {
               "name": "keyword.other.class.monkeyx"
@@ -352,7 +782,15 @@
             "4": {
               "patterns": [
                 {
-                  "match": "\\b(?i)(Extends)\\b\\s*(.+)",
+                  "match": "\\s*\\b(?i)(Abstract)\\b\\s*",
+                  "captures": {
+                    "1": {
+                      "name": "keyword.other.abstract.monkeyx"
+                    }
+                  }
+                },
+                {
+                  "match": "\\s*\\b(?i)(Extends)\\b\\s*(.+)",
                   "captures": {
                     "1": {
                       "name": "keyword.other.extends.monkeyx"
@@ -365,13 +803,9 @@
                       ]
                     }
                   }
-                }
-              ]
-            },
-            "5": {
-              "patterns": [
+                },
                 {
-                  "match": "\\b(?i)(Implements)\\b\\s*(.+)",
+                  "match": "\\s*\\b(?i)(Implements)\\b\\s*(.+)",
                   "captures": {
                     "1": {
                       "name": "keyword.other.implements.monkeyx"
@@ -388,7 +822,7 @@
               ]
             }
           },
-          "end": "(?i:\\b(End\\s+Class|End)\\b\\s*)",
+          "end": "\\s*\\b(?i)(End\\s+Class|End)\\b\\s*",
           "endCaptures": {
             "1": {
               "name": "keyword.other.class.monkeyx"
@@ -399,7 +833,7 @@
               "include": "#comment"
             },
             {
-              "include": "#rem-directive"
+              "include": "#preprocessor-directive"
             },
             {
               "include": "#private-directive"
@@ -421,9 +855,6 @@
             },
             {
               "include": "#class-method-declaration"
-            },
-            {
-              "include": "#debug-invalid"
             }
           ]
         }
@@ -448,18 +879,19 @@
         "field-declaration": {
           "patterns": [
             {
-              "begin": "\\b(?i)(Field)\\b\\s*",
-              "beginCaptures": {
+              "match": "\\s*\\b(?i)(Field)\\b\\s*([^']+(?<!\\s))",
+              "captures": {
                 "1": {
                   "name": "keyword.other.field.monkeyx"
+                },
+                "2": {
+                  "patterns": [
+                    {
+                      "include": "#data-declarations"
+                    }
+                  ]
                 }
-              },
-              "end": "(?=$)",
-              "patterns": [
-                {
-                  "include": "#data-declarations"
-                }
-              ]
+              }
             }
           ]
         },
@@ -467,7 +899,7 @@
           "patterns": [
             {
               "comment": "Abstract method",
-              "match": "\\b(?i)(Method)\\b\\s*((?:[A-Za-z]|_[A-Za-z])[_A-Za-z0-9]*)([^\\(]*)([^\\)]+\\))\\s*\\b(?i)(Abstract)\\b\\s*",
+              "match": "\\s*\\b(?i)(Method)\\b\\s*((?:[A-Za-z]|_[A-Za-z])[_A-Za-z0-9]*)([^\\(]*)([^\\)]+\\))(?:\\s*\\b(?i)(Property)\\b\\s*)?\\s*\\b(?i)(Abstract)\\b\\s*",
               "captures": {
                 "1": {
                   "name": "keyword.other.method.monkeyx"
@@ -494,12 +926,15 @@
                   ]
                 },
                 "5": {
+                  "name": "keyword.other.property.monkeyx"
+                },
+                "6": {
                   "name": "keyword.other.abstract.monkeyx"
                 }
               }
             },
             {
-              "begin": "\\b(?i)(Method)\\b\\s*((?:[A-Za-z]|_[A-Za-z])[_A-Za-z0-9]*)([^\\(]*)([^\\)]+\\))",
+              "begin": "\\s*\\b(?i)(Method)\\b\\s*((?:[A-Za-z]|_[A-Za-z])[_A-Za-z0-9]*)([^\\(]*)([^\\)]+\\))(\\s*\\b(?i)(Property)\\b\\s*)?",
               "beginCaptures": {
                 "1": {
                   "name": "keyword.other.method.monkeyx"
@@ -520,9 +955,12 @@
                       "include": "#bracketed-parameter-list"
                     }
                   ]
+                },
+                "5": {
+                  "name": "storage.modifier.property.monkeyx"
                 }
               },
-              "end": "\\b(?i)(End\\s+Method|End)\\b\\s*",
+              "end": "\\s*\\b(?i)(End\\s+Method|End)\\b\\s*",
               "endCaptures": {
                 "1": {
                   "name": "keyword.other.method.monkeyx"
@@ -533,7 +971,7 @@
                   "include": "#comment"
                 },
                 {
-                  "include": "#rem-directive"
+                  "include": "#preprocessor-directive"
                 },
                 {
                   "include": "#statement"
@@ -551,7 +989,7 @@
           "include": "#comment"
         },
         {
-          "include": "#rem-directive"
+          "include": "#preprocessor-directive"
         },
         {
           "include": "#local-declaration"
@@ -561,6 +999,12 @@
         },
         {
           "include": "#if-statement"
+        },
+        {
+          "include": "#elseif-statement"
+        },
+        {
+          "include": "#else-statement"
         },
         {
           "include": "#select-statement"
@@ -581,17 +1025,20 @@
           "include": "#exit-statement"
         },
         {
-          "include": "#assignment-statement"
+          "include": "#continue-statement"
         },
         {
           "include": "#expression-statement"
+        },
+        {
+          "include": "#assignment-statement"
         }
       ]
     },
     "local-declaration": {
       "patterns": [
         {
-          "begin": "\\b(?i)(Local)\\b\\s*",
+          "begin": "\\s*\\b(?i)(Local)\\b\\s*",
           "beginCaptures": {
             "1": {
               "name": "keyword.other.local.monkeyx"
@@ -609,7 +1056,7 @@
     "return-statement": {
       "patterns": [
         {
-          "match": "\\b(?i)(Return)\\b\\s*(.+)?",
+          "match": "\\s*\\b(?i)(Return)\\b\\s*(.+)?",
           "captures": {
             "1": {
               "name": "keyword.control.return.monkeyx"
@@ -628,42 +1075,7 @@
     "if-statement": {
       "patterns": [
         {
-          "begin": "\\b(?i)(If)\\b\\s*(.+)(?:\\b(?i)(Then)\\b\\s*)?",
-          "beginCaptures": {
-            "1": {
-              "name": "keyword.control.conditional.if.monkeyx"
-            },
-            "2": {
-              "patterns": [
-                {
-                  "include": "#expression"
-                }
-              ]
-            },
-            "3": {
-              "name": "keyword.control.conditional.then.monkeyx"
-            }
-          },
-          "end": "\\b(?i)(End\\s*If|End)\\b\\s*",
-          "endCaptures": {
-            "1": {
-              "name": "keyword.control.conditional.if.monkeyx"
-            }
-          },
-          "patterns": [
-            {
-              "include": "#else-if-statement"
-            },
-            {
-              "include": "#else-statement"
-            },
-            {
-              "include": "#statement"
-            }
-          ]
-        },
-        {
-          "match": "\\b(?i)(If)\\b\\s*(.+)(?:\\b(?i)(Then)\\b\\s*)?(.+)(?:\\b(?i)(Else)\\b\\s*(.+))?",
+          "match": "\\s*\\b(?i)(If)\\b\\s*(.+?)(?:\\s*\\b(?i)(Then)\\b\\s*)?(.+?(?=(?i:Else)|$))(?:\\s*\\b(?i)(Else)\\b\\s*(.+))?",
           "captures": {
             "1": {
               "name": "keyword.control.conditional.if.monkeyx"
@@ -697,60 +1109,57 @@
             }
           }
         }
-      ],
-      "repository": {
-        "else-if-statement": {
-          "patterns": [
-            {
-              "begin": "\\b(?i)(Else\\s*If)\\b\\s*(.+)(?:\\b(?i)(Then)\\b\\s*)?",
-              "beginCaptures": {
-                "1": {
-                  "name": "keyword.control.conditional.else.monkeyx"
-                },
-                "2": {
-                  "patterns": [
-                    {
-                      "include": "#expression"
-                    }
-                  ]
-                },
-                "3": {
-                  "name": "keyword.control.conditional.then.monkeyx"
-                }
-              },
-              "end": "(?=\\b(?i)(Else|End\\s*If|End)\\b\\s*)",
+      ]
+    },
+    "elseif-statement": {
+      "patterns": [
+        {
+          "match": "\\s*\\b(?i)(Else\\s*If)\\b\\s*(.+?)(?:\\s*\\b(?i)(Then)\\b\\s*)?",
+          "captures": {
+            "1": {
+              "name": "keyword.control.conditional.else.monkeyx"
+            },
+            "2": {
               "patterns": [
                 {
-                  "include": "#statement"
+                  "include": "#expression"
                 }
               ]
+            },
+            "3": {
+              "name": "keyword.control.conditional.then.monkeyx"
             }
-          ]
-        },
-        "else-statement": {
+          }
+        }
+      ]
+    },
+    "else-statement": {
+      "patterns": [
+        {
+          "begin": "\\s*\\b(?i)(Else)\\b\\s*",
+          "beginCaptures": {
+            "1": {
+              "name": "keyword.control.conditional.else.monkeyx"
+            }
+          },
+          "end": "\\s*\\b(?i)(End\\s*If|End)\\b\\s*",
+          "endCaptures": {
+            "1": {
+              "name": "keyword.control.conditional.endif.monkeyx"
+            }
+          },
           "patterns": [
             {
-              "begin": "\\b(?i)(Else)\\b\\s*",
-              "beginCaptures": {
-                "1": {
-                  "name": "keyword.control.conditional.else.monkeyx"
-                }
-              },
-              "end": "(?=\\b(?i)(Endif|End\\s+If|End)\\b\\s*)",
-              "patterns": [
-                {
-                  "include": "#statement"
-                }
-              ]
+              "include": "#statement"
             }
           ]
         }
-      }
+      ]
     },
     "select-statement": {
       "patterns": [
         {
-          "begin": "\\b(?i)(Select)\\b\\s*(.+)",
+          "begin": "\\s*\\b(?i)(Select)\\b\\s*(.+)",
           "beginCaptures": {
             "1": {
               "name": "keyword.control.select.monkeyx"
@@ -763,7 +1172,7 @@
               ]
             }
           },
-          "end": "\\b(?i)(End\\s*Select|End)\\b\\s*",
+          "end": "\\s*\\b(?i)(End\\s+Select|End)\\b\\s*",
           "endCaptures": {
             "1": {
               "name": "keyword.control.select.monkeyx"
@@ -783,7 +1192,7 @@
         "case-statement": {
           "patterns": [
             {
-              "begin": "\\b(?i)(Case)\\b\\s*(.+)",
+              "begin": "\\s*\\b(?i)(Case)\\b\\s*(.+)",
               "beginCaptures": {
                 "1": {
                   "name": "keyword.control.case.monkeyx"
@@ -791,15 +1200,15 @@
                 "2": {
                   "patterns": [
                     {
-                      "include": "#expression"
+                      "include": "#punctuation-comma"
                     },
                     {
-                      "include": "#punctuation-comma"
+                      "include": "#expression"
                     }
                   ]
                 }
               },
-              "end": "(?=\\b(?i)(Case|Default|End\\s*Select|End)\\b\\s*)",
+              "end": "(?=\\s*\\b(?i)(Case|Default|End\\s+Select|End)\\b\\s*)",
               "patterns": [
                 {
                   "include": "#statement"
@@ -811,13 +1220,13 @@
         "default-statement": {
           "patterns": [
             {
-              "begin": "\\b(?i)(Default)\\b\\s*",
+              "begin": "\\s*\\b(?i)(Default)\\b\\s*",
               "beginCaptures": {
                 "1": {
                   "name": "keyword.control.default.monkeyx"
                 }
               },
-              "end": "(?=\\b(?i)(Case|Default|End\\s*Select|End)\\b\\s*)",
+              "end": "(?=\\s*\\b(?i)(Case|Default|End\\s+Select|End)\\b\\s*)",
               "patterns": [
                 {
                   "include": "#statement"
@@ -831,7 +1240,7 @@
     "while-loop": {
       "patterns": [
         {
-          "begin": "\\b(?i)(While)\\b\\s*(.+)",
+          "begin": "\\s*\\b(?i)(While)\\b\\s*(.+)",
           "beginCaptures": {
             "1": {
               "name": "keyword.control.while.monkeyx"
@@ -844,7 +1253,7 @@
               ]
             }
           },
-          "end": "\\b(?i)(Wend|End\\s*While|End)\\b\\s*",
+          "end": "\\s*\\b(?i)(Wend|End\\s+While|End)\\b\\s*",
           "endCaptures": {
             "1": {
               "name": "keyword.control.while.monkeyx"
@@ -861,35 +1270,16 @@
     "repeat-loop": {
       "patterns": [
         {
-          "begin": "\\b(?i)(Repeat)\\b\\s*",
+          "begin": "\\s*\\b(?i)(Repeat)\\b\\s*",
           "beginCaptures": {
             "1": {
               "name": "keyword.control.repeat.monkeyx"
             }
           },
-          "end": "\\b(?i)(Forever)\\b\\s*",
+          "end": "\\s*\\b(?i)(Forever|Until)\\b\\s*(.+)?",
           "endCaptures": {
             "1": {
-              "name": "keyword.control.repeat.monkeyx"
-            }
-          },
-          "patterns": [
-            {
-              "include": "#statement"
-            }
-          ]
-        },
-        {
-          "begin": "\\b(?i)(Repeat)\\b\\s*",
-          "beginCaptures": {
-            "1": {
-              "name": "keyword.control.repeat.monkeyx"
-            }
-          },
-          "end": "\\b(?i)(Until)\\b\\s*(.+)",
-          "endCaptures": {
-            "1": {
-              "name": "keyword.control.repeat.monkeyx"
+              "name": "keyword.control.forever-until.monkeyx"
             },
             "2": {
               "patterns": [
@@ -910,7 +1300,7 @@
     "numeric-for-loop": {
       "patterns": [
         {
-          "begin": "\\b(?i)(For)\\b\\s*(.+)\\b(?i)(To|Until)\\b\\s*(.+)(?:\\b(?i)(Step)\\b\\s*(.+))?",
+          "begin": "\\s*\\b(?i)(For)\\b\\s*(.+)\\s*\\b(?i)(To|Until)\\b\\s*(.+?)\\s*\\b(?i)(Step)\\b\\s*(.+)",
           "beginCaptures": {
             "1": {
               "name": "keyword.control.for.monkeyx"
@@ -943,7 +1333,43 @@
               ]
             }
           },
-          "end": "\\b(?i)(Next|End\\s*For|End)\\b\\s*",
+          "end": "\\s*\\b(?i)(Next|End\\s+For|End)\\b\\s*",
+          "endCaptures": {
+            "1": {
+              "name": "keyword.control.for.monkeyx"
+            }
+          },
+          "patterns": [
+            {
+              "include": "#statement"
+            }
+          ]
+        },
+        {
+          "begin": "\\s*\\b(?i)(For)\\b\\s*(.+)\\s*\\b(?i)(To|Until)\\b\\s*(.+)",
+          "beginCaptures": {
+            "1": {
+              "name": "keyword.control.for.monkeyx"
+            },
+            "2": {
+              "patterns": [
+                {
+                  "include": "#local-declaration"
+                }
+              ]
+            },
+            "3": {
+              "name": "keyword.control.to-until.monkeyx"
+            },
+            "4": {
+              "patterns": [
+                {
+                  "include": "#expression"
+                }
+              ]
+            }
+          },
+          "end": "\\s*\\b(?i)(Next|End\\s+For|End)\\b\\s*",
           "endCaptures": {
             "1": {
               "name": "keyword.control.for.monkeyx"
@@ -960,23 +1386,70 @@
     "for-eachin-loop": {
       "patterns": [
         {
-          "begin": "\\b(?i)(For)\\b\\s*(?:\\b(Local)\\b\\s*)?([^:=]+)",
+          "begin": "\\s*\\b(?i)(For)\\b\\s*(.+)\\s*\\b(Eachin)\\b\\s*(.+)",
           "beginCaptures": {
             "1": {
               "name": "keyword.control.for.monkeyx"
             },
             "2": {
-              "name": "keyword.other.local.monkeyx"
-            },
-            "3": {
               "patterns": [
                 {
-                  "include": "#identifier"
+                  "match": "\\b(?i)(Local)\\b\\s*((?:[A-Za-z]|_[A-Za-z])[_A-Za-z0-9]*)\\s*(:?=)\\s*",
+                  "captures": {
+                    "1": {
+                      "name": "keyword.other.local.monkeyx"
+                    },
+                    "2": {
+                      "patterns": [
+                        {
+                          "include": "#identifier"
+                        }
+                      ]
+                    },
+                    "3": {
+                      "name": "keyword.operator.infer-assignment.monkeyx"
+                    }
+                  }
+                },
+                {
+                  "match": "\\b(?i)(Local)\\b\\s*((?:[A-Za-z]|_[A-Za-z])[_A-Za-z0-9]*)\\s*([^=]+)\\s*",
+                  "captures": {
+                    "1": {
+                      "name": "keyword.other.local.monkeyx"
+                    },
+                    "2": {
+                      "patterns": [
+                        {
+                          "include": "#identifier"
+                        }
+                      ]
+                    },
+                    "3": {
+                      "patterns": [
+                        {
+                          "include": "#type-declaration"
+                        }
+                      ]
+                    }
+                  }
+                },
+                {
+                  "include": "#assignment-statement"
+                }
+              ]
+            },
+            "3": {
+              "name": "keyword.control.eachin.monkeyx"
+            },
+            "4": {
+              "patterns": [
+                {
+                  "include": "#expression"
                 }
               ]
             }
           },
-          "end": "\\b(?i)(Next|End\\s*For|End)\\b\\s*",
+          "end": "\\s*\\b(?i)(Next|End\\s+For|End)\\b\\s*",
           "endCaptures": {
             "1": {
               "name": "keyword.control.for.monkeyx"
@@ -993,7 +1466,7 @@
     "exit-statement": {
       "patterns": [
         {
-          "match": "\\b(?i)(Exit)\\b\\s*",
+          "match": "\\s*\\b(?i)(Exit)\\b\\s*",
           "captures": {
             "1": {
               "name": "keyword.control.exit.monkeyx"
@@ -1005,7 +1478,7 @@
     "continue-statement": {
       "patterns": [
         {
-          "match": "\\b(?i)(Continue)\\b\\s*",
+          "match": "\\s*\\b(?i)(Continue)\\b\\s*",
           "captures": {
             "1": {
               "name": "keyword.control.continue.monkeyx"
@@ -1014,10 +1487,10 @@
         }
       ]
     },
-    "DISABLED-assignment-statement": {
+    "assignment-statement": {
       "patterns": [
         {
-          "match": "(.+)(=|\\*=|/=|(?i)(?:Shl)=|(?i)(?:Shr)=|(?i)(?:Mod)=|\\+=|-=|&=|~=|\\|=)(.+)",
+          "match": "\\s*([^=<>]+)\\s*(?<!\\))\\s*(=|\\*=|/=|(?i)(?:Shl)=|(?i)(?:Shr)=|(?i)(?:Mod)=|\\+=|-=|&=|~=|\\|=)\\s*(.+)",
           "captures": {
             "1": {
               "patterns": [
@@ -1084,7 +1557,16 @@
     "expression-statement": {
       "patterns": [
         {
-          "include": "#expression"
+          "match": "\\s*(.+)",
+          "captures": {
+            "1": {
+              "patterns": [
+                {
+                  "include": "#expression"
+                }
+              ]
+            }
+          }
         }
       ]
     },
@@ -1092,7 +1574,13 @@
     "expression": {
       "patterns": [
         {
-          "include": "#operator"
+          "include": "#expression-operator"
+        },
+        {
+          "include": "#bracketed-argument-list"
+        },
+        {
+          "include": "#index-operator"
         },
         {
           "include": "#grouping-expression"
@@ -1132,9 +1620,6 @@
         },
         {
           "include": "#scope-member-access-expression"
-        },
-        {
-          "include": "#bracketed-argument-list"
         }
       ]
     },
@@ -1246,7 +1731,7 @@
         {
           "comment": "Hexadecimal number",
           "name": "constant.numeric.hex.monkeyx",
-          "match": "\\$[0-9A-Fa-f]+]"
+          "match": "\\$[0-9A-Fa-f]+"
         },
         {
           "comment": "Binary number",
@@ -1295,72 +1780,108 @@
         }
       ]
     },
-    "operator": {
+    "index-operator": {
+      "patterns": [
+        {
+          "match": "\\[([^\\.]+)?\\.\\.([^\\]]+)?\\]",
+          "captures": {
+            "1": {
+              "patterns": [
+                {
+                  "include": "#expression"
+                }
+              ]
+            },
+            "2": {
+              "patterns": [
+                {
+                  "include": "#expression"
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    "expression-operator": {
       "patterns": [
         {
           "comment": "Unary plus | Addition",
           "name": "keyword.operator.unary-plus.monkeyx",
-          "match": "\\+"
+          "match": "\\s*\\+\\s*"
         },
         {
           "comment": "Unary minus | Subtraction",
           "name": "keyword.operator.unary-minus.monkeyx",
-          "match": "-"
+          "match": "\\s*-\\s*"
         },
         {
           "comment": "Bitwise complement | Bitwise 'xor'",
           "name": "keyword.operator.bitwise.xor.monkeyx",
-          "match": "~"
+          "match": "\\s*~\\s*"
         },
         {
           "comment": "Boolean inverse",
-          "name": "keyword.operator.bitwise.not.monkeyx",
-          "match": "\\b(?i)(Not)\\b\\s*"
+          "name": "keyword.operator.logical.not.monkeyx",
+          "match": "\\s*\\b(?i)(Not)\\b\\s*"
+        },
+        {
+          "name": "keyword.operator.arithmetic.multiplication.monkeyx",
+          "match": "\\s*\\*\\s*"
+        },
+        {
+          "name": "keyword.operator.arithmetic.division.monkeyx",
+          "match": "\\s*/\\s*"
+        },
+        {
+          "comment": "Modulus",
+          "name": "keyword.operator.bitwise.mod.monkeyx",
+          "match": "\\s*\\b(?i)(Mod)\\b\\s*"
         },
         {
           "comment": "Bitwise shift left",
           "name": "keyword.operator.bitwise.shl.monkeyx",
-          "match": "\\b(?i)(Shl)\\b\\s*"
+          "match": "\\s*\\b(?i)(Shl)\\b\\s*"
         },
         {
           "comment": "Bitwise shift right",
           "name": "keyword.operator.bitwise.shr.monkeyx",
-          "match": "\\b(?i)(Shr)\\b\\s*"
+          "match": "\\s*\\b(?i)(Shr)\\b\\s*"
         },
         {
           "comment": "Bitwise 'and'",
           "name": "keyword.operator.bitwise.and.monkeyx",
-          "match": "&"
+          "match": "\\s*&\\s*"
         },
         {
           "comment": "Bitwise 'or'",
           "name": "keyword.operator.bitwise.or.monkeyx",
-          "match": "\\|"
+          "match": "\\s*\\|\\s*"
         },
         {
           "comment": "Equals",
           "name": "keyword.operator.equals.monkeyx",
-          "match": "="
+          "match": "\\s*=\\s*"
         },
         {
           "comment": "Less than",
           "name": "keyword.operator.less-than.monkeyx",
-          "match": "<"
+          "match": "\\s*<\\s*"
         },
         {
           "comment": "Greater than",
           "name": "keyword.operator.greater-than.monkeyx",
-          "match": ">"
+          "match": "\\s*>\\s*"
         },
         {
           "comment": "Conditional 'and'",
           "name": "keyword.operator.logical.and.monkeyx",
-          "match": "\\b(?i)(And)\\b\\s*"
+          "match": "\\s*\\b(?i)(And)\\b\\s*"
         },
         {
           "comment": "Conditional 'or'",
           "name": "keyword.operator.logical.or.monkeyx",
-          "match": "\\b(?i)(Or)\\b\\s*"
+          "match": "\\s*\\b(?i)(Or)\\b\\s*"
         }
       ]
     },
@@ -1391,10 +1912,10 @@
     "argument-list": {
       "patterns": [
         {
-          "include": "#argument"
+          "include": "#punctuation-comma"
         },
         {
-          "include": "#punctuation-comma"
+          "include": "#argument"
         }
       ]
     },
@@ -1607,7 +2128,7 @@
       "patterns": [
         {
           "name": "storage.type.monkeyx",
-          "match": "((?:[A-Za-z]|_[A-Za-z])[_A-Za-z0-9]*\\.)*((?:[A-Za-z]|_[A-Za-z])[_A-Za-z0-9]*)(<[^>]+>)?(\\[\\])*",
+          "match": "((?:[A-Za-z]|_[A-Za-z])[_A-Za-z0-9]*\\.)*((?:[A-Za-z]|_[A-Za-z])[_A-Za-z0-9]*)(<[^>]+>)?(\\[[^\\]]*\\])*",
           "captures": {
             "1": {
               "patterns": [
@@ -1629,6 +2150,13 @@
                   "include": "#generic-type-arguments"
                 }
               ]
+            },
+            "4": {
+              "patterns": [
+                {
+                  "include": "#array-type-declaration"
+                }
+              ]
             }
           }
         }
@@ -1638,7 +2166,16 @@
       "patterns": [
         {
           "name": "storage.type.monkeyx",
-          "match": "(\\$|\\?|#|%)(\\[\\])*"
+          "match": "(?:\\$|\\?|#|%)(\\[[^\\]]*\\])*",
+          "captures": {
+            "1": {
+              "patterns": [
+                {
+                  "include": "#array-type-declaration"
+                }
+              ]
+            }
+          }
         }
       ]
     },
@@ -1655,7 +2192,7 @@
         }
       ]
     },
-    "index-operator": {
+    "array-type-declaration": {
       "patterns": [
         {
           "begin": "\\[",
@@ -1663,9 +2200,6 @@
           "patterns": [
             {
               "include": "#expression"
-            },
-            {
-              "match": ",\\s*"
             }
           ]
         }
@@ -1675,7 +2209,7 @@
       "patterns": [
         {
           "name": "variable.name.monkeyx",
-          "match": "(?:[A-Za-z]|_[A-Za-z])[_A-Za-z0-9]*"
+          "match": "@?(?:[A-Za-z]|_[A-Za-z])[_A-Za-z0-9]*"
         }
       ]
     },
@@ -1691,7 +2225,7 @@
       "patterns": [
         {
           "name": "punctuation.separator.comma.monkeyx",
-          "match": ","
+          "match": "\\s*,\\s*"
         }
       ]
     },
@@ -1710,10 +2244,17 @@
         }
       ]
     },
-    "debug-invalid": {
+    "whitespace": {
       "patterns": [
         {
-          "name": "invalid.illegal.monkeyx",
+          "match": "[\\x00-\\x20]+"
+        }
+      ]
+    },
+    "debug-unhandled": {
+      "patterns": [
+        {
+          "name": "markup.underline",
           "match": "."
         }
       ]
