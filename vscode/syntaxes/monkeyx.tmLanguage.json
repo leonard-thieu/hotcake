@@ -2503,6 +2503,21 @@
           "match": "[\\x00-\\x20]*\\|[\\x00-\\x20]*"
         },
         {
+          "comment": "Less than or equals",
+          "name": "keyword.operator.less-than-or-equals.monkeyx",
+          "match": "[\\x00-\\x20]*<=[\\x00-\\x20]*"
+        },
+        {
+          "comment": "Greater than or equals",
+          "name": "keyword.operator.greater-than-or-equals.monkeyx",
+          "match": "[\\x00-\\x20]*>=[\\x00-\\x20]*"
+        },
+        {
+          "comment": "Not equals",
+          "name": "keyword.operator.not-equals.monkeyx",
+          "match": "[\\x00-\\x20]*<>[\\x00-\\x20]*"
+        },
+        {
           "comment": "Equals",
           "name": "keyword.operator.equals.monkeyx",
           "match": "[\\x00-\\x20]*=[\\x00-\\x20]*"
