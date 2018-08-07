@@ -21,14 +21,17 @@ moduleDeclaration :
         constDeclaration |
         globalDeclaration |
         importStatement |
+        friendDirective |
         aliasDirective |
-        directive |
+        preprocessorDirective |
         Newline
     )*
     EOF
     ;
 
 importStatement : Import (modulePath | StringLiteral) ;
+
+friendDirective : Friend modulePath ;
 
 aliasDirective : Alias Identifier EqualsSign modulePath FullStop Identifier ;
 
@@ -38,7 +41,7 @@ modulePath : Identifier (FullStop Identifier)* ;
  * Directives
  */
 
-directive :
+preprocessorDirective :
     ifDirective |
     elseIfDirective |
     elseDirective |
@@ -79,7 +82,7 @@ classDeclaration :
             constructorDeclaration |
             fieldDeclaration |
             classMethodDeclaration |
-            directive |
+            preprocessorDirective |
             Newline
         )*
     End Class?
@@ -103,7 +106,7 @@ localDeclaration : Local dataDeclarations ;
 functionDeclaration :
     Function Identifier typeDeclaration? LeftParenthesis dataDeclarations? RightParenthesis (EqualsSign StringLiteral |
         (
-            directive |
+            preprocessorDirective |
             statement
         )*
     End Function?)?
@@ -112,18 +115,17 @@ functionDeclaration :
 constructorDeclaration :
     Method New LeftParenthesis dataDeclarations? RightParenthesis
         (
-            directive |
+            preprocessorDirective |
             statement
         )*
     End Method?
     ;
 
 classMethodDeclaration :
-    // Is abstract property allowed?
     // `Final` is undocumented.
     Method Identifier typeDeclaration? LeftParenthesis dataDeclarations? RightParenthesis Property? Final? (EqualsSign StringLiteral | Abstract |
         (
-            directive |
+            preprocessorDirective |
             statement
         )*
     End Method?)?
@@ -142,7 +144,7 @@ dataDeclaration : Identifier (typeDeclaration? (EqualsSign expression)? | InferA
 
 statement :
     inlineStatement? (Newline | Semicolon) |
-    directive
+    preprocessorDirective
     ;
 
 inlineStatement :
@@ -155,6 +157,7 @@ inlineStatement :
     numericForLoopStatement |
     forEachinLoopStatement |
     throwStatement |
+    tryStatement |
     returnStatement |
     localDeclaration |
     constDeclaration |
@@ -215,6 +218,14 @@ forEachinLoopStatement :
     ;
 
 throwStatement : Throw expression ;
+
+tryStatement :
+    Try Newline
+        statement*
+    (Catch dataDeclaration Newline
+        statement*)+
+    End
+    ;
 
 assignmentStatement : assignableExpression assignmentOperator expression ;
 assignableExpression :

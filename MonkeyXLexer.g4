@@ -36,6 +36,7 @@ fragment Lowercase : [a-z] ;
 fragment Uppercase : [A-Z] ;
 fragment Numeric : [0-9] ;
 fragment Hexadecimal : [0-9a-fA-F] ;
+fragment Binary : [0-1] ;
 
 fragment Alpha : Lowercase | Uppercase ;
 fragment Alphanumeric : Alpha | Numeric ;
@@ -81,8 +82,8 @@ NotEqualsOperator : '<>' ;
 
 SliceOperator : '..' ;
 
-Whitespace : [ \t]+ -> channel(WhitespaceChannel) ;
-Newline : ('\r'? '\n' | '\r')+ ;
+Whitespace : [\u0000-\u0009\u000B-\u0020]+ -> channel(WhitespaceChannel) ;
+Newline : '\n' ;
 
 /*
  * Language keywords and reserved identifiers
@@ -159,17 +160,27 @@ Throw : T H R O W ;
 
 Null : N U L L ;
 Alias : A L I A S ;
-// Undocumented
+
+/*
+ * Undocumented keywords and reserved identifiers
+ */
+
 Protected : P R O T E C T E D ;
+Friend : F R I E N D ;
+Include : I N C L U D E ;
+//Throwable : T H R O W A B L E ;
 
 StringLiteral : '"' .*? '"' ;
 // Negative numbers are handled by the parser.
+// TODO: Handle e notation.
 FloatLiteral : Numeric* FullStop Numeric+ ;
-IntLiteral : Numeric+ | DollarSign Hexadecimal+ ;
+IntLiteral : DollarSign Hexadecimal+ | PercentSign Binary+ | Numeric+ ;
 
+// Documentation states that a leading underscore must be followed by an alphabetic character but the transpiler seems to
+// allow underscore and numeric characters to follow.
 Identifier : (Alpha | ('_' Alpha)) (Alphanumeric | '_')* ;
 
-Comment : '\'' ~[\r\n]* -> skip;
+Comment : '\'' ~[\n]* -> skip;
 
 DirectiveCommon : NumberSign ;
 
