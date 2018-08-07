@@ -25,7 +25,7 @@ Strict  ' Strict directive
 ' TODO: Move string literal escape code test to more appropriate place.
 ' Import "my/module/~q/~n/~r/~t/~z/~~/~a"
 
-Import "my/module"  ' Import directive (path)
+Import "my/module"  ' Import directive (native)
 Import mojo         ' Import directive (module path)
 Import my.module    ' Import directive (dotted module path)
 
@@ -66,17 +66,17 @@ Function Eat()                      ' Default return type, no parameters
     '...
 End
 
-Function Eat()                      ' End Function
-    ' ' Directive
-    ' #If TARGET <> "glfw"
-    '     Print("Not glfw")
-    ' #End
+Function Eat()
+    ' Directive
+    #If TARGET <> "glfw"
+        Print("Not glfw")
+    #End
 
     ' Statement
     While x > 5
         Print(x)
     End While
-End Function
+End Function                        ' End Function
 
 Interface Paintable
     Method Paint: Void( refresh?,force:Bool=False)
