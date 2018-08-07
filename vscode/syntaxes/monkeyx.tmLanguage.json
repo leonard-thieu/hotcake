@@ -1070,7 +1070,6 @@
               "end": ">",
               "patterns": [
                 {
-                  "name": "variable.parameter.monkeyx",
                   "include": "#identifier"
                 },
                 {
@@ -1301,13 +1300,13 @@
           },
           "patterns": [
             {
-              "include": "#base-statement"
+              "include": "#inline-statement"
             }
           ]
         }
       ]
     },
-    "base-statement": {
+    "inline-statement": {
       "patterns": [
         {
           "include": "#comment"
@@ -1344,6 +1343,12 @@
         },
         {
           "include": "#continue-statement"
+        },
+        {
+          "include": "#throw-statement"
+        },
+        {
+          "include": "#try-statement"
         },
         {
           "include": "#expression-statement"
@@ -1993,6 +1998,97 @@
         }
       ]
     },
+    "throw-statement": {
+      "patterns": [
+        {
+          "match": "[\\x00-\\x20]*\\b(?i)(Throw)\\b[\\x00-\\x20]*(.+)",
+          "captures": {
+            "1": {
+              "name": "keyword.control.throw.monkeyx"
+            },
+            "2": {
+              "patterns": [
+                {
+                  "include": "#comment"
+                },
+                {
+                  "include": "#expression"
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    "try-statement": {
+      "patterns": [
+        {
+          "comment": "TODO: Is End Try allowed?",
+          "begin": "[\\x00-\\x20]*\\b(?i)(Try)\\b[\\x00-\\x20]*",
+          "beginCaptures": {
+            "1": {
+              "name": "keyword.control.try.monkeyx"
+            }
+          },
+          "end": "[\\x00-\\x20]*\\b(?i)(End)\\b[\\x00-\\x20]*",
+          "endCaptures": {
+            "1": {
+              "name": "keyword.control.try.monkeyx"
+            }
+          },
+          "patterns": [
+            {
+              "include": "#comment"
+            },
+            {
+              "include": "#preprocessor-directive"
+            },
+            {
+              "include": "#catch-statement"
+            },
+            {
+              "include": "#statement"
+            }
+          ]
+        }
+      ],
+      "repository": {
+        "catch-statement": {
+          "patterns": [
+            {
+              "begin": "^[\\x00-\\x20]*\\b(?i)(Catch)\\b[\\x00-\\x20]*(.+)",
+              "beginCaptures": {
+                "1": {
+                  "name": "keyword.control.catch.monkeyx"
+                },
+                "2": {
+                  "patterns": [
+                    {
+                      "include": "#comment"
+                    },
+                    {
+                      "include": "#data-declaration"
+                    }
+                  ]
+                }
+              },
+              "end": "(?=^[\\x00-\\x20]*\\b(?i:Catch|End)\\b)",
+              "patterns": [
+                {
+                  "include": "#comment"
+                },
+                {
+                  "include": "#preprocessor-directive"
+                },
+                {
+                  "include": "#statement"
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
     "assignment-statement": {
       "patterns": [
         {
@@ -2241,14 +2337,28 @@
       ]
     },
     "string-literal": {
-      "name": "string.quoted.double.monkeyx",
-      "begin": "\"",
-      "end": "\"",
       "patterns": [
         {
-          "comment": "TODO: Consider splitting this up into individual patterns with more specific scopes.",
-          "name": "constant.character.escape.monkeyx",
-          "match": "~(?:q|n|r|t|z|~)"
+          "name": "string.quoted.double.monkeyx",
+          "begin": "\"",
+          "beginCaptures": {
+            "0": {
+              "name": "punctuation.definition.string.begin"
+            }
+          },
+          "end": "\"",
+          "endCaptures": {
+            "0": {
+              "name": "punctuation.definition.string.end"
+            }
+          },
+          "patterns": [
+            {
+              "comment": "TODO: Consider splitting this up into individual patterns with more specific scopes.",
+              "name": "constant.character.escape.monkeyx",
+              "match": "~(?:q|n|r|t|z|~)"
+            }
+          ]
         }
       ]
     },
@@ -2463,6 +2573,7 @@
     "bracketed-parameter-list": {
       "patterns": [
         {
+          "name": "meta.function.parameters.monkeyx",
           "begin": "\\(",
           "beginCaptures": {
             "0": {
@@ -2499,11 +2610,7 @@
           "match": "((?:[A-Za-z]|_[A-Za-z])[_A-Za-z0-9]*)[\\x00-\\x20]*([^,]*)",
           "captures": {
             "1": {
-              "patterns": [
-                {
-                  "include": "#identifier"
-                }
-              ]
+              "name": "variable.parameter.monkeyx"
             },
             "2": {
               "patterns": [
@@ -2517,13 +2624,33 @@
       ]
     },
     "module-path": {
-      "name": "meta.path.module.monkeyx",
       "patterns": [
         {
-          "include": "#identifier"
-        },
-        {
-          "include": "#punctuation-accessor"
+          "comment": "Double capture to apply an aesthetic scope and a semantic scope.",
+          "name": "meta.selector.monkeyx",
+          "match": ".+?",
+          "captures": {
+            "0": {
+              "patterns": [
+                {
+                  "name": "entity.name.namespace.monkeyx",
+                  "match": ".+?",
+                  "captures": {
+                    "0": {
+                      "patterns": [
+                        {
+                          "include": "#identifier"
+                        },
+                        {
+                          "include": "#punctuation-accessor"
+                        }
+                      ]
+                    }
+                  }
+                }
+              ]
+            }
+          }
         }
       ]
     },
@@ -2689,11 +2816,7 @@
               ]
             },
             "2": {
-              "patterns": [
-                {
-                  "include": "#identifier"
-                }
-              ]
+              "name": "entity.name.type.monkeyx"
             },
             "3": {
               "patterns": [
