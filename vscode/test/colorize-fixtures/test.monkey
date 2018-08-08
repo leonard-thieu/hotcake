@@ -25,11 +25,11 @@ Strict  ' Strict directive
 ' TODO: Move string literal escape code test to more appropriate place.
 ' Import "my/module/~q/~n/~r/~t/~z/~~/~a"
 
-Import "my/module"  ' Import directive (native)
-Import mojo         ' Import directive (module path)
-Import my.module    ' Import directive (dotted module path)
+Import "my/module"      ' Import directive (native)
+Import mojo             ' Import directive (module path)
+Import brl.filesystem   ' Import directive (dotted module path)
 
-Friend my.other.module  ' Friend directive
+Friend monkey.list  ' Friend directive
 
 Private         ' Private directive
 Public          ' Public directive
