@@ -243,7 +243,7 @@ catchStatement :
     ;
 
 expressionStatement :
-    Super FullStop New (invokeOperator | invokeArguments)? |
+    newExpression (invokeOperator | invokeArguments)? |
     invokableExpression (invokeOperator | invokeArguments)?
     ;
 
@@ -287,9 +287,9 @@ expression :
     Newline* FloatLiteral |
     Newline* IntLiteral |
     Newline* arrayLiteral |
-    Newline* identifierExpression |
+    Newline* Identifier |
 
-    Newline* dottableExpression FullStop identifierExpression |
+    Newline* dottableExpression FullStop Identifier |
     Newline* FullStop Identifier |
     Newline* invokableExpression invokeOperator |
     Newline* indexableExpression indexOperator |
@@ -336,33 +336,34 @@ dottableExpression :
     arrayLiteral |
     FullStop Identifier |
     typeReference invokeOperator |
-    identifierExpression |
-    dottableExpression FullStop identifierExpression invokeOperator? |
+    Identifier |
+    dottableExpression FullStop Identifier invokeOperator? |
     indexableExpression indexOperator
     ;
 
 invokableExpression :
     newExpression |
-    dottableExpression FullStop identifierExpression |
-    FullStop identifierExpression |
-    identifierExpression |
+    Super FullStop New |
+    dottableExpression FullStop Identifier |
+    FullStop Identifier |
+    Identifier |
     typeReference
     ;
 
 indexableExpression :
     stringLiteral |
     arrayLiteral |
-    identifierExpression |
+    Identifier |
     (
         Self |
         Super |
-    ) FullStop identifierExpression |
-    FullStop? identifierExpression (FullStop identifierExpression)* |
+    ) FullStop Identifier |
+    FullStop? Identifier (FullStop Identifier)* |
     newExpression |
-    indexableExpression indexOperator FullStop identifierExpression |
+    indexableExpression indexOperator FullStop Identifier |
     indexableExpression indexOperator |
     (
-        identifierExpression |
+        Identifier |
         typeReference
     ) invokeOperator |
     groupingExpression
@@ -371,41 +372,43 @@ indexableExpression :
 // Undocumented
 groupingExpression : LeftParenthesis expression RightParenthesis ;
 
-identifierExpression : Identifier ;
+stringLiteral : StringLiteral ;
+
+arrayLiteral : LeftSquareBracket (expression (Comma expression)*)? RightSquareBracket ;
+
+invokeOperator : LeftParenthesis invokeArguments? RightParenthesis ;
+
+invokeArguments : (Comma | expression) (Comma expression?)* ;
+
+indexOperator : LeftSquareBracket (expression | expression? SliceOperator expression?) RightSquareBracket ;
 
 /*
  * Helpers
  */
 
 dataDeclarations : dataDeclaration (Comma dataDeclaration)* ;
+
 dataDeclaration :
     assignedDataDeclaration |
     baseDataDeclaration
     ;
+
 assignedDataDeclaration :
     Identifier InferAssignmentOperator expression |
     baseDataDeclaration EqualsSign expression
     ;
+
 baseDataDeclaration : Identifier typeDeclaration? ;
 
-stringLiteral : StringLiteral ;
-
-arrayLiteral : LeftSquareBracket (expression (Comma expression)*)? RightSquareBracket ;
-
-invokeOperator : LeftParenthesis invokeArguments? RightParenthesis ;
-invokeArguments : (Comma | expression) (Comma expression?)* ;
-
-indexOperator : LeftSquareBracket (expression | expression? SliceOperator expression?) RightSquareBracket ;
-
 typeDeclaration :
-    shorthandTypeReference arrayTypeReference* |
     arrayTypeReference+ |
+    shorthandTypeReference arrayTypeReference* |
     Colon longhandTypeReference arrayTypeReference*
     ;
 
 typeReference :
-    shorthandTypeReference arrayTypeReference* |
     arrayTypeReference+ |
+    shorthandTypeReference arrayTypeReference* |
     longhandTypeReference arrayTypeReference*
     ;
 
