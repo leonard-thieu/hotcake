@@ -5,40 +5,39 @@ channels
     WhitespaceChannel
 }
 
-fragment A : [aA];
-fragment B : [bB];
-fragment C : [cC];
-fragment D : [dD];
-fragment E : [eE];
-fragment F : [fF];
-fragment G : [gG];
-fragment H : [hH];
-fragment I : [iI];
-fragment J : [jJ];
-fragment K : [kK];
-fragment L : [lL];
-fragment M : [mM];
-fragment N : [nN];
-fragment O : [oO];
-fragment P : [pP];
-fragment Q : [qQ];
-fragment R : [rR];
-fragment S : [sS];
-fragment T : [tT];
-fragment U : [uU];
-fragment V : [vV];
-fragment W : [wW];
-fragment X : [xX];
-fragment Y : [yY];
-fragment Z : [zZ];
+fragment A : [Aa] ;
+fragment B : [Bb] ;
+fragment C : [Cc] ;
+fragment D : [Dd] ;
+fragment E : [Ee] ;
+fragment F : [Ff] ;
+fragment G : [Gg] ;
+fragment H : [Hh] ;
+fragment I : [Ii] ;
+fragment J : [Jj] ;
+fragment K : [Kk] ;
+fragment L : [Ll] ;
+fragment M : [Mm] ;
+fragment N : [Nn] ;
+fragment O : [Oo] ;
+fragment P : [Pp] ;
+fragment Q : [Qq] ;
+fragment R : [Rr] ;
+fragment S : [Ss] ;
+fragment T : [Tt] ;
+fragment U : [Uu] ;
+fragment V : [Vv] ;
+fragment W : [Ww] ;
+fragment X : [Xx] ;
+fragment Y : [Yy] ;
+fragment Z : [Zz] ;
 
-fragment Lowercase : [a-z] ;
-fragment Uppercase : [A-Z] ;
+fragment Alpha : [A-Za-z] ;
+
 fragment Numeric : [0-9] ;
-fragment Hexadecimal : [0-9a-fA-F] ;
+fragment Hexadecimal : [0-9A-Fa-f] ;
 fragment Binary : [0-1] ;
 
-fragment Alpha : Lowercase | Uppercase ;
 fragment Alphanumeric : Alpha | Numeric ;
 
 LessThanSign : '<' ;
@@ -174,13 +173,17 @@ StringLiteral : '"' .*? '"' ;
 // Negative numbers are handled by the parser.
 // TODO: Handle e notation.
 FloatLiteral : Numeric* FullStop Numeric+ ;
-IntLiteral : DollarSign Hexadecimal+ | PercentSign Binary+ | Numeric+ ;
+IntLiteral :
+    DollarSign Hexadecimal+ |
+    PercentSign Binary+ |
+    Numeric+
+    ;
 
 // Documentation states that a leading underscore must be followed by an alphabetic character but the transpiler seems to
 // allow underscore and numeric characters to follow.
 Identifier : (Alpha | ('_' Alpha)) (Alphanumeric | '_')* ;
 
-Comment : '\'' ~[\n]* -> skip;
+Comment : '\'' ~[\n]* -> skip ;
 
 DirectiveCommon : NumberSign ;
 

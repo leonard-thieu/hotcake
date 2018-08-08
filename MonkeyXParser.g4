@@ -6,8 +6,6 @@ options
 }
 
 // Should/can preprocessor directives be handled separately?
-// Should Strict introduce its own mode?
-// Should Extern [Private] introduce its own mode?
 
 moduleDeclaration :
     (
