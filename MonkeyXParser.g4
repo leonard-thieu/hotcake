@@ -121,7 +121,7 @@ constructorDeclaration :
 
 classMethodDeclaration :
     // `Final` is undocumented.
-    Method Identifier typeDeclaration? LeftParenthesis dataDeclarations? RightParenthesis Property? Final? (EqualsSign StringLiteral | Abstract |
+    Method Identifier typeDeclaration? LeftParenthesis dataDeclarations? RightParenthesis Property? Final? (EqualsSign StringLiteral | Abstract Property? |
         (
             preprocessorDirective |
             statement
