@@ -9,23 +9,34 @@ options
 
 moduleDeclaration :
     (
-        Strict |
-        Private |
-        Public |
-        Extern |
-        classDeclaration |
-        interfaceDeclaration |
-        functionDeclaration |
-        constDeclaration |
-        globalDeclaration |
+        preprocessorDirective |
+        strictDirective |
+        privateDirective |
+        publicDirective |
+        externPrivateDirective |
+        externDirective |
         importStatement |
         friendDirective |
         aliasDirective |
-        preprocessorDirective |
+        constDeclaration |
+        globalDeclaration |
+        functionDeclaration |
+        interfaceDeclaration |
+        classDeclaration |
         Newline
     )*
     EOF
     ;
+
+strictDirective : Strict ;
+
+privateDirective : Private ;
+
+publicDirective : Public ;
+
+externPrivateDirective : Extern Private ;
+
+externDirective : Extern ;
 
 importStatement : Import (modulePath | StringLiteral) ;
 
@@ -33,10 +44,8 @@ friendDirective : Friend modulePath ;
 
 aliasDirective : Alias Identifier EqualsSign modulePath FullStop Identifier ;
 
-modulePath : Identifier (FullStop Identifier)* ;
-
 /*
- * Directives
+ * Preprocessor Directives
  */
 
 preprocessorDirective :
@@ -61,27 +70,14 @@ assignmentDirective : NumberSign Identifier assignmentOperator expression ;
  * Declarations
  */
 
-classDeclaration :
-    Class CommercialAt? Identifier
-      (LessThanSign Identifier (Comma Identifier)* GreaterThanSign)?
-      (Extends (Null | typeReference))?
-      (Implements typeReference (Comma typeReference)*)?
-      (Abstract | Final)?
-      (EqualsSign StringLiteral)?
-        (
-            Private |
-            Public |
-            Protected |
-            constDeclaration |
-            globalDeclaration |
-            functionDeclaration |
-            constructorDeclaration |
-            fieldDeclaration |
-            classMethodDeclaration |
-            preprocessorDirective |
-            Newline
-        )*
-    End Class?
+constDeclaration : Const assignedDataDeclaration (Comma assignedDataDeclaration)* ;
+
+globalDeclaration : Global dataDeclarations ;
+
+functionDeclaration :
+    Function Identifier typeDeclaration? LeftParenthesis dataDeclarations? RightParenthesis (EqualsSign StringLiteral |
+        statement*
+    End Function?)?
     ;
 
 interfaceDeclaration :
@@ -94,72 +90,81 @@ interfaceDeclaration :
     End Interface?
     ;
 
-globalDeclaration : Global dataDeclarations ;
-fieldDeclaration : Field dataDeclarations ;
-constDeclaration : Const dataDeclarations ;
-localDeclaration : Local dataDeclarations ;
-
-functionDeclaration :
-    Function Identifier typeDeclaration? LeftParenthesis dataDeclarations? RightParenthesis (EqualsSign StringLiteral |
-        (
-            preprocessorDirective |
-            statement
-        )*
-    End Function?)?
+interfaceMethodDeclaration :
+    Method Identifier typeDeclaration? LeftParenthesis dataDeclarations? RightParenthesis
     ;
 
-constructorDeclaration :
-    Method New LeftParenthesis dataDeclarations? RightParenthesis
+classDeclaration :
+    Class CommercialAt? Identifier
+      (LessThanSign Identifier (Comma Identifier)* GreaterThanSign)?
+      (Extends (Null | typeReference))?
+      (Implements typeReference (Comma typeReference)*)?
+      (Abstract | Final)?
+      (EqualsSign StringLiteral)?
         (
             preprocessorDirective |
-            statement
+            privateDirective |
+            publicDirective |
+            protectedDirective |
+            constDeclaration |
+            globalDeclaration |
+            functionDeclaration |
+            constructorDeclaration |
+            fieldDeclaration |
+            classMethodDeclaration |
+            Newline
         )*
+    End Class?
+    ;
+
+protectedDirective : Protected ;
+
+fieldDeclaration : Field dataDeclarations ;
+
+constructorDeclaration :
+    // TODO: Can this be Abstract? Extern?
+    Method New LeftParenthesis dataDeclarations? RightParenthesis
+        statement*
     End Method?
     ;
 
 classMethodDeclaration :
     // `Final` is undocumented.
     Method Identifier typeDeclaration? LeftParenthesis dataDeclarations? RightParenthesis Property? Final? (EqualsSign StringLiteral | Abstract Property? |
-        (
-            preprocessorDirective |
-            statement
-        )*
+        statement*
     End Method?)?
     ;
-
-interfaceMethodDeclaration :
-    Method Identifier typeDeclaration? LeftParenthesis dataDeclarations? RightParenthesis
-    ;
-
-dataDeclarations : dataDeclaration (Comma dataDeclaration)* ;
-dataDeclaration : Identifier (typeDeclaration? (EqualsSign expression)? | InferAssignmentOperator expression) ;
 
 /*
  * Statements
  */
 
 statement :
-    inlineStatement? (Newline | Semicolon) |
-    preprocessorDirective
+    preprocessorDirective |
+    inlineStatement? (Newline | Semicolon)
     ;
 
 inlineStatement :
-    Exit |
-    Continue |
-    ifStatement |
-    selectStatement |
-    whileLoopStatement |
-    repeatLoopStatement |
-    numericForLoopStatement |
-    forEachinLoopStatement |
-    throwStatement |
-    tryStatement |
-    returnStatement |
     localDeclaration |
     constDeclaration |
+    returnStatement |
+    ifStatement |
+    selectStatement |
+    whileLoop |
+    repeatLoop |
+    numericForLoop |
+    forEachinLoop |
+    continueStatement |
+    exitStatement |
+    throwStatement |
+    tryStatement |
     expressionStatement |
     assignmentStatement
     ;
+
+localDeclaration : Local dataDeclarations ;
+
+returnStatement : Return expression? ;
 
 ifStatement :
     If expression Then? inlineStatement (Else inlineStatement)? #singleLineIfStatement |
@@ -173,57 +178,77 @@ ifStatement :
     ;
 
 selectStatement :
-    Select expression Newline+
+    Select expression Newline
+        (
+            preprocessorDirective |
+            Newline
+        )*
         caseStatement*
         defaultStatement?
     End Select?
     ;
 
+// TODO: Why does this match multline, comma separated expressions without an explicit Newline token?
+// TODO: Allow preprocessor directives between expressions?
 caseStatement :
-    Case expression (Comma expression)* Newline?
+    Case expression (Comma expression)*
         statement*
     ;
 
 defaultStatement :
-    Default Newline?
+    Default
         statement*
     ;
 
-whileLoopStatement :
+whileLoop :
     While expression Newline
         statement*
     (Wend | End While?)
     ;
 
-repeatLoopStatement :
+repeatLoop :
     Repeat Newline
         statement*
     (Until expression | Forever)
     ;
 
-numericForLoopStatement :
+numericForLoop :
     For (localDeclaration | assignmentStatement) (To | Until) expression (Step expression)? Newline
         statement*
     (Next | End For?)
     ;
 
-forEachinLoopStatement :
+forEachinLoop :
     For (Local Identifier (typeDeclaration? EqualsSign | InferAssignmentOperator) | Identifier EqualsSign) Eachin expression Newline
         statement*
     (Next | End For?)
     ;
+
+continueStatement : Continue ;
+
+exitStatement : Exit ;
 
 throwStatement : Throw expression ;
 
 tryStatement :
     Try Newline
         statement*
-    (Catch dataDeclaration Newline
-        statement*)+
+    catchStatement+
     End
     ;
 
+catchStatement :
+    Catch dataDeclaration Newline
+        statement*
+    ;
+
+expressionStatement :
+    Super FullStop New (invokeOperator | invokeArguments)? |
+    invokableExpression (invokeOperator | invokeArguments)?
+    ;
+
 assignmentStatement : assignableExpression assignmentOperator expression ;
+
 assignableExpression :
     indexableExpression indexOperator |
     dottableExpression FullStop Identifier |
@@ -235,22 +260,15 @@ assignmentOperator :
     EqualsSign |
     MultiplicationUpdateAssignmentOperator |
     DivisionUpdateAssignmentOperator |
-    Shl EqualsSign |
-    Shr EqualsSign |
-    Mod EqualsSign |
+    ShiftLeftUpdateAssignmentOperator |
+    ShiftRightUpdateAssignmentOperator |
+    ModulusUpdateAssignmentOperator |
     AdditionUpdateAssignmentOperator |
     SubtractionUpdateAssignmentOperator |
     BitwiseAndUpdateAssignmentOperator |
     BitwiseXorUpdateAssignmentOperator |
     BitwiseOrUpdateAssignmentOperator
     ;
-
-expressionStatement :
-    Super FullStop New (invokeOperator | invokeArguments)? |
-    invokableExpression (invokeOperator | invokeArguments)?
-    ;
-
-returnStatement : Return expression? ;
 
 /*
  * Expressions
@@ -355,6 +373,21 @@ groupingExpression : LeftParenthesis expression RightParenthesis ;
 
 identifierExpression : Identifier ;
 
+/*
+ * Helpers
+ */
+
+dataDeclarations : dataDeclaration (Comma dataDeclaration)* ;
+dataDeclaration :
+    assignedDataDeclaration |
+    baseDataDeclaration
+    ;
+assignedDataDeclaration :
+    Identifier InferAssignmentOperator expression |
+    baseDataDeclaration EqualsSign expression
+    ;
+baseDataDeclaration : Identifier typeDeclaration? ;
+
 stringLiteral : StringLiteral ;
 
 arrayLiteral : LeftSquareBracket (expression (Comma expression)*)? RightSquareBracket ;
@@ -392,3 +425,5 @@ arrayTypeReference :
     LeftSquareBracket expression RightSquareBracket |
     LeftSquareBracket RightSquareBracket
     ;
+
+modulePath : Identifier (FullStop Identifier)* ;
