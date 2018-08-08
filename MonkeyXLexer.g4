@@ -190,11 +190,14 @@ DirectiveCommon : NumberSign ;
 IfDirectiveStart : DirectiveCommon I F ;
 ElseIfDirectiveStart : DirectiveCommon E L S E Whitespace* I F ;
 ElseDirectiveStart : DirectiveCommon E L S E ;
-EndIfDirectiveStart : DirectiveCommon E N D I F ;
+EndIfDirectiveStart : DirectiveCommon E N D (I F)? ;
 ErrorDirectiveStart : DirectiveCommon E R R O R ;
 PrintDirectiveStart : DirectiveCommon P R I N T ;
-// TODO: Ensure #Rem can handle nesting.
-RemDirectiveStart : Whitespace* DirectiveCommon R E M .*? Whitespace* EndDirectiveStart -> skip ;
-EndDirectiveStart : DirectiveCommon E N D ;
+
+RemDirective :
+    DirectiveCommon R E M
+        (RemDirective | .)+?
+    Newline Whitespace* DirectiveCommon E N D -> skip
+    ;
 
 ErrorCharacter : . -> channel(HIDDEN) ;

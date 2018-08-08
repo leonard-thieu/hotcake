@@ -44,7 +44,6 @@ preprocessorDirective :
     elseIfDirective |
     elseDirective |
     endIfDirective |
-    endDirective |
     printDirective |
     errorDirective |
     assignmentDirective
@@ -54,7 +53,6 @@ ifDirective : IfDirectiveStart expression ;
 elseIfDirective : ElseIfDirectiveStart expression ;
 elseDirective : ElseDirectiveStart ;
 endIfDirective : EndIfDirectiveStart ;
-endDirective : EndDirectiveStart ;
 printDirective : PrintDirectiveStart StringLiteral ;
 errorDirective : ErrorDirectiveStart StringLiteral ;
 assignmentDirective : NumberSign Identifier assignmentOperator expression ;
