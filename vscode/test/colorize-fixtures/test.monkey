@@ -17,13 +17,9 @@ Print "The sound of silence!"       'inside a block comment
 
 #Error "My error message!"  ' Error directive
 
-#ANDROID_MANIFEST_APPLICATION+="<meta-data android:name=~qcom.google.android.gms.version~q android:value=~q@integer/google_play_services_version~q />"  ' Addition update assignment directive
 #ANDROID_LIBRARY_REFERENCE_1="android.library.reference.1=google-play-services_lib" ' Assignment directive
 
 Strict  ' Strict directive
-
-' TODO: Move string literal escape code test to more appropriate place.
-' Import "my/module/~q/~n/~r/~t/~z/~~/~a"
 
 Import "my/module"      ' Import directive (native)
 Import mojo             ' Import directive (module path)
@@ -117,15 +113,11 @@ End
 
 Class Pointer Abstract  ' Class declaration (Abstract)
 
-    Protected   ' Protected directive
-
     Method Reset() Abstract                 ' Abstract method
     
     Method IsReset() Property Abstract      ' Abstract property
 
     Method IsNotReset() Abstract Property   ' Abstract property
-
-    Public  ' Public directive
 
     Method Set( data:T )
         ' _data=data
@@ -134,8 +126,6 @@ Class Pointer Abstract  ' Class declaration (Abstract)
     Method Get:T()
         ' Return _data
     End
-
-    Private ' Private directive
 
     Field _data:T
 
@@ -232,23 +222,23 @@ End Function
 
 Function SelectStatement()
 
-    Select myVal    ' Select statement
-                    ' Comment in body
-        Case 1      ' Case statement
+    Select myVal        ' Select statement
+                        ' Comment in body
+        Case 1          ' Case statement
             Exit
-        Case 2,     ' Expressions on multiple lines
-             3,
-             4
+        Case 2, 3, 4    ' Expressions on same line
             Continue
-        Default     ' Default statement
+        Default         ' Default statement
             Select myVal
                 Case 1
                     Exit
-                Case 2, 3, 4    ' Expressions on same line
+                Case 2, ' Expressions on multiple lines
+                     3,
+                     4
                     Continue
                 Default
                     Return
-            End Select
-    End
+            End Select  ' End Select
+    End                 ' End
 
 End
