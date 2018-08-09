@@ -1336,7 +1336,7 @@
           "include": "#numeric-for-loop"
         },
         {
-          "include": "#for-eachin-loop"
+          "include": "#for-each-in-loop"
         },
         {
           "include": "#exit-statement"
@@ -1415,29 +1415,12 @@
             },
             "3": {
               "name": "keyword.control.conditional.then.monkeyx"
-            },
-            "4": {
-              "patterns": [
-                {
-                  "include": "#statement"
-                }
-              ]
-            },
-            "5": {
-              "name": "keyword.control.conditional.else.monkeyx"
-            },
-            "6": {
-              "patterns": [
-                {
-                  "include": "#statement"
-                }
-              ]
             }
           },
-          "end": "[\\x00-\\x20]*\\b(?i)(End[\\x00-\\x20]*if|End)\\b[\\x00-\\x20]*",
+          "end": "[\\x00-\\x20]*\\b(?i)(End[\\x00-\\x20]*If|End)\\b[\\x00-\\x20]*",
           "endCaptures": {
             "1": {
-              "name": "keyword.control.conditional.endif.monkeyx"
+              "name": "keyword.control.conditional.end-if.monkeyx"
             }
           },
           "patterns": [
@@ -1448,7 +1431,7 @@
               "include": "#preprocessor-directive"
             },
             {
-              "include": "#elseif-statement"
+              "include": "#else-if-statement"
             },
             {
               "include": "#else-statement"
@@ -1472,10 +1455,10 @@
               ]
             }
           },
-          "end": "[\\x00-\\x20]*\\b(?i)(End[\\x00-\\x20]*if|End)\\b[\\x00-\\x20]*",
+          "end": "[\\x00-\\x20]*\\b(?i)(End[\\x00-\\x20]*If|End)\\b[\\x00-\\x20]*",
           "endCaptures": {
             "1": {
-              "name": "keyword.control.conditional.endif.monkeyx"
+              "name": "keyword.control.conditional.end-if.monkeyx"
             }
           },
           "patterns": [
@@ -1486,7 +1469,7 @@
               "include": "#preprocessor-directive"
             },
             {
-              "include": "#elseif-statement"
+              "include": "#else-if-statement"
             },
             {
               "include": "#else-statement"
@@ -1498,10 +1481,10 @@
         }
       ],
       "repository": {
-        "elseif-statement": {
+        "else-if-statement": {
           "patterns": [
             {
-              "begin": "[\\x00-\\x20]*\\b(?i)(Else[\\x00-\\x20]*if)\\b[\\x00-\\x20]*(.+?)[\\x00-\\x20]*\\b(?i)(Then)\\b[\\x00-\\x20]*",
+              "begin": "[\\x00-\\x20]*\\b(?i)(Else[\\x00-\\x20]*If)\\b[\\x00-\\x20]*(.+?)[\\x00-\\x20]*\\b(?i)(Then)\\b[\\x00-\\x20]*",
               "beginCaptures": {
                 "1": {
                   "name": "keyword.control.conditional.else.monkeyx"
@@ -1517,7 +1500,7 @@
                   "name": "keyword.control.conditional.then.monkeyx"
                 }
               },
-              "end": "(?=[\\x00-\\x20]*\\b(?i:Else[\\x00-\\x20]*if|Else|End[\\x00-\\x20]*if|End)\\b[\\x00-\\x20]*)",
+              "end": "(?=[\\x00-\\x20]*\\b(?i:Else[\\x00-\\x20]*If|Else|End[\\x00-\\x20]*If|End)\\b[\\x00-\\x20]*)",
               "patterns": [
                 {
                   "include": "#comment"
@@ -1531,7 +1514,7 @@
               ]
             },
             {
-              "begin": "[\\x00-\\x20]*\\b(?i)(Else[\\x00-\\x20]*if)\\b[\\x00-\\x20]*(.+)",
+              "begin": "[\\x00-\\x20]*\\b(?i)(Else[\\x00-\\x20]*If)\\b[\\x00-\\x20]*(.+)",
               "beginCaptures": {
                 "1": {
                   "name": "keyword.control.conditional.else.monkeyx"
@@ -1544,7 +1527,7 @@
                   ]
                 }
               },
-              "end": "(?=[\\x00-\\x20]*\\b(?i:Else[\\x00-\\x20]*if|Else|End[\\x00-\\x20]*if|End)\\b[\\x00-\\x20]*)",
+              "end": "(?=[\\x00-\\x20]*\\b(?i:Else[\\x00-\\x20]*If|Else|End[\\x00-\\x20]*If|End)\\b[\\x00-\\x20]*)",
               "patterns": [
                 {
                   "include": "#comment"
@@ -1568,7 +1551,7 @@
                   "name": "keyword.control.conditional.else.monkeyx"
                 }
               },
-              "end": "(?=[\\x00-\\x20]*\\b(?i:End[\\x00-\\x20]*if|End)\\b[\\x00-\\x20]*)",
+              "end": "(?=[\\x00-\\x20]*\\b(?i:End[\\x00-\\x20]*If|End)\\b[\\x00-\\x20]*)",
               "patterns": [
                 {
                   "include": "#comment"
@@ -1894,10 +1877,10 @@
         }
       ]
     },
-    "for-eachin-loop": {
+    "for-each-in-loop": {
       "patterns": [
         {
-          "begin": "[\\x00-\\x20]*\\b(?i)(For)\\b[\\x00-\\x20]*(.+)[\\x00-\\x20]*\\b(Eachin)\\b[\\x00-\\x20]*(.+)",
+          "begin": "[\\x00-\\x20]*\\b(?i)(For)\\b[\\x00-\\x20]*(.+)[\\x00-\\x20]*\\b(EachIn)\\b[\\x00-\\x20]*(.+)",
           "beginCaptures": {
             "1": {
               "name": "keyword.control.for.monkeyx"
@@ -1950,7 +1933,7 @@
               ]
             },
             "3": {
-              "name": "keyword.control.eachin.monkeyx"
+              "name": "keyword.control.each-in.monkeyx"
             },
             "4": {
               "patterns": [
