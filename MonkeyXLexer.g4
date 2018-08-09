@@ -175,10 +175,8 @@ Include : I N C L U D E ;
 StringLiteral : '"' .*? '"' ;
 // Negative numbers are handled by the parser.
 FloatLiteral :
-    (
-        Numeric* FullStop Numeric+ |
-        Numeric+
-    ) (E (PlusSign | HyphenMinus)? Numeric* )?
+    Numeric* FullStop Numeric+ (E (PlusSign | HyphenMinus)? Numeric*)? |
+    Numeric+ E (PlusSign | HyphenMinus)? Numeric*
     ;
 IntLiteral :
     DollarSign Hexadecimal+ |
