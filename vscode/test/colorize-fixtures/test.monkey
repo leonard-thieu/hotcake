@@ -242,3 +242,12 @@ Function SelectStatement()
     End                 ' End
 
 End
+
+Function FloatLiteral()
+    Local f: Float
+    f = 65453.5
+    f = .1639
+    f = 2e+6
+    f = 1.7e3
+    f = .8e-96
+End Function

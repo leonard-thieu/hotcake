@@ -174,8 +174,12 @@ Include : I N C L U D E ;
 
 StringLiteral : '"' .*? '"' ;
 // Negative numbers are handled by the parser.
-// TODO: Handle e notation.
-FloatLiteral : Numeric* FullStop Numeric+ ;
+FloatLiteral :
+    (
+        Numeric* FullStop Numeric+ |
+        Numeric+
+    ) (E (PlusSign | HyphenMinus)? Numeric* )?
+    ;
 IntLiteral :
     DollarSign Hexadecimal+ |
     PercentSign Binary+ |
