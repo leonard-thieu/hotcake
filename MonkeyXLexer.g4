@@ -32,37 +32,29 @@ fragment X : [Xx] ;
 fragment Y : [Yy] ;
 fragment Z : [Zz] ;
 
-fragment Alpha : [A-Za-z] ;
-
-fragment Numeric : [0-9] ;
-fragment Hexadecimal : [0-9A-Fa-f] ;
-fragment Binary : [0-1] ;
-
-fragment Alphanumeric : Alpha | Numeric ;
-
-LessThanSign : '<' ;
-GreaterThanSign : '>' ;
-Comma : ',' ;
-EqualsSign : '=' ;
-LeftParenthesis : '(' ;
-RightParenthesis : ')' ;
-FullStop : '.' ;
+NumberSign : '#' ;
+DollarSign : '$' ;
+PercentSign : '%' ;
+Ampersand : '&' ;
+OpeningParenthesis : '(' ;
+ClosingParenthesis : ')' ;
 Asterisk : '*' ;
 PlusSign : '+' ;
+Comma : ',' ;
 HyphenMinus : '-' ;
-Tilde : '~' ;
-Solidus : '/' ;
-Ampersand : '&' ;
-LeftSquareBracket : '[' ;
-RightSquareBracket : ']' ;
+Period : '.' ;
+Slash : '/' ;
 Colon : ':' ;
-VerticalBar : '|' ;
 Semicolon : ';' ;
-CommercialAt : '@' ;
-DollarSign : '$' ;
+LessThanSign : '<' ;
+EqualsSign : '=' ;
+GreaterThanSign : '>' ;
 QuestionMark : '?' ;
-NumberSign : '#' ;
-PercentSign : '%' ;
+CommercialAt : '@' ;
+OpeningSquareBracket : '[' ;
+ClosingSquareBracket : ']' ;
+VerticalBar : '|' ;
+Tilde : '~' ;
 
 InferAssignmentOperator : ':=' ;
 MultiplicationUpdateAssignmentOperator : '*=' ;
@@ -76,12 +68,6 @@ BitwiseAndUpdateAssignmentOperator : '&=' ;
 BitwiseXorUpdateAssignmentOperator : '~=' ;
 BitwiseOrUpdateAssignmentOperator : '|=' ;
 
-LessThanOrEqualsOperator : '<=' ;
-// Disabled because it takes priority over assignment to generic type.
-//     Field _head:Node<T>=New HeadNode<T>
-//GreaterThanOrEqualsOperator : '>=' ;
-NotEqualsOperator : '<>' ;
-
 SliceOperator : '..' ;
 
 Whitespace : [\u0000-\u0009\u000B-\u0020]+ -> channel(WhitespaceChannel) ;
@@ -91,14 +77,6 @@ Newline : '\n' ;
  * Language keywords and reserved identifiers
  */
 
-// Exclude core types so that they don't require special treatment everywhere in the parser.
-//Void : V O I D ;
-//Bool : B O O L ;
-//Int : I N T ;
-//Float : F L O A T ;
-//String : S T R I N G ;
-//Array : A R R A Y ;
-//Object : O B J E C T ;
 Strict : S T R I C T ;
 Public : P U B L I C ;
 Private : P R I V A T E ;
@@ -113,7 +91,7 @@ Self : S E L F ;
 Super : S U P E R ;
 Try : T R Y ;
 Catch : C A T C H ;
-Eachin : E A C H I N ;
+EachIn : E A C H I N ;
 True : T R U E ;
 False : F A L S E ;
 Not : N O T ;
@@ -156,53 +134,54 @@ Implements : I M P L E M E N T S ;
 Inline : I N L I N E ;
 Throw : T H R O W ;
 
-/*
- * Non-reserved keywords
- */
+// Undocumented as reserved.
 
 Null : N U L L ;
 Alias : A L I A S ;
-
-/*
- * Undocumented keywords and reserved identifiers
- */
-
 Protected : P R O T E C T E D ;
 Friend : F R I E N D ;
 Include : I N C L U D E ;
+
+// Exclude core types so that they don't require special treatment everywhere in the parser.
+
+//Void : V O I D ;
+//Bool : B O O L ;
+//Int : I N T ;
+//Float : F L O A T ;
+//String : S T R I N G ;
+//Array : A R R A Y ;
+//Object : O B J E C T ;
 //Throwable : T H R O W A B L E ;
 
 StringLiteral : '"' .*? '"' ;
 // Negative numbers are handled by the parser.
 FloatLiteral :
-    Numeric* FullStop Numeric+ (E (PlusSign | HyphenMinus)? Numeric*)? |
-    Numeric+ E (PlusSign | HyphenMinus)? Numeric*
+    [0-9]* Period [0-9]+ (E (PlusSign | HyphenMinus)? [0-9]*)? |
+    [0-9]+ E (PlusSign | HyphenMinus)? [0-9]*
     ;
 IntLiteral :
-    DollarSign Hexadecimal+ |
-    PercentSign Binary+ |
-    Numeric+
+    DollarSign [0-9A-Fa-f]+ |
+    PercentSign [0-1]+ |
+    [0-9]+
     ;
 
 // Documentation states that a leading underscore must be followed by an alphabetic character but the transpiler seems to
 // allow underscore and numeric characters to follow.
-Identifier : (Alpha | ('_' Alpha)) (Alphanumeric | '_')* ;
+Identifier : ([A-Za-z] | ('_' [A-Za-z])) [0-9A-Z_a-z]* ;
 
 Comment : '\'' ~[\n]* -> skip ;
 
-DirectiveCommon : NumberSign ;
-
-IfDirectiveStart : DirectiveCommon I F ;
-ElseIfDirectiveStart : DirectiveCommon E L S E Whitespace* I F ;
-ElseDirectiveStart : DirectiveCommon E L S E ;
-EndIfDirectiveStart : DirectiveCommon E N D (I F)? ;
-ErrorDirectiveStart : DirectiveCommon E R R O R ;
-PrintDirectiveStart : DirectiveCommon P R I N T ;
+IfDirectiveStart : NumberSign I F ;
+ElseIfDirectiveStart : NumberSign E L S E Whitespace* I F ;
+ElseDirectiveStart : NumberSign E L S E ;
+EndIfDirectiveStart : NumberSign E N D (I F)? ;
+ErrorDirectiveStart : NumberSign E R R O R ;
+PrintDirectiveStart : NumberSign P R I N T ;
 
 RemDirective :
-    DirectiveCommon R E M
+    NumberSign R E M
         (RemDirective | .)+?
-    Newline Whitespace* DirectiveCommon E N D -> skip
+    Newline Whitespace* NumberSign E N D -> skip
     ;
 
 ErrorCharacter : . -> channel(HIDDEN) ;

@@ -42,7 +42,7 @@ importStatement : Import (modulePath | StringLiteral) ;
 
 friendDirective : Friend modulePath ;
 
-aliasDirective : Alias Identifier EqualsSign modulePath FullStop Identifier ;
+aliasDirective : Alias Identifier EqualsSign modulePath Period Identifier ;
 
 /*
  * Preprocessor Directives
@@ -75,7 +75,7 @@ constDeclaration : Const assignedDataDeclaration (Comma assignedDataDeclaration)
 globalDeclaration : Global dataDeclarations ;
 
 functionDeclaration :
-    Function Identifier typeDeclaration? LeftParenthesis dataDeclarations? RightParenthesis (EqualsSign StringLiteral |
+    Function Identifier typeDeclaration? OpeningParenthesis dataDeclarations? ClosingParenthesis (EqualsSign StringLiteral |
         statement*
     End Function?)?
     ;
@@ -91,7 +91,7 @@ interfaceDeclaration :
     ;
 
 interfaceMethodDeclaration :
-    Method Identifier typeDeclaration? LeftParenthesis dataDeclarations? RightParenthesis
+    Method Identifier typeDeclaration? OpeningParenthesis dataDeclarations? ClosingParenthesis
     ;
 
 classDeclaration :
@@ -123,14 +123,14 @@ fieldDeclaration : Field dataDeclarations ;
 
 constructorDeclaration :
     // TODO: Can this be Abstract? Extern?
-    Method New LeftParenthesis dataDeclarations? RightParenthesis
+    Method New OpeningParenthesis dataDeclarations? ClosingParenthesis
         statement*
     End Method?
     ;
 
 classMethodDeclaration :
     // `Final` is undocumented.
-    Method Identifier typeDeclaration? LeftParenthesis dataDeclarations? RightParenthesis Property? Final? (EqualsSign StringLiteral | Abstract Property? |
+    Method Identifier typeDeclaration? OpeningParenthesis dataDeclarations? ClosingParenthesis Property? Final? (EqualsSign StringLiteral | Abstract Property? |
         statement*
     End Method?)?
     ;
@@ -153,7 +153,7 @@ inlineStatement :
     whileLoop |
     repeatLoop |
     numericForLoop |
-    forEachinLoop |
+    forEachInLoop |
     continueStatement |
     exitStatement |
     throwStatement |
@@ -218,8 +218,8 @@ numericForLoop :
     (Next | End For?)
     ;
 
-forEachinLoop :
-    For (Local Identifier (typeDeclaration? EqualsSign | InferAssignmentOperator) | Identifier EqualsSign) Eachin expression Newline
+forEachInLoop :
+    For (Local Identifier (typeDeclaration? EqualsSign | InferAssignmentOperator) | Identifier EqualsSign) EachIn expression Newline
         statement*
     (Next | End For?)
     ;
@@ -251,8 +251,8 @@ assignmentStatement : assignableExpression assignmentOperator expression ;
 
 assignableExpression :
     indexableExpression indexOperator |
-    dottableExpression FullStop Identifier |
-    FullStop Identifier |
+    dottableExpression Period Identifier |
+    Period Identifier |
     Identifier
     ;
 
@@ -289,8 +289,8 @@ expression :
     Newline* arrayLiteral |
     Newline* Identifier |
 
-    Newline* dottableExpression FullStop Identifier |
-    Newline* FullStop Identifier |
+    Newline* dottableExpression Period Identifier |
+    Newline* Period Identifier |
     Newline* invokableExpression invokeOperator |
     Newline* indexableExpression indexOperator |
 
@@ -300,7 +300,7 @@ expression :
     Newline* Not expression |
 
     expression Asterisk expression |
-    expression Solidus expression |
+    expression Slash expression |
     expression Mod expression |
     expression Shl expression |
     expression Shr expression |
@@ -316,9 +316,9 @@ expression :
     expression EqualsSign expression |
     expression LessThanSign expression |
     expression GreaterThanSign expression |
-    expression LessThanOrEqualsOperator expression |
+    expression LessThanSign EqualsSign expression |
     expression GreaterThanSign EqualsSign expression |
-    expression NotEqualsOperator expression |
+    expression LessThanSign GreaterThanSign expression |
 
     expression And expression |
 
@@ -334,18 +334,18 @@ dottableExpression :
     Super |
     stringLiteral |
     arrayLiteral |
-    FullStop Identifier |
+    Period Identifier |
     typeReference invokeOperator |
     Identifier |
-    dottableExpression FullStop Identifier invokeOperator? |
+    dottableExpression Period Identifier invokeOperator? |
     indexableExpression indexOperator
     ;
 
 invokableExpression :
     newExpression |
-    Super FullStop New |
-    dottableExpression FullStop Identifier |
-    FullStop Identifier |
+    Super Period New |
+    dottableExpression Period Identifier |
+    Period Identifier |
     Identifier |
     typeReference
     ;
@@ -357,10 +357,10 @@ indexableExpression :
     (
         Self |
         Super |
-    ) FullStop Identifier |
-    FullStop? Identifier (FullStop Identifier)* |
+    ) Period Identifier |
+    Period? Identifier (Period Identifier)* |
     newExpression |
-    indexableExpression indexOperator FullStop Identifier |
+    indexableExpression indexOperator Period Identifier |
     indexableExpression indexOperator |
     (
         Identifier |
@@ -370,17 +370,17 @@ indexableExpression :
     ;
 
 // Undocumented
-groupingExpression : LeftParenthesis expression RightParenthesis ;
+groupingExpression : OpeningParenthesis expression ClosingParenthesis ;
 
 stringLiteral : StringLiteral ;
 
-arrayLiteral : LeftSquareBracket (expression (Comma expression)*)? RightSquareBracket ;
+arrayLiteral : OpeningSquareBracket (expression (Comma expression)*)? ClosingSquareBracket ;
 
-invokeOperator : LeftParenthesis invokeArguments? RightParenthesis ;
+invokeOperator : OpeningParenthesis invokeArguments? ClosingParenthesis ;
 
 invokeArguments : (Comma | expression) (Comma expression?)* ;
 
-indexOperator : LeftSquareBracket (expression | expression? SliceOperator expression?) RightSquareBracket ;
+indexOperator : OpeningSquareBracket (expression | expression? SliceOperator expression?) ClosingSquareBracket ;
 
 /*
  * Helpers
@@ -412,7 +412,7 @@ typeReference :
     longhandTypeReference arrayTypeReference*
     ;
 
-longhandTypeReference : (modulePath FullStop)? Identifier genericTypeReference? ;
+longhandTypeReference : (modulePath Period)? Identifier genericTypeReference? ;
 
 shorthandTypeReference :
     DollarSign |
@@ -425,8 +425,8 @@ genericTypeReference : LessThanSign typeReference (Comma typeReference)* Greater
 
 arrayTypeReference :
     // Undocumented?
-    LeftSquareBracket expression RightSquareBracket |
-    LeftSquareBracket RightSquareBracket
+    OpeningSquareBracket expression ClosingSquareBracket |
+    OpeningSquareBracket ClosingSquareBracket
     ;
 
-modulePath : Identifier (FullStop Identifier)* ;
+modulePath : Identifier (Period Identifier)* ;
