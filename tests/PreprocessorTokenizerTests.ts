@@ -31,5 +31,15 @@ describe('PreprocessorTokenizer', function() {
 
             assert.equal(token.kind, PreprocessorTokenKind.Newline);
         });
+
+        it(`should return a Whitespace token when reading a run of whitespace characters`, function() {
+            const input = '\t ';
+            const tokenizer = new PreprocessorTokenizer(input);
+
+            const token = tokenizer.next();
+
+            assert.equal(token.kind, PreprocessorTokenKind.Whitespace);
+            assert.equal(token.length, 2);
+        });
     });
 });
