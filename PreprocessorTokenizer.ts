@@ -54,6 +54,19 @@ export class PreprocessorTokenizer {
         let length = 1;
 
         switch (c) {
+            case "'":
+                kind = PreprocessorTokenKind.Comment
+
+                while (true) {
+                    c = this.peekChar();
+                    if (c === '\n' ||
+                        c === null) {
+                        break;
+                    }
+                    this.position++;
+                    length++;
+                }
+                break;
             case '\n':
                 kind = PreprocessorTokenKind.Newline;
                 break;

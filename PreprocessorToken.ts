@@ -10,4 +10,5 @@ export enum PreprocessorTokenKind {
     EOF = 1,
     Newline = 2,
     Whitespace = 3,
+    Comment = 4,
 }
