@@ -8,4 +8,5 @@ export class PreprocessorToken {
 export enum PreprocessorTokenKind {
     Unknown = 0,
     EOF = 1,
+    Newline = 2,
 }
