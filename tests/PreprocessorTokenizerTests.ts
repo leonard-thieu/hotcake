@@ -42,7 +42,7 @@ describe('PreprocessorTokenizer', function() {
             assert.equal(token.length, 2);
         });
 
-        it(`should return a Comment token when reading a single quote character and the rest of the characters on the line`, function() {
+        it(`should return a Comment token when reading "'" followed by the rest of the characters on the line`, function() {
             const input = "' This is my comment.";
             const tokenizer = new PreprocessorTokenizer(input);
 
@@ -50,6 +50,16 @@ describe('PreprocessorTokenizer', function() {
 
             assert.equal(token.kind, PreprocessorTokenKind.Comment);
             assert.equal(token.length, 21);
+        });
+
+        it(`should return a StringLiteral token when reading '"' followed by any characters and terminated by '"'`, function() {
+            const input = '"My string literal."';
+            const tokenizer = new PreprocessorTokenizer(input);
+
+            const token = tokenizer.next();
+
+            assert.equal(token.kind, PreprocessorTokenKind.StringLiteral);
+            assert.equal(token.length, 20);
         });
     });
 });

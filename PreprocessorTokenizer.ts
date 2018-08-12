@@ -54,6 +54,18 @@ export class PreprocessorTokenizer {
         let length = 1;
 
         switch (c) {
+            // TODO: Should escape characters be handled?
+            case '"':
+                kind = PreprocessorTokenKind.StringLiteral
+
+                while (true) {
+                    c = this.nextChar();
+                    length++;
+                    if (c === '"') {
+                        break;
+                    }
+                }
+                break;
             case "'":
                 kind = PreprocessorTokenKind.Comment
 
