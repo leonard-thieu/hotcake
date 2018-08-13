@@ -181,6 +181,90 @@ export class PreprocessorTokenizer {
                 }
                 break;
             }
+            case '#': {
+                kind = PreprocessorTokenKind.NumberSign;
+                break;
+            }
+            case '&': {
+                kind = PreprocessorTokenKind.Ampersand;
+                break;
+            }
+            case '(': {
+                kind = PreprocessorTokenKind.OpeningParenthesis;
+                break;
+            }
+            case ')': {
+                kind = PreprocessorTokenKind.ClosingParenthesis;
+                break;
+            }
+            case '*': {
+                kind = PreprocessorTokenKind.Asterisk;
+                break;
+            }
+            case '+': {
+                kind = PreprocessorTokenKind.PlusSign;
+                break;
+            }
+            case ',': {
+                kind = PreprocessorTokenKind.Comma;
+                break;
+            }
+            case '-': {
+                kind = PreprocessorTokenKind.HyphenMinus;
+                break;
+            }
+            case '.': {
+                kind = PreprocessorTokenKind.Period;
+                break;
+            }
+            case '/': {
+                kind = PreprocessorTokenKind.Slash;
+                break;
+            }
+            case ':': {
+                kind = PreprocessorTokenKind.Colon;
+                break;
+            }
+            case ';': {
+                kind = PreprocessorTokenKind.Semicolon;
+                break;
+            }
+            case '<': {
+                kind = PreprocessorTokenKind.LessThanSign;
+                break;
+            }
+            case '=': {
+                kind = PreprocessorTokenKind.EqualsSign;
+                break;
+            }
+            case '>': {
+                kind = PreprocessorTokenKind.GreaterThanSign;
+                break;
+            }
+            case '?': {
+                kind = PreprocessorTokenKind.QuestionMark;
+                break;
+            }
+            case '@': {
+                kind = PreprocessorTokenKind.CommercialAt;
+                break;
+            }
+            case '[': {
+                kind = PreprocessorTokenKind.OpeningSquareBracket;
+                break;
+            }
+            case ']': {
+                kind = PreprocessorTokenKind.ClosingSquareBracket;
+                break;
+            }
+            case '|': {
+                kind = PreprocessorTokenKind.VerticalBar;
+                break;
+            }
+            case '~': {
+                kind = PreprocessorTokenKind.Tilde;
+                break;
+            }
             default: {
                 if (isWhitespace(c)) {
                     kind = PreprocessorTokenKind.Whitespace;

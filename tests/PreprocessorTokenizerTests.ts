@@ -111,5 +111,41 @@ describe('PreprocessorTokenizer', function() {
             assert.equal(token.kind, PreprocessorTokenKind.FloatLiteral);
             assert.equal(token.length, 5);
         });
+
+        const symbols = [
+            { kind: PreprocessorTokenKind.NumberSign, input: '#' },
+            { kind: PreprocessorTokenKind.Ampersand, input: '&' },
+            { kind: PreprocessorTokenKind.OpeningParenthesis, input: '(' },
+            { kind: PreprocessorTokenKind.ClosingParenthesis, input: ')' },
+            { kind: PreprocessorTokenKind.Asterisk, input: '*' },
+            { kind: PreprocessorTokenKind.PlusSign, input: '+' },
+            { kind: PreprocessorTokenKind.Comma, input: ',' },
+            { kind: PreprocessorTokenKind.HyphenMinus, input: '-' },
+            { kind: PreprocessorTokenKind.Period, input: '.' },
+            { kind: PreprocessorTokenKind.Slash, input: '/' },
+            { kind: PreprocessorTokenKind.Colon, input: ':' },
+            { kind: PreprocessorTokenKind.Semicolon, input: ';' },
+            { kind: PreprocessorTokenKind.LessThanSign, input: '<' },
+            { kind: PreprocessorTokenKind.EqualsSign, input: '=' },
+            { kind: PreprocessorTokenKind.GreaterThanSign, input: '>' },
+            { kind: PreprocessorTokenKind.QuestionMark, input: '?' },
+            { kind: PreprocessorTokenKind.CommercialAt, input: '@' },
+            { kind: PreprocessorTokenKind.OpeningSquareBracket, input: '[' },
+            { kind: PreprocessorTokenKind.ClosingSquareBracket, input: ']' },
+            { kind: PreprocessorTokenKind.VerticalBar, input: '|' },
+            { kind: PreprocessorTokenKind.Tilde, input: '~' },
+        ];
+
+        for (let { kind, input } of symbols) {
+            const k = PreprocessorTokenKind[kind];
+
+            it(`should return a ${k} token when reading '${input}'`, function() {
+                const tokenizer = new PreprocessorTokenizer(input);
+    
+                const token = tokenizer.next();
+    
+                assert.equal(token.kind, kind);
+            });
+        }
     });
 });
