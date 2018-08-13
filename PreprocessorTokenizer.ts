@@ -41,6 +41,64 @@ function isWhitespace(c: string | null): boolean {
     return false;
 }
 
+function isBinary(c: string | null): boolean {
+    switch (c) {
+        case '0':
+        case '1':
+            return true;
+    }
+
+    return false;
+}
+
+function isDecimal(c: string | null): boolean {
+    switch (c) {
+        case '0':
+        case '1':
+        case '2':
+        case '3':
+        case '4':
+        case '5':
+        case '6':
+        case '7':
+        case '8':
+        case '9':
+            return true;
+    }
+
+    return false;
+}
+
+function isHexadecimal(c: string | null): boolean {
+    switch (c) {
+        case '0':
+        case '1':
+        case '2':
+        case '3':
+        case '4':
+        case '5':
+        case '6':
+        case '7':
+        case '8':
+        case '9':
+        case 'A':
+        case 'B':
+        case 'C':
+        case 'D':
+        case 'E':
+        case 'F':
+        case 'a':
+        case 'b':
+        case 'c':
+        case 'd':
+        case 'e':
+        case 'f':
+            return true;
+    }
+
+    return false;
+}
+
 export class PreprocessorTokenizer {
     constructor(private readonly input: string) { }
 
@@ -54,14 +112,16 @@ export class PreprocessorTokenizer {
         let length = 1;
 
         switch (c) {
-            case null:
+            case null: {
                 kind = PreprocessorTokenKind.EOF;
                 length = 0;
                 break;
-            case '\n':
+            }
+            case '\n': {
                 kind = PreprocessorTokenKind.Newline;
                 break;
-            case "'":
+            }
+            case "'": {
                 kind = PreprocessorTokenKind.Comment
 
                 while (true) {
@@ -74,8 +134,10 @@ export class PreprocessorTokenizer {
                     length++;
                 }
                 break;
+            }
             // TODO: Should escape characters be handled?
-            case '"':
+            // TODO: What should happen if the closing '"' can't be found?
+            case '"': {
                 kind = PreprocessorTokenKind.StringLiteral
 
                 while (true) {
@@ -86,7 +148,42 @@ export class PreprocessorTokenizer {
                     }
                 }
                 break;
-            default:
+            }
+            case '%': {
+                while (true) {
+                    c = this.peekChar();
+                    if (!isBinary(c)) {
+                        break;
+                    }
+                    this.position++;
+                    length++;
+                }
+
+                if (length > 1) {
+                    kind = PreprocessorTokenKind.IntegerLiteral;
+                } else {
+                    this.position = start;
+                }
+                break;
+            }
+            case '$': {
+                while (true) {
+                    c = this.peekChar();
+                    if (!isHexadecimal(c)) {
+                        break;
+                    }
+                    this.position++;
+                    length++;
+                }
+
+                if (length > 1) {
+                    kind = PreprocessorTokenKind.IntegerLiteral;
+                } else {
+                    this.position = start;
+                }
+                break;
+            }
+            default: {
                 if (isWhitespace(c)) {
                     kind = PreprocessorTokenKind.Whitespace;
 
@@ -98,8 +195,54 @@ export class PreprocessorTokenizer {
                         this.position++;
                         length++;
                     }
+                } else if (isDecimal(c) ||
+                           (c === '.' && isDecimal(this.peekChar()))) {
+                    kind = PreprocessorTokenKind.IntegerLiteral;
+
+                    if (c === '.') {
+                        kind = PreprocessorTokenKind.FloatLiteral;
+                    }
+
+                    while (isDecimal(this.peekChar())) {
+                        this.position++;
+                        length++;
+                    }
+
+                    if (kind === PreprocessorTokenKind.IntegerLiteral &&
+                        this.peekChar() === '.' &&
+                        isDecimal(this.peekChar(2))) {
+                        kind = PreprocessorTokenKind.FloatLiteral;
+                        this.position++;
+                        length++;
+
+                        while (isDecimal(this.peekChar())) {
+                            this.position++;
+                            length++;
+                        }
+                    }
+
+                    c = this.peekChar();
+                    if (c === 'E' ||
+                        c === 'e') {
+                        kind = PreprocessorTokenKind.FloatLiteral;
+                        this.position++;
+                        length++;
+
+                        c = this.peekChar();
+                        if (c === '+' ||
+                            c === '-') {
+                            this.position++;
+                            length++;
+                        }
+
+                        while (isDecimal(this.peekChar())) {
+                            this.position++;
+                            length++;
+                        }
+                    }
                 }
                 break;
+            }
         }
 
         return new PreprocessorToken(kind, start, length);

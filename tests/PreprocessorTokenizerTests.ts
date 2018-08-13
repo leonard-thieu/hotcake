@@ -61,5 +61,45 @@ describe('PreprocessorTokenizer', function() {
             assert.equal(token.kind, PreprocessorTokenKind.StringLiteral);
             assert.equal(token.length, 20);
         });
+
+        it(`should return an IntegerLiteral token when reading '%' followed by any binary character`, function() {
+            const input = '%0101001';
+            const tokenizer = new PreprocessorTokenizer(input);
+
+            const token = tokenizer.next();
+
+            assert.equal(token.kind, PreprocessorTokenKind.IntegerLiteral);
+            assert.equal(token.length, 8);
+        });
+
+        it(`should return an IntegerLiteral token when reading '$' followed by any hexadecimal character`, function() {
+            const input = '$1D39';
+            const tokenizer = new PreprocessorTokenizer(input);
+
+            const token = tokenizer.next();
+
+            assert.equal(token.kind, PreprocessorTokenKind.IntegerLiteral);
+            assert.equal(token.length, 5);
+        });
+
+        it(`should return an IntegerLiteral token when reading decimal characters`, function() {
+            const input = '1234';
+            const tokenizer = new PreprocessorTokenizer(input);
+
+            const token = tokenizer.next();
+
+            assert.equal(token.kind, PreprocessorTokenKind.IntegerLiteral);
+            assert.equal(token.length, 4);
+        });
+
+        it(`should return a FloatLiteral token when reading a floating point number`, function() {
+            const input = '1.234';
+            const tokenizer = new PreprocessorTokenizer(input);
+
+            const token = tokenizer.next();
+
+            assert.equal(token.kind, PreprocessorTokenKind.FloatLiteral);
+            assert.equal(token.length, 5);
+        });
     });
 });
