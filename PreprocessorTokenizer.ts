@@ -99,6 +99,66 @@ function isHexadecimal(c: string | null): boolean {
     return false;
 }
 
+function isAlpha(c: string | null): boolean {
+    switch (c) {
+        case 'A':
+        case 'B':
+        case 'C':
+        case 'D':
+        case 'E':
+        case 'F':
+        case 'G':
+        case 'H':
+        case 'I':
+        case 'J':
+        case 'K':
+        case 'L':
+        case 'M':
+        case 'N':
+        case 'O':
+        case 'P':
+        case 'Q':
+        case 'R':
+        case 'S':
+        case 'T':
+        case 'U':
+        case 'V':
+        case 'W':
+        case 'X':
+        case 'Y':
+        case 'Z':
+        case 'a':
+        case 'b':
+        case 'c':
+        case 'd':
+        case 'e':
+        case 'f':
+        case 'g':
+        case 'h':
+        case 'i':
+        case 'j':
+        case 'k':
+        case 'l':
+        case 'm':
+        case 'n':
+        case 'o':
+        case 'p':
+        case 'q':
+        case 'r':
+        case 's':
+        case 't':
+        case 'u':
+        case 'v':
+        case 'w':
+        case 'x':
+        case 'y':
+        case 'z':
+            return true;
+    }
+
+    return false;
+}
+
 export class PreprocessorTokenizer {
     constructor(private readonly input: string) { }
 
@@ -314,6 +374,229 @@ export class PreprocessorTokenizer {
                             }
                             break;
                         }
+                    }
+                } else if (c === '_' ||
+                           isAlpha(c)) {
+                    kind = PreprocessorTokenKind.Identifier;
+
+                    while (true) {
+                        c = this.peekChar();
+                        if (c !== '_' &&
+                            !isAlpha(c) &&
+                            !isDecimal(c)) {
+                            break;
+                        }
+                        this.position++;
+                    }
+
+                    switch (this.input.slice(start, this.position + 1).toLowerCase()) {
+                        case 'void':
+                            kind = PreprocessorTokenKind.VoidKeyword;
+                            break;
+                        case 'strict':
+                            kind = PreprocessorTokenKind.StrictKeyword;
+                            break;
+                        case 'public':
+                            kind = PreprocessorTokenKind.PublicKeyword;
+                            break;
+                        case 'private':
+                            kind = PreprocessorTokenKind.PrivateKeyword;
+                            break;
+                        case 'protected':
+                            kind = PreprocessorTokenKind.ProtectedKeyword;
+                            break;
+                        case 'friend':
+                            kind = PreprocessorTokenKind.FriendKeyword;
+                            break;
+                        case 'property':
+                            kind = PreprocessorTokenKind.PropertyKeyword;
+                            break;
+                        case 'bool':
+                            kind = PreprocessorTokenKind.BoolKeyword;
+                            break;
+                        case 'int':
+                            kind = PreprocessorTokenKind.IntKeyword;
+                            break;
+                        case 'float':
+                            kind = PreprocessorTokenKind.FloatKeyword;
+                            break;
+                        case 'string':
+                            kind = PreprocessorTokenKind.StringKeyword;
+                            break;
+                        case 'array':
+                            kind = PreprocessorTokenKind.ArrayKeyword;
+                            break;
+                        case 'object':
+                            kind = PreprocessorTokenKind.ObjectKeyword;
+                            break;
+                        case 'mod':
+                            kind = PreprocessorTokenKind.ModKeyword;
+                            break;
+                        case 'continue':
+                            kind = PreprocessorTokenKind.ContinueKeyword;
+                            break;
+                        case 'exit':
+                            kind = PreprocessorTokenKind.ExitKeyword;
+                            break;
+                        case 'include':
+                            kind = PreprocessorTokenKind.IncludeKeyword;
+                            break;
+                        case 'import':
+                            kind = PreprocessorTokenKind.ImportKeyword;
+                            break;
+                        case 'module':
+                            kind = PreprocessorTokenKind.ModuleKeyword;
+                            break;
+                        case 'extern':
+                            kind = PreprocessorTokenKind.ExternKeyword;
+                            break;
+                        case 'new':
+                            kind = PreprocessorTokenKind.NewKeyword;
+                            break;
+                        case 'self':
+                            kind = PreprocessorTokenKind.SelfKeyword;
+                            break;
+                        case 'super':
+                            kind = PreprocessorTokenKind.SuperKeyword;
+                            break;
+                        case 'eachin':
+                            kind = PreprocessorTokenKind.EachInKeyword;
+                            break;
+                        case 'true':
+                            kind = PreprocessorTokenKind.TrueKeyword;
+                            break;
+                        case 'false':
+                            kind = PreprocessorTokenKind.FalseKeyword;
+                            break;
+                        case 'null':
+                            kind = PreprocessorTokenKind.NullKeyword;
+                            break;
+                        case 'not':
+                            kind = PreprocessorTokenKind.NotKeyword;
+                            break;
+                        case 'extends':
+                            kind = PreprocessorTokenKind.ExtendsKeyword;
+                            break;
+                        case 'abstract':
+                            kind = PreprocessorTokenKind.AbstractKeyword;
+                            break;
+                        case 'final':
+                            kind = PreprocessorTokenKind.FinalKeyword;
+                            break;
+                        case 'select':
+                            kind = PreprocessorTokenKind.SelectKeyword;
+                            break;
+                        case 'case':
+                            kind = PreprocessorTokenKind.CaseKeyword;
+                            break;
+                        case 'default':
+                            kind = PreprocessorTokenKind.DefaultKeyword;
+                            break;
+                        case 'const':
+                            kind = PreprocessorTokenKind.ConstKeyword;
+                            break;
+                        case 'local':
+                            kind = PreprocessorTokenKind.LocalKeyword;
+                            break;
+                        case 'global':
+                            kind = PreprocessorTokenKind.GlobalKeyword;
+                            break;
+                        case 'field':
+                            kind = PreprocessorTokenKind.FieldKeyword;
+                            break;
+                        case 'method':
+                            kind = PreprocessorTokenKind.MethodKeyword;
+                            break;
+                        case 'function':
+                            kind = PreprocessorTokenKind.FunctionKeyword;
+                            break;
+                        case 'class':
+                            kind = PreprocessorTokenKind.ClassKeyword;
+                            break;
+                        case 'and':
+                            kind = PreprocessorTokenKind.AndKeyword;
+                            break;
+                        case 'or':
+                            kind = PreprocessorTokenKind.OrKeyword;
+                            break;
+                        case 'shl':
+                            kind = PreprocessorTokenKind.ShlKeyword;
+                            break;
+                        case 'shr':
+                            kind = PreprocessorTokenKind.ShrKeyword;
+                            break;
+                        case 'end':
+                            kind = PreprocessorTokenKind.EndKeyword;
+                            break;
+                        case 'if':
+                            kind = PreprocessorTokenKind.IfKeyword;
+                            break;
+                        case 'then':
+                            kind = PreprocessorTokenKind.ThenKeyword;
+                            break;
+                        case 'else':
+                            kind = PreprocessorTokenKind.ElseKeyword;
+                            break;
+                        case 'elseif':
+                            kind = PreprocessorTokenKind.ElseIfKeyword;
+                            break;
+                        case 'endif':
+                            kind = PreprocessorTokenKind.EndIfKeyword;
+                            break;
+                        case 'while':
+                            kind = PreprocessorTokenKind.WhileKeyword;
+                            break;
+                        case 'wend':
+                            kind = PreprocessorTokenKind.WendKeyword;
+                            break;
+                        case 'repeat':
+                            kind = PreprocessorTokenKind.RepeatKeyword;
+                            break;
+                        case 'until':
+                            kind = PreprocessorTokenKind.UntilKeyword;
+                            break;
+                        case 'forever':
+                            kind = PreprocessorTokenKind.ForeverKeyword;
+                            break;
+                        case 'for':
+                            kind = PreprocessorTokenKind.ForKeyword;
+                            break;
+                        case 'to':
+                            kind = PreprocessorTokenKind.ToKeyword;
+                            break;
+                        case 'step':
+                            kind = PreprocessorTokenKind.StepKeyword;
+                            break;
+                        case 'next':
+                            kind = PreprocessorTokenKind.NextKeyword;
+                            break;
+                        case 'return':
+                            kind = PreprocessorTokenKind.ReturnKeyword;
+                            break;
+                        case 'interface':
+                            kind = PreprocessorTokenKind.InterfaceKeyword;
+                            break;
+                        case 'implements':
+                            kind = PreprocessorTokenKind.ImplementsKeyword;
+                            break;
+                        case 'inline':
+                            kind = PreprocessorTokenKind.InlineKeyword;
+                            break;
+                        case 'alias':
+                            kind = PreprocessorTokenKind.AliasKeyword;
+                            break;
+                        case 'try':
+                            kind = PreprocessorTokenKind.TryKeyword;
+                            break;
+                        case 'catch':
+                            kind = PreprocessorTokenKind.CatchKeyword;
+                            break;
+                        case 'throw':
+                            kind = PreprocessorTokenKind.ThrowKeyword;
+                            break;
+                        case 'throwable':
+                            kind = PreprocessorTokenKind.ThrowableKeyword;
+                            break;
                     }
                 }
                 break;

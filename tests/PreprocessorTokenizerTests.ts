@@ -112,6 +112,26 @@ describe('PreprocessorTokenizer', function() {
             assert.equal(token.length, 5);
         });
 
+        it(`should return an Identifier token when reading an alphabetic character followed by any '_' or alphanumeric characters`, function() {
+            const input = 'a23_4b';
+            const tokenizer = new PreprocessorTokenizer(input);
+
+            const token = tokenizer.next();
+
+            assert.equal(token.kind, PreprocessorTokenKind.Identifier);
+            assert.equal(token.length, 6);
+        });
+
+        it(`should return an Identifier token when reading '_' followed by any '_' or alphanumeric characters`, function() {
+            const input = '_a23_4b';
+            const tokenizer = new PreprocessorTokenizer(input);
+
+            const token = tokenizer.next();
+
+            assert.equal(token.kind, PreprocessorTokenKind.Identifier);
+            assert.equal(token.length, 7);
+        });
+
         const symbols = [
             { kind: PreprocessorTokenKind.NumberSign, input: '#' },
             { kind: PreprocessorTokenKind.Ampersand, input: '&' },
@@ -137,6 +157,90 @@ describe('PreprocessorTokenizer', function() {
         ];
 
         for (let { kind, input } of symbols) {
+            const k = PreprocessorTokenKind[kind];
+
+            it(`should return a ${k} token when reading '${input}'`, function() {
+                const tokenizer = new PreprocessorTokenizer(input);
+    
+                const token = tokenizer.next();
+    
+                assert.equal(token.kind, kind);
+            });
+        }
+
+        const keywords = [
+            { kind: PreprocessorTokenKind.VoidKeyword, input: 'Void' },
+            { kind: PreprocessorTokenKind.StrictKeyword, input: 'Strict' },
+            { kind: PreprocessorTokenKind.PublicKeyword, input: 'Public' },
+            { kind: PreprocessorTokenKind.PrivateKeyword, input: 'Private' },
+            { kind: PreprocessorTokenKind.ProtectedKeyword, input: 'Protected' },
+            { kind: PreprocessorTokenKind.FriendKeyword, input: 'Friend' },
+            { kind: PreprocessorTokenKind.PropertyKeyword, input: 'Property' },
+            { kind: PreprocessorTokenKind.BoolKeyword, input: 'Bool' },
+            { kind: PreprocessorTokenKind.IntKeyword, input: 'Int' },
+            { kind: PreprocessorTokenKind.FloatKeyword, input: 'Float' },
+            { kind: PreprocessorTokenKind.StringKeyword, input: 'String' },
+            { kind: PreprocessorTokenKind.ArrayKeyword, input: 'Array' },
+            { kind: PreprocessorTokenKind.ObjectKeyword, input: 'Object' },
+            { kind: PreprocessorTokenKind.ModKeyword, input: 'Mod' },
+            { kind: PreprocessorTokenKind.ContinueKeyword, input: 'Continue' },
+            { kind: PreprocessorTokenKind.ExitKeyword, input: 'Exit' },
+            { kind: PreprocessorTokenKind.IncludeKeyword, input: 'Include' },
+            { kind: PreprocessorTokenKind.ImportKeyword, input: 'Import' },
+            { kind: PreprocessorTokenKind.ModuleKeyword, input: 'Module' },
+            { kind: PreprocessorTokenKind.ExternKeyword, input: 'Extern' },
+            { kind: PreprocessorTokenKind.NewKeyword, input: 'New' },
+            { kind: PreprocessorTokenKind.SelfKeyword, input: 'Self' },
+            { kind: PreprocessorTokenKind.SuperKeyword, input: 'Super' },
+            { kind: PreprocessorTokenKind.EachInKeyword, input: 'EachIn' },
+            { kind: PreprocessorTokenKind.TrueKeyword, input: 'True' },
+            { kind: PreprocessorTokenKind.FalseKeyword, input: 'False' },
+            { kind: PreprocessorTokenKind.NullKeyword, input: 'Null' },
+            { kind: PreprocessorTokenKind.NotKeyword, input: 'Not' },
+            { kind: PreprocessorTokenKind.ExtendsKeyword, input: 'Extends' },
+            { kind: PreprocessorTokenKind.AbstractKeyword, input: 'Abstract' },
+            { kind: PreprocessorTokenKind.FinalKeyword, input: 'Final' },
+            { kind: PreprocessorTokenKind.SelectKeyword, input: 'Select' },
+            { kind: PreprocessorTokenKind.CaseKeyword, input: 'Case' },
+            { kind: PreprocessorTokenKind.DefaultKeyword, input: 'Default' },
+            { kind: PreprocessorTokenKind.ConstKeyword, input: 'Const' },
+            { kind: PreprocessorTokenKind.LocalKeyword, input: 'Local' },
+            { kind: PreprocessorTokenKind.GlobalKeyword, input: 'Global' },
+            { kind: PreprocessorTokenKind.FieldKeyword, input: 'Field' },
+            { kind: PreprocessorTokenKind.MethodKeyword, input: 'Method' },
+            { kind: PreprocessorTokenKind.FunctionKeyword, input: 'Function' },
+            { kind: PreprocessorTokenKind.ClassKeyword, input: 'Class' },
+            { kind: PreprocessorTokenKind.AndKeyword, input: 'And' },
+            { kind: PreprocessorTokenKind.OrKeyword, input: 'Or' },
+            { kind: PreprocessorTokenKind.ShlKeyword, input: 'Shl' },
+            { kind: PreprocessorTokenKind.ShrKeyword, input: 'Shr' },
+            { kind: PreprocessorTokenKind.EndKeyword, input: 'End' },
+            { kind: PreprocessorTokenKind.IfKeyword, input: 'If' },
+            { kind: PreprocessorTokenKind.ThenKeyword, input: 'Then' },
+            { kind: PreprocessorTokenKind.ElseKeyword, input: 'Else' },
+            { kind: PreprocessorTokenKind.ElseIfKeyword, input: 'ElseIf' },
+            { kind: PreprocessorTokenKind.EndIfKeyword, input: 'EndIf' },
+            { kind: PreprocessorTokenKind.WhileKeyword, input: 'While' },
+            { kind: PreprocessorTokenKind.WendKeyword, input: 'Wend' },
+            { kind: PreprocessorTokenKind.RepeatKeyword, input: 'Repeat' },
+            { kind: PreprocessorTokenKind.UntilKeyword, input: 'Until' },
+            { kind: PreprocessorTokenKind.ForeverKeyword, input: 'Forever' },
+            { kind: PreprocessorTokenKind.ForKeyword, input: 'For' },
+            { kind: PreprocessorTokenKind.ToKeyword, input: 'To' },
+            { kind: PreprocessorTokenKind.StepKeyword, input: 'Step' },
+            { kind: PreprocessorTokenKind.NextKeyword, input: 'Next' },
+            { kind: PreprocessorTokenKind.ReturnKeyword, input: 'Return' },
+            { kind: PreprocessorTokenKind.InterfaceKeyword, input: 'Interface' },
+            { kind: PreprocessorTokenKind.ImplementsKeyword, input: 'Implements' },
+            { kind: PreprocessorTokenKind.InlineKeyword, input: 'Inline' },
+            { kind: PreprocessorTokenKind.AliasKeyword, input: 'Alias' },
+            { kind: PreprocessorTokenKind.TryKeyword, input: 'Try' },
+            { kind: PreprocessorTokenKind.CatchKeyword, input: 'Catch' },
+            { kind: PreprocessorTokenKind.ThrowKeyword, input: 'Throw' },
+            { kind: PreprocessorTokenKind.ThrowableKeyword, input: 'Throwable' },
+        ];
+
+        for (let { kind, input } of keywords) {
             const k = PreprocessorTokenKind[kind];
 
             it(`should return a ${k} token when reading '${input}'`, function() {
