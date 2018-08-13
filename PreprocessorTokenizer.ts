@@ -109,12 +109,10 @@ export class PreprocessorTokenizer {
 
         let kind = PreprocessorTokenKind.Unknown;
         const start = this.position;
-        let length = 1;
 
         switch (c) {
             case null: {
                 kind = PreprocessorTokenKind.EOF;
-                length = 0;
                 break;
             }
             case '\n': {
@@ -124,14 +122,11 @@ export class PreprocessorTokenizer {
             case "'": {
                 kind = PreprocessorTokenKind.Comment
 
-                while (true) {
-                    c = this.peekChar();
-                    if (c === '\n' ||
-                        c === null) {
+                while ((c = this.peekChar()) !== null) {
+                    if (c === '\n') {
                         break;
                     }
                     this.position++;
-                    length++;
                 }
                 break;
             }
@@ -140,46 +135,34 @@ export class PreprocessorTokenizer {
             case '"': {
                 kind = PreprocessorTokenKind.StringLiteral
 
-                while (true) {
-                    c = this.nextChar();
-                    length++;
-                    if (c === '"') {
-                        break;
-                    }
+                while (this.nextChar() !== '"') {
+                    
                 }
                 break;
             }
             case '%': {
-                while (true) {
-                    c = this.peekChar();
-                    if (!isBinary(c)) {
-                        break;
-                    }
-                    this.position++;
-                    length++;
+                if (!isBinary(this.peekChar())) {
+                    break;
                 }
 
-                if (length > 1) {
-                    kind = PreprocessorTokenKind.IntegerLiteral;
-                } else {
-                    this.position = start;
+                this.position++;
+                kind = PreprocessorTokenKind.IntegerLiteral;
+
+                while (isBinary(this.peekChar())) {
+                    this.position++;
                 }
                 break;
             }
             case '$': {
-                while (true) {
-                    c = this.peekChar();
-                    if (!isHexadecimal(c)) {
-                        break;
-                    }
-                    this.position++;
-                    length++;
+                if (!isHexadecimal(this.peekChar())) {
+                    break;
                 }
 
-                if (length > 1) {
-                    kind = PreprocessorTokenKind.IntegerLiteral;
-                } else {
-                    this.position = start;
+                this.position++;
+                kind = PreprocessorTokenKind.IntegerLiteral;
+
+                while (isHexadecimal(this.peekChar())) {
+                    this.position++;
                 }
                 break;
             }
@@ -187,13 +170,8 @@ export class PreprocessorTokenizer {
                 if (isWhitespace(c)) {
                     kind = PreprocessorTokenKind.Whitespace;
 
-                    while (true) {
-                        c = this.peekChar();
-                        if (!isWhitespace(c)) {
-                            break;
-                        }
+                    while (isWhitespace(this.peekChar())) {
                         this.position++;
-                        length++;
                     }
                 } else if (isDecimal(c) ||
                            (c === '.' && isDecimal(this.peekChar()))) {
@@ -205,7 +183,6 @@ export class PreprocessorTokenizer {
 
                     while (isDecimal(this.peekChar())) {
                         this.position++;
-                        length++;
                     }
 
                     if (kind === PreprocessorTokenKind.IntegerLiteral &&
@@ -213,37 +190,38 @@ export class PreprocessorTokenizer {
                         isDecimal(this.peekChar(2))) {
                         kind = PreprocessorTokenKind.FloatLiteral;
                         this.position++;
-                        length++;
 
                         while (isDecimal(this.peekChar())) {
                             this.position++;
-                            length++;
                         }
                     }
 
-                    c = this.peekChar();
-                    if (c === 'E' ||
-                        c === 'e') {
-                        kind = PreprocessorTokenKind.FloatLiteral;
-                        this.position++;
-                        length++;
-
-                        c = this.peekChar();
-                        if (c === '+' ||
-                            c === '-') {
+                    switch (this.peekChar()) {
+                        case 'E':
+                        case 'e': {
+                            kind = PreprocessorTokenKind.FloatLiteral;
                             this.position++;
-                            length++;
-                        }
 
-                        while (isDecimal(this.peekChar())) {
-                            this.position++;
-                            length++;
+                            switch (this.peekChar()) {
+                                case '+':
+                                case '-': {
+                                    this.position++;
+                                    break;
+                                }
+                            }
+                            
+                            while (isDecimal(this.peekChar())) {
+                                this.position++;
+                            }
+                            break;
                         }
                     }
                 }
                 break;
             }
         }
+
+        const length = this.position - start + 1;
 
         return new PreprocessorToken(kind, start, length);
     }
