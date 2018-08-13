@@ -54,17 +54,12 @@ export class PreprocessorTokenizer {
         let length = 1;
 
         switch (c) {
-            // TODO: Should escape characters be handled?
-            case '"':
-                kind = PreprocessorTokenKind.StringLiteral
-
-                while (true) {
-                    c = this.nextChar();
-                    length++;
-                    if (c === '"') {
-                        break;
-                    }
-                }
+            case null:
+                kind = PreprocessorTokenKind.EOF;
+                length = 0;
+                break;
+            case '\n':
+                kind = PreprocessorTokenKind.Newline;
                 break;
             case "'":
                 kind = PreprocessorTokenKind.Comment
@@ -79,12 +74,17 @@ export class PreprocessorTokenizer {
                     length++;
                 }
                 break;
-            case '\n':
-                kind = PreprocessorTokenKind.Newline;
-                break;
-            case null:
-                kind = PreprocessorTokenKind.EOF;
-                length = 0;
+            // TODO: Should escape characters be handled?
+            case '"':
+                kind = PreprocessorTokenKind.StringLiteral
+
+                while (true) {
+                    c = this.nextChar();
+                    length++;
+                    if (c === '"') {
+                        break;
+                    }
+                }
                 break;
             default:
                 if (isWhitespace(c)) {
