@@ -62,6 +62,16 @@ describe('PreprocessorTokenizer', function() {
             assert.equal(token.length, 20);
         });
 
+        it(`should return an Unknown token when reading '"' that is never terminated by another '"'`, function() {
+            const input = '"My unterminated string literal.';
+            const tokenizer = new PreprocessorTokenizer(input);
+
+            const token = tokenizer.next();
+
+            assert.equal(token.kind, PreprocessorTokenKind.Unknown);
+            assert.equal(token.length, 1);
+        });
+
         it(`should return an IntegerLiteral token when reading '%' followed by any binary character`, function() {
             const input = '%0101001';
             const tokenizer = new PreprocessorTokenizer(input);

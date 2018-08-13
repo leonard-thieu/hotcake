@@ -131,13 +131,28 @@ export class PreprocessorTokenizer {
                 break;
             }
             // TODO: Should escape characters be handled?
-            // TODO: What should happen if the closing '"' can't be found?
             case '"': {
-                kind = PreprocessorTokenKind.StringLiteral
-
-                while (this.nextChar() !== '"') {
-                    
-                }
+                let keepReading = true;
+                do {
+                    switch (this.peekChar()) {
+                        // Couldn't find a terminating '"'. Rollback.
+                        case null: {
+                            this.position = start;
+                            keepReading = false;
+                            break;
+                        }
+                        case '"': {
+                            this.position++;
+                            kind = PreprocessorTokenKind.StringLiteral
+                            keepReading = false;
+                            break;
+                        }
+                        default: {
+                            this.position++;
+                            break;
+                        }
+                    }
+                } while (keepReading);
                 break;
             }
             case '%': {
@@ -188,8 +203,8 @@ export class PreprocessorTokenizer {
                     if (kind === PreprocessorTokenKind.IntegerLiteral &&
                         this.peekChar() === '.' &&
                         isDecimal(this.peekChar(2))) {
-                        kind = PreprocessorTokenKind.FloatLiteral;
                         this.position++;
+                        kind = PreprocessorTokenKind.FloatLiteral;
 
                         while (isDecimal(this.peekChar())) {
                             this.position++;
@@ -199,8 +214,8 @@ export class PreprocessorTokenizer {
                     switch (this.peekChar()) {
                         case 'E':
                         case 'e': {
-                            kind = PreprocessorTokenKind.FloatLiteral;
                             this.position++;
+                            kind = PreprocessorTokenKind.FloatLiteral;
 
                             switch (this.peekChar()) {
                                 case '+':
