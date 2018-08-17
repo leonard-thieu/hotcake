@@ -3,6 +3,20 @@ export class PreprocessorToken {
         public kind: PreprocessorTokenKind,
         public start: number,
         public length: number) { }
+
+    toJSON(): SerializablePreprocessorToken {
+        return {
+            kind: PreprocessorTokenKind[this.kind],
+            start: this.start,
+            length: this.length,
+        };
+    }
+}
+
+interface SerializablePreprocessorToken {
+    kind: string;
+    start: number;
+    length: number;
 }
 
 export enum PreprocessorTokenKind {
