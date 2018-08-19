@@ -1,4 +1,4 @@
-import { MissingToken } from "./MissingToken";
+import { MissingToken } from './MissingToken';
 import {
     ElseDirectiveNode,
     ElseIfDirectiveNode,
@@ -8,10 +8,10 @@ import {
     Node,
     PrintDirectiveNode,
     RemDirectiveNode,
-} from "./Node";
-import { SkippedToken } from "./SkippedToken";
-import { Token, TokenKind } from "./Token";
-import { Tokenizer } from "./Tokenizer";
+} from './Node';
+import { SkippedToken } from './SkippedToken';
+import { Token, TokenKind } from './Token';
+import { Tokenizer } from './Tokenizer';
 
 export class PreprocessorParser {
     private tokens: Token[] = [];

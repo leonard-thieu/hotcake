@@ -2,8 +2,8 @@ import assert = require('assert');
 import glob = require('glob');
 import fs = require('fs');
 
-import { Tokenizer } from "../Tokenizer";
-import { Token, TokenKind } from '../Token';
+import { Tokenizer } from '../src/Tokenizer';
+import { Token, TokenKind } from '../src/Token';
 
 describe('Tokenizer', function () {
     describe('#next()', function () {

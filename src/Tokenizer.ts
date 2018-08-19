@@ -1,4 +1,4 @@
-import { Token, TokenKind } from "./Token";
+import { Token, TokenKind } from './Token';
 
 function isWhitespace(c: string | null): boolean {
     switch (c) {

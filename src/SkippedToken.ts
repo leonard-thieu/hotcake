@@ -1,4 +1,4 @@
-import { Token } from "./Token";
+import { Token } from './Token';
 
 export class SkippedToken extends Token {
     constructor(token: Token) {

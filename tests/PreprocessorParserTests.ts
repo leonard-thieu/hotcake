@@ -1,6 +1,6 @@
 import assert = require('assert');
 
-import { PreprocessorParser } from '../PreprocessorParser';
+import { PreprocessorParser } from '../src/PreprocessorParser';
 
 describe('PreprocessorParser', function() {
     describe('#parse()', function() {

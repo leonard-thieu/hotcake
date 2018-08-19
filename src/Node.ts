@@ -1,5 +1,5 @@
-import { Token } from "./Token";
-import { MissingToken } from "./MissingToken";
+import { Token } from './Token';
+import { MissingToken } from './MissingToken';
 
 export abstract class Node {
     parent: Node | null = null;
