@@ -275,7 +275,6 @@ export class Tokenizer {
                 case '+': { kind = TokenKind.PlusSign; break; }
                 case ',': { kind = TokenKind.Comma; break; }
                 case '-': { kind = TokenKind.HyphenMinus; break; }
-                case '.': { kind = TokenKind.Period; break; }
                 case '/': { kind = TokenKind.Slash; break; }
                 case ':': { kind = TokenKind.Colon; break; }
                 case ';': { kind = TokenKind.Semicolon; break; }
@@ -343,6 +342,8 @@ export class Tokenizer {
                                 break;
                             }
                         }
+                    } else if (c === '.') {
+                        kind = TokenKind.Period;
                     } else {
                         // Walk back so `tryReadIdentifier` can read the first character.
                         this.position--;
