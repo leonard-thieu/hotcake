@@ -202,7 +202,9 @@ export class Tokenizer {
             }
         } else {
             switch (c) {
-                case null: { kind = TokenKind.EOF; break; }
+                case null: {
+                    return new Token(TokenKind.EOF, this.position, 0);
+                }
                 case '\n': { kind = TokenKind.Newline; break; }
                 case "'": {
                     kind = TokenKind.Comment
@@ -429,17 +431,7 @@ export class Tokenizer {
             }
         }
 
-        let length: number;
-        switch (kind) {
-            case TokenKind.EOF: {
-                length = 0;
-                break;
-            }
-            default: {
-                length = this.position - start + 1;
-                break;
-            }
-        }
+        const length = this.position - start + 1;
 
         return new Token(kind, start, length);
     }
@@ -448,7 +440,7 @@ export class Tokenizer {
         const start = this.position;
         let kind = TokenKind.Unknown;
 
-        if (this.input[this.position] === '#') {
+        if (this.peekChar(0) === '#') {
             while (isWhitespace(this.peekChar())) {
                 this.position++;
             }
@@ -593,7 +585,7 @@ export class Tokenizer {
     private nextChar(): string | null {
         const c = this.peekChar();
 
-        if (c !== null) {
+        if (this.position < this.input.length) {
             this.position++;
         }
 
