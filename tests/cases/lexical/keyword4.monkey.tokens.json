@@ -1,0 +1,12 @@
+[
+  {
+    "kind": "PrivateKeyword",
+    "start": 0,
+    "length": 7
+  },
+  {
+    "kind": "EOF",
+    "start": 6,
+    "length": 0
+  }
+]

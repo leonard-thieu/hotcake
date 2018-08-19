@@ -1,0 +1,12 @@
+[
+  {
+    "kind": "ConfigVar",
+    "start": 0,
+    "length": 29
+  },
+  {
+    "kind": "EOF",
+    "start": 28,
+    "length": 0
+  }
+]

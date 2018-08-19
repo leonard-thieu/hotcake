@@ -1,0 +1,12 @@
+[
+  {
+    "kind": "StrictKeyword",
+    "start": 0,
+    "length": 6
+  },
+  {
+    "kind": "EOF",
+    "start": 5,
+    "length": 0
+  }
+]

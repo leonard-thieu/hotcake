@@ -1,0 +1,17 @@
+[
+  {
+    "kind": "Unknown",
+    "start": 0,
+    "length": 1
+  },
+  {
+    "kind": "Identifier",
+    "start": 1,
+    "length": 5
+  },
+  {
+    "kind": "EOF",
+    "start": 5,
+    "length": 0
+  }
+]

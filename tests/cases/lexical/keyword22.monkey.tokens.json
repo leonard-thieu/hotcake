@@ -1,0 +1,12 @@
+[
+  {
+    "kind": "SelfKeyword",
+    "start": 0,
+    "length": 4
+  },
+  {
+    "kind": "EOF",
+    "start": 3,
+    "length": 0
+  }
+]

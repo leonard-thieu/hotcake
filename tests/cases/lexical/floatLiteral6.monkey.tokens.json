@@ -1,0 +1,12 @@
+[
+  {
+    "kind": "FloatLiteral",
+    "start": 0,
+    "length": 9
+  },
+  {
+    "kind": "EOF",
+    "start": 8,
+    "length": 0
+  }
+]

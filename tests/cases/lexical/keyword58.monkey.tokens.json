@@ -1,0 +1,12 @@
+[
+  {
+    "kind": "ToKeyword",
+    "start": 0,
+    "length": 2
+  },
+  {
+    "kind": "EOF",
+    "start": 1,
+    "length": 0
+  }
+]

@@ -1,0 +1,12 @@
+[
+  {
+    "kind": "ImplementsKeyword",
+    "start": 0,
+    "length": 10
+  },
+  {
+    "kind": "EOF",
+    "start": 9,
+    "length": 0
+  }
+]

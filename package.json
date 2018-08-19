@@ -18,6 +18,7 @@
     "@types/node": "10.5.2",
     "glob": "7.1.2",
     "mocha": "5.2.0",
+    "natural-orderby": "1.0.2",
     "typescript": "3.0.1"
   }
 }

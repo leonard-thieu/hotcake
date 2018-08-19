@@ -1,0 +1,12 @@
+[
+  {
+    "kind": "VerticalBar",
+    "start": 0,
+    "length": 1
+  },
+  {
+    "kind": "EOF",
+    "start": 0,
+    "length": 0
+  }
+]
