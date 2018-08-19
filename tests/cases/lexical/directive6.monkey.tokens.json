@@ -1,6 +1,6 @@
 [
   {
-    "kind": "ErrorDirectiveKeyword",
+    "kind": "PrintDirectiveKeyword",
     "start": 0,
     "length": 6
   },

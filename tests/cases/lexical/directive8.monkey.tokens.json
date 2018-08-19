@@ -1,12 +1,12 @@
 [
   {
-    "kind": "PrintDirectiveKeyword",
+    "kind": "ConfigVar",
     "start": 0,
-    "length": 6
+    "length": 29
   },
   {
     "kind": "EOF",
-    "start": 6,
+    "start": 29,
     "length": 0
   }
 ]

@@ -168,6 +168,10 @@ export class Tokenizer {
     next(): Token {
         let c = this.nextChar();
 
+        if (c === null) {
+            return new Token(TokenKind.EOF, this.position, 0);
+        }
+
         let kind = TokenKind.Unknown;
         const start = this.position;
 
@@ -202,9 +206,6 @@ export class Tokenizer {
             }
         } else {
             switch (c) {
-                case null: {
-                    return new Token(TokenKind.EOF, this.position, 0);
-                }
                 case '\n': { kind = TokenKind.Newline; break; }
                 case "'": {
                     kind = TokenKind.Comment

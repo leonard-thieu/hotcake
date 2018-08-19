@@ -1,12 +1,12 @@
 [
   {
-    "kind": "ConfigVar",
+    "kind": "RemDirectiveKeyword",
     "start": 0,
-    "length": 29
+    "length": 4
   },
   {
     "kind": "EOF",
-    "start": 29,
+    "start": 4,
     "length": 0
   }
 ]

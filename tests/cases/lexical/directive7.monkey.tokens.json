@@ -1,12 +1,12 @@
 [
   {
-    "kind": "EndDirectiveKeyword",
+    "kind": "ErrorDirectiveKeyword",
     "start": 0,
-    "length": 4
+    "length": 6
   },
   {
     "kind": "EOF",
-    "start": 4,
+    "start": 6,
     "length": 0
   }
 ]
