@@ -5,23 +5,17 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "antlr4 MonkeyXLexer.g4 -o gen && antlr4 MonkeyXParser.g4 -o gen -lib gen && javac gen/MonkeyX*.java",
-    "test:ndref": "tsc && node test \"S:\\Projects\\_GitHub\\leonard-thieu\\ndref\\src\\**\\*.monkey\"",
-    "test:monkeyx": "tsc && node test \"S:\\Projects\\_GitHub\\blitz-research\\monkey\\**\\*.monkey\"",
-    "test:tokenizer": "mocha tests",
+    "build": "tsc",
+    "test": "mocha tests",
     "watch": "tsc --watch"
   },
   "author": "Leonard Thieu",
   "license": "MIT",
-  "dependencies": {
-    "antlr4": "4.7.1"
-  },
+  "dependencies": {},
   "devDependencies": {
-    "@types/commondir": "1.0.0",
     "@types/glob": "5.0.35",
     "@types/mocha": "5.2.5",
     "@types/node": "10.5.2",
-    "commondir": "1.0.1",
     "glob": "7.1.2",
     "mocha": "5.2.0",
     "typescript": "3.0.1"
