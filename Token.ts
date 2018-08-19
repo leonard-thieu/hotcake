@@ -1,25 +1,25 @@
-export class PreprocessorToken {
+export class Token {
     constructor(
-        public kind: PreprocessorTokenKind,
+        public kind: TokenKind,
         public start: number,
         public length: number) { }
 
-    toJSON(): SerializablePreprocessorToken {
+    toJSON(): SerializableToken {
         return {
-            kind: PreprocessorTokenKind[this.kind],
+            kind: TokenKind[this.kind],
             start: this.start,
             length: this.length,
         };
     }
 }
 
-interface SerializablePreprocessorToken {
+interface SerializableToken {
     kind: string;
     start: number;
     length: number;
 }
 
-export enum PreprocessorTokenKind {
+export enum TokenKind {
     Unknown,
     EOF,
     Newline,
@@ -28,7 +28,17 @@ export enum PreprocessorTokenKind {
     StringLiteral,
     IntegerLiteral,
     FloatLiteral,
-    NumberSign,
+    
+    IfDirectiveKeyword,
+    ElseIfDirectiveKeyword,
+    ElseDirectiveKeyword,
+    EndDirectiveKeyword,
+    RemDirectiveKeyword,
+    RemDirectiveBody,
+    PrintDirectiveKeyword,
+    ErrorDirectiveKeyword,
+    ConfigVar,
+    
     Ampersand,
     OpeningParenthesis,
     ClosingParenthesis,
@@ -49,6 +59,7 @@ export enum PreprocessorTokenKind {
     ClosingSquareBracket,
     VerticalBar,
     Tilde,
+    
     Identifier,
     VoidKeyword,
     StrictKeyword,
@@ -119,4 +130,6 @@ export enum PreprocessorTokenKind {
     CatchKeyword,
     ThrowKeyword,
     ThrowableKeyword,
+    
+    Expression,
 }
