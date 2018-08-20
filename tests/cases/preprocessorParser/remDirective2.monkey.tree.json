@@ -1,0 +1,57 @@
+{
+  "ModuleNode": {
+    "children": [
+      {
+        "RemDirectiveNode": {
+          "remDirectiveKeyword": {
+            "kind": "RemDirectiveKeyword",
+            "start": 0,
+            "length": 4
+          },
+          "children": [
+            {
+              "kind": "RemDirectiveBody",
+              "start": 4,
+              "length": 22
+            }
+          ],
+          "endDirectiveKeyword": {
+            "kind": "EndDirectiveKeyword",
+            "start": 26,
+            "length": 4
+          }
+        }
+      },
+      {
+        "kind": "Whitespace",
+        "start": 30,
+        "length": 1
+      },
+      {
+        "kind": "Newline",
+        "start": 31,
+        "length": 1
+      },
+      {
+        "kind": "Whitespace",
+        "start": 32,
+        "length": 1
+      },
+      {
+        "kind": "Newline",
+        "start": 33,
+        "length": 1
+      },
+      {
+        "kind": "EndDirectiveKeyword",
+        "start": 34,
+        "length": 4
+      }
+    ],
+    "eofToken": {
+      "kind": "EOF",
+      "start": 38,
+      "length": 0
+    }
+  }
+}

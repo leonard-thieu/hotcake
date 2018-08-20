@@ -204,11 +204,13 @@ export class PreprocessorParser {
                 case TokenKind.RemDirectiveBody: {
                     const child = t;
                     n.children.push(child);
+                    this.advanceToken();
                     break;
                 }
                 default: {
                     const child = new SkippedToken(t);
                     n.children.push(child);
+                    this.advanceToken();
                     break;
                 }
             }

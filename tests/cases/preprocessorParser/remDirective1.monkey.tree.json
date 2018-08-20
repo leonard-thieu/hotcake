@@ -1,0 +1,32 @@
+{
+  "ModuleNode": {
+    "children": [
+      {
+        "RemDirectiveNode": {
+          "remDirectiveKeyword": {
+            "kind": "RemDirectiveKeyword",
+            "start": 0,
+            "length": 4
+          },
+          "children": [
+            {
+              "kind": "RemDirectiveBody",
+              "start": 4,
+              "length": 2
+            }
+          ],
+          "endDirectiveKeyword": {
+            "kind": "EndDirectiveKeyword",
+            "start": 6,
+            "length": 4
+          }
+        }
+      }
+    ],
+    "eofToken": {
+      "kind": "EOF",
+      "start": 10,
+      "length": 0
+    }
+  }
+}
