@@ -1,0 +1,42 @@
+{
+  "ModuleNode": {
+    "children": [
+      {
+        "ErrorDirectiveNode": {
+          "errorDirectiveKeyword": {
+            "kind": "ErrorDirectiveKeyword",
+            "start": 0,
+            "length": 6
+          },
+          "expression": {
+            "StringLiteral": {
+              "startQuote": {
+                "kind": "QuotationMark",
+                "start": 7,
+                "length": 1
+              },
+              "children": [
+                {
+                  "kind": "StringLiteralText",
+                  "start": 8,
+                  "length": 7
+                }
+              ],
+              "endQuote": {
+                "kind": "QuotationMark",
+                "start": 15,
+                "length": 1
+              }
+            }
+          },
+          "children": []
+        }
+      }
+    ],
+    "eofToken": {
+      "kind": "EOF",
+      "start": 16,
+      "length": 0
+    }
+  }
+}

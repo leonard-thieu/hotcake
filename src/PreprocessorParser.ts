@@ -8,6 +8,7 @@ import {
     Node,
     PrintDirectiveNode,
     RemDirectiveNode,
+    StringLiteral,
 } from './Node';
 import { SkippedToken } from './SkippedToken';
 import { Token, TokenKind } from './Token';
@@ -240,13 +241,77 @@ export class PreprocessorParser {
     }
 
     private parseExpression(parent: Node): Node | MissingToken {
+        this.skipTriviaTokens();
+
         const token = this.getCurrentToken();
+
+        switch (token.kind) {
+            case TokenKind.QuotationMark: {
+                return this.parseStringLiteral(parent);
+            }
+        }
 
         return new MissingToken(TokenKind.Expression, token.start);
     }
 
+    private parseStringLiteral(parent: Node) {
+        const n = new StringLiteral();
+        n.parent = parent;
+        n.startQuote = this.eat(TokenKind.QuotationMark);
+
+        let continueParsing = true;
+        do {
+            const t = this.getCurrentToken();
+            switch (t.kind) {
+                case TokenKind.QuotationMark:
+                case TokenKind.EOF: {
+                    continueParsing = false;
+                    break;
+                }
+                case TokenKind.StringLiteralText:
+                case TokenKind.EscapeNull:
+                case TokenKind.EscapeCharacterTabulation:
+                case TokenKind.EscapeLineFeedLf:
+                case TokenKind.EscapeCarriageReturnCr:
+                case TokenKind.EscapeQuotationMark:
+                case TokenKind.EscapeTilde:
+                case TokenKind.EscapeUnicodeHexValue:
+                case TokenKind.InvalidEscapeSequence: {
+                    const child = t;
+                    n.children.push(child);
+                    this.advanceToken();
+                    break;
+                }
+                default: {
+                    const child = new SkippedToken(t);
+                    n.children.push(child);
+                    this.advanceToken();
+                    break;
+                }
+            }
+        } while (continueParsing);
+
+        n.endQuote = this.eat(TokenKind.QuotationMark);
+
+        return n;
+    }
+
     private eat(kind: TokenKind): Token {
+        this.skipTriviaTokens();
+
         let token = this.getCurrentToken();
+
+        if (token.kind === kind) {
+            this.advanceToken();
+            return token;
+        }
+
+        return new MissingToken(kind, token.start);
+    }
+
+    private skipTriviaTokens(): void {
+        let token = this.getCurrentToken();
+
         let keepAdvancing = true;
         while (keepAdvancing) {
             switch (token.kind) {
@@ -262,13 +327,6 @@ export class PreprocessorParser {
                 }
             }
         }
-
-        if (token.kind === kind) {
-            this.advanceToken();
-            return token;
-        }
-
-        return new MissingToken(kind, token.start);
     }
 
     private getCurrentToken(): Token {

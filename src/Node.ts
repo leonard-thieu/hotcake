@@ -36,7 +36,7 @@ export class ModuleNode extends Node {
 
 export class IfDirectiveNode extends Node {
     ifDirectiveKeyword: Token | null = null;
-    expression: Node | MissingToken | null = null;
+    expression: Expression | MissingToken | null = null;
     elseIfDirectives: ElseIfDirectiveNode[] = [];
     elseDirective: ElseDirectiveNode | null = null;
     endDirectiveKeyword: Token | MissingToken | null = null;
@@ -59,7 +59,7 @@ export class IfDirectiveNode extends Node {
 
 export class ElseIfDirectiveNode extends Node {
     elseIfDirectiveKeyword: Token | null = null;
-    expression: Node | MissingToken | null = null;
+    expression: Expression | MissingToken | null = null;
 
     protected toJSONBeforeChildren() {
         return {
@@ -98,7 +98,7 @@ export class RemDirectiveNode extends Node {
 
 export class PrintDirectiveNode extends Node {
     printDirectiveKeyword: Token | null = null;
-    expression: Node | MissingToken | null = null;
+    expression: Expression | MissingToken | null = null;
 
     protected toJSONBeforeChildren() {
         return {
@@ -110,12 +110,31 @@ export class PrintDirectiveNode extends Node {
 
 export class ErrorDirectiveNode extends Node {
     errorDirectiveKeyword: Token | null = null;
-    expression: Node | MissingToken | null = null;
+    expression: Expression | MissingToken | null = null;
 
     protected toJSONBeforeChildren() {
         return {
             errorDirectiveKeyword: this.errorDirectiveKeyword,
             expression: this.expression,
+        };
+    }
+}
+
+export abstract class Expression extends Node { }
+
+export class StringLiteral extends Expression {
+    startQuote: Token | null = null;
+    endQuote: Token | MissingToken | null = null;
+
+    protected toJSONBeforeChildren() {
+        return {
+            startQuote: this.startQuote,
+        };
+    }
+
+    protected toJSONAfterChildren() {
+        return {
+            endQuote: this.endQuote,
         };
     }
 }

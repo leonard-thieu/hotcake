@@ -25,9 +25,18 @@ export enum TokenKind {
     Newline,
     Whitespace,
     Comment,
-    StringLiteral,
     IntegerLiteral,
     FloatLiteral,
+
+    StringLiteralText,
+    EscapeNull,
+    EscapeCharacterTabulation,
+    EscapeLineFeedLf,
+    EscapeCarriageReturnCr,
+    EscapeQuotationMark,
+    EscapeTilde,
+    EscapeUnicodeHexValue,
+    InvalidEscapeSequence,
     
     IfDirectiveKeyword,
     ElseIfDirectiveKeyword,
@@ -39,6 +48,7 @@ export enum TokenKind {
     ErrorDirectiveKeyword,
     ConfigVar,
     
+    QuotationMark,
     Ampersand,
     OpeningParenthesis,
     ClosingParenthesis,

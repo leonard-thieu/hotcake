@@ -164,6 +164,7 @@ export class Tokenizer {
 
     private position: number = -1;
     private remDirectiveLevel: number = 0;
+    private inString: boolean = false;
 
     next(): Token {
         let c = this.nextChar();
@@ -204,6 +205,85 @@ export class Tokenizer {
                     break;
                 }
             }
+        } else if (this.inString) {
+            switch (c) {
+                case '"': {
+                    kind = TokenKind.QuotationMark;
+                    this.inString = false;
+                    break;
+                }
+                case '~': {
+                    switch (this.peekChar()) {
+                        case '~': {
+                            kind = TokenKind.EscapeTilde;
+                            this.position++;
+                            break;
+                        }
+                        case 'q': {
+                            kind = TokenKind.EscapeQuotationMark;
+                            this.position++;
+                            break;
+                        }
+                        case 'n': {
+                            kind = TokenKind.EscapeLineFeedLf;
+                            this.position++;
+                            break;
+                        }
+                        case 'r': {
+                            kind = TokenKind.EscapeCarriageReturnCr;
+                            this.position++;
+                            break;
+                        }
+                        case 't': {
+                            kind = TokenKind.EscapeCharacterTabulation;
+                            this.position++;
+                            break;
+                        }
+                        case '0': {
+                            kind = TokenKind.EscapeNull;
+                            this.position++;
+                            break;
+                        }
+                        case 'u': {
+                            kind = TokenKind.EscapeUnicodeHexValue;
+                            
+                            for (let i = 0; i < 4; i++) {
+                                c = this.nextChar();
+
+                                if (!isHexadecimal(c)) {
+                                    kind = TokenKind.InvalidEscapeSequence;
+                                }
+                            }
+                            break;
+                        }
+                        default: {
+                            kind = TokenKind.InvalidEscapeSequence;
+                            break;
+                        }
+                    }
+                    break;
+                }
+                default: {
+                    kind = TokenKind.StringLiteralText;
+
+                    let keepReading = true;
+                    while (keepReading) {
+                        switch (this.peekChar()) {
+                            case null:
+                            case '"':
+                            case '~': {
+                                keepReading = false;
+                                break;
+                            }
+                            default: {
+                                this.position++;
+                                break;
+                            }
+                        }
+                    }
+                    break;
+                }
+            }
         } else {
             switch (c) {
                 case '\n': { kind = TokenKind.Newline; break; }
@@ -218,29 +298,10 @@ export class Tokenizer {
                     }
                     break;
                 }
-                // TODO: Should escape characters be handled?
+                // TODO: Should this scan ahead to check if the string literal is terminated?
                 case '"': {
-                    let keepReading = true;
-                    do {
-                        switch (this.peekChar()) {
-                            // Couldn't find a terminating '"'. Rollback.
-                            case null: {
-                                this.position = start;
-                                keepReading = false;
-                                break;
-                            }
-                            case '"': {
-                                this.position++;
-                                kind = TokenKind.StringLiteral
-                                keepReading = false;
-                                break;
-                            }
-                            default: {
-                                this.position++;
-                                break;
-                            }
-                        }
-                    } while (keepReading);
+                    kind = TokenKind.QuotationMark;
+                    this.inString = true;
                     break;
                 }
                 case '%': {

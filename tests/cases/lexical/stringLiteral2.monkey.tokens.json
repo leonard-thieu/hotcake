@@ -1,11 +1,11 @@
 [
   {
-    "kind": "Unknown",
+    "kind": "QuotationMark",
     "start": 0,
     "length": 1
   },
   {
-    "kind": "Identifier",
+    "kind": "StringLiteralText",
     "start": 1,
     "length": 5
   },

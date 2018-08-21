@@ -5,18 +5,18 @@
     "length": 1
   },
   {
-    "kind": "StringLiteralText",
+    "kind": "EscapeQuotationMark",
     "start": 1,
-    "length": 5
+    "length": 2
   },
   {
     "kind": "QuotationMark",
-    "start": 6,
+    "start": 3,
     "length": 1
   },
   {
     "kind": "EOF",
-    "start": 7,
+    "start": 4,
     "length": 0
   }
 ]
