@@ -1,6 +1,6 @@
 {
   "ModuleNode": {
-    "children": [
+    "members": [
       {
         "RemDirectiveNode": {
           "remDirectiveKeyword": {

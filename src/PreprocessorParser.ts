@@ -49,7 +49,7 @@ export class PreprocessorParser {
                         child = new SkippedToken(t);
                         this.advanceToken();
                     }
-                    n.children.push(child);
+                    n.members.push(child);
                     break;
                 }
             }
@@ -111,7 +111,7 @@ export class PreprocessorParser {
                         child = t;
                         this.advanceToken();
                     }
-                    n.children.push(child);
+                    n.members.push(child);
                     break;
                 }
             }
@@ -145,7 +145,7 @@ export class PreprocessorParser {
                         child = t;
                         this.advanceToken();
                     }
-                    n.children.push(child);
+                    n.members.push(child);
                     break;
                 }
             }
@@ -174,7 +174,7 @@ export class PreprocessorParser {
                         child = t;
                         this.advanceToken();
                     }
-                    n.children.push(child);
+                    n.members.push(child);
                     break;
                 }
             }

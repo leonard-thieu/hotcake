@@ -3,7 +3,6 @@ import { MissingToken } from './MissingToken';
 
 export abstract class Node {
     parent: Node | null = null;
-    children: Array<Token | Node> = [];
 
     toJSON() {
         const obj: any = {};
@@ -26,10 +25,11 @@ export abstract class Node {
 
 export class ModuleNode extends Node {
     static CHILD_NAMES: (keyof ModuleNode)[] = [
-        'children',
+        'members',
         'eofToken',
     ];
 
+    members: Array<Node | Token> = [];
     eofToken: Token | null = null;
 }
 
@@ -37,7 +37,7 @@ export class IfDirectiveNode extends Node {
     static CHILD_NAMES: (keyof IfDirectiveNode)[] = [
         'ifDirectiveKeyword',
         'expression',
-        'children',
+        'members',
         'elseIfDirectives',
         'elseDirective',
         'endDirectiveKeyword',
@@ -45,6 +45,7 @@ export class IfDirectiveNode extends Node {
 
     ifDirectiveKeyword: Token | null = null;
     expression: Expression | MissingToken | null = null;
+    members: Array<Node | Token> = [];
     elseIfDirectives: ElseIfDirectiveNode[] = [];
     elseDirective: ElseDirectiveNode | null = null;
     endDirectiveKeyword: Token | MissingToken | null = null;
@@ -54,20 +55,22 @@ export class ElseIfDirectiveNode extends Node {
     static CHILD_NAMES: (keyof ElseIfDirectiveNode)[] = [
         'elseIfDirectiveKeyword',
         'expression',
-        'children',
+        'members',
     ];
 
     elseIfDirectiveKeyword: Token | null = null;
     expression: Expression | MissingToken | null = null;
+    members: Array<Node | Token> = [];
 }
 
 export class ElseDirectiveNode extends Node {
     static CHILD_NAMES: (keyof ElseDirectiveNode)[] = [
         'elseDirectiveKeyword',
-        'children',
+        'members',
     ];
 
     elseDirectiveKeyword: Token | null = null;
+    members: Array<Node | Token> = [];
 }
 
 export class RemDirectiveNode extends Node {
@@ -78,6 +81,7 @@ export class RemDirectiveNode extends Node {
     ];
 
     remDirectiveKeyword: Token | null = null;
+    children: Array<Node | Token> = [];
     endDirectiveKeyword: Token | MissingToken | null = null;
 }
 
@@ -111,5 +115,6 @@ export class StringLiteral extends Expression {
     ];
 
     startQuote: Token | null = null;
+    children: Array<Token> = [];
     endQuote: Token | MissingToken | null = null;
 }
