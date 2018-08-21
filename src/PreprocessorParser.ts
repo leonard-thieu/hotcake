@@ -1,15 +1,13 @@
 import { MissingToken } from './MissingToken';
-import {
-    ElseDirectiveNode,
-    ElseIfDirectiveNode,
-    ErrorDirectiveNode,
-    IfDirectiveNode,
-    ModuleNode,
-    Node,
-    PrintDirectiveNode,
-    RemDirectiveNode,
-    StringLiteral,
-} from './Node';
+import { ElseDirectiveNode } from './Node/ElseDirectiveNode';
+import { ElseIfDirectiveNode } from './Node/ElseIfDirectiveNode';
+import { ErrorDirectiveNode } from './Node/ErrorDirectiveNode';
+import { StringLiteral } from './Node/Expression/StringLiteral';
+import { IfDirectiveNode } from './Node/IfDirectiveNode';
+import { ModuleNode } from './Node/ModuleNode';
+import { Node } from './Node/Node';
+import { PrintDirectiveNode } from './Node/PrintDirectiveNode';
+import { RemDirectiveNode } from './Node/RemDirectiveNode';
 import { SkippedToken } from './SkippedToken';
 import { Token, TokenKind } from './Token';
 import { Tokenizer } from './Tokenizer';
