@@ -8,7 +8,7 @@ export function executeTestCases(type: string, ext: string, testCallback: TestCa
 
     describe(type, function () {
         const casesPath = path.join(__dirname, 'cases', type);
-        const casesGlobPath = path.join(casesPath, '**', '*.monkey');
+        const casesGlobPath = path.join(casesPath, '*.monkey');
         const sourcePaths = orderBy(glob.sync(casesGlobPath));
     
         for (const sourcePath of sourcePaths) {
