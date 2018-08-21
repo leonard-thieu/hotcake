@@ -12,40 +12,48 @@
             {
               "kind": "RemDirectiveBody",
               "start": 4,
-              "length": 22
+              "length": 8
+            },
+            {
+              "IfDirectiveNode": {
+                "ifDirectiveKeyword": {
+                  "kind": "IfDirectiveKeyword",
+                  "start": 12,
+                  "length": 3
+                },
+                "expression": {
+                  "kind": "Expression",
+                  "start": 15,
+                  "length": 0
+                },
+                "members": [
+                  {
+                    "kind": "RemDirectiveBody",
+                    "start": 15,
+                    "length": 11
+                  }
+                ],
+                "elseIfDirectives": [],
+                "elseDirective": null,
+                "endDirectiveKeyword": {
+                  "kind": "EndDirectiveKeyword",
+                  "start": 26,
+                  "length": 4
+                }
+              }
+            },
+            {
+              "kind": "RemDirectiveBody",
+              "start": 30,
+              "length": 4
             }
           ],
           "endDirectiveKeyword": {
             "kind": "EndDirectiveKeyword",
-            "start": 26,
+            "start": 34,
             "length": 4
           }
         }
-      },
-      {
-        "kind": "Whitespace",
-        "start": 30,
-        "length": 1
-      },
-      {
-        "kind": "Newline",
-        "start": 31,
-        "length": 1
-      },
-      {
-        "kind": "Whitespace",
-        "start": 32,
-        "length": 1
-      },
-      {
-        "kind": "Newline",
-        "start": 33,
-        "length": 1
-      },
-      {
-        "kind": "EndDirectiveKeyword",
-        "start": 34,
-        "length": 4
       }
     ],
     "eofToken": {

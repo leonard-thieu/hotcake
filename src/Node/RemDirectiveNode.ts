@@ -1,5 +1,6 @@
 import { MissingToken } from '../MissingToken';
 import { Token } from '../Token';
+import { IfDirectiveNode } from './IfDirectiveNode';
 import { Node } from './Node';
 
 export class RemDirectiveNode extends Node {
@@ -10,6 +11,6 @@ export class RemDirectiveNode extends Node {
     ];
 
     remDirectiveKeyword: Token | null = null;
-    children: Array<Node | Token> = [];
+    children: Array<RemDirectiveNode | IfDirectiveNode | Token> = [];
     endDirectiveKeyword: Token | MissingToken | null = null;
 }

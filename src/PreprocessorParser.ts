@@ -200,6 +200,11 @@ export class PreprocessorParser {
                     n.children.push(child);
                     break;
                 }
+                case TokenKind.IfDirectiveKeyword: {
+                    const child = this.parseIfDirective(n);
+                    n.children.push(child);
+                    break;
+                }
                 case TokenKind.RemDirectiveBody: {
                     const child = t;
                     n.children.push(child);

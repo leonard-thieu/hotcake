@@ -179,7 +179,8 @@ export class Tokenizer {
         if (this.remDirectiveLevel > 0) {
             kind = this.tryReadPreprocessorDirective();
             switch (kind) {
-                case TokenKind.RemDirectiveKeyword: {
+                case TokenKind.RemDirectiveKeyword:
+                case TokenKind.IfDirectiveKeyword: {
                     this.remDirectiveLevel++;
                     break;
                 }
@@ -190,16 +191,25 @@ export class Tokenizer {
                 default: {
                     kind = TokenKind.RemDirectiveBody;
 
-                    while (c !== null) {
+                    let continueReading = true;
+                    while (continueReading) {
                         const pos = this.position - 1;
-                        const nextKind = this.tryReadPreprocessorDirective();
-                        if (nextKind === TokenKind.RemDirectiveKeyword ||
-                            nextKind === TokenKind.EndDirectiveKeyword) {
-                            this.position = pos;
-                            break;
-                        } else {
-                            this.position++;
-                            c = this.peekChar();
+                        switch (this.tryReadPreprocessorDirective()) {
+                            case TokenKind.RemDirectiveKeyword:
+                            case TokenKind.IfDirectiveKeyword:
+                            case TokenKind.EndDirectiveKeyword: {
+                                this.position = pos;
+                                continueReading = false;
+                                break;
+                            }
+                            default: {
+                                this.position++;
+                                c = this.peekChar();
+                                if (c === null) {
+                                    continueReading = false;
+                                }
+                                break;
+                            }
                         }
                     }
                     break;
