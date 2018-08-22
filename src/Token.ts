@@ -143,4 +143,7 @@ export enum TokenKind {
     ThrowableKeyword,
     
     Expression,
+    LessThanOrEquals,
+    GreaterThanOrEquals,
+    NotEquals,
 }

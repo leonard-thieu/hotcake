@@ -1,8 +1,15 @@
+import assert = require('assert');
+
 import { MissingToken } from './MissingToken';
 import { ElseDirectiveNode } from './Node/ElseDirectiveNode';
 import { ElseIfDirectiveNode } from './Node/ElseIfDirectiveNode';
 import { ErrorDirectiveNode } from './Node/ErrorDirectiveNode';
+import { BinaryExpression } from './Node/Expression/BinaryExpression';
+import { Expression } from './Node/Expression/Expression';
+import { GroupingExpression } from './Node/Expression/GroupingExpression';
 import { StringLiteral } from './Node/Expression/StringLiteral';
+import { UnaryOpExpression } from './Node/Expression/UnaryOpExpression';
+import { Variable } from './Node/Expression/Variable';
 import { IfDirectiveNode } from './Node/IfDirectiveNode';
 import { ModuleNode } from './Node/ModuleNode';
 import { Node } from './Node/Node';
@@ -77,6 +84,8 @@ export class PreprocessorParser {
 
         return null;
     }
+
+    // #region Directives
 
     private parseIfDirective(parent: Node): IfDirectiveNode {
         const n = new IfDirectiveNode();
@@ -243,16 +252,160 @@ export class PreprocessorParser {
         return n;
     }
 
-    private parseExpression(parent: Node): Node | MissingToken {
-        const token = this.getCurrentToken();
+    // #endregion
 
+    // #region Expressions
+
+    private parseExpression(parent: Node): Expression {
+        const expression = this.parseBinaryExpression(parent);
+
+        assert([
+            TokenKind.Newline,
+            TokenKind.EOF,
+        ].includes(this.getCurrentToken().kind), TokenKind[this.getCurrentToken().kind]);
+
+        return expression;
+    }
+
+    private parseBinaryExpression(parent: Node): Expression {
+        let expression = this.parseUnaryExpression(parent);
+
+        do {
+            let token = this.getCurrentToken();
+
+            let isBinaryOperator = false;
+            switch (token.kind) {
+                case TokenKind.Asterisk:
+                case TokenKind.Slash:
+                case TokenKind.ModKeyword:
+                case TokenKind.ShlKeyword:
+                case TokenKind.ShrKeyword:
+                case TokenKind.PlusSign:
+                case TokenKind.HyphenMinus:
+                case TokenKind.Ampersand:
+                case TokenKind.Tilde:
+                case TokenKind.VerticalBar:
+                case TokenKind.EqualsSign: {
+                    isBinaryOperator = true;
+                    break;
+                }
+                case TokenKind.LessThanSign: {
+                    const nextToken = this.getToken(1);
+                    switch (nextToken.kind) {
+                        case TokenKind.EqualsSign:
+                            this.advanceToken();
+                            token = new Token(TokenKind.LessThanOrEquals, token.fullStart, token.start, token.length + nextToken.length);
+                            break;
+                        case TokenKind.GreaterThanSign:
+                            this.advanceToken();
+                            token = new Token(TokenKind.NotEquals, token.fullStart, token.start, token.length + nextToken.length);
+                            break;
+                    }
+
+                    isBinaryOperator = true;
+                    break;
+                }
+                case TokenKind.GreaterThanSign: {
+                    const nextToken = this.getToken(1);
+                    switch (nextToken.kind) {
+                        case TokenKind.EqualsSign:
+                            this.advanceToken();
+                            token = new Token(TokenKind.GreaterThanOrEquals, token.fullStart, token.start, token.length + nextToken.length);
+                            break;
+                    }
+
+                    isBinaryOperator = true;
+                    break;
+                }
+                case TokenKind.AndKeyword:
+                case TokenKind.OrKeyword: {
+                    isBinaryOperator = true;
+                    break;
+                }
+            }
+
+            if (!isBinaryOperator) {
+                break;
+            }
+
+            this.advanceToken();
+
+            expression = this.makeBinaryExpression(
+                expression,
+                token,
+                this.parseBinaryExpression((null as any)),
+                parent
+            );
+        } while (false);
+
+        return expression;
+    }
+
+    private makeBinaryExpression(leftOperand: Expression, operator: Token, rightOperand: Expression, parent: Node): Expression {
+        const binaryExpression = new BinaryExpression();
+        binaryExpression.parent = parent;
+        binaryExpression.leftOperand = leftOperand;
+        leftOperand.parent = binaryExpression;
+        binaryExpression.operator = operator;
+        binaryExpression.rightOperand = rightOperand;
+        rightOperand.parent = binaryExpression;
+
+        return binaryExpression;
+    }
+
+    private parseUnaryExpression(parent: Node): Expression {
+        const token = this.getCurrentToken();
         switch (token.kind) {
-            case TokenKind.QuotationMark: {
-                return this.parseStringLiteral(parent);
+            case TokenKind.NotKeyword: {
+                return this.parseUnaryOpExpression(parent);
             }
         }
 
-        return new MissingToken(TokenKind.Expression, token.start);
+        return this.parsePrimaryExpression(parent);
+    }
+
+    private parseUnaryOpExpression(parent: Node): UnaryOpExpression {
+        const unaryOpExpression = new UnaryOpExpression();
+        unaryOpExpression.parent = parent;
+        unaryOpExpression.operator = this.eat(TokenKind.PlusSign, TokenKind.HyphenMinus, TokenKind.Tilde, TokenKind.NotKeyword);
+        unaryOpExpression.operand = this.parseUnaryExpression(unaryOpExpression);
+
+        return unaryOpExpression;
+    }
+
+    private parsePrimaryExpression(parent: Node): Expression {
+        const token = this.getCurrentToken();
+        switch (token.kind) {
+            case TokenKind.OpeningParenthesis: {
+                return this.parseGroupingExpression(parent);
+            }
+            case TokenKind.QuotationMark: {
+                return this.parseStringLiteral(parent);
+            }
+            case TokenKind.Identifier: {
+                return this.parseConfigVariable(parent);
+            }
+        }
+
+        throw new Error(`${TokenKind[token.kind]} not implemented.`);
+    }
+
+    private parseGroupingExpression(parent: Node): GroupingExpression {
+        const groupingExpression = new GroupingExpression();
+        groupingExpression.parent = parent;
+        groupingExpression.openingParenthesis = this.eat(TokenKind.OpeningParenthesis);
+        groupingExpression.expression = this.parseExpression(groupingExpression);
+        groupingExpression.closingParenthesis = this.eat(TokenKind.ClosingParenthesis);
+
+        return groupingExpression;
+    }
+
+    private parseConfigVariable(parent: Node) {
+        const variable = new Variable();
+        variable.parent = parent;
+        variable.name = this.eat(TokenKind.Identifier);
+
+        return variable;
     }
 
     private parseStringLiteral(parent: Node) {
@@ -297,19 +450,38 @@ export class PreprocessorParser {
         return n;
     }
 
-    private eat(kind: TokenKind): Token {
-        let token = this.getCurrentToken();
+    // #endregion
 
-        if (token.kind === kind) {
+    // #region Core
+
+    private eat(...kinds: TokenKind[]): Token {
+        const eaten = this.eatOptional(...kinds);
+        if (eaten !== null) {
+            return eaten;
+        }
+
+        const token = this.getCurrentToken();
+
+        return new MissingToken(kinds[0], token.start);
+    }
+
+    private eatOptional(...kinds: TokenKind[]): Token | null {
+        const token = this.getCurrentToken();
+        if (kinds.includes(token.kind)) {
             this.advanceToken();
+
             return token;
         }
 
-        return new MissingToken(kind, token.start);
+        return null;
     }
 
     private getCurrentToken(): Token {
-        return this.tokens[this.position];
+        return this.getToken(0);
+    }
+
+    private getToken(offset: number): Token {
+        return this.tokens[this.position + offset];
     }
 
     private advanceToken(): void {
@@ -317,4 +489,6 @@ export class PreprocessorParser {
             this.position++;
         }
     }
+
+    // #endregion
 }

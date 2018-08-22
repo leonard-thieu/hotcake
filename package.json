@@ -6,7 +6,8 @@
   "main": "index.js",
   "scripts": {
     "build": "tsc",
-    "test": "mocha \"./tests/!(MonkeyTests)*.js\"",
+    "test": "mocha --require source-map-support/register \"./tests/!(MonkeyTests)*.js\"",
+    "test:monkey": "mocha --require source-map-support/register \"./tests\"",
     "watch": "tsc --watch"
   },
   "author": "Leonard Thieu",
@@ -21,6 +22,7 @@
     "mkdirp": "0.5.1",
     "mocha": "5.2.0",
     "natural-orderby": "1.0.2",
+    "source-map-support": "0.5.9",
     "typescript": "3.0.1"
   }
 }

@@ -32,29 +32,25 @@ export function executeTestCases(type: TestCaseOptions | string, ext?: string, t
         const sourcePaths = orderBy(glob.sync(casesGlobPath));
     
         for (const sourcePath of sourcePaths) {
-            const sourceBasename = path.basename(sourcePath);
-            const outputDir = path.join(outputBasePath, path.relative(casesPath, path.dirname(sourcePath)));
-            mkdirp.sync(outputDir);
-            const outputPath = path.join(outputDir, `${sourceBasename}.${ext}.json`);
+            const sourceRelativePath = path.relative(casesPath, sourcePath);
+            const outputPath = path.join(outputBasePath, sourceRelativePath) + `.${ext}.json`;
+            mkdirp.sync(path.dirname(outputPath));
     
             let _it: Mocha.PendingTestFunction = it;
-            if (skippedCases && skippedCases.includes(sourceBasename)) {
+            if (skippedCases && skippedCases.includes(sourceRelativePath)) {
                 _it = xit;
                 try {
                     fs.unlinkSync(outputPath);
                 } catch (error) {
                     switch (error.code) {
                         case 'ENOENT': { break; }
-                        default: {
-                            console.log(error);
-                            break;
-                        }
+                        default: { throw error; }
                     }
                 }
             }
     
             // TODO: Should this fail/warn if baselines have changed?
-            _it(sourceBasename, function () {
+            _it(sourceRelativePath, function () {
                 const contents = fs.readFileSync(sourcePath, 'utf8');
                 const result = testCallback!(contents);
     
