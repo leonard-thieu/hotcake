@@ -158,11 +158,9 @@ export class PreprocessorParser {
                     break;
                 }
                 default: {
-                    let child: Node | Token | null = this.parseNextInModuleContext(elseIfDirective);
-                    if (child === null) {
-                        child = token;
-                        this.advanceToken();
-                    }
+                    const child =
+                        this.parseNextInModuleContext(elseIfDirective) ||
+                        this.eat(token.kind);
                     elseIfDirective.members.push(child);
                     break;
                 }
@@ -187,11 +185,9 @@ export class PreprocessorParser {
                     break;
                 }
                 default: {
-                    let child: Node | Token | null = this.parseNextInModuleContext(elseDirective);
-                    if (child === null) {
-                        child = token;
-                        this.advanceToken();
-                    }
+                    const child =
+                        this.parseNextInModuleContext(elseDirective) ||
+                        this.eat(token.kind);
                     elseDirective.members.push(child);
                     break;
                 }
@@ -226,15 +222,13 @@ export class PreprocessorParser {
                     break;
                 }
                 case TokenKind.RemDirectiveBody: {
-                    const child = token;
+                    const child = this.eat(token.kind);
                     remDirective.children.push(child);
-                    this.advanceToken();
                     break;
                 }
                 default: {
-                    const child = new SkippedToken(token);
+                    const child = new SkippedToken(this.eat(token.kind));
                     remDirective.children.push(child);
-                    this.advanceToken();
                     break;
                 }
             }
@@ -385,11 +379,11 @@ export class PreprocessorParser {
             case TokenKind.OpeningParenthesis: {
                 return this.parseGroupingExpression(parent);
             }
-            case TokenKind.QuotationMark: {
-                return this.parseStringLiteral(parent);
-            }
             case TokenKind.Identifier: {
                 return this.parseVariable(parent);
+            }
+            case TokenKind.QuotationMark: {
+                return this.parseStringLiteral(parent);
             }
         }
 
@@ -437,15 +431,13 @@ export class PreprocessorParser {
                 case TokenKind.EscapeTilde:
                 case TokenKind.EscapeUnicodeHexValue:
                 case TokenKind.InvalidEscapeSequence: {
-                    const child = token;
+                    const child = this.eat(token.kind);
                     stringLiteral.children.push(child);
-                    this.advanceToken();
                     break;
                 }
                 default: {
-                    const child = new SkippedToken(token);
+                    const child = new SkippedToken(this.eat(token.kind));
                     stringLiteral.children.push(child);
-                    this.advanceToken();
                     break;
                 }
             }
