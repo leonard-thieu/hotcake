@@ -1,21 +1,25 @@
 [
   {
     "kind": "QuotationMark",
+    "fullStart": 0,
     "start": 0,
     "length": 1
   },
   {
     "kind": "EscapeNull",
+    "fullStart": 1,
     "start": 1,
     "length": 2
   },
   {
     "kind": "QuotationMark",
+    "fullStart": 3,
     "start": 3,
     "length": 1
   },
   {
     "kind": "EOF",
+    "fullStart": 4,
     "start": 4,
     "length": 0
   }

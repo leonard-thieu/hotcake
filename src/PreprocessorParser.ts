@@ -244,8 +244,6 @@ export class PreprocessorParser {
     }
 
     private parseExpression(parent: Node): Node | MissingToken {
-        this.skipTriviaTokens();
-
         const token = this.getCurrentToken();
 
         switch (token.kind) {
@@ -300,8 +298,6 @@ export class PreprocessorParser {
     }
 
     private eat(kind: TokenKind): Token {
-        this.skipTriviaTokens();
-
         let token = this.getCurrentToken();
 
         if (token.kind === kind) {
@@ -310,26 +306,6 @@ export class PreprocessorParser {
         }
 
         return new MissingToken(kind, token.start);
-    }
-
-    private skipTriviaTokens(): void {
-        let token = this.getCurrentToken();
-
-        let keepAdvancing = true;
-        while (keepAdvancing) {
-            switch (token.kind) {
-                case TokenKind.Whitespace:
-                case TokenKind.Comment: {
-                    this.advanceToken();
-                    token = this.getCurrentToken();
-                    break;
-                }
-                default: {
-                    keepAdvancing = false;
-                    break;
-                }
-            }
-        }
     }
 
     private getCurrentToken(): Token {

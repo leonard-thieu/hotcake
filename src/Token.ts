@@ -1,12 +1,14 @@
 export class Token {
     constructor(
         public kind: TokenKind,
+        public fullStart: number,
         public start: number,
         public length: number) { }
 
     toJSON(): SerializableToken {
         return {
             kind: TokenKind[this.kind],
+            fullStart: this.fullStart,
             start: this.start,
             length: this.length,
         };
@@ -15,6 +17,7 @@ export class Token {
 
 interface SerializableToken {
     kind: string;
+    fullStart: number;
     start: number;
     length: number;
 }
@@ -23,8 +26,6 @@ export enum TokenKind {
     Unknown,
     EOF,
     Newline,
-    Whitespace,
-    Comment,
     IntegerLiteral,
     FloatLiteral,
 

@@ -1,11 +1,13 @@
 [
   {
     "kind": "ImplementsKeyword",
+    "fullStart": 0,
     "start": 0,
     "length": 10
   },
   {
     "kind": "EOF",
+    "fullStart": 10,
     "start": 10,
     "length": 0
   }

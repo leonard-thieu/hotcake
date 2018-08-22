@@ -5,31 +5,36 @@
         "RemDirectiveNode": {
           "remDirectiveKeyword": {
             "kind": "RemDirectiveKeyword",
+            "fullStart": 0,
             "start": 0,
             "length": 4
           },
           "children": [
             {
               "kind": "RemDirectiveBody",
-              "start": 4,
+              "fullStart": 4,
+              "start": 5,
               "length": 8
             },
             {
               "IfDirectiveNode": {
                 "ifDirectiveKeyword": {
                   "kind": "IfDirectiveKeyword",
+                  "fullStart": 12,
                   "start": 12,
                   "length": 3
                 },
                 "expression": {
                   "kind": "Expression",
-                  "start": 15,
+                  "fullStart": 16,
+                  "start": 16,
                   "length": 0
                 },
                 "members": [
                   {
                     "kind": "RemDirectiveBody",
-                    "start": 15,
+                    "fullStart": 15,
+                    "start": 16,
                     "length": 11
                   }
                 ],
@@ -37,6 +42,7 @@
                 "elseDirective": null,
                 "endDirectiveKeyword": {
                   "kind": "EndDirectiveKeyword",
+                  "fullStart": 26,
                   "start": 26,
                   "length": 4
                 }
@@ -44,12 +50,14 @@
             },
             {
               "kind": "RemDirectiveBody",
-              "start": 30,
+              "fullStart": 30,
+              "start": 31,
               "length": 4
             }
           ],
           "endDirectiveKeyword": {
             "kind": "EndDirectiveKeyword",
+            "fullStart": 34,
             "start": 34,
             "length": 4
           }
@@ -58,6 +66,7 @@
     ],
     "eofToken": {
       "kind": "EOF",
+      "fullStart": 38,
       "start": 38,
       "length": 0
     }

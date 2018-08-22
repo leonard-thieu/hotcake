@@ -1,11 +1,13 @@
 [
   {
     "kind": "FriendKeyword",
+    "fullStart": 0,
     "start": 0,
     "length": 6
   },
   {
     "kind": "EOF",
+    "fullStart": 6,
     "start": 6,
     "length": 0
   }

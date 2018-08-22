@@ -1,11 +1,13 @@
 [
   {
     "kind": "AbstractKeyword",
+    "fullStart": 0,
     "start": 0,
     "length": 8
   },
   {
     "kind": "EOF",
+    "fullStart": 8,
     "start": 8,
     "length": 0
   }

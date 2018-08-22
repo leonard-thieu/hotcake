@@ -1,11 +1,13 @@
 [
   {
     "kind": "ThrowableKeyword",
+    "fullStart": 0,
     "start": 0,
     "length": 9
   },
   {
     "kind": "EOF",
+    "fullStart": 9,
     "start": 9,
     "length": 0
   }

@@ -1,11 +1,7 @@
 [
   {
-    "kind": "Whitespace",
-    "start": 0,
-    "length": 2
-  },
-  {
     "kind": "EOF",
+    "fullStart": 0,
     "start": 2,
     "length": 0
   }

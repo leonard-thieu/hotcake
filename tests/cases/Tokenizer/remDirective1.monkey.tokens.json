@@ -1,21 +1,25 @@
 [
   {
     "kind": "RemDirectiveKeyword",
+    "fullStart": 0,
     "start": 0,
     "length": 4
   },
   {
     "kind": "RemDirectiveBody",
-    "start": 4,
+    "fullStart": 4,
+    "start": 5,
     "length": 2
   },
   {
     "kind": "EndDirectiveKeyword",
+    "fullStart": 6,
     "start": 6,
     "length": 4
   },
   {
     "kind": "EOF",
+    "fullStart": 10,
     "start": 10,
     "length": 0
   }

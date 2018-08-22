@@ -169,12 +169,30 @@ export class Tokenizer {
     next(): Token {
         let c = this.nextChar();
 
-        if (c === null) {
-            return new Token(TokenKind.EOF, this.position, 0);
+        let kind = TokenKind.Unknown;
+        const fullStart = this.position;
+
+        while (isWhitespace(c)) {
+            c = this.nextChar();
         }
 
-        let kind = TokenKind.Unknown;
+        if (c === '\'') {
+            while ((c = this.nextChar()) !== null) {
+                if (c === '\n') {
+                    break;
+                }
+            }
+        }
+
+        // TODO: Should Rem directives be treated as trivia?
+        
         const start = this.position;
+
+        if (c === null) {
+            kind = TokenKind.EOF;
+
+            return new Token(kind, fullStart, start, 0);
+        }
 
         if (this.remDirectiveLevel > 0) {
             kind = this.tryReadPreprocessorDirective();
@@ -297,17 +315,6 @@ export class Tokenizer {
         } else {
             switch (c) {
                 case '\n': { kind = TokenKind.Newline; break; }
-                case "'": {
-                    kind = TokenKind.Comment
-    
-                    while ((c = this.peekChar()) !== null) {
-                        if (c === '\n') {
-                            break;
-                        }
-                        this.position++;
-                    }
-                    break;
-                }
                 // TODO: Should this scan ahead to check if the string literal is terminated?
                 case '"': {
                     kind = TokenKind.QuotationMark;
@@ -364,14 +371,8 @@ export class Tokenizer {
                     if (kind !== TokenKind.Unknown) {
                         break;
                     }
-    
-                    if (isWhitespace(c)) {
-                        kind = TokenKind.Whitespace;
-    
-                        while (isWhitespace(this.peekChar())) {
-                            this.position++;
-                        }
-                    } else if (isDecimal(c) ||
+                    
+                    if (isDecimal(c) ||
                         (c === '.' && isDecimal(this.peekChar()))) {
                         kind = TokenKind.IntegerLiteral;
     
@@ -504,9 +505,9 @@ export class Tokenizer {
             }
         }
 
-        const length = this.position - start + 1;
+        const length = this.position - fullStart + 1;
 
-        return new Token(kind, start, length);
+        return new Token(kind, fullStart, start, length);
     }
 
     private tryReadPreprocessorDirective(): TokenKind {
