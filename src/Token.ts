@@ -50,6 +50,9 @@ export enum TokenKind {
     ConfigVar,
     
     QuotationMark,
+    NumberSign,
+    DollarSign,
+    PercentSign,
     Ampersand,
     OpeningParenthesis,
     ClosingParenthesis,

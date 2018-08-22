@@ -163,6 +163,8 @@ export class Tokenizer {
     constructor(private readonly input: string) { }
 
     private position: number = -1;
+    private line: number = 1;
+    private lineStart: number = 0;
     /**
      * Track directive nesting.
      */
@@ -175,14 +177,16 @@ export class Tokenizer {
         let kind = TokenKind.Unknown;
         const fullStart = this.position;
 
-        while (isWhitespace(c)) {
-            c = this.nextChar();
-        }
-
-        if (c === '\'') {
-            while ((c = this.nextChar()) !== null) {
-                if (c === '\n') {
-                    break;
+        if (!this.inString) {
+            while (isWhitespace(c)) {
+                c = this.nextChar();
+            }
+    
+            if (c === '\'') {
+                while ((c = this.nextChar()) !== null) {
+                    if (c === '\n') {
+                        break;
+                    }
                 }
             }
         }
@@ -319,7 +323,12 @@ export class Tokenizer {
             }
         } else {
             switch (c) {
-                case '\n': { kind = TokenKind.Newline; break; }
+                case '\n': {
+                    kind = TokenKind.Newline;
+                    this.line++;
+                    this.lineStart = this.position + 1;
+                    break;
+                }
                 // TODO: Should this scan ahead to check if the string literal is terminated?
                 case '"': {
                     kind = TokenKind.QuotationMark;
@@ -328,6 +337,7 @@ export class Tokenizer {
                 }
                 case '%': {
                     if (!isBinary(this.peekChar())) {
+                        kind = TokenKind.PercentSign;
                         break;
                     }
 
@@ -341,6 +351,7 @@ export class Tokenizer {
                 }
                 case '$': {
                     if (!isHexadecimal(this.peekChar())) {
+                        kind = TokenKind.DollarSign;
                         break;
                     }
 
@@ -377,7 +388,9 @@ export class Tokenizer {
                         break;
                     }
 
-                    if (isDecimal(c) ||
+                    if (c === '#') {
+                        kind = TokenKind.NumberSign;
+                    } else if (isDecimal(c) ||
                         (c === '.' && isDecimal(this.peekChar()))) {
                         kind = TokenKind.IntegerLiteral;
 
@@ -508,6 +521,11 @@ export class Tokenizer {
                     break;
                 }
             }
+        }
+
+        if (kind === TokenKind.Unknown) {
+            const col = this.position - this.lineStart + 1;
+            console.log(`Unknown token: ${JSON.stringify(c)} (line: ${this.line}, col: ${col}, pos: ${this.position})`);
         }
 
         const length = this.position - fullStart + 1;

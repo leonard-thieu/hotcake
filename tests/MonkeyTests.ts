@@ -7,7 +7,7 @@ import { executeTestCases } from "./shared";
 
 executeTestCases({
     name: 'MonkeyX',
-    casesPath: path.resolve('..', '..', 'blitz-research', 'monkey', 'modules'),
+    casesPath: path.resolve('..', '..', 'blitz-research', 'monkey'),
     outputBasePath: path.join(__dirname, 'cases', 'MonkeyX'),
     ext: 'tokens',
     testCallback: (contents) => {
@@ -25,7 +25,7 @@ executeTestCases({
 
 executeTestCases({
     name: 'MonkeyX',
-    casesPath: path.resolve('..', '..', 'blitz-research', 'monkey', 'modules'),
+    casesPath: path.resolve('..', '..', 'blitz-research', 'monkey'),
     outputBasePath: path.join(__dirname, 'cases', 'MonkeyX'),
     ext: 'tree',
     testCallback: (contents) => {
