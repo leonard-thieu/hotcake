@@ -163,7 +163,10 @@ export class Tokenizer {
     constructor(private readonly input: string) { }
 
     private position: number = -1;
-    private remDirectiveLevel: number = 0;
+    /**
+     * Track directive nesting.
+     */
+    private nesting: TokenKind[] = [];
     private inString: boolean = false;
 
     next(): Token {
@@ -185,7 +188,7 @@ export class Tokenizer {
         }
 
         // TODO: Should Rem directives be treated as trivia?
-        
+
         const start = this.position;
 
         if (c === null) {
@@ -194,16 +197,17 @@ export class Tokenizer {
             return new Token(kind, fullStart, start, 0);
         }
 
-        if (this.remDirectiveLevel > 0) {
+        const inDirective = this.nesting[this.nesting.length - 1];
+        if (inDirective === TokenKind.RemDirectiveKeyword) {
             kind = this.tryReadPreprocessorDirective();
             switch (kind) {
                 case TokenKind.RemDirectiveKeyword:
                 case TokenKind.IfDirectiveKeyword: {
-                    this.remDirectiveLevel++;
+                    this.nesting.push(kind);
                     break;
                 }
                 case TokenKind.EndDirectiveKeyword: {
-                    this.remDirectiveLevel--;
+                    this.nesting.pop();
                     break;
                 }
                 default: {
@@ -211,12 +215,13 @@ export class Tokenizer {
 
                     let continueReading = true;
                     while (continueReading) {
-                        const pos = this.position - 1;
+                        const directiveStart = this.position;
                         switch (this.tryReadPreprocessorDirective()) {
                             case TokenKind.RemDirectiveKeyword:
                             case TokenKind.IfDirectiveKeyword:
                             case TokenKind.EndDirectiveKeyword: {
-                                this.position = pos;
+                                this.position = directiveStart;
+                                this.position--;
                                 continueReading = false;
                                 break;
                             }
@@ -274,7 +279,7 @@ export class Tokenizer {
                         }
                         case 'u': {
                             kind = TokenKind.EscapeUnicodeHexValue;
-                            
+
                             for (let i = 0; i < 4; i++) {
                                 c = this.nextChar();
 
@@ -325,10 +330,10 @@ export class Tokenizer {
                     if (!isBinary(this.peekChar())) {
                         break;
                     }
-    
+
                     this.position++;
                     kind = TokenKind.IntegerLiteral;
-    
+
                     while (isBinary(this.peekChar())) {
                         this.position++;
                     }
@@ -338,10 +343,10 @@ export class Tokenizer {
                     if (!isHexadecimal(this.peekChar())) {
                         break;
                     }
-    
+
                     this.position++;
                     kind = TokenKind.IntegerLiteral;
-    
+
                     while (isHexadecimal(this.peekChar())) {
                         this.position++;
                     }
@@ -371,36 +376,36 @@ export class Tokenizer {
                     if (kind !== TokenKind.Unknown) {
                         break;
                     }
-                    
+
                     if (isDecimal(c) ||
                         (c === '.' && isDecimal(this.peekChar()))) {
                         kind = TokenKind.IntegerLiteral;
-    
+
                         if (c === '.') {
                             kind = TokenKind.FloatLiteral;
                         }
-    
+
                         while (isDecimal(this.peekChar())) {
                             this.position++;
                         }
-    
+
                         if (kind === TokenKind.IntegerLiteral &&
                             this.peekChar() === '.' &&
                             isDecimal(this.peekChar(2))) {
                             this.position++;
                             kind = TokenKind.FloatLiteral;
-    
+
                             while (isDecimal(this.peekChar())) {
                                 this.position++;
                             }
                         }
-    
+
                         switch (this.peekChar()) {
                             case 'E':
                             case 'e': {
                                 this.position++;
                                 kind = TokenKind.FloatLiteral;
-    
+
                                 switch (this.peekChar()) {
                                     case '+':
                                     case '-': {
@@ -408,7 +413,7 @@ export class Tokenizer {
                                         break;
                                     }
                                 }
-    
+
                                 while (isDecimal(this.peekChar())) {
                                     this.position++;
                                 }
@@ -423,7 +428,7 @@ export class Tokenizer {
                         const id = this.tryReadIdentifier();
                         if (id !== null) {
                             kind = TokenKind.Identifier;
-    
+
                             switch (id.toLowerCase()) {
                                 case 'void': { kind = TokenKind.VoidKeyword; break; }
                                 case 'strict': { kind = TokenKind.StrictKeyword; break; }
@@ -514,11 +519,8 @@ export class Tokenizer {
         const start = this.position;
         let kind = TokenKind.Unknown;
 
-        if (this.peekChar(0) === '#') {
-            while (isWhitespace(this.peekChar())) {
-                this.position++;
-            }
-
+        // Preprocessor directives must start on their own line and may be preceded by whitespace.
+        if (this.peekChar(0) === '#' && this.isDirectiveAllowed()) {
             const id = this.tryReadIdentifier();
             if (id !== null) {
                 switch (id.toLowerCase()) {
@@ -595,13 +597,14 @@ export class Tokenizer {
                     case 'endif':
                     case 'end': {
                         kind = TokenKind.EndDirectiveKeyword;
+                        this.nesting.pop();
                         break;
                     }
                     case 'print': { kind = TokenKind.PrintDirectiveKeyword; break; }
                     case 'error': { kind = TokenKind.ErrorDirectiveKeyword; break; }
                     case 'rem': {
                         kind = TokenKind.RemDirectiveKeyword;
-                        this.remDirectiveLevel++;
+                        this.nesting.push(kind);
                         break;
                     }
                     default: {
@@ -630,6 +633,21 @@ export class Tokenizer {
         }
 
         return kind;
+    }
+
+    private isDirectiveAllowed(): boolean {
+        for (let i = this.position - 1; i >= 0; i--) {
+            const c = this.input[i];
+            if (!isWhitespace(c)) {
+                if (c === '\n') {
+                    return true;
+                }
+
+                return false;
+            }
+        }
+
+        return true;
     }
 
     private tryReadIdentifier(): string | null {
