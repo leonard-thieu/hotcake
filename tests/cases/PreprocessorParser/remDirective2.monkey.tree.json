@@ -25,26 +25,30 @@
                   "length": 3
                 },
                 "expression": {
-                  "kind": "Expression",
-                  "fullStart": 16,
-                  "start": 16,
-                  "length": 0
+                  "BooleanLiteral": {
+                    "booleanKeyword": {
+                      "kind": "TrueKeyword",
+                      "fullStart": 15,
+                      "start": 16,
+                      "length": 5
+                    }
+                  }
                 },
                 "members": [
                   {
-                    "kind": "RemDirectiveBody",
-                    "fullStart": 15,
-                    "start": 16,
-                    "length": 11
+                    "kind": "Newline",
+                    "fullStart": 20,
+                    "start": 21,
+                    "length": 2
                   }
                 ],
                 "elseIfDirectives": [],
                 "elseDirective": null,
                 "endDirectiveKeyword": {
                   "kind": "EndDirectiveKeyword",
-                  "fullStart": 26,
+                  "fullStart": 22,
                   "start": 26,
-                  "length": 4
+                  "length": 8
                 }
               }
             },

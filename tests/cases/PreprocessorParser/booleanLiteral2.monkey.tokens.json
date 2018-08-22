@@ -1,0 +1,32 @@
+[
+  {
+    "kind": "IfDirectiveKeyword",
+    "fullStart": 0,
+    "start": 0,
+    "length": 3
+  },
+  {
+    "kind": "FalseKeyword",
+    "fullStart": 3,
+    "start": 4,
+    "length": 6
+  },
+  {
+    "kind": "Newline",
+    "fullStart": 9,
+    "start": 10,
+    "length": 2
+  },
+  {
+    "kind": "EndDirectiveKeyword",
+    "fullStart": 11,
+    "start": 11,
+    "length": 4
+  },
+  {
+    "kind": "EOF",
+    "fullStart": 15,
+    "start": 15,
+    "length": 0
+  }
+]

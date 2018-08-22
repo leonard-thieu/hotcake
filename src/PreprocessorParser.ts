@@ -5,8 +5,11 @@ import { ElseDirectiveNode } from './Node/ElseDirectiveNode';
 import { ElseIfDirectiveNode } from './Node/ElseIfDirectiveNode';
 import { ErrorDirectiveNode } from './Node/ErrorDirectiveNode';
 import { BinaryExpression } from './Node/Expression/BinaryExpression';
+import { BooleanLiteral } from './Node/Expression/BooleanLiteral';
 import { Expression } from './Node/Expression/Expression';
+import { FloatLiteral } from './Node/Expression/FloatLiteral';
 import { GroupingExpression } from './Node/Expression/GroupingExpression';
+import { IntegerLiteral } from './Node/Expression/IntegerLiteral';
 import { StringLiteral } from './Node/Expression/StringLiteral';
 import { UnaryOpExpression } from './Node/Expression/UnaryOpExpression';
 import { Variable } from './Node/Expression/Variable';
@@ -385,6 +388,16 @@ export class PreprocessorParser {
             case TokenKind.QuotationMark: {
                 return this.parseStringLiteral(parent);
             }
+            case TokenKind.TrueKeyword:
+            case TokenKind.FalseKeyword: {
+                return this.parseBooleanLiteral(parent);
+            }
+            case TokenKind.IntegerLiteral: {
+                return this.parseIntegerLiteral(parent);
+            }
+            case TokenKind.FloatLiteral: {
+                return this.parseFloatLiteral(parent);
+            }
         }
 
         throw new Error(`${TokenKind[token.kind]} not implemented.`);
@@ -446,6 +459,30 @@ export class PreprocessorParser {
         stringLiteral.endQuote = this.eat(TokenKind.QuotationMark);
 
         return stringLiteral;
+    }
+
+    private parseBooleanLiteral(parent: Node): BooleanLiteral {
+        const booleanLiteral = new BooleanLiteral();
+        booleanLiteral.parent = parent;
+        booleanLiteral.value = this.eat(TokenKind.TrueKeyword, TokenKind.FalseKeyword);
+
+        return booleanLiteral;
+    }
+
+    private parseIntegerLiteral(parent: Node): IntegerLiteral {
+        const integerLiteral = new IntegerLiteral();
+        integerLiteral.parent = parent;
+        integerLiteral.value = this.eat(TokenKind.IntegerLiteral);
+
+        return integerLiteral;
+    }
+
+    private parseFloatLiteral(parent: Node): FloatLiteral {
+        const floatLiteral = new FloatLiteral();
+        floatLiteral.parent = parent;
+        floatLiteral.value = this.eat(TokenKind.FloatLiteral);
+
+        return floatLiteral;
     }
 
     // #endregion
