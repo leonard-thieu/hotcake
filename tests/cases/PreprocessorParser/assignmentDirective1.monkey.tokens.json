@@ -1,0 +1,44 @@
+[
+  {
+    "kind": "NumberSign",
+    "fullStart": 0,
+    "start": 0,
+    "length": 1
+  },
+  {
+    "kind": "ConfigurationVariable",
+    "fullStart": 1,
+    "start": 1,
+    "length": 6
+  },
+  {
+    "kind": "EqualsSign",
+    "fullStart": 7,
+    "start": 8,
+    "length": 2
+  },
+  {
+    "kind": "QuotationMark",
+    "fullStart": 9,
+    "start": 10,
+    "length": 2
+  },
+  {
+    "kind": "StringLiteralText",
+    "fullStart": 11,
+    "start": 11,
+    "length": 5
+  },
+  {
+    "kind": "QuotationMark",
+    "fullStart": 16,
+    "start": 16,
+    "length": 1
+  },
+  {
+    "kind": "EOF",
+    "fullStart": 17,
+    "start": 17,
+    "length": 0
+  }
+]

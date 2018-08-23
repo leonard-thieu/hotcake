@@ -1,6 +1,7 @@
 import assert = require('assert');
 
 import { MissingToken } from './MissingToken';
+import { AssignmentDirective } from './Node/Directive/AssignmentDirective';
 import { Directive } from './Node/Directive/Directive';
 import { ElseDirective } from './Node/Directive/ElseDirective';
 import { ElseIfDirective } from './Node/Directive/ElseIfDirective';
@@ -87,6 +88,9 @@ export class PreprocessorParser {
                 }
                 case TokenKind.ErrorDirectiveKeyword: {
                     return this.parseErrorDirective(parent);
+                }
+                case TokenKind.ConfigurationVariable: {
+                    return this.parseAssignmentDirective(parent);
                 }
             }
         }
@@ -306,6 +310,17 @@ export class PreprocessorParser {
         this.assertExpressionParsedCompletely();
 
         return errorDirective;
+    }
+
+    private parseAssignmentDirective(parent: Node): AssignmentDirective {
+        const assignmentDirective = new AssignmentDirective();
+        assignmentDirective.parent = parent;
+        assignmentDirective.numberSign = this.eat(TokenKind.NumberSign);
+        assignmentDirective.name = this.eat(TokenKind.ConfigurationVariable);
+        assignmentDirective.operator = this.eat(TokenKind.EqualsSign, TokenKind.PlusSignEqualsSign);
+        assignmentDirective.expression = this.parseExpression(assignmentDirective);
+
+        return assignmentDirective;
     }
 
     // #endregion
