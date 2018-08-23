@@ -1,0 +1,2 @@
+#If TARGET = "cpp"
+#EndIf

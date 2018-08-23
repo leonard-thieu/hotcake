@@ -141,8 +141,7 @@ export class PreprocessorParser {
                 case TokenKind.NumberSign: {
                     const nextToken = this.getToken(1);
                     switch (nextToken.kind) {
-                        case TokenKind.EndDirectiveKeyword:
-                        case TokenKind.EOF: {
+                        case TokenKind.EndDirectiveKeyword: {
                             continueParsing = false;
                             break;
                         }
@@ -193,11 +192,27 @@ export class PreprocessorParser {
         do {
             const token = this.getCurrentToken();
             switch (token.kind) {
-                case TokenKind.ElseIfDirectiveKeyword:
-                case TokenKind.ElseDirectiveKeyword:
-                case TokenKind.EndDirectiveKeyword:
                 case TokenKind.EOF: {
                     continueParsing = false;
+                    break;
+                }
+                case TokenKind.NumberSign: {
+                    const nextToken = this.getToken(1);
+                    switch (nextToken.kind) {
+                        case TokenKind.ElseIfDirectiveKeyword:
+                        case TokenKind.ElseDirectiveKeyword:
+                        case TokenKind.EndDirectiveKeyword: {
+                            continueParsing = false;
+                            break;
+                        }
+                        default: {
+                            const child =
+                                this.parseNextInModuleContext(elseIfDirective) ||
+                                this.eat(token.kind);
+                            elseIfDirective.members.push(child);
+                            break;
+                        }
+                    }
                     break;
                 }
                 default: {
@@ -226,6 +241,23 @@ export class PreprocessorParser {
                 case TokenKind.EndDirectiveKeyword:
                 case TokenKind.EOF: {
                     continueParsing = false;
+                    break;
+                }
+                case TokenKind.NumberSign: {
+                    const nextToken = this.getToken(1);
+                    switch (nextToken.kind) {
+                        case TokenKind.EndDirectiveKeyword: {
+                            continueParsing = false;
+                            break;
+                        }
+                        default: {
+                            const child =
+                                this.parseNextInModuleContext(elseDirective) ||
+                                this.eat(token.kind);
+                            elseDirective.members.push(child);
+                            break;
+                        }
+                    }
                     break;
                 }
                 default: {
@@ -267,8 +299,7 @@ export class PreprocessorParser {
                 case TokenKind.NumberSign: {
                     const nextToken = this.getToken(1);
                     switch (nextToken.kind) {
-                        case TokenKind.EndDirectiveKeyword:
-                        case TokenKind.EOF: {
+                        case TokenKind.EndDirectiveKeyword: {
                             continueParsing = false;
                             break;
                         }
