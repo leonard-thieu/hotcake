@@ -4,6 +4,7 @@ export enum TokenKind {
     Newline,
     IntegerLiteral,
     FloatLiteral,
+
     StringLiteralText,
     EscapeNull,
     EscapeCharacterTabulation,
@@ -13,6 +14,7 @@ export enum TokenKind {
     EscapeTilde,
     EscapeUnicodeHexValue,
     InvalidEscapeSequence,
+
     IfDirectiveKeyword,
     ElseIfDirectiveKeyword,
     ElseDirectiveKeyword,
@@ -22,6 +24,7 @@ export enum TokenKind {
     PrintDirectiveKeyword,
     ErrorDirectiveKeyword,
     ConfigurationVariable,
+
     QuotationMark,
     NumberSign,
     DollarSign,
@@ -46,6 +49,17 @@ export enum TokenKind {
     ClosingSquareBracket,
     VerticalBar,
     Tilde,
+
+    PeriodPeriod,
+    AmpersandEqualsSign,
+    AsteriskEqualsSign,
+    PlusSignEqualsSign,
+    HyphenMinusEqualsSign,
+    SlashEqualsSign,
+    ColonEqualsSign,
+    VerticalBarEqualsSign,
+    TildeEqualsSign,
+
     Identifier,
     VoidKeyword,
     StrictKeyword,
@@ -116,8 +130,9 @@ export enum TokenKind {
     CatchKeyword,
     ThrowKeyword,
     ThrowableKeyword,
+
     Expression,
     LessThanOrEquals,
     GreaterThanOrEquals,
-    NotEquals
+    NotEquals,
 }

@@ -1,0 +1,14 @@
+[
+  {
+    "kind": "AsteriskEqualsSign",
+    "fullStart": 0,
+    "start": 0,
+    "length": 2
+  },
+  {
+    "kind": "EOF",
+    "fullStart": 2,
+    "start": 2,
+    "length": 0
+  }
+]

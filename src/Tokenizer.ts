@@ -373,15 +373,63 @@ export class Tokenizer {
                     }
                     break;
                 }
-                case '&': { kind = TokenKind.Ampersand; break; }
+                case '&': {
+                    if (this.peekChar() === '=') {
+                        this.position++;
+                        kind = TokenKind.AmpersandEqualsSign;
+                    } else {
+                        kind = TokenKind.Ampersand;
+                    }
+                    break;
+                }
                 case '(': { kind = TokenKind.OpeningParenthesis; break; }
                 case ')': { kind = TokenKind.ClosingParenthesis; break; }
-                case '*': { kind = TokenKind.Asterisk; break; }
-                case '+': { kind = TokenKind.PlusSign; break; }
+                case '*': {
+                    if (this.peekChar() === '=') {
+                        this.position++;
+                        kind = TokenKind.AsteriskEqualsSign;
+                    } else {
+                        kind = TokenKind.Asterisk;
+                    }
+                    break;
+                }
+                case '+': {
+                    if (this.peekChar() === '=') {
+                        this.position++;
+                        kind = TokenKind.PlusSignEqualsSign;
+                    } else {
+                        kind = TokenKind.PlusSign;
+                    }
+                    break;
+                }
                 case ',': { kind = TokenKind.Comma; break; }
-                case '-': { kind = TokenKind.HyphenMinus; break; }
-                case '/': { kind = TokenKind.Slash; break; }
-                case ':': { kind = TokenKind.Colon; break; }
+                case '-': {
+                    if (this.peekChar() === '=') {
+                        this.position++;
+                        kind = TokenKind.HyphenMinusEqualsSign;
+                    } else {
+                        kind = TokenKind.HyphenMinus;
+                    }
+                    break;
+                }
+                case '/': {
+                    if (this.peekChar() === '=') {
+                        this.position++;
+                        kind = TokenKind.SlashEqualsSign;
+                    } else {
+                        kind = TokenKind.Slash;
+                    }
+                    break;
+                }
+                case ':': {
+                    if (this.peekChar() === '=') {
+                        this.position++;
+                        kind = TokenKind.ColonEqualsSign;
+                    } else {
+                        kind = TokenKind.Colon;
+                    }
+                    break;
+                }
                 case ';': { kind = TokenKind.Semicolon; break; }
                 case '<': { kind = TokenKind.LessThanSign; break; }
                 case '=': { kind = TokenKind.EqualsSign; break; }
@@ -390,8 +438,24 @@ export class Tokenizer {
                 case '@': { kind = TokenKind.CommercialAt; break; }
                 case '[': { kind = TokenKind.OpeningSquareBracket; break; }
                 case ']': { kind = TokenKind.ClosingSquareBracket; break; }
-                case '|': { kind = TokenKind.VerticalBar; break; }
-                case '~': { kind = TokenKind.Tilde; break; }
+                case '|': {
+                    if (this.peekChar() === '=') {
+                        this.position++;
+                        kind = TokenKind.VerticalBarEqualsSign;
+                    } else {
+                        kind = TokenKind.VerticalBar;
+                    }
+                    break;
+                }
+                case '~': {
+                    if (this.peekChar() === '=') {
+                        this.position++;
+                        kind = TokenKind.TildeEqualsSign;
+                    } else {
+                        kind = TokenKind.Tilde;
+                    }
+                    break;
+                }
                 default: {
                     kind = this.tryReadPreprocessorDirective();
                     if (kind !== TokenKind.Unknown) {
@@ -442,7 +506,12 @@ export class Tokenizer {
                             }
                         }
                     } else if (c === '.') {
-                        kind = TokenKind.Period;
+                        if (this.peekChar() === '.') {
+                            this.position++;
+                            kind = TokenKind.PeriodPeriod;
+                        } else {
+                            kind = TokenKind.Period;
+                        }
                     } else {
                         const id = this.tryReadIdentifier();
                         if (id !== null) {
@@ -654,7 +723,7 @@ export class Tokenizer {
     // Preprocessor directives must start with a # on their own line and may be preceded by whitespace.
     private isPreprocessorDirectiveAllowed(): boolean {
         let i = this.position - 1;
-        
+
         for (; i >= 0; i--) {
             const c = this.input[i];
             if (!isWhitespace(c)) {
