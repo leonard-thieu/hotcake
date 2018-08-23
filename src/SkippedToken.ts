@@ -6,9 +6,9 @@ export class SkippedToken extends Token {
     }
 
     toJSON(): any {
-        const obj = super.toJSON();
-        obj.type = this.constructor.name;
-
-        return obj;
+        return {
+            type: this.constructor.name,
+            ...super.toJSON(),
+        };
     }
 }

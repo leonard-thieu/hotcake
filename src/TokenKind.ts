@@ -57,8 +57,11 @@ export enum TokenKind {
     HyphenMinusEqualsSign,
     SlashEqualsSign,
     ColonEqualsSign,
+    LessThanSignEqualsSign,
+    GreaterThanSignEqualsSign,
     VerticalBarEqualsSign,
     TildeEqualsSign,
+    LessThanSignGreaterThanSign,
 
     Identifier,
     VoidKeyword,
@@ -132,7 +135,4 @@ export enum TokenKind {
     ThrowableKeyword,
 
     Expression,
-    LessThanOrEquals,
-    GreaterThanOrEquals,
-    NotEquals,
 }

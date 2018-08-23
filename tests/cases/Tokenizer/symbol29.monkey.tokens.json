@@ -1,6 +1,6 @@
 [
   {
-    "kind": "LessThanSignEqualsSign",
+    "kind": "TildeEqualsSign",
     "fullStart": 0,
     "start": 0,
     "length": 2

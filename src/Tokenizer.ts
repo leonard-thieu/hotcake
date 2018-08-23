@@ -431,7 +431,25 @@ export class Tokenizer {
                     break;
                 }
                 case ';': { kind = TokenKind.Semicolon; break; }
-                case '<': { kind = TokenKind.LessThanSign; break; }
+                case '<': {
+                    switch (this.peekChar()) {
+                        case '=': {
+                            this.position++;
+                            kind = TokenKind.LessThanSignEqualsSign;
+                            break;
+                        }
+                        case '>': {
+                            this.position++;
+                            kind = TokenKind.LessThanSignGreaterThanSign;
+                            break;
+                        }
+                        default: {
+                            kind = TokenKind.LessThanSign;
+                            break;
+                        }
+                    }
+                    break;
+                }
                 case '=': { kind = TokenKind.EqualsSign; break; }
                 case '>': { kind = TokenKind.GreaterThanSign; break; }
                 case '?': { kind = TokenKind.QuestionMark; break; }
