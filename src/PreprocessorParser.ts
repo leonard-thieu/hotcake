@@ -58,8 +58,7 @@ export class PreprocessorParser {
                 default: {
                     let child: Node | Token | null = this.parseNextInModuleContext(moduleNode);
                     if (child === null) {
-                        child = new SkippedToken(token);
-                        this.advanceToken();
+                        child = this.eat(token.kind);
                     }
                     moduleNode.members.push(child);
                     break;
