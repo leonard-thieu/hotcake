@@ -2,7 +2,7 @@
   "type": "ModuleNode",
   "members": [
     {
-      "type": "ErrorDirectiveNode",
+      "type": "ErrorDirective",
       "numberSign": {
         "kind": "NumberSign",
         "fullStart": 0,

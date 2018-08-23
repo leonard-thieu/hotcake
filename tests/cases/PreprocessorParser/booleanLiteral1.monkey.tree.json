@@ -2,7 +2,7 @@
   "type": "ModuleNode",
   "members": [
     {
-      "type": "IfDirectiveNode",
+      "type": "IfDirective",
       "numberSign": {
         "kind": "NumberSign",
         "fullStart": 0,
@@ -35,7 +35,7 @@
       "elseIfDirectives": [],
       "elseDirective": null,
       "endDirective": {
-        "type": "EndDirectiveNode",
+        "type": "EndDirective",
         "numberSign": {
           "kind": "NumberSign",
           "fullStart": 10,

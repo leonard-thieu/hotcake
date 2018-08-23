@@ -1,11 +1,14 @@
 import assert = require('assert');
 
 import { MissingToken } from './MissingToken';
-import { DirectiveNode } from './Node/DirectiveNode';
-import { ElseDirectiveNode } from './Node/ElseDirectiveNode';
-import { ElseIfDirectiveNode } from './Node/ElseIfDirectiveNode';
-import { EndDirectiveNode } from './Node/EndDirectiveNode';
-import { ErrorDirectiveNode } from './Node/ErrorDirectiveNode';
+import { Directive } from './Node/Directive/Directive';
+import { ElseDirective } from './Node/Directive/ElseDirective';
+import { ElseIfDirective } from './Node/Directive/ElseIfDirective';
+import { EndDirective } from './Node/Directive/EndDirective';
+import { ErrorDirective } from './Node/Directive/ErrorDirective';
+import { IfDirective } from './Node/Directive/IfDirective';
+import { PrintDirective } from './Node/Directive/PrintDirective';
+import { RemDirective } from './Node/Directive/RemDirective';
 import { BinaryExpression } from './Node/Expression/BinaryExpression';
 import { BooleanLiteral } from './Node/Expression/BooleanLiteral';
 import { Expression } from './Node/Expression/Expression';
@@ -15,11 +18,8 @@ import { IntegerLiteral } from './Node/Expression/IntegerLiteral';
 import { StringLiteral } from './Node/Expression/StringLiteral';
 import { UnaryOpExpression } from './Node/Expression/UnaryOpExpression';
 import { Variable } from './Node/Expression/Variable';
-import { IfDirectiveNode } from './Node/IfDirectiveNode';
 import { ModuleNode } from './Node/ModuleNode';
 import { Node } from './Node/Node';
-import { PrintDirectiveNode } from './Node/PrintDirectiveNode';
-import { RemDirectiveNode } from './Node/RemDirectiveNode';
 import { SkippedToken } from './SkippedToken';
 import { Token, TokenKind } from './Token';
 import { Tokenizer } from './Tokenizer';
@@ -104,8 +104,8 @@ export class PreprocessorParser {
         ].includes(token.kind), TokenKind[token.kind]);
     }
 
-    private parseIfDirective(parent: Node): IfDirectiveNode {
-        const ifDirective = new IfDirectiveNode();
+    private parseIfDirective(parent: Node): IfDirective {
+        const ifDirective = new IfDirective();
         ifDirective.parent = parent;
         ifDirective.numberSign = this.eat(TokenKind.NumberSign);
         ifDirective.ifDirectiveKeyword = this.eat(TokenKind.IfDirectiveKeyword);
@@ -163,8 +163,8 @@ export class PreprocessorParser {
         return ifDirective;
     }
 
-    private parseElseIfDirective(parent: IfDirectiveNode): ElseIfDirectiveNode {
-        const elseIfDirective = new ElseIfDirectiveNode();
+    private parseElseIfDirective(parent: IfDirective): ElseIfDirective {
+        const elseIfDirective = new ElseIfDirective();
         elseIfDirective.parent = parent;
         elseIfDirective.numberSign = this.eat(TokenKind.NumberSign);
         elseIfDirective.elseIfDirectiveKeyword = this.eat(TokenKind.ElseIfDirectiveKeyword);
@@ -195,8 +195,8 @@ export class PreprocessorParser {
         return elseIfDirective;
     }
 
-    private parseElseDirective(parent: IfDirectiveNode): ElseDirectiveNode {
-        const elseDirective = new ElseDirectiveNode();
+    private parseElseDirective(parent: IfDirective): ElseDirective {
+        const elseDirective = new ElseDirective();
         elseDirective.parent = parent;
         elseDirective.numberSign = this.eat(TokenKind.NumberSign);
         elseDirective.elseDirectiveKeyword = this.eat(TokenKind.ElseDirectiveKeyword);
@@ -223,8 +223,8 @@ export class PreprocessorParser {
         return elseDirective;
     }
 
-    private parseEndDirective(parent: DirectiveNode): EndDirectiveNode {
-        const endDirective = new EndDirectiveNode();
+    private parseEndDirective(parent: Directive): EndDirective {
+        const endDirective = new EndDirective();
         endDirective.parent = parent;
         endDirective.numberSign = this.eat(TokenKind.NumberSign);
         endDirective.endDirectiveKeyword = this.eat(TokenKind.EndDirectiveKeyword);
@@ -232,8 +232,8 @@ export class PreprocessorParser {
         return endDirective;
     }
 
-    private parseRemDirective(parent: Node): RemDirectiveNode {
-        const remDirective = new RemDirectiveNode();
+    private parseRemDirective(parent: Node): RemDirective {
+        const remDirective = new RemDirective();
         remDirective.parent = parent;
         remDirective.numberSign = this.eat(TokenKind.NumberSign);
         remDirective.remDirectiveKeyword = this.eat(TokenKind.RemDirectiveKeyword);
@@ -285,8 +285,8 @@ export class PreprocessorParser {
         return remDirective;
     }
 
-    private parsePrintDirective(parent: Node): PrintDirectiveNode {
-        const printDirective = new PrintDirectiveNode();
+    private parsePrintDirective(parent: Node): PrintDirective {
+        const printDirective = new PrintDirective();
         printDirective.parent = parent;
         printDirective.numberSign = this.eat(TokenKind.NumberSign);
         printDirective.printDirectiveKeyword = this.eat(TokenKind.PrintDirectiveKeyword);
@@ -296,8 +296,8 @@ export class PreprocessorParser {
         return printDirective;
     }
 
-    private parseErrorDirective(parent: Node): ErrorDirectiveNode {
-        const errorDirective = new ErrorDirectiveNode();
+    private parseErrorDirective(parent: Node): ErrorDirective {
+        const errorDirective = new ErrorDirective();
         errorDirective.parent = parent;
         errorDirective.numberSign = this.eat(TokenKind.NumberSign);
         errorDirective.errorDirectiveKeyword = this.eat(TokenKind.ErrorDirectiveKeyword);

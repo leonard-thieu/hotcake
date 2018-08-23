@@ -2,7 +2,7 @@
   "type": "ModuleNode",
   "members": [
     {
-      "type": "RemDirectiveNode",
+      "type": "RemDirective",
       "numberSign": {
         "kind": "NumberSign",
         "fullStart": 0,
@@ -24,7 +24,7 @@
         }
       ],
       "endDirective": {
-        "type": "EndDirectiveNode",
+        "type": "EndDirective",
         "numberSign": {
           "kind": "NumberSign",
           "fullStart": 6,
