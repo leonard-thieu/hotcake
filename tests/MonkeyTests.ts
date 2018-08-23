@@ -1,8 +1,9 @@
 import path = require('path');
 
 import { PreprocessorParser } from '../src/PreprocessorParser';
-import { Token, TokenKind } from '../src/Token';
+import { Token } from '../src/Token';
 import { Tokenizer } from '../src/Tokenizer';
+import { TokenKind } from "../src/TokenKind";
 import { executeTestCases } from "./shared";
 
 executeTestCases({
@@ -18,7 +19,7 @@ executeTestCases({
             t = tokenizer.next();
             tokens.push(t);
         } while (t.kind !== TokenKind.EOF);
-    
+
         return tokens;
     },
 });
@@ -30,7 +31,7 @@ executeTestCases({
     ext: 'tree',
     testCallback: (contents) => {
         const parser = new PreprocessorParser();
-        
+
         return parser.parse(contents);
     },
 });

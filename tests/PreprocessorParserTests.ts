@@ -1,6 +1,7 @@
 import { PreprocessorParser } from '../src/PreprocessorParser';
-import { Token, TokenKind } from '../src/Token';
+import { Token } from '../src/Token';
 import { Tokenizer } from '../src/Tokenizer';
+import { TokenKind } from "../src/TokenKind";
 import { executeTestCases } from './shared';
 
 executeTestCases('PreprocessorParser', 'tokens', (contents) => {

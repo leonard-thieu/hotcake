@@ -21,8 +21,9 @@ import { Variable } from './Node/Expression/Variable';
 import { ModuleNode } from './Node/ModuleNode';
 import { Node } from './Node/Node';
 import { SkippedToken } from './SkippedToken';
-import { Token, TokenKind } from './Token';
+import { Token } from './Token';
 import { Tokenizer } from './Tokenizer';
+import { TokenKind } from "./TokenKind";
 
 export class PreprocessorParser {
     private tokens: Token[] = [];
