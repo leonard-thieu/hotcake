@@ -478,6 +478,9 @@ export class PreprocessorParser {
     private parseUnaryExpression(parent: Node): Expression {
         const token = this.getCurrentToken();
         switch (token.kind) {
+            case TokenKind.PlusSign:
+            case TokenKind.HyphenMinus:
+            case TokenKind.Tilde:
             case TokenKind.NotKeyword: {
                 return this.parseUnaryOpExpression(parent);
             }
