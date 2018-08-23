@@ -100,7 +100,7 @@ export class PreprocessorParser {
 
     // #region Directives
 
-    private assertExpressionParsedCompletely() {
+    private assertExpressionParsedCompletely(): void {
         const token = this.getCurrentToken();
 
         assert([
@@ -474,7 +474,7 @@ export class PreprocessorParser {
         return groupingExpression;
     }
 
-    private parseVariable(parent: Node) {
+    private parseVariable(parent: Node): Variable {
         const variable = new Variable();
         variable.parent = parent;
         variable.name = this.eat(TokenKind.Identifier);
@@ -482,7 +482,7 @@ export class PreprocessorParser {
         return variable;
     }
 
-    private parseStringLiteral(parent: Node) {
+    private parseStringLiteral(parent: Node): StringLiteral {
         const stringLiteral = new StringLiteral();
         stringLiteral.parent = parent;
         stringLiteral.startQuote = this.eat(TokenKind.QuotationMark);

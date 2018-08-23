@@ -1,17 +1,16 @@
 export abstract class Node {
     parent: Node | null = null;
 
-    toJSON() {
+    toJSON(): any {
         const obj: any = {};
 
         for (const childName of this.getChildNames()) {
             obj[childName] = this[childName];
         }
 
-        return {
-            type: this.constructor.name,
-            ...obj,
-        };
+        obj.type = this.constructor.name;
+
+        return obj;
     }
 
     private getChildNames<K extends keyof this>(): K[] {
