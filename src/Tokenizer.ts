@@ -638,7 +638,7 @@ export class Tokenizer {
                                 break;
                             }
                             default: {
-                                kind = TokenKind.ConfigVar;
+                                kind = TokenKind.ConfigurationVariable;
                                 break;
                             }
                         }

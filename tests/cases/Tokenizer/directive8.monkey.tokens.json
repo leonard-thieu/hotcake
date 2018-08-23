@@ -6,7 +6,7 @@
     "length": 1
   },
   {
-    "kind": "ConfigVar",
+    "kind": "ConfigurationVariable",
     "fullStart": 1,
     "start": 1,
     "length": 28

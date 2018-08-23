@@ -40,7 +40,7 @@ export enum TokenKind {
     RemDirectiveBody,
     PrintDirectiveKeyword,
     ErrorDirectiveKeyword,
-    ConfigVar,
+    ConfigurationVariable,
 
     QuotationMark,
     NumberSign,
