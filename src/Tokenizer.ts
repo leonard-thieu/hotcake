@@ -181,7 +181,7 @@ export class Tokenizer {
             while (isWhitespace(c)) {
                 c = this.nextChar();
             }
-    
+
             if (c === '\'') {
                 while ((c = this.nextChar()) !== null) {
                     if (c === '\n') {
@@ -203,43 +203,51 @@ export class Tokenizer {
 
         const inDirective = this.nesting[this.nesting.length - 1];
         if (inDirective === TokenKind.RemDirectiveKeyword) {
-            kind = this.tryReadPreprocessorDirective();
-            switch (kind) {
-                case TokenKind.RemDirectiveKeyword:
-                case TokenKind.IfDirectiveKeyword: {
-                    this.nesting.push(kind);
-                    break;
-                }
-                case TokenKind.EndDirectiveKeyword: {
-                    this.nesting.pop();
-                    break;
-                }
-                default: {
-                    kind = TokenKind.RemDirectiveBody;
-
-                    let continueReading = true;
-                    while (continueReading) {
-                        const directiveStart = this.position;
-                        switch (this.tryReadPreprocessorDirective()) {
-                            case TokenKind.RemDirectiveKeyword:
-                            case TokenKind.IfDirectiveKeyword:
-                            case TokenKind.EndDirectiveKeyword: {
-                                this.position = directiveStart;
-                                this.position--;
-                                continueReading = false;
-                                break;
-                            }
-                            default: {
-                                this.position++;
-                                c = this.peekChar();
-                                if (c === null) {
-                                    continueReading = false;
-                                }
-                                break;
-                            }
+            if (c === '#') {
+                const position = this.position;
+                if (this.position < this.input.length) {
+                    this.position++;
+                    switch (this.tryReadPreprocessorDirective()) {
+                        case TokenKind.RemDirectiveKeyword:
+                        case TokenKind.IfDirectiveKeyword:
+                        case TokenKind.EndDirectiveKeyword: {
+                            kind = TokenKind.NumberSign;
+                            break;
                         }
                     }
-                    break;
+                    this.position = position;
+                }
+            } else {
+                kind = this.tryReadPreprocessorDirective();
+                switch (kind) {
+                    case TokenKind.RemDirectiveKeyword:
+                    case TokenKind.IfDirectiveKeyword: {
+                        this.nesting.push(kind);
+                        break;
+                    }
+                    case TokenKind.EndDirectiveKeyword: {
+                        this.nesting.pop();
+                        break;
+                    }
+                }
+            }
+
+            if (kind === TokenKind.Unknown) {
+                kind = TokenKind.RemDirectiveBody;
+
+                let continueReading = true;
+                while (continueReading) {
+                    switch (this.peekChar()) {
+                        case '#':
+                        case null: {
+                            continueReading = false;
+                            break;
+                        }
+                        default: {
+                            this.position++;
+                            break;
+                        }
+                    }
                 }
             }
         } else if (this.inString) {
@@ -329,6 +337,7 @@ export class Tokenizer {
                     this.lineStart = this.position + 1;
                     break;
                 }
+                case '#': { kind = TokenKind.NumberSign; break; }
                 // TODO: Should this scan ahead to check if the string literal is terminated?
                 case '"': {
                     kind = TokenKind.QuotationMark;
@@ -388,9 +397,7 @@ export class Tokenizer {
                         break;
                     }
 
-                    if (c === '#') {
-                        kind = TokenKind.NumberSign;
-                    } else if (isDecimal(c) ||
+                    if (isDecimal(c) ||
                         (c === '.' && isDecimal(this.peekChar()))) {
                         kind = TokenKind.IntegerLiteral;
 
@@ -436,8 +443,6 @@ export class Tokenizer {
                     } else if (c === '.') {
                         kind = TokenKind.Period;
                     } else {
-                        // Walk back so `tryReadIdentifier` can read the first character.
-                        this.position--;
                         const id = this.tryReadIdentifier();
                         if (id !== null) {
                             kind = TokenKind.Identifier;
@@ -513,9 +518,6 @@ export class Tokenizer {
                                 case 'throw': { kind = TokenKind.ThrowKeyword; break; }
                                 case 'throwable': { kind = TokenKind.ThrowableKeyword; break; }
                             }
-                        } else {
-                            // Rollback walk back.
-                            this.position = start;
                         }
                     }
                     break;
@@ -537,8 +539,7 @@ export class Tokenizer {
         const start = this.position;
         let kind = TokenKind.Unknown;
 
-        // Preprocessor directives must start on their own line and may be preceded by whitespace.
-        if (this.peekChar(0) === '#' && this.isDirectiveAllowed()) {
+        if (this.isPreprocessorDirectiveAllowed()) {
             const id = this.tryReadIdentifier();
             if (id !== null) {
                 switch (id.toLowerCase()) {
@@ -643,22 +644,36 @@ export class Tokenizer {
                         }
                     }
                 }
-            } else {
-                // Unrecognized preprocessor directive.
-                // Rollback whitespace.
-                this.position = start;
             }
         }
 
         return kind;
     }
 
-    private isDirectiveAllowed(): boolean {
-        for (let i = this.position - 1; i >= 0; i--) {
+    // Preprocessor directives must start with a # on their own line and may be preceded by whitespace.
+    private isPreprocessorDirectiveAllowed(): boolean {
+        let i = this.position - 1;
+        
+        for (; i >= 0; i--) {
             const c = this.input[i];
             if (!isWhitespace(c)) {
+                if (c === '#') {
+                    break;
+                }
+
+                return false;
+            }
+        }
+
+        if (i < 0) {
+            return false;
+        }
+
+        for (let j = i - 1; j >= 0; j--) {
+            const c = this.input[j];
+            if (!isWhitespace(c)) {
                 if (c === '\n') {
-                    return true;
+                    break;
                 }
 
                 return false;
@@ -669,11 +684,10 @@ export class Tokenizer {
     }
 
     private tryReadIdentifier(): string | null {
-        let c = this.peekChar();
+        let c = this.peekChar(0);
 
         if (c === '_' ||
             isAlpha(c)) {
-            this.position++;
             const start = this.position;
 
             while (true) {

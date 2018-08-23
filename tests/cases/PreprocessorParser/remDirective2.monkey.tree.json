@@ -1,78 +1,104 @@
 {
-  "ModuleNode": {
-    "members": [
-      {
-        "RemDirectiveNode": {
-          "remDirectiveKeyword": {
-            "kind": "RemDirectiveKeyword",
-            "fullStart": 0,
-            "start": 0,
-            "length": 4
+  "type": "ModuleNode",
+  "members": [
+    {
+      "type": "RemDirectiveNode",
+      "numberSign": {
+        "kind": "NumberSign",
+        "fullStart": 0,
+        "start": 0,
+        "length": 1
+      },
+      "remDirectiveKeyword": {
+        "kind": "RemDirectiveKeyword",
+        "fullStart": 1,
+        "start": 1,
+        "length": 3
+      },
+      "children": [
+        {
+          "kind": "RemDirectiveBody",
+          "fullStart": 4,
+          "start": 5,
+          "length": 8
+        },
+        {
+          "type": "IfDirectiveNode",
+          "numberSign": {
+            "kind": "NumberSign",
+            "fullStart": 12,
+            "start": 12,
+            "length": 1
           },
-          "children": [
+          "ifDirectiveKeyword": {
+            "kind": "IfDirectiveKeyword",
+            "fullStart": 13,
+            "start": 13,
+            "length": 2
+          },
+          "expression": {
+            "type": "BooleanLiteral",
+            "value": {
+              "kind": "TrueKeyword",
+              "fullStart": 15,
+              "start": 16,
+              "length": 5
+            }
+          },
+          "members": [
             {
-              "kind": "RemDirectiveBody",
-              "fullStart": 4,
-              "start": 5,
-              "length": 8
-            },
-            {
-              "IfDirectiveNode": {
-                "ifDirectiveKeyword": {
-                  "kind": "IfDirectiveKeyword",
-                  "fullStart": 12,
-                  "start": 12,
-                  "length": 3
-                },
-                "expression": {
-                  "BooleanLiteral": {
-                    "value": {
-                      "kind": "TrueKeyword",
-                      "fullStart": 15,
-                      "start": 16,
-                      "length": 5
-                    }
-                  }
-                },
-                "members": [
-                  {
-                    "kind": "Newline",
-                    "fullStart": 20,
-                    "start": 21,
-                    "length": 2
-                  }
-                ],
-                "elseIfDirectives": [],
-                "elseDirective": null,
-                "endDirectiveKeyword": {
-                  "kind": "EndDirectiveKeyword",
-                  "fullStart": 22,
-                  "start": 26,
-                  "length": 8
-                }
-              }
-            },
-            {
-              "kind": "RemDirectiveBody",
-              "fullStart": 30,
-              "start": 31,
-              "length": 4
+              "kind": "Newline",
+              "fullStart": 20,
+              "start": 21,
+              "length": 2
             }
           ],
-          "endDirectiveKeyword": {
-            "kind": "EndDirectiveKeyword",
-            "fullStart": 34,
-            "start": 34,
-            "length": 4
+          "elseIfDirectives": [],
+          "elseDirective": null,
+          "endDirective": {
+            "type": "EndDirectiveNode",
+            "numberSign": {
+              "kind": "NumberSign",
+              "fullStart": 22,
+              "start": 26,
+              "length": 5
+            },
+            "endDirectiveKeyword": {
+              "kind": "EndDirectiveKeyword",
+              "fullStart": 27,
+              "start": 27,
+              "length": 3
+            }
           }
+        },
+        {
+          "kind": "RemDirectiveBody",
+          "fullStart": 30,
+          "start": 31,
+          "length": 4
+        }
+      ],
+      "endDirective": {
+        "type": "EndDirectiveNode",
+        "numberSign": {
+          "kind": "NumberSign",
+          "fullStart": 34,
+          "start": 34,
+          "length": 1
+        },
+        "endDirectiveKeyword": {
+          "kind": "EndDirectiveKeyword",
+          "fullStart": 35,
+          "start": 35,
+          "length": 3
         }
       }
-    ],
-    "eofToken": {
-      "kind": "EOF",
-      "fullStart": 38,
-      "start": 38,
-      "length": 0
     }
+  ],
+  "eofToken": {
+    "kind": "EOF",
+    "fullStart": 38,
+    "start": 38,
+    "length": 0
   }
 }

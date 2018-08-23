@@ -1,9 +1,15 @@
 [
   {
-    "kind": "ConfigVar",
+    "kind": "NumberSign",
     "fullStart": 0,
     "start": 0,
-    "length": 29
+    "length": 1
+  },
+  {
+    "kind": "ConfigVar",
+    "fullStart": 1,
+    "start": 1,
+    "length": 28
   },
   {
     "kind": "EOF",

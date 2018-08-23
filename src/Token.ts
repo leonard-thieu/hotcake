@@ -5,7 +5,7 @@ export class Token {
         public start: number,
         public length: number) { }
 
-    toJSON(): SerializableToken {
+    toJSON(): any {
         return {
             kind: TokenKind[this.kind],
             fullStart: this.fullStart,
@@ -13,13 +13,6 @@ export class Token {
             length: this.length,
         };
     }
-}
-
-interface SerializableToken {
-    kind: string;
-    fullStart: number;
-    start: number;
-    length: number;
 }
 
 export enum TokenKind {
@@ -38,7 +31,7 @@ export enum TokenKind {
     EscapeTilde,
     EscapeUnicodeHexValue,
     InvalidEscapeSequence,
-    
+
     IfDirectiveKeyword,
     ElseIfDirectiveKeyword,
     ElseDirectiveKeyword,
@@ -48,7 +41,7 @@ export enum TokenKind {
     PrintDirectiveKeyword,
     ErrorDirectiveKeyword,
     ConfigVar,
-    
+
     QuotationMark,
     NumberSign,
     DollarSign,
@@ -73,7 +66,7 @@ export enum TokenKind {
     ClosingSquareBracket,
     VerticalBar,
     Tilde,
-    
+
     Identifier,
     VoidKeyword,
     StrictKeyword,
@@ -144,7 +137,7 @@ export enum TokenKind {
     CatchKeyword,
     ThrowKeyword,
     ThrowableKeyword,
-    
+
     Expression,
     LessThanOrEquals,
     GreaterThanOrEquals,

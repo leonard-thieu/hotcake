@@ -1,18 +1,21 @@
 import { MissingToken } from '../MissingToken';
 import { Token } from '../Token';
+import { DirectiveNode } from './DirectiveNode';
 import { ElseDirectiveNode } from './ElseDirectiveNode';
 import { ElseIfDirectiveNode } from './ElseIfDirectiveNode';
+import { EndDirectiveNode } from './EndDirectiveNode';
 import { Expression } from './Expression/Expression';
 import { Node } from './Node';
 
-export class IfDirectiveNode extends Node {
+export class IfDirectiveNode extends DirectiveNode {
     static CHILD_NAMES: (keyof IfDirectiveNode)[] = [
+        'numberSign',
         'ifDirectiveKeyword',
         'expression',
         'members',
         'elseIfDirectives',
         'elseDirective',
-        'endDirectiveKeyword',
+        'endDirective',
     ];
 
     ifDirectiveKeyword: Token | null = null;
@@ -20,5 +23,5 @@ export class IfDirectiveNode extends Node {
     members: Array<Node | Token> = [];
     elseIfDirectives: ElseIfDirectiveNode[] = [];
     elseDirective: ElseDirectiveNode | null = null;
-    endDirectiveKeyword: Token | MissingToken | null = null;
+    endDirective: EndDirectiveNode | null = null;
 }

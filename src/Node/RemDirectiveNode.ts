@@ -1,16 +1,17 @@
-import { MissingToken } from '../MissingToken';
 import { Token } from '../Token';
+import { DirectiveNode } from './DirectiveNode';
+import { EndDirectiveNode } from './EndDirectiveNode';
 import { IfDirectiveNode } from './IfDirectiveNode';
-import { Node } from './Node';
 
-export class RemDirectiveNode extends Node {
+export class RemDirectiveNode extends DirectiveNode {
     static CHILD_NAMES: (keyof RemDirectiveNode)[] = [
+        'numberSign',
         'remDirectiveKeyword',
         'children',
-        'endDirectiveKeyword',
+        'endDirective',
     ];
 
     remDirectiveKeyword: Token | null = null;
     children: Array<RemDirectiveNode | IfDirectiveNode | Token> = [];
-    endDirectiveKeyword: Token | MissingToken | null = null;
+    endDirective: EndDirectiveNode | null = null;
 }

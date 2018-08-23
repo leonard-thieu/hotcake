@@ -1,46 +1,49 @@
 {
-  "ModuleNode": {
-    "members": [
-      {
-        "ErrorDirectiveNode": {
-          "errorDirectiveKeyword": {
-            "kind": "ErrorDirectiveKeyword",
-            "fullStart": 0,
-            "start": 0,
-            "length": 6
-          },
-          "expression": {
-            "StringLiteral": {
-              "startQuote": {
-                "kind": "QuotationMark",
-                "fullStart": 6,
-                "start": 7,
-                "length": 2
-              },
-              "children": [
-                {
-                  "kind": "StringLiteralText",
-                  "fullStart": 8,
-                  "start": 8,
-                  "length": 7
-                }
-              ],
-              "endQuote": {
-                "kind": "QuotationMark",
-                "fullStart": 15,
-                "start": 15,
-                "length": 1
-              }
-            }
+  "type": "ModuleNode",
+  "members": [
+    {
+      "type": "ErrorDirectiveNode",
+      "numberSign": {
+        "kind": "NumberSign",
+        "fullStart": 0,
+        "start": 0,
+        "length": 1
+      },
+      "errorDirectiveKeyword": {
+        "kind": "ErrorDirectiveKeyword",
+        "fullStart": 1,
+        "start": 1,
+        "length": 5
+      },
+      "expression": {
+        "type": "StringLiteral",
+        "startQuote": {
+          "kind": "QuotationMark",
+          "fullStart": 6,
+          "start": 7,
+          "length": 2
+        },
+        "children": [
+          {
+            "kind": "StringLiteralText",
+            "fullStart": 8,
+            "start": 8,
+            "length": 7
           }
+        ],
+        "endQuote": {
+          "kind": "QuotationMark",
+          "fullStart": 15,
+          "start": 15,
+          "length": 1
         }
       }
-    ],
-    "eofToken": {
-      "kind": "EOF",
-      "fullStart": 16,
-      "start": 16,
-      "length": 0
     }
+  ],
+  "eofToken": {
+    "kind": "EOF",
+    "fullStart": 16,
+    "start": 16,
+    "length": 0
   }
 }

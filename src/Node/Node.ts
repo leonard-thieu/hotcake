@@ -9,7 +9,8 @@ export abstract class Node {
         }
 
         return {
-            [this.constructor.name]: obj,
+            type: this.constructor.name,
+            ...obj,
         };
     }
 

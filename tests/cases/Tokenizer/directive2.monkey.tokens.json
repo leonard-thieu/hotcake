@@ -1,9 +1,15 @@
 [
   {
-    "kind": "ElseIfDirectiveKeyword",
+    "kind": "NumberSign",
     "fullStart": 0,
     "start": 0,
-    "length": 7
+    "length": 1
+  },
+  {
+    "kind": "ElseIfDirectiveKeyword",
+    "fullStart": 1,
+    "start": 1,
+    "length": 6
   },
   {
     "kind": "EOF",

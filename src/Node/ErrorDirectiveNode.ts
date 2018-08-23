@@ -1,10 +1,11 @@
 import { MissingToken } from '../MissingToken';
 import { Token } from '../Token';
+import { DirectiveNode } from './DirectiveNode';
 import { Expression } from './Expression/Expression';
-import { Node } from './Node';
 
-export class ErrorDirectiveNode extends Node {
+export class ErrorDirectiveNode extends DirectiveNode {
     static CHILD_NAMES: (keyof ErrorDirectiveNode)[] = [
+        'numberSign',
         'errorDirectiveKeyword',
         'expression',
     ];

@@ -1,10 +1,11 @@
 import { MissingToken } from '../MissingToken';
 import { Token } from '../Token';
+import { DirectiveNode } from './DirectiveNode';
 import { Expression } from './Expression/Expression';
-import { Node } from './Node';
 
-export class PrintDirectiveNode extends Node {
+export class PrintDirectiveNode extends DirectiveNode {
     static CHILD_NAMES: (keyof PrintDirectiveNode)[] = [
+        'numberSign',
         'printDirectiveKeyword',
         'expression',
     ];

@@ -1,9 +1,15 @@
 [
   {
-    "kind": "PrintDirectiveKeyword",
+    "kind": "NumberSign",
     "fullStart": 0,
     "start": 0,
-    "length": 6
+    "length": 1
+  },
+  {
+    "kind": "PrintDirectiveKeyword",
+    "fullStart": 1,
+    "start": 1,
+    "length": 5
   },
   {
     "kind": "QuotationMark",
