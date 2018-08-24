@@ -45,7 +45,7 @@ export function executeTestCases(options: TestCaseOptions): void {
             const sourceRelativePath = path.relative(casesPath, sourcePath);
 
             let _it: Mocha.PendingTestFunction = it;
-            if (skippedCases && skippedCases.includes(sourceRelativePath)) {
+            if (skippedCases.includes(sourceRelativePath)) {
                 _it = xit;
             }
 
