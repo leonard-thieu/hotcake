@@ -1,23 +1,9 @@
-import { PreprocessorParser } from '../src/PreprocessorParser';
-import { Token } from '../src/Token';
-import { Tokenizer } from '../src/Tokenizer';
-import { TokenKind } from "../src/TokenKind";
-import { executeTestCases } from './shared';
+import path = require('path');
 
-executeTestCases('PreprocessorParser', 'tokens', (contents) => {
-    const tokenizer = new Tokenizer(contents);
-    const tokens: Token[] = [];
-    let t: Token;
-    do {
-        t = tokenizer.next();
-        tokens.push(t);
-    } while (t.kind !== TokenKind.EOF);
+import { executePreprocessorParserTestCases, executeTokenizerTestCases } from './shared';
 
-    return tokens;
-});
+const name = 'PreprocessorParser';
+const casesPath = path.resolve(__dirname, 'cases', name);
 
-executeTestCases('PreprocessorParser', 'tree', (contents) => {
-    const parser = new PreprocessorParser();
-
-    return parser.parse(contents);
-});
+executeTokenizerTestCases(name, casesPath);
+executePreprocessorParserTestCases(name, casesPath);

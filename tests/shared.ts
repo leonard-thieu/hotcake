@@ -4,27 +4,37 @@ import path = require('path');
 import mkdirp = require('mkdirp');
 import { orderBy } from 'natural-orderby';
 
-export function executeTestCases(options: TestCaseOptions): void;
-export function executeTestCases(type: string, ext: string, testCallback: TestCallback): void;
+import { PreprocessorParser } from '../src/PreprocessorParser';
+import { Token } from '../src/Token';
+import { Tokenizer } from '../src/Tokenizer';
+import { TokenKind } from '../src/TokenKind';
 
-export function executeTestCases(type: TestCaseOptions | string, ext?: string, testCallback?: TestCallback): void {
-    let name: string;
-    let casesPath: string;
-    let outputBasePath: string;
-    let skippedCases: string[] | undefined;
+interface TestCaseOptions {
+    name: string;
+    casesPath: string;
+    testCallback: TestCallback;
+}
 
-    if (typeof type !== 'string') {
-        const options = type;
-        name = options.name;
-        casesPath = options.casesPath;
-        outputBasePath = options.outputBasePath;
-        ext = options.ext;
-        testCallback = options.testCallback;
-    } else {
-        name = type;
-        casesPath = path.join(__dirname, 'cases', type);
-        outputBasePath = casesPath;
-        skippedCases = require(`./${type}.skipped.json`);
+interface TestContext {
+    _it: Mocha.PendingTestFunction;
+    sourceRelativePath: string;
+    contents: string;
+}
+
+type TestCallback = (context: TestContext) => void;
+
+export function executeTestCases(options: TestCaseOptions): void {
+    const {
+        name,
+        casesPath,
+        testCallback,
+    } = options;
+
+    let skippedCases: string[];
+    try {
+        skippedCases = require(`./${name}.skipped.json`);
+    } catch (error) {
+        skippedCases = [];
     }
 
     describe(name, function () {
@@ -33,40 +43,89 @@ export function executeTestCases(type: TestCaseOptions | string, ext?: string, t
 
         for (const sourcePath of sourcePaths) {
             const sourceRelativePath = path.relative(casesPath, sourcePath);
-            const outputPath = path.join(outputBasePath, sourceRelativePath) + `.${ext}.json`;
-            mkdirp.sync(path.dirname(outputPath));
 
             let _it: Mocha.PendingTestFunction = it;
             if (skippedCases && skippedCases.includes(sourceRelativePath)) {
                 _it = xit;
-                try {
-                    fs.unlinkSync(outputPath);
-                } catch (error) {
-                    switch (error.code) {
-                        case 'ENOENT': { break; }
-                        default: { throw error; }
-                    }
-                }
             }
 
-            // TODO: Should this fail/warn if baselines have changed?
-            _it(sourceRelativePath, function () {
-                const contents = fs.readFileSync(sourcePath, 'utf8');
-                const result = testCallback!(contents);
-
-                const json = JSON.stringify(result, null, 2);
-                fs.writeFileSync(outputPath, json);
+            const contents = fs.readFileSync(sourcePath, 'utf8');
+            testCallback({
+                _it,
+                sourceRelativePath,
+                contents,
             });
         }
     });
 }
 
-interface TestCaseOptions {
-    name: string;
-    casesPath: string;
-    outputBasePath: string;
-    ext: string;
-    testCallback: TestCallback;
+export function executeBaselineTestCase(outputPath: string, testCallback: () => any): void {
+    mkdirp.sync(path.dirname(outputPath));
+
+    try {
+        fs.unlinkSync(outputPath);
+    } catch (error) {
+        switch (error.code) {
+            case 'ENOENT': { break; }
+            default: { throw error; }
+        }
+    }
+
+    const result = testCallback();
+
+    const json = JSON.stringify(result, null, 2);
+    fs.writeFileSync(outputPath, json);
 }
 
-type TestCallback = (contents: string) => any;
+export function executeTokenizerTestCases(name: string, casesPath: string) {
+    executeTestCases({
+        name: name,
+        casesPath: casesPath,
+        testCallback: function (context) {
+            const { _it, sourceRelativePath, contents } = context;
+
+            _it(sourceRelativePath, function () {
+                const outputPath = path.resolve(__dirname, 'cases', name, sourceRelativePath) + '.tokens.json';
+                executeBaselineTestCase(outputPath, () => {
+                    return getTokens(contents);
+                });
+            });
+        },
+    });
+}
+
+export function executePreprocessorParserTestCases(name: string, casesPath: string) {
+    executeTestCases({
+        name: name,
+        casesPath: casesPath,
+        testCallback: function (context) {
+            const { _it, sourceRelativePath, contents } = context;
+
+            _it(sourceRelativePath, function () {
+                const outputPath = path.resolve(__dirname, 'cases', name, sourceRelativePath) + '.tree.json';
+                executeBaselineTestCase(outputPath, () => {
+                    return getPreprocessorParseTree(contents);
+                });
+            });
+        },
+    });
+}
+
+export function getTokens(contents: string) {
+    const tokenizer = new Tokenizer(contents);
+    const tokens: Token[] = [];
+
+    let t: Token;
+    do {
+        t = tokenizer.next();
+        tokens.push(t);
+    } while (t.kind !== TokenKind.EOF);
+
+    return tokens;
+}
+
+export function getPreprocessorParseTree(contents: string) {
+    const parser = new PreprocessorParser();
+
+    return parser.parse(contents);
+}
