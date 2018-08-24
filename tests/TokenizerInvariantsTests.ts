@@ -19,13 +19,22 @@ executeTestCases({
                 tokensLength += token.length;
             }
 
-            tokensLength.should.equal(contents.length, 'Invariant: Sum of the lengths of all the tokens should be equivalent to the length of the document.');
+            tokensLength.should.equal(contents.length, 'Invariant: Sum of the lengths of all the tokens should be equivalent to the length of the document');
         });
 
         _it(sourceRelativePath, function () {
             for (const token of tokens) {
-                token.start.should.be.at.least(token.fullStart, "Invariant: A token's Start is always >= FullStart.");
+                token.start.should.be.at.least(token.fullStart, "Invariant: A token's start is always >= fullStart");
             }
+        });
+
+        _it(sourceRelativePath, function() {
+            let allFullText = '';
+            for (const token of tokens) {
+                allFullText += token.getFullText(contents);
+            }
+
+            allFullText.should.equal(contents, 'Invariant: Concatenating the full text of each token returns the document');
         });
     },
 });

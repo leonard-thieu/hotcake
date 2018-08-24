@@ -7,6 +7,10 @@ export class Token {
         public start: number,
         public length: number) { }
 
+    getFullText(module: string): string {
+        return module.slice(this.fullStart, this.fullStart + this.length);
+    }
+
     toJSON(): any {
         return {
             kind: TokenKind[this.kind],
