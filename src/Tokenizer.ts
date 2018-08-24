@@ -199,7 +199,7 @@ export class Tokenizer {
         if (c === null) {
             kind = TokenKind.EOF;
 
-            return new Token(kind, fullStart, start, 0);
+            return new Token(kind, fullStart, start, this.position - fullStart);
         }
 
         const inDirective = this.nesting[this.nesting.length - 1];
