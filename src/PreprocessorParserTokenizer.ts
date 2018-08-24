@@ -1,10 +1,10 @@
 import { Directive } from "./Node/Directive/Directive";
 import { IfDirective } from "./Node/Directive/IfDirective";
-import { ModuleNode } from "./Node/ModuleNode";
+import { PreprocessorModule } from "./Node/PreprocessorModule";
 import { Token } from "./Token";
 
 export class PreprocessorParserTokenizer {
-    * getTokens(module: ModuleNode): IterableIterator<Token> {
+    * getTokens(module: PreprocessorModule): IterableIterator<Token> {
         for (const member of this.readMember(module.members)) {
             yield member;
         }

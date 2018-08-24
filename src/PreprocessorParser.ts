@@ -20,8 +20,8 @@ import { IntegerLiteral } from './Node/Expression/IntegerLiteral';
 import { StringLiteral } from './Node/Expression/StringLiteral';
 import { UnaryOpExpression } from './Node/Expression/UnaryOpExpression';
 import { Variable } from './Node/Expression/Variable';
-import { ModuleNode } from './Node/ModuleNode';
 import { Node } from './Node/Node';
+import { PreprocessorModule } from './Node/PreprocessorModule';
 import { SkippedToken } from './SkippedToken';
 import { Token } from './Token';
 import { Tokenizer } from './Tokenizer';
@@ -44,7 +44,7 @@ export class PreprocessorParser {
     private tokens: Token[] = [];
     private position: number = 0;
 
-    parse(input: string): ModuleNode {
+    parse(input: string): PreprocessorModule {
         const tokenizer = new Tokenizer(input);
 
         this.tokens.length = 0;
@@ -58,8 +58,8 @@ export class PreprocessorParser {
         return this.parseModule();
     }
 
-    private parseModule(): ModuleNode {
-        const moduleNode = new ModuleNode();
+    private parseModule(): PreprocessorModule {
+        const moduleNode = new PreprocessorModule();
 
         let continueParsing = true;
         do {
