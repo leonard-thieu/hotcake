@@ -1,0 +1,80 @@
+[
+  {
+    "kind": "Newline",
+    "fullStart": 18,
+    "start": 19,
+    "length": 2
+  },
+  {
+    "kind": "Newline",
+    "fullStart": 20,
+    "start": 21,
+    "length": 2
+  },
+  {
+    "kind": "ImportKeyword",
+    "fullStart": 22,
+    "start": 26,
+    "length": 10
+  },
+  {
+    "kind": "QuotationMark",
+    "fullStart": 32,
+    "start": 33,
+    "length": 2
+  },
+  {
+    "kind": "StringLiteralText",
+    "fullStart": 34,
+    "start": 34,
+    "length": 22
+  },
+  {
+    "kind": "QuotationMark",
+    "fullStart": 56,
+    "start": 56,
+    "length": 1
+  },
+  {
+    "kind": "Newline",
+    "fullStart": 57,
+    "start": 58,
+    "length": 2
+  },
+  {
+    "kind": "Newline",
+    "fullStart": 59,
+    "start": 60,
+    "length": 2
+  },
+  {
+    "kind": "Newline",
+    "fullStart": 119,
+    "start": 120,
+    "length": 2
+  },
+  {
+    "kind": "Newline",
+    "fullStart": 121,
+    "start": 122,
+    "length": 2
+  },
+  {
+    "kind": "ImportKeyword",
+    "fullStart": 123,
+    "start": 123,
+    "length": 6
+  },
+  {
+    "kind": "Identifier",
+    "fullStart": 129,
+    "start": 130,
+    "length": 4
+  },
+  {
+    "kind": "EOF",
+    "fullStart": 133,
+    "start": 133,
+    "length": 0
+  }
+]

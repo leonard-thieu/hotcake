@@ -1,4 +1,5 @@
 import { Token } from '../Token';
+import { Directive } from './Directive/Directive';
 import { Node } from './Node';
 
 export class ModuleNode extends Node {
@@ -7,6 +8,6 @@ export class ModuleNode extends Node {
         'eofToken',
     ];
 
-    members: Array<Node | Token> = [];
+    members: Array<Directive | Token> = [];
     eofToken: Token | null = null;
 }

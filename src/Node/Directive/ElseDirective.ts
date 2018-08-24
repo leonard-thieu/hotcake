@@ -1,5 +1,4 @@
 import { Token } from '../../Token';
-import { Node } from '../Node';
 import { Directive } from './Directive';
 
 export class ElseDirective extends Directive {
@@ -10,5 +9,5 @@ export class ElseDirective extends Directive {
     ];
 
     elseDirectiveKeyword: Token | null = null;
-    members: Array<Node | Token> = [];
+    members: Array<Directive | Token> = [];
 }

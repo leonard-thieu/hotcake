@@ -70,10 +70,9 @@ export class PreprocessorParser {
                     break;
                 }
                 default: {
-                    let child: Node | Token | null = this.parseNextInModuleContext(moduleNode);
-                    if (child === null) {
-                        child = this.eat(token.kind);
-                    }
+                    const child =
+                        this.parseNextInModuleContext(moduleNode) ||
+                        this.eat(token.kind);
                     moduleNode.members.push(child);
                     break;
                 }
@@ -85,7 +84,7 @@ export class PreprocessorParser {
         return moduleNode;
     }
 
-    private parseNextInModuleContext(parent: Node): Node | null {
+    private parseNextInModuleContext(parent: Node): Directive | null {
         const token = this.getCurrentToken();
         if (token.kind === TokenKind.NumberSign) {
             const nextToken = this.getToken(1);

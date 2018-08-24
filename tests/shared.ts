@@ -3,8 +3,8 @@ import fs = require('fs');
 import path = require('path');
 import mkdirp = require('mkdirp');
 import { orderBy } from 'natural-orderby';
-
 import { PreprocessorParser } from '../src/PreprocessorParser';
+import { PreprocessorParserTokenizer } from '../src/PreprocessorParserTokenizer';
 import { Token } from '../src/Token';
 import { Tokenizer } from '../src/Tokenizer';
 import { TokenKind } from '../src/TokenKind';
@@ -111,6 +111,23 @@ export function executePreprocessorParserTestCases(name: string, casesPath: stri
     });
 }
 
+export function executePreprocessorParserTokenizerTestCases(name: string, casesPath: string) {
+    executeTestCases({
+        name: name,
+        casesPath: casesPath,
+        testCallback: function (context) {
+            const { _it, sourceRelativePath, contents } = context;
+
+            _it(sourceRelativePath, function () {
+                const outputPath = path.resolve(__dirname, 'cases', name, sourceRelativePath) + '.tokens.json';
+                executeBaselineTestCase(outputPath, () => {
+                    return getPreprocessorParserTokens(contents);
+                });
+            });
+        },
+    });
+}
+
 export function getTokens(contents: string) {
     const tokenizer = new Tokenizer(contents);
     const tokens: Token[] = [];
@@ -128,4 +145,11 @@ export function getPreprocessorParseTree(contents: string) {
     const parser = new PreprocessorParser();
 
     return parser.parse(contents);
+}
+
+export function getPreprocessorParserTokens(contents: string) {
+    const tree = getPreprocessorParseTree(contents);
+    const tokenizer = new PreprocessorParserTokenizer();
+
+    return Array.from(tokenizer.getTokens(tree));
 }
