@@ -1,5 +1,5 @@
 import path = require('path');
-import assert = require('assert');
+import 'chai/register-should';
 
 import { executeTestCases, getTokens } from "./shared";
 
@@ -19,9 +19,13 @@ executeTestCases({
                 tokensLength += token.length;
             }
 
-            assert.strictEqual(
-                tokensLength, contents.length,
-                'Invariant: Sum of the lengths of all the tokens should be equivalent to the length of the document.');
+            tokensLength.should.equal(contents.length, 'Invariant: Sum of the lengths of all the tokens should be equivalent to the length of the document.');
+        });
+
+        _it(sourceRelativePath, function () {
+            for (const token of tokens) {
+                token.start.should.be.at.least(token.fullStart, "Invariant: A token's Start is always >= FullStart.");
+            }
         });
     },
 });
