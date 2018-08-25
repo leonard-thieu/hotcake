@@ -27,19 +27,6 @@ import { Token } from './Token';
 import { Tokenizer } from './Tokenizer';
 import { TokenKind } from "./TokenKind";
 
-enum Associativity {
-    Unknown = -1,
-    None = 0,
-    Left = 1,
-    Right = 2,
-}
-
-type PrecedenceAndAssociativity = [number, Associativity];
-
-type PrecedenceAndAssociativityMap = {
-    readonly [P in keyof typeof TokenKind]?: PrecedenceAndAssociativity;
-};
-
 export class PreprocessorParser {
     private tokens: Token[];
     private position: number;
@@ -371,13 +358,13 @@ export class PreprocessorParser {
     // #region Expressions
 
     private parseExpression(parent: Node): Expression {
-        return this.parseBinaryExpression(0, parent);
+        return this.parseBinaryExpression(Precedence.Initial, parent);
     }
 
-    private parseBinaryExpression(precedence: number, parent: Node): Expression {
+    private parseBinaryExpression(precedence: Precedence, parent: Node): Expression {
         let expression = this.parseUnaryExpression(parent);
 
-        let [prevNewPrecedence, prevAssociativity] = PreprocessorParser.UNKNOWN_PRECEDENCE_AND_ASSOCIATIVITY;
+        let [prevNewPrecedence, prevAssociativity] = UNKNOWN_PRECEDENCE_AND_ASSOCIATIVITY;
 
         while (true) {
             let token = this.getCurrentToken();
@@ -390,7 +377,7 @@ export class PreprocessorParser {
                 }
             }
 
-            const [newPrecedence, associativity] = PreprocessorParser.getBinaryOperatorPrecedenceAndAssociativity(token);
+            const [newPrecedence, associativity] = getBinaryOperatorPrecedenceAndAssociativity(token);
 
             if (prevAssociativity === Associativity.None && prevNewPrecedence === newPrecedence) {
                 break;
@@ -419,47 +406,6 @@ export class PreprocessorParser {
         }
 
         return expression;
-    }
-
-    private static readonly OPERATOR_PRECEDENCE_AND_ASSOCIATIVITY: PrecedenceAndAssociativityMap = {
-        // Multiplicative and shift operators
-        [TokenKind.Asterisk]: [12, Associativity.Left],
-        [TokenKind.Slash]: [12, Associativity.Left],
-        [TokenKind.ModKeyword]: [12, Associativity.Left],
-        [TokenKind.ShlKeyword]: [12, Associativity.Left],
-        [TokenKind.ShrKeyword]: [12, Associativity.Left],
-
-        // Additive operators
-        [TokenKind.PlusSign]: [11, Associativity.Left],
-        [TokenKind.HyphenMinus]: [11, Associativity.Left],
-
-        // Bitwise AND and XOR operators
-        [TokenKind.Ampersand]: [10, Associativity.Left],
-        [TokenKind.Tilde]: [10, Associativity.Left],
-
-        // Bitwise OR operator
-        [TokenKind.VerticalBar]: [9, Associativity.Left],
-
-        // Equality and relational operators
-        [TokenKind.EqualsSign]: [8, Associativity.None],
-        [TokenKind.LessThanSign]: [8, Associativity.None],
-        [TokenKind.GreaterThanSign]: [8, Associativity.None],
-        [TokenKind.LessThanSignEqualsSign]: [8, Associativity.None],
-        [TokenKind.GreaterThanSignEqualsSign]: [8, Associativity.None],
-        [TokenKind.LessThanSignGreaterThanSign]: [8, Associativity.None],
-
-        // Logical AND operator
-        [TokenKind.AndKeyword]: [7, Associativity.Left],
-
-        // Logical OR operator
-        [TokenKind.OrKeyword]: [6, Associativity.Left],
-    };
-
-    private static readonly UNKNOWN_PRECEDENCE_AND_ASSOCIATIVITY: PrecedenceAndAssociativity = [-1, Associativity.Unknown];
-
-    private static getBinaryOperatorPrecedenceAndAssociativity(token: Token): PrecedenceAndAssociativity {
-        return PreprocessorParser.OPERATOR_PRECEDENCE_AND_ASSOCIATIVITY[token.kind] ||
-            PreprocessorParser.UNKNOWN_PRECEDENCE_AND_ASSOCIATIVITY;
     }
 
     private makeBinaryExpression(leftOperand: Expression, operator: Token, rightOperand: Expression, parent: Node): Expression {
@@ -648,3 +594,66 @@ export class PreprocessorParser {
 
     // #endregion
 }
+
+// #region Precedence and associativity
+
+enum Precedence {
+    Unknown = -1,
+    Initial = 0,
+    LogicalOr = 6,
+    LogicalAnd = 7,
+    EqualityRelational = 8,
+    BitwiseOr = 9,
+    BitwiseXorBitwiseAnd = 10,
+    Additive = 11,
+    ShiftMultiplicative = 12,
+}
+
+enum Associativity {
+    Unknown = -1,
+    None = 0,
+    Left = 1,
+    Right = 2,
+}
+
+type PrecedenceAndAssociativity = [Precedence, Associativity];
+
+type PrecedenceAndAssociativityMap = {
+    readonly [P in keyof typeof TokenKind]?: PrecedenceAndAssociativity;
+};
+
+const OPERATOR_PRECEDENCE_AND_ASSOCIATIVITY: PrecedenceAndAssociativityMap = {
+    [TokenKind.OrKeyword]: [Precedence.LogicalOr, Associativity.Left],
+
+    [TokenKind.AndKeyword]: [Precedence.LogicalAnd, Associativity.Left],
+
+    [TokenKind.LessThanSignGreaterThanSign]: [Precedence.EqualityRelational, Associativity.None],
+    [TokenKind.GreaterThanSignEqualsSign]: [Precedence.EqualityRelational, Associativity.None],
+    [TokenKind.LessThanSignEqualsSign]: [Precedence.EqualityRelational, Associativity.None],
+    [TokenKind.GreaterThanSign]: [Precedence.EqualityRelational, Associativity.None],
+    [TokenKind.LessThanSign]: [Precedence.EqualityRelational, Associativity.None],
+    [TokenKind.EqualsSign]: [Precedence.EqualityRelational, Associativity.None],
+
+    [TokenKind.VerticalBar]: [Precedence.BitwiseOr, Associativity.Left],
+
+    [TokenKind.Tilde]: [Precedence.BitwiseXorBitwiseAnd, Associativity.Left],
+    [TokenKind.Ampersand]: [Precedence.BitwiseXorBitwiseAnd, Associativity.Left],
+
+    [TokenKind.HyphenMinus]: [Precedence.Additive, Associativity.Left],
+    [TokenKind.PlusSign]: [Precedence.Additive, Associativity.Left],
+
+    [TokenKind.ShrKeyword]: [Precedence.ShiftMultiplicative, Associativity.Left],
+    [TokenKind.ShlKeyword]: [Precedence.ShiftMultiplicative, Associativity.Left],
+    [TokenKind.ModKeyword]: [Precedence.ShiftMultiplicative, Associativity.Left],
+    [TokenKind.Slash]: [Precedence.ShiftMultiplicative, Associativity.Left],
+    [TokenKind.Asterisk]: [Precedence.ShiftMultiplicative, Associativity.Left],
+};
+
+const UNKNOWN_PRECEDENCE_AND_ASSOCIATIVITY: PrecedenceAndAssociativity = [Precedence.Unknown, Associativity.Unknown];
+
+function getBinaryOperatorPrecedenceAndAssociativity(token: Token): PrecedenceAndAssociativity {
+    return OPERATOR_PRECEDENCE_AND_ASSOCIATIVITY[token.kind] ||
+        UNKNOWN_PRECEDENCE_AND_ASSOCIATIVITY;
+}
+
+// #endregion
