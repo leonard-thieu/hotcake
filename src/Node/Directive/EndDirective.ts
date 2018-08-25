@@ -1,4 +1,5 @@
 import { Token } from "../../Token";
+import { NodeKind } from "../NodeKind";
 import { Directive } from "./Directive";
 
 export class EndDirective extends Directive {
@@ -6,6 +7,8 @@ export class EndDirective extends Directive {
         'numberSign',
         'endDirectiveKeyword',
     ];
+
+    readonly kind = NodeKind.EndDirective;
 
     endDirectiveKeyword: Token;
 }

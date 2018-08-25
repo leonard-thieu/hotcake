@@ -1,6 +1,7 @@
 import { MissingToken } from "../../MissingToken";
 import { Token } from "../../Token";
 import { Expression } from "../Expression/Expression";
+import { NodeKind } from "../NodeKind";
 import { Directive } from "./Directive";
 
 export class AssignmentDirective extends Directive {
@@ -10,6 +11,8 @@ export class AssignmentDirective extends Directive {
         'operator',
         'expression',
     ];
+
+    readonly kind = NodeKind.AssignmentDirective;
 
     name: Token;
     operator: Token;

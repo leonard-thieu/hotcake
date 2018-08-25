@@ -1,8 +1,8 @@
 {
-  "type": "PreprocessorModule",
+  "kind": "PreprocessorModule",
   "members": [
     {
-      "type": "PrintDirective",
+      "kind": "PrintDirective",
       "numberSign": {
         "kind": "NumberSign",
         "fullStart": 0,
@@ -16,7 +16,7 @@
         "length": 5
       },
       "expression": {
-        "type": "StringLiteral",
+        "kind": "StringLiteral",
         "startQuote": {
           "kind": "QuotationMark",
           "fullStart": 6,

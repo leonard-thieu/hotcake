@@ -1,8 +1,8 @@
 {
-  "type": "PreprocessorModule",
+  "kind": "PreprocessorModule",
   "members": [
     {
-      "type": "IfDirective",
+      "kind": "IfDirective",
       "numberSign": {
         "kind": "NumberSign",
         "fullStart": 0,
@@ -16,9 +16,9 @@
         "length": 2
       },
       "expression": {
-        "type": "BinaryExpression",
+        "kind": "BinaryExpression",
         "leftOperand": {
-          "type": "Variable",
+          "kind": "Variable",
           "name": {
             "kind": "Identifier",
             "fullStart": 3,
@@ -33,7 +33,7 @@
           "length": 2
         },
         "rightOperand": {
-          "type": "StringLiteral",
+          "kind": "StringLiteral",
           "startQuote": {
             "kind": "QuotationMark",
             "fullStart": 12,
@@ -67,7 +67,7 @@
       "elseIfDirectives": [],
       "elseDirective": null,
       "endDirective": {
-        "type": "EndDirective",
+        "kind": "EndDirective",
         "numberSign": {
           "kind": "NumberSign",
           "fullStart": 20,

@@ -1,8 +1,8 @@
 {
-  "type": "PreprocessorModule",
+  "kind": "PreprocessorModule",
   "members": [
     {
-      "type": "AssignmentDirective",
+      "kind": "AssignmentDirective",
       "numberSign": {
         "kind": "NumberSign",
         "fullStart": 0,
@@ -22,7 +22,7 @@
         "length": 2
       },
       "expression": {
-        "type": "StringLiteral",
+        "kind": "StringLiteral",
         "startQuote": {
           "kind": "QuotationMark",
           "fullStart": 9,

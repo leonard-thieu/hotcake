@@ -1,9 +1,12 @@
+import { NodeKind } from "./NodeKind";
+
 export abstract class Node {
+    abstract readonly kind: NodeKind;
     parent: Node | undefined;
 
     toJSON(): any {
         const obj: any = {
-            type: this.constructor.name,
+            kind: NodeKind[this.kind],
         };
 
         for (const childName of this.getChildNames()) {

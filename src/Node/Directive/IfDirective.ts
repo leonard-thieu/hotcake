@@ -1,6 +1,7 @@
 import { MissingToken } from '../../MissingToken';
 import { Token } from '../../Token';
 import { Expression } from '../Expression/Expression';
+import { NodeKind } from '../NodeKind';
 import { Directive } from './Directive';
 import { ElseDirective } from './ElseDirective';
 import { ElseIfDirective } from './ElseIfDirective';
@@ -16,6 +17,8 @@ export class IfDirective extends Directive {
         'elseDirective',
         'endDirective',
     ];
+
+    readonly kind = NodeKind.IfDirective;
 
     ifDirectiveKeyword: Token;
     expression: Expression | MissingToken;

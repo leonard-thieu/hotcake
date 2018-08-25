@@ -1,8 +1,8 @@
 {
-  "type": "PreprocessorModule",
+  "kind": "PreprocessorModule",
   "members": [
     {
-      "type": "RemDirective",
+      "kind": "RemDirective",
       "numberSign": {
         "kind": "NumberSign",
         "fullStart": 0,
@@ -23,7 +23,7 @@
           "length": 8
         },
         {
-          "type": "RemDirective",
+          "kind": "RemDirective",
           "numberSign": {
             "kind": "NumberSign",
             "fullStart": 12,
@@ -45,7 +45,7 @@
             }
           ],
           "endDirective": {
-            "type": "EndDirective",
+            "kind": "EndDirective",
             "numberSign": {
               "kind": "NumberSign",
               "fullStart": 22,
@@ -68,7 +68,7 @@
         }
       ],
       "endDirective": {
-        "type": "EndDirective",
+        "kind": "EndDirective",
         "numberSign": {
           "kind": "NumberSign",
           "fullStart": 30,

@@ -1,6 +1,7 @@
 import { MissingToken } from '../../MissingToken';
 import { Token } from '../../Token';
 import { Expression } from '../Expression/Expression';
+import { NodeKind } from '../NodeKind';
 import { Directive } from './Directive';
 
 export class ElseIfDirective extends Directive {
@@ -10,6 +11,8 @@ export class ElseIfDirective extends Directive {
         'expression',
         'members',
     ];
+
+    readonly kind = NodeKind.ElseIfDirective;
 
     elseIfDirectiveKeyword: Token;
     expression: Expression | MissingToken;

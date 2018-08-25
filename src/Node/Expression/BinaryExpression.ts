@@ -1,4 +1,5 @@
 import { Token } from "../../Token";
+import { NodeKind } from "../NodeKind";
 import { Expression } from "./Expression";
 
 export class BinaryExpression extends Expression {
@@ -7,6 +8,8 @@ export class BinaryExpression extends Expression {
         'operator',
         'rightOperand',
     ];
+
+    readonly kind = NodeKind.BinaryExpression;
 
     leftOperand: Expression;
     operator: Token;

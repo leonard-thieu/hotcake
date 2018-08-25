@@ -1,4 +1,5 @@
 import { Token } from "../../Token";
+import { NodeKind } from "../NodeKind";
 import { Expression } from "./Expression";
 
 export class UnaryOpExpression extends Expression {
@@ -6,6 +7,8 @@ export class UnaryOpExpression extends Expression {
         'operator',
         'operand',
     ];
+
+    readonly kind = NodeKind.UnaryOpExpression;
 
     operator: Token;
     operand: Expression;

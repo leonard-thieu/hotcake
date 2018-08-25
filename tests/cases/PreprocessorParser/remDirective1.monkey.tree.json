@@ -1,8 +1,8 @@
 {
-  "type": "PreprocessorModule",
+  "kind": "PreprocessorModule",
   "members": [
     {
-      "type": "RemDirective",
+      "kind": "RemDirective",
       "numberSign": {
         "kind": "NumberSign",
         "fullStart": 0,
@@ -24,7 +24,7 @@
         }
       ],
       "endDirective": {
-        "type": "EndDirective",
+        "kind": "EndDirective",
         "numberSign": {
           "kind": "NumberSign",
           "fullStart": 6,

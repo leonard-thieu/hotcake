@@ -1,8 +1,8 @@
 {
-  "type": "PreprocessorModule",
+  "kind": "PreprocessorModule",
   "members": [
     {
-      "type": "IfDirective",
+      "kind": "IfDirective",
       "numberSign": {
         "kind": "NumberSign",
         "fullStart": 0,
@@ -16,9 +16,9 @@
         "length": 2
       },
       "expression": {
-        "type": "BinaryExpression",
+        "kind": "BinaryExpression",
         "leftOperand": {
-          "type": "Variable",
+          "kind": "Variable",
           "name": {
             "kind": "Identifier",
             "fullStart": 3,
@@ -33,7 +33,7 @@
           "length": 2
         },
         "rightOperand": {
-          "type": "StringLiteral",
+          "kind": "StringLiteral",
           "startQuote": {
             "kind": "QuotationMark",
             "fullStart": 12,
@@ -108,7 +108,7 @@
       ],
       "elseIfDirectives": [
         {
-          "type": "ElseIfDirective",
+          "kind": "ElseIfDirective",
           "numberSign": {
             "kind": "NumberSign",
             "fullStart": 61,
@@ -122,9 +122,9 @@
             "length": 6
           },
           "expression": {
-            "type": "BinaryExpression",
+            "kind": "BinaryExpression",
             "leftOperand": {
-              "type": "Variable",
+              "kind": "Variable",
               "name": {
                 "kind": "Identifier",
                 "fullStart": 68,
@@ -139,7 +139,7 @@
               "length": 2
             },
             "rightOperand": {
-              "type": "StringLiteral",
+              "kind": "StringLiteral",
               "startQuote": {
                 "kind": "QuotationMark",
                 "fullStart": 75,
@@ -212,7 +212,7 @@
               "length": 2
             },
             {
-              "type": "IfDirective",
+              "kind": "IfDirective",
               "numberSign": {
                 "kind": "NumberSign",
                 "fullStart": 132,
@@ -226,9 +226,9 @@
                 "length": 2
               },
               "expression": {
-                "type": "BinaryExpression",
+                "kind": "BinaryExpression",
                 "leftOperand": {
-                  "type": "IntegerLiteral",
+                  "kind": "IntegerLiteral",
                   "value": {
                     "kind": "IntegerLiteral",
                     "fullStart": 139,
@@ -243,7 +243,7 @@
                   "length": 2
                 },
                 "rightOperand": {
-                  "type": "Variable",
+                  "kind": "Variable",
                   "name": {
                     "kind": "Identifier",
                     "fullStart": 150,
@@ -266,7 +266,7 @@
                   "length": 2
                 },
                 {
-                  "type": "PrintDirective",
+                  "kind": "PrintDirective",
                   "numberSign": {
                     "kind": "NumberSign",
                     "fullStart": 159,
@@ -280,7 +280,7 @@
                     "length": 5
                   },
                   "expression": {
-                    "type": "StringLiteral",
+                    "kind": "StringLiteral",
                     "startQuote": {
                       "kind": "QuotationMark",
                       "fullStart": 173,
@@ -319,7 +319,7 @@
               "elseIfDirectives": [],
               "elseDirective": null,
               "endDirective": {
-                "type": "EndDirective",
+                "kind": "EndDirective",
                 "numberSign": {
                   "kind": "NumberSign",
                   "fullStart": 194,
@@ -349,7 +349,7 @@
           ]
         },
         {
-          "type": "ElseIfDirective",
+          "kind": "ElseIfDirective",
           "numberSign": {
             "kind": "NumberSign",
             "fullStart": 206,
@@ -363,9 +363,9 @@
             "length": 6
           },
           "expression": {
-            "type": "BinaryExpression",
+            "kind": "BinaryExpression",
             "leftOperand": {
-              "type": "Variable",
+              "kind": "Variable",
               "name": {
                 "kind": "Identifier",
                 "fullStart": 213,
@@ -380,7 +380,7 @@
               "length": 2
             },
             "rightOperand": {
-              "type": "StringLiteral",
+              "kind": "StringLiteral",
               "startQuote": {
                 "kind": "QuotationMark",
                 "fullStart": 220,
@@ -456,7 +456,7 @@
         }
       ],
       "elseDirective": {
-        "type": "ElseDirective",
+        "kind": "ElseDirective",
         "numberSign": {
           "kind": "NumberSign",
           "fullStart": 277,
@@ -521,7 +521,7 @@
         ]
       },
       "endDirective": {
-        "type": "EndDirective",
+        "kind": "EndDirective",
         "numberSign": {
           "kind": "NumberSign",
           "fullStart": 331,

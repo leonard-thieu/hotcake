@@ -1,8 +1,8 @@
 {
-  "type": "PreprocessorModule",
+  "kind": "PreprocessorModule",
   "members": [
     {
-      "type": "IfDirective",
+      "kind": "IfDirective",
       "numberSign": {
         "kind": "NumberSign",
         "fullStart": 0,
@@ -16,7 +16,7 @@
         "length": 2
       },
       "expression": {
-        "type": "UnaryOpExpression",
+        "kind": "UnaryOpExpression",
         "operator": {
           "kind": "HyphenMinus",
           "fullStart": 3,
@@ -24,7 +24,7 @@
           "length": 2
         },
         "operand": {
-          "type": "IntegerLiteral",
+          "kind": "IntegerLiteral",
           "value": {
             "kind": "IntegerLiteral",
             "fullStart": 5,
@@ -44,7 +44,7 @@
       "elseIfDirectives": [],
       "elseDirective": null,
       "endDirective": {
-        "type": "EndDirective",
+        "kind": "EndDirective",
         "numberSign": {
           "kind": "NumberSign",
           "fullStart": 8,
