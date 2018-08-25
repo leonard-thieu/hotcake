@@ -6,16 +6,10 @@
     "length": 1
   },
   {
-    "kind": "InvalidEscapeSequence",
+    "kind": "EscapeUnicodeHexValue",
     "fullStart": 1,
     "start": 1,
-    "length": 5
-  },
-  {
-    "kind": "StringLiteralText",
-    "fullStart": 6,
-    "start": 6,
-    "length": 1
+    "length": 6
   },
   {
     "kind": "QuotationMark",

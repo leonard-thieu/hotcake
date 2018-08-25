@@ -9,7 +9,13 @@
     "kind": "InvalidEscapeSequence",
     "fullStart": 1,
     "start": 1,
-    "length": 5
+    "length": 4
+  },
+  {
+    "kind": "QuotationMark",
+    "fullStart": 5,
+    "start": 5,
+    "length": 1
   },
   {
     "kind": "EOF",

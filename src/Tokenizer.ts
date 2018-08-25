@@ -292,13 +292,16 @@ export class Tokenizer {
                         }
                         case 'u': {
                             kind = TokenKind.EscapeUnicodeHexValue;
+                            this.position++;
 
                             for (let i = 0; i < 4; i++) {
-                                c = this.nextChar();
-
+                                c = this.peekChar();
                                 if (!isHexadecimal(c)) {
                                     kind = TokenKind.InvalidEscapeSequence;
+                                    break;
                                 }
+
+                                this.position++;
                             }
                             break;
                         }
