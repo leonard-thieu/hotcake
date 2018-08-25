@@ -4,7 +4,7 @@ import path = require('path');
 import mkdirp = require('mkdirp');
 import { orderBy } from 'natural-orderby';
 import { PreprocessorParser } from '../src/PreprocessorParser';
-import { PreprocessorParserTokenizer } from '../src/PreprocessorParserTokenizer';
+import { ConfigurationVariables, PreprocessorParserTokenizer } from '../src/PreprocessorParserTokenizer';
 import { Token } from '../src/Token';
 import { Tokenizer } from '../src/Tokenizer';
 import { TokenKind } from '../src/TokenKind';
@@ -150,6 +150,14 @@ export function getPreprocessorParseTree(contents: string) {
 export function getPreprocessorParserTokens(contents: string) {
     const tree = getPreprocessorParseTree(contents);
     const tokenizer = new PreprocessorParserTokenizer();
+    const configVars: ConfigurationVariables = {
+        HOST: 'winnt',
+        LANG: 'cpp',
+        TARGET: 'glfw',
+        CONFIG: 'release',
+        CD: __dirname,
+        MODPATH: __filename,
+    };
 
-    return Array.from(tokenizer.getTokens(contents, tree));
+    return Array.from(tokenizer.getTokens(contents, tree, configVars));
 }

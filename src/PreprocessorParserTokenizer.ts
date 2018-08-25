@@ -18,30 +18,24 @@ import { PreprocessorModule } from "./Node/PreprocessorModule";
 import { Token } from "./Token";
 import { TokenKind } from "./TokenKind";
 
-interface ConfigurationVariables {
-    readonly HOST: string;
-    readonly LANG: string;
-    readonly TARGET: string;
-    readonly CONFIG: string;
-    readonly CD: string;
-    readonly MODPATH: string;
+export interface ConfigurationVariables {
+    HOST: string;
+    LANG: string;
+    TARGET: string;
+    CONFIG: string;
+    CD: string;
+    MODPATH: string;
 
     [key: string]: any;
 }
 
 export class PreprocessorParserTokenizer {
-    private configVars: ConfigurationVariables = {
-        HOST: 'winnt',
-        LANG: 'cpp',
-        TARGET: 'glfw',
-        CONFIG: 'release',
-        CD: __dirname,
-        MODPATH: __filename,
-    };
     private document: string;
+    private configVars: ConfigurationVariables;
 
-    * getTokens(document: string, module: PreprocessorModule): IterableIterator<Token> {
+    * getTokens(document: string, module: PreprocessorModule, configVars: ConfigurationVariables): IterableIterator<Token> {
         this.document = document;
+        this.configVars = Object.assign(configVars);
 
         for (const member of this.readMember(module.members)) {
             yield member;
