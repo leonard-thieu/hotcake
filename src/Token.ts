@@ -7,8 +7,12 @@ export class Token {
         public start: number,
         public length: number) { }
 
-    getFullText(module: string): string {
-        return module.slice(this.fullStart, this.fullStart + this.length);
+    getFullText(document: string): string {
+        return document.slice(this.fullStart, this.fullStart + this.length);
+    }
+
+    getText(document: string): string {
+        return document.slice(this.start, this.fullStart + this.length);
     }
 
     toJSON(): any {

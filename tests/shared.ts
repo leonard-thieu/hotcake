@@ -151,5 +151,5 @@ export function getPreprocessorParserTokens(contents: string) {
     const tree = getPreprocessorParseTree(contents);
     const tokenizer = new PreprocessorParserTokenizer();
 
-    return Array.from(tokenizer.getTokens(tree));
+    return Array.from(tokenizer.getTokens(contents, tree));
 }
