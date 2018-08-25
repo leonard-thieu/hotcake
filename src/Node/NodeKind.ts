@@ -1,6 +1,6 @@
 export enum NodeKind {
     PreprocessorModule,
-    
+
     IfDirective,
     ElseIfDirective,
     ElseDirective,
@@ -10,12 +10,12 @@ export enum NodeKind {
     ErrorDirective,
     AssignmentDirective,
 
-    BinaryExpression,
     BooleanLiteral,
     FloatLiteral,
-    GroupingExpression,
     IntegerLiteral,
     StringLiteral,
-    UnaryOpExpression,
     Variable,
+    BinaryExpression,
+    GroupingExpression,
+    UnaryOpExpression,
 }

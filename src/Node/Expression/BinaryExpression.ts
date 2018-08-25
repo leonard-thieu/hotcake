@@ -1,6 +1,6 @@
 import { Token } from "../../Token";
 import { NodeKind } from "../NodeKind";
-import { Expression } from "./Expression";
+import { Expression, Expressions } from "./Expression";
 
 export class BinaryExpression extends Expression {
     static CHILD_NAMES: (keyof BinaryExpression)[] = [
@@ -11,7 +11,7 @@ export class BinaryExpression extends Expression {
 
     readonly kind = NodeKind.BinaryExpression;
 
-    leftOperand: Expression;
+    leftOperand: Expressions;
     operator: Token;
-    rightOperand: Expression;
+    rightOperand: Expressions;
 }

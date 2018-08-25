@@ -1,6 +1,6 @@
 import { Token } from "../../Token";
 import { NodeKind } from "../NodeKind";
-import { Expression } from "./Expression";
+import { Expression, Expressions } from "./Expression";
 
 export class GroupingExpression extends Expression {
     static CHILD_NAMES: (keyof GroupingExpression)[] = [
@@ -12,6 +12,6 @@ export class GroupingExpression extends Expression {
     readonly kind = NodeKind.GroupingExpression;
 
     openingParenthesis: Token;
-    expression: Expression;
+    expression: Expressions;
     closingParenthesis: Token;
 }

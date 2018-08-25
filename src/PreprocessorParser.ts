@@ -3,7 +3,7 @@ import assert = require('assert');
 import { GreaterThanSignEqualsSignToken } from './GreaterThanSignEqualsSignToken';
 import { MissingToken } from './MissingToken';
 import { AssignmentDirective } from './Node/Directive/AssignmentDirective';
-import { Directive } from './Node/Directive/Directive';
+import { Directive, Directives } from './Node/Directive/Directive';
 import { ElseDirective } from './Node/Directive/ElseDirective';
 import { ElseIfDirective } from './Node/Directive/ElseIfDirective';
 import { EndDirective } from './Node/Directive/EndDirective';
@@ -13,7 +13,7 @@ import { PrintDirective } from './Node/Directive/PrintDirective';
 import { RemDirective } from './Node/Directive/RemDirective';
 import { BinaryExpression } from './Node/Expression/BinaryExpression';
 import { BooleanLiteral } from './Node/Expression/BooleanLiteral';
-import { Expression } from './Node/Expression/Expression';
+import { Expressions } from './Node/Expression/Expression';
 import { FloatLiteral } from './Node/Expression/FloatLiteral';
 import { GroupingExpression } from './Node/Expression/GroupingExpression';
 import { IntegerLiteral } from './Node/Expression/IntegerLiteral';
@@ -71,7 +71,7 @@ export class PreprocessorParser {
         return moduleNode;
     }
 
-    private parseNextInModuleContext(parent: Node): Directive | null {
+    private parseNextInModuleContext(parent: Node): Directives | null {
         const token = this.getCurrentToken();
         if (token.kind === TokenKind.NumberSign) {
             const nextToken = this.getToken(1);
@@ -357,11 +357,11 @@ export class PreprocessorParser {
 
     // #region Expressions
 
-    private parseExpression(parent: Node): Expression {
+    private parseExpression(parent: Node): Expressions {
         return this.parseBinaryExpression(Precedence.Initial, parent);
     }
 
-    private parseBinaryExpression(precedence: Precedence, parent: Node): Expression {
+    private parseBinaryExpression(precedence: Precedence, parent: Node): Expressions {
         let expression = this.parseUnaryExpression(parent);
 
         let [prevNewPrecedence, prevAssociativity] = UNKNOWN_PRECEDENCE_AND_ASSOCIATIVITY;
@@ -408,7 +408,7 @@ export class PreprocessorParser {
         return expression;
     }
 
-    private makeBinaryExpression(leftOperand: Expression, operator: Token, rightOperand: Expression, parent: Node): Expression {
+    private makeBinaryExpression(leftOperand: Expressions, operator: Token, rightOperand: Expressions, parent: Node): Expressions {
         const binaryExpression = new BinaryExpression();
         binaryExpression.parent = parent;
         binaryExpression.leftOperand = leftOperand;
@@ -420,7 +420,7 @@ export class PreprocessorParser {
         return binaryExpression;
     }
 
-    private parseUnaryExpression(parent: Node): Expression {
+    private parseUnaryExpression(parent: Node): Expressions {
         const token = this.getCurrentToken();
         switch (token.kind) {
             case TokenKind.PlusSign:
@@ -443,7 +443,7 @@ export class PreprocessorParser {
         return unaryOpExpression;
     }
 
-    private parsePrimaryExpression(parent: Node): Expression {
+    private parsePrimaryExpression(parent: Node): Expressions {
         const token = this.getCurrentToken();
         switch (token.kind) {
             case TokenKind.OpeningParenthesis: {

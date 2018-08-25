@@ -1,6 +1,6 @@
 import { Token } from "../../Token";
 import { NodeKind } from "../NodeKind";
-import { Expression } from "./Expression";
+import { Expression, Expressions } from "./Expression";
 
 export class UnaryOpExpression extends Expression {
     static CHILD_NAMES: (keyof UnaryOpExpression)[] = [
@@ -11,5 +11,5 @@ export class UnaryOpExpression extends Expression {
     readonly kind = NodeKind.UnaryOpExpression;
 
     operator: Token;
-    operand: Expression;
+    operand: Expressions;
 }

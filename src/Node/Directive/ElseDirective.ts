@@ -1,6 +1,6 @@
 import { Token } from '../../Token';
 import { NodeKind } from '../NodeKind';
-import { Directive } from './Directive';
+import { Directive, Directives } from './Directive';
 
 export class ElseDirective extends Directive {
     static CHILD_NAMES: (keyof ElseDirective)[] = [
@@ -12,5 +12,5 @@ export class ElseDirective extends Directive {
     readonly kind = NodeKind.ElseDirective;
 
     elseDirectiveKeyword: Token;
-    members: Array<Directive | Token> = [];
+    members: Array<Directives | Token> = [];
 }

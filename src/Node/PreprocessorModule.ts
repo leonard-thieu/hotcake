@@ -1,5 +1,5 @@
 import { Token } from '../Token';
-import { Directive } from './Directive/Directive';
+import { Directives } from './Directive/Directive';
 import { Node } from './Node';
 import { NodeKind } from './NodeKind';
 
@@ -11,6 +11,6 @@ export class PreprocessorModule extends Node {
 
     readonly kind = NodeKind.PreprocessorModule;
 
-    members: Array<Directive | Token> = [];
+    members: Array<Directives | Token> = [];
     eofToken: Token;
 }

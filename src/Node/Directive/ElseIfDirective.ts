@@ -1,8 +1,8 @@
 import { MissingToken } from '../../MissingToken';
 import { Token } from '../../Token';
-import { Expression } from '../Expression/Expression';
+import { Expressions } from '../Expression/Expression';
 import { NodeKind } from '../NodeKind';
-import { Directive } from './Directive';
+import { Directive, Directives } from './Directive';
 
 export class ElseIfDirective extends Directive {
     static CHILD_NAMES: (keyof ElseIfDirective)[] = [
@@ -15,6 +15,6 @@ export class ElseIfDirective extends Directive {
     readonly kind = NodeKind.ElseIfDirective;
 
     elseIfDirectiveKeyword: Token;
-    expression: Expression | MissingToken;
-    members: Array<Directive | Token> = [];
+    expression: Expressions | MissingToken;
+    members: Array<Directives | Token> = [];
 }
