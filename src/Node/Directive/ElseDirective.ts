@@ -8,6 +8,6 @@ export class ElseDirective extends Directive {
         'members',
     ];
 
-    elseDirectiveKeyword: Token | null = null;
+    elseDirectiveKeyword: Token;
     members: Array<Directive | Token> = [];
 }

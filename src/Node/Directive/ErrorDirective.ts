@@ -10,6 +10,6 @@ export class ErrorDirective extends Directive {
         'expression',
     ];
 
-    errorDirectiveKeyword: Token | null = null;
-    expression: Expression | MissingToken | null = null;
+    errorDirectiveKeyword: Token;
+    expression: Expression | MissingToken;
 }

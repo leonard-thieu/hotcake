@@ -11,7 +11,7 @@ export class ElseIfDirective extends Directive {
         'members',
     ];
 
-    elseIfDirectiveKeyword: Token | null = null;
-    expression: Expression | MissingToken | null = null;
+    elseIfDirectiveKeyword: Token;
+    expression: Expression | MissingToken;
     members: Array<Directive | Token> = [];
 }

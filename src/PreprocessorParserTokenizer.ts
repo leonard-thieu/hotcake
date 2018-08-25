@@ -38,7 +38,7 @@ export class PreprocessorParserTokenizer {
         CD: __dirname,
         MODPATH: __filename,
     };
-    private document: string = '';
+    private document: string;
 
     * getTokens(document: string, module: PreprocessorModule): IterableIterator<Token> {
         this.document = document;
@@ -47,7 +47,7 @@ export class PreprocessorParserTokenizer {
             yield member;
         }
 
-        yield module.eofToken!;
+        yield module.eofToken;
     }
 
     /**
@@ -59,11 +59,11 @@ export class PreprocessorParserTokenizer {
             if (member instanceof IfDirective) {
                 let branchMembers: Array<Directive | Token> | undefined;
 
-                if (this.eval(member.expression!)) {
+                if (this.eval(member.expression)) {
                     branchMembers = member.members;
                 } else {
                     for (const elseIfDirective of member.elseIfDirectives) {
-                        if (this.eval(elseIfDirective.expression!)) {
+                        if (this.eval(elseIfDirective.expression)) {
                             branchMembers = elseIfDirective.members;
                             break;
                         }
@@ -86,10 +86,10 @@ export class PreprocessorParserTokenizer {
                  * TODO: Verify Monkey X transpiler behavior wrt setting CD and MODPATH.
                  *       Looks like CD and MODPATH are settable but are always overwritten.
                  */
-                const varName = member.name!.getText(this.document);
-                const value = this.eval(member.expression!);
+                const varName = member.name.getText(this.document);
+                const value = this.eval(member.expression);
 
-                const kind = member.operator!.kind;
+                const kind = member.operator.kind;
                 switch (kind) {
                     case TokenKind.EqualsSign: {
                         this.configVars[varName] = value;
@@ -109,10 +109,10 @@ export class PreprocessorParserTokenizer {
                     }
                 }
             } else if (member instanceof PrintDirective) {
-                const message = this.eval(member.expression!);
+                const message = this.eval(member.expression);
                 console.log(message);
             } else if (member instanceof ErrorDirective) {
-                const message = this.eval(member.expression!);
+                const message = this.eval(member.expression);
                 console.error(message);
             } else if (member instanceof RemDirective) {
                 // Ignore
@@ -126,12 +126,12 @@ export class PreprocessorParserTokenizer {
 
     private eval(expression: Expression | MissingToken): any {
         if (expression instanceof GroupingExpression) {
-            return this.eval(expression.expression!);
+            return this.eval(expression.expression);
         } else if (expression instanceof BinaryExpression) {
-            const leftValue = this.eval(expression.leftOperand!);
-            const rightValue = this.eval(expression.rightOperand!);
+            const leftValue = this.eval(expression.leftOperand);
+            const rightValue = this.eval(expression.rightOperand);
 
-            const kind = expression.operator!.kind;
+            const kind = expression.operator.kind;
             switch (kind) {
                 case TokenKind.Asterisk: {
                     return leftValue * rightValue;
@@ -193,8 +193,8 @@ export class PreprocessorParserTokenizer {
                 }
             }
         } else if (expression instanceof UnaryOpExpression) {
-            const operand = this.eval(expression.operand!);
-            const kind = expression.operator!.kind;
+            const operand = this.eval(expression.operand);
+            const kind = expression.operator.kind;
             switch (kind) {
                 case TokenKind.PlusSign: {
                     return +operand;
@@ -242,7 +242,7 @@ export class PreprocessorParserTokenizer {
 
             return value;
         } else if (expression instanceof BooleanLiteral) {
-            const kind = expression.value!.kind;
+            const kind = expression.value.kind;
             switch (kind) {
                 case TokenKind.TrueKeyword: {
                     return true;
@@ -256,11 +256,11 @@ export class PreprocessorParserTokenizer {
                 }
             }
         } else if (expression instanceof IntegerLiteral) {
-            return parseInt(expression.value!.getText(this.document));
+            return parseInt(expression.value.getText(this.document));
         } else if (expression instanceof FloatLiteral) {
-            return parseFloat(expression.value!.getText(this.document));
+            return parseFloat(expression.value.getText(this.document));
         } else if (expression instanceof Variable) {
-            const varName = expression.name!.getText(this.document);
+            const varName = expression.name.getText(this.document);
             if (varName in this.configVars) {
                 return this.configVars[varName];
             }

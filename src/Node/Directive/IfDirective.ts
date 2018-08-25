@@ -17,10 +17,10 @@ export class IfDirective extends Directive {
         'endDirective',
     ];
 
-    ifDirectiveKeyword: Token | null = null;
-    expression: Expression | MissingToken | null = null;
+    ifDirectiveKeyword: Token;
+    expression: Expression | MissingToken;
     members: Array<Directive | Token> = [];
     elseIfDirectives: ElseIfDirective[] = [];
     elseDirective: ElseDirective | null = null;
-    endDirective: EndDirective | null = null;
+    endDirective: EndDirective;
 }

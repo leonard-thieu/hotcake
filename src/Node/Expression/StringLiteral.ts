@@ -9,7 +9,7 @@ export class StringLiteral extends Expression {
         'endQuote',
     ];
 
-    startQuote: Token | null = null;
+    startQuote: Token;
     children: Array<Token> = [];
-    endQuote: Token | MissingToken | null = null;
+    endQuote: Token | MissingToken;
 }

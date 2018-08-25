@@ -6,5 +6,5 @@ export class BooleanLiteral extends Expression {
         'value',
     ];
 
-    value: Token | null = null;
+    value: Token;
 }

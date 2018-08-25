@@ -6,5 +6,5 @@ export class Variable extends Expression {
         'name',
     ];
 
-    name: Token | null = null;
+    name: Token;
 }

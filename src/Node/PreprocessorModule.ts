@@ -9,5 +9,5 @@ export class PreprocessorModule extends Node {
     ];
 
     members: Array<Directive | Token> = [];
-    eofToken: Token | null = null;
+    eofToken: Token;
 }

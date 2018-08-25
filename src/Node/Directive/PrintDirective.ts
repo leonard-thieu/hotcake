@@ -10,6 +10,6 @@ export class PrintDirective extends Directive {
         'expression',
     ];
 
-    printDirectiveKeyword: Token | null = null;
-    expression: Expression | MissingToken | null = null;
+    printDirectiveKeyword: Token;
+    expression: Expression | MissingToken;
 }

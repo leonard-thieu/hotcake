@@ -8,7 +8,7 @@ export class GroupingExpression extends Expression {
         'closingParenthesis',
     ];
 
-    openingParenthesis: Token | null = null;
-    expression: Expression | null = null;
-    closingParenthesis: Token | null = null;
+    openingParenthesis: Token;
+    expression: Expression;
+    closingParenthesis: Token;
 }

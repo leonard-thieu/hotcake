@@ -6,5 +6,5 @@ export class FloatLiteral extends Expression {
         'value',
     ];
 
-    value: Token | null = null;
+    value: Token;
 }

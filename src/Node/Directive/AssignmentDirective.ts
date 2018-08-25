@@ -11,7 +11,7 @@ export class AssignmentDirective extends Directive {
         'expression',
     ];
 
-    name: Token | null = null;
-    operator: Token | null = null;
-    expression: Expression | MissingToken | null = null;
+    name: Token;
+    operator: Token;
+    expression: Expression | MissingToken;
 }

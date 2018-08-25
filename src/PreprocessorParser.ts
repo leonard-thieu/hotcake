@@ -41,13 +41,13 @@ type PrecedenceAndAssociativityMap = {
 };
 
 export class PreprocessorParser {
-    private tokens: Token[] = [];
-    private position: number = 0;
+    private tokens: Token[];
+    private position: number;
 
     parse(input: string): PreprocessorModule {
         const tokenizer = new Tokenizer(input);
 
-        this.tokens.length = 0;
+        this.tokens = [];
         this.position = 0;
         let token: Token;
         do {

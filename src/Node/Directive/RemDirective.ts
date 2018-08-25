@@ -11,7 +11,7 @@ export class RemDirective extends Directive {
         'endDirective',
     ];
 
-    remDirectiveKeyword: Token | null = null;
+    remDirectiveKeyword: Token;
     children: Array<RemDirective | IfDirective | Token> = [];
-    endDirective: EndDirective | null = null;
+    endDirective: EndDirective;
 }

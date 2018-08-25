@@ -8,7 +8,7 @@ export class BinaryExpression extends Expression {
         'rightOperand',
     ];
 
-    leftOperand: Expression | null = null;
-    operator: Token | null = null;
-    rightOperand: Expression | null = null;
+    leftOperand: Expression;
+    operator: Token;
+    rightOperand: Expression;
 }

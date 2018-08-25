@@ -7,6 +7,6 @@ export class UnaryOpExpression extends Expression {
         'operand',
     ];
 
-    operator: Token | null = null;
-    operand: Expression | null = null;
+    operator: Token;
+    operand: Expression;
 }

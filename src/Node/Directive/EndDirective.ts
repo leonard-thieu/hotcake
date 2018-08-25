@@ -7,5 +7,5 @@ export class EndDirective extends Directive {
         'endDirectiveKeyword',
     ];
 
-    endDirectiveKeyword: Token | null = null;
+    endDirectiveKeyword: Token;
 }
