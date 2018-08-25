@@ -1,5 +1,5 @@
 export abstract class Node {
-    parent: Node;
+    parent: Node | undefined;
 
     toJSON(): any {
         const obj: any = {
