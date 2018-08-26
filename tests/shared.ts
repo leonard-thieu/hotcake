@@ -109,7 +109,7 @@ export function executePreprocessorParserTestCases(name: string, casesPath: stri
     });
 }
 
-export function executePreprocessorParserTokenizerTestCases(name: string, casesPath: string) {
+export function executeTokenizerTestCases(name: string, casesPath: string) {
     executeTestCases({
         name: name,
         casesPath: casesPath,
@@ -119,7 +119,7 @@ export function executePreprocessorParserTokenizerTestCases(name: string, casesP
             _it(sourceRelativePath, function () {
                 const outputPath = path.resolve(__dirname, 'cases', name, sourceRelativePath) + '.tokens.json';
                 executeBaselineTestCase(outputPath, () => {
-                    return getPreprocessorParserTokens(contents);
+                    return getTokens(contents);
                 });
             });
         },
@@ -138,7 +138,7 @@ export function getPreprocessorParseTree(document: string) {
     return parser.parse(document);
 }
 
-export function getPreprocessorParserTokens(document: string) {
+export function getTokens(document: string) {
     const tree = getPreprocessorParseTree(document);
     const tokenizer = new Tokenizer();
     const configVars: ConfigurationVariables = {
