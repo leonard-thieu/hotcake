@@ -4,9 +4,9 @@ import path = require('path');
 import mkdirp = require('mkdirp');
 import { orderBy } from 'natural-orderby';
 import { PreprocessorParser } from '../src/PreprocessorParser';
-import { ConfigurationVariables, PreprocessorParserTokenizer } from '../src/PreprocessorParserTokenizer';
 import { PreprocessorTokenizer } from '../src/PreprocessorTokenizer';
 import { Token } from '../src/Token';
+import { ConfigurationVariables, Tokenizer } from '../src/Tokenizer';
 import { TokenKind } from '../src/TokenKind';
 
 interface TestCaseOptions {
@@ -149,7 +149,7 @@ export function getPreprocessorParseTree(contents: string) {
 
 export function getPreprocessorParserTokens(contents: string) {
     const tree = getPreprocessorParseTree(contents);
-    const tokenizer = new PreprocessorParserTokenizer();
+    const tokenizer = new Tokenizer();
     const configVars: ConfigurationVariables = {
         HOST: 'winnt',
         LANG: 'cpp',

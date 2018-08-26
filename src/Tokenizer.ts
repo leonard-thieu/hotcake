@@ -7,7 +7,7 @@ import { PreprocessorModule } from "./Node/PreprocessorModule";
 import { Token } from "./Token";
 import { TokenKind } from "./TokenKind";
 
-export class PreprocessorParserTokenizer {
+export class Tokenizer {
     private document: string;
     private configVars: ConfigurationVariables;
 
