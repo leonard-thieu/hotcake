@@ -13,7 +13,7 @@
               "--timeout",
               "999999",
               "--colors",
-              "${workspaceFolder}/tests"
+              "${workspaceFolder}/tests/!(MonkeyTests)*.js"
           ],
           "console": "integratedTerminal",
           "internalConsoleOptions": "neverOpen"
