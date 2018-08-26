@@ -33,16 +33,11 @@ export class PreprocessorParser {
     private tokens: Token[];
     private position: number;
 
-    parse(input: string): PreprocessorModule {
-        const tokenizer = new PreprocessorTokenizer(input);
+    parse(document: string): PreprocessorModule {
+        const lexer = new PreprocessorTokenizer();
 
-        this.tokens = [];
+        this.tokens = lexer.getTokens(document);
         this.position = 0;
-        let token: Token;
-        do {
-            token = tokenizer.next();
-            this.tokens.push(token);
-        } while (token.kind !== TokenKind.EOF);
 
         return this.parseModule();
     }

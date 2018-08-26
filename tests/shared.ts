@@ -5,9 +5,7 @@ import mkdirp = require('mkdirp');
 import { orderBy } from 'natural-orderby';
 import { PreprocessorParser } from '../src/PreprocessorParser';
 import { PreprocessorTokenizer } from '../src/PreprocessorTokenizer';
-import { Token } from '../src/Token';
 import { ConfigurationVariables, Tokenizer } from '../src/Tokenizer';
-import { TokenKind } from '../src/TokenKind';
 
 interface TestCaseOptions {
     name: string;
@@ -128,27 +126,20 @@ export function executePreprocessorParserTokenizerTestCases(name: string, casesP
     });
 }
 
-export function getTokens(contents: string) {
-    const tokenizer = new PreprocessorTokenizer(contents);
-    const tokens: Token[] = [];
-
-    let t: Token;
-    do {
-        t = tokenizer.next();
-        tokens.push(t);
-    } while (t.kind !== TokenKind.EOF);
-
-    return tokens;
+export function getTokens(document: string) {
+    const lexer = new PreprocessorTokenizer();
+    
+    return lexer.getTokens(document);
 }
 
-export function getPreprocessorParseTree(contents: string) {
+export function getPreprocessorParseTree(document: string) {
     const parser = new PreprocessorParser();
 
-    return parser.parse(contents);
+    return parser.parse(document);
 }
 
-export function getPreprocessorParserTokens(contents: string) {
-    const tree = getPreprocessorParseTree(contents);
+export function getPreprocessorParserTokens(document: string) {
+    const tree = getPreprocessorParseTree(document);
     const tokenizer = new Tokenizer();
     const configVars: ConfigurationVariables = {
         HOST: 'winnt',
@@ -159,5 +150,5 @@ export function getPreprocessorParserTokens(contents: string) {
         MODPATH: __filename,
     };
 
-    return Array.from(tokenizer.getTokens(contents, tree, configVars));
+    return Array.from(tokenizer.getTokens(document, tree, configVars));
 }

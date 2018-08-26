@@ -2,18 +2,35 @@ import { Token } from './Token';
 import { TokenKind } from "./TokenKind";
 
 export class PreprocessorTokenizer {
-    constructor(private readonly input: string) { }
-
-    private position: number = 0;
-    private line: number = 1;
-    private lineStart: number = 0;
+    private document: string;
+    private position: number;
+    private line: number;
+    private lineStart: number;
     /**
      * Track directive nesting.
      */
-    private nesting: TokenKind[] = [];
-    private inString: boolean = false;
+    private nesting: TokenKind[];
+    private inString: boolean;
 
-    next(): Token {
+    getTokens(document: string): Token[] {
+        this.document = document;
+        this.position = 0;
+        this.line = 1;
+        this.lineStart = 0;
+        this.nesting = [];
+        this.inString = false;
+
+        const tokens: Token[] = [];
+        let token: Token;
+        do {
+            token = this.next();
+            tokens.push(token);
+        } while (token.kind !== TokenKind.EOF);
+
+        return tokens;
+    }
+
+    private next(): Token {
         let kind = TokenKind.Unknown;
         const fullStart = this.position;
 
@@ -638,7 +655,7 @@ export class PreprocessorTokenizer {
     // Preprocessor directives must start on their own line and may be preceded by whitespace.
     private isPreprocessorDirectiveAllowed(): boolean {
         for (let i = this.position - 1; i >= this.lineStart; i--) {
-            if (!isWhitespace(this.input[i])) {
+            if (!isWhitespace(this.document[i])) {
                 return false;
             }
         }
@@ -658,17 +675,17 @@ export class PreprocessorTokenizer {
             this.position++;
         }
 
-        return this.input.slice(start, this.position);
+        return this.document.slice(start, this.position);
     }
 
     private getChar(offset: number = 0): string | null {
         const nextPosition = this.position + offset;
 
-        if (nextPosition >= this.input.length) {
+        if (nextPosition >= this.document.length) {
             return null;
         }
 
-        return this.input[nextPosition];
+        return this.document[nextPosition];
     }
 }
 
