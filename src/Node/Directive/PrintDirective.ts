@@ -6,7 +6,6 @@ import { Directive } from './Directive';
 
 export class PrintDirective extends Directive {
     static CHILD_NAMES: (keyof PrintDirective)[] = [
-        'numberSign',
         'printDirectiveKeyword',
         'expression',
     ];

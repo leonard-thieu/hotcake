@@ -6,7 +6,6 @@ import { Directive } from "./Directive";
 
 export class AssignmentDirective extends Directive {
     static CHILD_NAMES: (keyof AssignmentDirective)[] = [
-        'numberSign',
         'name',
         'operator',
         'expression',

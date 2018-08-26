@@ -9,7 +9,6 @@ import { EndDirective } from './EndDirective';
 
 export class IfDirective extends Directive {
     static CHILD_NAMES: (keyof IfDirective)[] = [
-        'numberSign',
         'ifDirectiveKeyword',
         'expression',
         'members',

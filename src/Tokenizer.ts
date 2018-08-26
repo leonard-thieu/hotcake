@@ -204,49 +204,46 @@ export class Tokenizer {
 
         const inDirective = this.nesting[this.nesting.length - 1];
         if (inDirective === TokenKind.RemDirectiveKeyword) {
-            if (c === '#') {
-                const position = this.position;
-                if (this.position < this.input.length) {
+            kind = this.tryReadPreprocessorDirective();
+            switch (kind) {
+                case TokenKind.RemDirectiveKeyword:
+                case TokenKind.IfDirectiveKeyword: {
+                    this.nesting.push(kind);
+                    break;
+                }
+                case TokenKind.EndDirectiveKeyword: {
+                    this.nesting.pop();
+                    break;
+                }
+                default: {
+                    kind = TokenKind.RemDirectiveBody;
                     this.position++;
-                    switch (this.tryReadPreprocessorDirective()) {
-                        case TokenKind.RemDirectiveKeyword:
-                        case TokenKind.IfDirectiveKeyword:
-                        case TokenKind.EndDirectiveKeyword: {
-                            kind = TokenKind.NumberSign;
+    
+                    let continueReading = true;
+                    while (continueReading) {
+                        if (this.peekChar(0) === null) {
                             break;
                         }
-                    }
-                    this.position = position;
-                }
-            } else {
-                kind = this.tryReadPreprocessorDirective();
-                switch (kind) {
-                    case TokenKind.RemDirectiveKeyword:
-                    case TokenKind.IfDirectiveKeyword: {
-                        this.nesting.push(kind);
-                        break;
-                    }
-                    case TokenKind.EndDirectiveKeyword: {
-                        this.nesting.pop();
-                        break;
-                    }
-                }
-            }
 
-            if (kind === TokenKind.Unknown) {
-                kind = TokenKind.RemDirectiveBody;
-
-                let continueReading = true;
-                while (continueReading) {
-                    switch (this.peekChar()) {
-                        case '#':
-                        case null: {
-                            continueReading = false;
-                            break;
-                        }
-                        default: {
-                            this.position++;
-                            break;
+                        const position = this.position;
+                        switch (this.tryReadPreprocessorDirective()) {
+                            case TokenKind.RemDirectiveKeyword:
+                            case TokenKind.IfDirectiveKeyword:
+                            case TokenKind.EndDirectiveKeyword: {
+                                /**
+                                 * Found a directive token that should be consumed on next call. Stop reading the current token and
+                                 * rewind the tokenizer to before the `#` character.
+                                 */
+                                continueReading = false;
+                                this.position = position;
+                                this.position--;
+                                break;
+                            }
+                            default: {
+                                this.position = position;
+                                this.position++;
+                                break;
+                            }
                         }
                     }
                 }
@@ -341,7 +338,6 @@ export class Tokenizer {
                     this.lineStart = this.position + 1;
                     break;
                 }
-                case '#': { kind = TokenKind.NumberSign; break; }
                 // TODO: Should this scan ahead to check if the string literal is terminated?
                 case '"': {
                     kind = TokenKind.QuotationMark;
@@ -483,7 +479,9 @@ export class Tokenizer {
                         break;
                     }
 
-                    if (isDecimal(c) ||
+                    if (c === '#') {
+                        kind = TokenKind.NumberSign;
+                    } else if (isDecimal(c) ||
                         (c === '.' && isDecimal(this.peekChar()))) {
                         kind = TokenKind.IntegerLiteral;
 
@@ -631,106 +629,115 @@ export class Tokenizer {
         let kind = TokenKind.Unknown;
 
         if (this.isPreprocessorDirectiveAllowed()) {
-            const id = this.tryReadIdentifier();
-            if (id !== null) {
-                switch (id.toLowerCase()) {
-                    case 'void':
-                    case 'strict':
-                    case 'public':
-                    case 'private':
-                    case 'protected':
-                    case 'friend':
-                    case 'property':
-                    case 'bool':
-                    case 'int':
-                    case 'float':
-                    case 'string':
-                    case 'array':
-                    case 'object':
-                    case 'mod':
-                    case 'continue':
-                    case 'exit':
-                    case 'include':
-                    case 'import':
-                    case 'module':
-                    case 'extern':
-                    case 'new':
-                    case 'self':
-                    case 'super':
-                    case 'eachin':
-                    case 'true':
-                    case 'false':
-                    case 'null':
-                    case 'not':
-                    case 'extends':
-                    case 'abstract':
-                    case 'final':
-                    case 'select':
-                    case 'case':
-                    case 'default':
-                    case 'const':
-                    case 'local':
-                    case 'global':
-                    case 'field':
-                    case 'method':
-                    case 'function':
-                    case 'class':
-                    case 'and':
-                    case 'or':
-                    case 'shl':
-                    case 'shr':
-                    case 'then':
-                    case 'while':
-                    case 'wend':
-                    case 'repeat':
-                    case 'until':
-                    case 'forever':
-                    case 'for':
-                    case 'to':
-                    case 'step':
-                    case 'next':
-                    case 'return':
-                    case 'interface':
-                    case 'implements':
-                    case 'inline':
-                    case 'alias':
-                    case 'try':
-                    case 'catch':
-                    case 'throw':
-                    case 'throwable': {
-                        this.position = start;
-                        break;
-                    }
-                    case 'if': { kind = TokenKind.IfDirectiveKeyword; break; }
-                    case 'elseif': { kind = TokenKind.ElseIfDirectiveKeyword; break; }
-                    case 'else': { kind = TokenKind.ElseDirectiveKeyword; break; }
-                    case 'endif':
-                    case 'end': {
-                        kind = TokenKind.EndDirectiveKeyword;
-                        this.nesting.pop();
-                        break;
-                    }
-                    case 'print': { kind = TokenKind.PrintDirectiveKeyword; break; }
-                    case 'error': { kind = TokenKind.ErrorDirectiveKeyword; break; }
-                    case 'rem': {
-                        kind = TokenKind.RemDirectiveKeyword;
-                        this.nesting.push(kind);
-                        break;
-                    }
-                    default: {
-                        switch (id) {
-                            case 'HOST':
-                            case 'LANG':
-                            case 'CONFIG':
-                            case 'TARGET':
-                            case 'SAFEMODE': {
-                                // App config vars cannot be modified.
-                                this.position = start;
-                                break;
-                            }
-                            default: {
-                                kind = TokenKind.ConfigurationVariable;
-                                break;
+            if (this.peekChar(0) === '#') {
+                this.position++;
+
+                while (isWhitespace(this.peekChar(0))) {
+                    this.position++;
+                }
+
+                const id = this.tryReadIdentifier();
+                if (id !== null) {
+                    switch (id.toLowerCase()) {
+                        case 'void':
+                        case 'strict':
+                        case 'public':
+                        case 'private':
+                        case 'protected':
+                        case 'friend':
+                        case 'property':
+                        case 'bool':
+                        case 'int':
+                        case 'float':
+                        case 'string':
+                        case 'array':
+                        case 'object':
+                        case 'mod':
+                        case 'continue':
+                        case 'exit':
+                        case 'include':
+                        case 'import':
+                        case 'module':
+                        case 'extern':
+                        case 'new':
+                        case 'self':
+                        case 'super':
+                        case 'eachin':
+                        case 'true':
+                        case 'false':
+                        case 'null':
+                        case 'not':
+                        case 'extends':
+                        case 'abstract':
+                        case 'final':
+                        case 'select':
+                        case 'case':
+                        case 'default':
+                        case 'const':
+                        case 'local':
+                        case 'global':
+                        case 'field':
+                        case 'method':
+                        case 'function':
+                        case 'class':
+                        case 'and':
+                        case 'or':
+                        case 'shl':
+                        case 'shr':
+                        case 'then':
+                        case 'while':
+                        case 'wend':
+                        case 'repeat':
+                        case 'until':
+                        case 'forever':
+                        case 'for':
+                        case 'to':
+                        case 'step':
+                        case 'next':
+                        case 'return':
+                        case 'interface':
+                        case 'implements':
+                        case 'inline':
+                        case 'alias':
+                        case 'try':
+                        case 'catch':
+                        case 'throw':
+                        case 'throwable': {
+                            this.position = start;
+                            break;
+                        }
+                        case 'if': { kind = TokenKind.IfDirectiveKeyword; break; }
+                        case 'elseif': { kind = TokenKind.ElseIfDirectiveKeyword; break; }
+                        case 'else': { kind = TokenKind.ElseDirectiveKeyword; break; }
+                        case 'endif':
+                        case 'end': {
+                            kind = TokenKind.EndDirectiveKeyword;
+                            this.nesting.pop();
+                            break;
+                        }
+                        case 'print': { kind = TokenKind.PrintDirectiveKeyword; break; }
+                        case 'error': { kind = TokenKind.ErrorDirectiveKeyword; break; }
+                        case 'rem': {
+                            kind = TokenKind.RemDirectiveKeyword;
+                            this.nesting.push(kind);
+                            break;
+                        }
+                        default: {
+                            switch (id) {
+                                // TODO: Block CD and MODPATH too?
+                                case 'HOST':
+                                case 'LANG':
+                                case 'CONFIG':
+                                case 'TARGET':
+                                case 'SAFEMODE': {
+                                    // App config vars cannot be modified.
+                                    this.position = start;
+                                    break;
+                                }
+                                default: {
+                                    kind = TokenKind.ConfigurationVariable;
+                                    break;
+                                }
                             }
                         }
                     }
@@ -741,27 +748,10 @@ export class Tokenizer {
         return kind;
     }
 
-    // Preprocessor directives must start with a # on their own line and may be preceded by whitespace.
+    // Preprocessor directives must start on their own line and may be preceded by whitespace.
     private isPreprocessorDirectiveAllowed(): boolean {
-        let i = this.position - 1;
-
-        for (; i >= 0; i--) {
+        for (let i = this.position - 1; i >= 0; i--) {
             const c = this.input[i];
-            if (!isWhitespace(c)) {
-                if (c === '#') {
-                    break;
-                }
-
-                return false;
-            }
-        }
-
-        if (i < 0) {
-            return false;
-        }
-
-        for (let j = i - 1; j >= 0; j--) {
-            const c = this.input[j];
             if (!isWhitespace(c)) {
                 if (c === '\n') {
                     break;

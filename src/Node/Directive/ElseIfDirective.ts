@@ -6,7 +6,6 @@ import { Directive, Directives } from './Directive';
 
 export class ElseIfDirective extends Directive {
     static CHILD_NAMES: (keyof ElseIfDirective)[] = [
-        'numberSign',
         'elseIfDirectiveKeyword',
         'expression',
         'members',

@@ -6,7 +6,6 @@ import { Directive } from './Directive';
 
 export class ErrorDirective extends Directive {
     static CHILD_NAMES: (keyof ErrorDirective)[] = [
-        'numberSign',
         'errorDirectiveKeyword',
         'expression',
     ];

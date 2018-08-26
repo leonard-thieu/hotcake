@@ -1,4 +1,3 @@
-import { Token } from "../../Token";
 import { Node } from "../Node";
 import { AssignmentDirective } from "./AssignmentDirective";
 import { ElseDirective } from "./ElseDirective";
@@ -10,7 +9,7 @@ import { PrintDirective } from "./PrintDirective";
 import { RemDirective } from "./RemDirective";
 
 export abstract class Directive extends Node {
-    numberSign: Token;
+
 }
 
 export type Directives =
