@@ -24,9 +24,9 @@ import { Variable } from './Node/Expression/Variable';
 import { Node } from './Node/Node';
 import { PreprocessorModule } from './Node/PreprocessorModule';
 import { PreprocessorParseContext } from './PreprocessorParseContext';
+import { PreprocessorTokenizer } from './PreprocessorTokenizer';
 import { SkippedToken } from './SkippedToken';
 import { Token } from './Token';
-import { Tokenizer } from './Tokenizer';
 import { TokenKind } from "./TokenKind";
 
 export class PreprocessorParser {
@@ -34,7 +34,7 @@ export class PreprocessorParser {
     private position: number;
 
     parse(input: string): PreprocessorModule {
-        const tokenizer = new Tokenizer(input);
+        const tokenizer = new PreprocessorTokenizer(input);
 
         this.tokens = [];
         this.position = 0;

@@ -5,8 +5,8 @@ import mkdirp = require('mkdirp');
 import { orderBy } from 'natural-orderby';
 import { PreprocessorParser } from '../src/PreprocessorParser';
 import { ConfigurationVariables, PreprocessorParserTokenizer } from '../src/PreprocessorParserTokenizer';
+import { PreprocessorTokenizer } from '../src/PreprocessorTokenizer';
 import { Token } from '../src/Token';
-import { Tokenizer } from '../src/Tokenizer';
 import { TokenKind } from '../src/TokenKind';
 
 interface TestCaseOptions {
@@ -129,7 +129,7 @@ export function executePreprocessorParserTokenizerTestCases(name: string, casesP
 }
 
 export function getTokens(contents: string) {
-    const tokenizer = new Tokenizer(contents);
+    const tokenizer = new PreprocessorTokenizer(contents);
     const tokens: Token[] = [];
 
     let t: Token;

@@ -160,7 +160,7 @@ function isAlpha(c: string | null): boolean {
     return false;
 }
 
-export class Tokenizer {
+export class PreprocessorTokenizer {
     constructor(private readonly input: string) { }
 
     private position: number = -1;
