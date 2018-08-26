@@ -1,5 +1,6 @@
 import assert = require('assert');
 
+import { assertNever } from './assertNever';
 import { GreaterThanSignEqualsSignToken } from './GreaterThanSignEqualsSignToken';
 import { MissingToken } from './MissingToken';
 import { AssignmentDirective } from './Node/Directive/AssignmentDirective';
@@ -13,7 +14,7 @@ import { PrintDirective } from './Node/Directive/PrintDirective';
 import { RemDirective } from './Node/Directive/RemDirective';
 import { BinaryExpression } from './Node/Expression/BinaryExpression';
 import { BooleanLiteral } from './Node/Expression/BooleanLiteral';
-import { Expressions } from './Node/Expression/Expression';
+import { Expression, Expressions } from './Node/Expression/Expression';
 import { FloatLiteral } from './Node/Expression/FloatLiteral';
 import { GroupingExpression } from './Node/Expression/GroupingExpression';
 import { IntegerLiteral } from './Node/Expression/IntegerLiteral';
@@ -22,6 +23,7 @@ import { UnaryOpExpression } from './Node/Expression/UnaryOpExpression';
 import { Variable } from './Node/Expression/Variable';
 import { Node } from './Node/Node';
 import { PreprocessorModule } from './Node/PreprocessorModule';
+import { PreprocessorParseContext } from './PreprocessorParseContext';
 import { SkippedToken } from './SkippedToken';
 import { Token } from './Token';
 import { Tokenizer } from './Tokenizer';
@@ -46,55 +48,11 @@ export class PreprocessorParser {
     }
 
     private parseModule(): PreprocessorModule {
-        const moduleNode = new PreprocessorModule();
+        const preprocessorModule = new PreprocessorModule();
+        preprocessorModule.members.push(...this.parseList(preprocessorModule, PreprocessorParseContext.ModuleMembers) as Array<Directives | Token>);
+        preprocessorModule.eofToken = this.eat(TokenKind.EOF);
 
-        let continueParsing = true;
-        do {
-            const token = this.getCurrentToken();
-            switch (token.kind) {
-                case TokenKind.EOF: {
-                    continueParsing = false;
-                    break;
-                }
-                default: {
-                    const child =
-                        this.parseNextInModuleContext(moduleNode) ||
-                        this.eat(token.kind);
-                    moduleNode.members.push(child);
-                    break;
-                }
-            }
-        } while (continueParsing);
-
-        moduleNode.eofToken = this.eat(TokenKind.EOF);
-
-        return moduleNode;
-    }
-
-    private parseNextInModuleContext(parent: Node): Directives | null {
-        const token = this.getCurrentToken();
-        if (token.kind === TokenKind.NumberSign) {
-            const nextToken = this.getToken(1);
-            switch (nextToken.kind) {
-                case TokenKind.IfDirectiveKeyword: {
-                    return this.parseIfDirective(parent);
-                }
-                case TokenKind.RemDirectiveKeyword: {
-                    return this.parseRemDirective(parent);
-                }
-                case TokenKind.PrintDirectiveKeyword: {
-                    return this.parsePrintDirective(parent);
-                }
-                case TokenKind.ErrorDirectiveKeyword: {
-                    return this.parseErrorDirective(parent);
-                }
-                case TokenKind.ConfigurationVariable: {
-                    return this.parseAssignmentDirective(parent);
-                }
-            }
-        }
-
-        return null;
+        return preprocessorModule;
     }
 
     // #region Directives
@@ -111,55 +69,18 @@ export class PreprocessorParser {
     private parseIfDirective(parent: Node): IfDirective {
         const ifDirective = new IfDirective();
         ifDirective.parent = parent;
-        ifDirective.numberSign = this.eat(TokenKind.NumberSign);
         ifDirective.ifDirectiveKeyword = this.eat(TokenKind.IfDirectiveKeyword);
         ifDirective.expression = this.parseExpression(ifDirective);
         this.assertExpressionParsedCompletely();
 
-        let continueParsing = true;
-        do {
-            const token = this.getCurrentToken();
-            switch (token.kind) {
-                case TokenKind.EOF: {
-                    continueParsing = false;
-                    break;
-                }
-                case TokenKind.NumberSign: {
-                    const nextToken = this.getToken(1);
-                    switch (nextToken.kind) {
-                        case TokenKind.EndDirectiveKeyword: {
-                            continueParsing = false;
-                            break;
-                        }
-                        case TokenKind.ElseIfDirectiveKeyword: {
-                            const child = this.parseElseIfDirective(ifDirective);
-                            ifDirective.elseIfDirectives.push(child);
-                            break;
-                        }
-                        case TokenKind.ElseDirectiveKeyword: {
-                            // TODO: How should multiple Else directives be handled?
-                            ifDirective.elseDirective = this.parseElseDirective(ifDirective);
-                            break;
-                        }
-                        default: {
-                            const child =
-                                this.parseNextInModuleContext(ifDirective) ||
-                                this.eat(token.kind);
-                            ifDirective.members.push(child);
-                            break;
-                        }
-                    }
-                    break;
-                }
-                default: {
-                    const child =
-                        this.parseNextInModuleContext(ifDirective) ||
-                        this.eat(token.kind);
-                    ifDirective.members.push(child);
-                    break;
-                }
-            }
-        } while (continueParsing);
+        ifDirective.members.push(...this.parseList(ifDirective, PreprocessorParseContext.IfDirectiveMembers) as Array<Directives | Token>);
+        while (this.getCurrentToken().kind === TokenKind.ElseIfDirectiveKeyword) {
+            ifDirective.elseIfDirectives.push(this.parseElseIfDirective(ifDirective));
+        }
+
+        if (this.getCurrentToken().kind === TokenKind.ElseDirectiveKeyword) {
+            ifDirective.elseDirective = this.parseElseDirective(ifDirective);
+        }
 
         ifDirective.endDirective = this.parseEndDirective(ifDirective);
 
@@ -169,47 +90,11 @@ export class PreprocessorParser {
     private parseElseIfDirective(parent: IfDirective): ElseIfDirective {
         const elseIfDirective = new ElseIfDirective();
         elseIfDirective.parent = parent;
-        elseIfDirective.numberSign = this.eat(TokenKind.NumberSign);
         elseIfDirective.elseIfDirectiveKeyword = this.eat(TokenKind.ElseIfDirectiveKeyword);
         elseIfDirective.expression = this.parseExpression(elseIfDirective);
         this.assertExpressionParsedCompletely();
 
-        let continueParsing = true;
-        do {
-            const token = this.getCurrentToken();
-            switch (token.kind) {
-                case TokenKind.EOF: {
-                    continueParsing = false;
-                    break;
-                }
-                case TokenKind.NumberSign: {
-                    const nextToken = this.getToken(1);
-                    switch (nextToken.kind) {
-                        case TokenKind.ElseIfDirectiveKeyword:
-                        case TokenKind.ElseDirectiveKeyword:
-                        case TokenKind.EndDirectiveKeyword: {
-                            continueParsing = false;
-                            break;
-                        }
-                        default: {
-                            const child =
-                                this.parseNextInModuleContext(elseIfDirective) ||
-                                this.eat(token.kind);
-                            elseIfDirective.members.push(child);
-                            break;
-                        }
-                    }
-                    break;
-                }
-                default: {
-                    const child =
-                        this.parseNextInModuleContext(elseIfDirective) ||
-                        this.eat(token.kind);
-                    elseIfDirective.members.push(child);
-                    break;
-                }
-            }
-        } while (continueParsing);
+        elseIfDirective.members.push(...this.parseList(elseIfDirective, PreprocessorParseContext.IfDirectiveMembers) as Array<Directives | Token>);
 
         return elseIfDirective;
     }
@@ -217,44 +102,8 @@ export class PreprocessorParser {
     private parseElseDirective(parent: IfDirective): ElseDirective {
         const elseDirective = new ElseDirective();
         elseDirective.parent = parent;
-        elseDirective.numberSign = this.eat(TokenKind.NumberSign);
         elseDirective.elseDirectiveKeyword = this.eat(TokenKind.ElseDirectiveKeyword);
-
-        let continueParsing = true;
-        do {
-            const token = this.getCurrentToken();
-            switch (token.kind) {
-                case TokenKind.EndDirectiveKeyword:
-                case TokenKind.EOF: {
-                    continueParsing = false;
-                    break;
-                }
-                case TokenKind.NumberSign: {
-                    const nextToken = this.getToken(1);
-                    switch (nextToken.kind) {
-                        case TokenKind.EndDirectiveKeyword: {
-                            continueParsing = false;
-                            break;
-                        }
-                        default: {
-                            const child =
-                                this.parseNextInModuleContext(elseDirective) ||
-                                this.eat(token.kind);
-                            elseDirective.members.push(child);
-                            break;
-                        }
-                    }
-                    break;
-                }
-                default: {
-                    const child =
-                        this.parseNextInModuleContext(elseDirective) ||
-                        this.eat(token.kind);
-                    elseDirective.members.push(child);
-                    break;
-                }
-            }
-        } while (continueParsing);
+        elseDirective.members.push(...this.parseList(elseDirective, PreprocessorParseContext.IfDirectiveMembers) as Array<Directives | Token>);
 
         return elseDirective;
     }
@@ -262,7 +111,6 @@ export class PreprocessorParser {
     private parseEndDirective(parent: Directive): EndDirective {
         const endDirective = new EndDirective();
         endDirective.parent = parent;
-        endDirective.numberSign = this.eat(TokenKind.NumberSign);
         endDirective.endDirectiveKeyword = this.eat(TokenKind.EndDirectiveKeyword);
 
         return endDirective;
@@ -271,50 +119,8 @@ export class PreprocessorParser {
     private parseRemDirective(parent: Node): RemDirective {
         const remDirective = new RemDirective();
         remDirective.parent = parent;
-        remDirective.numberSign = this.eat(TokenKind.NumberSign);
         remDirective.remDirectiveKeyword = this.eat(TokenKind.RemDirectiveKeyword);
-
-        let continueParsing = true;
-        do {
-            const token = this.getCurrentToken();
-            switch (token.kind) {
-                case TokenKind.EOF: {
-                    continueParsing = false;
-                    break;
-                }
-                case TokenKind.NumberSign: {
-                    const nextToken = this.getToken(1);
-                    switch (nextToken.kind) {
-                        case TokenKind.EndDirectiveKeyword: {
-                            continueParsing = false;
-                            break;
-                        }
-                        case TokenKind.RemDirectiveKeyword: {
-                            const child = this.parseRemDirective(remDirective);
-                            remDirective.children.push(child);
-                            break;
-                        }
-                        case TokenKind.IfDirectiveKeyword: {
-                            const child = this.parseIfDirective(remDirective);
-                            remDirective.children.push(child);
-                            break;
-                        }
-                    }
-                    break;
-                }
-                case TokenKind.RemDirectiveBody: {
-                    const child = this.eat(token.kind);
-                    remDirective.children.push(child);
-                    break;
-                }
-                default: {
-                    const child = new SkippedToken(this.eat(token.kind));
-                    remDirective.children.push(child);
-                    break;
-                }
-            }
-        } while (continueParsing);
-
+        remDirective.children.push(...this.parseList(remDirective, PreprocessorParseContext.RemDirectiveMembers) as Array<RemDirective | IfDirective | Token>);
         remDirective.endDirective = this.parseEndDirective(remDirective);
 
         return remDirective;
@@ -323,7 +129,6 @@ export class PreprocessorParser {
     private parsePrintDirective(parent: Node): PrintDirective {
         const printDirective = new PrintDirective();
         printDirective.parent = parent;
-        printDirective.numberSign = this.eat(TokenKind.NumberSign);
         printDirective.printDirectiveKeyword = this.eat(TokenKind.PrintDirectiveKeyword);
         printDirective.expression = this.parseExpression(printDirective);
         this.assertExpressionParsedCompletely();
@@ -334,7 +139,6 @@ export class PreprocessorParser {
     private parseErrorDirective(parent: Node): ErrorDirective {
         const errorDirective = new ErrorDirective();
         errorDirective.parent = parent;
-        errorDirective.numberSign = this.eat(TokenKind.NumberSign);
         errorDirective.errorDirectiveKeyword = this.eat(TokenKind.ErrorDirectiveKeyword);
         errorDirective.expression = this.parseExpression(errorDirective);
         this.assertExpressionParsedCompletely();
@@ -345,7 +149,6 @@ export class PreprocessorParser {
     private parseAssignmentDirective(parent: Node): AssignmentDirective {
         const assignmentDirective = new AssignmentDirective();
         assignmentDirective.parent = parent;
-        assignmentDirective.numberSign = this.eat(TokenKind.NumberSign);
         assignmentDirective.name = this.eat(TokenKind.ConfigurationVariable);
         assignmentDirective.operator = this.eat(TokenKind.EqualsSign, TokenKind.PlusSignEqualsSign);
         assignmentDirective.expression = this.parseExpression(assignmentDirective);
@@ -556,6 +359,165 @@ export class PreprocessorParser {
 
     // #region Core
 
+    private currentParseContext: PreprocessorParseContext;
+
+    private parseList(parent: Node, parseContext: PreprocessorParseContext): Array<Expression | Token> {
+        const savedParseContext = this.currentParseContext;
+        this.currentParseContext |= parseContext;
+
+        const parseListElementFn = this.getParseListElementFn(parseContext).bind(this);
+
+        const nodes: Array<Expression | Token> = [];
+        while (!this.isCurrentTokenListTerminator(parseContext)) {
+            if (this.isCurrentTokenValidListElement(parseContext)) {
+                const element = parseListElementFn(parent);
+                nodes.push(element);
+
+                continue;
+            }
+
+            if (this.isCurrentTokenValidInEnclosingContexts()) {
+                break;
+            }
+
+            const token = new SkippedToken(this.getCurrentToken());
+            nodes.push(token);
+            this.advanceToken();
+        }
+
+        this.currentParseContext = savedParseContext;
+
+        return nodes;
+    }
+
+    private getParseListElementFn(parseContext: PreprocessorParseContext): ParseListElementFn {
+        switch (parseContext) {
+            case PreprocessorParseContext.ModuleMembers:
+            case PreprocessorParseContext.IfDirectiveMembers: {
+                return this.parseModuleMember;
+            }
+            case PreprocessorParseContext.RemDirectiveMembers: {
+                return this.parseRemDirectiveMember;
+            }
+        }
+
+        return assertNever(parseContext);
+    }
+
+    private parseModuleMember(parent: Node): Directives | Token {
+        const token = this.getCurrentToken();
+        switch (token.kind) {
+            case TokenKind.IfDirectiveKeyword: {
+                return this.parseIfDirective(parent);
+            }
+            case TokenKind.RemDirectiveKeyword: {
+                return this.parseRemDirective(parent);
+            }
+            case TokenKind.PrintDirectiveKeyword: {
+                return this.parsePrintDirective(parent);
+            }
+            case TokenKind.ErrorDirectiveKeyword: {
+                return this.parseErrorDirective(parent);
+            }
+            case TokenKind.ConfigurationVariable: {
+                return this.parseAssignmentDirective(parent);
+            }
+        }
+
+        this.advanceToken();
+
+        return token;
+    }
+
+    private parseRemDirectiveMember(parent: Node): IfDirective | RemDirective | Token {
+        const token = this.getCurrentToken();
+        switch (token.kind) {
+            case TokenKind.IfDirectiveKeyword: {
+                return this.parseIfDirective(parent);
+            }
+            case TokenKind.RemDirectiveKeyword: {
+                return this.parseRemDirective(parent);
+            }
+            case TokenKind.RemDirectiveBody: {
+                this.advanceToken();
+
+                return token;
+            }
+        }
+
+        throw new Error(`Unexpected token: ${TokenKind[token.kind] || token.kind}`);
+    }
+
+    private isCurrentTokenListTerminator(parseContext: PreprocessorParseContext): boolean {
+        const token = this.getCurrentToken();
+        if (token.kind === TokenKind.EOF) {
+            return true;
+        }
+
+        switch (parseContext) {
+            case PreprocessorParseContext.ModuleMembers: {
+                return false;
+            }
+            case PreprocessorParseContext.IfDirectiveMembers: {
+                switch (token.kind) {
+                    case TokenKind.ElseIfDirectiveKeyword:
+                    case TokenKind.ElseDirectiveKeyword:
+                    case TokenKind.EndDirectiveKeyword: {
+                        return true;
+                    }
+                }
+
+                return false;
+            }
+            case PreprocessorParseContext.RemDirectiveMembers: {
+                return token.kind === TokenKind.EndDirectiveKeyword;
+            }
+        }
+
+        return assertNever(parseContext);
+    }
+
+    private isCurrentTokenValidListElement(parseContext: PreprocessorParseContext): boolean {
+        switch (parseContext) {
+            case PreprocessorParseContext.ModuleMembers:
+            case PreprocessorParseContext.IfDirectiveMembers: {
+                return true;
+            }
+            case PreprocessorParseContext.RemDirectiveMembers: {
+                const token = this.getCurrentToken();
+                switch (token.kind) {
+                    case TokenKind.IfDirectiveKeyword:
+                    case TokenKind.RemDirectiveKeyword:
+                    case TokenKind.RemDirectiveBody: {
+                        return true;
+                    }
+                }
+
+                return false;
+            }
+        }
+
+        return assertNever(parseContext);
+    }
+
+    private isCurrentTokenValidInEnclosingContexts(): boolean {
+        for (let i = 0; i < 32; i++) {
+            const parseContext = 1 << i;
+            if (this.isInParseContext(parseContext)) {
+                if (this.isCurrentTokenValidListElement(parseContext) ||
+                    this.isCurrentTokenListTerminator(parseContext)) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
+
+    private isInParseContext(parseContext: number): boolean {
+        return (this.currentParseContext & parseContext) === 1;
+    }
+
     private eat(...kinds: TokenKind[]): Token {
         const eaten = this.eatOptional(...kinds);
         if (eaten !== null) {
@@ -594,6 +556,8 @@ export class PreprocessorParser {
 
     // #endregion
 }
+
+type ParseListElementFn = (parent: Node) => Expression | Token;
 
 // #region Precedence and associativity
 
