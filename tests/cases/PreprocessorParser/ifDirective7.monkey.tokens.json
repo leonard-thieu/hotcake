@@ -1,15 +1,9 @@
 [
   {
-    "kind": "NumberSign",
+    "kind": "IfDirectiveKeyword",
     "fullStart": 0,
     "start": 0,
-    "length": 1
-  },
-  {
-    "kind": "IfDirectiveKeyword",
-    "fullStart": 1,
-    "start": 1,
-    "length": 2
+    "length": 3
   },
   {
     "kind": "Identifier",
@@ -90,16 +84,10 @@
     "length": 2
   },
   {
-    "kind": "NumberSign",
+    "kind": "ElseIfDirectiveKeyword",
     "fullStart": 61,
     "start": 61,
-    "length": 1
-  },
-  {
-    "kind": "ElseIfDirectiveKeyword",
-    "fullStart": 62,
-    "start": 62,
-    "length": 6
+    "length": 7
   },
   {
     "kind": "Identifier",
@@ -180,16 +168,10 @@
     "length": 2
   },
   {
-    "kind": "NumberSign",
+    "kind": "IfDirectiveKeyword",
     "fullStart": 132,
     "start": 136,
-    "length": 5
-  },
-  {
-    "kind": "IfDirectiveKeyword",
-    "fullStart": 137,
-    "start": 137,
-    "length": 2
+    "length": 7
   },
   {
     "kind": "IntegerLiteral",
@@ -222,16 +204,10 @@
     "length": 2
   },
   {
-    "kind": "NumberSign",
+    "kind": "PrintDirectiveKeyword",
     "fullStart": 159,
     "start": 167,
-    "length": 9
-  },
-  {
-    "kind": "PrintDirectiveKeyword",
-    "fullStart": 168,
-    "start": 168,
-    "length": 5
+    "length": 14
   },
   {
     "kind": "QuotationMark",
@@ -264,16 +240,10 @@
     "length": 2
   },
   {
-    "kind": "NumberSign",
+    "kind": "EndDirectiveKeyword",
     "fullStart": 194,
     "start": 198,
-    "length": 5
-  },
-  {
-    "kind": "EndDirectiveKeyword",
-    "fullStart": 199,
-    "start": 199,
-    "length": 3
+    "length": 8
   },
   {
     "kind": "Newline",
@@ -288,16 +258,10 @@
     "length": 2
   },
   {
-    "kind": "NumberSign",
+    "kind": "ElseIfDirectiveKeyword",
     "fullStart": 206,
     "start": 206,
-    "length": 1
-  },
-  {
-    "kind": "ElseIfDirectiveKeyword",
-    "fullStart": 207,
-    "start": 207,
-    "length": 6
+    "length": 7
   },
   {
     "kind": "Identifier",
@@ -378,16 +342,10 @@
     "length": 2
   },
   {
-    "kind": "NumberSign",
+    "kind": "ElseDirectiveKeyword",
     "fullStart": 277,
     "start": 277,
-    "length": 1
-  },
-  {
-    "kind": "ElseDirectiveKeyword",
-    "fullStart": 278,
-    "start": 278,
-    "length": 4
+    "length": 5
   },
   {
     "kind": "Newline",
@@ -438,16 +396,10 @@
     "length": 2
   },
   {
-    "kind": "NumberSign",
+    "kind": "EndDirectiveKeyword",
     "fullStart": 331,
     "start": 331,
-    "length": 1
-  },
-  {
-    "kind": "EndDirectiveKeyword",
-    "fullStart": 332,
-    "start": 332,
-    "length": 3
+    "length": 4
   },
   {
     "kind": "Newline",

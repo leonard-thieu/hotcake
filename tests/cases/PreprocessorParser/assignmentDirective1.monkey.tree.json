@@ -3,17 +3,11 @@
   "members": [
     {
       "kind": "AssignmentDirective",
-      "numberSign": {
-        "kind": "NumberSign",
-        "fullStart": 0,
-        "start": 0,
-        "length": 1
-      },
       "name": {
         "kind": "ConfigurationVariable",
-        "fullStart": 1,
-        "start": 1,
-        "length": 6
+        "fullStart": 0,
+        "start": 0,
+        "length": 7
       },
       "operator": {
         "kind": "EqualsSign",

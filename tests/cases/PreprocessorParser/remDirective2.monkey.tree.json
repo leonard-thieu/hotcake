@@ -3,17 +3,11 @@
   "members": [
     {
       "kind": "RemDirective",
-      "numberSign": {
-        "kind": "NumberSign",
-        "fullStart": 0,
-        "start": 0,
-        "length": 1
-      },
       "remDirectiveKeyword": {
         "kind": "RemDirectiveKeyword",
-        "fullStart": 1,
-        "start": 1,
-        "length": 3
+        "fullStart": 0,
+        "start": 0,
+        "length": 4
       },
       "children": [
         {
@@ -24,17 +18,11 @@
         },
         {
           "kind": "IfDirective",
-          "numberSign": {
-            "kind": "NumberSign",
-            "fullStart": 12,
-            "start": 12,
-            "length": 1
-          },
           "ifDirectiveKeyword": {
             "kind": "IfDirectiveKeyword",
-            "fullStart": 13,
-            "start": 13,
-            "length": 2
+            "fullStart": 12,
+            "start": 12,
+            "length": 3
           },
           "expression": {
             "kind": "BooleanLiteral",
@@ -57,17 +45,11 @@
           "elseDirective": null,
           "endDirective": {
             "kind": "EndDirective",
-            "numberSign": {
-              "kind": "NumberSign",
-              "fullStart": 22,
-              "start": 26,
-              "length": 5
-            },
             "endDirectiveKeyword": {
               "kind": "EndDirectiveKeyword",
-              "fullStart": 27,
-              "start": 27,
-              "length": 3
+              "fullStart": 22,
+              "start": 26,
+              "length": 8
             }
           }
         },
@@ -80,17 +62,11 @@
       ],
       "endDirective": {
         "kind": "EndDirective",
-        "numberSign": {
-          "kind": "NumberSign",
-          "fullStart": 34,
-          "start": 34,
-          "length": 1
-        },
         "endDirectiveKeyword": {
           "kind": "EndDirectiveKeyword",
-          "fullStart": 35,
-          "start": 35,
-          "length": 3
+          "fullStart": 34,
+          "start": 34,
+          "length": 4
         }
       }
     }

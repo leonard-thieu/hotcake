@@ -1,15 +1,9 @@
 [
   {
-    "kind": "NumberSign",
+    "kind": "IfDirectiveKeyword",
     "fullStart": 0,
     "start": 0,
-    "length": 1
-  },
-  {
-    "kind": "IfDirectiveKeyword",
-    "fullStart": 1,
-    "start": 1,
-    "length": 2
+    "length": 3
   },
   {
     "kind": "Identifier",
@@ -48,16 +42,10 @@
     "length": 2
   },
   {
-    "kind": "NumberSign",
+    "kind": "EndDirectiveKeyword",
     "fullStart": 20,
     "start": 20,
-    "length": 1
-  },
-  {
-    "kind": "EndDirectiveKeyword",
-    "fullStart": 21,
-    "start": 21,
-    "length": 3
+    "length": 4
   },
   {
     "kind": "EOF",

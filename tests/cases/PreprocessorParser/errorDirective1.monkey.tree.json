@@ -3,17 +3,11 @@
   "members": [
     {
       "kind": "ErrorDirective",
-      "numberSign": {
-        "kind": "NumberSign",
-        "fullStart": 0,
-        "start": 0,
-        "length": 1
-      },
       "errorDirectiveKeyword": {
         "kind": "ErrorDirectiveKeyword",
-        "fullStart": 1,
-        "start": 1,
-        "length": 5
+        "fullStart": 0,
+        "start": 0,
+        "length": 6
       },
       "expression": {
         "kind": "StringLiteral",

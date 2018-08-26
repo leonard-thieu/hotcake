@@ -1,15 +1,9 @@
 [
   {
-    "kind": "NumberSign",
+    "kind": "IfDirectiveKeyword",
     "fullStart": 0,
     "start": 0,
-    "length": 1
-  },
-  {
-    "kind": "IfDirectiveKeyword",
-    "fullStart": 1,
-    "start": 1,
-    "length": 2
+    "length": 3
   },
   {
     "kind": "HyphenMinus",
@@ -30,16 +24,10 @@
     "length": 2
   },
   {
-    "kind": "NumberSign",
+    "kind": "EndDirectiveKeyword",
     "fullStart": 8,
     "start": 8,
-    "length": 1
-  },
-  {
-    "kind": "EndDirectiveKeyword",
-    "fullStart": 9,
-    "start": 9,
-    "length": 3
+    "length": 4
   },
   {
     "kind": "EOF",

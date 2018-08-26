@@ -1,15 +1,9 @@
 [
   {
-    "kind": "NumberSign",
+    "kind": "RemDirectiveKeyword",
     "fullStart": 0,
     "start": 0,
-    "length": 1
-  },
-  {
-    "kind": "RemDirectiveKeyword",
-    "fullStart": 1,
-    "start": 1,
-    "length": 3
+    "length": 4
   },
   {
     "kind": "RemDirectiveBody",
@@ -18,16 +12,10 @@
     "length": 2
   },
   {
-    "kind": "NumberSign",
+    "kind": "EndDirectiveKeyword",
     "fullStart": 6,
     "start": 6,
-    "length": 1
-  },
-  {
-    "kind": "EndDirectiveKeyword",
-    "fullStart": 7,
-    "start": 7,
-    "length": 3
+    "length": 4
   },
   {
     "kind": "EOF",

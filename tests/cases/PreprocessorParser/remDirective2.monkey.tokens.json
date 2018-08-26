@@ -1,15 +1,9 @@
 [
   {
-    "kind": "NumberSign",
+    "kind": "RemDirectiveKeyword",
     "fullStart": 0,
     "start": 0,
-    "length": 1
-  },
-  {
-    "kind": "RemDirectiveKeyword",
-    "fullStart": 1,
-    "start": 1,
-    "length": 3
+    "length": 4
   },
   {
     "kind": "RemDirectiveBody",
@@ -18,16 +12,10 @@
     "length": 8
   },
   {
-    "kind": "NumberSign",
+    "kind": "IfDirectiveKeyword",
     "fullStart": 12,
     "start": 12,
-    "length": 1
-  },
-  {
-    "kind": "IfDirectiveKeyword",
-    "fullStart": 13,
-    "start": 13,
-    "length": 2
+    "length": 3
   },
   {
     "kind": "TrueKeyword",
@@ -42,16 +30,10 @@
     "length": 2
   },
   {
-    "kind": "NumberSign",
+    "kind": "EndDirectiveKeyword",
     "fullStart": 22,
     "start": 26,
-    "length": 5
-  },
-  {
-    "kind": "EndDirectiveKeyword",
-    "fullStart": 27,
-    "start": 27,
-    "length": 3
+    "length": 8
   },
   {
     "kind": "RemDirectiveBody",
@@ -60,16 +42,10 @@
     "length": 4
   },
   {
-    "kind": "NumberSign",
+    "kind": "EndDirectiveKeyword",
     "fullStart": 34,
     "start": 34,
-    "length": 1
-  },
-  {
-    "kind": "EndDirectiveKeyword",
-    "fullStart": 35,
-    "start": 35,
-    "length": 3
+    "length": 4
   },
   {
     "kind": "EOF",

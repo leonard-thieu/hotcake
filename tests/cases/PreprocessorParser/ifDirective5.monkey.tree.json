@@ -3,17 +3,11 @@
   "members": [
     {
       "kind": "IfDirective",
-      "numberSign": {
-        "kind": "NumberSign",
-        "fullStart": 0,
-        "start": 0,
-        "length": 1
-      },
       "ifDirectiveKeyword": {
         "kind": "IfDirectiveKeyword",
-        "fullStart": 1,
-        "start": 1,
-        "length": 2
+        "fullStart": 0,
+        "start": 0,
+        "length": 3
       },
       "expression": {
         "kind": "BinaryExpression",
@@ -109,17 +103,11 @@
       "elseIfDirectives": [
         {
           "kind": "ElseIfDirective",
-          "numberSign": {
-            "kind": "NumberSign",
-            "fullStart": 61,
-            "start": 61,
-            "length": 1
-          },
           "elseIfDirectiveKeyword": {
             "kind": "ElseIfDirectiveKeyword",
-            "fullStart": 62,
-            "start": 62,
-            "length": 6
+            "fullStart": 61,
+            "start": 61,
+            "length": 7
           },
           "expression": {
             "kind": "BinaryExpression",
@@ -215,17 +203,11 @@
         },
         {
           "kind": "ElseIfDirective",
-          "numberSign": {
-            "kind": "NumberSign",
-            "fullStart": 132,
-            "start": 132,
-            "length": 1
-          },
           "elseIfDirectiveKeyword": {
             "kind": "ElseIfDirectiveKeyword",
-            "fullStart": 133,
-            "start": 133,
-            "length": 6
+            "fullStart": 132,
+            "start": 132,
+            "length": 7
           },
           "expression": {
             "kind": "BinaryExpression",
@@ -323,17 +305,11 @@
       "elseDirective": null,
       "endDirective": {
         "kind": "EndDirective",
-        "numberSign": {
-          "kind": "NumberSign",
-          "fullStart": 203,
-          "start": 203,
-          "length": 1
-        },
         "endDirectiveKeyword": {
           "kind": "EndDirectiveKeyword",
-          "fullStart": 204,
-          "start": 204,
-          "length": 3
+          "fullStart": 203,
+          "start": 203,
+          "length": 4
         }
       }
     },

@@ -1,15 +1,9 @@
 [
   {
-    "kind": "NumberSign",
+    "kind": "ElseDirectiveKeyword",
     "fullStart": 0,
     "start": 0,
-    "length": 1
-  },
-  {
-    "kind": "ElseDirectiveKeyword",
-    "fullStart": 1,
-    "start": 1,
-    "length": 4
+    "length": 5
   },
   {
     "kind": "EOF",

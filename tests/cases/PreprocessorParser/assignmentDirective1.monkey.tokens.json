@@ -1,15 +1,9 @@
 [
   {
-    "kind": "NumberSign",
+    "kind": "ConfigurationVariable",
     "fullStart": 0,
     "start": 0,
-    "length": 1
-  },
-  {
-    "kind": "ConfigurationVariable",
-    "fullStart": 1,
-    "start": 1,
-    "length": 6
+    "length": 7
   },
   {
     "kind": "EqualsSign",
