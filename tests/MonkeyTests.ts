@@ -1,9 +1,9 @@
 import path = require('path');
 
-import { executePreprocessorParserTestCases, executeTokenizerTestCases } from "./shared";
+import { executePreprocessorParserTestCases, executePreprocessorTokenizerTestCases } from "./shared";
 
 const name = 'MonkeyX';
 const casesPath = path.resolve('..', '..', 'blitz-research', 'monkey');
 
-executeTokenizerTestCases(name, casesPath);
+executePreprocessorTokenizerTestCases(name, casesPath);
 executePreprocessorParserTestCases(name, casesPath);

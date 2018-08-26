@@ -75,7 +75,7 @@ export function executeBaselineTestCase(outputPath: string, testCallback: () => 
     fs.writeFileSync(outputPath, json);
 }
 
-export function executeTokenizerTestCases(name: string, casesPath: string) {
+export function executePreprocessorTokenizerTestCases(name: string, casesPath: string) {
     executeTestCases({
         name: name,
         casesPath: casesPath,
@@ -85,7 +85,7 @@ export function executeTokenizerTestCases(name: string, casesPath: string) {
             _it(sourceRelativePath, function () {
                 const outputPath = path.resolve(__dirname, 'cases', name, sourceRelativePath) + '.tokens.json';
                 executeBaselineTestCase(outputPath, () => {
-                    return getTokens(contents);
+                    return getPreprocessorTokens(contents);
                 });
             });
         },
@@ -126,9 +126,9 @@ export function executePreprocessorParserTokenizerTestCases(name: string, casesP
     });
 }
 
-export function getTokens(document: string) {
+export function getPreprocessorTokens(document: string) {
     const lexer = new PreprocessorTokenizer();
-    
+
     return lexer.getTokens(document);
 }
 

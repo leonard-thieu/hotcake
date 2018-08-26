@@ -1,9 +1,9 @@
 import path = require('path');
 import 'chai/register-should';
 
-import { executeTestCases, getTokens } from "./shared";
+import { executeTestCases, getPreprocessorTokens } from "./shared";
 
-const name = 'Tokenizer';
+const name = 'PreprocessorTokenizer';
 const casesPath = path.resolve(__dirname, 'cases', name);
 
 executeTestCases({
@@ -11,7 +11,7 @@ executeTestCases({
     casesPath: casesPath,
     testCallback: function (context) {
         const { _it, sourceRelativePath, contents } = context;
-        const tokens = getTokens(contents);
+        const tokens = getPreprocessorTokens(contents);
 
         _it(sourceRelativePath, function () {
             let tokensLength = 0;

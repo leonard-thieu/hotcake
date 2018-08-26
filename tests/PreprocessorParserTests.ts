@@ -1,9 +1,9 @@
 import path = require('path');
 
-import { executePreprocessorParserTestCases, executeTokenizerTestCases } from './shared';
+import { executePreprocessorParserTestCases, executePreprocessorTokenizerTestCases } from './shared';
 
 const name = 'PreprocessorParser';
 const casesPath = path.resolve(__dirname, 'cases', name);
 
-executeTokenizerTestCases(name, casesPath);
+executePreprocessorTokenizerTestCases(name, casesPath);
 executePreprocessorParserTestCases(name, casesPath);
