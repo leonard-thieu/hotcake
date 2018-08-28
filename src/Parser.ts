@@ -13,6 +13,7 @@ import { FriendDirective } from "./Node/Statement/FriendDirective";
 import { FunctionDeclaration } from "./Node/Statement/FunctionDeclaration";
 import { ImportStatement } from "./Node/Statement/ImportStatement";
 import { InterfaceDeclaration } from "./Node/Statement/InterfaceDeclaration";
+import { InterfaceMethodDeclaration } from "./Node/Statement/InterfaceMethodDeclaration";
 import { Statement } from "./Node/Statement/Statement";
 import { StrictDirective } from "./Node/Statement/StrictDirective";
 import { ParseContext } from "./ParseContext";
@@ -143,6 +144,13 @@ export class Parser extends ParserBase {
     }
 
     private isInterfaceMemberStart(token: Token): boolean {
+        switch (token.kind) {
+            case TokenKind.ConstKeyword:
+            case TokenKind.MethodKeyword: {
+                return true;
+            }
+        }
+
         return false;
     }
     
@@ -170,7 +178,9 @@ export class Parser extends ParserBase {
             case ParseContext.ModuleMembers: {
                 return this.parseModuleMember;
             }
-            case ParseContext.InterfaceMembers:
+            case ParseContext.InterfaceMembers: {
+                return this.parseInterfaceMember;
+            }
             case ParseContext.ClassMembers:
             case ParseContext.BlockStatements: {
                 return () => { throw new Error(); };
@@ -280,6 +290,119 @@ export class Parser extends ParserBase {
         return aliasDirective;
     }
 
+    private parseFunctionDeclaration(parent: Node): FunctionDeclaration {
+        const functionDeclaration = new FunctionDeclaration();
+        functionDeclaration.parent = parent;
+        functionDeclaration.functionKeyword = this.eat(TokenKind.FunctionKeyword);
+        functionDeclaration.name = this.eat(TokenKind.Identifier);
+
+        if (this.getToken().kind !== TokenKind.OpeningParenthesis) {
+            functionDeclaration.colon = this.eatOptional(TokenKind.Colon);
+            functionDeclaration.returnType = this.parseQualifiedIdentifier(functionDeclaration);   
+        }
+
+        functionDeclaration.openingParenthesis = this.eat(TokenKind.OpeningParenthesis);
+        functionDeclaration.parameters = this.parseDataDeclarationList(functionDeclaration);        
+        functionDeclaration.closingParenthesis = this.eat(TokenKind.ClosingParenthesis);
+        functionDeclaration.statements = this.parseList(functionDeclaration, ParseContext.BlockStatements);
+        functionDeclaration.endKeyword = this.eat(TokenKind.EndKeyword);
+        functionDeclaration.endFunctionKeyword = this.eatOptional(TokenKind.FunctionKeyword);
+
+        return functionDeclaration;
+    }
+
+    private parseInterfaceDeclaration(parent: Node): InterfaceDeclaration {
+        const interfaceDeclaration = new InterfaceDeclaration();
+        interfaceDeclaration.parent = parent;
+        interfaceDeclaration.interfaceKeyword = this.eat(TokenKind.InterfaceKeyword);
+        interfaceDeclaration.name = this.eat(TokenKind.Identifier);
+        // TODO: Extends
+        interfaceDeclaration.members = this.parseList(interfaceDeclaration, ParseContext.InterfaceMembers);
+        interfaceDeclaration.endKeyword = this.eat(TokenKind.EndKeyword);
+        interfaceDeclaration.endInterfaceKeyword = this.eatOptional(TokenKind.InterfaceKeyword);
+
+        return interfaceDeclaration;
+    }
+
+    private parseInterfaceMember = (parent: Node) => {
+        const token = this.getCurrentToken();
+        switch (token.kind) {
+            case TokenKind.ConstKeyword: {
+                return this.parseDataDeclarationList(parent);
+            }
+            case TokenKind.MethodKeyword: {
+                return this.parseInterfaceMethod(parent);
+            }
+        }
+
+        throw new Error(`Unexpected token: ${JSON.stringify(TokenKind[token.kind] || token.kind)}`);
+    }
+
+    private parseInterfaceMethod(parent: Node): InterfaceMethodDeclaration {
+        const interfaceMethodDeclaration = new InterfaceMethodDeclaration();
+        interfaceMethodDeclaration.parent = parent;
+        interfaceMethodDeclaration.methodKeyword = this.eat(TokenKind.MethodKeyword);
+        interfaceMethodDeclaration.name = this.eat(TokenKind.Identifier);
+
+        if (this.getToken().kind !== TokenKind.OpeningParenthesis) {
+            interfaceMethodDeclaration.colon = this.eatOptional(TokenKind.Colon);
+            interfaceMethodDeclaration.returnType = this.parseQualifiedIdentifier(interfaceMethodDeclaration);
+        }
+
+        interfaceMethodDeclaration.openingParenthesis = this.eat(TokenKind.OpeningParenthesis);
+        interfaceMethodDeclaration.parameters = this.parseDataDeclarationList(interfaceMethodDeclaration);        
+        interfaceMethodDeclaration.closingParenthesis = this.eat(TokenKind.ClosingParenthesis);
+
+        return interfaceMethodDeclaration;
+    }
+
+    private parseClassDeclaration(parent: Node): ClassDeclaration {
+        const classDeclaration = new ClassDeclaration();
+        classDeclaration.parent = parent;
+        classDeclaration.classKeyword = this.eat(TokenKind.ClassKeyword);
+        // TODO: Generic parameters
+        // TODO: Extends
+        // TODO: Implements
+        classDeclaration.members = this.parseList(classDeclaration, ParseContext.ClassMembers);
+        classDeclaration.endKeyword = this.eat(TokenKind.EndKeyword);
+        classDeclaration.endClassKeyword = this.eatOptional(TokenKind.ClassKeyword);
+
+        return classDeclaration;
+    }
+
+    private parseModulePath(parent: Node): ModulePath {
+        const modulePath = new ModulePath();
+        modulePath.parent = parent;
+
+        let lastTokenKind: TokenKind | undefined;
+        while (true) {
+            const token = this.getToken();
+            if (token.kind === TokenKind.Identifier) {
+                if (lastTokenKind !== undefined &&
+                    lastTokenKind !== TokenKind.Period) {
+                    console.error(`Did not expect ${JSON.stringify(TokenKind[token.kind])} to follow ${JSON.stringify(lastTokenKind ? TokenKind[lastTokenKind] : undefined)}`);
+                    break;
+                }
+
+                modulePath.children.push(token);
+                this.advanceToken();
+            } else if (token.kind === TokenKind.Period) {
+                if (lastTokenKind !== undefined &&
+                    lastTokenKind !== TokenKind.Identifier) {
+                    console.error(`Did not expect ${JSON.stringify(TokenKind[token.kind])} to follow ${JSON.stringify(lastTokenKind ? TokenKind[lastTokenKind] : undefined)}`);
+                    break;
+                }
+
+                modulePath.children.push(token);
+                this.advanceToken();
+            } else {
+                break;
+            }
+        }
+        
+        return modulePath;
+    }
+
     private parseDataDeclarationList(parent: Node): DataDeclarationList {
         const dataDeclarationList = new DataDeclarationList();
         dataDeclarationList.parent = parent;
@@ -334,87 +457,6 @@ export class Parser extends ParserBase {
         dataDeclaration.expression = this.parseExpression(dataDeclaration);
 
         return dataDeclaration;
-    }
-
-    private parseFunctionDeclaration(parent: Node): FunctionDeclaration {
-        const functionDeclaration = new FunctionDeclaration();
-        functionDeclaration.parent = parent;
-        functionDeclaration.functionKeyword = this.eat(TokenKind.FunctionKeyword);
-        functionDeclaration.name = this.eat(TokenKind.Identifier);
-
-        if (this.getToken().kind !== TokenKind.OpeningParenthesis) {
-            functionDeclaration.colon = this.eatOptional(TokenKind.Colon);
-            functionDeclaration.returnType = this.parseQualifiedIdentifier(functionDeclaration);   
-        }
-
-        functionDeclaration.openingParenthesis = this.eat(TokenKind.OpeningParenthesis);
-        functionDeclaration.parameters = this.parseDataDeclarationList(functionDeclaration);        
-        functionDeclaration.closingParenthesis = this.eat(TokenKind.ClosingParenthesis);
-        functionDeclaration.statements = this.parseList(functionDeclaration, ParseContext.BlockStatements);
-        functionDeclaration.endKeyword = this.eat(TokenKind.EndKeyword);
-        functionDeclaration.endFunctionKeyword = this.eatOptional(TokenKind.FunctionKeyword);
-
-        return functionDeclaration;
-    }
-
-    private parseInterfaceDeclaration(parent: Node): InterfaceDeclaration {
-        const interfaceDeclaration = new InterfaceDeclaration();
-        interfaceDeclaration.parent = parent;
-        interfaceDeclaration.interfaceKeyword = this.eat(TokenKind.InterfaceKeyword);
-        interfaceDeclaration.name = this.eat(TokenKind.Identifier);
-        // TODO: Extends
-        interfaceDeclaration.members = this.parseList(interfaceDeclaration, ParseContext.InterfaceMembers);
-        interfaceDeclaration.endKeyword = this.eat(TokenKind.EndKeyword);
-        interfaceDeclaration.endInterfaceKeyword = this.eatOptional(TokenKind.InterfaceKeyword);
-
-        return interfaceDeclaration;
-    }
-
-    private parseClassDeclaration(parent: Node): ClassDeclaration {
-        const classDeclaration = new ClassDeclaration();
-        classDeclaration.parent = parent;
-        classDeclaration.classKeyword = this.eat(TokenKind.ClassKeyword);
-        // TODO: Generic parameters
-        // TODO: Extends
-        // TODO: Implements
-        classDeclaration.members = this.parseList(classDeclaration, ParseContext.ClassMembers);
-        classDeclaration.endKeyword = this.eat(TokenKind.EndKeyword);
-        classDeclaration.endClassKeyword = this.eatOptional(TokenKind.ClassKeyword);
-
-        return classDeclaration;
-    }
-
-    private parseModulePath(parent: Node): ModulePath {
-        const modulePath = new ModulePath();
-        modulePath.parent = parent;
-
-        let lastTokenKind: TokenKind | undefined;
-        while (true) {
-            const token = this.getToken();
-            if (token.kind === TokenKind.Identifier) {
-                if (lastTokenKind !== undefined &&
-                    lastTokenKind !== TokenKind.Period) {
-                    console.error(`Did not expect ${JSON.stringify(TokenKind[token.kind])} to follow ${JSON.stringify(lastTokenKind ? TokenKind[lastTokenKind] : undefined)}`);
-                    break;
-                }
-
-                modulePath.children.push(token);
-                this.advanceToken();
-            } else if (token.kind === TokenKind.Period) {
-                if (lastTokenKind !== undefined &&
-                    lastTokenKind !== TokenKind.Identifier) {
-                    console.error(`Did not expect ${JSON.stringify(TokenKind[token.kind])} to follow ${JSON.stringify(lastTokenKind ? TokenKind[lastTokenKind] : undefined)}`);
-                    break;
-                }
-
-                modulePath.children.push(token);
-                this.advanceToken();
-            } else {
-                break;
-            }
-        }
-        
-        return modulePath;
     }
 
     private parseQualifiedIdentifier(parent: Node): QualifiedIdentifier {

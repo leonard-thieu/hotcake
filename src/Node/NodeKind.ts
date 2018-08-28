@@ -23,6 +23,8 @@ export enum NodeKind {
     InterfaceDeclaration,
     ClassDeclaration,
 
+    InterfaceMethodDeclaration,
+
     ModulePath,
     QualifiedIdentifier,
     DataDeclaration,
