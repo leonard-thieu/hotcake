@@ -2553,151 +2553,211 @@
           "length": 24
         },
         {
-          "type": "SkippedToken",
-          "kind": "FieldKeyword",
-          "fullStart": 2864,
-          "start": 2868,
-          "length": 9
+          "kind": "DataDeclarationList",
+          "dataDeclarationKeyword": {
+            "kind": "FieldKeyword",
+            "fullStart": 2864,
+            "start": 2868,
+            "length": 9
+          },
+          "children": [
+            {
+              "kind": "DataDeclaration",
+              "name": {
+                "kind": "Identifier",
+                "fullStart": 2873,
+                "start": 2874,
+                "length": 2
+              },
+              "colonEqualsSign": null,
+              "colon": null,
+              "longhandType": null,
+              "shorthandType": null,
+              "equalsSign": null,
+              "expression": {
+                "type": "MissingToken",
+                "kind": "Expression",
+                "fullStart": 2875,
+                "start": 2875,
+                "length": 0
+              }
+            },
+            {
+              "type": "SkippedToken",
+              "kind": "Newline",
+              "fullStart": 2875,
+              "start": 2905,
+              "length": 31
+            }
+          ]
         },
         {
-          "type": "SkippedToken",
-          "kind": "Identifier",
-          "fullStart": 2873,
-          "start": 2874,
-          "length": 2
+          "kind": "DataDeclarationList",
+          "dataDeclarationKeyword": {
+            "kind": "FieldKeyword",
+            "fullStart": 2906,
+            "start": 2910,
+            "length": 9
+          },
+          "children": [
+            {
+              "kind": "DataDeclaration",
+              "name": {
+                "kind": "Identifier",
+                "fullStart": 2915,
+                "start": 2916,
+                "length": 2
+              },
+              "colonEqualsSign": {
+                "kind": "ColonEqualsSign",
+                "fullStart": 2917,
+                "start": 2918,
+                "length": 3
+              },
+              "colon": null,
+              "longhandType": null,
+              "shorthandType": null,
+              "equalsSign": null,
+              "expression": {
+                "kind": "IntegerLiteral",
+                "value": {
+                  "kind": "IntegerLiteral",
+                  "fullStart": 2920,
+                  "start": 2921,
+                  "length": 2
+                }
+              }
+            },
+            {
+              "type": "SkippedToken",
+              "kind": "Newline",
+              "fullStart": 2922,
+              "start": 2961,
+              "length": 40
+            }
+          ]
         },
         {
-          "type": "SkippedToken",
-          "kind": "Newline",
-          "fullStart": 2875,
-          "start": 2905,
-          "length": 31
+          "kind": "DataDeclarationList",
+          "dataDeclarationKeyword": {
+            "kind": "FieldKeyword",
+            "fullStart": 2962,
+            "start": 2966,
+            "length": 9
+          },
+          "children": [
+            {
+              "kind": "DataDeclaration",
+              "name": {
+                "kind": "Identifier",
+                "fullStart": 2971,
+                "start": 2972,
+                "length": 2
+              },
+              "colonEqualsSign": null,
+              "colon": {
+                "kind": "Colon",
+                "fullStart": 2973,
+                "start": 2973,
+                "length": 1
+              },
+              "longhandType": {
+                "kind": "QualifiedIdentifier",
+                "modulePath": {
+                  "kind": "ModulePath",
+                  "children": []
+                },
+                "scopeMemberAccessOperator": null,
+                "identifier": {
+                  "kind": "FloatKeyword",
+                  "fullStart": 2974,
+                  "start": 2975,
+                  "length": 6
+                }
+              },
+              "shorthandType": null,
+              "equalsSign": null,
+              "expression": {
+                "type": "MissingToken",
+                "kind": "Expression",
+                "fullStart": 2980,
+                "start": 2980,
+                "length": 0
+              }
+            },
+            {
+              "type": "SkippedToken",
+              "kind": "Newline",
+              "fullStart": 2980,
+              "start": 3009,
+              "length": 30
+            }
+          ]
         },
         {
-          "type": "SkippedToken",
-          "kind": "FieldKeyword",
-          "fullStart": 2906,
-          "start": 2910,
-          "length": 9
-        },
-        {
-          "type": "SkippedToken",
-          "kind": "Identifier",
-          "fullStart": 2915,
-          "start": 2916,
-          "length": 2
-        },
-        {
-          "type": "SkippedToken",
-          "kind": "ColonEqualsSign",
-          "fullStart": 2917,
-          "start": 2918,
-          "length": 3
-        },
-        {
-          "type": "SkippedToken",
-          "kind": "IntegerLiteral",
-          "fullStart": 2920,
-          "start": 2921,
-          "length": 2
-        },
-        {
-          "type": "SkippedToken",
-          "kind": "Newline",
-          "fullStart": 2922,
-          "start": 2961,
-          "length": 40
-        },
-        {
-          "type": "SkippedToken",
-          "kind": "FieldKeyword",
-          "fullStart": 2962,
-          "start": 2966,
-          "length": 9
-        },
-        {
-          "type": "SkippedToken",
-          "kind": "Identifier",
-          "fullStart": 2971,
-          "start": 2972,
-          "length": 2
-        },
-        {
-          "type": "SkippedToken",
-          "kind": "Colon",
-          "fullStart": 2973,
-          "start": 2973,
-          "length": 1
-        },
-        {
-          "type": "SkippedToken",
-          "kind": "FloatKeyword",
-          "fullStart": 2974,
-          "start": 2975,
-          "length": 6
-        },
-        {
-          "type": "SkippedToken",
-          "kind": "Newline",
-          "fullStart": 2980,
-          "start": 3009,
-          "length": 30
-        },
-        {
-          "type": "SkippedToken",
-          "kind": "FieldKeyword",
-          "fullStart": 3010,
-          "start": 3014,
-          "length": 9
-        },
-        {
-          "type": "SkippedToken",
-          "kind": "Identifier",
-          "fullStart": 3019,
-          "start": 3020,
-          "length": 2
-        },
-        {
-          "type": "SkippedToken",
-          "kind": "DollarSign",
-          "fullStart": 3021,
-          "start": 3021,
-          "length": 1
-        },
-        {
-          "type": "SkippedToken",
-          "kind": "EqualsSign",
-          "fullStart": 3022,
-          "start": 3023,
-          "length": 2
-        },
-        {
-          "type": "SkippedToken",
-          "kind": "QuotationMark",
-          "fullStart": 3024,
-          "start": 3025,
-          "length": 2
-        },
-        {
-          "type": "SkippedToken",
-          "kind": "StringLiteralText",
-          "fullStart": 3026,
-          "start": 3026,
-          "length": 8
-        },
-        {
-          "type": "SkippedToken",
-          "kind": "QuotationMark",
-          "fullStart": 3034,
-          "start": 3034,
-          "length": 1
-        },
-        {
-          "type": "SkippedToken",
-          "kind": "Newline",
-          "fullStart": 3035,
-          "start": 3070,
-          "length": 36
+          "kind": "DataDeclarationList",
+          "dataDeclarationKeyword": {
+            "kind": "FieldKeyword",
+            "fullStart": 3010,
+            "start": 3014,
+            "length": 9
+          },
+          "children": [
+            {
+              "kind": "DataDeclaration",
+              "name": {
+                "kind": "Identifier",
+                "fullStart": 3019,
+                "start": 3020,
+                "length": 2
+              },
+              "colonEqualsSign": null,
+              "colon": null,
+              "longhandType": null,
+              "shorthandType": {
+                "kind": "DollarSign",
+                "fullStart": 3021,
+                "start": 3021,
+                "length": 1
+              },
+              "equalsSign": {
+                "kind": "EqualsSign",
+                "fullStart": 3022,
+                "start": 3023,
+                "length": 2
+              },
+              "expression": {
+                "kind": "StringLiteral",
+                "startQuote": {
+                  "kind": "QuotationMark",
+                  "fullStart": 3024,
+                  "start": 3025,
+                  "length": 2
+                },
+                "children": [
+                  {
+                    "kind": "StringLiteralText",
+                    "fullStart": 3026,
+                    "start": 3026,
+                    "length": 8
+                  }
+                ],
+                "endQuote": {
+                  "kind": "QuotationMark",
+                  "fullStart": 3034,
+                  "start": 3034,
+                  "length": 1
+                }
+              }
+            },
+            {
+              "type": "SkippedToken",
+              "kind": "Newline",
+              "fullStart": 3035,
+              "start": 3070,
+              "length": 36
+            }
+          ]
         },
         {
           "type": "SkippedToken",
@@ -2721,39 +2781,50 @@
           "length": 26
         },
         {
-          "type": "SkippedToken",
-          "kind": "FieldKeyword",
-          "fullStart": 3112,
-          "start": 3116,
-          "length": 9
-        },
-        {
-          "type": "SkippedToken",
-          "kind": "Identifier",
-          "fullStart": 3121,
-          "start": 3122,
-          "length": 2
-        },
-        {
-          "type": "SkippedToken",
-          "kind": "EqualsSign",
-          "fullStart": 3123,
-          "start": 3124,
-          "length": 2
-        },
-        {
-          "type": "SkippedToken",
-          "kind": "IntegerLiteral",
-          "fullStart": 3125,
-          "start": 3126,
-          "length": 2
-        },
-        {
-          "type": "SkippedToken",
-          "kind": "Newline",
-          "fullStart": 3127,
-          "start": 3166,
-          "length": 40
+          "kind": "DataDeclarationList",
+          "dataDeclarationKeyword": {
+            "kind": "FieldKeyword",
+            "fullStart": 3112,
+            "start": 3116,
+            "length": 9
+          },
+          "children": [
+            {
+              "kind": "DataDeclaration",
+              "name": {
+                "kind": "Identifier",
+                "fullStart": 3121,
+                "start": 3122,
+                "length": 2
+              },
+              "colonEqualsSign": null,
+              "colon": null,
+              "longhandType": null,
+              "shorthandType": null,
+              "equalsSign": {
+                "kind": "EqualsSign",
+                "fullStart": 3123,
+                "start": 3124,
+                "length": 2
+              },
+              "expression": {
+                "kind": "IntegerLiteral",
+                "value": {
+                  "kind": "IntegerLiteral",
+                  "fullStart": 3125,
+                  "start": 3126,
+                  "length": 2
+                }
+              }
+            },
+            {
+              "type": "SkippedToken",
+              "kind": "Newline",
+              "fullStart": 3127,
+              "start": 3166,
+              "length": 40
+            }
+          ]
         },
         {
           "type": "SkippedToken",
@@ -2968,597 +3039,645 @@
           "length": 2
         },
         {
-          "type": "SkippedToken",
-          "kind": "MethodKeyword",
-          "fullStart": 3433,
-          "start": 3437,
-          "length": 10
-        },
-        {
-          "type": "SkippedToken",
-          "kind": "Identifier",
-          "fullStart": 3443,
-          "start": 3444,
-          "length": 6
-        },
-        {
-          "type": "SkippedToken",
-          "kind": "OpeningParenthesis",
-          "fullStart": 3449,
-          "start": 3449,
-          "length": 1
-        },
-        {
-          "type": "SkippedToken",
-          "kind": "ClosingParenthesis",
-          "fullStart": 3450,
-          "start": 3450,
-          "length": 1
-        },
-        {
-          "type": "SkippedToken",
-          "kind": "AbstractKeyword",
-          "fullStart": 3451,
-          "start": 3452,
-          "length": 9
+          "kind": "ClassMethodDeclaration",
+          "methodKeyword": {
+            "kind": "MethodKeyword",
+            "fullStart": 3433,
+            "start": 3437,
+            "length": 10
+          },
+          "name": {
+            "kind": "Identifier",
+            "fullStart": 3443,
+            "start": 3444,
+            "length": 6
+          },
+          "colon": null,
+          "returnType": null,
+          "openingParenthesis": {
+            "kind": "OpeningParenthesis",
+            "fullStart": 3449,
+            "start": 3449,
+            "length": 1
+          },
+          "parameters": {
+            "kind": "DataDeclarationList",
+            "dataDeclarationKeyword": null,
+            "children": []
+          },
+          "closingParenthesis": {
+            "kind": "ClosingParenthesis",
+            "fullStart": 3450,
+            "start": 3450,
+            "length": 1
+          },
+          "statements": [
+            {
+              "type": "SkippedToken",
+              "kind": "AbstractKeyword",
+              "fullStart": 3451,
+              "start": 3452,
+              "length": 9
+            },
+            {
+              "type": "SkippedToken",
+              "kind": "Newline",
+              "fullStart": 3460,
+              "start": 3495,
+              "length": 36
+            },
+            {
+              "type": "SkippedToken",
+              "kind": "Newline",
+              "fullStart": 3496,
+              "start": 3501,
+              "length": 6
+            },
+            {
+              "type": "SkippedToken",
+              "kind": "MethodKeyword",
+              "fullStart": 3502,
+              "start": 3506,
+              "length": 10
+            },
+            {
+              "type": "SkippedToken",
+              "kind": "Identifier",
+              "fullStart": 3512,
+              "start": 3513,
+              "length": 8
+            },
+            {
+              "type": "SkippedToken",
+              "kind": "OpeningParenthesis",
+              "fullStart": 3520,
+              "start": 3520,
+              "length": 1
+            },
+            {
+              "type": "SkippedToken",
+              "kind": "ClosingParenthesis",
+              "fullStart": 3521,
+              "start": 3521,
+              "length": 1
+            },
+            {
+              "type": "SkippedToken",
+              "kind": "PropertyKeyword",
+              "fullStart": 3522,
+              "start": 3523,
+              "length": 9
+            },
+            {
+              "type": "SkippedToken",
+              "kind": "AbstractKeyword",
+              "fullStart": 3531,
+              "start": 3532,
+              "length": 9
+            },
+            {
+              "type": "SkippedToken",
+              "kind": "Newline",
+              "fullStart": 3540,
+              "start": 3566,
+              "length": 27
+            },
+            {
+              "type": "SkippedToken",
+              "kind": "Newline",
+              "fullStart": 3567,
+              "start": 3568,
+              "length": 2
+            },
+            {
+              "type": "SkippedToken",
+              "kind": "MethodKeyword",
+              "fullStart": 3569,
+              "start": 3573,
+              "length": 10
+            },
+            {
+              "type": "SkippedToken",
+              "kind": "Identifier",
+              "fullStart": 3579,
+              "start": 3580,
+              "length": 11
+            },
+            {
+              "type": "SkippedToken",
+              "kind": "OpeningParenthesis",
+              "fullStart": 3590,
+              "start": 3590,
+              "length": 1
+            },
+            {
+              "type": "SkippedToken",
+              "kind": "ClosingParenthesis",
+              "fullStart": 3591,
+              "start": 3591,
+              "length": 1
+            },
+            {
+              "type": "SkippedToken",
+              "kind": "AbstractKeyword",
+              "fullStart": 3592,
+              "start": 3593,
+              "length": 9
+            },
+            {
+              "type": "SkippedToken",
+              "kind": "PropertyKeyword",
+              "fullStart": 3601,
+              "start": 3602,
+              "length": 9
+            },
+            {
+              "type": "SkippedToken",
+              "kind": "Newline",
+              "fullStart": 3610,
+              "start": 3633,
+              "length": 24
+            },
+            {
+              "type": "SkippedToken",
+              "kind": "Newline",
+              "fullStart": 3634,
+              "start": 3635,
+              "length": 2
+            },
+            {
+              "type": "SkippedToken",
+              "kind": "MethodKeyword",
+              "fullStart": 3636,
+              "start": 3640,
+              "length": 10
+            },
+            {
+              "type": "SkippedToken",
+              "kind": "Identifier",
+              "fullStart": 3646,
+              "start": 3647,
+              "length": 4
+            },
+            {
+              "type": "SkippedToken",
+              "kind": "OpeningParenthesis",
+              "fullStart": 3650,
+              "start": 3650,
+              "length": 1
+            },
+            {
+              "type": "SkippedToken",
+              "kind": "Identifier",
+              "fullStart": 3651,
+              "start": 3652,
+              "length": 5
+            },
+            {
+              "type": "SkippedToken",
+              "kind": "Colon",
+              "fullStart": 3656,
+              "start": 3656,
+              "length": 1
+            },
+            {
+              "type": "SkippedToken",
+              "kind": "Identifier",
+              "fullStart": 3657,
+              "start": 3657,
+              "length": 1
+            },
+            {
+              "type": "SkippedToken",
+              "kind": "ClosingParenthesis",
+              "fullStart": 3658,
+              "start": 3659,
+              "length": 2
+            },
+            {
+              "type": "SkippedToken",
+              "kind": "Newline",
+              "fullStart": 3660,
+              "start": 3661,
+              "length": 2
+            },
+            {
+              "type": "SkippedToken",
+              "kind": "Newline",
+              "fullStart": 3662,
+              "start": 3683,
+              "length": 22
+            }
+          ],
+          "endKeyword": {
+            "kind": "EndKeyword",
+            "fullStart": 3684,
+            "start": 3688,
+            "length": 7
+          },
+          "endMethodKeyword": {
+            "kind": "MethodKeyword",
+            "fullStart": 3691,
+            "start": 3692,
+            "length": 7
+          }
         },
         {
           "type": "SkippedToken",
           "kind": "Newline",
-          "fullStart": 3460,
-          "start": 3495,
-          "length": 36
-        },
-        {
-          "type": "SkippedToken",
-          "kind": "Newline",
-          "fullStart": 3496,
-          "start": 3501,
-          "length": 6
-        },
-        {
-          "type": "SkippedToken",
-          "kind": "MethodKeyword",
-          "fullStart": 3502,
-          "start": 3506,
-          "length": 10
-        },
-        {
-          "type": "SkippedToken",
-          "kind": "Identifier",
-          "fullStart": 3512,
-          "start": 3513,
-          "length": 8
-        },
-        {
-          "type": "SkippedToken",
-          "kind": "OpeningParenthesis",
-          "fullStart": 3520,
-          "start": 3520,
-          "length": 1
-        },
-        {
-          "type": "SkippedToken",
-          "kind": "ClosingParenthesis",
-          "fullStart": 3521,
-          "start": 3521,
-          "length": 1
-        },
-        {
-          "type": "SkippedToken",
-          "kind": "PropertyKeyword",
-          "fullStart": 3522,
-          "start": 3523,
-          "length": 9
-        },
-        {
-          "type": "SkippedToken",
-          "kind": "AbstractKeyword",
-          "fullStart": 3531,
-          "start": 3532,
-          "length": 9
-        },
-        {
-          "type": "SkippedToken",
-          "kind": "Newline",
-          "fullStart": 3540,
-          "start": 3566,
-          "length": 27
-        },
-        {
-          "type": "SkippedToken",
-          "kind": "Newline",
-          "fullStart": 3567,
-          "start": 3568,
+          "fullStart": 3698,
+          "start": 3699,
           "length": 2
         },
         {
           "type": "SkippedToken",
-          "kind": "MethodKeyword",
-          "fullStart": 3569,
-          "start": 3573,
-          "length": 10
-        },
-        {
-          "type": "SkippedToken",
-          "kind": "Identifier",
-          "fullStart": 3579,
-          "start": 3580,
-          "length": 11
-        },
-        {
-          "type": "SkippedToken",
-          "kind": "OpeningParenthesis",
-          "fullStart": 3590,
-          "start": 3590,
-          "length": 1
-        },
-        {
-          "type": "SkippedToken",
-          "kind": "ClosingParenthesis",
-          "fullStart": 3591,
-          "start": 3591,
-          "length": 1
-        },
-        {
-          "type": "SkippedToken",
-          "kind": "AbstractKeyword",
-          "fullStart": 3592,
-          "start": 3593,
-          "length": 9
-        },
-        {
-          "type": "SkippedToken",
-          "kind": "PropertyKeyword",
-          "fullStart": 3601,
-          "start": 3602,
-          "length": 9
-        },
-        {
-          "type": "SkippedToken",
           "kind": "Newline",
-          "fullStart": 3610,
-          "start": 3633,
-          "length": 24
-        },
-        {
-          "type": "SkippedToken",
-          "kind": "Newline",
-          "fullStart": 3634,
-          "start": 3635,
+          "fullStart": 3700,
+          "start": 3701,
           "length": 2
         },
         {
-          "type": "SkippedToken",
-          "kind": "MethodKeyword",
-          "fullStart": 3636,
-          "start": 3640,
-          "length": 10
+          "kind": "ClassMethodDeclaration",
+          "methodKeyword": {
+            "kind": "MethodKeyword",
+            "fullStart": 3702,
+            "start": 3706,
+            "length": 10
+          },
+          "name": {
+            "kind": "Identifier",
+            "fullStart": 3712,
+            "start": 3713,
+            "length": 4
+          },
+          "colon": {
+            "kind": "Colon",
+            "fullStart": 3716,
+            "start": 3716,
+            "length": 1
+          },
+          "returnType": {
+            "kind": "QualifiedIdentifier",
+            "modulePath": {
+              "kind": "ModulePath",
+              "children": []
+            },
+            "scopeMemberAccessOperator": null,
+            "identifier": {
+              "kind": "Identifier",
+              "fullStart": 3717,
+              "start": 3717,
+              "length": 1
+            }
+          },
+          "openingParenthesis": {
+            "kind": "OpeningParenthesis",
+            "fullStart": 3718,
+            "start": 3718,
+            "length": 1
+          },
+          "parameters": {
+            "kind": "DataDeclarationList",
+            "dataDeclarationKeyword": null,
+            "children": []
+          },
+          "closingParenthesis": {
+            "kind": "ClosingParenthesis",
+            "fullStart": 3719,
+            "start": 3719,
+            "length": 1
+          },
+          "statements": [
+            {
+              "type": "SkippedToken",
+              "kind": "Newline",
+              "fullStart": 3720,
+              "start": 3721,
+              "length": 2
+            },
+            {
+              "type": "SkippedToken",
+              "kind": "Newline",
+              "fullStart": 3722,
+              "start": 3745,
+              "length": 24
+            }
+          ],
+          "endKeyword": {
+            "kind": "EndKeyword",
+            "fullStart": 3746,
+            "start": 3750,
+            "length": 7
+          },
+          "endMethodKeyword": null
         },
         {
           "type": "SkippedToken",
-          "kind": "Identifier",
-          "fullStart": 3646,
-          "start": 3647,
-          "length": 4
-        },
-        {
-          "type": "SkippedToken",
-          "kind": "OpeningParenthesis",
-          "fullStart": 3650,
-          "start": 3650,
-          "length": 1
-        },
-        {
-          "type": "SkippedToken",
-          "kind": "Identifier",
-          "fullStart": 3651,
-          "start": 3652,
-          "length": 5
-        },
-        {
-          "type": "SkippedToken",
-          "kind": "Colon",
-          "fullStart": 3656,
-          "start": 3656,
-          "length": 1
-        },
-        {
-          "type": "SkippedToken",
-          "kind": "Identifier",
-          "fullStart": 3657,
-          "start": 3657,
-          "length": 1
-        },
-        {
-          "type": "SkippedToken",
-          "kind": "ClosingParenthesis",
-          "fullStart": 3658,
-          "start": 3659,
+          "kind": "Newline",
+          "fullStart": 3753,
+          "start": 3754,
           "length": 2
         },
         {
           "type": "SkippedToken",
           "kind": "Newline",
-          "fullStart": 3660,
-          "start": 3661,
+          "fullStart": 3755,
+          "start": 3756,
           "length": 2
+        },
+        {
+          "kind": "DataDeclarationList",
+          "dataDeclarationKeyword": {
+            "kind": "FieldKeyword",
+            "fullStart": 3757,
+            "start": 3761,
+            "length": 9
+          },
+          "children": [
+            {
+              "kind": "DataDeclaration",
+              "name": {
+                "kind": "Identifier",
+                "fullStart": 3766,
+                "start": 3767,
+                "length": 6
+              },
+              "colonEqualsSign": null,
+              "colon": {
+                "kind": "Colon",
+                "fullStart": 3772,
+                "start": 3772,
+                "length": 1
+              },
+              "longhandType": {
+                "kind": "QualifiedIdentifier",
+                "modulePath": {
+                  "kind": "ModulePath",
+                  "children": []
+                },
+                "scopeMemberAccessOperator": null,
+                "identifier": {
+                  "kind": "Identifier",
+                  "fullStart": 3773,
+                  "start": 3773,
+                  "length": 1
+                }
+              },
+              "shorthandType": null,
+              "equalsSign": null,
+              "expression": {
+                "type": "MissingToken",
+                "kind": "Expression",
+                "fullStart": 3774,
+                "start": 3774,
+                "length": 0
+              }
+            },
+            {
+              "type": "SkippedToken",
+              "kind": "Newline",
+              "fullStart": 3774,
+              "start": 3775,
+              "length": 2
+            }
+          ]
         },
         {
           "type": "SkippedToken",
           "kind": "Newline",
-          "fullStart": 3662,
-          "start": 3683,
-          "length": 22
+          "fullStart": 3776,
+          "start": 3777,
+          "length": 2
+        },
+        {
+          "kind": "ClassMethodDeclaration",
+          "methodKeyword": {
+            "kind": "MethodKeyword",
+            "fullStart": 3778,
+            "start": 3782,
+            "length": 10
+          },
+          "name": {
+            "kind": "Identifier",
+            "fullStart": 3788,
+            "start": 3789,
+            "length": 5
+          },
+          "colon": null,
+          "returnType": null,
+          "openingParenthesis": {
+            "kind": "OpeningParenthesis",
+            "fullStart": 3793,
+            "start": 3793,
+            "length": 1
+          },
+          "parameters": {
+            "kind": "DataDeclarationList",
+            "dataDeclarationKeyword": null,
+            "children": []
+          },
+          "closingParenthesis": {
+            "kind": "ClosingParenthesis",
+            "fullStart": 3794,
+            "start": 3794,
+            "length": 1
+          },
+          "statements": [
+            {
+              "type": "SkippedToken",
+              "kind": "Newline",
+              "fullStart": 3795,
+              "start": 3796,
+              "length": 2
+            },
+            {
+              "type": "SkippedToken",
+              "kind": "Newline",
+              "fullStart": 3797,
+              "start": 3828,
+              "length": 32
+            }
+          ],
+          "endKeyword": {
+            "kind": "EndKeyword",
+            "fullStart": 3829,
+            "start": 3833,
+            "length": 7
+          },
+          "endMethodKeyword": null
+        },
+        {
+          "type": "SkippedToken",
+          "kind": "Newline",
+          "fullStart": 3836,
+          "start": 3837,
+          "length": 2
+        },
+        {
+          "kind": "ClassMethodDeclaration",
+          "methodKeyword": {
+            "kind": "MethodKeyword",
+            "fullStart": 3838,
+            "start": 3842,
+            "length": 10
+          },
+          "name": {
+            "kind": "Identifier",
+            "fullStart": 3848,
+            "start": 3849,
+            "length": 5
+          },
+          "colon": null,
+          "returnType": null,
+          "openingParenthesis": {
+            "kind": "OpeningParenthesis",
+            "fullStart": 3853,
+            "start": 3853,
+            "length": 1
+          },
+          "parameters": {
+            "kind": "DataDeclarationList",
+            "dataDeclarationKeyword": null,
+            "children": []
+          },
+          "closingParenthesis": {
+            "kind": "ClosingParenthesis",
+            "fullStart": 3854,
+            "start": 3854,
+            "length": 1
+          },
+          "statements": [
+            {
+              "type": "SkippedToken",
+              "kind": "Newline",
+              "fullStart": 3855,
+              "start": 3856,
+              "length": 2
+            },
+            {
+              "type": "SkippedToken",
+              "kind": "Newline",
+              "fullStart": 3857,
+              "start": 3888,
+              "length": 32
+            }
+          ],
+          "endKeyword": {
+            "kind": "EndKeyword",
+            "fullStart": 3889,
+            "start": 3893,
+            "length": 7
+          },
+          "endMethodKeyword": null
+        },
+        {
+          "type": "SkippedToken",
+          "kind": "Newline",
+          "fullStart": 3896,
+          "start": 3897,
+          "length": 2
         }
       ],
       "endKeyword": {
         "kind": "EndKeyword",
-        "fullStart": 3684,
-        "start": 3688,
-        "length": 7
+        "fullStart": 3898,
+        "start": 3898,
+        "length": 3
       },
-      "endClassKeyword": null
-    },
-    {
-      "type": "SkippedToken",
-      "kind": "MethodKeyword",
-      "fullStart": 3691,
-      "start": 3692,
-      "length": 7
+      "endClassKeyword": {
+        "kind": "ClassKeyword",
+        "fullStart": 3901,
+        "start": 3902,
+        "length": 6
+      }
     },
     {
       "type": "SkippedToken",
       "kind": "Newline",
-      "fullStart": 3698,
-      "start": 3699,
+      "fullStart": 3907,
+      "start": 3908,
       "length": 2
     },
     {
       "type": "SkippedToken",
       "kind": "Newline",
-      "fullStart": 3700,
-      "start": 3701,
+      "fullStart": 3909,
+      "start": 3910,
       "length": 2
-    },
-    {
-      "type": "SkippedToken",
-      "kind": "MethodKeyword",
-      "fullStart": 3702,
-      "start": 3706,
-      "length": 10
-    },
-    {
-      "type": "SkippedToken",
-      "kind": "Identifier",
-      "fullStart": 3712,
-      "start": 3713,
-      "length": 4
-    },
-    {
-      "type": "SkippedToken",
-      "kind": "Colon",
-      "fullStart": 3716,
-      "start": 3716,
-      "length": 1
-    },
-    {
-      "type": "SkippedToken",
-      "kind": "Identifier",
-      "fullStart": 3717,
-      "start": 3717,
-      "length": 1
-    },
-    {
-      "type": "SkippedToken",
-      "kind": "OpeningParenthesis",
-      "fullStart": 3718,
-      "start": 3718,
-      "length": 1
-    },
-    {
-      "type": "SkippedToken",
-      "kind": "ClosingParenthesis",
-      "fullStart": 3719,
-      "start": 3719,
-      "length": 1
-    },
-    {
-      "type": "SkippedToken",
-      "kind": "Newline",
-      "fullStart": 3720,
-      "start": 3721,
-      "length": 2
-    },
-    {
-      "type": "SkippedToken",
-      "kind": "Newline",
-      "fullStart": 3722,
-      "start": 3745,
-      "length": 24
-    },
-    {
-      "type": "SkippedToken",
-      "kind": "EndKeyword",
-      "fullStart": 3746,
-      "start": 3750,
-      "length": 7
-    },
-    {
-      "type": "SkippedToken",
-      "kind": "Newline",
-      "fullStart": 3753,
-      "start": 3754,
-      "length": 2
-    },
-    {
-      "type": "SkippedToken",
-      "kind": "Newline",
-      "fullStart": 3755,
-      "start": 3756,
-      "length": 2
-    },
-    {
-      "type": "SkippedToken",
-      "kind": "FieldKeyword",
-      "fullStart": 3757,
-      "start": 3761,
-      "length": 9
-    },
-    {
-      "type": "SkippedToken",
-      "kind": "Identifier",
-      "fullStart": 3766,
-      "start": 3767,
-      "length": 6
-    },
-    {
-      "type": "SkippedToken",
-      "kind": "Colon",
-      "fullStart": 3772,
-      "start": 3772,
-      "length": 1
-    },
-    {
-      "type": "SkippedToken",
-      "kind": "Identifier",
-      "fullStart": 3773,
-      "start": 3773,
-      "length": 1
-    },
-    {
-      "type": "SkippedToken",
-      "kind": "Newline",
-      "fullStart": 3774,
-      "start": 3775,
-      "length": 2
-    },
-    {
-      "type": "SkippedToken",
-      "kind": "Newline",
-      "fullStart": 3776,
-      "start": 3777,
-      "length": 2
-    },
-    {
-      "type": "SkippedToken",
-      "kind": "MethodKeyword",
-      "fullStart": 3778,
-      "start": 3782,
-      "length": 10
-    },
-    {
-      "type": "SkippedToken",
-      "kind": "Identifier",
-      "fullStart": 3788,
-      "start": 3789,
-      "length": 5
-    },
-    {
-      "type": "SkippedToken",
-      "kind": "OpeningParenthesis",
-      "fullStart": 3793,
-      "start": 3793,
-      "length": 1
-    },
-    {
-      "type": "SkippedToken",
-      "kind": "ClosingParenthesis",
-      "fullStart": 3794,
-      "start": 3794,
-      "length": 1
-    },
-    {
-      "type": "SkippedToken",
-      "kind": "Newline",
-      "fullStart": 3795,
-      "start": 3796,
-      "length": 2
-    },
-    {
-      "type": "SkippedToken",
-      "kind": "Newline",
-      "fullStart": 3797,
-      "start": 3828,
-      "length": 32
-    },
-    {
-      "type": "SkippedToken",
-      "kind": "EndKeyword",
-      "fullStart": 3829,
-      "start": 3833,
-      "length": 7
-    },
-    {
-      "type": "SkippedToken",
-      "kind": "Newline",
-      "fullStart": 3836,
-      "start": 3837,
-      "length": 2
-    },
-    {
-      "type": "SkippedToken",
-      "kind": "MethodKeyword",
-      "fullStart": 3838,
-      "start": 3842,
-      "length": 10
-    },
-    {
-      "type": "SkippedToken",
-      "kind": "Identifier",
-      "fullStart": 3848,
-      "start": 3849,
-      "length": 5
-    },
-    {
-      "type": "SkippedToken",
-      "kind": "OpeningParenthesis",
-      "fullStart": 3853,
-      "start": 3853,
-      "length": 1
-    },
-    {
-      "type": "SkippedToken",
-      "kind": "ClosingParenthesis",
-      "fullStart": 3854,
-      "start": 3854,
-      "length": 1
-    },
-    {
-      "type": "SkippedToken",
-      "kind": "Newline",
-      "fullStart": 3855,
-      "start": 3856,
-      "length": 2
-    },
-    {
-      "type": "SkippedToken",
-      "kind": "Newline",
-      "fullStart": 3857,
-      "start": 3888,
-      "length": 32
-    },
-    {
-      "type": "SkippedToken",
-      "kind": "EndKeyword",
-      "fullStart": 3889,
-      "start": 3893,
-      "length": 7
-    },
-    {
-      "type": "SkippedToken",
-      "kind": "Newline",
-      "fullStart": 3896,
-      "start": 3897,
-      "length": 2
-    },
-    {
-      "type": "SkippedToken",
-      "kind": "EndKeyword",
-      "fullStart": 3898,
-      "start": 3898,
-      "length": 3
     },
     {
       "kind": "ClassDeclaration",
       "classKeyword": {
         "kind": "ClassKeyword",
-        "fullStart": 3901,
-        "start": 3902,
-        "length": 6
+        "fullStart": 3911,
+        "start": 3911,
+        "length": 5
       },
       "members": [
         {
           "type": "SkippedToken",
-          "kind": "Newline",
-          "fullStart": 3907,
-          "start": 3908,
-          "length": 2
+          "kind": "Identifier",
+          "fullStart": 3916,
+          "start": 3917,
+          "length": 8
+        },
+        {
+          "type": "SkippedToken",
+          "kind": "LessThanSign",
+          "fullStart": 3924,
+          "start": 3924,
+          "length": 1
+        },
+        {
+          "type": "SkippedToken",
+          "kind": "Identifier",
+          "fullStart": 3925,
+          "start": 3925,
+          "length": 1
+        },
+        {
+          "type": "SkippedToken",
+          "kind": "GreaterThanSign",
+          "fullStart": 3926,
+          "start": 3926,
+          "length": 1
+        },
+        {
+          "type": "SkippedToken",
+          "kind": "ExtendsKeyword",
+          "fullStart": 3927,
+          "start": 3928,
+          "length": 8
+        },
+        {
+          "type": "SkippedToken",
+          "kind": "Identifier",
+          "fullStart": 3935,
+          "start": 3936,
+          "length": 8
         },
         {
           "type": "SkippedToken",
           "kind": "Newline",
-          "fullStart": 3909,
-          "start": 3910,
-          "length": 2
+          "fullStart": 3943,
+          "start": 4020,
+          "length": 78
+        },
+        {
+          "type": "SkippedToken",
+          "kind": "Newline",
+          "fullStart": 4021,
+          "start": 4030,
+          "length": 10
         }
       ],
       "endKeyword": {
-        "type": "MissingToken",
         "kind": "EndKeyword",
-        "fullStart": 3911,
-        "start": 3911,
-        "length": 0
+        "fullStart": 4031,
+        "start": 4031,
+        "length": 3
       },
-      "endClassKeyword": {
-        "kind": "ClassKeyword",
-        "fullStart": 3911,
-        "start": 3911,
-        "length": 5
-      }
-    },
-    {
-      "type": "SkippedToken",
-      "kind": "Identifier",
-      "fullStart": 3916,
-      "start": 3917,
-      "length": 8
-    },
-    {
-      "type": "SkippedToken",
-      "kind": "LessThanSign",
-      "fullStart": 3924,
-      "start": 3924,
-      "length": 1
-    },
-    {
-      "type": "SkippedToken",
-      "kind": "Identifier",
-      "fullStart": 3925,
-      "start": 3925,
-      "length": 1
-    },
-    {
-      "type": "SkippedToken",
-      "kind": "GreaterThanSign",
-      "fullStart": 3926,
-      "start": 3926,
-      "length": 1
-    },
-    {
-      "type": "SkippedToken",
-      "kind": "ExtendsKeyword",
-      "fullStart": 3927,
-      "start": 3928,
-      "length": 8
-    },
-    {
-      "type": "SkippedToken",
-      "kind": "Identifier",
-      "fullStart": 3935,
-      "start": 3936,
-      "length": 8
-    },
-    {
-      "type": "SkippedToken",
-      "kind": "Newline",
-      "fullStart": 3943,
-      "start": 4020,
-      "length": 78
-    },
-    {
-      "type": "SkippedToken",
-      "kind": "Newline",
-      "fullStart": 4021,
-      "start": 4030,
-      "length": 10
-    },
-    {
-      "type": "SkippedToken",
-      "kind": "EndKeyword",
-      "fullStart": 4031,
-      "start": 4031,
-      "length": 3
+      "endClassKeyword": null
     },
     {
       "type": "SkippedToken",

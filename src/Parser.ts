@@ -9,6 +9,7 @@ import { QualifiedIdentifier } from "./Node/QualifiedIdentifier";
 import { AccessibilityDirective } from "./Node/Statement/AccessibilityDirective";
 import { AliasDirective } from "./Node/Statement/AliasDirective";
 import { ClassDeclaration } from "./Node/Statement/ClassDeclaration";
+import { ClassMethodDeclaration } from "./Node/Statement/ClassMethodDeclaration";
 import { FriendDirective } from "./Node/Statement/FriendDirective";
 import { FunctionDeclaration } from "./Node/Statement/FunctionDeclaration";
 import { ImportStatement } from "./Node/Statement/ImportStatement";
@@ -155,6 +156,16 @@ export class Parser extends ParserBase {
     }
     
     private isClassMemberStart(token: Token): boolean {
+        switch (token.kind) {
+            case TokenKind.ConstKeyword:
+            case TokenKind.GlobalKeyword:
+            case TokenKind.FunctionKeyword:
+            case TokenKind.FieldKeyword:
+            case TokenKind.MethodKeyword: {
+                return true;
+            }
+        }
+
         return false;
     }
 
@@ -181,7 +192,9 @@ export class Parser extends ParserBase {
             case ParseContext.InterfaceMembers: {
                 return this.parseInterfaceMember;
             }
-            case ParseContext.ClassMembers:
+            case ParseContext.ClassMembers: {
+                return this.parseClassMember;
+            }
             case ParseContext.BlockStatements: {
                 return () => { throw new Error(); };
             }
@@ -368,6 +381,46 @@ export class Parser extends ParserBase {
         classDeclaration.endClassKeyword = this.eatOptional(TokenKind.ClassKeyword);
 
         return classDeclaration;
+    }
+
+    private parseClassMember = (parent: Node) => {
+        const token = this.getCurrentToken();
+        switch (token.kind) {
+            case TokenKind.ConstKeyword:
+            case TokenKind.GlobalKeyword:
+            case TokenKind.FieldKeyword: {
+                return this.parseDataDeclarationList(parent);
+            }
+            case TokenKind.FunctionKeyword: {
+                return this.parseFunctionDeclaration(parent);
+            }
+            case TokenKind.MethodKeyword: {
+                return this.parseClassMethodDeclaration(parent);
+            }
+        }
+
+        throw new Error(`Unexpected token: ${JSON.stringify(TokenKind[token.kind] || token.kind)}`);
+    }
+
+    private parseClassMethodDeclaration(parent: Node): ClassMethodDeclaration {
+        const classMethodDeclaration = new ClassMethodDeclaration();
+        classMethodDeclaration.parent = parent;
+        classMethodDeclaration.methodKeyword = this.eat(TokenKind.MethodKeyword);
+        classMethodDeclaration.name = this.eat(TokenKind.Identifier);
+
+        if (this.getToken().kind !== TokenKind.OpeningParenthesis) {
+            classMethodDeclaration.colon = this.eatOptional(TokenKind.Colon);
+            classMethodDeclaration.returnType = this.parseQualifiedIdentifier(classMethodDeclaration);   
+        }
+
+        classMethodDeclaration.openingParenthesis = this.eat(TokenKind.OpeningParenthesis);
+        classMethodDeclaration.parameters = this.parseDataDeclarationList(classMethodDeclaration);        
+        classMethodDeclaration.closingParenthesis = this.eat(TokenKind.ClosingParenthesis);
+        classMethodDeclaration.statements = this.parseList(classMethodDeclaration, ParseContext.BlockStatements);
+        classMethodDeclaration.endKeyword = this.eat(TokenKind.EndKeyword);
+        classMethodDeclaration.endMethodKeyword = this.eatOptional(TokenKind.MethodKeyword);
+
+        return classMethodDeclaration;
     }
 
     private parseModulePath(parent: Node): ModulePath {

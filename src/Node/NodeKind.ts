@@ -24,6 +24,7 @@ export enum NodeKind {
     ClassDeclaration,
 
     InterfaceMethodDeclaration,
+    ClassMethodDeclaration,
 
     ModulePath,
     QualifiedIdentifier,
