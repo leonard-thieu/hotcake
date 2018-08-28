@@ -2,7 +2,7 @@ import { NodeKind } from "./NodeKind";
 
 export abstract class Node {
     abstract readonly kind: NodeKind;
-    parent: Node | undefined;
+    parent: Node | null = null;
 
     toJSON(): any {
         const obj: any = {

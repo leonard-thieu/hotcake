@@ -13,7 +13,7 @@ import { RemDirective } from './Node/Directive/RemDirective';
 import { Expression } from './Node/Expression/Expression';
 import { Node } from './Node/Node';
 import { PreprocessorModule } from './Node/PreprocessorModule';
-import { ParseListElementFn, ParserBase } from './ParserBase';
+import { ParserBase } from './ParserBase';
 import { PreprocessorParseContext } from './PreprocessorParseContext';
 import { PreprocessorTokenizer } from './PreprocessorTokenizer';
 import { SkippedToken } from './SkippedToken';
@@ -304,3 +304,5 @@ export class PreprocessorParser extends ParserBase {
 
     // #endregion
 }
+
+type ParseListElementFn = (parent: Node) => Node | Token;

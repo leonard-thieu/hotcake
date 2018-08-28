@@ -2,7 +2,7 @@ import { GreaterThanSignEqualsSignToken } from "./GreaterThanSignEqualsSignToken
 import { MissingToken } from "./MissingToken";
 import { BinaryExpression } from "./Node/Expression/BinaryExpression";
 import { BooleanLiteral } from "./Node/Expression/BooleanLiteral";
-import { Expression, Expressions } from "./Node/Expression/Expression";
+import { Expressions, Expression } from "./Node/Expression/Expression";
 import { FloatLiteral } from "./Node/Expression/FloatLiteral";
 import { GroupingExpression } from "./Node/Expression/GroupingExpression";
 import { IntegerLiteral } from "./Node/Expression/IntegerLiteral";
@@ -20,11 +20,11 @@ export abstract class ParserBase {
 
     // #region Expressions
 
-    protected parseExpression(parent: Node): Expressions {
+    protected parseExpression(parent: Node): Expressions | MissingToken {
         return this.parseBinaryExpression(Precedence.Initial, parent);
     }
 
-    protected parseBinaryExpression(precedence: Precedence, parent: Node): Expressions {
+    protected parseBinaryExpression(precedence: Precedence, parent: Node): Expressions | MissingToken {
         let expression = this.parseUnaryExpression(parent);
 
         let [prevNewPrecedence, prevAssociativity] = UNKNOWN_PRECEDENCE_AND_ASSOCIATIVITY;
@@ -71,19 +71,23 @@ export abstract class ParserBase {
         return expression;
     }
 
-    protected makeBinaryExpression(leftOperand: Expressions, operator: Token, rightOperand: Expressions, parent: Node): Expressions {
+    protected makeBinaryExpression(leftOperand: Expressions | MissingToken, operator: Token, rightOperand: Expressions | MissingToken, parent: Node): Expressions {
         const binaryExpression = new BinaryExpression();
         binaryExpression.parent = parent;
         binaryExpression.leftOperand = leftOperand;
-        leftOperand.parent = binaryExpression;
+        if (leftOperand instanceof Expression) {
+            leftOperand.parent = binaryExpression;
+        }
         binaryExpression.operator = operator;
         binaryExpression.rightOperand = rightOperand;
-        rightOperand.parent = binaryExpression;
+        if (rightOperand instanceof Expression) {
+            rightOperand.parent = binaryExpression;
+        }
 
         return binaryExpression;
     }
 
-    protected parseUnaryExpression(parent: Node): Expressions {
+    protected parseUnaryExpression(parent: Node): Expressions | MissingToken {
         const token = this.getCurrentToken();
         switch (token.kind) {
             case TokenKind.PlusSign:
@@ -106,7 +110,7 @@ export abstract class ParserBase {
         return unaryOpExpression;
     }
 
-    protected parsePrimaryExpression(parent: Node): Expressions {
+    protected parsePrimaryExpression(parent: Node): Expressions | MissingToken {
         const token = this.getCurrentToken();
         switch (token.kind) {
             case TokenKind.OpeningParenthesis: {
@@ -130,7 +134,9 @@ export abstract class ParserBase {
             }
         }
 
-        throw new Error(`${TokenKind[token.kind]} not implemented.`);
+        console.log(`${TokenKind[token.kind]} not implemented.`);
+
+        return new MissingToken(TokenKind.Expression, token.fullStart)
     }
 
     protected parseGroupingExpression(parent: Node): GroupingExpression {
@@ -245,7 +251,7 @@ export abstract class ParserBase {
         return this.getToken(0);
     }
 
-    protected getToken(offset: number): Token {
+    protected getToken(offset: number = 0): Token {
         return this.tokens[this.position + offset];
     }
 
@@ -258,8 +264,6 @@ export abstract class ParserBase {
     // #endregion
 
 }
-
-export type ParseListElementFn = (parent: Node) => Expression | Token;
 
 // #region Precedence and associativity
 

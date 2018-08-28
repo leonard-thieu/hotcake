@@ -10,6 +10,24 @@ export enum NodeKind {
     ErrorDirective,
     AssignmentDirective,
 
+    Module,
+
+    StrictDirective,
+    ImportStatement,
+    FriendDirective,
+    AccessibilityDirective,
+    AliasDirective,
+    ConstantDeclaration,
+    VariableDeclaration,
+    FunctionDeclaration,
+    InterfaceDeclaration,
+    ClassDeclaration,
+
+    ModulePath,
+    QualifiedIdentifier,
+    DataDeclaration,
+    DataDeclarationList,
+
     BooleanLiteral,
     FloatLiteral,
     IntegerLiteral,

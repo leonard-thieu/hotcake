@@ -13,6 +13,8 @@
               "--timeout",
               "999999",
               "--colors",
+              "--require",
+              "source-map-support/register",
               "${workspaceFolder}/tests/!(MonkeyTests)*.js"
           ],
           "console": "integratedTerminal",

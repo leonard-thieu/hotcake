@@ -3,8 +3,12 @@ import fs = require('fs');
 import path = require('path');
 import mkdirp = require('mkdirp');
 import { orderBy } from 'natural-orderby';
+import { Module } from '../src/Node/Module';
+import { PreprocessorModule } from '../src/Node/PreprocessorModule';
+import { Parser } from '../src/Parser';
 import { PreprocessorParser } from '../src/PreprocessorParser';
 import { PreprocessorTokenizer } from '../src/PreprocessorTokenizer';
+import { Token } from '../src/Token';
 import { ConfigurationVariables, Tokenizer } from '../src/Tokenizer';
 
 interface TestCaseOptions {
@@ -75,7 +79,7 @@ export function executeBaselineTestCase(outputPath: string, testCallback: () => 
     fs.writeFileSync(outputPath, json);
 }
 
-export function executePreprocessorTokenizerTestCases(name: string, casesPath: string) {
+export function executePreprocessorTokenizerTestCases(name: string, casesPath: string): void {
     executeTestCases({
         name: name,
         casesPath: casesPath,
@@ -92,7 +96,7 @@ export function executePreprocessorTokenizerTestCases(name: string, casesPath: s
     });
 }
 
-export function executePreprocessorParserTestCases(name: string, casesPath: string) {
+export function executePreprocessorParserTestCases(name: string, casesPath: string): void {
     executeTestCases({
         name: name,
         casesPath: casesPath,
@@ -109,7 +113,7 @@ export function executePreprocessorParserTestCases(name: string, casesPath: stri
     });
 }
 
-export function executeTokenizerTestCases(name: string, casesPath: string) {
+export function executeTokenizerTestCases(name: string, casesPath: string): void {
     executeTestCases({
         name: name,
         casesPath: casesPath,
@@ -126,19 +130,36 @@ export function executeTokenizerTestCases(name: string, casesPath: string) {
     });
 }
 
-export function getPreprocessorTokens(document: string) {
+export function executeParserTestCases(name: string, casesPath: string): void {
+    executeTestCases({
+        name: name,
+        casesPath: casesPath,
+        testCallback: function (context) {
+            const { _it, sourceRelativePath, contents } = context;
+
+            _it(sourceRelativePath, function () {
+                const outputPath = path.resolve(__dirname, 'cases', name, sourceRelativePath) + '.tree.json';
+                executeBaselineTestCase(outputPath, () => {
+                    return getParseTree(sourceRelativePath, contents);
+                });
+            });
+        },
+    });
+}
+
+export function getPreprocessorTokens(document: string): Token[] {
     const lexer = new PreprocessorTokenizer();
 
     return lexer.getTokens(document);
 }
 
-export function getPreprocessorParseTree(document: string) {
+export function getPreprocessorParseTree(document: string): PreprocessorModule {
     const parser = new PreprocessorParser();
 
     return parser.parse(document);
 }
 
-export function getTokens(document: string) {
+export function getTokens(document: string): Token[] {
     const tree = getPreprocessorParseTree(document);
     const tokenizer = new Tokenizer();
     const configVars: ConfigurationVariables = {
@@ -151,4 +172,11 @@ export function getTokens(document: string) {
     };
 
     return Array.from(tokenizer.getTokens(document, tree, configVars));
+}
+
+export function getParseTree(filePath: string, document: string): Module {
+    const tokens = getTokens(document);
+    const parser = new Parser();
+
+    return parser.parse(filePath, document, tokens);
 }

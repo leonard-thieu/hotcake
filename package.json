@@ -8,6 +8,7 @@
     "build": "tsc",
     "test": "mocha --require source-map-support/register \"./tests/!(MonkeyTests)*.js\"",
     "test:monkey": "mocha --require source-map-support/register \"./tests\"",
+    "test:parser": "mocha --require source-map-support/register \"./tests/ParserTests.js\"",
     "watch": "tsc --watch"
   },
   "author": "Leonard Thieu",
