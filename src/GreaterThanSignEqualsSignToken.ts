@@ -12,10 +12,9 @@ export class GreaterThanSignEqualsSignToken extends Token {
     }
 
     toJSON(): any {
-        return {
-            ...super.toJSON(),
+        return Object.assign({}, this, {
             greaterThanSign: this.greaterThanSign,
             equalsSign: this.equalsSign,
-        };
+        });
     }
 }

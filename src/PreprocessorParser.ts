@@ -46,7 +46,7 @@ export class PreprocessorParser extends ParserBase {
         assert([
             TokenKind.Newline,
             TokenKind.EOF,
-        ].includes(token.kind), TokenKind[token.kind]);
+        ].includes(token.kind), token.kind);
     }
 
     private parseIfDirective(parent: Node): IfDirective {
@@ -229,7 +229,7 @@ export class PreprocessorParser extends ParserBase {
             }
         }
 
-        throw new Error(`Unexpected token: ${TokenKind[token.kind] || token.kind}`);
+        throw new Error(`Unexpected token: ${JSON.stringify(token.kind)}`);
     }
 
     private isCurrentTokenListTerminator(parseContext: PreprocessorParseContext): boolean {

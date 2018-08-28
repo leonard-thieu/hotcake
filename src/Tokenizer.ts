@@ -85,7 +85,7 @@ export class Tokenizer {
                             break;
                         }
                         default: {
-                            console.log(`Unexpected binary operator ${JSON.stringify(TokenKind[kind])}`);
+                            console.log(`Unexpected binary operator ${JSON.stringify(kind)}`);
                             break;
                         }
                     }
@@ -189,7 +189,7 @@ export class Tokenizer {
                         return leftValue || rightValue;
                     }
                     default: {
-                        console.log(`Unexpected binary operator ${JSON.stringify(TokenKind[kind])}`);
+                        console.log(`Unexpected binary operator ${JSON.stringify(kind)}`);
                         break;
                     }
                 }
@@ -212,7 +212,7 @@ export class Tokenizer {
                         return !operand;
                     }
                     default: {
-                        console.log(`Unexpected unary operator ${JSON.stringify(TokenKind[kind])}`);
+                        console.log(`Unexpected unary operator ${JSON.stringify(kind)}`);
                         break;
                     }
                 }
@@ -239,7 +239,7 @@ export class Tokenizer {
                             break;
                         }
                         default: {
-                            console.log(`Skipped ${JSON.stringify(TokenKind[kind])}`);
+                            console.log(`Skipped ${JSON.stringify(kind)}`);
                             break;
                         }
                     }
@@ -257,7 +257,7 @@ export class Tokenizer {
                         return false;
                     }
                     default: {
-                        console.log(`Skipped ${JSON.stringify(TokenKind[kind])}`);
+                        console.log(`Skipped ${JSON.stringify(kind)}`);
                         break;
                     }
                 }

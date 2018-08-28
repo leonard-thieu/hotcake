@@ -14,13 +14,4 @@ export class Token {
     getText(document: string): string {
         return document.slice(this.start, this.fullStart + this.length);
     }
-
-    toJSON(): any {
-        return {
-            kind: TokenKind[this.kind],
-            fullStart: this.fullStart,
-            start: this.start,
-            length: this.length,
-        };
-    }
 }

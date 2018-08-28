@@ -2,7 +2,7 @@ import { GreaterThanSignEqualsSignToken } from "./GreaterThanSignEqualsSignToken
 import { MissingToken } from "./MissingToken";
 import { BinaryExpression } from "./Node/Expression/BinaryExpression";
 import { BooleanLiteral } from "./Node/Expression/BooleanLiteral";
-import { Expressions, Expression } from "./Node/Expression/Expression";
+import { Expression, Expressions } from "./Node/Expression/Expression";
 import { FloatLiteral } from "./Node/Expression/FloatLiteral";
 import { GroupingExpression } from "./Node/Expression/GroupingExpression";
 import { IntegerLiteral } from "./Node/Expression/IntegerLiteral";
@@ -134,7 +134,7 @@ export abstract class ParserBase {
             }
         }
 
-        console.log(`${TokenKind[token.kind]} not implemented.`);
+        console.log(`${JSON.stringify(token.kind)} not implemented.`);
 
         return new MissingToken(TokenKind.Expression, token.fullStart)
     }

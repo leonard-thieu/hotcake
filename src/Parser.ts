@@ -15,7 +15,6 @@ import { FunctionDeclaration } from "./Node/Statement/FunctionDeclaration";
 import { ImportStatement } from "./Node/Statement/ImportStatement";
 import { InterfaceDeclaration } from "./Node/Statement/InterfaceDeclaration";
 import { InterfaceMethodDeclaration } from "./Node/Statement/InterfaceMethodDeclaration";
-import { Statement } from "./Node/Statement/Statement";
 import { StrictDirective } from "./Node/Statement/StrictDirective";
 import { ParseContext } from "./ParseContext";
 import { ParserBase } from "./ParserBase";
@@ -45,13 +44,13 @@ export class Parser extends ParserBase {
 
     private currentParseContext: ParseContext;
 
-    private parseList(parent: Node, parseContext: ParseContext): Array<Expression | SkippedToken> {
+    private parseList(parent: Node, parseContext: ParseContext): Array<Expression | Token> {
         const savedParseContext = this.currentParseContext;
         this.currentParseContext |= parseContext;
 
         const parseListElementFn = this.getParseListElementFn(parseContext);
 
-        const nodes: Array<Expression | SkippedToken> = [];
+        const nodes: Array<Expression | Token> = [];
         let token = this.getToken();
         while (!this.isListTerminator(token, parseContext)) {
             token = this.getToken();
@@ -66,8 +65,8 @@ export class Parser extends ParserBase {
                 break;
             }
 
-            token = new SkippedToken(token);
-            nodes.push(token);
+            const skippedToken = new SkippedToken(token);
+            nodes.push(skippedToken);
 
             this.advanceToken();
             token = this.getToken();
@@ -206,7 +205,7 @@ export class Parser extends ParserBase {
         return assertNever(parseContext);
     }
 
-    private parseModuleMember = (parent: Node): Statement | Token => {
+    private parseModuleMember = (parent: Node) => {
         const token = this.getCurrentToken();
         switch (token.kind) {
             case TokenKind.StrictKeyword: {
@@ -241,7 +240,7 @@ export class Parser extends ParserBase {
             }
         }
 
-        throw new Error(`Unexpected token: ${JSON.stringify(TokenKind[token.kind] || token.kind)}`);
+        throw new Error(`Unexpected token: ${JSON.stringify(token.kind)}`);
     }
 
     private parseStrictDirective(parent: Node): StrictDirective {
@@ -348,7 +347,7 @@ export class Parser extends ParserBase {
             }
         }
 
-        throw new Error(`Unexpected token: ${JSON.stringify(TokenKind[token.kind] || token.kind)}`);
+        throw new Error(`Unexpected token: ${JSON.stringify(token.kind)}`);
     }
 
     private parseInterfaceMethod(parent: Node): InterfaceMethodDeclaration {
@@ -399,7 +398,7 @@ export class Parser extends ParserBase {
             }
         }
 
-        throw new Error(`Unexpected token: ${JSON.stringify(TokenKind[token.kind] || token.kind)}`);
+        throw new Error(`Unexpected token: ${JSON.stringify(token.kind)}`);
     }
 
     private parseClassMethodDeclaration(parent: Node): ClassMethodDeclaration {
@@ -433,7 +432,7 @@ export class Parser extends ParserBase {
             if (token.kind === TokenKind.Identifier) {
                 if (lastTokenKind !== undefined &&
                     lastTokenKind !== TokenKind.Period) {
-                    console.error(`Did not expect ${JSON.stringify(TokenKind[token.kind])} to follow ${JSON.stringify(lastTokenKind ? TokenKind[lastTokenKind] : undefined)}`);
+                    console.error(`Did not expect ${JSON.stringify(token.kind)} to follow ${JSON.stringify(lastTokenKind)}`);
                     break;
                 }
 
@@ -442,7 +441,7 @@ export class Parser extends ParserBase {
             } else if (token.kind === TokenKind.Period) {
                 if (lastTokenKind !== undefined &&
                     lastTokenKind !== TokenKind.Identifier) {
-                    console.error(`Did not expect ${JSON.stringify(TokenKind[token.kind])} to follow ${JSON.stringify(lastTokenKind ? TokenKind[lastTokenKind] : undefined)}`);
+                    console.error(`Did not expect ${JSON.stringify(token.kind)} to follow ${JSON.stringify(lastTokenKind)}`);
                     break;
                 }
 
@@ -472,7 +471,7 @@ export class Parser extends ParserBase {
         return dataDeclarationList;
     }
 
-    private parseDataDeclarationListMember = (parent: Node): DataDeclaration | Token => {
+    private parseDataDeclarationListMember = (parent: Node) => {
         const token = this.getToken();
         switch (token.kind) {
             case TokenKind.Identifier: {
@@ -485,7 +484,7 @@ export class Parser extends ParserBase {
             }
         }
 
-        throw new Error();
+        throw new Error(`Unexpected token: ${JSON.stringify(token.kind)}`);
     }
 
     private parseDataDeclaration(parent: Node): DataDeclaration {

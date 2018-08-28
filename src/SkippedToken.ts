@@ -6,9 +6,8 @@ export class SkippedToken extends Token {
     }
 
     toJSON(): any {
-        return {
+        return Object.assign({
             type: this.constructor.name,
-            ...super.toJSON(),
-        };
+        }, this);
     }
 }
