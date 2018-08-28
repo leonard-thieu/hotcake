@@ -463,13 +463,6 @@ export class Parser extends ParserBase {
         dataDeclarationList.dataDeclarationKeyword = this.eatOptional(TokenKind.ConstKeyword, TokenKind.GlobalKeyword, TokenKind.FieldKeyword, TokenKind.LocalKeyword);
         dataDeclarationList.children = this.parseList(dataDeclarationList, ParseContext.DataDeclarationListMembers) as typeof dataDeclarationList.children;
 
-        // HACK: parseList eats the closing parenthesis as a SkippedToken. Pop it off and rewind.
-        const lastChild = dataDeclarationList.children[dataDeclarationList.children.length - 1];
-        if (lastChild && lastChild.kind === TokenKind.ClosingParenthesis) {
-            dataDeclarationList.children.pop();
-            this.position--;
-        }
-
         return dataDeclarationList;
     }
 
