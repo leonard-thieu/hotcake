@@ -462,15 +462,15 @@
               "length": 2
             }
           }
-        },
-        {
-          "type": "SkippedToken",
-          "kind": "Newline",
-          "fullStart": 1072,
-          "start": 1109,
-          "length": 38
         }
       ]
+    },
+    {
+      "type": "SkippedToken",
+      "kind": "Newline",
+      "fullStart": 1072,
+      "start": 1109,
+      "length": 38
     },
     {
       "kind": "DataDeclarationList",
@@ -527,15 +527,15 @@
               "length": 1
             }
           }
-        },
-        {
-          "type": "SkippedToken",
-          "kind": "Newline",
-          "fullStart": 1136,
-          "start": 1166,
-          "length": 31
         }
       ]
+    },
+    {
+      "type": "SkippedToken",
+      "kind": "Newline",
+      "fullStart": 1136,
+      "start": 1166,
+      "length": 31
     },
     {
       "kind": "DataDeclarationList",
@@ -573,15 +573,15 @@
               "length": 2
             }
           }
-        },
-        {
-          "type": "SkippedToken",
-          "kind": "Newline",
-          "fullStart": 1181,
-          "start": 1208,
-          "length": 28
         }
       ]
+    },
+    {
+      "type": "SkippedToken",
+      "kind": "Newline",
+      "fullStart": 1181,
+      "start": 1208,
+      "length": 28
     },
     {
       "kind": "DataDeclarationList",
@@ -619,15 +619,15 @@
               "length": 2
             }
           }
-        },
-        {
-          "type": "SkippedToken",
-          "kind": "Newline",
-          "fullStart": 1222,
-          "start": 1252,
-          "length": 31
         }
       ]
+    },
+    {
+      "type": "SkippedToken",
+      "kind": "Newline",
+      "fullStart": 1222,
+      "start": 1252,
+      "length": 31
     },
     {
       "kind": "DataDeclarationList",
@@ -699,15 +699,15 @@
               "length": 1
             }
           }
-        },
-        {
-          "type": "SkippedToken",
-          "kind": "Newline",
-          "fullStart": 1271,
-          "start": 1305,
-          "length": 35
         }
       ]
+    },
+    {
+      "type": "SkippedToken",
+      "kind": "Newline",
+      "fullStart": 1271,
+      "start": 1305,
+      "length": 35
     },
     {
       "type": "SkippedToken",
@@ -770,15 +770,15 @@
               "length": 2
             }
           }
-        },
-        {
-          "type": "SkippedToken",
-          "kind": "Newline",
-          "fullStart": 1327,
-          "start": 1363,
-          "length": 37
         }
       ]
+    },
+    {
+      "type": "SkippedToken",
+      "kind": "Newline",
+      "fullStart": 1327,
+      "start": 1363,
+      "length": 37
     },
     {
       "kind": "DataDeclarationList",
@@ -835,15 +835,15 @@
               "length": 1
             }
           }
-        },
-        {
-          "type": "SkippedToken",
-          "kind": "Newline",
-          "fullStart": 1389,
-          "start": 1420,
-          "length": 32
         }
       ]
+    },
+    {
+      "type": "SkippedToken",
+      "kind": "Newline",
+      "fullStart": 1389,
+      "start": 1420,
+      "length": 32
     },
     {
       "kind": "DataDeclarationList",
@@ -881,15 +881,15 @@
               "length": 2
             }
           }
-        },
-        {
-          "type": "SkippedToken",
-          "kind": "Newline",
-          "fullStart": 1436,
-          "start": 1462,
-          "length": 27
         }
       ]
+    },
+    {
+      "type": "SkippedToken",
+      "kind": "Newline",
+      "fullStart": 1436,
+      "start": 1462,
+      "length": 27
     },
     {
       "kind": "DataDeclarationList",
@@ -927,15 +927,15 @@
               "length": 2
             }
           }
-        },
-        {
-          "type": "SkippedToken",
-          "kind": "Newline",
-          "fullStart": 1477,
-          "start": 1506,
-          "length": 30
         }
       ]
+    },
+    {
+      "type": "SkippedToken",
+      "kind": "Newline",
+      "fullStart": 1477,
+      "start": 1506,
+      "length": 30
     },
     {
       "kind": "DataDeclarationList",
@@ -1007,15 +1007,15 @@
               "length": 1
             }
           }
-        },
-        {
-          "type": "SkippedToken",
-          "kind": "Newline",
-          "fullStart": 1526,
-          "start": 1559,
-          "length": 34
         }
       ]
+    },
+    {
+      "type": "SkippedToken",
+      "kind": "Newline",
+      "fullStart": 1526,
+      "start": 1559,
+      "length": 34
     },
     {
       "kind": "DataDeclarationList",
@@ -1064,15 +1064,15 @@
             "start": 1577,
             "length": 0
           }
-        },
-        {
-          "type": "SkippedToken",
-          "kind": "Newline",
-          "fullStart": 1577,
-          "start": 1630,
-          "length": 54
         }
       ]
+    },
+    {
+      "type": "SkippedToken",
+      "kind": "Newline",
+      "fullStart": 1577,
+      "start": 1630,
+      "length": 54
     },
     {
       "kind": "DataDeclarationList",
@@ -1103,15 +1103,15 @@
             "start": 1639,
             "length": 0
           }
-        },
-        {
-          "type": "SkippedToken",
-          "kind": "Newline",
-          "fullStart": 1639,
-          "start": 1689,
-          "length": 51
         }
       ]
+    },
+    {
+      "type": "SkippedToken",
+      "kind": "Newline",
+      "fullStart": 1639,
+      "start": 1689,
+      "length": 51
     },
     {
       "type": "SkippedToken",
@@ -1188,15 +1188,15 @@
               "length": 1
             }
           }
-        },
-        {
-          "type": "SkippedToken",
-          "kind": "Newline",
-          "fullStart": 1736,
-          "start": 1747,
-          "length": 12
         }
       ]
+    },
+    {
+      "type": "SkippedToken",
+      "kind": "Newline",
+      "fullStart": 1736,
+      "start": 1747,
+      "length": 12
     },
     {
       "type": "SkippedToken",
@@ -2133,15 +2133,15 @@
                   "length": 5
                 }
               }
-            },
-            {
-              "type": "SkippedToken",
-              "kind": "Newline",
-              "fullStart": 2490,
-              "start": 2491,
-              "length": 2
             }
           ]
+        },
+        {
+          "type": "SkippedToken",
+          "kind": "Newline",
+          "fullStart": 2490,
+          "start": 2491,
+          "length": 2
         },
         {
           "type": "SkippedToken",
@@ -2305,15 +2305,15 @@
                   "length": 5
                 }
               }
-            },
-            {
-              "type": "SkippedToken",
-              "kind": "Newline",
-              "fullStart": 2663,
-              "start": 2714,
-              "length": 52
             }
           ]
+        },
+        {
+          "type": "SkippedToken",
+          "kind": "Newline",
+          "fullStart": 2663,
+          "start": 2714,
+          "length": 52
         },
         {
           "type": "SkippedToken",
@@ -2581,15 +2581,15 @@
                 "start": 2875,
                 "length": 0
               }
-            },
-            {
-              "type": "SkippedToken",
-              "kind": "Newline",
-              "fullStart": 2875,
-              "start": 2905,
-              "length": 31
             }
           ]
+        },
+        {
+          "type": "SkippedToken",
+          "kind": "Newline",
+          "fullStart": 2875,
+          "start": 2905,
+          "length": 31
         },
         {
           "kind": "DataDeclarationList",
@@ -2627,15 +2627,15 @@
                   "length": 2
                 }
               }
-            },
-            {
-              "type": "SkippedToken",
-              "kind": "Newline",
-              "fullStart": 2922,
-              "start": 2961,
-              "length": 40
             }
           ]
+        },
+        {
+          "type": "SkippedToken",
+          "kind": "Newline",
+          "fullStart": 2922,
+          "start": 2961,
+          "length": 40
         },
         {
           "kind": "DataDeclarationList",
@@ -2684,15 +2684,15 @@
                 "start": 2980,
                 "length": 0
               }
-            },
-            {
-              "type": "SkippedToken",
-              "kind": "Newline",
-              "fullStart": 2980,
-              "start": 3009,
-              "length": 30
             }
           ]
+        },
+        {
+          "type": "SkippedToken",
+          "kind": "Newline",
+          "fullStart": 2980,
+          "start": 3009,
+          "length": 30
         },
         {
           "kind": "DataDeclarationList",
@@ -2749,15 +2749,15 @@
                   "length": 1
                 }
               }
-            },
-            {
-              "type": "SkippedToken",
-              "kind": "Newline",
-              "fullStart": 3035,
-              "start": 3070,
-              "length": 36
             }
           ]
+        },
+        {
+          "type": "SkippedToken",
+          "kind": "Newline",
+          "fullStart": 3035,
+          "start": 3070,
+          "length": 36
         },
         {
           "type": "SkippedToken",
@@ -2816,15 +2816,15 @@
                   "length": 2
                 }
               }
-            },
-            {
-              "type": "SkippedToken",
-              "kind": "Newline",
-              "fullStart": 3127,
-              "start": 3166,
-              "length": 40
             }
           ]
+        },
+        {
+          "type": "SkippedToken",
+          "kind": "Newline",
+          "fullStart": 3127,
+          "start": 3166,
+          "length": 40
         },
         {
           "type": "SkippedToken",
@@ -3432,15 +3432,15 @@
                 "start": 3774,
                 "length": 0
               }
-            },
-            {
-              "type": "SkippedToken",
-              "kind": "Newline",
-              "fullStart": 3774,
-              "start": 3775,
-              "length": 2
             }
           ]
+        },
+        {
+          "type": "SkippedToken",
+          "kind": "Newline",
+          "fullStart": 3774,
+          "start": 3775,
+          "length": 2
         },
         {
           "type": "SkippedToken",

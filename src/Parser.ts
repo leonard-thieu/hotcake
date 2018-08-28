@@ -51,9 +51,13 @@ export class Parser extends ParserBase {
         const parseListElementFn = this.getParseListElementFn(parseContext);
 
         const nodes: Array<Expression | Token> = [];
-        let token = this.getToken();
-        while (!this.isListTerminator(token, parseContext)) {
-            token = this.getToken();
+        while (true) {
+            const token = this.getToken();
+            
+            if (this.isListTerminator(token, parseContext)) {
+                break;
+            }
+            
             if (this.isValidListElement(token, parseContext)) {
                 const element = parseListElementFn(parent);
                 nodes.push(element);
@@ -67,9 +71,7 @@ export class Parser extends ParserBase {
 
             const skippedToken = new SkippedToken(token);
             nodes.push(skippedToken);
-
             this.advanceToken();
-            token = this.getToken();
         }
 
         this.currentParseContext = savedParseContext;
