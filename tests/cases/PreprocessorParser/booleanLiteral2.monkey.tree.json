@@ -1,5 +1,5 @@
 {
-    "kind": "PreprocessorModule",
+    "kind": "PreprocessorModuleDeclaration",
     "members": [
         {
             "kind": "IfDirective",

@@ -1,5 +1,5 @@
 {
-    "kind": "Module",
+    "kind": "ModuleDeclaration",
     "members": [
         {
             "kind": "Newline",
