@@ -108,7 +108,7 @@ export class Tokenizer {
                 case NodeKind.ElseIfDirective:
                 case NodeKind.ElseDirective:
                 case NodeKind.EndDirective: {
-                    console.log(`Skipped ${JSON.stringify(NodeKind[member.kind])}`);
+                    console.log(`Skipped ${JSON.stringify(member.kind)}`);
                     break;
                 }
                 default: {

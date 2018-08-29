@@ -6,7 +6,7 @@ export abstract class Node {
 
     toJSON(): any {
         const obj: any = {
-            kind: NodeKind[this.kind],
+            kind: this.kind,
         };
 
         for (const childName of this.getChildNames()) {
