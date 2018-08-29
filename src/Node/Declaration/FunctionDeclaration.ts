@@ -1,8 +1,8 @@
+import { ParseContextElementArray } from "../../Parser";
 import { Token } from "../../Token";
-import { DataDeclarationList } from "./DataDeclarationList";
 import { NodeKind } from "../NodeKind";
 import { QualifiedIdentifier } from "../QualifiedIdentifier";
-import { Statement } from "../Statement/Statement";
+import { DataDeclarationList } from "./DataDeclarationList";
 import { Declaration } from "./Declaration";
 
 export class FunctionDeclaration extends Declaration {
@@ -28,7 +28,7 @@ export class FunctionDeclaration extends Declaration {
     openingParenthesis: Token;
     parameters: DataDeclarationList;
     closingParenthesis: Token;
-    statements: Array<Statement | Token>;
+    statements: ParseContextElementArray<FunctionDeclaration['kind']>;
     endKeyword: Token;
     endFunctionKeyword: Token | null = null;
 }

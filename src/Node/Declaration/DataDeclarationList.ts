@@ -1,6 +1,5 @@
+import { ParseContextElementArray } from "../../Parser";
 import { Token } from "../../Token";
-import { CommaSeparator } from "../CommaSeparator";
-import { DataDeclaration } from "../DataDeclaration";
 import { NodeKind } from "../NodeKind";
 import { Declaration } from "./Declaration";
 
@@ -17,5 +16,5 @@ export class DataDeclarationList extends Declaration {
      * null for parameters
      */
     dataDeclarationKeyword: Token | null = null;
-    children: Array<DataDeclaration | CommaSeparator>;
+    children: ParseContextElementArray<DataDeclarationList['kind']>;
 }

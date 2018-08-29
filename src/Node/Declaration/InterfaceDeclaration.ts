@@ -1,6 +1,6 @@
+import { ParseContextElementArray, ParseContextKind } from "../../Parser";
 import { Token } from "../../Token";
 import { NodeKind } from "../NodeKind";
-import { QualifiedIdentifier } from "../QualifiedIdentifier";
 import { Declaration } from "./Declaration";
 
 export class InterfaceDeclaration extends Declaration {
@@ -19,8 +19,8 @@ export class InterfaceDeclaration extends Declaration {
     interfaceKeyword: Token;
     name: Token;
     extendsKeyword: Token | null = null;
-    baseTypes: Array<QualifiedIdentifier | Token> | null = null;
-    members: Array<Declaration | Token>;
+    baseTypes: ParseContextElementArray<ParseContextKind.BaseTypes> | null = null;
+    members: ParseContextElementArray<InterfaceDeclaration['kind']>;
     endKeyword: Token;
     endInterfaceKeyword: Token | null = null;
 }

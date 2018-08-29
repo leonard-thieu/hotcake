@@ -1,4 +1,5 @@
 import { MissingToken } from "../../MissingToken";
+import { ParseContextElementArray } from "../../Parser";
 import { Token } from "../../Token";
 import { Expression } from "../Expression/Expression";
 import { NodeKind } from "../NodeKind";
@@ -18,7 +19,7 @@ export class WhileLoop extends Statement {
 
     whileKeyword: Token;
     expression: Expression | MissingToken;
-    statements: Array<Statement | Token>;
+    statements: ParseContextElementArray<WhileLoop['kind']>;
     endKeyword: Token;
     endWhileKeyword: Token | null = null;
 }

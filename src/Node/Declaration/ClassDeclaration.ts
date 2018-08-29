@@ -1,3 +1,4 @@
+import { ParseContextElementArray, ParseContextKind } from "../../Parser";
 import { Token } from "../../Token";
 import { NodeKind } from "../NodeKind";
 import { QualifiedIdentifier } from "../QualifiedIdentifier";
@@ -35,12 +36,12 @@ export class ClassDeclaration extends Declaration {
 
     // Implements
     implementsKeyword: Token | null = null;
-    implementedTypes: Array<QualifiedIdentifier | Token> | null = null;
+    implementedTypes: ParseContextElementArray<ParseContextKind.BaseTypes> | null = null;
 
     // Abstract or Final
     attributes: Token[] = [];
 
-    members: Array<Declaration | Token>;
+    members: ParseContextElementArray<ClassDeclaration['kind']>;
     endKeyword: Token;
     endClassKeyword: Token | null = null;
 }

@@ -6102,353 +6102,404 @@
                             "length": 6
                         }
                     },
-                    "statements": [
+                    "newlines": [
                         {
-                            "kind": "EmptyStatement",
-                            "terminator": {
-                                "kind": "Newline",
-                                "fullStart": 6173,
-                                "start": 6200,
-                                "length": 28
-                            }
+                            "kind": "Newline",
+                            "fullStart": 6173,
+                            "start": 6200,
+                            "length": 28
                         },
                         {
-                            "kind": "EmptyStatement",
-                            "terminator": {
-                                "kind": "Newline",
-                                "fullStart": 6201,
-                                "start": 6243,
-                                "length": 43
-                            }
-                        },
+                            "kind": "Newline",
+                            "fullStart": 6201,
+                            "start": 6243,
+                            "length": 43
+                        }
+                    ],
+                    "caseStatements": [
                         {
-                            "type": "SkippedToken",
-                            "kind": "CaseKeyword",
-                            "fullStart": 6244,
-                            "start": 6252,
-                            "length": 12
-                        },
-                        {
-                            "type": "SkippedToken",
-                            "kind": "IntegerLiteral",
-                            "fullStart": 6256,
-                            "start": 6257,
-                            "length": 2
-                        },
-                        {
-                            "kind": "EmptyStatement",
-                            "terminator": {
-                                "kind": "Newline",
-                                "fullStart": 6258,
-                                "start": 6285,
-                                "length": 28
-                            }
-                        },
-                        {
-                            "kind": "ExitStatement",
-                            "exitKeyword": {
-                                "kind": "ExitKeyword",
-                                "fullStart": 6286,
-                                "start": 6298,
-                                "length": 16
+                            "kind": "CaseStatement",
+                            "caseKeyword": {
+                                "kind": "CaseKeyword",
+                                "fullStart": 6244,
+                                "start": 6252,
+                                "length": 12
                             },
-                            "terminator": {
-                                "kind": "Newline",
-                                "fullStart": 6302,
-                                "start": 6303,
-                                "length": 2
-                            }
-                        },
-                        {
-                            "type": "SkippedToken",
-                            "kind": "CaseKeyword",
-                            "fullStart": 6304,
-                            "start": 6312,
-                            "length": 12
-                        },
-                        {
-                            "type": "SkippedToken",
-                            "kind": "IntegerLiteral",
-                            "fullStart": 6316,
-                            "start": 6317,
-                            "length": 2
-                        },
-                        {
-                            "type": "SkippedToken",
-                            "kind": "Comma",
-                            "fullStart": 6318,
-                            "start": 6318,
-                            "length": 1
-                        },
-                        {
-                            "type": "SkippedToken",
-                            "kind": "IntegerLiteral",
-                            "fullStart": 6319,
-                            "start": 6320,
-                            "length": 2
-                        },
-                        {
-                            "type": "SkippedToken",
-                            "kind": "Comma",
-                            "fullStart": 6321,
-                            "start": 6321,
-                            "length": 1
-                        },
-                        {
-                            "type": "SkippedToken",
-                            "kind": "IntegerLiteral",
-                            "fullStart": 6322,
-                            "start": 6323,
-                            "length": 2
-                        },
-                        {
-                            "kind": "EmptyStatement",
-                            "terminator": {
-                                "kind": "Newline",
-                                "fullStart": 6324,
-                                "start": 6355,
-                                "length": 32
-                            }
-                        },
-                        {
-                            "kind": "ContinueStatement",
-                            "continueKeyword": {
-                                "kind": "ContinueKeyword",
-                                "fullStart": 6356,
-                                "start": 6368,
-                                "length": 20
-                            },
-                            "terminator": {
-                                "kind": "Newline",
-                                "fullStart": 6376,
-                                "start": 6377,
-                                "length": 2
-                            }
-                        },
-                        {
-                            "type": "SkippedToken",
-                            "kind": "DefaultKeyword",
-                            "fullStart": 6378,
-                            "start": 6386,
-                            "length": 15
-                        },
-                        {
-                            "kind": "EmptyStatement",
-                            "terminator": {
-                                "kind": "Newline",
-                                "fullStart": 6393,
-                                "start": 6422,
-                                "length": 30
-                            }
-                        },
-                        {
-                            "kind": "SelectStatement",
-                            "selectKeyword": {
-                                "kind": "SelectKeyword",
-                                "fullStart": 6423,
-                                "start": 6435,
-                                "length": 18
-                            },
-                            "expression": {
-                                "kind": "Variable",
-                                "name": {
-                                    "kind": "Identifier",
-                                    "fullStart": 6441,
-                                    "start": 6442,
-                                    "length": 6
+                            "expressions": [
+                                {
+                                    "kind": "IntegerLiteral",
+                                    "value": {
+                                        "kind": "IntegerLiteral",
+                                        "fullStart": 6256,
+                                        "start": 6257,
+                                        "length": 2
+                                    }
                                 }
-                            },
+                            ],
                             "statements": [
                                 {
                                     "kind": "EmptyStatement",
                                     "terminator": {
                                         "kind": "Newline",
-                                        "fullStart": 6447,
-                                        "start": 6448,
-                                        "length": 2
-                                    }
-                                },
-                                {
-                                    "type": "SkippedToken",
-                                    "kind": "CaseKeyword",
-                                    "fullStart": 6449,
-                                    "start": 6465,
-                                    "length": 20
-                                },
-                                {
-                                    "type": "SkippedToken",
-                                    "kind": "IntegerLiteral",
-                                    "fullStart": 6469,
-                                    "start": 6470,
-                                    "length": 2
-                                },
-                                {
-                                    "kind": "EmptyStatement",
-                                    "terminator": {
-                                        "kind": "Newline",
-                                        "fullStart": 6471,
-                                        "start": 6472,
-                                        "length": 2
+                                        "fullStart": 6258,
+                                        "start": 6285,
+                                        "length": 28
                                     }
                                 },
                                 {
                                     "kind": "ExitStatement",
                                     "exitKeyword": {
                                         "kind": "ExitKeyword",
-                                        "fullStart": 6473,
-                                        "start": 6493,
-                                        "length": 24
+                                        "fullStart": 6286,
+                                        "start": 6298,
+                                        "length": 16
                                     },
                                     "terminator": {
                                         "kind": "Newline",
-                                        "fullStart": 6497,
-                                        "start": 6498,
+                                        "fullStart": 6302,
+                                        "start": 6303,
+                                        "length": 2
+                                    }
+                                }
+                            ]
+                        },
+                        {
+                            "kind": "CaseStatement",
+                            "caseKeyword": {
+                                "kind": "CaseKeyword",
+                                "fullStart": 6304,
+                                "start": 6312,
+                                "length": 12
+                            },
+                            "expressions": [
+                                {
+                                    "kind": "IntegerLiteral",
+                                    "value": {
+                                        "kind": "IntegerLiteral",
+                                        "fullStart": 6316,
+                                        "start": 6317,
                                         "length": 2
                                     }
                                 },
                                 {
-                                    "type": "SkippedToken",
-                                    "kind": "CaseKeyword",
-                                    "fullStart": 6499,
-                                    "start": 6515,
-                                    "length": 20
+                                    "kind": "CommaSeparator",
+                                    "separator": {
+                                        "kind": "Comma",
+                                        "fullStart": 6318,
+                                        "start": 6318,
+                                        "length": 1
+                                    },
+                                    "newlines": []
                                 },
                                 {
-                                    "type": "SkippedToken",
                                     "kind": "IntegerLiteral",
-                                    "fullStart": 6519,
-                                    "start": 6520,
-                                    "length": 2
-                                },
-                                {
-                                    "type": "SkippedToken",
-                                    "kind": "Comma",
-                                    "fullStart": 6521,
-                                    "start": 6521,
-                                    "length": 1
-                                },
-                                {
-                                    "kind": "EmptyStatement",
-                                    "terminator": {
-                                        "kind": "Newline",
-                                        "fullStart": 6522,
-                                        "start": 6555,
-                                        "length": 34
-                                    }
-                                },
-                                {
-                                    "type": "SkippedToken",
-                                    "kind": "IntegerLiteral",
-                                    "fullStart": 6556,
-                                    "start": 6577,
-                                    "length": 22
-                                },
-                                {
-                                    "type": "SkippedToken",
-                                    "kind": "Comma",
-                                    "fullStart": 6578,
-                                    "start": 6578,
-                                    "length": 1
-                                },
-                                {
-                                    "kind": "EmptyStatement",
-                                    "terminator": {
-                                        "kind": "Newline",
-                                        "fullStart": 6579,
-                                        "start": 6580,
+                                    "value": {
+                                        "kind": "IntegerLiteral",
+                                        "fullStart": 6319,
+                                        "start": 6320,
                                         "length": 2
                                     }
                                 },
                                 {
-                                    "type": "SkippedToken",
-                                    "kind": "IntegerLiteral",
-                                    "fullStart": 6581,
-                                    "start": 6602,
-                                    "length": 22
+                                    "kind": "CommaSeparator",
+                                    "separator": {
+                                        "kind": "Comma",
+                                        "fullStart": 6321,
+                                        "start": 6321,
+                                        "length": 1
+                                    },
+                                    "newlines": []
                                 },
+                                {
+                                    "kind": "IntegerLiteral",
+                                    "value": {
+                                        "kind": "IntegerLiteral",
+                                        "fullStart": 6322,
+                                        "start": 6323,
+                                        "length": 2
+                                    }
+                                }
+                            ],
+                            "statements": [
                                 {
                                     "kind": "EmptyStatement",
                                     "terminator": {
                                         "kind": "Newline",
-                                        "fullStart": 6603,
-                                        "start": 6604,
-                                        "length": 2
+                                        "fullStart": 6324,
+                                        "start": 6355,
+                                        "length": 32
                                     }
                                 },
                                 {
                                     "kind": "ContinueStatement",
                                     "continueKeyword": {
                                         "kind": "ContinueKeyword",
-                                        "fullStart": 6605,
-                                        "start": 6625,
-                                        "length": 28
+                                        "fullStart": 6356,
+                                        "start": 6368,
+                                        "length": 20
                                     },
                                     "terminator": {
                                         "kind": "Newline",
-                                        "fullStart": 6633,
-                                        "start": 6634,
-                                        "length": 2
-                                    }
-                                },
-                                {
-                                    "type": "SkippedToken",
-                                    "kind": "DefaultKeyword",
-                                    "fullStart": 6635,
-                                    "start": 6651,
-                                    "length": 23
-                                },
-                                {
-                                    "kind": "EmptyStatement",
-                                    "terminator": {
-                                        "kind": "Newline",
-                                        "fullStart": 6658,
-                                        "start": 6659,
-                                        "length": 2
-                                    }
-                                },
-                                {
-                                    "kind": "ReturnStatement",
-                                    "returnKeyword": {
-                                        "kind": "ReturnKeyword",
-                                        "fullStart": 6660,
-                                        "start": 6680,
-                                        "length": 26
-                                    },
-                                    "expression": {
-                                        "type": "MissingToken",
-                                        "kind": "Expression",
-                                        "fullStart": 6686,
-                                        "start": 6686,
-                                        "length": 0
-                                    },
-                                    "terminator": {
-                                        "kind": "Newline",
-                                        "fullStart": 6686,
-                                        "start": 6687,
+                                        "fullStart": 6376,
+                                        "start": 6377,
                                         "length": 2
                                     }
                                 }
-                            ],
-                            "endKeyword": {
-                                "kind": "EndKeyword",
-                                "fullStart": 6688,
-                                "start": 6700,
-                                "length": 15
-                            },
-                            "endSelectKeyword": {
-                                "kind": "SelectKeyword",
-                                "fullStart": 6703,
-                                "start": 6704,
-                                "length": 7
-                            },
-                            "terminator": {
-                                "kind": "Newline",
-                                "fullStart": 6710,
-                                "start": 6725,
-                                "length": 16
-                            }
+                            ]
                         }
                     ],
+                    "defaultStatement": {
+                        "kind": "DefaultStatement",
+                        "defaultKeyword": {
+                            "kind": "DefaultKeyword",
+                            "fullStart": 6378,
+                            "start": 6386,
+                            "length": 15
+                        },
+                        "statements": [
+                            {
+                                "kind": "EmptyStatement",
+                                "terminator": {
+                                    "kind": "Newline",
+                                    "fullStart": 6393,
+                                    "start": 6422,
+                                    "length": 30
+                                }
+                            },
+                            {
+                                "kind": "SelectStatement",
+                                "selectKeyword": {
+                                    "kind": "SelectKeyword",
+                                    "fullStart": 6423,
+                                    "start": 6435,
+                                    "length": 18
+                                },
+                                "expression": {
+                                    "kind": "Variable",
+                                    "name": {
+                                        "kind": "Identifier",
+                                        "fullStart": 6441,
+                                        "start": 6442,
+                                        "length": 6
+                                    }
+                                },
+                                "newlines": [
+                                    {
+                                        "kind": "Newline",
+                                        "fullStart": 6447,
+                                        "start": 6448,
+                                        "length": 2
+                                    }
+                                ],
+                                "caseStatements": [
+                                    {
+                                        "kind": "CaseStatement",
+                                        "caseKeyword": {
+                                            "kind": "CaseKeyword",
+                                            "fullStart": 6449,
+                                            "start": 6465,
+                                            "length": 20
+                                        },
+                                        "expressions": [
+                                            {
+                                                "kind": "IntegerLiteral",
+                                                "value": {
+                                                    "kind": "IntegerLiteral",
+                                                    "fullStart": 6469,
+                                                    "start": 6470,
+                                                    "length": 2
+                                                }
+                                            }
+                                        ],
+                                        "statements": [
+                                            {
+                                                "kind": "EmptyStatement",
+                                                "terminator": {
+                                                    "kind": "Newline",
+                                                    "fullStart": 6471,
+                                                    "start": 6472,
+                                                    "length": 2
+                                                }
+                                            },
+                                            {
+                                                "kind": "ExitStatement",
+                                                "exitKeyword": {
+                                                    "kind": "ExitKeyword",
+                                                    "fullStart": 6473,
+                                                    "start": 6493,
+                                                    "length": 24
+                                                },
+                                                "terminator": {
+                                                    "kind": "Newline",
+                                                    "fullStart": 6497,
+                                                    "start": 6498,
+                                                    "length": 2
+                                                }
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "kind": "CaseStatement",
+                                        "caseKeyword": {
+                                            "kind": "CaseKeyword",
+                                            "fullStart": 6499,
+                                            "start": 6515,
+                                            "length": 20
+                                        },
+                                        "expressions": [
+                                            {
+                                                "kind": "IntegerLiteral",
+                                                "value": {
+                                                    "kind": "IntegerLiteral",
+                                                    "fullStart": 6519,
+                                                    "start": 6520,
+                                                    "length": 2
+                                                }
+                                            },
+                                            {
+                                                "kind": "CommaSeparator",
+                                                "separator": {
+                                                    "kind": "Comma",
+                                                    "fullStart": 6521,
+                                                    "start": 6521,
+                                                    "length": 1
+                                                },
+                                                "newlines": [
+                                                    {
+                                                        "kind": "Newline",
+                                                        "fullStart": 6522,
+                                                        "start": 6555,
+                                                        "length": 34
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "kind": "IntegerLiteral",
+                                                "value": {
+                                                    "kind": "IntegerLiteral",
+                                                    "fullStart": 6556,
+                                                    "start": 6577,
+                                                    "length": 22
+                                                }
+                                            },
+                                            {
+                                                "kind": "CommaSeparator",
+                                                "separator": {
+                                                    "kind": "Comma",
+                                                    "fullStart": 6578,
+                                                    "start": 6578,
+                                                    "length": 1
+                                                },
+                                                "newlines": [
+                                                    {
+                                                        "kind": "Newline",
+                                                        "fullStart": 6579,
+                                                        "start": 6580,
+                                                        "length": 2
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "kind": "IntegerLiteral",
+                                                "value": {
+                                                    "kind": "IntegerLiteral",
+                                                    "fullStart": 6581,
+                                                    "start": 6602,
+                                                    "length": 22
+                                                }
+                                            }
+                                        ],
+                                        "statements": [
+                                            {
+                                                "kind": "EmptyStatement",
+                                                "terminator": {
+                                                    "kind": "Newline",
+                                                    "fullStart": 6603,
+                                                    "start": 6604,
+                                                    "length": 2
+                                                }
+                                            },
+                                            {
+                                                "kind": "ContinueStatement",
+                                                "continueKeyword": {
+                                                    "kind": "ContinueKeyword",
+                                                    "fullStart": 6605,
+                                                    "start": 6625,
+                                                    "length": 28
+                                                },
+                                                "terminator": {
+                                                    "kind": "Newline",
+                                                    "fullStart": 6633,
+                                                    "start": 6634,
+                                                    "length": 2
+                                                }
+                                            }
+                                        ]
+                                    }
+                                ],
+                                "defaultStatement": {
+                                    "kind": "DefaultStatement",
+                                    "defaultKeyword": {
+                                        "kind": "DefaultKeyword",
+                                        "fullStart": 6635,
+                                        "start": 6651,
+                                        "length": 23
+                                    },
+                                    "statements": [
+                                        {
+                                            "kind": "EmptyStatement",
+                                            "terminator": {
+                                                "kind": "Newline",
+                                                "fullStart": 6658,
+                                                "start": 6659,
+                                                "length": 2
+                                            }
+                                        },
+                                        {
+                                            "kind": "ReturnStatement",
+                                            "returnKeyword": {
+                                                "kind": "ReturnKeyword",
+                                                "fullStart": 6660,
+                                                "start": 6680,
+                                                "length": 26
+                                            },
+                                            "expression": {
+                                                "type": "MissingToken",
+                                                "kind": "Expression",
+                                                "fullStart": 6686,
+                                                "start": 6686,
+                                                "length": 0
+                                            },
+                                            "terminator": {
+                                                "kind": "Newline",
+                                                "fullStart": 6686,
+                                                "start": 6687,
+                                                "length": 2
+                                            }
+                                        }
+                                    ]
+                                },
+                                "endKeyword": {
+                                    "kind": "EndKeyword",
+                                    "fullStart": 6688,
+                                    "start": 6700,
+                                    "length": 15
+                                },
+                                "endSelectKeyword": {
+                                    "kind": "SelectKeyword",
+                                    "fullStart": 6703,
+                                    "start": 6704,
+                                    "length": 7
+                                },
+                                "terminator": {
+                                    "kind": "Newline",
+                                    "fullStart": 6710,
+                                    "start": 6725,
+                                    "length": 16
+                                }
+                            }
+                        ]
+                    },
                     "endKeyword": {
                         "kind": "EndKeyword",
                         "fullStart": 6726,

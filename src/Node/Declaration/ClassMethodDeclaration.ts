@@ -1,7 +1,7 @@
+import { ParseContextElementArray } from "../../Parser";
 import { Token } from "../../Token";
 import { NodeKind } from "../NodeKind";
 import { QualifiedIdentifier } from "../QualifiedIdentifier";
-import { Statement } from "../Statement/Statement";
 import { DataDeclarationList } from "./DataDeclarationList";
 import { Declaration } from "./Declaration";
 
@@ -30,7 +30,7 @@ export class ClassMethodDeclaration extends Declaration {
     parameters: DataDeclarationList;
     closingParenthesis: Token;
     attributes: Token[] = [];
-    statements: Array<Statement | Token> | null = null;
+    statements: ParseContextElementArray<ClassMethodDeclaration['kind']> | null = null;
     endKeyword: Token | null = null;
     endMethodKeyword: Token | null = null;
 }

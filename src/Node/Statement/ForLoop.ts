@@ -1,4 +1,5 @@
 import { MissingToken } from "../../MissingToken";
+import { ParseContextElementArray } from "../../Parser";
 import { Token } from "../../Token";
 import { DataDeclarationList } from "../Declaration/DataDeclarationList";
 import { BinaryExpression } from "../Expression/BinaryExpression";
@@ -20,7 +21,7 @@ export class ForLoop extends Statement {
 
     forKeyword: Token;
     header: NumericForLoopHeader | DataDeclarationList | BinaryExpression;
-    statements: Array<Statement | Token>;
+    statements: ParseContextElementArray<ForLoop['kind']>;
     endKeyword: Token;
     endForKeyword: Token | null = null;
 }

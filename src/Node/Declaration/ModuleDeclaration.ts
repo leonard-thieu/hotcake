@@ -1,4 +1,4 @@
-import { Token } from "../../Token";
+import { ParseContextElementArray } from "../../Parser";
 import { NodeKind } from "../NodeKind";
 import { Declaration } from "./Declaration";
 
@@ -12,5 +12,5 @@ export class ModuleDeclaration extends Declaration {
 
     readonly kind = NodeKind.ModuleDeclaration;
 
-    members: Array<Declaration | Token>;
+    members: ParseContextElementArray<ModuleDeclaration['kind']>;
 }
