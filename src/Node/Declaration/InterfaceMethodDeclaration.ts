@@ -1,10 +1,10 @@
 import { Token } from "../../Token";
-import { DataDeclarationList } from "../DataDeclarationList";
+import { DataDeclarationList } from "./DataDeclarationList";
 import { NodeKind } from "../NodeKind";
 import { QualifiedIdentifier } from "../QualifiedIdentifier";
-import { Statement } from "./Statement";
+import { Declaration } from "./Declaration";
 
-export class InterfaceMethodDeclaration extends Statement {
+export class InterfaceMethodDeclaration extends Declaration {
     static CHILD_NAMES: (keyof InterfaceMethodDeclaration)[] = [
         'methodKeyword',
         'name',

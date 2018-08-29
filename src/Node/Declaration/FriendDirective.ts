@@ -1,9 +1,9 @@
 import { Token } from "../../Token";
 import { ModulePath } from "../ModulePath";
 import { NodeKind } from "../NodeKind";
-import { Statement } from "./Statement";
+import { Declaration } from "./Declaration";
 
-export class FriendDirective extends Statement {
+export class FriendDirective extends Declaration {
     static CHILD_NAMES: (keyof FriendDirective)[] = [
         'friendKeyword',
         'modulePath',

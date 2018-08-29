@@ -1,10 +1,11 @@
 import { Token } from "../../Token";
-import { DataDeclarationList } from "../DataDeclarationList";
+import { DataDeclarationList } from "./DataDeclarationList";
 import { NodeKind } from "../NodeKind";
 import { QualifiedIdentifier } from "../QualifiedIdentifier";
-import { Statement } from "./Statement";
+import { Statement } from "../Statement/Statement";
+import { Declaration } from "./Declaration";
 
-export class FunctionDeclaration extends Statement {
+export class FunctionDeclaration extends Declaration {
     static CHILD_NAMES: (keyof FunctionDeclaration)[] = [
         'functionKeyword',
         'name',

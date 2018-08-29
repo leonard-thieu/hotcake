@@ -1,10 +1,10 @@
-import { Token } from "../Token";
-import { CommaSeparator } from "./CommaSeparator";
-import { DataDeclaration } from "./DataDeclaration";
-import { Node } from "./Node";
-import { NodeKind } from "./NodeKind";
+import { Token } from "../../Token";
+import { CommaSeparator } from "../CommaSeparator";
+import { DataDeclaration } from "../DataDeclaration";
+import { NodeKind } from "../NodeKind";
+import { Declaration } from "./Declaration";
 
-export class DataDeclarationList extends Node {
+export class DataDeclarationList extends Declaration {
     static CHILD_NAMES: (keyof DataDeclarationList)[] = [
         'dataDeclarationKeyword',
         'children',

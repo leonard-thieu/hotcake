@@ -1,10 +1,9 @@
 import { Token } from "../../Token";
-import { Node } from "../Node";
 import { NodeKind } from "../NodeKind";
 import { QualifiedIdentifier } from "../QualifiedIdentifier";
-import { Statement } from "./Statement";
+import { Declaration } from "./Declaration";
 
-export class InterfaceDeclaration extends Statement {
+export class InterfaceDeclaration extends Declaration {
     static CHILD_NAMES: (keyof InterfaceDeclaration)[] = [
         'interfaceKeyword',
         'name',
@@ -21,7 +20,7 @@ export class InterfaceDeclaration extends Statement {
     name: Token;
     extendsKeyword: Token | null = null;
     baseTypes: Array<QualifiedIdentifier | Token> | null = null;
-    members: Array<Node | Token>;
+    members: Array<Declaration | Token>;
     endKeyword: Token;
     endInterfaceKeyword: Token | null = null;
 }

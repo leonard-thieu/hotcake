@@ -1,9 +1,9 @@
 import { Token } from "../../Token";
 import { NodeKind } from "../NodeKind";
 import { QualifiedIdentifier } from "../QualifiedIdentifier";
-import { Statement } from "./Statement";
+import { Declaration } from "./Declaration";
 
-export class AliasDirective extends Statement {
+export class AliasDirective extends Declaration {
     static CHILD_NAMES: (keyof AliasDirective)[] = [
         'aliasKeyword',
         'name',

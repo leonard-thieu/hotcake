@@ -1,8 +1,8 @@
 import { Token } from "../../Token";
 import { NodeKind } from "../NodeKind";
-import { Statement } from "./Statement";
+import { Declaration } from "./Declaration";
 
-export class AccessibilityDirective extends Statement {
+export class AccessibilityDirective extends Declaration {
     static CHILD_NAMES: (keyof AccessibilityDirective)[] = [
         'accessibilityKeyword',
         'externPrivateKeyword',

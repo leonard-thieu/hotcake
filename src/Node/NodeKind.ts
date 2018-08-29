@@ -1,5 +1,5 @@
 export enum NodeKind {
-    PreprocessorModule = 'PreprocessorModule',
+    PreprocessorModuleDeclaration = 'PreprocessorModuleDeclaration',
 
     IfDirective = 'IfDirective',
     ElseIfDirective = 'ElseIfDirective',
@@ -10,7 +10,7 @@ export enum NodeKind {
     ErrorDirective = 'ErrorDirective',
     AssignmentDirective = 'AssignmentDirective',
 
-    Module = 'Module',
+    ModuleDeclaration = 'ModuleDeclaration',
 
     StrictDirective = 'StrictDirective',
     ImportStatement = 'ImportStatement',

@@ -1,6 +1,6 @@
 import assert = require('assert');
-
 import { assertNever } from './assertNever';
+import { PreprocessorModuleDeclaration } from './Node/Declaration/PreprocessorModuleDeclaration';
 import { AssignmentDirective } from './Node/Directive/AssignmentDirective';
 import { Directive, Directives } from './Node/Directive/Directive';
 import { ElseDirective } from './Node/Directive/ElseDirective';
@@ -12,7 +12,6 @@ import { PrintDirective } from './Node/Directive/PrintDirective';
 import { RemDirective } from './Node/Directive/RemDirective';
 import { Expression } from './Node/Expression/Expression';
 import { Node } from './Node/Node';
-import { PreprocessorModule } from './Node/PreprocessorModule';
 import { ParserBase } from './ParserBase';
 import { PreprocessorParseContext } from './PreprocessorParseContext';
 import { PreprocessorTokenizer } from './PreprocessorTokenizer';
@@ -21,21 +20,21 @@ import { Token } from './Token';
 import { TokenKind } from "./TokenKind";
 
 export class PreprocessorParser extends ParserBase {
-    parse(document: string): PreprocessorModule {
+    parse(document: string): PreprocessorModuleDeclaration {
         const lexer = new PreprocessorTokenizer();
 
         this.tokens = lexer.getTokens(document);
         this.position = 0;
 
-        return this.parseModule();
+        return this.parsePreprocessorModuleDeclaration();
     }
 
-    private parseModule(): PreprocessorModule {
-        const preprocessorModule = new PreprocessorModule();
-        preprocessorModule.members.push(...this.parseList(preprocessorModule, PreprocessorParseContext.ModuleMembers) as Array<Directives | Token>);
-        preprocessorModule.eofToken = this.eat(TokenKind.EOF);
+    private parsePreprocessorModuleDeclaration(): PreprocessorModuleDeclaration {
+        const preprocessorModuleDeclaration = new PreprocessorModuleDeclaration();
+        preprocessorModuleDeclaration.members = this.parseList(preprocessorModuleDeclaration, PreprocessorParseContext.ModuleMembers) as typeof preprocessorModuleDeclaration.members;
+        preprocessorModuleDeclaration.eofToken = this.eat(TokenKind.EOF);
 
-        return preprocessorModule;
+        return preprocessorModuleDeclaration;
     }
 
     // #region Directives

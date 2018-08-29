@@ -1,32 +1,31 @@
 import { assertNever } from "./assertNever";
 import { CommaSeparator } from "./Node/CommaSeparator";
 import { DataDeclaration } from "./Node/DataDeclaration";
-import { DataDeclarationList } from "./Node/DataDeclarationList";
+import { AccessibilityDirective } from "./Node/Declaration/AccessibilityDirective";
+import { AliasDirective } from "./Node/Declaration/AliasDirective";
+import { ClassDeclaration } from "./Node/Declaration/ClassDeclaration";
+import { ClassMethodDeclaration } from "./Node/Declaration/ClassMethodDeclaration";
+import { DataDeclarationList } from "./Node/Declaration/DataDeclarationList";
+import { FriendDirective } from "./Node/Declaration/FriendDirective";
+import { FunctionDeclaration } from "./Node/Declaration/FunctionDeclaration";
+import { ImportStatement } from "./Node/Declaration/ImportStatement";
+import { InterfaceDeclaration } from "./Node/Declaration/InterfaceDeclaration";
+import { InterfaceMethodDeclaration } from "./Node/Declaration/InterfaceMethodDeclaration";
+import { ModuleDeclaration } from "./Node/Declaration/ModuleDeclaration";
+import { StrictDirective } from "./Node/Declaration/StrictDirective";
 import { BinaryExpression } from "./Node/Expression/BinaryExpression";
-import { Expression } from "./Node/Expression/Expression";
-import { Module } from "./Node/Module";
 import { ModulePath } from "./Node/ModulePath";
 import { Node } from "./Node/Node";
 import { NodeKind } from "./Node/NodeKind";
 import { QualifiedIdentifier } from "./Node/QualifiedIdentifier";
-import { AccessibilityDirective } from "./Node/Statement/AccessibilityDirective";
-import { AliasDirective } from "./Node/Statement/AliasDirective";
-import { ClassDeclaration } from "./Node/Statement/ClassDeclaration";
-import { ClassMethodDeclaration } from "./Node/Statement/ClassMethodDeclaration";
 import { ContinueStatement } from "./Node/Statement/ContinueStatement";
 import { EmptyStatement } from "./Node/Statement/EmptyStatement";
 import { ExitStatement } from "./Node/Statement/ExitStatement";
 import { ForLoop, NumericForLoopHeader } from "./Node/Statement/ForLoop";
-import { FriendDirective } from "./Node/Statement/FriendDirective";
-import { FunctionDeclaration } from "./Node/Statement/FunctionDeclaration";
 import { ElseIfStatement, ElseStatement, IfStatement } from "./Node/Statement/IfStatement";
-import { ImportStatement } from "./Node/Statement/ImportStatement";
-import { InterfaceDeclaration } from "./Node/Statement/InterfaceDeclaration";
-import { InterfaceMethodDeclaration } from "./Node/Statement/InterfaceMethodDeclaration";
 import { RepeatLoop } from "./Node/Statement/RepeatLoop";
 import { ReturnStatement } from "./Node/Statement/ReturnStatement";
 import { CaseStatement, DefaultStatement, SelectStatement } from "./Node/Statement/SelectStatement";
-import { StrictDirective } from "./Node/Statement/StrictDirective";
 import { ThrowStatement } from "./Node/Statement/ThrowStatement";
 import { CatchStatement, TryStatement } from "./Node/Statement/TryStatement";
 import { WhileLoop } from "./Node/Statement/WhileLoop";
@@ -37,21 +36,21 @@ import { Token } from "./Token";
 import { TokenKind } from "./TokenKind";
 
 export class Parser extends ParserBase {
-    parse(filePath: string, document: string, tokens: Token[]): Module {
+    parse(filePath: string, document: string, tokens: Token[]): ModuleDeclaration {
         this.tokens = [...tokens];
         this.position = 0;
 
-        return this.parseModule(filePath, document);
+        return this.parseModuleDeclaration(filePath, document);
     }
 
-    private parseModule(filePath: string, document: string): Module {
-        const module = new Module();
-        module.filePath = filePath;
-        module.document = document;
+    private parseModuleDeclaration(filePath: string, document: string): ModuleDeclaration {
+        const moduleDeclaration = new ModuleDeclaration();
+        moduleDeclaration.filePath = filePath;
+        moduleDeclaration.document = document;
 
-        module.members = this.parseList(module, ParseContext.ModuleMembers);
+        moduleDeclaration.members = this.parseList(moduleDeclaration, ParseContext.ModuleMembers);
 
-        return module;
+        return moduleDeclaration;
     }
 
     // #region Module members
@@ -918,13 +917,13 @@ export class Parser extends ParserBase {
 
     private currentParseContext: ParseContext;
 
-    private parseList(parent: Node, parseContext: ParseContext): Array<Expression | Token> {
+    private parseList(parent: Node, parseContext: ParseContext): Array<Node | Token> {
         const savedParseContext = this.currentParseContext;
         this.currentParseContext |= parseContext;
 
         const parseListElementFn = this.getParseListElementFn(parseContext);
 
-        const nodes: Array<Expression | Token> = [];
+        const nodes: Array<Node | Token> = [];
         while (true) {
             const token = this.getToken();
 

@@ -1,10 +1,9 @@
 import { Token } from "../../Token";
-import { Node } from "../Node";
 import { NodeKind } from "../NodeKind";
 import { QualifiedIdentifier } from "../QualifiedIdentifier";
-import { Statement } from "./Statement";
+import { Declaration } from "./Declaration";
 
-export class ClassDeclaration extends Statement {
+export class ClassDeclaration extends Declaration {
     static CHILD_NAMES: (keyof ClassDeclaration)[] = [
         'classKeyword',
         'name',
@@ -41,7 +40,7 @@ export class ClassDeclaration extends Statement {
     // Abstract or Final
     attributes: Token[] = [];
 
-    members: Array<Node | Token>;
+    members: Array<Declaration | Token>;
     endKeyword: Token;
     endClassKeyword: Token | null = null;
 }

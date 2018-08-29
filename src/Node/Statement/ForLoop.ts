@@ -1,6 +1,6 @@
 import { MissingToken } from "../../MissingToken";
 import { Token } from "../../Token";
-import { DataDeclarationList } from "../DataDeclarationList";
+import { DataDeclarationList } from "../Declaration/DataDeclarationList";
 import { BinaryExpression } from "../Expression/BinaryExpression";
 import { Expression } from "../Expression/Expression";
 import { Node } from "../Node";

@@ -1,8 +1,8 @@
 import { Token } from "../../Token";
 import { NodeKind } from "../NodeKind";
-import { Statement } from "./Statement";
+import { Declaration } from "./Declaration";
 
-export class StrictDirective extends Statement {
+export class StrictDirective extends Declaration {
     static CHILD_NAMES: (keyof StrictDirective)[] = [
         'strictKeyword',
     ];

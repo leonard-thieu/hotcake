@@ -3,8 +3,8 @@ import fs = require('fs');
 import path = require('path');
 import mkdirp = require('mkdirp');
 import { orderBy } from 'natural-orderby';
-import { Module } from '../src/Node/Module';
-import { PreprocessorModule } from '../src/Node/PreprocessorModule';
+import { ModuleDeclaration } from '../src/Node/Declaration/ModuleDeclaration';
+import { PreprocessorModuleDeclaration } from '../src/Node/Declaration/PreprocessorModuleDeclaration';
 import { Parser } from '../src/Parser';
 import { PreprocessorParser } from '../src/PreprocessorParser';
 import { PreprocessorTokenizer } from '../src/PreprocessorTokenizer';
@@ -153,7 +153,7 @@ export function getPreprocessorTokens(document: string): Token[] {
     return lexer.getTokens(document);
 }
 
-export function getPreprocessorParseTree(document: string): PreprocessorModule {
+export function getPreprocessorParseTree(document: string): PreprocessorModuleDeclaration {
     const parser = new PreprocessorParser();
 
     return parser.parse(document);
@@ -174,7 +174,7 @@ export function getTokens(document: string): Token[] {
     return Array.from(tokenizer.getTokens(document, tree, configVars));
 }
 
-export function getParseTree(filePath: string, document: string): Module {
+export function getParseTree(filePath: string, document: string): ModuleDeclaration {
     const tokens = getTokens(document);
     const parser = new Parser();
 

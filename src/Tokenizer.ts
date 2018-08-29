@@ -1,9 +1,9 @@
 import { assertNever } from "./assertNever";
 import { MissingToken } from "./MissingToken";
+import { PreprocessorModuleDeclaration } from "./Node/Declaration/PreprocessorModuleDeclaration";
 import { Directives } from "./Node/Directive/Directive";
 import { Expressions } from "./Node/Expression/Expression";
 import { NodeKind } from "./Node/NodeKind";
-import { PreprocessorModule } from "./Node/PreprocessorModule";
 import { Token } from "./Token";
 import { TokenKind } from "./TokenKind";
 
@@ -11,15 +11,19 @@ export class Tokenizer {
     private document: string;
     private configVars: ConfigurationVariables;
 
-    * getTokens(document: string, module: PreprocessorModule, configVars: ConfigurationVariables): IterableIterator<Token> {
+    * getTokens(
+        document: string,
+        preprocessorModuleDeclaration: PreprocessorModuleDeclaration,
+        configVars: ConfigurationVariables
+    ): IterableIterator<Token> {
         this.document = document;
         this.configVars = Object.assign(configVars);
 
-        for (const member of this.readMember(module.members)) {
+        for (const member of this.readMember(preprocessorModuleDeclaration.members)) {
             yield member;
         }
 
-        yield module.eofToken;
+        yield preprocessorModuleDeclaration.eofToken;
     }
 
     /**

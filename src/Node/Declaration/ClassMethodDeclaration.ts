@@ -1,10 +1,11 @@
 import { Token } from "../../Token";
-import { DataDeclarationList } from "../DataDeclarationList";
 import { NodeKind } from "../NodeKind";
 import { QualifiedIdentifier } from "../QualifiedIdentifier";
-import { Statement } from "./Statement";
+import { Statement } from "../Statement/Statement";
+import { DataDeclarationList } from "./DataDeclarationList";
+import { Declaration } from "./Declaration";
 
-export class ClassMethodDeclaration extends Statement {
+export class ClassMethodDeclaration extends Declaration {
     static CHILD_NAMES: (keyof ClassMethodDeclaration)[] = [
         'methodKeyword',
         'name',
