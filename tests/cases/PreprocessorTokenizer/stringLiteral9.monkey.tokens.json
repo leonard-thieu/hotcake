@@ -1,26 +1,26 @@
 [
-  {
-    "kind": "QuotationMark",
-    "fullStart": 0,
-    "start": 0,
-    "length": 1
-  },
-  {
-    "kind": "EscapeUnicodeHexValue",
-    "fullStart": 1,
-    "start": 1,
-    "length": 6
-  },
-  {
-    "kind": "QuotationMark",
-    "fullStart": 7,
-    "start": 7,
-    "length": 1
-  },
-  {
-    "kind": "EOF",
-    "fullStart": 8,
-    "start": 8,
-    "length": 0
-  }
+    {
+        "kind": "QuotationMark",
+        "fullStart": 0,
+        "start": 0,
+        "length": 1
+    },
+    {
+        "kind": "EscapeUnicodeHexValue",
+        "fullStart": 1,
+        "start": 1,
+        "length": 6
+    },
+    {
+        "kind": "QuotationMark",
+        "fullStart": 7,
+        "start": 7,
+        "length": 1
+    },
+    {
+        "kind": "EOF",
+        "fullStart": 8,
+        "start": 8,
+        "length": 0
+    }
 ]

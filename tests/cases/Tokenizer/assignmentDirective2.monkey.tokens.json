@@ -1,8 +1,8 @@
 [
-  {
-    "kind": "EOF",
-    "fullStart": 20,
-    "start": 20,
-    "length": 0
-  }
+    {
+        "kind": "EOF",
+        "fullStart": 20,
+        "start": 20,
+        "length": 0
+    }
 ]

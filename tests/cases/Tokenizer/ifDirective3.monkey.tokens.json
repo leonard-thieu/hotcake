@@ -1,32 +1,32 @@
 [
-  {
-    "kind": "Newline",
-    "fullStart": 65,
-    "start": 66,
-    "length": 2
-  },
-  {
-    "kind": "Newline",
-    "fullStart": 67,
-    "start": 68,
-    "length": 2
-  },
-  {
-    "kind": "ImportKeyword",
-    "fullStart": 69,
-    "start": 69,
-    "length": 6
-  },
-  {
-    "kind": "Identifier",
-    "fullStart": 75,
-    "start": 76,
-    "length": 4
-  },
-  {
-    "kind": "EOF",
-    "fullStart": 79,
-    "start": 79,
-    "length": 0
-  }
+    {
+        "kind": "Newline",
+        "fullStart": 65,
+        "start": 66,
+        "length": 2
+    },
+    {
+        "kind": "Newline",
+        "fullStart": 67,
+        "start": 68,
+        "length": 2
+    },
+    {
+        "kind": "ImportKeyword",
+        "fullStart": 69,
+        "start": 69,
+        "length": 6
+    },
+    {
+        "kind": "Identifier",
+        "fullStart": 75,
+        "start": 76,
+        "length": 4
+    },
+    {
+        "kind": "EOF",
+        "fullStart": 79,
+        "start": 79,
+        "length": 0
+    }
 ]

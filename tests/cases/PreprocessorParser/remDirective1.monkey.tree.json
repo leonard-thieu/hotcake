@@ -1,37 +1,37 @@
 {
-  "kind": "PreprocessorModule",
-  "members": [
-    {
-      "kind": "RemDirective",
-      "remDirectiveKeyword": {
-        "kind": "RemDirectiveKeyword",
-        "fullStart": 0,
-        "start": 0,
-        "length": 4
-      },
-      "children": [
+    "kind": "PreprocessorModule",
+    "members": [
         {
-          "kind": "RemDirectiveBody",
-          "fullStart": 4,
-          "start": 5,
-          "length": 2
+            "kind": "RemDirective",
+            "remDirectiveKeyword": {
+                "kind": "RemDirectiveKeyword",
+                "fullStart": 0,
+                "start": 0,
+                "length": 4
+            },
+            "children": [
+                {
+                    "kind": "RemDirectiveBody",
+                    "fullStart": 4,
+                    "start": 5,
+                    "length": 2
+                }
+            ],
+            "endDirective": {
+                "kind": "EndDirective",
+                "endDirectiveKeyword": {
+                    "kind": "EndDirectiveKeyword",
+                    "fullStart": 6,
+                    "start": 6,
+                    "length": 4
+                }
+            }
         }
-      ],
-      "endDirective": {
-        "kind": "EndDirective",
-        "endDirectiveKeyword": {
-          "kind": "EndDirectiveKeyword",
-          "fullStart": 6,
-          "start": 6,
-          "length": 4
-        }
-      }
+    ],
+    "eofToken": {
+        "kind": "EOF",
+        "fullStart": 10,
+        "start": 10,
+        "length": 0
     }
-  ],
-  "eofToken": {
-    "kind": "EOF",
-    "fullStart": 10,
-    "start": 10,
-    "length": 0
-  }
 }

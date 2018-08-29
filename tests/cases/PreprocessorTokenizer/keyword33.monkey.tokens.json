@@ -1,14 +1,14 @@
 [
-  {
-    "kind": "CaseKeyword",
-    "fullStart": 0,
-    "start": 0,
-    "length": 4
-  },
-  {
-    "kind": "EOF",
-    "fullStart": 4,
-    "start": 4,
-    "length": 0
-  }
+    {
+        "kind": "CaseKeyword",
+        "fullStart": 0,
+        "start": 0,
+        "length": 4
+    },
+    {
+        "kind": "EOF",
+        "fullStart": 4,
+        "start": 4,
+        "length": 0
+    }
 ]

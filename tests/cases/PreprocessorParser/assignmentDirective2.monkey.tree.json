@@ -1,49 +1,49 @@
 {
-  "kind": "PreprocessorModule",
-  "members": [
-    {
-      "kind": "AssignmentDirective",
-      "name": {
-        "kind": "ConfigurationVariable",
-        "fullStart": 0,
-        "start": 0,
-        "length": 7
-      },
-      "operator": {
-        "kind": "PlusSignEqualsSign",
-        "fullStart": 7,
-        "start": 8,
-        "length": 3
-      },
-      "expression": {
-        "kind": "StringLiteral",
-        "startQuote": {
-          "kind": "QuotationMark",
-          "fullStart": 10,
-          "start": 11,
-          "length": 2
-        },
-        "children": [
-          {
-            "kind": "StringLiteralText",
-            "fullStart": 12,
-            "start": 12,
-            "length": 7
-          }
-        ],
-        "endQuote": {
-          "kind": "QuotationMark",
-          "fullStart": 19,
-          "start": 19,
-          "length": 1
+    "kind": "PreprocessorModule",
+    "members": [
+        {
+            "kind": "AssignmentDirective",
+            "name": {
+                "kind": "ConfigurationVariable",
+                "fullStart": 0,
+                "start": 0,
+                "length": 7
+            },
+            "operator": {
+                "kind": "PlusSignEqualsSign",
+                "fullStart": 7,
+                "start": 8,
+                "length": 3
+            },
+            "expression": {
+                "kind": "StringLiteral",
+                "startQuote": {
+                    "kind": "QuotationMark",
+                    "fullStart": 10,
+                    "start": 11,
+                    "length": 2
+                },
+                "children": [
+                    {
+                        "kind": "StringLiteralText",
+                        "fullStart": 12,
+                        "start": 12,
+                        "length": 7
+                    }
+                ],
+                "endQuote": {
+                    "kind": "QuotationMark",
+                    "fullStart": 19,
+                    "start": 19,
+                    "length": 1
+                }
+            }
         }
-      }
+    ],
+    "eofToken": {
+        "kind": "EOF",
+        "fullStart": 20,
+        "start": 20,
+        "length": 0
     }
-  ],
-  "eofToken": {
-    "kind": "EOF",
-    "fullStart": 20,
-    "start": 20,
-    "length": 0
-  }
 }

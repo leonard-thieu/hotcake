@@ -1,14 +1,14 @@
 [
-  {
-    "kind": "ConfigurationVariable",
-    "fullStart": 0,
-    "start": 0,
-    "length": 29
-  },
-  {
-    "kind": "EOF",
-    "fullStart": 29,
-    "start": 29,
-    "length": 0
-  }
+    {
+        "kind": "ConfigurationVariable",
+        "fullStart": 0,
+        "start": 0,
+        "length": 29
+    },
+    {
+        "kind": "EOF",
+        "fullStart": 29,
+        "start": 29,
+        "length": 0
+    }
 ]

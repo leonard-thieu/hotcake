@@ -1,32 +1,32 @@
 [
-  {
-    "kind": "PrintDirectiveKeyword",
-    "fullStart": 0,
-    "start": 0,
-    "length": 6
-  },
-  {
-    "kind": "QuotationMark",
-    "fullStart": 6,
-    "start": 7,
-    "length": 2
-  },
-  {
-    "kind": "StringLiteralText",
-    "fullStart": 8,
-    "start": 8,
-    "length": 5
-  },
-  {
-    "kind": "QuotationMark",
-    "fullStart": 13,
-    "start": 13,
-    "length": 1
-  },
-  {
-    "kind": "EOF",
-    "fullStart": 14,
-    "start": 14,
-    "length": 0
-  }
+    {
+        "kind": "PrintDirectiveKeyword",
+        "fullStart": 0,
+        "start": 0,
+        "length": 6
+    },
+    {
+        "kind": "QuotationMark",
+        "fullStart": 6,
+        "start": 7,
+        "length": 2
+    },
+    {
+        "kind": "StringLiteralText",
+        "fullStart": 8,
+        "start": 8,
+        "length": 5
+    },
+    {
+        "kind": "QuotationMark",
+        "fullStart": 13,
+        "start": 13,
+        "length": 1
+    },
+    {
+        "kind": "EOF",
+        "fullStart": 14,
+        "start": 14,
+        "length": 0
+    }
 ]

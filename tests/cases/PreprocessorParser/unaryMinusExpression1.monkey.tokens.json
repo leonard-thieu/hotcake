@@ -1,38 +1,38 @@
 [
-  {
-    "kind": "IfDirectiveKeyword",
-    "fullStart": 0,
-    "start": 0,
-    "length": 3
-  },
-  {
-    "kind": "HyphenMinus",
-    "fullStart": 3,
-    "start": 4,
-    "length": 2
-  },
-  {
-    "kind": "IntegerLiteral",
-    "fullStart": 5,
-    "start": 5,
-    "length": 1
-  },
-  {
-    "kind": "Newline",
-    "fullStart": 6,
-    "start": 7,
-    "length": 2
-  },
-  {
-    "kind": "EndDirectiveKeyword",
-    "fullStart": 8,
-    "start": 8,
-    "length": 4
-  },
-  {
-    "kind": "EOF",
-    "fullStart": 12,
-    "start": 12,
-    "length": 0
-  }
+    {
+        "kind": "IfDirectiveKeyword",
+        "fullStart": 0,
+        "start": 0,
+        "length": 3
+    },
+    {
+        "kind": "HyphenMinus",
+        "fullStart": 3,
+        "start": 4,
+        "length": 2
+    },
+    {
+        "kind": "IntegerLiteral",
+        "fullStart": 5,
+        "start": 5,
+        "length": 1
+    },
+    {
+        "kind": "Newline",
+        "fullStart": 6,
+        "start": 7,
+        "length": 2
+    },
+    {
+        "kind": "EndDirectiveKeyword",
+        "fullStart": 8,
+        "start": 8,
+        "length": 4
+    },
+    {
+        "kind": "EOF",
+        "fullStart": 12,
+        "start": 12,
+        "length": 0
+    }
 ]

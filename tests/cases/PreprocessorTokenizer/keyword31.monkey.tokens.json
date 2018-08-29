@@ -1,14 +1,14 @@
 [
-  {
-    "kind": "FinalKeyword",
-    "fullStart": 0,
-    "start": 0,
-    "length": 5
-  },
-  {
-    "kind": "EOF",
-    "fullStart": 5,
-    "start": 5,
-    "length": 0
-  }
+    {
+        "kind": "FinalKeyword",
+        "fullStart": 0,
+        "start": 0,
+        "length": 5
+    },
+    {
+        "kind": "EOF",
+        "fullStart": 5,
+        "start": 5,
+        "length": 0
+    }
 ]
