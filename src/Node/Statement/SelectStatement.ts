@@ -1,9 +1,9 @@
-import { MissingToken } from "../../MissingToken";
-import { ParseContextElementArray } from "../../Parser";
-import { Token } from "../../Token";
-import { Expression } from "../Expression/Expression";
-import { NodeKind } from "../NodeKind";
-import { Statement } from "./Statement";
+import { ParseContextElementArray } from '../../Parser';
+import { MissingToken } from '../../Token/MissingToken';
+import { Token } from '../../Token/Token';
+import { Expression } from '../Expression/Expression';
+import { NodeKind } from '../NodeKind';
+import { Statement } from './Statement';
 
 export class SelectStatement extends Statement {
     static CHILD_NAMES: (keyof SelectStatement)[] = [

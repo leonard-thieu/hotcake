@@ -1,7 +1,7 @@
-import { Token } from "../../Token";
-import { ModulePath } from "../ModulePath";
-import { NodeKind } from "../NodeKind";
-import { Declaration } from "./Declaration";
+import { Token } from '../../Token/Token';
+import { ModulePath } from '../ModulePath';
+import { NodeKind } from '../NodeKind';
+import { Declaration } from './Declaration';
 
 export class FriendDirective extends Declaration {
     static CHILD_NAMES: (keyof FriendDirective)[] = [

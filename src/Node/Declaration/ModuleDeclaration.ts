@@ -1,6 +1,6 @@
-import { ParseContextElementArray } from "../../Parser";
-import { NodeKind } from "../NodeKind";
-import { Declaration } from "./Declaration";
+import { ParseContextElementArray } from '../../Parser';
+import { NodeKind } from '../NodeKind';
+import { Declaration } from './Declaration';
 
 export class ModuleDeclaration extends Declaration {
     static CHILD_NAMES: (keyof ModuleDeclaration)[] = [

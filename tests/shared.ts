@@ -8,7 +8,7 @@ import { PreprocessorModuleDeclaration } from '../src/Node/Declaration/Preproces
 import { Parser } from '../src/Parser';
 import { PreprocessorParser } from '../src/PreprocessorParser';
 import { PreprocessorTokenizer } from '../src/PreprocessorTokenizer';
-import { Token } from '../src/Token';
+import { Token } from '../src/Token/Token';
 import { ConfigurationVariables, Tokenizer } from '../src/Tokenizer';
 
 interface TestCaseOptions {

@@ -1,4 +1,4 @@
-import { NodeKind } from "./NodeKind";
+import { NodeKind } from './NodeKind';
 
 export abstract class Node {
     abstract readonly kind: NodeKind;

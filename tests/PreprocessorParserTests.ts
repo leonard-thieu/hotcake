@@ -1,5 +1,4 @@
 import path = require('path');
-
 import { executePreprocessorParserTestCases, executePreprocessorTokenizerTestCases } from './shared';
 
 const name = 'PreprocessorParser';

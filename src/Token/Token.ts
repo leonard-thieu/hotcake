@@ -1,4 +1,4 @@
-import { TokenKind } from "./TokenKind";
+import { TokenKind } from './TokenKind';
 
 export class Token {
     constructor(

@@ -1,5 +1,5 @@
-import { MissingToken } from '../../MissingToken';
-import { Token } from '../../Token';
+import { MissingToken } from '../../Token/MissingToken';
+import { Token } from '../../Token/Token';
 import { Expressions } from '../Expression/Expression';
 import { NodeKind } from '../NodeKind';
 import { Directive, Directives } from './Directive';

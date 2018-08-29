@@ -1,6 +1,6 @@
-import { Token } from "../../Token";
-import { NodeKind } from "../NodeKind";
-import { Declaration } from "./Declaration";
+import { Token } from '../../Token/Token';
+import { NodeKind } from '../NodeKind';
+import { Declaration } from './Declaration';
 
 export class AccessibilityDirective extends Declaration {
     static CHILD_NAMES: (keyof AccessibilityDirective)[] = [

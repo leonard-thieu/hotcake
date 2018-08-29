@@ -1,6 +1,6 @@
-import { Token } from "../../Token";
-import { NodeKind } from "../NodeKind";
-import { Directive } from "./Directive";
+import { Token } from '../../Token/Token';
+import { NodeKind } from '../NodeKind';
+import { Directive } from './Directive';
 
 export class EndDirective extends Directive {
     static CHILD_NAMES: (keyof EndDirective)[] = [

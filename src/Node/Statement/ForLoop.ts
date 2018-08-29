@@ -1,12 +1,12 @@
-import { MissingToken } from "../../MissingToken";
-import { ParseContextElementArray } from "../../Parser";
-import { Token } from "../../Token";
-import { DataDeclarationList } from "../Declaration/DataDeclarationList";
-import { BinaryExpression } from "../Expression/BinaryExpression";
-import { Expression } from "../Expression/Expression";
-import { Node } from "../Node";
-import { NodeKind } from "../NodeKind";
-import { Statement } from "./Statement";
+import { ParseContextElementArray } from '../../Parser';
+import { MissingToken } from '../../Token/MissingToken';
+import { Token } from '../../Token/Token';
+import { DataDeclarationList } from '../Declaration/DataDeclarationList';
+import { BinaryExpression } from '../Expression/BinaryExpression';
+import { Expression } from '../Expression/Expression';
+import { Node } from '../Node';
+import { NodeKind } from '../NodeKind';
+import { Statement } from './Statement';
 
 export class ForLoop extends Statement {
     static CHILD_NAMES: (keyof ForLoop)[] = [

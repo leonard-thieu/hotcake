@@ -1,8 +1,8 @@
-import { ParseContextElementArray, ParseContextKind } from "../../Parser";
-import { Token } from "../../Token";
-import { NodeKind } from "../NodeKind";
-import { QualifiedIdentifier } from "../QualifiedIdentifier";
-import { Declaration } from "./Declaration";
+import { ParseContextElementArray, ParseContextKind } from '../../Parser';
+import { Token } from '../../Token/Token';
+import { NodeKind } from '../NodeKind';
+import { QualifiedIdentifier } from '../QualifiedIdentifier';
+import { Declaration } from './Declaration';
 
 export class ClassDeclaration extends Declaration {
     static CHILD_NAMES: (keyof ClassDeclaration)[] = [

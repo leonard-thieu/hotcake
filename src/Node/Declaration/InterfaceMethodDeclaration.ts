@@ -1,8 +1,8 @@
-import { Token } from "../../Token";
-import { DataDeclarationList } from "./DataDeclarationList";
-import { NodeKind } from "../NodeKind";
-import { QualifiedIdentifier } from "../QualifiedIdentifier";
-import { Declaration } from "./Declaration";
+import { Token } from '../../Token/Token';
+import { DataDeclarationList } from './DataDeclarationList';
+import { NodeKind } from '../NodeKind';
+import { QualifiedIdentifier } from '../QualifiedIdentifier';
+import { Declaration } from './Declaration';
 
 export class InterfaceMethodDeclaration extends Declaration {
     static CHILD_NAMES: (keyof InterfaceMethodDeclaration)[] = [

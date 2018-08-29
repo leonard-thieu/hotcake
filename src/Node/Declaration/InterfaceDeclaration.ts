@@ -1,7 +1,7 @@
-import { ParseContextElementArray, ParseContextKind } from "../../Parser";
-import { Token } from "../../Token";
-import { NodeKind } from "../NodeKind";
-import { Declaration } from "./Declaration";
+import { ParseContextElementArray, ParseContextKind } from '../../Parser';
+import { Token } from '../../Token/Token';
+import { NodeKind } from '../NodeKind';
+import { Declaration } from './Declaration';
 
 export class InterfaceDeclaration extends Declaration {
     static CHILD_NAMES: (keyof InterfaceDeclaration)[] = [

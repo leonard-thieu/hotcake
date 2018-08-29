@@ -1,7 +1,6 @@
 import path = require('path');
 import 'chai/register-should';
-
-import { executeTestCases, getPreprocessorTokens } from "./shared";
+import { executeTestCases, getPreprocessorTokens } from './shared';
 
 const name = 'PreprocessorTokenizer';
 const casesPath = path.resolve(__dirname, 'cases', name);
@@ -28,7 +27,7 @@ executeTestCases({
             }
         });
 
-        _it(sourceRelativePath, function() {
+        _it(sourceRelativePath, function () {
             let allFullText = '';
             for (const token of tokens) {
                 allFullText += token.getFullText(contents);

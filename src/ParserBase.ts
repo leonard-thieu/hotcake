@@ -1,18 +1,18 @@
-import { GreaterThanSignEqualsSignToken } from "./GreaterThanSignEqualsSignToken";
-import { MissingToken } from "./MissingToken";
-import { BinaryExpression } from "./Node/Expression/BinaryExpression";
-import { BooleanLiteral } from "./Node/Expression/BooleanLiteral";
-import { Expression, Expressions } from "./Node/Expression/Expression";
-import { FloatLiteral } from "./Node/Expression/FloatLiteral";
-import { GroupingExpression } from "./Node/Expression/GroupingExpression";
-import { IntegerLiteral } from "./Node/Expression/IntegerLiteral";
-import { StringLiteral } from "./Node/Expression/StringLiteral";
-import { UnaryOpExpression } from "./Node/Expression/UnaryOpExpression";
-import { Variable } from "./Node/Expression/Variable";
-import { Node } from "./Node/Node";
-import { SkippedToken } from "./SkippedToken";
-import { Token } from "./Token";
-import { TokenKind } from "./TokenKind";
+import { BinaryExpression } from './Node/Expression/BinaryExpression';
+import { BooleanLiteral } from './Node/Expression/BooleanLiteral';
+import { Expression, Expressions } from './Node/Expression/Expression';
+import { FloatLiteral } from './Node/Expression/FloatLiteral';
+import { GroupingExpression } from './Node/Expression/GroupingExpression';
+import { IntegerLiteral } from './Node/Expression/IntegerLiteral';
+import { StringLiteral } from './Node/Expression/StringLiteral';
+import { UnaryOpExpression } from './Node/Expression/UnaryOpExpression';
+import { Variable } from './Node/Expression/Variable';
+import { Node } from './Node/Node';
+import { GreaterThanSignEqualsSignToken } from './Token/GreaterThanSignEqualsSignToken';
+import { MissingToken } from './Token/MissingToken';
+import { SkippedToken } from './Token/SkippedToken';
+import { Token } from './Token/Token';
+import { TokenKind } from './Token/TokenKind';
 
 export abstract class ParserBase {
     protected tokens: Token[];

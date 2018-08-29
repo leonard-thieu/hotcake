@@ -1,8 +1,8 @@
-import { ParseContextElementArray } from "../../Parser";
-import { Token } from "../../Token";
-import { DataDeclaration } from "../DataDeclaration";
-import { NodeKind } from "../NodeKind";
-import { Statement } from "./Statement";
+import { ParseContextElementArray } from '../../Parser';
+import { Token } from '../../Token/Token';
+import { DataDeclaration } from '../DataDeclaration';
+import { NodeKind } from '../NodeKind';
+import { Statement } from './Statement';
 
 export class TryStatement extends Statement {
     static CHILD_NAMES: (keyof TryStatement)[] = [

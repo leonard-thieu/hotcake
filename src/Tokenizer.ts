@@ -1,11 +1,11 @@
-import { assertNever } from "./assertNever";
-import { MissingToken } from "./MissingToken";
-import { PreprocessorModuleDeclaration } from "./Node/Declaration/PreprocessorModuleDeclaration";
-import { Directives } from "./Node/Directive/Directive";
-import { Expressions } from "./Node/Expression/Expression";
-import { NodeKind } from "./Node/NodeKind";
-import { Token } from "./Token";
-import { TokenKind } from "./TokenKind";
+import { assertNever } from './assertNever';
+import { PreprocessorModuleDeclaration } from './Node/Declaration/PreprocessorModuleDeclaration';
+import { Directives } from './Node/Directive/Directive';
+import { Expressions } from './Node/Expression/Expression';
+import { NodeKind } from './Node/NodeKind';
+import { MissingToken } from './Token/MissingToken';
+import { Token } from './Token/Token';
+import { TokenKind } from './Token/TokenKind';
 
 export class Tokenizer {
     private document: string;

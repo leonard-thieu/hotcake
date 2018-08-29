@@ -1,5 +1,5 @@
-import { Token } from "./Token";
-import { TokenKind } from "./TokenKind";
+import { Token } from './Token';
+import { TokenKind } from './TokenKind';
 
 export class GreaterThanSignEqualsSignToken extends Token {
     constructor(public greaterThanSign: Token, public equalsSign: Token) {

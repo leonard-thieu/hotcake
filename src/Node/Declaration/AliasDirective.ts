@@ -1,7 +1,7 @@
-import { Token } from "../../Token";
-import { NodeKind } from "../NodeKind";
-import { QualifiedIdentifier } from "../QualifiedIdentifier";
-import { Declaration } from "./Declaration";
+import { Token } from '../../Token/Token';
+import { NodeKind } from '../NodeKind';
+import { QualifiedIdentifier } from '../QualifiedIdentifier';
+import { Declaration } from './Declaration';
 
 export class AliasDirective extends Declaration {
     static CHILD_NAMES: (keyof AliasDirective)[] = [

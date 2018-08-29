@@ -1,4 +1,4 @@
-import { Token } from '../../Token';
+import { Token } from '../../Token/Token';
 import { Directives } from '../Directive/Directive';
 import { Node } from '../Node';
 import { NodeKind } from '../NodeKind';

@@ -15,9 +15,9 @@ import { Node } from './Node/Node';
 import { ParserBase } from './ParserBase';
 import { PreprocessorParseContext } from './PreprocessorParseContext';
 import { PreprocessorTokenizer } from './PreprocessorTokenizer';
-import { SkippedToken } from './SkippedToken';
-import { Token } from './Token';
-import { TokenKind } from "./TokenKind";
+import { SkippedToken } from './Token/SkippedToken';
+import { Token } from './Token/Token';
+import { TokenKind } from './Token/TokenKind';
 
 export class PreprocessorParser extends ParserBase {
     parse(document: string): PreprocessorModuleDeclaration {

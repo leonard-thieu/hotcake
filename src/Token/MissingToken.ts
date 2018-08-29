@@ -1,5 +1,5 @@
 import { Token } from './Token';
-import { TokenKind } from "./TokenKind";
+import { TokenKind } from './TokenKind';
 
 export class MissingToken extends Token {
     constructor(kind: TokenKind, fullStart: number) {

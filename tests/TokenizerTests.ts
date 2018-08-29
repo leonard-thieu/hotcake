@@ -1,5 +1,4 @@
 import path = require('path');
-
 import { executeTokenizerTestCases } from './shared';
 
 const name = 'Tokenizer';
