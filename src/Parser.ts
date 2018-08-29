@@ -81,7 +81,7 @@ export class Parser extends ParserBase {
         return false;
     }
 
-    private parseModuleMember = (parent: Node) => {
+    private parseModuleMember(parent: Node) {
         const token = this.getCurrentToken();
         switch (token.kind) {
             case TokenKind.StrictKeyword: {
@@ -242,7 +242,7 @@ export class Parser extends ParserBase {
         return false;
     }
 
-    private parseInterfaceMember = (parent: Node) => {
+    private parseInterfaceMember(parent: Node) {
         const token = this.getCurrentToken();
         switch (token.kind) {
             case TokenKind.ConstKeyword: {
@@ -300,7 +300,7 @@ export class Parser extends ParserBase {
         return false;
     }
 
-    private parseClassMember = (parent: Node) => {
+    private parseClassMember(parent: Node) {
         const token = this.getCurrentToken();
         switch (token.kind) {
             case TokenKind.ConstKeyword:
@@ -389,7 +389,7 @@ export class Parser extends ParserBase {
         return false;
     }
 
-    private parseStatement = (parent: Node) => {
+    private parseStatement(parent: Node) {
         const token = this.getCurrentToken();
         switch (token.kind) {
             case TokenKind.LocalKeyword: {
@@ -794,7 +794,7 @@ export class Parser extends ParserBase {
         return false;
     }
 
-    private parseDataDeclarationListMember = (parent: Node) => {
+    private parseDataDeclarationListMember(parent: Node) {
         const token = this.getToken();
         switch (token.kind) {
             case TokenKind.Identifier: {
@@ -921,8 +921,6 @@ export class Parser extends ParserBase {
         const savedParseContext = this.currentParseContext;
         this.currentParseContext |= parseContext;
 
-        const parseListElementFn = this.getParseListElementFn(parseContext);
-
         const nodes: Array<Node | Token> = [];
         while (true) {
             const token = this.getToken();
@@ -932,7 +930,7 @@ export class Parser extends ParserBase {
             }
 
             if (this.isValidListElement(token, parseContext)) {
-                const element = parseListElementFn(parent);
+                const element = this.parseListElement(parent, parseContext);
                 nodes.push(element);
 
                 continue;
@@ -1004,23 +1002,23 @@ export class Parser extends ParserBase {
         return assertNever(parseContext);
     }
 
-    private getParseListElementFn(parseContext: ParseContext): ParseListElementFn {
+    private parseListElement(parent: Node, parseContext: ParseContext) {
         switch (parseContext) {
             case ParseContext.ModuleMembers: {
-                return this.parseModuleMember;
+                return this.parseModuleMember(parent);
             }
             case ParseContext.InterfaceMembers: {
-                return this.parseInterfaceMember;
+                return this.parseInterfaceMember(parent);
             }
             case ParseContext.ClassMembers: {
-                return this.parseClassMember;
+                return this.parseClassMember(parent);
             }
             case ParseContext.BlockStatements:
             case ParseContext.IfStatementStatements: {
-                return this.parseStatement;
+                return this.parseStatement(parent);
             }
             case ParseContext.DataDeclarationListMembers: {
-                return this.parseDataDeclarationListMember;
+                return this.parseDataDeclarationListMember(parent);
             }
         }
 
