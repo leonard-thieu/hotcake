@@ -26,6 +26,7 @@
           "start": 11,
           "length": 2
         },
+        "eachInKeyword": null,
         "rightOperand": {
           "kind": "StringLiteral",
           "startQuote": {
@@ -126,6 +127,7 @@
               "start": 74,
               "length": 2
             },
+            "eachInKeyword": null,
             "rightOperand": {
               "kind": "StringLiteral",
               "startQuote": {
@@ -224,6 +226,7 @@
                   "start": 149,
                   "length": 2
                 },
+                "eachInKeyword": null,
                 "rightOperand": {
                   "kind": "Variable",
                   "name": {
@@ -343,6 +346,7 @@
               "start": 219,
               "length": 2
             },
+            "eachInKeyword": null,
             "rightOperand": {
               "kind": "StringLiteral",
               "startQuote": {

@@ -26,6 +26,7 @@
           "start": 11,
           "length": 2
         },
+        "eachInKeyword": null,
         "rightOperand": {
           "kind": "StringLiteral",
           "startQuote": {
