@@ -590,6 +590,18 @@ export class Parser extends ParserBase {
         return defaultStatement;
     }
 
+    private isCaseOrDefaultStatementStatementsListTerminator(token: Token): boolean {
+        switch (token.kind) {
+            case TokenKind.CaseKeyword:
+            case TokenKind.DefaultKeyword:
+            case TokenKind.EndKeyword: {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     // #endregion
 
     // #region Loops
@@ -1068,18 +1080,6 @@ export class Parser extends ParserBase {
         }
 
         return assertNever(parseContext);
-    }
-
-    private isCaseOrDefaultStatementStatementsListTerminator(token: Token): boolean {
-        switch (token.kind) {
-            case TokenKind.CaseKeyword:
-            case TokenKind.DefaultKeyword:
-            case TokenKind.EndKeyword: {
-                return true;
-            }
-        }
-
-        return false;
     }
 
     private isValidListElement(parseContext: ParseContext, token: Token): boolean {

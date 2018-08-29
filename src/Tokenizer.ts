@@ -1,8 +1,9 @@
 import { assertNever } from './assertNever';
 import { PreprocessorModuleDeclaration } from './Node/Declaration/PreprocessorModuleDeclaration';
-import { Directives } from './Node/Directive/Directive';
+import { IfDirective } from './Node/Directive/IfDirective';
 import { Expressions } from './Node/Expression/Expression';
 import { NodeKind } from './Node/NodeKind';
+import { PreprocessorParseContextElementArray } from './PreprocessorParser';
 import { MissingToken } from './Token/MissingToken';
 import { Token } from './Token/Token';
 import { TokenKind } from './Token/TokenKind';
@@ -30,7 +31,7 @@ export class Tokenizer {
      * TODO: Ensure operator semantics and implicit type conversions match Monkey X behavior.
      */
 
-    private * readMember(members: Array<Directives | Token>): IterableIterator<Token> {
+    private * readMember(members: PreprocessorParseContextElementArray<PreprocessorModuleDeclaration['kind']>): IterableIterator<Token> {
         for (const member of members) {
             if (member instanceof Token) {
                 yield member;
@@ -40,7 +41,7 @@ export class Tokenizer {
 
             switch (member.kind) {
                 case NodeKind.IfDirective: {
-                    let branchMembers: Array<Directives | Token> | undefined;
+                    let branchMembers: PreprocessorParseContextElementArray<IfDirective['kind']> | undefined;
 
                     if (this.eval(member.expression)) {
                         branchMembers = member.members;
@@ -107,12 +108,6 @@ export class Tokenizer {
                 }
                 case NodeKind.RemDirective: {
                     // Ignore
-                    break;
-                }
-                case NodeKind.ElseIfDirective:
-                case NodeKind.ElseDirective:
-                case NodeKind.EndDirective: {
-                    console.log(`Skipped ${JSON.stringify(member.kind)}`);
                     break;
                 }
                 default: {

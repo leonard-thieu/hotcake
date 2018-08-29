@@ -1,5 +1,5 @@
+import { PreprocessorParseContextElementArray } from '../../PreprocessorParser';
 import { Token } from '../../Token/Token';
-import { Directives } from '../Directive/Directive';
 import { Node } from '../Node';
 import { NodeKind } from '../NodeKind';
 
@@ -9,8 +9,11 @@ export class PreprocessorModuleDeclaration extends Node {
         'eofToken',
     ];
 
+    filePath: string;
+    document: string;
+
     readonly kind = NodeKind.PreprocessorModuleDeclaration;
 
-    members: Array<Directives | Token>;
+    members: PreprocessorParseContextElementArray<PreprocessorModuleDeclaration['kind']>;
     eofToken: Token;
 }

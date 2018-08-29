@@ -1,8 +1,8 @@
+import { PreprocessorParseContextElementArray } from '../../PreprocessorParser';
 import { Token } from '../../Token/Token';
 import { NodeKind } from '../NodeKind';
 import { Directive } from './Directive';
 import { EndDirective } from './EndDirective';
-import { IfDirective } from './IfDirective';
 
 export class RemDirective extends Directive {
     static CHILD_NAMES: (keyof RemDirective)[] = [
@@ -14,6 +14,6 @@ export class RemDirective extends Directive {
     readonly kind = NodeKind.RemDirective;
 
     remDirectiveKeyword: Token;
-    children: Array<RemDirective | IfDirective | Token> = [];
+    children: PreprocessorParseContextElementArray<RemDirective['kind']>;
     endDirective: EndDirective;
 }

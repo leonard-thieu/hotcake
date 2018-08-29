@@ -106,7 +106,7 @@ export function executePreprocessorParserTestCases(name: string, casesPath: stri
             _it(sourceRelativePath, function () {
                 const outputPath = path.resolve(__dirname, 'cases', name, sourceRelativePath) + '.tree.json';
                 executeBaselineTestCase(outputPath, () => {
-                    return getPreprocessorParseTree(contents);
+                    return getPreprocessorParseTree(sourceRelativePath, contents);
                 });
             });
         },
@@ -123,7 +123,7 @@ export function executeTokenizerTestCases(name: string, casesPath: string): void
             _it(sourceRelativePath, function () {
                 const outputPath = path.resolve(__dirname, 'cases', name, sourceRelativePath) + '.tokens.json';
                 executeBaselineTestCase(outputPath, () => {
-                    return getTokens(contents);
+                    return getTokens(sourceRelativePath, contents);
                 });
             });
         },
@@ -153,14 +153,15 @@ export function getPreprocessorTokens(document: string): Token[] {
     return lexer.getTokens(document);
 }
 
-export function getPreprocessorParseTree(document: string): PreprocessorModuleDeclaration {
+export function getPreprocessorParseTree(filePath: string, document: string): PreprocessorModuleDeclaration {
     const parser = new PreprocessorParser();
+    const tokens = getPreprocessorTokens(document);
 
-    return parser.parse(document);
+    return parser.parse(filePath, document, tokens);
 }
 
-export function getTokens(document: string): Token[] {
-    const tree = getPreprocessorParseTree(document);
+export function getTokens(filePath: string, document: string): Token[] {
+    const tree = getPreprocessorParseTree(filePath, document);
     const tokenizer = new Tokenizer();
     const configVars: ConfigurationVariables = {
         HOST: 'winnt',
@@ -175,7 +176,7 @@ export function getTokens(document: string): Token[] {
 }
 
 export function getParseTree(filePath: string, document: string): ModuleDeclaration {
-    const tokens = getTokens(document);
+    const tokens = getTokens(filePath, document);
     const parser = new Parser();
 
     return parser.parse(filePath, document, tokens);
