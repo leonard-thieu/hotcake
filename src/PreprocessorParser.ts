@@ -1,4 +1,3 @@
-import assert = require('assert');
 import { assertNever } from './assertNever';
 import { PreprocessorModuleDeclaration } from './Node/Declaration/PreprocessorModuleDeclaration';
 import { AssignmentDirective } from './Node/Directive/AssignmentDirective';
@@ -39,21 +38,11 @@ export class PreprocessorParser extends ParserBase {
 
     // #region Directives
 
-    private assertExpressionParsedCompletely(): void {
-        const token = this.getCurrentToken();
-
-        assert([
-            TokenKind.Newline,
-            TokenKind.EOF,
-        ].includes(token.kind), token.kind);
-    }
-
     private parseIfDirective(parent: Node): IfDirective {
         const ifDirective = new IfDirective();
         ifDirective.parent = parent;
         ifDirective.ifDirectiveKeyword = this.eat(TokenKind.IfDirectiveKeyword);
         ifDirective.expression = this.parseExpression(ifDirective);
-        this.assertExpressionParsedCompletely();
 
         ifDirective.members.push(...this.parseList(ifDirective, PreprocessorParseContext.IfDirectiveMembers) as Array<Directives | Token>);
         while (this.getCurrentToken().kind === TokenKind.ElseIfDirectiveKeyword) {
@@ -74,7 +63,6 @@ export class PreprocessorParser extends ParserBase {
         elseIfDirective.parent = parent;
         elseIfDirective.elseIfDirectiveKeyword = this.eat(TokenKind.ElseIfDirectiveKeyword);
         elseIfDirective.expression = this.parseExpression(elseIfDirective);
-        this.assertExpressionParsedCompletely();
 
         elseIfDirective.members.push(...this.parseList(elseIfDirective, PreprocessorParseContext.IfDirectiveMembers) as Array<Directives | Token>);
 
@@ -113,7 +101,6 @@ export class PreprocessorParser extends ParserBase {
         printDirective.parent = parent;
         printDirective.printDirectiveKeyword = this.eat(TokenKind.PrintDirectiveKeyword);
         printDirective.expression = this.parseExpression(printDirective);
-        this.assertExpressionParsedCompletely();
 
         return printDirective;
     }
@@ -123,7 +110,6 @@ export class PreprocessorParser extends ParserBase {
         errorDirective.parent = parent;
         errorDirective.errorDirectiveKeyword = this.eat(TokenKind.ErrorDirectiveKeyword);
         errorDirective.expression = this.parseExpression(errorDirective);
-        this.assertExpressionParsedCompletely();
 
         return errorDirective;
     }
