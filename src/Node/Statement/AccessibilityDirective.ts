@@ -11,5 +11,5 @@ export class AccessibilityDirective extends Statement {
     readonly kind = NodeKind.AccessibilityDirective;
 
     accessibilityKeyword: Token;
-    externPrivateKeyword: Token | null;
+    externPrivateKeyword: Token | null = null;
 }

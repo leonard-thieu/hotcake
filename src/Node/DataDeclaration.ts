@@ -29,6 +29,7 @@ export class DataDeclaration extends Node {
         'longhandType',
         'shorthandType',
         'equalsSign',
+        'eachInKeyword',
         'expression',
     ];
 
@@ -45,5 +46,6 @@ export class DataDeclaration extends Node {
 
     equalsSign: Token | null = null;
 
+    eachInKeyword: Token | null = null;
     expression: Expression | MissingToken | null = null;
 }

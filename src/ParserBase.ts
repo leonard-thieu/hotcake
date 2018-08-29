@@ -57,9 +57,12 @@ export abstract class ParserBase {
 
             this.advanceToken();
 
+            const eachInKeyword = this.eatOptional(TokenKind.EachInKeyword);
+
             expression = this.makeBinaryExpression(
                 expression,
                 token,
+                eachInKeyword,
                 this.parseBinaryExpression(newPrecedence, (null as any)),
                 parent
             );
@@ -71,7 +74,13 @@ export abstract class ParserBase {
         return expression;
     }
 
-    protected makeBinaryExpression(leftOperand: Expressions | MissingToken, operator: Token, rightOperand: Expressions | MissingToken, parent: Node): Expressions {
+    protected makeBinaryExpression(
+        leftOperand: Expressions | MissingToken,
+        operator: Token,
+        eachInKeyword: Token | null,
+        rightOperand: Expressions | MissingToken,
+        parent: Node
+    ): Expressions {
         const binaryExpression = new BinaryExpression();
         binaryExpression.parent = parent;
         binaryExpression.leftOperand = leftOperand;
@@ -79,6 +88,7 @@ export abstract class ParserBase {
             leftOperand.parent = binaryExpression;
         }
         binaryExpression.operator = operator;
+        binaryExpression.eachInKeyword = eachInKeyword;
         binaryExpression.rightOperand = rightOperand;
         if (rightOperand instanceof Expression) {
             rightOperand.parent = binaryExpression;

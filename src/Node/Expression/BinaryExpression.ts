@@ -7,6 +7,7 @@ export class BinaryExpression extends Expression {
     static CHILD_NAMES: (keyof BinaryExpression)[] = [
         'leftOperand',
         'operator',
+        'eachInKeyword',
         'rightOperand',
     ];
 
@@ -14,5 +15,6 @@ export class BinaryExpression extends Expression {
 
     leftOperand: Expressions | MissingToken;
     operator: Token;
+    eachInKeyword: Token | null = null;
     rightOperand: Expressions | MissingToken;
 }

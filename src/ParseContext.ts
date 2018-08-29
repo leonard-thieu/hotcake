@@ -3,5 +3,6 @@ export enum ParseContext {
     InterfaceMembers = 2,
     ClassMembers = 4,
     BlockStatements = 8,
-    DataDeclarationListMembers = 16,
+    IfStatementStatements = 16,
+    DataDeclarationListMembers = 32,
 }

@@ -13,6 +13,7 @@ export class ClassMethodDeclaration extends Statement {
         'openingParenthesis',
         'parameters',
         'closingParenthesis',
+        'attributes',
         'statements',
         'endKeyword',
         'endMethodKeyword',
@@ -27,7 +28,8 @@ export class ClassMethodDeclaration extends Statement {
     openingParenthesis: Token;
     parameters: DataDeclarationList;
     closingParenthesis: Token;
-    statements: Array<Statement | Token>;
-    endKeyword: Token;
+    attributes: Token[] = [];
+    statements: Array<Statement | Token> | null = null;
+    endKeyword: Token | null = null;
     endMethodKeyword: Token | null = null;
 }
