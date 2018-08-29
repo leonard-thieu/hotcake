@@ -56,6 +56,10 @@ export class Parser extends ParserBase {
 
     // #region Module members
 
+    private isModuleMembersListTerminator(): boolean {
+        return false;
+    }
+
     private isModuleMemberStart(token: Token): boolean {
         switch (token.kind) {
             case TokenKind.StrictKeyword:
@@ -223,6 +227,10 @@ export class Parser extends ParserBase {
 
     // #region Interface members
 
+    private isInterfaceMembersListTerminator(token: Token): boolean {
+        return token.kind === TokenKind.EndKeyword;
+    }
+
     private isInterfaceMemberStart(token: Token): boolean {
         switch (token.kind) {
             case TokenKind.ConstKeyword:
@@ -270,6 +278,10 @@ export class Parser extends ParserBase {
     // #endregion
 
     // #region Class members
+
+    private isClassMembersListTerminator(token: Token): boolean {
+        return token.kind === TokenKind.EndKeyword;
+    }
 
     private isClassMemberStart(token: Token): boolean {
         switch (token.kind) {
@@ -351,6 +363,10 @@ export class Parser extends ParserBase {
     // #endregion
 
     // #region Statements
+
+    private isBlockStatementsListTerminator(token: Token): boolean {
+        return token.kind === TokenKind.EndKeyword;
+    }
 
     private isStatementStart(token: Token): boolean {
         switch (token.kind) {
@@ -515,6 +531,13 @@ export class Parser extends ParserBase {
         }
 
         return elseStatement;
+    }
+
+    private isIfStatementStatementsListTerminator(token: Token): boolean {
+        return token.kind === TokenKind.ElseIfKeyword ||
+            token.kind === TokenKind.ElseKeyword ||
+            token.kind === TokenKind.EndIfKeyword ||
+            token.kind === TokenKind.EndKeyword;
     }
 
     // #endregion
@@ -756,6 +779,11 @@ export class Parser extends ParserBase {
 
     // #region Data declaration list members
 
+    private isDataDeclarationListMembersListTerminator(token: Token): boolean {
+        return token.kind !== TokenKind.Identifier &&
+            token.kind !== TokenKind.Comma;
+    }
+
     private isDataDeclarationListMemberStart(token: Token): boolean {
         switch (token.kind) {
             case TokenKind.Identifier:
@@ -932,22 +960,22 @@ export class Parser extends ParserBase {
 
         switch (parseContext) {
             case ParseContext.ModuleMembers: {
-                return false;
+                return this.isModuleMembersListTerminator();
             }
-            case ParseContext.InterfaceMembers:
-            case ParseContext.ClassMembers:
+            case ParseContext.InterfaceMembers: {
+                return this.isInterfaceMembersListTerminator(token);
+            }
+            case ParseContext.ClassMembers: {
+                return this.isClassMembersListTerminator(token);
+            }
             case ParseContext.BlockStatements: {
-                return token.kind === TokenKind.EndKeyword;
+                return this.isBlockStatementsListTerminator(token);
             }
             case ParseContext.IfStatementStatements: {
-                return token.kind === TokenKind.ElseIfKeyword ||
-                    token.kind === TokenKind.ElseKeyword ||
-                    token.kind === TokenKind.EndIfKeyword ||
-                    token.kind === TokenKind.EndKeyword;
+                return this.isIfStatementStatementsListTerminator(token);
             }
             case ParseContext.DataDeclarationListMembers: {
-                return token.kind !== TokenKind.Identifier &&
-                    token.kind !== TokenKind.Comma;
+                return this.isDataDeclarationListMembersListTerminator(token);
             }
         }
 
@@ -1032,7 +1060,10 @@ export class Parser extends ParserBase {
             }
         }
 
-        throw new Error(`Unexpected token: ${JSON.stringify(token.kind)}`);
+        const p = parent || {
+            kind: null,
+        };
+        throw new Error(`Unexpected token: ${JSON.stringify(token.kind)} in ${JSON.stringify(p.kind)}`);
     }
 
     // #endregion
