@@ -4844,7 +4844,7 @@
                     ],
                     "elseIfStatements": [
                         {
-                            "kind": "IfStatement",
+                            "kind": "ElseIfStatement",
                             "elseIfKeyword": {
                                 "kind": "ElseKeyword",
                                 "fullStart": 5159,
@@ -5017,7 +5017,7 @@
                     ],
                     "elseIfStatements": [
                         {
-                            "kind": "IfStatement",
+                            "kind": "ElseIfStatement",
                             "elseIfKeyword": {
                                 "kind": "ElseKeyword",
                                 "fullStart": 5296,
@@ -5218,7 +5218,7 @@
                     ],
                     "elseIfStatements": [
                         {
-                            "kind": "IfStatement",
+                            "kind": "ElseIfStatement",
                             "elseIfKeyword": {
                                 "kind": "ElseKeyword",
                                 "fullStart": 5476,

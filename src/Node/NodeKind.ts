@@ -27,6 +27,7 @@ export enum NodeKind {
     ClassMethodDeclaration = 'ClassMethodDeclaration',
     ReturnStatement = 'ReturnStatement',
     IfStatement = 'IfStatement',
+    ElseIfStatement = 'ElseIfStatement',
     ElseStatement = 'ElseStatement',
     SelectStatement = 'SelectStatement',
     CaseStatement = 'CaseStatement',

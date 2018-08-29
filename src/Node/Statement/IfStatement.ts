@@ -38,7 +38,7 @@ export class ElseIfStatement extends Statement {
         'statements',
     ];
 
-    readonly kind = NodeKind.IfStatement;
+    readonly kind = NodeKind.ElseIfStatement;
 
     elseIfKeyword: Token;
     ifKeyword: Token | null = null;
