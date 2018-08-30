@@ -5,6 +5,7 @@ import { FloatLiteral } from './Node/Expression/FloatLiteral';
 import { GroupingExpression } from './Node/Expression/GroupingExpression';
 import { IndexExpression } from './Node/Expression/IndexExpression';
 import { IntegerLiteral } from './Node/Expression/IntegerLiteral';
+import { SelfExpression } from './Node/Expression/SelfExpression';
 import { StringLiteral } from './Node/Expression/StringLiteral';
 import { UnaryOpExpression } from './Node/Expression/UnaryOpExpression';
 import { Variable } from './Node/Expression/Variable';
@@ -145,6 +146,9 @@ export abstract class ParserBase {
             case TokenKind.FloatLiteral: {
                 return this.parseFloatLiteral(parent);
             }
+            case TokenKind.SelfKeyword: {
+                return this.parseSelfExpression(parent);
+            }
         }
 
         console.error(`${JSON.stringify(token.kind)} not implemented.`);
@@ -232,6 +236,14 @@ export abstract class ParserBase {
         floatLiteral.value = this.eat(TokenKind.FloatLiteral);
 
         return floatLiteral;
+    }
+
+    protected parseSelfExpression(parent: Node): SelfExpression {
+        const selfExpression = new SelfExpression();
+        selfExpression.parent = parent;
+        selfExpression.selfKeyword = this.eat(TokenKind.SelfKeyword);
+
+        return selfExpression;
     }
 
     protected parsePostfixExpression(expression: Expressions | MissingToken) {

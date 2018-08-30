@@ -7,6 +7,7 @@ import { IndexExpression } from './IndexExpression';
 import { IntegerLiteral } from './IntegerLiteral';
 import { NewExpression } from './NewExpression';
 import { NullExpression } from './NullExpression';
+import { SelfExpression } from './SelfExpression';
 import { StringLiteral } from './StringLiteral';
 import { UnaryOpExpression } from './UnaryOpExpression';
 import { Variable } from './Variable';
@@ -26,5 +27,6 @@ export type Expressions =
     UnaryOpExpression |
     NewExpression |
     NullExpression |
-    IndexExpression
+    IndexExpression |
+    SelfExpression
     ;
