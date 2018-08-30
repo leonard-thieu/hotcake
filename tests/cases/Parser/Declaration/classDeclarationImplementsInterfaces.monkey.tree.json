@@ -27,20 +27,19 @@
             },
             "implementedTypes": [
                 {
-                    "kind": "DataDeclaration",
-                    "name": {
+                    "kind": "TypeReference",
+                    "modulePath": null,
+                    "scopeMemberAccessOperator": null,
+                    "identifier": {
                         "kind": "Identifier",
                         "fullStart": 22,
                         "start": 23,
                         "length": 9
                     },
-                    "colonEqualsSign": null,
-                    "colon": null,
-                    "longhandType": null,
-                    "shorthandType": null,
-                    "equalsSign": null,
-                    "eachInKeyword": null,
-                    "expression": null
+                    "lessThanSign": null,
+                    "typeArguments": null,
+                    "greaterThanSign": null,
+                    "arrayTypeDeclarations": null
                 },
                 {
                     "kind": "CommaSeparator",
@@ -53,20 +52,19 @@
                     "newlines": []
                 },
                 {
-                    "kind": "DataDeclaration",
-                    "name": {
+                    "kind": "TypeReference",
+                    "modulePath": null,
+                    "scopeMemberAccessOperator": null,
+                    "identifier": {
                         "kind": "Identifier",
                         "fullStart": 32,
                         "start": 32,
                         "length": 8
                     },
-                    "colonEqualsSign": null,
-                    "colon": null,
-                    "longhandType": null,
-                    "shorthandType": null,
-                    "equalsSign": null,
-                    "eachInKeyword": null,
-                    "expression": null
+                    "lessThanSign": null,
+                    "typeArguments": null,
+                    "greaterThanSign": null,
+                    "arrayTypeDeclarations": null
                 }
             ],
             "attributes": [],

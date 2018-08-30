@@ -55,18 +55,19 @@
                             "length": 7
                         },
                         "type": {
-                            "kind": "QualifiedIdentifier",
-                            "modulePath": {
-                                "kind": "ModulePath",
-                                "children": []
-                            },
+                            "kind": "TypeReference",
+                            "modulePath": null,
                             "scopeMemberAccessOperator": null,
                             "identifier": {
                                 "kind": "Identifier",
                                 "fullStart": 24,
                                 "start": 25,
                                 "length": 6
-                            }
+                            },
+                            "lessThanSign": null,
+                            "typeArguments": null,
+                            "greaterThanSign": null,
+                            "arrayTypeDeclarations": null
                         },
                         "openingParenthesis": {
                             "kind": "OpeningParenthesis",

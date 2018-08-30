@@ -22,7 +22,7 @@
                 "length": 1
             },
             "target": {
-                "kind": "QualifiedIdentifier",
+                "kind": "TypeReference",
                 "modulePath": {
                     "kind": "ModulePath",
                     "children": [
@@ -45,7 +45,11 @@
                     "fullStart": 14,
                     "start": 14,
                     "length": 1
-                }
+                },
+                "lessThanSign": null,
+                "typeArguments": null,
+                "greaterThanSign": null,
+                "arrayTypeDeclarations": null
             }
         }
     ]

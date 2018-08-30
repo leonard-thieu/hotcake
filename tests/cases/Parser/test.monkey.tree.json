@@ -345,7 +345,7 @@
                 "length": 1
             },
             "target": {
-                "kind": "QualifiedIdentifier",
+                "kind": "TypeReference",
                 "modulePath": {
                     "kind": "ModulePath",
                     "children": [
@@ -368,7 +368,11 @@
                     "fullStart": 1016,
                     "start": 1016,
                     "length": 1
-                }
+                },
+                "lessThanSign": null,
+                "typeArguments": null,
+                "greaterThanSign": null,
+                "arrayTypeDeclarations": null
             }
         },
         {
@@ -407,21 +411,21 @@
                         "start": 1063,
                         "length": 1
                     },
-                    "longhandType": {
-                        "kind": "QualifiedIdentifier",
-                        "modulePath": {
-                            "kind": "ModulePath",
-                            "children": []
-                        },
+                    "type": {
+                        "kind": "TypeReference",
+                        "modulePath": null,
                         "scopeMemberAccessOperator": null,
                         "identifier": {
                             "kind": "IntKeyword",
                             "fullStart": 1064,
                             "start": 1065,
                             "length": 4
-                        }
+                        },
+                        "lessThanSign": null,
+                        "typeArguments": null,
+                        "greaterThanSign": null,
+                        "arrayTypeDeclarations": null
                     },
-                    "shorthandType": null,
                     "equalsSign": {
                         "kind": "EqualsSign",
                         "fullStart": 1068,
@@ -466,12 +470,20 @@
                     },
                     "colonEqualsSign": null,
                     "colon": null,
-                    "longhandType": null,
-                    "shorthandType": {
-                        "kind": "DollarSign",
-                        "fullStart": 1119,
-                        "start": 1119,
-                        "length": 1
+                    "type": {
+                        "kind": "TypeReference",
+                        "modulePath": null,
+                        "scopeMemberAccessOperator": null,
+                        "identifier": {
+                            "kind": "DollarSign",
+                            "fullStart": 1119,
+                            "start": 1119,
+                            "length": 1
+                        },
+                        "lessThanSign": null,
+                        "typeArguments": null,
+                        "greaterThanSign": null,
+                        "arrayTypeDeclarations": null
                     },
                     "equalsSign": {
                         "kind": "EqualsSign",
@@ -536,8 +548,7 @@
                         "length": 3
                     },
                     "colon": null,
-                    "longhandType": null,
-                    "shorthandType": null,
+                    "type": null,
                     "equalsSign": null,
                     "eachInKeyword": null,
                     "expression": {
@@ -577,8 +588,7 @@
                     },
                     "colonEqualsSign": null,
                     "colon": null,
-                    "longhandType": null,
-                    "shorthandType": null,
+                    "type": null,
                     "equalsSign": {
                         "kind": "EqualsSign",
                         "fullStart": 1218,
@@ -623,8 +633,7 @@
                     },
                     "colonEqualsSign": null,
                     "colon": null,
-                    "longhandType": null,
-                    "shorthandType": null,
+                    "type": null,
                     "equalsSign": {
                         "kind": "EqualsSign",
                         "fullStart": 1262,
@@ -667,8 +676,7 @@
                         "length": 2
                     },
                     "colon": null,
-                    "longhandType": null,
-                    "shorthandType": null,
+                    "type": null,
                     "equalsSign": null,
                     "eachInKeyword": null,
                     "expression": {
@@ -719,21 +727,21 @@
                         "start": 1318,
                         "length": 1
                     },
-                    "longhandType": {
-                        "kind": "QualifiedIdentifier",
-                        "modulePath": {
-                            "kind": "ModulePath",
-                            "children": []
-                        },
+                    "type": {
+                        "kind": "TypeReference",
+                        "modulePath": null,
                         "scopeMemberAccessOperator": null,
                         "identifier": {
                             "kind": "IntKeyword",
                             "fullStart": 1319,
                             "start": 1320,
                             "length": 4
-                        }
+                        },
+                        "lessThanSign": null,
+                        "typeArguments": null,
+                        "greaterThanSign": null,
+                        "arrayTypeDeclarations": null
                     },
-                    "shorthandType": null,
                     "equalsSign": {
                         "kind": "EqualsSign",
                         "fullStart": 1323,
@@ -778,12 +786,20 @@
                     },
                     "colonEqualsSign": null,
                     "colon": null,
-                    "longhandType": null,
-                    "shorthandType": {
-                        "kind": "DollarSign",
-                        "fullStart": 1374,
-                        "start": 1374,
-                        "length": 1
+                    "type": {
+                        "kind": "TypeReference",
+                        "modulePath": null,
+                        "scopeMemberAccessOperator": null,
+                        "identifier": {
+                            "kind": "DollarSign",
+                            "fullStart": 1374,
+                            "start": 1374,
+                            "length": 1
+                        },
+                        "lessThanSign": null,
+                        "typeArguments": null,
+                        "greaterThanSign": null,
+                        "arrayTypeDeclarations": null
                     },
                     "equalsSign": {
                         "kind": "EqualsSign",
@@ -848,8 +864,7 @@
                         "length": 3
                     },
                     "colon": null,
-                    "longhandType": null,
-                    "shorthandType": null,
+                    "type": null,
                     "equalsSign": null,
                     "eachInKeyword": null,
                     "expression": {
@@ -889,8 +904,7 @@
                     },
                     "colonEqualsSign": null,
                     "colon": null,
-                    "longhandType": null,
-                    "shorthandType": null,
+                    "type": null,
                     "equalsSign": {
                         "kind": "EqualsSign",
                         "fullStart": 1473,
@@ -935,8 +949,7 @@
                     },
                     "colonEqualsSign": null,
                     "colon": null,
-                    "longhandType": null,
-                    "shorthandType": null,
+                    "type": null,
                     "equalsSign": {
                         "kind": "EqualsSign",
                         "fullStart": 1517,
@@ -979,8 +992,7 @@
                         "length": 2
                     },
                     "colon": null,
-                    "longhandType": null,
-                    "shorthandType": null,
+                    "type": null,
                     "equalsSign": null,
                     "eachInKeyword": null,
                     "expression": {
@@ -1025,21 +1037,21 @@
                         "start": 1570,
                         "length": 1
                     },
-                    "longhandType": {
-                        "kind": "QualifiedIdentifier",
-                        "modulePath": {
-                            "kind": "ModulePath",
-                            "children": []
-                        },
+                    "type": {
+                        "kind": "TypeReference",
+                        "modulePath": null,
                         "scopeMemberAccessOperator": null,
                         "identifier": {
                             "kind": "FloatKeyword",
                             "fullStart": 1571,
                             "start": 1572,
                             "length": 6
-                        }
+                        },
+                        "lessThanSign": null,
+                        "typeArguments": null,
+                        "greaterThanSign": null,
+                        "arrayTypeDeclarations": null
                     },
-                    "shorthandType": null,
                     "equalsSign": null,
                     "eachInKeyword": null,
                     "expression": null
@@ -1071,8 +1083,7 @@
                     },
                     "colonEqualsSign": null,
                     "colon": null,
-                    "longhandType": null,
-                    "shorthandType": null,
+                    "type": null,
                     "equalsSign": null,
                     "eachInKeyword": null,
                     "expression": null
@@ -1115,21 +1126,21 @@
                         "start": 1711,
                         "length": 1
                     },
-                    "longhandType": {
-                        "kind": "QualifiedIdentifier",
-                        "modulePath": {
-                            "kind": "ModulePath",
-                            "children": []
-                        },
+                    "type": {
+                        "kind": "TypeReference",
+                        "modulePath": null,
                         "scopeMemberAccessOperator": null,
                         "identifier": {
                             "kind": "Identifier",
                             "fullStart": 1712,
                             "start": 1712,
                             "length": 6
-                        }
+                        },
+                        "lessThanSign": null,
+                        "typeArguments": null,
+                        "greaterThanSign": null,
+                        "arrayTypeDeclarations": null
                     },
-                    "shorthandType": null,
                     "equalsSign": {
                         "kind": "EqualsSign",
                         "fullStart": 1718,
@@ -1196,18 +1207,19 @@
                 "length": 1
             },
             "returnType": {
-                "kind": "QualifiedIdentifier",
-                "modulePath": {
-                    "kind": "ModulePath",
-                    "children": []
-                },
+                "kind": "TypeReference",
+                "modulePath": null,
                 "scopeMemberAccessOperator": null,
                 "identifier": {
                     "kind": "VoidKeyword",
                     "fullStart": 1763,
                     "start": 1763,
                     "length": 4
-                }
+                },
+                "lessThanSign": null,
+                "typeArguments": null,
+                "greaterThanSign": null,
+                "arrayTypeDeclarations": null
             },
             "openingParenthesis": {
                 "kind": "OpeningParenthesis",
@@ -1234,21 +1246,21 @@
                             "start": 1775,
                             "length": 1
                         },
-                        "longhandType": {
-                            "kind": "QualifiedIdentifier",
-                            "modulePath": {
-                                "kind": "ModulePath",
-                                "children": []
-                            },
+                        "type": {
+                            "kind": "TypeReference",
+                            "modulePath": null,
                             "scopeMemberAccessOperator": null,
                             "identifier": {
                                 "kind": "IntKeyword",
                                 "fullStart": 1776,
                                 "start": 1776,
                                 "length": 3
-                            }
+                            },
+                            "lessThanSign": null,
+                            "typeArguments": null,
+                            "greaterThanSign": null,
+                            "arrayTypeDeclarations": null
                         },
-                        "shorthandType": null,
                         "equalsSign": null,
                         "eachInKeyword": null,
                         "expression": null
@@ -1342,21 +1354,21 @@
                             "start": 1858,
                             "length": 1
                         },
-                        "longhandType": {
-                            "kind": "QualifiedIdentifier",
-                            "modulePath": {
-                                "kind": "ModulePath",
-                                "children": []
-                            },
+                        "type": {
+                            "kind": "TypeReference",
+                            "modulePath": null,
                             "scopeMemberAccessOperator": null,
                             "identifier": {
                                 "kind": "IntKeyword",
                                 "fullStart": 1859,
                                 "start": 1859,
                                 "length": 3
-                            }
+                            },
+                            "lessThanSign": null,
+                            "typeArguments": null,
+                            "greaterThanSign": null,
+                            "arrayTypeDeclarations": null
                         },
-                        "shorthandType": null,
                         "equalsSign": null,
                         "eachInKeyword": null,
                         "expression": null
@@ -1381,12 +1393,20 @@
                         },
                         "colonEqualsSign": null,
                         "colon": null,
-                        "longhandType": null,
-                        "shorthandType": {
-                            "kind": "QuestionMark",
-                            "fullStart": 1869,
-                            "start": 1869,
-                            "length": 1
+                        "type": {
+                            "kind": "TypeReference",
+                            "modulePath": null,
+                            "scopeMemberAccessOperator": null,
+                            "identifier": {
+                                "kind": "QuestionMark",
+                                "fullStart": 1869,
+                                "start": 1869,
+                                "length": 1
+                            },
+                            "lessThanSign": null,
+                            "typeArguments": null,
+                            "greaterThanSign": null,
+                            "arrayTypeDeclarations": null
                         },
                         "equalsSign": null,
                         "eachInKeyword": null,
@@ -1780,18 +1800,19 @@
                         "length": 1
                     },
                     "returnType": {
-                        "kind": "QualifiedIdentifier",
-                        "modulePath": {
-                            "kind": "ModulePath",
-                            "children": []
-                        },
+                        "kind": "TypeReference",
+                        "modulePath": null,
                         "scopeMemberAccessOperator": null,
                         "identifier": {
                             "kind": "VoidKeyword",
                             "fullStart": 2274,
                             "start": 2275,
                             "length": 5
-                        }
+                        },
+                        "lessThanSign": null,
+                        "typeArguments": null,
+                        "greaterThanSign": null,
+                        "arrayTypeDeclarations": null
                     },
                     "openingParenthesis": {
                         "kind": "OpeningParenthesis",
@@ -1813,12 +1834,20 @@
                                 },
                                 "colonEqualsSign": null,
                                 "colon": null,
-                                "longhandType": null,
-                                "shorthandType": {
-                                    "kind": "QuestionMark",
-                                    "fullStart": 2288,
-                                    "start": 2288,
-                                    "length": 1
+                                "type": {
+                                    "kind": "TypeReference",
+                                    "modulePath": null,
+                                    "scopeMemberAccessOperator": null,
+                                    "identifier": {
+                                        "kind": "QuestionMark",
+                                        "fullStart": 2288,
+                                        "start": 2288,
+                                        "length": 1
+                                    },
+                                    "lessThanSign": null,
+                                    "typeArguments": null,
+                                    "greaterThanSign": null,
+                                    "arrayTypeDeclarations": null
                                 },
                                 "equalsSign": null,
                                 "eachInKeyword": null,
@@ -1849,21 +1878,21 @@
                                     "start": 2295,
                                     "length": 1
                                 },
-                                "longhandType": {
-                                    "kind": "QualifiedIdentifier",
-                                    "modulePath": {
-                                        "kind": "ModulePath",
-                                        "children": []
-                                    },
+                                "type": {
+                                    "kind": "TypeReference",
+                                    "modulePath": null,
                                     "scopeMemberAccessOperator": null,
                                     "identifier": {
                                         "kind": "BoolKeyword",
                                         "fullStart": 2296,
                                         "start": 2296,
                                         "length": 4
-                                    }
+                                    },
+                                    "lessThanSign": null,
+                                    "typeArguments": null,
+                                    "greaterThanSign": null,
+                                    "arrayTypeDeclarations": null
                                 },
-                                "shorthandType": null,
                                 "equalsSign": {
                                     "kind": "EqualsSign",
                                     "fullStart": 2300,
@@ -2023,20 +2052,19 @@
             },
             "baseTypes": [
                 {
-                    "kind": "DataDeclaration",
-                    "name": {
+                    "kind": "TypeReference",
+                    "modulePath": null,
+                    "scopeMemberAccessOperator": null,
+                    "identifier": {
                         "kind": "Identifier",
                         "fullStart": 2413,
                         "start": 2414,
                         "length": 9
                     },
-                    "colonEqualsSign": null,
-                    "colon": null,
-                    "longhandType": null,
-                    "shorthandType": null,
-                    "equalsSign": null,
-                    "eachInKeyword": null,
-                    "expression": null
+                    "lessThanSign": null,
+                    "typeArguments": null,
+                    "greaterThanSign": null,
+                    "arrayTypeDeclarations": null
                 }
             ],
             "members": [
@@ -2070,8 +2098,7 @@
                                 "length": 3
                             },
                             "colon": null,
-                            "longhandType": null,
-                            "shorthandType": null,
+                            "type": null,
                             "equalsSign": null,
                             "eachInKeyword": null,
                             "expression": {
@@ -2186,20 +2213,19 @@
             },
             "baseTypes": [
                 {
-                    "kind": "DataDeclaration",
-                    "name": {
+                    "kind": "TypeReference",
+                    "modulePath": null,
+                    "scopeMemberAccessOperator": null,
+                    "identifier": {
                         "kind": "Identifier",
                         "fullStart": 2574,
                         "start": 2575,
                         "length": 10
                     },
-                    "colonEqualsSign": null,
-                    "colon": null,
-                    "longhandType": null,
-                    "shorthandType": null,
-                    "equalsSign": null,
-                    "eachInKeyword": null,
-                    "expression": null
+                    "lessThanSign": null,
+                    "typeArguments": null,
+                    "greaterThanSign": null,
+                    "arrayTypeDeclarations": null
                 },
                 {
                     "kind": "CommaSeparator",
@@ -2212,20 +2238,19 @@
                     "newlines": []
                 },
                 {
-                    "kind": "DataDeclaration",
-                    "name": {
+                    "kind": "TypeReference",
+                    "modulePath": null,
+                    "scopeMemberAccessOperator": null,
+                    "identifier": {
                         "kind": "Identifier",
                         "fullStart": 2585,
                         "start": 2586,
                         "length": 9
                     },
-                    "colonEqualsSign": null,
-                    "colon": null,
-                    "longhandType": null,
-                    "shorthandType": null,
-                    "equalsSign": null,
-                    "eachInKeyword": null,
-                    "expression": null
+                    "lessThanSign": null,
+                    "typeArguments": null,
+                    "greaterThanSign": null,
+                    "arrayTypeDeclarations": null
                 }
             ],
             "members": [
@@ -2259,8 +2284,7 @@
                                 "length": 3
                             },
                             "colon": null,
-                            "longhandType": null,
-                            "shorthandType": null,
+                            "type": null,
                             "equalsSign": null,
                             "eachInKeyword": null,
                             "expression": {
@@ -2308,18 +2332,19 @@
                         "length": 1
                     },
                     "returnType": {
-                        "kind": "QualifiedIdentifier",
-                        "modulePath": {
-                            "kind": "ModulePath",
-                            "children": []
-                        },
+                        "kind": "TypeReference",
+                        "modulePath": null,
                         "scopeMemberAccessOperator": null,
                         "identifier": {
                             "kind": "VoidKeyword",
                             "fullStart": 2734,
                             "start": 2735,
                             "length": 5
-                        }
+                        },
+                        "lessThanSign": null,
+                        "typeArguments": null,
+                        "greaterThanSign": null,
+                        "arrayTypeDeclarations": null
                     },
                     "openingParenthesis": {
                         "kind": "OpeningParenthesis",
@@ -2341,12 +2366,20 @@
                                 },
                                 "colonEqualsSign": null,
                                 "colon": null,
-                                "longhandType": null,
-                                "shorthandType": {
-                                    "kind": "QuestionMark",
-                                    "fullStart": 2748,
-                                    "start": 2748,
-                                    "length": 1
+                                "type": {
+                                    "kind": "TypeReference",
+                                    "modulePath": null,
+                                    "scopeMemberAccessOperator": null,
+                                    "identifier": {
+                                        "kind": "QuestionMark",
+                                        "fullStart": 2748,
+                                        "start": 2748,
+                                        "length": 1
+                                    },
+                                    "lessThanSign": null,
+                                    "typeArguments": null,
+                                    "greaterThanSign": null,
+                                    "arrayTypeDeclarations": null
                                 },
                                 "equalsSign": null,
                                 "eachInKeyword": null,
@@ -2377,21 +2410,21 @@
                                     "start": 2755,
                                     "length": 1
                                 },
-                                "longhandType": {
-                                    "kind": "QualifiedIdentifier",
-                                    "modulePath": {
-                                        "kind": "ModulePath",
-                                        "children": []
-                                    },
+                                "type": {
+                                    "kind": "TypeReference",
+                                    "modulePath": null,
                                     "scopeMemberAccessOperator": null,
                                     "identifier": {
                                         "kind": "BoolKeyword",
                                         "fullStart": 2756,
                                         "start": 2756,
                                         "length": 4
-                                    }
+                                    },
+                                    "lessThanSign": null,
+                                    "typeArguments": null,
+                                    "greaterThanSign": null,
+                                    "arrayTypeDeclarations": null
                                 },
-                                "shorthandType": null,
                                 "equalsSign": {
                                     "kind": "EqualsSign",
                                     "fullStart": 2760,
@@ -2537,8 +2570,7 @@
                             },
                             "colonEqualsSign": null,
                             "colon": null,
-                            "longhandType": null,
-                            "shorthandType": null,
+                            "type": null,
                             "equalsSign": null,
                             "eachInKeyword": null,
                             "expression": null
@@ -2575,8 +2607,7 @@
                                 "length": 3
                             },
                             "colon": null,
-                            "longhandType": null,
-                            "shorthandType": null,
+                            "type": null,
                             "equalsSign": null,
                             "eachInKeyword": null,
                             "expression": {
@@ -2621,21 +2652,21 @@
                                 "start": 2973,
                                 "length": 1
                             },
-                            "longhandType": {
-                                "kind": "QualifiedIdentifier",
-                                "modulePath": {
-                                    "kind": "ModulePath",
-                                    "children": []
-                                },
+                            "type": {
+                                "kind": "TypeReference",
+                                "modulePath": null,
                                 "scopeMemberAccessOperator": null,
                                 "identifier": {
                                     "kind": "FloatKeyword",
                                     "fullStart": 2974,
                                     "start": 2975,
                                     "length": 6
-                                }
+                                },
+                                "lessThanSign": null,
+                                "typeArguments": null,
+                                "greaterThanSign": null,
+                                "arrayTypeDeclarations": null
                             },
-                            "shorthandType": null,
                             "equalsSign": null,
                             "eachInKeyword": null,
                             "expression": null
@@ -2667,12 +2698,20 @@
                             },
                             "colonEqualsSign": null,
                             "colon": null,
-                            "longhandType": null,
-                            "shorthandType": {
-                                "kind": "DollarSign",
-                                "fullStart": 3021,
-                                "start": 3021,
-                                "length": 1
+                            "type": {
+                                "kind": "TypeReference",
+                                "modulePath": null,
+                                "scopeMemberAccessOperator": null,
+                                "identifier": {
+                                    "kind": "DollarSign",
+                                    "fullStart": 3021,
+                                    "start": 3021,
+                                    "length": 1
+                                },
+                                "lessThanSign": null,
+                                "typeArguments": null,
+                                "greaterThanSign": null,
+                                "arrayTypeDeclarations": null
                             },
                             "equalsSign": {
                                 "kind": "EqualsSign",
@@ -2754,8 +2793,7 @@
                             },
                             "colonEqualsSign": null,
                             "colon": null,
-                            "longhandType": null,
-                            "shorthandType": null,
+                            "type": null,
                             "equalsSign": {
                                 "kind": "EqualsSign",
                                 "fullStart": 3123,
@@ -2822,8 +2860,17 @@
                             },
                             "colonEqualsSign": null,
                             "colon": null,
-                            "longhandType": null,
-                            "shorthandType": null,
+                            "type": {
+                                "kind": "TypeReference",
+                                "modulePath": {
+                                    "kind": "ModulePath",
+                                    "children": []
+                                },
+                                "lessThanSign": null,
+                                "typeArguments": null,
+                                "greaterThanSign": null,
+                                "arrayTypeDeclarations": null
+                            },
                             "equalsSign": null,
                             "eachInKeyword": null,
                             "expression": null
@@ -2848,8 +2895,17 @@
                             },
                             "colonEqualsSign": null,
                             "colon": null,
-                            "longhandType": null,
-                            "shorthandType": null,
+                            "type": {
+                                "kind": "TypeReference",
+                                "modulePath": {
+                                    "kind": "ModulePath",
+                                    "children": []
+                                },
+                                "lessThanSign": null,
+                                "typeArguments": null,
+                                "greaterThanSign": null,
+                                "arrayTypeDeclarations": null
+                            },
                             "equalsSign": null,
                             "eachInKeyword": null,
                             "expression": null
@@ -2874,8 +2930,7 @@
                             },
                             "colonEqualsSign": null,
                             "colon": null,
-                            "longhandType": null,
-                            "shorthandType": null,
+                            "type": null,
                             "equalsSign": null,
                             "eachInKeyword": null,
                             "expression": null
@@ -2929,8 +2984,17 @@
                             },
                             "colonEqualsSign": null,
                             "colon": null,
-                            "longhandType": null,
-                            "shorthandType": null,
+                            "type": {
+                                "kind": "TypeReference",
+                                "modulePath": {
+                                    "kind": "ModulePath",
+                                    "children": []
+                                },
+                                "lessThanSign": null,
+                                "typeArguments": null,
+                                "greaterThanSign": null,
+                                "arrayTypeDeclarations": null
+                            },
                             "equalsSign": null,
                             "eachInKeyword": null,
                             "expression": null
@@ -2955,8 +3019,17 @@
                             },
                             "colonEqualsSign": null,
                             "colon": null,
-                            "longhandType": null,
-                            "shorthandType": null,
+                            "type": {
+                                "kind": "TypeReference",
+                                "modulePath": {
+                                    "kind": "ModulePath",
+                                    "children": []
+                                },
+                                "lessThanSign": null,
+                                "typeArguments": null,
+                                "greaterThanSign": null,
+                                "arrayTypeDeclarations": null
+                            },
                             "equalsSign": null,
                             "eachInKeyword": null,
                             "expression": null
@@ -2981,8 +3054,7 @@
                             },
                             "colonEqualsSign": null,
                             "colon": null,
-                            "longhandType": null,
-                            "shorthandType": null,
+                            "type": null,
                             "equalsSign": null,
                             "eachInKeyword": null,
                             "expression": null
@@ -3281,21 +3353,21 @@
                                     "start": 3656,
                                     "length": 1
                                 },
-                                "longhandType": {
-                                    "kind": "QualifiedIdentifier",
-                                    "modulePath": {
-                                        "kind": "ModulePath",
-                                        "children": []
-                                    },
+                                "type": {
+                                    "kind": "TypeReference",
+                                    "modulePath": null,
                                     "scopeMemberAccessOperator": null,
                                     "identifier": {
                                         "kind": "Identifier",
                                         "fullStart": 3657,
                                         "start": 3657,
                                         "length": 1
-                                    }
+                                    },
+                                    "lessThanSign": null,
+                                    "typeArguments": null,
+                                    "greaterThanSign": null,
+                                    "arrayTypeDeclarations": null
                                 },
-                                "shorthandType": null,
                                 "equalsSign": null,
                                 "eachInKeyword": null,
                                 "expression": null
@@ -3375,18 +3447,19 @@
                         "length": 1
                     },
                     "returnType": {
-                        "kind": "QualifiedIdentifier",
-                        "modulePath": {
-                            "kind": "ModulePath",
-                            "children": []
-                        },
+                        "kind": "TypeReference",
+                        "modulePath": null,
                         "scopeMemberAccessOperator": null,
                         "identifier": {
                             "kind": "Identifier",
                             "fullStart": 3717,
                             "start": 3717,
                             "length": 1
-                        }
+                        },
+                        "lessThanSign": null,
+                        "typeArguments": null,
+                        "greaterThanSign": null,
+                        "arrayTypeDeclarations": null
                     },
                     "openingParenthesis": {
                         "kind": "OpeningParenthesis",
@@ -3470,21 +3543,21 @@
                                 "start": 3772,
                                 "length": 1
                             },
-                            "longhandType": {
-                                "kind": "QualifiedIdentifier",
-                                "modulePath": {
-                                    "kind": "ModulePath",
-                                    "children": []
-                                },
+                            "type": {
+                                "kind": "TypeReference",
+                                "modulePath": null,
                                 "scopeMemberAccessOperator": null,
                                 "identifier": {
                                     "kind": "Identifier",
                                     "fullStart": 3773,
                                     "start": 3773,
                                     "length": 1
-                                }
+                                },
+                                "lessThanSign": null,
+                                "typeArguments": null,
+                                "greaterThanSign": null,
+                                "arrayTypeDeclarations": null
                             },
-                            "shorthandType": null,
                             "equalsSign": null,
                             "eachInKeyword": null,
                             "expression": null
@@ -3878,20 +3951,19 @@
             },
             "implementedTypes": [
                 {
-                    "kind": "DataDeclaration",
-                    "name": {
+                    "kind": "TypeReference",
+                    "modulePath": null,
+                    "scopeMemberAccessOperator": null,
+                    "identifier": {
                         "kind": "Identifier",
                         "fullStart": 4200,
                         "start": 4201,
                         "length": 9
                     },
-                    "colonEqualsSign": null,
-                    "colon": null,
-                    "longhandType": null,
-                    "shorthandType": null,
-                    "equalsSign": null,
-                    "eachInKeyword": null,
-                    "expression": null
+                    "lessThanSign": null,
+                    "typeArguments": null,
+                    "greaterThanSign": null,
+                    "arrayTypeDeclarations": null
                 }
             ],
             "attributes": [],
@@ -3975,20 +4047,19 @@
             },
             "implementedTypes": [
                 {
-                    "kind": "DataDeclaration",
-                    "name": {
+                    "kind": "TypeReference",
+                    "modulePath": null,
+                    "scopeMemberAccessOperator": null,
+                    "identifier": {
                         "kind": "Identifier",
                         "fullStart": 4321,
                         "start": 4322,
                         "length": 9
                     },
-                    "colonEqualsSign": null,
-                    "colon": null,
-                    "longhandType": null,
-                    "shorthandType": null,
-                    "equalsSign": null,
-                    "eachInKeyword": null,
-                    "expression": null
+                    "lessThanSign": null,
+                    "typeArguments": null,
+                    "greaterThanSign": null,
+                    "arrayTypeDeclarations": null
                 }
             ],
             "attributes": [
@@ -4079,20 +4150,19 @@
             },
             "implementedTypes": [
                 {
-                    "kind": "DataDeclaration",
-                    "name": {
+                    "kind": "TypeReference",
+                    "modulePath": null,
+                    "scopeMemberAccessOperator": null,
+                    "identifier": {
                         "kind": "Identifier",
                         "fullStart": 4458,
                         "start": 4459,
                         "length": 9
                     },
-                    "colonEqualsSign": null,
-                    "colon": null,
-                    "longhandType": null,
-                    "shorthandType": null,
-                    "equalsSign": null,
-                    "eachInKeyword": null,
-                    "expression": null
+                    "lessThanSign": null,
+                    "typeArguments": null,
+                    "greaterThanSign": null,
+                    "arrayTypeDeclarations": null
                 },
                 {
                     "kind": "CommaSeparator",
@@ -4105,20 +4175,19 @@
                     "newlines": []
                 },
                 {
-                    "kind": "DataDeclaration",
-                    "name": {
+                    "kind": "TypeReference",
+                    "modulePath": null,
+                    "scopeMemberAccessOperator": null,
+                    "identifier": {
                         "kind": "Identifier",
                         "fullStart": 4468,
                         "start": 4468,
                         "length": 8
                     },
-                    "colonEqualsSign": null,
-                    "colon": null,
-                    "longhandType": null,
-                    "shorthandType": null,
-                    "equalsSign": null,
-                    "eachInKeyword": null,
-                    "expression": null
+                    "lessThanSign": null,
+                    "typeArguments": null,
+                    "greaterThanSign": null,
+                    "arrayTypeDeclarations": null
                 }
             ],
             "attributes": [],
@@ -4207,20 +4276,19 @@
             },
             "implementedTypes": [
                 {
-                    "kind": "DataDeclaration",
-                    "name": {
+                    "kind": "TypeReference",
+                    "modulePath": null,
+                    "scopeMemberAccessOperator": null,
+                    "identifier": {
                         "kind": "Identifier",
                         "fullStart": 4596,
                         "start": 4597,
                         "length": 9
                     },
-                    "colonEqualsSign": null,
-                    "colon": null,
-                    "longhandType": null,
-                    "shorthandType": null,
-                    "equalsSign": null,
-                    "eachInKeyword": null,
-                    "expression": null
+                    "lessThanSign": null,
+                    "typeArguments": null,
+                    "greaterThanSign": null,
+                    "arrayTypeDeclarations": null
                 },
                 {
                     "kind": "CommaSeparator",
@@ -4233,20 +4301,19 @@
                     "newlines": []
                 },
                 {
-                    "kind": "DataDeclaration",
-                    "name": {
+                    "kind": "TypeReference",
+                    "modulePath": null,
+                    "scopeMemberAccessOperator": null,
+                    "identifier": {
                         "kind": "Identifier",
                         "fullStart": 4606,
                         "start": 4606,
                         "length": 8
                     },
-                    "colonEqualsSign": null,
-                    "colon": null,
-                    "longhandType": null,
-                    "shorthandType": null,
-                    "equalsSign": null,
-                    "eachInKeyword": null,
-                    "expression": null
+                    "lessThanSign": null,
+                    "typeArguments": null,
+                    "greaterThanSign": null,
+                    "arrayTypeDeclarations": null
                 }
             ],
             "attributes": [],
@@ -4340,20 +4407,19 @@
             },
             "implementedTypes": [
                 {
-                    "kind": "DataDeclaration",
-                    "name": {
+                    "kind": "TypeReference",
+                    "modulePath": null,
+                    "scopeMemberAccessOperator": null,
+                    "identifier": {
                         "kind": "Identifier",
                         "fullStart": 4748,
                         "start": 4749,
                         "length": 9
                     },
-                    "colonEqualsSign": null,
-                    "colon": null,
-                    "longhandType": null,
-                    "shorthandType": null,
-                    "equalsSign": null,
-                    "eachInKeyword": null,
-                    "expression": null
+                    "lessThanSign": null,
+                    "typeArguments": null,
+                    "greaterThanSign": null,
+                    "arrayTypeDeclarations": null
                 },
                 {
                     "kind": "CommaSeparator",
@@ -4366,20 +4432,19 @@
                     "newlines": []
                 },
                 {
-                    "kind": "DataDeclaration",
-                    "name": {
+                    "kind": "TypeReference",
+                    "modulePath": null,
+                    "scopeMemberAccessOperator": null,
+                    "identifier": {
                         "kind": "Identifier",
                         "fullStart": 4758,
                         "start": 4758,
                         "length": 8
                     },
-                    "colonEqualsSign": null,
-                    "colon": null,
-                    "longhandType": null,
-                    "shorthandType": null,
-                    "equalsSign": null,
-                    "eachInKeyword": null,
-                    "expression": null
+                    "lessThanSign": null,
+                    "typeArguments": null,
+                    "greaterThanSign": null,
+                    "arrayTypeDeclarations": null
                 }
             ],
             "attributes": [
@@ -4470,21 +4535,21 @@
                             "start": 4891,
                             "length": 1
                         },
-                        "longhandType": {
-                            "kind": "QualifiedIdentifier",
-                            "modulePath": {
-                                "kind": "ModulePath",
-                                "children": []
-                            },
+                        "type": {
+                            "kind": "TypeReference",
+                            "modulePath": null,
                             "scopeMemberAccessOperator": null,
                             "identifier": {
                                 "kind": "StringKeyword",
                                 "fullStart": 4892,
                                 "start": 4893,
                                 "length": 7
-                            }
+                            },
+                            "lessThanSign": null,
+                            "typeArguments": null,
+                            "greaterThanSign": null,
+                            "arrayTypeDeclarations": null
                         },
-                        "shorthandType": null,
                         "equalsSign": null,
                         "eachInKeyword": null,
                         "expression": null
@@ -5370,21 +5435,21 @@
                             "start": 5640,
                             "length": 1
                         },
-                        "longhandType": {
-                            "kind": "QualifiedIdentifier",
-                            "modulePath": {
-                                "kind": "ModulePath",
-                                "children": []
-                            },
+                        "type": {
+                            "kind": "TypeReference",
+                            "modulePath": null,
                             "scopeMemberAccessOperator": null,
                             "identifier": {
                                 "kind": "StringKeyword",
                                 "fullStart": 5641,
                                 "start": 5642,
                                 "length": 7
-                            }
+                            },
+                            "lessThanSign": null,
+                            "typeArguments": null,
+                            "greaterThanSign": null,
+                            "arrayTypeDeclarations": null
                         },
-                        "shorthandType": null,
                         "equalsSign": null,
                         "eachInKeyword": null,
                         "expression": null
@@ -6588,21 +6653,21 @@
                                     "start": 6802,
                                     "length": 1
                                 },
-                                "longhandType": {
-                                    "kind": "QualifiedIdentifier",
-                                    "modulePath": {
-                                        "kind": "ModulePath",
-                                        "children": []
-                                    },
+                                "type": {
+                                    "kind": "TypeReference",
+                                    "modulePath": null,
                                     "scopeMemberAccessOperator": null,
                                     "identifier": {
                                         "kind": "FloatKeyword",
                                         "fullStart": 6803,
                                         "start": 6804,
                                         "length": 6
-                                    }
+                                    },
+                                    "lessThanSign": null,
+                                    "typeArguments": null,
+                                    "greaterThanSign": null,
+                                    "arrayTypeDeclarations": null
                                 },
-                                "shorthandType": null,
                                 "equalsSign": null,
                                 "eachInKeyword": null,
                                 "expression": null

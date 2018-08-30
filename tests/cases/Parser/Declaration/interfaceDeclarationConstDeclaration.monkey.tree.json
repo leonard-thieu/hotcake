@@ -43,8 +43,7 @@
                             },
                             "colonEqualsSign": null,
                             "colon": null,
-                            "longhandType": null,
-                            "shorthandType": null,
+                            "type": null,
                             "equalsSign": {
                                 "kind": "EqualsSign",
                                 "fullStart": 35,

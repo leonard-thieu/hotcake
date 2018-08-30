@@ -53,21 +53,21 @@
                                 "start": 27,
                                 "length": 1
                             },
-                            "longhandType": {
-                                "kind": "QualifiedIdentifier",
-                                "modulePath": {
-                                    "kind": "ModulePath",
-                                    "children": []
-                                },
+                            "type": {
+                                "kind": "TypeReference",
+                                "modulePath": null,
                                 "scopeMemberAccessOperator": null,
                                 "identifier": {
                                     "kind": "StringKeyword",
                                     "fullStart": 28,
                                     "start": 29,
                                     "length": 7
-                                }
+                                },
+                                "lessThanSign": null,
+                                "typeArguments": null,
+                                "greaterThanSign": null,
+                                "arrayTypeDeclarations": null
                             },
-                            "shorthandType": null,
                             "equalsSign": null,
                             "eachInKeyword": null,
                             "expression": null
