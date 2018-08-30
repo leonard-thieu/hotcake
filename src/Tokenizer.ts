@@ -1,4 +1,4 @@
-import { assertNever } from './assertNever';
+import { assertNever, assertType } from './assertNever';
 import { PreprocessorModuleDeclaration } from './Node/Declaration/PreprocessorModuleDeclaration';
 import { IfDirective } from './Node/Directive/IfDirective';
 import { Expressions, isExpressionMissingToken } from './Node/Expression/Expression';
@@ -33,12 +33,6 @@ export class Tokenizer {
 
     private * readMember(members: PreprocessorParseContextElementArray<PreprocessorModuleDeclaration['kind']>): IterableIterator<Token> {
         for (const member of members) {
-            if (member instanceof Token) {
-                yield member;
-
-                continue;
-            }
-
             switch (member.kind) {
                 case NodeKind.IfDirective: {
                     let branchMembers: PreprocessorParseContextElementArray<IfDirective['kind']> | undefined;
@@ -111,7 +105,9 @@ export class Tokenizer {
                     break;
                 }
                 default: {
-                    assertNever(member);
+                    assertType<Token>(member);
+                    yield member;
+                    
                     break;
                 }
             }
