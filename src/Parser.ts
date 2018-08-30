@@ -455,7 +455,10 @@ export class Parser extends ParserBase {
         const returnStatement = new ReturnStatement();
         returnStatement.parent = parent;
         returnStatement.returnKeyword = this.eat(TokenKind.ReturnKeyword);
-        returnStatement.expression = this.parseExpression(returnStatement);
+        // TODO: Is there sufficient information at this point to determine whether the return expression is required?
+        if (this.isExpressionStart(this.getToken())) {
+            returnStatement.expression = this.parseExpression(returnStatement);
+        }
         returnStatement.terminator = this.eatStatementTerminator();
 
         return returnStatement;
