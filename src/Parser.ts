@@ -14,6 +14,7 @@ import { InterfaceMethodDeclaration } from './Node/Declaration/InterfaceMethodDe
 import { ModuleDeclaration } from './Node/Declaration/ModuleDeclaration';
 import { StrictDirective } from './Node/Declaration/StrictDirective';
 import { BinaryExpression } from './Node/Expression/BinaryExpression';
+import { NewExpression } from './Node/Expression/NewExpression';
 import { ModulePath } from './Node/ModulePath';
 import { Node } from './Node/Node';
 import { NodeKind } from './Node/NodeKind';
@@ -1238,10 +1239,6 @@ export class Parser extends ParserBase {
         return false;
     }
 
-    private eatStatementTerminator(): Token {
-        return this.eat(TokenKind.Newline, TokenKind.Semicolon);
-    }
-
     private parseCore(parent: Node) {
         const token = this.getToken();
         switch (token.kind) {
@@ -1256,6 +1253,33 @@ export class Parser extends ParserBase {
             kind: null,
         };
         throw new Error(`Unexpected token: ${JSON.stringify(token.kind)} in ${JSON.stringify(p.kind)}`);
+    }
+
+    protected parsePrimaryExpression(parent: Node) {
+        const token = this.getToken();
+        switch (token.kind) {
+            case TokenKind.NewKeyword: {
+                return this.parseNewExpression(parent);
+            }
+        }
+
+        return super.parsePrimaryExpression(parent);
+    }
+
+    private parseNewExpression(parent: Node): NewExpression {
+        const newExpression = new NewExpression();
+        newExpression.parent = parent;
+        newExpression.newKeyword = this.eat(TokenKind.NewKeyword);
+        newExpression.type = this.parseQualifiedIdentifier(newExpression);
+        newExpression.openingParenthesis = this.eatOptional(TokenKind.OpeningParenthesis);
+        newExpression.arguments = this.parseList(newExpression, ParseContextKind.ExpressionSequence);
+        newExpression.closingParenthesis = this.eatOptional(TokenKind.ClosingParenthesis);
+
+        return newExpression;
+    }
+
+    private eatStatementTerminator(): Token {
+        return this.eat(TokenKind.Newline, TokenKind.Semicolon);
     }
 
     // #endregion

@@ -144,7 +144,7 @@ export abstract class ParserBase {
             }
         }
 
-        console.log(`${JSON.stringify(token.kind)} not implemented.`);
+        console.error(`${JSON.stringify(token.kind)} not implemented.`);
 
         return new MissingToken(TokenKind.Expression, token.fullStart)
     }

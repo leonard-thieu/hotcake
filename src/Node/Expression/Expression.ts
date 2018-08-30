@@ -4,6 +4,7 @@ import { BooleanLiteral } from './BooleanLiteral';
 import { FloatLiteral } from './FloatLiteral';
 import { GroupingExpression } from './GroupingExpression';
 import { IntegerLiteral } from './IntegerLiteral';
+import { NewExpression } from './NewExpression';
 import { StringLiteral } from './StringLiteral';
 import { UnaryOpExpression } from './UnaryOpExpression';
 import { Variable } from './Variable';
@@ -20,5 +21,6 @@ export type Expressions =
     Variable |
     BinaryExpression |
     GroupingExpression |
-    UnaryOpExpression
+    UnaryOpExpression |
+    NewExpression
     ;
