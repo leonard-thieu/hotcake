@@ -1,0 +1,47 @@
+{
+    "kind": "ModuleDeclaration",
+    "members": [
+        {
+            "kind": "ClassDeclaration",
+            "classKeyword": {
+                "kind": "ClassKeyword",
+                "fullStart": 0,
+                "start": 0,
+                "length": 5
+            },
+            "name": {
+                "kind": "Identifier",
+                "fullStart": 5,
+                "start": 6,
+                "length": 6
+            },
+            "lessThanSign": null,
+            "typeParameters": null,
+            "greaterThanSign": null,
+            "extendsKeyword": null,
+            "implementsKeyword": null,
+            "implementedTypes": null,
+            "attributes": [],
+            "members": [
+                {
+                    "kind": "Newline",
+                    "fullStart": 11,
+                    "start": 12,
+                    "length": 2
+                }
+            ],
+            "endKeyword": {
+                "kind": "EndKeyword",
+                "fullStart": 13,
+                "start": 13,
+                "length": 3
+            },
+            "endClassKeyword": {
+                "kind": "ClassKeyword",
+                "fullStart": 16,
+                "start": 17,
+                "length": 6
+            }
+        }
+    ]
+}

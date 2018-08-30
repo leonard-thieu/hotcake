@@ -1,0 +1,38 @@
+{
+    "kind": "ModuleDeclaration",
+    "members": [
+        {
+            "kind": "ImportStatement",
+            "importKeyword": {
+                "kind": "ImportKeyword",
+                "fullStart": 0,
+                "start": 0,
+                "length": 6
+            },
+            "modulePath": null,
+            "nativeFilePath": {
+                "kind": "StringLiteral",
+                "startQuote": {
+                    "kind": "QuotationMark",
+                    "fullStart": 6,
+                    "start": 7,
+                    "length": 2
+                },
+                "children": [
+                    {
+                        "kind": "StringLiteralText",
+                        "fullStart": 8,
+                        "start": 8,
+                        "length": 16
+                    }
+                ],
+                "endQuote": {
+                    "kind": "QuotationMark",
+                    "fullStart": 24,
+                    "start": 24,
+                    "length": 1
+                }
+            }
+        }
+    ]
+}

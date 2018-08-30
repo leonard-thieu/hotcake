@@ -1,0 +1,93 @@
+{
+    "kind": "ModuleDeclaration",
+    "members": [
+        {
+            "kind": "ClassDeclaration",
+            "classKeyword": {
+                "kind": "ClassKeyword",
+                "fullStart": 0,
+                "start": 0,
+                "length": 5
+            },
+            "name": {
+                "kind": "Identifier",
+                "fullStart": 5,
+                "start": 6,
+                "length": 6
+            },
+            "lessThanSign": null,
+            "typeParameters": null,
+            "greaterThanSign": null,
+            "extendsKeyword": null,
+            "implementsKeyword": null,
+            "implementedTypes": null,
+            "attributes": [],
+            "members": [
+                {
+                    "kind": "Newline",
+                    "fullStart": 11,
+                    "start": 12,
+                    "length": 2
+                },
+                {
+                    "kind": "DataDeclarationList",
+                    "dataDeclarationKeyword": {
+                        "kind": "GlobalKeyword",
+                        "fullStart": 13,
+                        "start": 17,
+                        "length": 10
+                    },
+                    "children": [
+                        {
+                            "kind": "DataDeclaration",
+                            "name": {
+                                "kind": "Identifier",
+                                "fullStart": 23,
+                                "start": 24,
+                                "length": 10
+                            },
+                            "colonEqualsSign": null,
+                            "colon": null,
+                            "longhandType": null,
+                            "shorthandType": {
+                                "kind": "PercentSign",
+                                "fullStart": 33,
+                                "start": 33,
+                                "length": 1
+                            },
+                            "equalsSign": {
+                                "kind": "EqualsSign",
+                                "fullStart": 34,
+                                "start": 35,
+                                "length": 2
+                            },
+                            "eachInKeyword": null,
+                            "expression": {
+                                "kind": "IntegerLiteral",
+                                "value": {
+                                    "kind": "IntegerLiteral",
+                                    "fullStart": 36,
+                                    "start": 37,
+                                    "length": 2
+                                }
+                            }
+                        }
+                    ]
+                },
+                {
+                    "kind": "Newline",
+                    "fullStart": 38,
+                    "start": 39,
+                    "length": 2
+                }
+            ],
+            "endKeyword": {
+                "kind": "EndKeyword",
+                "fullStart": 40,
+                "start": 40,
+                "length": 3
+            },
+            "endClassKeyword": null
+        }
+    ]
+}

@@ -1,0 +1,83 @@
+{
+    "kind": "ModuleDeclaration",
+    "members": [
+        {
+            "kind": "InterfaceDeclaration",
+            "interfaceKeyword": {
+                "kind": "InterfaceKeyword",
+                "fullStart": 0,
+                "start": 0,
+                "length": 9
+            },
+            "name": {
+                "kind": "Identifier",
+                "fullStart": 9,
+                "start": 10,
+                "length": 9
+            },
+            "extendsKeyword": null,
+            "baseTypes": null,
+            "members": [
+                {
+                    "kind": "Newline",
+                    "fullStart": 18,
+                    "start": 19,
+                    "length": 2
+                },
+                {
+                    "kind": "DataDeclarationList",
+                    "dataDeclarationKeyword": {
+                        "kind": "ConstKeyword",
+                        "fullStart": 20,
+                        "start": 24,
+                        "length": 9
+                    },
+                    "children": [
+                        {
+                            "kind": "DataDeclaration",
+                            "name": {
+                                "kind": "Identifier",
+                                "fullStart": 29,
+                                "start": 30,
+                                "length": 6
+                            },
+                            "colonEqualsSign": null,
+                            "colon": null,
+                            "longhandType": null,
+                            "shorthandType": null,
+                            "equalsSign": {
+                                "kind": "EqualsSign",
+                                "fullStart": 35,
+                                "start": 35,
+                                "length": 1
+                            },
+                            "eachInKeyword": null,
+                            "expression": {
+                                "kind": "FloatLiteral",
+                                "value": {
+                                    "kind": "FloatLiteral",
+                                    "fullStart": 36,
+                                    "start": 36,
+                                    "length": 3
+                                }
+                            }
+                        }
+                    ]
+                },
+                {
+                    "kind": "Newline",
+                    "fullStart": 39,
+                    "start": 40,
+                    "length": 2
+                }
+            ],
+            "endKeyword": {
+                "kind": "EndKeyword",
+                "fullStart": 41,
+                "start": 41,
+                "length": 3
+            },
+            "endInterfaceKeyword": null
+        }
+    ]
+}

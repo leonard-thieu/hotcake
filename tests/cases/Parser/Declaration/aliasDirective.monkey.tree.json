@@ -1,0 +1,52 @@
+{
+    "kind": "ModuleDeclaration",
+    "members": [
+        {
+            "kind": "AliasDirective",
+            "aliasKeyword": {
+                "kind": "AliasKeyword",
+                "fullStart": 0,
+                "start": 0,
+                "length": 5
+            },
+            "name": {
+                "kind": "Identifier",
+                "fullStart": 5,
+                "start": 6,
+                "length": 2
+            },
+            "equalsSign": {
+                "kind": "EqualsSign",
+                "fullStart": 7,
+                "start": 7,
+                "length": 1
+            },
+            "target": {
+                "kind": "QualifiedIdentifier",
+                "modulePath": {
+                    "kind": "ModulePath",
+                    "children": [
+                        {
+                            "kind": "Identifier",
+                            "fullStart": 8,
+                            "start": 8,
+                            "length": 5
+                        }
+                    ]
+                },
+                "scopeMemberAccessOperator": {
+                    "kind": "Period",
+                    "fullStart": 13,
+                    "start": 13,
+                    "length": 1
+                },
+                "identifier": {
+                    "kind": "Identifier",
+                    "fullStart": 14,
+                    "start": 14,
+                    "length": 1
+                }
+            }
+        }
+    ]
+}

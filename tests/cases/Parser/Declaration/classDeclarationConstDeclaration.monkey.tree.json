@@ -1,0 +1,107 @@
+{
+    "kind": "ModuleDeclaration",
+    "members": [
+        {
+            "kind": "ClassDeclaration",
+            "classKeyword": {
+                "kind": "ClassKeyword",
+                "fullStart": 0,
+                "start": 0,
+                "length": 5
+            },
+            "name": {
+                "kind": "Identifier",
+                "fullStart": 5,
+                "start": 6,
+                "length": 6
+            },
+            "lessThanSign": null,
+            "typeParameters": null,
+            "greaterThanSign": null,
+            "extendsKeyword": null,
+            "implementsKeyword": null,
+            "implementedTypes": null,
+            "attributes": [],
+            "members": [
+                {
+                    "kind": "Newline",
+                    "fullStart": 11,
+                    "start": 12,
+                    "length": 2
+                },
+                {
+                    "kind": "DataDeclarationList",
+                    "dataDeclarationKeyword": {
+                        "kind": "ConstKeyword",
+                        "fullStart": 13,
+                        "start": 17,
+                        "length": 9
+                    },
+                    "children": [
+                        {
+                            "kind": "DataDeclaration",
+                            "name": {
+                                "kind": "Identifier",
+                                "fullStart": 22,
+                                "start": 23,
+                                "length": 13
+                            },
+                            "colonEqualsSign": null,
+                            "colon": null,
+                            "longhandType": null,
+                            "shorthandType": {
+                                "kind": "DollarSign",
+                                "fullStart": 35,
+                                "start": 35,
+                                "length": 1
+                            },
+                            "equalsSign": {
+                                "kind": "EqualsSign",
+                                "fullStart": 36,
+                                "start": 36,
+                                "length": 1
+                            },
+                            "eachInKeyword": null,
+                            "expression": {
+                                "kind": "StringLiteral",
+                                "startQuote": {
+                                    "kind": "QuotationMark",
+                                    "fullStart": 37,
+                                    "start": 37,
+                                    "length": 1
+                                },
+                                "children": [
+                                    {
+                                        "kind": "StringLiteralText",
+                                        "fullStart": 38,
+                                        "start": 38,
+                                        "length": 4
+                                    }
+                                ],
+                                "endQuote": {
+                                    "kind": "QuotationMark",
+                                    "fullStart": 42,
+                                    "start": 42,
+                                    "length": 1
+                                }
+                            }
+                        }
+                    ]
+                },
+                {
+                    "kind": "Newline",
+                    "fullStart": 43,
+                    "start": 44,
+                    "length": 2
+                }
+            ],
+            "endKeyword": {
+                "kind": "EndKeyword",
+                "fullStart": 45,
+                "start": 45,
+                "length": 3
+            },
+            "endClassKeyword": null
+        }
+    ]
+}

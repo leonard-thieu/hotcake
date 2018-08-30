@@ -1,0 +1,100 @@
+{
+    "kind": "ModuleDeclaration",
+    "members": [
+        {
+            "kind": "ClassDeclaration",
+            "classKeyword": {
+                "kind": "ClassKeyword",
+                "fullStart": 0,
+                "start": 0,
+                "length": 5
+            },
+            "name": {
+                "kind": "Identifier",
+                "fullStart": 5,
+                "start": 6,
+                "length": 6
+            },
+            "lessThanSign": null,
+            "typeParameters": null,
+            "greaterThanSign": null,
+            "extendsKeyword": null,
+            "implementsKeyword": null,
+            "implementedTypes": null,
+            "attributes": [],
+            "members": [
+                {
+                    "kind": "Newline",
+                    "fullStart": 11,
+                    "start": 12,
+                    "length": 2
+                },
+                {
+                    "kind": "FunctionDeclaration",
+                    "functionKeyword": {
+                        "kind": "FunctionKeyword",
+                        "fullStart": 13,
+                        "start": 17,
+                        "length": 12
+                    },
+                    "name": {
+                        "kind": "Identifier",
+                        "fullStart": 25,
+                        "start": 26,
+                        "length": 7
+                    },
+                    "colon": null,
+                    "returnType": null,
+                    "openingParenthesis": {
+                        "kind": "OpeningParenthesis",
+                        "fullStart": 32,
+                        "start": 32,
+                        "length": 1
+                    },
+                    "parameters": {
+                        "kind": "DataDeclarationList",
+                        "dataDeclarationKeyword": null,
+                        "children": []
+                    },
+                    "closingParenthesis": {
+                        "kind": "ClosingParenthesis",
+                        "fullStart": 33,
+                        "start": 33,
+                        "length": 1
+                    },
+                    "statements": [
+                        {
+                            "kind": "EmptyStatement",
+                            "terminator": {
+                                "kind": "Newline",
+                                "fullStart": 34,
+                                "start": 35,
+                                "length": 2
+                            }
+                        }
+                    ],
+                    "endKeyword": {
+                        "kind": "EndKeyword",
+                        "fullStart": 36,
+                        "start": 40,
+                        "length": 7
+                    },
+                    "endFunctionKeyword": null
+                },
+                {
+                    "kind": "Newline",
+                    "fullStart": 43,
+                    "start": 44,
+                    "length": 2
+                }
+            ],
+            "endKeyword": {
+                "kind": "EndKeyword",
+                "fullStart": 45,
+                "start": 45,
+                "length": 3
+            },
+            "endClassKeyword": null
+        }
+    ]
+}
