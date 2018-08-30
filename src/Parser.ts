@@ -24,6 +24,7 @@ import { ExitStatement } from './Node/Statement/ExitStatement';
 import { ExpressionStatement } from './Node/Statement/ExpressionStatement';
 import { ForLoop, NumericForLoopHeader } from './Node/Statement/ForLoop';
 import { ElseIfStatement, ElseStatement, IfStatement } from './Node/Statement/IfStatement';
+import { LocalDeclarationListStatement } from './Node/Statement/LocalDeclarationListStatement';
 import { RepeatLoop } from './Node/Statement/RepeatLoop';
 import { ReturnStatement } from './Node/Statement/ReturnStatement';
 import { CaseStatement, DefaultStatement, SelectStatement } from './Node/Statement/SelectStatement';
@@ -392,7 +393,7 @@ export class Parser extends ParserBase {
         const token = this.getToken();
         switch (token.kind) {
             case TokenKind.LocalKeyword: {
-                return this.parseDataDeclarationList(parent);
+                return this.parseLocalDeclarationListStatement(parent);
             }
             case TokenKind.ReturnKeyword: {
                 return this.parseReturnStatement(parent);
@@ -437,6 +438,15 @@ export class Parser extends ParserBase {
         }
 
         return this.parseExpressionStatement(parent);
+    }
+
+    private parseLocalDeclarationListStatement(parent: Node): LocalDeclarationListStatement {
+        const localDeclarationListStatement = new LocalDeclarationListStatement();
+        localDeclarationListStatement.parent = parent;
+        localDeclarationListStatement.localDeclarationList = this.parseDataDeclarationList(localDeclarationListStatement);
+        localDeclarationListStatement.terminator = this.eatStatementTerminator();
+
+        return localDeclarationListStatement;
     }
 
     private parseReturnStatement(parent: Node): ReturnStatement {

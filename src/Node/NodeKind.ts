@@ -25,6 +25,7 @@ export enum NodeKind {
 
     InterfaceMethodDeclaration = 'InterfaceMethodDeclaration',
     ClassMethodDeclaration = 'ClassMethodDeclaration',
+    LocalDeclarationListStatement = 'LocalDeclarationListStatement',
     ReturnStatement = 'ReturnStatement',
     IfStatement = 'IfStatement',
     ElseIfStatement = 'ElseIfStatement',
