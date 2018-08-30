@@ -15,6 +15,7 @@ import { ModuleDeclaration } from './Node/Declaration/ModuleDeclaration';
 import { StrictDirective } from './Node/Declaration/StrictDirective';
 import { BinaryExpression } from './Node/Expression/BinaryExpression';
 import { NewExpression } from './Node/Expression/NewExpression';
+import { NullExpression } from './Node/Expression/NullExpression';
 import { ModulePath } from './Node/ModulePath';
 import { Node } from './Node/Node';
 import { NodeKind } from './Node/NodeKind';
@@ -1261,6 +1262,9 @@ export class Parser extends ParserBase {
             case TokenKind.NewKeyword: {
                 return this.parseNewExpression(parent);
             }
+            case TokenKind.NullKeyword: {
+                return this.parseNullExpression(parent);
+            }
         }
 
         return super.parsePrimaryExpression(parent);
@@ -1276,6 +1280,14 @@ export class Parser extends ParserBase {
         newExpression.closingParenthesis = this.eatOptional(TokenKind.ClosingParenthesis);
 
         return newExpression;
+    }
+
+    private parseNullExpression(parent: Node): NullExpression {
+        const nullExpression = new NullExpression();
+        nullExpression.parent = parent;
+        nullExpression.nullKeyword = this.eat(TokenKind.NullKeyword);
+
+        return nullExpression;
     }
 
     private eatStatementTerminator(): Token {

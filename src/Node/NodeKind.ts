@@ -63,4 +63,5 @@ export enum NodeKind {
     GroupingExpression = 'GroupingExpression',
     UnaryOpExpression = 'UnaryOpExpression',
     NewExpression = 'NewExpression',
+    NullExpression = 'NullExpression',
 }
