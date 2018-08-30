@@ -1,0 +1,2 @@
+Class Actor
+End Class

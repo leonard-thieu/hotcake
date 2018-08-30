@@ -1,0 +1,2 @@
+Interface Moveable
+End Interface
