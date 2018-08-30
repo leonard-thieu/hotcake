@@ -29,6 +29,7 @@ import { CaseStatement, DefaultStatement, SelectStatement } from './Node/Stateme
 import { ThrowStatement } from './Node/Statement/ThrowStatement';
 import { CatchStatement, TryStatement } from './Node/Statement/TryStatement';
 import { WhileLoop } from './Node/Statement/WhileLoop';
+import { TypeParameter } from './Node/TypeParameter';
 import { ParserBase } from './ParserBase';
 import { SkippedToken } from './Token/SkippedToken';
 import { Token } from './Token/Token';
@@ -171,7 +172,7 @@ export class Parser extends ParserBase {
         interfaceDeclaration.name = this.eat(TokenKind.Identifier);
         interfaceDeclaration.extendsKeyword = this.eatOptional(TokenKind.ExtendsKeyword);
         if (interfaceDeclaration.extendsKeyword !== null) {
-            interfaceDeclaration.baseTypes = this.parseList(interfaceDeclaration, ParseContextKind.BaseTypes) as typeof interfaceDeclaration.baseTypes;
+            interfaceDeclaration.baseTypes = this.parseList(interfaceDeclaration, ParseContextKind.BaseTypes);
         }
         interfaceDeclaration.members = this.parseList(interfaceDeclaration, interfaceDeclaration.kind);
         interfaceDeclaration.endKeyword = this.eat(TokenKind.EndKeyword);
@@ -188,8 +189,7 @@ export class Parser extends ParserBase {
 
         classDeclaration.lessThanSign = this.eatOptional(TokenKind.LessThanSign);
         if (classDeclaration.lessThanSign !== null) {
-            // TODO: Needs more specific context?
-            classDeclaration.typeParameters = this.parseList(classDeclaration, ParseContextKind.BaseTypes) as typeof classDeclaration.typeParameters;
+            classDeclaration.typeParameters = this.parseList(classDeclaration, ParseContextKind.TypeParameterSequence);
             classDeclaration.greaterThanSign = this.eat(TokenKind.GreaterThanSign);
         }
 
@@ -200,7 +200,7 @@ export class Parser extends ParserBase {
 
         classDeclaration.implementsKeyword = this.eatOptional(TokenKind.ImplementsKeyword);
         if (classDeclaration.implementsKeyword !== null) {
-            classDeclaration.implementedTypes = this.parseList(classDeclaration, ParseContextKind.BaseTypes) as typeof classDeclaration.implementedTypes;
+            classDeclaration.implementedTypes = this.parseList(classDeclaration, ParseContextKind.BaseTypes);
         }
 
         while (true) {
@@ -871,6 +871,47 @@ export class Parser extends ParserBase {
 
     // #endregion
 
+    // #region Type parameter sequence
+
+    private isTypeParameterSequenceTerminator(token: Token): boolean {
+        return !this.isTypeParameterSequenceMemberStart(token);
+    }
+
+    private isTypeParameterSequenceMemberStart(token: Token): boolean {
+        switch (token.kind) {
+            case TokenKind.Identifier:
+            case TokenKind.Comma: {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    private parseTypeParameterSequenceMember(parent: Node) {
+        const token = this.getToken();
+        switch (token.kind) {
+            case TokenKind.Identifier: {
+                return this.parseTypeParameter(parent);
+            }
+            case TokenKind.Comma: {
+                return this.parseCommaSeparator(parent);
+            }
+        }
+
+        return this.parseCore(parent);
+    }
+
+    private parseTypeParameter(parent: Node): TypeParameter {
+        const typeParameter = new TypeParameter();
+        typeParameter.parent = parent;
+        typeParameter.name = this.eat(TokenKind.Identifier);
+
+        return typeParameter;
+    }
+
+    // #endregion
+
     // #region Expression sequence
 
     private isExpressionSequenceListTerminator(token: Token): boolean {
@@ -882,7 +923,7 @@ export class Parser extends ParserBase {
             this.isExpressionStart(token);
     }
 
-    private parseExpressionSequence(parent: Node) {
+    private parseExpressionSequenceMember(parent: Node) {
         const token = this.getToken();
         switch (token.kind) {
             case TokenKind.Comma: {
@@ -1074,6 +1115,9 @@ export class Parser extends ParserBase {
             case ParseContextKind.BaseTypes: {
                 return this.isDataDeclarationListMembersListTerminator(token);
             }
+            case ParseContextKind.TypeParameterSequence: {
+                return this.isTypeParameterSequenceTerminator(token);
+            }
             case ParseContextKind.ExpressionSequence: {
                 return this.isExpressionSequenceListTerminator(token);
             }
@@ -1110,6 +1154,9 @@ export class Parser extends ParserBase {
             case NodeKind.DataDeclarationList:
             case ParseContextKind.BaseTypes: {
                 return this.isDataDeclarationListMemberStart(token);
+            }
+            case ParseContextKind.TypeParameterSequence: {
+                return this.isTypeParameterSequenceMemberStart(token);
             }
             case ParseContextKind.ExpressionSequence: {
                 return this.isExpressionSequenceMemberStart(token);
@@ -1148,8 +1195,11 @@ export class Parser extends ParserBase {
             case ParseContextKind.BaseTypes: {
                 return this.parseDataDeclarationListMember(parent);
             }
+            case ParseContextKind.TypeParameterSequence: {
+                return this.parseTypeParameterSequenceMember(parent);
+            }
             case ParseContextKind.ExpressionSequence: {
-                return this.parseExpressionSequence(parent);
+                return this.parseExpressionSequenceMember(parent);
             }
         }
 
@@ -1197,6 +1247,7 @@ type ParseContext = keyof ParseContextElementMap;
 
 export enum ParseContextKind {
     BaseTypes = 'BaseTypes',
+    TypeParameterSequence = 'TypeParameters',
     ExpressionSequence = 'Expressions',
 }
 
@@ -1217,6 +1268,7 @@ export interface ParseContextElementMap {
     [NodeKind.CatchStatement]: ReturnType<Parser['parseStatement']>;
     [NodeKind.FunctionDeclaration]: ReturnType<Parser['parseStatement']>;
     [NodeKind.DataDeclarationList]: ReturnType<Parser['parseDataDeclarationListMember']>;
-    [ParseContextKind.BaseTypes]: any;
-    [ParseContextKind.ExpressionSequence]: any;
+    [ParseContextKind.BaseTypes]: ReturnType<Parser['parseDataDeclarationListMember']>;
+    [ParseContextKind.TypeParameterSequence]: ReturnType<Parser['parseTypeParameterSequenceMember']>;
+    [ParseContextKind.ExpressionSequence]: ReturnType<Parser['parseExpressionSequenceMember']>;
 }

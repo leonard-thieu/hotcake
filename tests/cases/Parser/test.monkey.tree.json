@@ -3672,20 +3672,13 @@
             },
             "typeParameters": [
                 {
-                    "kind": "DataDeclaration",
+                    "kind": "TypeParameter",
                     "name": {
                         "kind": "Identifier",
                         "fullStart": 3925,
                         "start": 3925,
                         "length": 1
-                    },
-                    "colonEqualsSign": null,
-                    "colon": null,
-                    "longhandType": null,
-                    "shorthandType": null,
-                    "equalsSign": null,
-                    "eachInKeyword": null,
-                    "expression": null
+                    }
                 }
             ],
             "greaterThanSign": {
@@ -3759,20 +3752,13 @@
             },
             "typeParameters": [
                 {
-                    "kind": "DataDeclaration",
+                    "kind": "TypeParameter",
                     "name": {
                         "kind": "Identifier",
                         "fullStart": 4052,
                         "start": 4052,
                         "length": 1
-                    },
-                    "colonEqualsSign": null,
-                    "colon": null,
-                    "longhandType": null,
-                    "shorthandType": null,
-                    "equalsSign": null,
-                    "eachInKeyword": null,
-                    "expression": null
+                    }
                 }
             ],
             "greaterThanSign": {
@@ -3853,20 +3839,13 @@
             },
             "typeParameters": [
                 {
-                    "kind": "DataDeclaration",
+                    "kind": "TypeParameter",
                     "name": {
                         "kind": "Identifier",
                         "fullStart": 4187,
                         "start": 4187,
                         "length": 1
-                    },
-                    "colonEqualsSign": null,
-                    "colon": null,
-                    "longhandType": null,
-                    "shorthandType": null,
-                    "equalsSign": null,
-                    "eachInKeyword": null,
-                    "expression": null
+                    }
                 }
             ],
             "greaterThanSign": {
@@ -3957,20 +3936,13 @@
             },
             "typeParameters": [
                 {
-                    "kind": "DataDeclaration",
+                    "kind": "TypeParameter",
                     "name": {
                         "kind": "Identifier",
                         "fullStart": 4308,
                         "start": 4308,
                         "length": 1
-                    },
-                    "colonEqualsSign": null,
-                    "colon": null,
-                    "longhandType": null,
-                    "shorthandType": null,
-                    "equalsSign": null,
-                    "eachInKeyword": null,
-                    "expression": null
+                    }
                 }
             ],
             "greaterThanSign": {
@@ -4068,20 +4040,13 @@
             },
             "typeParameters": [
                 {
-                    "kind": "DataDeclaration",
+                    "kind": "TypeParameter",
                     "name": {
                         "kind": "Identifier",
                         "fullStart": 4445,
                         "start": 4445,
                         "length": 1
-                    },
-                    "colonEqualsSign": null,
-                    "colon": null,
-                    "longhandType": null,
-                    "shorthandType": null,
-                    "equalsSign": null,
-                    "eachInKeyword": null,
-                    "expression": null
+                    }
                 }
             ],
             "greaterThanSign": {
@@ -4198,20 +4163,13 @@
             },
             "typeParameters": [
                 {
-                    "kind": "DataDeclaration",
+                    "kind": "TypeParameter",
                     "name": {
                         "kind": "Identifier",
                         "fullStart": 4567,
                         "start": 4567,
                         "length": 1
-                    },
-                    "colonEqualsSign": null,
-                    "colon": null,
-                    "longhandType": null,
-                    "shorthandType": null,
-                    "equalsSign": null,
-                    "eachInKeyword": null,
-                    "expression": null
+                    }
                 }
             ],
             "greaterThanSign": {
@@ -4338,20 +4296,13 @@
             },
             "typeParameters": [
                 {
-                    "kind": "DataDeclaration",
+                    "kind": "TypeParameter",
                     "name": {
                         "kind": "Identifier",
                         "fullStart": 4719,
                         "start": 4719,
                         "length": 1
-                    },
-                    "colonEqualsSign": null,
-                    "colon": null,
-                    "longhandType": null,
-                    "shorthandType": null,
-                    "equalsSign": null,
-                    "eachInKeyword": null,
-                    "expression": null
+                    }
                 }
             ],
             "greaterThanSign": {

@@ -27,7 +27,7 @@ export class ClassDeclaration extends Declaration {
 
     // Generic
     lessThanSign: Token | null = null;
-    typeParameters: Token[] | null = null;
+    typeParameters: ParseContextElementArray<ParseContextKind.TypeParameterSequence> | null = null;
     greaterThanSign: Token | null = null;
 
     // Extends

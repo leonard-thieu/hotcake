@@ -49,6 +49,7 @@ export enum NodeKind {
     QualifiedIdentifier = 'QualifiedIdentifier',
     DataDeclaration = 'DataDeclaration',
     DataDeclarationList = 'DataDeclarationList',
+    TypeParameter = 'TypeParameter',
     CommaSeparator = 'CommaSeparator',
 
     BooleanLiteral = 'BooleanLiteral',
