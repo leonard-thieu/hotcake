@@ -30,7 +30,7 @@ export abstract class ParserBase {
         let [prevNewPrecedence, prevAssociativity] = UNKNOWN_PRECEDENCE_AND_ASSOCIATIVITY;
 
         while (true) {
-            let token = this.getCurrentToken();
+            let token = this.getToken();
 
             if (token.kind === TokenKind.GreaterThanSign) {
                 const nextToken = this.getToken(1);
@@ -98,7 +98,7 @@ export abstract class ParserBase {
     }
 
     protected parseUnaryExpression(parent: Node): Expressions | MissingToken {
-        const token = this.getCurrentToken();
+        const token = this.getToken();
         switch (token.kind) {
             case TokenKind.PlusSign:
             case TokenKind.HyphenMinus:
@@ -121,7 +121,7 @@ export abstract class ParserBase {
     }
 
     protected parsePrimaryExpression(parent: Node): Expressions | MissingToken {
-        const token = this.getCurrentToken();
+        const token = this.getToken();
         switch (token.kind) {
             case TokenKind.OpeningParenthesis: {
                 return this.parseGroupingExpression(parent);
@@ -174,7 +174,7 @@ export abstract class ParserBase {
 
         let continueParsing = true;
         do {
-            const token = this.getCurrentToken();
+            const token = this.getToken();
             switch (token.kind) {
                 case TokenKind.QuotationMark:
                 case TokenKind.EOF: {
@@ -241,13 +241,13 @@ export abstract class ParserBase {
             return eaten;
         }
 
-        const token = this.getCurrentToken();
+        const token = this.getToken();
 
         return new MissingToken(kinds[0], token.start);
     }
 
     protected eatOptional(...kinds: TokenKind[]): Token | null {
-        const token = this.getCurrentToken();
+        const token = this.getToken();
         if (kinds.includes(token.kind)) {
             this.advanceToken();
 
@@ -255,10 +255,6 @@ export abstract class ParserBase {
         }
 
         return null;
-    }
-
-    protected getCurrentToken(): Token {
-        return this.getToken(0);
     }
 
     protected getToken(offset: number = 0): Token {

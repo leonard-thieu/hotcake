@@ -83,7 +83,7 @@ export class Parser extends ParserBase {
     }
 
     private parseModuleMember(parent: Node) {
-        const token = this.getCurrentToken();
+        const token = this.getToken();
         switch (token.kind) {
             case TokenKind.StrictKeyword: {
                 return this.parseStrictDirective(parent);
@@ -241,7 +241,7 @@ export class Parser extends ParserBase {
     }
 
     private parseInterfaceMember(parent: Node) {
-        const token = this.getCurrentToken();
+        const token = this.getToken();
         switch (token.kind) {
             case TokenKind.ConstKeyword: {
                 return this.parseDataDeclarationList(parent);
@@ -299,7 +299,7 @@ export class Parser extends ParserBase {
     }
 
     private parseClassMember(parent: Node) {
-        const token = this.getCurrentToken();
+        const token = this.getToken();
         switch (token.kind) {
             case TokenKind.ConstKeyword:
             case TokenKind.GlobalKeyword:
@@ -388,7 +388,7 @@ export class Parser extends ParserBase {
     }
 
     private parseStatement(parent: Node) {
-        const token = this.getCurrentToken();
+        const token = this.getToken();
         switch (token.kind) {
             case TokenKind.LocalKeyword: {
                 return this.parseDataDeclarationList(parent);
@@ -725,7 +725,7 @@ export class Parser extends ParserBase {
         tryStatement.tryKeyword = this.eat(TokenKind.TryKeyword);
         tryStatement.statements = this.parseList(tryStatement, tryStatement.kind);
 
-        while (this.getCurrentToken().kind === TokenKind.CatchKeyword) {
+        while (this.getToken().kind === TokenKind.CatchKeyword) {
             tryStatement.catchStatements.push(this.parseCatchStatement(tryStatement));
         }
 

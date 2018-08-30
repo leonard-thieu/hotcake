@@ -45,7 +45,7 @@ export class PreprocessorParser extends ParserBase {
     }
 
     private parseModuleMember(parent: Node) {
-        const token = this.getCurrentToken();
+        const token = this.getToken();
         switch (token.kind) {
             case TokenKind.IfDirectiveKeyword: {
                 return this.parseIfDirective(parent);
@@ -76,11 +76,11 @@ export class PreprocessorParser extends ParserBase {
         ifDirective.expression = this.parseExpression(ifDirective);
         ifDirective.members = this.parseList(ifDirective, ifDirective.kind);
 
-        while (this.getCurrentToken().kind === TokenKind.ElseIfDirectiveKeyword) {
+        while (this.getToken().kind === TokenKind.ElseIfDirectiveKeyword) {
             ifDirective.elseIfDirectives.push(this.parseElseIfDirective(ifDirective));
         }
 
-        if (this.getCurrentToken().kind === TokenKind.ElseDirectiveKeyword) {
+        if (this.getToken().kind === TokenKind.ElseDirectiveKeyword) {
             ifDirective.elseDirective = this.parseElseDirective(ifDirective);
         }
 
@@ -155,7 +155,7 @@ export class PreprocessorParser extends ParserBase {
     }
 
     private parseRemDirectiveMember(parent: Node) {
-        const token = this.getCurrentToken();
+        const token = this.getToken();
         switch (token.kind) {
             case TokenKind.IfDirectiveKeyword: {
                 return this.parseIfDirective(parent);
