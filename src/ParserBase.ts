@@ -67,7 +67,7 @@ export abstract class ParserBase {
                 expression,
                 token,
                 eachInKeyword,
-                this.parseBinaryExpression(newPrecedence, (null as any)),
+                this.parseBinaryExpression(newPrecedence, parent),
                 parent
             );
 
@@ -130,7 +130,16 @@ export abstract class ParserBase {
             }
             default: {
                 expression = this.parsePrimaryExpression(parent);
-                expression = this.parsePostfixExpression(expression);
+
+                // TODO: Is this the best way to go about this?
+                let expression2: typeof expression;
+                while (true) {
+                    expression2 = this.parsePostfixExpression(expression);
+                    if (expression2 === expression) {
+                        break;
+                    }
+                    expression = expression2;
+                }
                 break;
             }
         }
