@@ -26,6 +26,7 @@
                     },
                     "expression": {
                         "kind": "BooleanLiteral",
+                        "newlines": null,
                         "value": {
                             "kind": "TrueKeyword",
                             "fullStart": 15,

@@ -11,8 +11,10 @@
             },
             "expression": {
                 "kind": "BinaryExpression",
+                "newlines": null,
                 "leftOperand": {
                     "kind": "Variable",
+                    "newlines": null,
                     "name": {
                         "kind": "Identifier",
                         "fullStart": 3,
@@ -29,6 +31,7 @@
                 "eachInKeyword": null,
                 "rightOperand": {
                     "kind": "StringLiteral",
+                    "newlines": null,
                     "startQuote": {
                         "kind": "QuotationMark",
                         "fullStart": 12,
@@ -112,8 +115,10 @@
                     },
                     "expression": {
                         "kind": "BinaryExpression",
+                        "newlines": null,
                         "leftOperand": {
                             "kind": "Variable",
+                            "newlines": null,
                             "name": {
                                 "kind": "Identifier",
                                 "fullStart": 68,
@@ -130,6 +135,7 @@
                         "eachInKeyword": null,
                         "rightOperand": {
                             "kind": "StringLiteral",
+                            "newlines": null,
                             "startQuote": {
                                 "kind": "QuotationMark",
                                 "fullStart": 75,
@@ -211,8 +217,10 @@
                             },
                             "expression": {
                                 "kind": "BinaryExpression",
+                                "newlines": null,
                                 "leftOperand": {
                                     "kind": "IntegerLiteral",
+                                    "newlines": null,
                                     "value": {
                                         "kind": "IntegerLiteral",
                                         "fullStart": 139,
@@ -229,6 +237,7 @@
                                 "eachInKeyword": null,
                                 "rightOperand": {
                                     "kind": "Variable",
+                                    "newlines": null,
                                     "name": {
                                         "kind": "Identifier",
                                         "fullStart": 150,
@@ -260,6 +269,7 @@
                                     },
                                     "expression": {
                                         "kind": "StringLiteral",
+                                        "newlines": null,
                                         "startQuote": {
                                             "kind": "QuotationMark",
                                             "fullStart": 173,
@@ -331,8 +341,10 @@
                     },
                     "expression": {
                         "kind": "BinaryExpression",
+                        "newlines": null,
                         "leftOperand": {
                             "kind": "Variable",
+                            "newlines": null,
                             "name": {
                                 "kind": "Identifier",
                                 "fullStart": 213,
@@ -349,6 +361,7 @@
                         "eachInKeyword": null,
                         "rightOperand": {
                             "kind": "StringLiteral",
+                            "newlines": null,
                             "startQuote": {
                                 "kind": "QuotationMark",
                                 "fullStart": 220,

@@ -11,8 +11,10 @@
             },
             "expression": {
                 "kind": "BinaryExpression",
+                "newlines": null,
                 "leftOperand": {
                     "kind": "Variable",
+                    "newlines": null,
                     "name": {
                         "kind": "Identifier",
                         "fullStart": 3,
@@ -29,6 +31,7 @@
                 "eachInKeyword": null,
                 "rightOperand": {
                     "kind": "StringLiteral",
+                    "newlines": null,
                     "startQuote": {
                         "kind": "QuotationMark",
                         "fullStart": 12,
@@ -112,8 +115,10 @@
                     },
                     "expression": {
                         "kind": "BinaryExpression",
+                        "newlines": null,
                         "leftOperand": {
                             "kind": "Variable",
+                            "newlines": null,
                             "name": {
                                 "kind": "Identifier",
                                 "fullStart": 68,
@@ -130,6 +135,7 @@
                         "eachInKeyword": null,
                         "rightOperand": {
                             "kind": "StringLiteral",
+                            "newlines": null,
                             "startQuote": {
                                 "kind": "QuotationMark",
                                 "fullStart": 75,
@@ -213,8 +219,10 @@
                     },
                     "expression": {
                         "kind": "BinaryExpression",
+                        "newlines": null,
                         "leftOperand": {
                             "kind": "Variable",
+                            "newlines": null,
                             "name": {
                                 "kind": "Identifier",
                                 "fullStart": 139,
@@ -231,6 +239,7 @@
                         "eachInKeyword": null,
                         "rightOperand": {
                             "kind": "StringLiteral",
+                            "newlines": null,
                             "startQuote": {
                                 "kind": "QuotationMark",
                                 "fullStart": 146,
