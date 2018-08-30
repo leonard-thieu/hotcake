@@ -1678,45 +1678,36 @@
                         {
                             "kind": "ExpressionStatement",
                             "expression": {
-                                "kind": "Variable",
+                                "kind": "InvokeExpression",
                                 "newlines": null,
-                                "name": {
-                                    "kind": "Identifier",
-                                    "fullStart": 2149,
-                                    "start": 2157,
-                                    "length": 13
-                                }
-                            },
-                            "terminator": {
-                                "type": "MissingToken",
-                                "kind": "Newline",
-                                "fullStart": 2162,
-                                "start": 2162,
-                                "length": 0,
-                                "newlines": null
-                            }
-                        },
-                        {
-                            "kind": "ExpressionStatement",
-                            "expression": {
-                                "kind": "GroupingExpression",
-                                "newlines": null,
+                                "invokableExpression": {
+                                    "kind": "Variable",
+                                    "newlines": null,
+                                    "name": {
+                                        "kind": "Identifier",
+                                        "fullStart": 2149,
+                                        "start": 2157,
+                                        "length": 13
+                                    }
+                                },
                                 "openingParenthesis": {
                                     "kind": "OpeningParenthesis",
                                     "fullStart": 2162,
                                     "start": 2162,
                                     "length": 1
                                 },
-                                "expression": {
-                                    "kind": "Variable",
-                                    "newlines": null,
-                                    "name": {
-                                        "kind": "Identifier",
-                                        "fullStart": 2163,
-                                        "start": 2163,
-                                        "length": 1
+                                "arguments": [
+                                    {
+                                        "kind": "Variable",
+                                        "newlines": null,
+                                        "name": {
+                                            "kind": "Identifier",
+                                            "fullStart": 2163,
+                                            "start": 2163,
+                                            "length": 1
+                                        }
                                     }
-                                },
+                                ],
                                 "closingParenthesis": {
                                     "kind": "ClosingParenthesis",
                                     "fullStart": 2164,
