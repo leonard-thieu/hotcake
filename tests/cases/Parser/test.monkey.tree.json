@@ -6544,52 +6544,52 @@
                     }
                 },
                 {
-                    "kind": "DataDeclarationList",
-                    "dataDeclarationKeyword": {
-                        "kind": "LocalKeyword",
-                        "fullStart": 6791,
-                        "start": 6795,
-                        "length": 9
-                    },
-                    "children": [
-                        {
-                            "kind": "DataDeclaration",
-                            "name": {
-                                "kind": "Identifier",
-                                "fullStart": 6800,
-                                "start": 6801,
-                                "length": 2
-                            },
-                            "colonEqualsSign": null,
-                            "colon": {
-                                "kind": "Colon",
-                                "fullStart": 6802,
-                                "start": 6802,
-                                "length": 1
-                            },
-                            "longhandType": {
-                                "kind": "QualifiedIdentifier",
-                                "modulePath": {
-                                    "kind": "ModulePath",
-                                    "children": []
+                    "kind": "LocalDeclarationListStatement",
+                    "localDeclarationList": {
+                        "kind": "DataDeclarationList",
+                        "dataDeclarationKeyword": {
+                            "kind": "LocalKeyword",
+                            "fullStart": 6791,
+                            "start": 6795,
+                            "length": 9
+                        },
+                        "children": [
+                            {
+                                "kind": "DataDeclaration",
+                                "name": {
+                                    "kind": "Identifier",
+                                    "fullStart": 6800,
+                                    "start": 6801,
+                                    "length": 2
                                 },
-                                "scopeMemberAccessOperator": null,
-                                "identifier": {
-                                    "kind": "FloatKeyword",
-                                    "fullStart": 6803,
-                                    "start": 6804,
-                                    "length": 6
-                                }
-                            },
-                            "shorthandType": null,
-                            "equalsSign": null,
-                            "eachInKeyword": null,
-                            "expression": null
-                        }
-                    ]
-                },
-                {
-                    "kind": "EmptyStatement",
+                                "colonEqualsSign": null,
+                                "colon": {
+                                    "kind": "Colon",
+                                    "fullStart": 6802,
+                                    "start": 6802,
+                                    "length": 1
+                                },
+                                "longhandType": {
+                                    "kind": "QualifiedIdentifier",
+                                    "modulePath": {
+                                        "kind": "ModulePath",
+                                        "children": []
+                                    },
+                                    "scopeMemberAccessOperator": null,
+                                    "identifier": {
+                                        "kind": "FloatKeyword",
+                                        "fullStart": 6803,
+                                        "start": 6804,
+                                        "length": 6
+                                    }
+                                },
+                                "shorthandType": null,
+                                "equalsSign": null,
+                                "eachInKeyword": null,
+                                "expression": null
+                            }
+                        ]
+                    },
                     "terminator": {
                         "kind": "Newline",
                         "fullStart": 6809,
