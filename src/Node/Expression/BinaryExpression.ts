@@ -5,6 +5,7 @@ import { Expression, Expressions } from './Expression';
 
 export class BinaryExpression extends Expression {
     static CHILD_NAMES: (keyof BinaryExpression)[] = [
+        'newlines',
         'leftOperand',
         'operator',
         'eachInKeyword',

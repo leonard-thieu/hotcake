@@ -102,19 +102,42 @@ export abstract class ParserBase {
     }
 
     protected parseUnaryExpression(parent: Node): Expressions | MissingToken {
+        let newlines: Token[] | null = null;
+        while (true) {
+            const token = this.getToken();
+            if (token.kind !== TokenKind.Newline) {
+                break;
+            }
+
+            if (!newlines) {
+                newlines = [];
+            }
+
+            this.advanceToken();
+            newlines.push(token);
+        }
+
+        let expression: Expressions | MissingToken;
+
         const token = this.getToken();
         switch (token.kind) {
             case TokenKind.PlusSign:
             case TokenKind.HyphenMinus:
             case TokenKind.Tilde:
             case TokenKind.NotKeyword: {
-                return this.parseUnaryOpExpression(parent);
+                expression = this.parseUnaryOpExpression(parent);
+                break;
+            }
+            default: {
+                expression = this.parsePrimaryExpression(parent);
+                expression = this.parsePostfixExpression(expression);
+                break;
             }
         }
 
-        const expression = this.parsePrimaryExpression(parent);
+        expression.newlines = newlines;
 
-        return this.parsePostfixExpression(expression);
+        return expression;
     }
 
     protected parseUnaryOpExpression(parent: Node): UnaryOpExpression {
@@ -126,7 +149,7 @@ export abstract class ParserBase {
         return unaryOpExpression;
     }
 
-    protected parsePrimaryExpression(parent: Node): Expressions | MissingToken {
+    protected parsePrimaryExpression(parent: Node) {
         const token = this.getToken();
         switch (token.kind) {
             case TokenKind.OpeningParenthesis: {
@@ -281,7 +304,7 @@ export abstract class ParserBase {
         const token = this.getToken();
         switch (token.kind) {
             case TokenKind.Period: {
-                return this.parseScopeMemberAccessExprssion(expression);
+                return this.parseScopeMemberAccessExpression(expression);
             }
             case TokenKind.OpeningSquareBracket: {
                 return this.parseIndexExpression(expression);
@@ -291,7 +314,7 @@ export abstract class ParserBase {
         return expression;
     }
 
-    protected parseScopeMemberAccessExprssion(expression: Expressions): ScopeMemberAccessExpression {
+    protected parseScopeMemberAccessExpression(expression: Expressions): ScopeMemberAccessExpression {
         const scopeMemberAccessExpression = new ScopeMemberAccessExpression();
         scopeMemberAccessExpression.parent = expression.parent;
         expression.parent = scopeMemberAccessExpression;

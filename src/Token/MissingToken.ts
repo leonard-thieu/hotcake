@@ -6,6 +6,8 @@ export class MissingToken extends Token {
         super(kind, fullStart, fullStart, 0);
     }
 
+    newlines: Token[] | null = null;
+
     toJSON(): any {
         return Object.assign({
             type: this.constructor.name,

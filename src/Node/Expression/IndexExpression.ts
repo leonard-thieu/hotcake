@@ -5,6 +5,7 @@ import { Expression, Expressions } from './Expression';
 
 export class IndexExpression extends Expression {
     static CHILD_NAMES: (keyof IndexExpression)[] = [
+        'newlines',
         'indexableExpression',
         'openingSquareBracket',
         'indexExpressionExpression',

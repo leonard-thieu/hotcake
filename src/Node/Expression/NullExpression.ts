@@ -4,6 +4,7 @@ import { Expression } from './Expression';
 
 export class NullExpression extends Expression {
     static CHILD_NAMES: (keyof NullExpression)[] = [
+        'newlines',
         'nullKeyword',
     ];
 

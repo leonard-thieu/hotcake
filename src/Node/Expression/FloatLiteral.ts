@@ -4,6 +4,7 @@ import { Expression } from './Expression';
 
 export class FloatLiteral extends Expression {
     static CHILD_NAMES: (keyof FloatLiteral)[] = [
+        'newlines',
         'value',
     ];
 

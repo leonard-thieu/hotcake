@@ -6,6 +6,7 @@ import { Expression } from './Expression';
 
 export class NewExpression extends Expression {
     static CHILD_NAMES: (keyof NewExpression)[] = [
+        'newlines',
         'newKeyword',
         'type',
         'openingParenthesis',

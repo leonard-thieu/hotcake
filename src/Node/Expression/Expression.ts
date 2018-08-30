@@ -1,4 +1,5 @@
 import { MissingToken } from '../../Token/MissingToken';
+import { Token } from '../../Token/Token';
 import { TokenKind } from '../../Token/TokenKind';
 import { Node } from '../Node';
 import { BinaryExpression } from './BinaryExpression';
@@ -17,7 +18,7 @@ import { UnaryOpExpression } from './UnaryOpExpression';
 import { Variable } from './Variable';
 
 export abstract class Expression extends Node {
-
+    newlines: Token[] | null = null;
 }
 
 export type Expressions =

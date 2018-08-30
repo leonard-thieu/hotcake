@@ -5,6 +5,7 @@ import { Expression } from './Expression';
 
 export class StringLiteral extends Expression {
     static CHILD_NAMES: (keyof StringLiteral)[] = [
+        'newlines',
         'startQuote',
         'children',
         'endQuote',

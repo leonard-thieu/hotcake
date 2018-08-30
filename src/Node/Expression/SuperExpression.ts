@@ -4,6 +4,7 @@ import { Expression } from './Expression';
 
 export class SuperExpression extends Expression {
     static CHILD_NAMES: (keyof SuperExpression)[] = [
+        'newlines',
         'superKeyword',
     ];
 

@@ -5,6 +5,7 @@ import { Expression, Expressions } from './Expression';
 
 export class GroupingExpression extends Expression {
     static CHILD_NAMES: (keyof GroupingExpression)[] = [
+        'newlines',
         'openingParenthesis',
         'expression',
         'closingParenthesis',

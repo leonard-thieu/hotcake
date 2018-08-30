@@ -5,6 +5,7 @@ import { Expression, Expressions } from './Expression';
 
 export class UnaryOpExpression extends Expression {
     static CHILD_NAMES: (keyof UnaryOpExpression)[] = [
+        'newlines',
         'operator',
         'operand',
     ];

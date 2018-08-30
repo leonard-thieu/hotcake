@@ -4,6 +4,7 @@ import { Expression } from './Expression';
 
 export class Variable extends Expression {
     static CHILD_NAMES: (keyof Variable)[] = [
+        'newlines',
         'name',
     ];
 
