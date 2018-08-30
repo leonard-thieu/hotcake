@@ -132,7 +132,13 @@ export abstract class ParserBase {
             case TokenKind.OpeningParenthesis: {
                 return this.parseGroupingExpression(parent);
             }
-            case TokenKind.Identifier: {
+            case TokenKind.Identifier:
+            case TokenKind.StringKeyword:
+            case TokenKind.BoolKeyword:
+            case TokenKind.FloatKeyword:
+            case TokenKind.IntKeyword:
+            case TokenKind.ObjectKeyword:
+            case TokenKind.ThrowableKeyword: {
                 return this.parseVariable(parent);
             }
             case TokenKind.QuotationMark: {
@@ -174,7 +180,15 @@ export abstract class ParserBase {
     protected parseVariable(parent: Node): Variable {
         const variable = new Variable();
         variable.parent = parent;
-        variable.name = this.eat(TokenKind.Identifier);
+        variable.name = this.eat(
+            TokenKind.Identifier,
+            TokenKind.StringKeyword,
+            TokenKind.BoolKeyword,
+            TokenKind.FloatKeyword,
+            TokenKind.IntKeyword,
+            TokenKind.ObjectKeyword,
+            TokenKind.ThrowableKeyword,
+        );
 
         return variable;
     }
