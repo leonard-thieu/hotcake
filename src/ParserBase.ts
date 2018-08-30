@@ -3,6 +3,7 @@ import { BooleanLiteral } from './Node/Expression/BooleanLiteral';
 import { Expression, Expressions } from './Node/Expression/Expression';
 import { FloatLiteral } from './Node/Expression/FloatLiteral';
 import { GroupingExpression } from './Node/Expression/GroupingExpression';
+import { IndexExpression } from './Node/Expression/IndexExpression';
 import { IntegerLiteral } from './Node/Expression/IntegerLiteral';
 import { StringLiteral } from './Node/Expression/StringLiteral';
 import { UnaryOpExpression } from './Node/Expression/UnaryOpExpression';
@@ -108,7 +109,9 @@ export abstract class ParserBase {
             }
         }
 
-        return this.parsePrimaryExpression(parent);
+        const expression = this.parsePrimaryExpression(parent);
+
+        return this.parsePostfixExpression(expression);
     }
 
     protected parseUnaryOpExpression(parent: Node): UnaryOpExpression {
@@ -229,6 +232,37 @@ export abstract class ParserBase {
         floatLiteral.value = this.eat(TokenKind.FloatLiteral);
 
         return floatLiteral;
+    }
+
+    protected parsePostfixExpression(expression: Expressions | MissingToken) {
+        function isExpressionMissingToken(expression: Expressions | MissingToken): expression is MissingToken {
+            return expression.kind === TokenKind.Expression;
+        }
+
+        if (isExpressionMissingToken(expression)) {
+            return expression;
+        }
+
+        const token = this.getToken();
+        switch (token.kind) {
+            case TokenKind.OpeningSquareBracket: {
+                return this.parseIndexExpression(expression);
+            }
+        }
+
+        return expression;
+    }
+
+    protected parseIndexExpression(expression: Expressions): IndexExpression {
+        const indexExpression = new IndexExpression();
+        indexExpression.parent = expression.parent;
+        expression.parent = indexExpression;
+        indexExpression.indexableExpression = expression;
+        indexExpression.openingSquareBracket = this.eat(TokenKind.OpeningSquareBracket);
+        indexExpression.indexExpressionExpression = this.parseExpression(indexExpression);
+        indexExpression.closingSquareBracket = this.eat(TokenKind.ClosingSquareBracket);
+
+        return indexExpression;
     }
 
     // #endregion

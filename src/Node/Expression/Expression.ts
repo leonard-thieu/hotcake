@@ -3,6 +3,7 @@ import { BinaryExpression } from './BinaryExpression';
 import { BooleanLiteral } from './BooleanLiteral';
 import { FloatLiteral } from './FloatLiteral';
 import { GroupingExpression } from './GroupingExpression';
+import { IndexExpression } from './IndexExpression';
 import { IntegerLiteral } from './IntegerLiteral';
 import { NewExpression } from './NewExpression';
 import { NullExpression } from './NullExpression';
@@ -24,5 +25,6 @@ export type Expressions =
     GroupingExpression |
     UnaryOpExpression |
     NewExpression |
-    NullExpression
+    NullExpression |
+    IndexExpression
     ;
