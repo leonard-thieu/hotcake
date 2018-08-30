@@ -1045,7 +1045,9 @@ export class Parser extends ParserBase {
         const arrayTypeDeclaration = new ArrayTypeDeclaration();
         arrayTypeDeclaration.parent = parent;
         arrayTypeDeclaration.openingSquareBracket = this.eat(TokenKind.OpeningSquareBracket);
-        arrayTypeDeclaration.expression = this.parseExpression(arrayTypeDeclaration);
+        if (this.isExpressionStart(this.getToken())) {
+            arrayTypeDeclaration.expression = this.parseExpression(arrayTypeDeclaration);
+        }
         arrayTypeDeclaration.closingSquareBracket = this.eat(TokenKind.ClosingSquareBracket);
 
         return arrayTypeDeclaration;
