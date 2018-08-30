@@ -140,55 +140,6 @@
                 "length": 3
             },
             "endFunctionKeyword": null
-        },
-        {
-            "kind": "Newline",
-            "fullStart": 45,
-            "start": 46,
-            "length": 2
-        },
-        {
-            "kind": "Newline",
-            "fullStart": 47,
-            "start": 48,
-            "length": 2
-        },
-        {
-            "kind": "ClassDeclaration",
-            "classKeyword": {
-                "kind": "ClassKeyword",
-                "fullStart": 49,
-                "start": 49,
-                "length": 5
-            },
-            "name": {
-                "kind": "Identifier",
-                "fullStart": 54,
-                "start": 55,
-                "length": 6
-            },
-            "lessThanSign": null,
-            "typeParameters": null,
-            "greaterThanSign": null,
-            "extendsKeyword": null,
-            "implementsKeyword": null,
-            "implementedTypes": null,
-            "attributes": [],
-            "members": [
-                {
-                    "kind": "Newline",
-                    "fullStart": 60,
-                    "start": 61,
-                    "length": 2
-                }
-            ],
-            "endKeyword": {
-                "kind": "EndKeyword",
-                "fullStart": 62,
-                "start": 62,
-                "length": 3
-            },
-            "endClassKeyword": null
         }
     ]
 }
