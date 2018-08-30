@@ -65,6 +65,7 @@ export enum NodeKind {
     StringLiteral = 'StringLiteral',
     Variable = 'Variable',
     ScopeMemberAccessExpression = 'ScopeMemberAccessExpression',
+    InvokeExpression = 'InvokeExpression',
     IndexExpression = 'IndexExpression',
     UnaryOpExpression = 'UnaryOpExpression',
     BinaryExpression = 'BinaryExpression',

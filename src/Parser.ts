@@ -14,6 +14,8 @@ import { InterfaceMethodDeclaration } from './Node/Declaration/InterfaceMethodDe
 import { ModuleDeclaration } from './Node/Declaration/ModuleDeclaration';
 import { StrictDirective } from './Node/Declaration/StrictDirective';
 import { BinaryExpression } from './Node/Expression/BinaryExpression';
+import { Expressions, isExpressionMissingToken } from './Node/Expression/Expression';
+import { InvokeExpression } from './Node/Expression/InvokeExpression';
 import { NewExpression } from './Node/Expression/NewExpression';
 import { NullExpression } from './Node/Expression/NullExpression';
 import { ModulePath } from './Node/ModulePath';
@@ -35,6 +37,7 @@ import { WhileLoop } from './Node/Statement/WhileLoop';
 import { TypeParameter } from './Node/TypeParameter';
 import { ArrayTypeDeclaration, TypeReference } from './Node/TypeReference';
 import { ParserBase } from './ParserBase';
+import { MissingToken } from './Token/MissingToken';
 import { SkippedToken } from './Token/SkippedToken';
 import { Token } from './Token/Token';
 import { TokenKind } from './Token/TokenKind';
@@ -1377,6 +1380,35 @@ export class Parser extends ParserBase {
         nullExpression.nullKeyword = this.eat(TokenKind.NullKeyword);
 
         return nullExpression;
+    }
+
+    protected parsePostfixExpression(expression: Expressions | MissingToken) {
+        if (isExpressionMissingToken(expression)) {
+            return expression;
+        }
+
+        const token = this.getToken();
+        switch (token.kind) {
+            case TokenKind.OpeningParenthesis: {
+                return this.parseInvokeExpression(expression);
+            }
+        }
+
+        return super.parsePostfixExpression(expression);
+    }
+
+    private parseInvokeExpression(expression: Expressions): InvokeExpression {
+        const invokeExpression = new InvokeExpression();
+        invokeExpression.parent = expression.parent;
+        expression.parent = invokeExpression;
+        invokeExpression.invokableExpression = expression;
+        invokeExpression.openingParenthesis = this.eatOptional(TokenKind.OpeningParenthesis);
+        invokeExpression.arguments = this.parseList(invokeExpression, ParseContextKind.ExpressionSequence);
+        if (invokeExpression.openingParenthesis !== null) {
+            invokeExpression.closingParenthesis = this.eat(TokenKind.ClosingParenthesis);
+        }
+
+        return invokeExpression;
     }
 
     private eatStatementTerminator(): Token {

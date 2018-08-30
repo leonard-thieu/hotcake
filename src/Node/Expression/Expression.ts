@@ -8,6 +8,7 @@ import { FloatLiteral } from './FloatLiteral';
 import { GroupingExpression } from './GroupingExpression';
 import { IndexExpression } from './IndexExpression';
 import { IntegerLiteral } from './IntegerLiteral';
+import { InvokeExpression } from './InvokeExpression';
 import { NewExpression } from './NewExpression';
 import { NullExpression } from './NullExpression';
 import { ScopeMemberAccessExpression } from './ScopeMemberAccessExpression';
@@ -33,6 +34,7 @@ export type Expressions =
     NewExpression |
     NullExpression |
     ScopeMemberAccessExpression |
+    InvokeExpression |
     IndexExpression |
     SelfExpression |
     SuperExpression
