@@ -1648,6 +1648,13 @@
                                     "start": 2157,
                                     "length": 13
                                 }
+                            },
+                            "terminator": {
+                                "type": "MissingToken",
+                                "kind": "Newline",
+                                "fullStart": 2162,
+                                "start": 2162,
+                                "length": 0
                             }
                         },
                         {
@@ -1675,6 +1682,12 @@
                                     "start": 2164,
                                     "length": 1
                                 }
+                            },
+                            "terminator": {
+                                "kind": "Newline",
+                                "fullStart": 2165,
+                                "start": 2166,
+                                "length": 2
                             }
                         }
                     ],
@@ -5952,6 +5965,12 @@
                                 }
                             }
                         }
+                    },
+                    "terminator": {
+                        "kind": "Newline",
+                        "fullStart": 6107,
+                        "start": 6108,
+                        "length": 2
                     }
                 },
                 {
@@ -6626,6 +6645,12 @@
                                 "length": 8
                             }
                         }
+                    },
+                    "terminator": {
+                        "kind": "Newline",
+                        "fullStart": 6826,
+                        "start": 6827,
+                        "length": 2
                     }
                 },
                 {
@@ -6657,6 +6682,12 @@
                                 "length": 6
                             }
                         }
+                    },
+                    "terminator": {
+                        "kind": "Newline",
+                        "fullStart": 6841,
+                        "start": 6842,
+                        "length": 2
                     }
                 },
                 {
@@ -6688,6 +6719,12 @@
                                 "length": 5
                             }
                         }
+                    },
+                    "terminator": {
+                        "kind": "Newline",
+                        "fullStart": 6855,
+                        "start": 6856,
+                        "length": 2
                     }
                 },
                 {
@@ -6719,6 +6756,12 @@
                                 "length": 6
                             }
                         }
+                    },
+                    "terminator": {
+                        "kind": "Newline",
+                        "fullStart": 6870,
+                        "start": 6871,
+                        "length": 2
                     }
                 },
                 {
@@ -6750,6 +6793,12 @@
                                 "length": 7
                             }
                         }
+                    },
+                    "terminator": {
+                        "kind": "Newline",
+                        "fullStart": 6886,
+                        "start": 6887,
+                        "length": 2
                     }
                 }
             ],
