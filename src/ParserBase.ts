@@ -5,6 +5,7 @@ import { FloatLiteral } from './Node/Expression/FloatLiteral';
 import { GroupingExpression } from './Node/Expression/GroupingExpression';
 import { IndexExpression } from './Node/Expression/IndexExpression';
 import { IntegerLiteral } from './Node/Expression/IntegerLiteral';
+import { ScopeMemberAccessExpression } from './Node/Expression/ScopeMemberAccessExpression';
 import { SelfExpression } from './Node/Expression/SelfExpression';
 import { StringLiteral } from './Node/Expression/StringLiteral';
 import { SuperExpression } from './Node/Expression/SuperExpression';
@@ -269,12 +270,26 @@ export abstract class ParserBase {
 
         const token = this.getToken();
         switch (token.kind) {
+            case TokenKind.Period: {
+                return this.parseScopeMemberAccessExprssion(expression);
+            }
             case TokenKind.OpeningSquareBracket: {
                 return this.parseIndexExpression(expression);
             }
         }
 
         return expression;
+    }
+
+    protected parseScopeMemberAccessExprssion(expression: Expressions): ScopeMemberAccessExpression {
+        const scopeMemberAccessExpression = new ScopeMemberAccessExpression();
+        scopeMemberAccessExpression.parent = expression.parent;
+        expression.parent = scopeMemberAccessExpression;
+        scopeMemberAccessExpression.scopableExpression = expression;
+        scopeMemberAccessExpression.scopeMemberAccessOperator = this.eat(TokenKind.Period);
+        scopeMemberAccessExpression.identifier = this.eat(TokenKind.Identifier);
+
+        return scopeMemberAccessExpression;
     }
 
     protected parseIndexExpression(expression: Expressions): IndexExpression {

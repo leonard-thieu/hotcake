@@ -7,6 +7,7 @@ import { IndexExpression } from './IndexExpression';
 import { IntegerLiteral } from './IntegerLiteral';
 import { NewExpression } from './NewExpression';
 import { NullExpression } from './NullExpression';
+import { ScopeMemberAccessExpression } from './ScopeMemberAccessExpression';
 import { SelfExpression } from './SelfExpression';
 import { StringLiteral } from './StringLiteral';
 import { SuperExpression } from './SuperExpression';
@@ -28,6 +29,7 @@ export type Expressions =
     UnaryOpExpression |
     NewExpression |
     NullExpression |
+    ScopeMemberAccessExpression |
     IndexExpression |
     SelfExpression |
     SuperExpression
