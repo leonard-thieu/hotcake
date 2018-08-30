@@ -1,6 +1,6 @@
 import { Token } from '../../Token/Token';
 import { NodeKind } from '../NodeKind';
-import { QualifiedIdentifier } from '../QualifiedIdentifier';
+import { TypeReference } from '../TypeReference';
 import { Declaration } from './Declaration';
 
 export class AliasDirective extends Declaration {
@@ -16,5 +16,5 @@ export class AliasDirective extends Declaration {
     aliasKeyword: Token;
     name: Token;
     equalsSign: Token;
-    target: QualifiedIdentifier;
+    target: TypeReference;
 }

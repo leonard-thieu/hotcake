@@ -19,7 +19,7 @@ export class InterfaceDeclaration extends Declaration {
     interfaceKeyword: Token;
     name: Token;
     extendsKeyword: Token | null = null;
-    baseTypes: ParseContextElementArray<ParseContextKind.BaseTypes> | null = null;
+    baseTypes: ParseContextElementArray<ParseContextKind.TypeReferenceSequence> | null = null;
     members: ParseContextElementArray<InterfaceDeclaration['kind']>;
     endKeyword: Token;
     endInterfaceKeyword: Token | null = null;

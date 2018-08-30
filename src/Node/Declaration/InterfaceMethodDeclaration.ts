@@ -1,7 +1,7 @@
 import { Token } from '../../Token/Token';
-import { DataDeclarationList } from './DataDeclarationList';
 import { NodeKind } from '../NodeKind';
-import { QualifiedIdentifier } from '../QualifiedIdentifier';
+import { TypeReference } from '../TypeReference';
+import { DataDeclarationList } from './DataDeclarationList';
 import { Declaration } from './Declaration';
 
 export class InterfaceMethodDeclaration extends Declaration {
@@ -20,7 +20,7 @@ export class InterfaceMethodDeclaration extends Declaration {
     methodKeyword: Token;
     name: Token;
     colon: Token | null = null;
-    returnType: QualifiedIdentifier | null = null;
+    returnType: TypeReference | null = null;
     openingParenthesis: Token;
     parameters: DataDeclarationList;
     closingParenthesis: Token;

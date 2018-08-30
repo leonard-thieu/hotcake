@@ -1,7 +1,7 @@
 import { ParseContextElementArray } from '../../Parser';
 import { Token } from '../../Token/Token';
 import { NodeKind } from '../NodeKind';
-import { QualifiedIdentifier } from '../QualifiedIdentifier';
+import { TypeReference } from '../TypeReference';
 import { DataDeclarationList } from './DataDeclarationList';
 import { Declaration } from './Declaration';
 
@@ -24,7 +24,7 @@ export class FunctionDeclaration extends Declaration {
     functionKeyword: Token;
     name: Token;
     colon: Token | null = null;
-    returnType: QualifiedIdentifier | null = null;
+    returnType: TypeReference | null = null;
     openingParenthesis: Token;
     parameters: DataDeclarationList;
     closingParenthesis: Token;

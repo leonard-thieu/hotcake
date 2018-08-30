@@ -48,7 +48,8 @@ export enum NodeKind {
     EmptyStatement = 'EmptyStatement',
 
     ModulePath = 'ModulePath',
-    QualifiedIdentifier = 'QualifiedIdentifier',
+    TypeReference = 'TypeReference',
+    ArrayTypeDeclaration = 'ArrayTypeDeclaration',
     DataDeclaration = 'DataDeclaration',
     DataDeclarationList = 'DataDeclarationList',
     TypeParameter = 'TypeParameter',

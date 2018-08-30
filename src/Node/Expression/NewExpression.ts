@@ -1,7 +1,7 @@
 import { ParseContextElementArray } from '../../Parser';
 import { Token } from '../../Token/Token';
 import { NodeKind } from '../NodeKind';
-import { QualifiedIdentifier } from '../QualifiedIdentifier';
+import { TypeReference } from '../TypeReference';
 import { Expression } from './Expression';
 
 export class NewExpression extends Expression {
@@ -16,7 +16,7 @@ export class NewExpression extends Expression {
     readonly kind = NodeKind.NewExpression;
 
     newKeyword: Token;
-    type: QualifiedIdentifier;
+    type: TypeReference;
     openingParenthesis: Token | null;
     arguments: ParseContextElementArray<any>;
     closingParenthesis: Token | null;

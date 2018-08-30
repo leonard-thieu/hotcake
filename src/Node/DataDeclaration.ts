@@ -3,7 +3,7 @@ import { Token } from '../Token/Token';
 import { Expression } from './Expression/Expression';
 import { Node } from './Node';
 import { NodeKind } from './NodeKind';
-import { QualifiedIdentifier } from './QualifiedIdentifier';
+import { TypeReference } from './TypeReference';
 
 /**
  * Inferred type
@@ -26,8 +26,7 @@ export class DataDeclaration extends Node {
         'name',
         'colonEqualsSign',
         'colon',
-        'longhandType',
-        'shorthandType',
+        'type',
         'equalsSign',
         'eachInKeyword',
         'expression',
@@ -40,9 +39,7 @@ export class DataDeclaration extends Node {
     colonEqualsSign: Token | null = null;
 
     colon: Token | null = null;
-    longhandType: QualifiedIdentifier | null = null;
-
-    shorthandType: Token | null = null;
+    type: TypeReference | null = null;;
 
     equalsSign: Token | null = null;
 

@@ -19,7 +19,6 @@ import { NullExpression } from './Node/Expression/NullExpression';
 import { ModulePath } from './Node/ModulePath';
 import { Node } from './Node/Node';
 import { NodeKind } from './Node/NodeKind';
-import { QualifiedIdentifier } from './Node/QualifiedIdentifier';
 import { ContinueStatement } from './Node/Statement/ContinueStatement';
 import { EmptyStatement } from './Node/Statement/EmptyStatement';
 import { ExitStatement } from './Node/Statement/ExitStatement';
@@ -34,6 +33,7 @@ import { ThrowStatement } from './Node/Statement/ThrowStatement';
 import { CatchStatement, TryStatement } from './Node/Statement/TryStatement';
 import { WhileLoop } from './Node/Statement/WhileLoop';
 import { TypeParameter } from './Node/TypeParameter';
+import { ArrayTypeDeclaration, TypeReference } from './Node/TypeReference';
 import { ParserBase } from './ParserBase';
 import { SkippedToken } from './Token/SkippedToken';
 import { Token } from './Token/Token';
@@ -164,7 +164,7 @@ export class Parser extends ParserBase {
         aliasDirective.aliasKeyword = this.eat(TokenKind.AliasKeyword);
         aliasDirective.name = this.eat(TokenKind.Identifier);
         aliasDirective.equalsSign = this.eat(TokenKind.EqualsSign);
-        aliasDirective.target = this.parseQualifiedIdentifier(aliasDirective);
+        aliasDirective.target = this.parseTypeReference(aliasDirective);
 
         return aliasDirective;
     }
@@ -176,7 +176,7 @@ export class Parser extends ParserBase {
         interfaceDeclaration.name = this.eat(TokenKind.Identifier);
         interfaceDeclaration.extendsKeyword = this.eatOptional(TokenKind.ExtendsKeyword);
         if (interfaceDeclaration.extendsKeyword !== null) {
-            interfaceDeclaration.baseTypes = this.parseList(interfaceDeclaration, ParseContextKind.BaseTypes);
+            interfaceDeclaration.baseTypes = this.parseList(interfaceDeclaration, ParseContextKind.TypeReferenceSequence);
         }
         interfaceDeclaration.members = this.parseList(interfaceDeclaration, interfaceDeclaration.kind);
         interfaceDeclaration.endKeyword = this.eat(TokenKind.EndKeyword);
@@ -199,12 +199,12 @@ export class Parser extends ParserBase {
 
         classDeclaration.extendsKeyword = this.eatOptional(TokenKind.ExtendsKeyword);
         if (classDeclaration.extendsKeyword !== null) {
-            classDeclaration.baseType = this.parseQualifiedIdentifier(classDeclaration);
+            classDeclaration.baseType = this.parseTypeReference(classDeclaration);
         }
 
         classDeclaration.implementsKeyword = this.eatOptional(TokenKind.ImplementsKeyword);
         if (classDeclaration.implementsKeyword !== null) {
-            classDeclaration.implementedTypes = this.parseList(classDeclaration, ParseContextKind.BaseTypes);
+            classDeclaration.implementedTypes = this.parseList(classDeclaration, ParseContextKind.TypeReferenceSequence);
         }
 
         while (true) {
@@ -266,7 +266,7 @@ export class Parser extends ParserBase {
 
         if (this.getToken().kind !== TokenKind.OpeningParenthesis) {
             interfaceMethodDeclaration.colon = this.eatOptional(TokenKind.Colon);
-            interfaceMethodDeclaration.returnType = this.parseQualifiedIdentifier(interfaceMethodDeclaration);
+            interfaceMethodDeclaration.returnType = this.parseTypeReference(interfaceMethodDeclaration);
         }
 
         interfaceMethodDeclaration.openingParenthesis = this.eat(TokenKind.OpeningParenthesis);
@@ -334,7 +334,7 @@ export class Parser extends ParserBase {
 
         if (this.getToken().kind !== TokenKind.OpeningParenthesis) {
             classMethodDeclaration.colon = this.eatOptional(TokenKind.Colon);
-            classMethodDeclaration.returnType = this.parseQualifiedIdentifier(classMethodDeclaration);
+            classMethodDeclaration.returnType = this.parseTypeReference(classMethodDeclaration);
         }
 
         classMethodDeclaration.openingParenthesis = this.eat(TokenKind.OpeningParenthesis);
@@ -802,7 +802,7 @@ export class Parser extends ParserBase {
         if (this.getToken().kind !== TokenKind.OpeningParenthesis) {
             // TODO: Consolidate type declaration handling logic.
             functionDeclaration.colon = this.eatOptional(TokenKind.Colon);
-            functionDeclaration.returnType = this.parseQualifiedIdentifier(functionDeclaration);
+            functionDeclaration.returnType = this.parseTypeReference(functionDeclaration);
         }
 
         functionDeclaration.openingParenthesis = this.eat(TokenKind.OpeningParenthesis);
@@ -827,12 +827,12 @@ export class Parser extends ParserBase {
     // #region Data declaration list members
 
     private isDataDeclarationListMembersListTerminator(token: Token): boolean {
-        return token.kind !== TokenKind.Identifier &&
-            token.kind !== TokenKind.Comma;
+        return !this.isDataDeclarationListMemberStart(token);
     }
 
     private isDataDeclarationListMemberStart(token: Token): boolean {
         switch (token.kind) {
+            // TODO: Is Period (global scope member access) allowed?
             case TokenKind.Identifier:
             case TokenKind.Comma: {
                 return true;
@@ -863,10 +863,8 @@ export class Parser extends ParserBase {
         dataDeclaration.colonEqualsSign = this.eatOptional(TokenKind.ColonEqualsSign);
         if (dataDeclaration.colonEqualsSign === null) {
             dataDeclaration.colon = this.eatOptional(TokenKind.Colon);
-            if (dataDeclaration.colon !== null) {
-                dataDeclaration.longhandType = this.parseQualifiedIdentifier(dataDeclaration);
-            } else {
-                dataDeclaration.shorthandType = this.eatOptional(TokenKind.DollarSign, TokenKind.QuestionMark, TokenKind.NumberSign, TokenKind.PercentSign);
+            if (this.isTypeReferenceSequenceMemberStart(this.getToken())) {
+                dataDeclaration.type = this.parseTypeReference(dataDeclaration);
             }
             dataDeclaration.equalsSign = this.eatOptional(TokenKind.EqualsSign);
         }
@@ -934,6 +932,121 @@ export class Parser extends ParserBase {
 
     // #endregion
 
+    // #region Type reference sequence
+
+    private isTypeReferenceSequenceTerminator(token: Token): boolean {
+        return !this.isTypeReferenceSequenceMemberStart(token);
+    }
+
+    private isTypeReferenceSequenceMemberStart(token: Token): boolean {
+        return token.kind === TokenKind.Comma ||
+            this.isTypeReferenceStart(token);
+    }
+
+    private isTypeReferenceStart(token: Token): boolean {
+        switch (token.kind) {
+            case TokenKind.DollarSign:
+            case TokenKind.QuestionMark:
+            case TokenKind.NumberSign:
+            case TokenKind.PercentSign:
+            case TokenKind.StringKeyword:
+            case TokenKind.BoolKeyword:
+            case TokenKind.FloatKeyword:
+            case TokenKind.IntKeyword:
+            case TokenKind.ObjectKeyword:
+            case TokenKind.ThrowableKeyword:
+            case TokenKind.VoidKeyword:
+            case TokenKind.Identifier:
+            case TokenKind.Period: {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    private parseTypeReferenceSequenceMember(parent: Node) {
+        const token = this.getToken();
+        switch (token.kind) {
+            case TokenKind.Identifier: {
+                return this.parseTypeReference(parent);
+            }
+            case TokenKind.Comma: {
+                return this.parseCommaSeparator(parent);
+            }
+        }
+
+        throw new Error(`Unexpected token: ${JSON.stringify(token.kind)}`);
+    }
+
+    private parseTypeReference(parent: Node): TypeReference {
+        const typeReference = new TypeReference();
+        typeReference.parent = parent;
+
+        const token = this.getToken();
+        switch (token.kind) {
+            case TokenKind.DollarSign:
+            case TokenKind.QuestionMark:
+            case TokenKind.NumberSign:
+            case TokenKind.PercentSign:
+            case TokenKind.StringKeyword:
+            case TokenKind.BoolKeyword:
+            case TokenKind.FloatKeyword:
+            case TokenKind.IntKeyword:
+            case TokenKind.ObjectKeyword:
+            case TokenKind.ThrowableKeyword:
+            case TokenKind.VoidKeyword: {
+                typeReference.identifier = token;
+                this.advanceToken();
+                break;
+            }
+            default: {
+                // Create a ModulePath only if necessary.
+                if (token.kind !== TokenKind.Identifier ||
+                    this.getToken(1).kind === TokenKind.Period) {
+                    typeReference.modulePath = this.parseModulePath(typeReference);
+
+                    const modulePathChildren = typeReference.modulePath.children;
+                    typeReference.identifier = modulePathChildren.pop()!;
+                    typeReference.scopeMemberAccessOperator = modulePathChildren.pop()!;
+                } else {
+                    typeReference.identifier = token;
+                    this.advanceToken();
+                }
+
+                // Generic type arguments
+                typeReference.lessThanSign = this.eatOptional(TokenKind.LessThanSign);
+                if (typeReference.lessThanSign !== null) {
+                    typeReference.typeArguments = this.parseList(typeReference, ParseContextKind.TypeReferenceSequence);
+                    typeReference.greaterThanSign = this.eat(TokenKind.GreaterThanSign);
+                }
+                break;
+            }
+        }
+
+        while (this.getToken().kind === TokenKind.OpeningSquareBracket) {
+            if (typeReference.arrayTypeDeclarations === null) {
+                typeReference.arrayTypeDeclarations = [];
+            }
+
+            typeReference.arrayTypeDeclarations.push(this.parseArrayTypeDeclaration(parent));
+        }
+
+        return typeReference;
+    }
+
+    private parseArrayTypeDeclaration(parent: Node): ArrayTypeDeclaration {
+        const arrayTypeDeclaration = new ArrayTypeDeclaration();
+        arrayTypeDeclaration.parent = parent;
+        arrayTypeDeclaration.openingSquareBracket = this.eat(TokenKind.OpeningSquareBracket);
+        arrayTypeDeclaration.expression = this.parseExpression(arrayTypeDeclaration);
+        arrayTypeDeclaration.closingSquareBracket = this.eat(TokenKind.ClosingSquareBracket);
+
+        return arrayTypeDeclaration;
+    }
+
+    // #endregion
+
     // #region Expression sequence
 
     private isExpressionSequenceListTerminator(token: Token): boolean {
@@ -957,39 +1070,6 @@ export class Parser extends ParserBase {
     }
 
     // #endregion
-
-    private parseQualifiedIdentifier(parent: Node): QualifiedIdentifier {
-        const qualifiedIdentifier = new QualifiedIdentifier();
-        qualifiedIdentifier.parent = parent;
-        qualifiedIdentifier.modulePath = this.parseModulePath(qualifiedIdentifier);
-
-        const modulePathChildren = qualifiedIdentifier.modulePath.children;
-        if (modulePathChildren.length > 0) {
-            qualifiedIdentifier.identifier = modulePathChildren.pop()!;
-            qualifiedIdentifier.scopeMemberAccessOperator = modulePathChildren.pop() || null;
-        } else {
-            const token = this.getToken();
-            switch (token.kind) {
-                case TokenKind.StringKeyword:
-                case TokenKind.BoolKeyword:
-                case TokenKind.FloatKeyword:
-                case TokenKind.IntKeyword:
-                case TokenKind.ObjectKeyword:
-                case TokenKind.ThrowableKeyword:
-                case TokenKind.VoidKeyword: {
-                    qualifiedIdentifier.identifier = token;
-                    this.advanceToken();
-                    break;
-                }
-                default: {
-                    qualifiedIdentifier.identifier = new SkippedToken(token);
-                    break;
-                }
-            }
-        }
-
-        return qualifiedIdentifier;
-    }
 
     private parseModulePath(parent: Node): ModulePath {
         const modulePath = new ModulePath();
@@ -1133,12 +1213,14 @@ export class Parser extends ParserBase {
                 return token.kind === TokenKind.WendKeyword ||
                     this.isBlockStatementsListTerminator(token);
             }
-            case NodeKind.DataDeclarationList:
-            case ParseContextKind.BaseTypes: {
+            case NodeKind.DataDeclarationList: {
                 return this.isDataDeclarationListMembersListTerminator(token);
             }
             case ParseContextKind.TypeParameterSequence: {
                 return this.isTypeParameterSequenceTerminator(token);
+            }
+            case ParseContextKind.TypeReferenceSequence: {
+                return this.isTypeReferenceSequenceTerminator(token);
             }
             case ParseContextKind.ExpressionSequence: {
                 return this.isExpressionSequenceListTerminator(token);
@@ -1173,12 +1255,14 @@ export class Parser extends ParserBase {
             case NodeKind.CatchStatement: {
                 return this.isStatementStart(token);
             }
-            case NodeKind.DataDeclarationList:
-            case ParseContextKind.BaseTypes: {
+            case NodeKind.DataDeclarationList: {
                 return this.isDataDeclarationListMemberStart(token);
             }
             case ParseContextKind.TypeParameterSequence: {
                 return this.isTypeParameterSequenceMemberStart(token);
+            }
+            case ParseContextKind.TypeReferenceSequence: {
+                return this.isTypeReferenceSequenceMemberStart(token);
             }
             case ParseContextKind.ExpressionSequence: {
                 return this.isExpressionSequenceMemberStart(token);
@@ -1213,9 +1297,11 @@ export class Parser extends ParserBase {
             case NodeKind.CatchStatement: {
                 return this.parseStatement(parent);
             }
-            case NodeKind.DataDeclarationList:
-            case ParseContextKind.BaseTypes: {
+            case NodeKind.DataDeclarationList: {
                 return this.parseDataDeclarationListMember(parent);
+            }
+            case ParseContextKind.TypeReferenceSequence: {
+                return this.parseTypeReferenceSequenceMember(parent);
             }
             case ParseContextKind.TypeParameterSequence: {
                 return this.parseTypeParameterSequenceMember(parent);
@@ -1274,7 +1360,7 @@ export class Parser extends ParserBase {
         const newExpression = new NewExpression();
         newExpression.parent = parent;
         newExpression.newKeyword = this.eat(TokenKind.NewKeyword);
-        newExpression.type = this.parseQualifiedIdentifier(newExpression);
+        newExpression.type = this.parseTypeReference(newExpression);
         newExpression.openingParenthesis = this.eatOptional(TokenKind.OpeningParenthesis);
         newExpression.arguments = this.parseList(newExpression, ParseContextKind.ExpressionSequence);
         newExpression.closingParenthesis = this.eatOptional(TokenKind.ClosingParenthesis);
@@ -1302,7 +1388,7 @@ export type ParseContextElementArray<T extends ParseContext> = Array<ParseContex
 type ParseContext = keyof ParseContextElementMap;
 
 export enum ParseContextKind {
-    BaseTypes = 'BaseTypes',
+    TypeReferenceSequence = 'TypeReferenceSequence',
     TypeParameterSequence = 'TypeParameters',
     ExpressionSequence = 'Expressions',
 }
@@ -1324,7 +1410,7 @@ export interface ParseContextElementMap {
     [NodeKind.CatchStatement]: ReturnType<Parser['parseStatement']>;
     [NodeKind.FunctionDeclaration]: ReturnType<Parser['parseStatement']>;
     [NodeKind.DataDeclarationList]: ReturnType<Parser['parseDataDeclarationListMember']>;
-    [ParseContextKind.BaseTypes]: ReturnType<Parser['parseDataDeclarationListMember']>;
+    [ParseContextKind.TypeReferenceSequence]: ReturnType<Parser['parseTypeReferenceSequenceMember']>;
     [ParseContextKind.TypeParameterSequence]: ReturnType<Parser['parseTypeParameterSequenceMember']>;
     [ParseContextKind.ExpressionSequence]: ReturnType<Parser['parseExpressionSequenceMember']>;
 }

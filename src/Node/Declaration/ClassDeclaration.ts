@@ -1,7 +1,7 @@
 import { ParseContextElementArray, ParseContextKind } from '../../Parser';
 import { Token } from '../../Token/Token';
 import { NodeKind } from '../NodeKind';
-import { QualifiedIdentifier } from '../QualifiedIdentifier';
+import { TypeReference } from '../TypeReference';
 import { Declaration } from './Declaration';
 
 export class ClassDeclaration extends Declaration {
@@ -32,11 +32,11 @@ export class ClassDeclaration extends Declaration {
 
     // Extends
     extendsKeyword: Token | null = null;
-    baseType: QualifiedIdentifier | null = null;
+    baseType: TypeReference | null = null;
 
     // Implements
     implementsKeyword: Token | null = null;
-    implementedTypes: ParseContextElementArray<ParseContextKind.BaseTypes> | null = null;
+    implementedTypes: ParseContextElementArray<ParseContextKind.TypeReferenceSequence> | null = null;
 
     // Abstract or Final
     attributes: Token[] = [];
