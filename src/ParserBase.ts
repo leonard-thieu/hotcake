@@ -149,7 +149,7 @@ export abstract class ParserBase {
         return unaryOpExpression;
     }
 
-    protected parsePrimaryExpression(parent: Node) {
+    protected parsePrimaryExpression(parent: Node): Expressions | MissingToken {
         const token = this.getToken();
         switch (token.kind) {
             case TokenKind.OpeningParenthesis: {

@@ -1,4 +1,4 @@
-import { ParseContextElementArray } from '../../Parser';
+import { ParseContextElementArray, ParseContextKind } from '../../Parser';
 import { MissingToken } from '../../Token/MissingToken';
 import { Token } from '../../Token/Token';
 import { Expression } from '../Expression/Expression';
@@ -38,7 +38,7 @@ export class CaseStatement extends Statement {
     readonly kind = NodeKind.CaseStatement;
 
     caseKeyword: Token;
-    expressions: Array<Expression | MissingToken>;
+    expressions: ParseContextElementArray<ParseContextKind.ExpressionSequence>;
     statements: ParseContextElementArray<CaseStatement['kind']>;
 }
 
