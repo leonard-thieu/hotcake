@@ -4,6 +4,18 @@ export abstract class Node {
     abstract readonly kind: NodeKind;
     parent: Node | null = null;
 
+    get root() {
+        let parent = this.parent;
+
+        if (parent !== null) {
+            while (parent.parent !== null) {
+                parent = parent.parent;
+            }
+        }
+
+        return parent;
+    }
+
     toJSON(): any {
         const obj: any = {
             kind: this.kind,
