@@ -21,6 +21,7 @@ import { QualifiedIdentifier } from './Node/QualifiedIdentifier';
 import { ContinueStatement } from './Node/Statement/ContinueStatement';
 import { EmptyStatement } from './Node/Statement/EmptyStatement';
 import { ExitStatement } from './Node/Statement/ExitStatement';
+import { ExpressionStatement } from './Node/Statement/ExpressionStatement';
 import { ForLoop, NumericForLoopHeader } from './Node/Statement/ForLoop';
 import { ElseIfStatement, ElseStatement, IfStatement } from './Node/Statement/IfStatement';
 import { RepeatLoop } from './Node/Statement/RepeatLoop';
@@ -384,7 +385,7 @@ export class Parser extends ParserBase {
             }
         }
 
-        return false;
+        return this.isExpressionStart(token);
     }
 
     private parseStatement(parent: Node) {
@@ -435,7 +436,7 @@ export class Parser extends ParserBase {
             }
         }
 
-        return this.parseCore(parent);
+        return this.parseExpressionStatement(parent);
     }
 
     private parseReturnStatement(parent: Node): ReturnStatement {
@@ -747,6 +748,15 @@ export class Parser extends ParserBase {
     }
 
     // #endregion
+
+    private parseExpressionStatement(parent: Node): ExpressionStatement {
+        const expressionStatement = new ExpressionStatement();
+        expressionStatement.parent = parent;
+        expressionStatement.expression = this.parseExpression(expressionStatement);
+        expressionStatement.terminator = this.eatStatementTerminator();
+
+        return expressionStatement;
+    }
 
     private parseEmptyStatement(parent: Node): EmptyStatement {
         const emptyStatement = new EmptyStatement();

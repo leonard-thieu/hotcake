@@ -1639,40 +1639,42 @@
                             }
                         },
                         {
-                            "type": "SkippedToken",
-                            "kind": "Identifier",
-                            "fullStart": 2149,
-                            "start": 2157,
-                            "length": 13
+                            "kind": "ExpressionStatement",
+                            "expression": {
+                                "kind": "Variable",
+                                "name": {
+                                    "kind": "Identifier",
+                                    "fullStart": 2149,
+                                    "start": 2157,
+                                    "length": 13
+                                }
+                            }
                         },
                         {
-                            "type": "SkippedToken",
-                            "kind": "OpeningParenthesis",
-                            "fullStart": 2162,
-                            "start": 2162,
-                            "length": 1
-                        },
-                        {
-                            "type": "SkippedToken",
-                            "kind": "Identifier",
-                            "fullStart": 2163,
-                            "start": 2163,
-                            "length": 1
-                        },
-                        {
-                            "type": "SkippedToken",
-                            "kind": "ClosingParenthesis",
-                            "fullStart": 2164,
-                            "start": 2164,
-                            "length": 1
-                        },
-                        {
-                            "kind": "EmptyStatement",
-                            "terminator": {
-                                "kind": "Newline",
-                                "fullStart": 2165,
-                                "start": 2166,
-                                "length": 2
+                            "kind": "ExpressionStatement",
+                            "expression": {
+                                "kind": "GroupingExpression",
+                                "openingParenthesis": {
+                                    "kind": "OpeningParenthesis",
+                                    "fullStart": 2162,
+                                    "start": 2162,
+                                    "length": 1
+                                },
+                                "expression": {
+                                    "kind": "Variable",
+                                    "name": {
+                                        "kind": "Identifier",
+                                        "fullStart": 2163,
+                                        "start": 2163,
+                                        "length": 1
+                                    }
+                                },
+                                "closingParenthesis": {
+                                    "kind": "ClosingParenthesis",
+                                    "fullStart": 2164,
+                                    "start": 2164,
+                                    "length": 1
+                                }
                             }
                         }
                     ],
@@ -5913,40 +5915,43 @@
                     }
                 },
                 {
-                    "type": "SkippedToken",
-                    "kind": "IntegerLiteral",
-                    "fullStart": 6090,
-                    "start": 6101,
-                    "length": 12
-                },
-                {
-                    "type": "SkippedToken",
-                    "kind": "LessThanSign",
-                    "fullStart": 6102,
-                    "start": 6103,
-                    "length": 2
-                },
-                {
-                    "type": "SkippedToken",
-                    "kind": "HyphenMinus",
-                    "fullStart": 6104,
-                    "start": 6105,
-                    "length": 2
-                },
-                {
-                    "type": "SkippedToken",
-                    "kind": "IntegerLiteral",
-                    "fullStart": 6106,
-                    "start": 6106,
-                    "length": 1
-                },
-                {
-                    "kind": "EmptyStatement",
-                    "terminator": {
-                        "kind": "Newline",
-                        "fullStart": 6107,
-                        "start": 6108,
-                        "length": 2
+                    "kind": "ExpressionStatement",
+                    "expression": {
+                        "kind": "BinaryExpression",
+                        "leftOperand": {
+                            "kind": "IntegerLiteral",
+                            "value": {
+                                "kind": "IntegerLiteral",
+                                "fullStart": 6090,
+                                "start": 6101,
+                                "length": 12
+                            }
+                        },
+                        "operator": {
+                            "kind": "LessThanSign",
+                            "fullStart": 6102,
+                            "start": 6103,
+                            "length": 2
+                        },
+                        "eachInKeyword": null,
+                        "rightOperand": {
+                            "kind": "UnaryOpExpression",
+                            "operator": {
+                                "kind": "HyphenMinus",
+                                "fullStart": 6104,
+                                "start": 6105,
+                                "length": 2
+                            },
+                            "operand": {
+                                "kind": "IntegerLiteral",
+                                "value": {
+                                    "kind": "IntegerLiteral",
+                                    "fullStart": 6106,
+                                    "start": 6106,
+                                    "length": 1
+                                }
+                            }
+                        }
                     }
                 },
                 {
@@ -6593,153 +6598,158 @@
                     }
                 },
                 {
-                    "type": "SkippedToken",
-                    "kind": "Identifier",
-                    "fullStart": 6811,
-                    "start": 6815,
-                    "length": 5
-                },
-                {
-                    "type": "SkippedToken",
-                    "kind": "EqualsSign",
-                    "fullStart": 6816,
-                    "start": 6817,
-                    "length": 2
-                },
-                {
-                    "type": "SkippedToken",
-                    "kind": "FloatLiteral",
-                    "fullStart": 6818,
-                    "start": 6819,
-                    "length": 8
-                },
-                {
-                    "kind": "EmptyStatement",
-                    "terminator": {
-                        "kind": "Newline",
-                        "fullStart": 6826,
-                        "start": 6827,
-                        "length": 2
+                    "kind": "ExpressionStatement",
+                    "expression": {
+                        "kind": "BinaryExpression",
+                        "leftOperand": {
+                            "kind": "Variable",
+                            "name": {
+                                "kind": "Identifier",
+                                "fullStart": 6811,
+                                "start": 6815,
+                                "length": 5
+                            }
+                        },
+                        "operator": {
+                            "kind": "EqualsSign",
+                            "fullStart": 6816,
+                            "start": 6817,
+                            "length": 2
+                        },
+                        "eachInKeyword": null,
+                        "rightOperand": {
+                            "kind": "FloatLiteral",
+                            "value": {
+                                "kind": "FloatLiteral",
+                                "fullStart": 6818,
+                                "start": 6819,
+                                "length": 8
+                            }
+                        }
                     }
                 },
                 {
-                    "type": "SkippedToken",
-                    "kind": "Identifier",
-                    "fullStart": 6828,
-                    "start": 6832,
-                    "length": 5
-                },
-                {
-                    "type": "SkippedToken",
-                    "kind": "EqualsSign",
-                    "fullStart": 6833,
-                    "start": 6834,
-                    "length": 2
-                },
-                {
-                    "type": "SkippedToken",
-                    "kind": "FloatLiteral",
-                    "fullStart": 6835,
-                    "start": 6836,
-                    "length": 6
-                },
-                {
-                    "kind": "EmptyStatement",
-                    "terminator": {
-                        "kind": "Newline",
-                        "fullStart": 6841,
-                        "start": 6842,
-                        "length": 2
+                    "kind": "ExpressionStatement",
+                    "expression": {
+                        "kind": "BinaryExpression",
+                        "leftOperand": {
+                            "kind": "Variable",
+                            "name": {
+                                "kind": "Identifier",
+                                "fullStart": 6828,
+                                "start": 6832,
+                                "length": 5
+                            }
+                        },
+                        "operator": {
+                            "kind": "EqualsSign",
+                            "fullStart": 6833,
+                            "start": 6834,
+                            "length": 2
+                        },
+                        "eachInKeyword": null,
+                        "rightOperand": {
+                            "kind": "FloatLiteral",
+                            "value": {
+                                "kind": "FloatLiteral",
+                                "fullStart": 6835,
+                                "start": 6836,
+                                "length": 6
+                            }
+                        }
                     }
                 },
                 {
-                    "type": "SkippedToken",
-                    "kind": "Identifier",
-                    "fullStart": 6843,
-                    "start": 6847,
-                    "length": 5
-                },
-                {
-                    "type": "SkippedToken",
-                    "kind": "EqualsSign",
-                    "fullStart": 6848,
-                    "start": 6849,
-                    "length": 2
-                },
-                {
-                    "type": "SkippedToken",
-                    "kind": "FloatLiteral",
-                    "fullStart": 6850,
-                    "start": 6851,
-                    "length": 5
-                },
-                {
-                    "kind": "EmptyStatement",
-                    "terminator": {
-                        "kind": "Newline",
-                        "fullStart": 6855,
-                        "start": 6856,
-                        "length": 2
+                    "kind": "ExpressionStatement",
+                    "expression": {
+                        "kind": "BinaryExpression",
+                        "leftOperand": {
+                            "kind": "Variable",
+                            "name": {
+                                "kind": "Identifier",
+                                "fullStart": 6843,
+                                "start": 6847,
+                                "length": 5
+                            }
+                        },
+                        "operator": {
+                            "kind": "EqualsSign",
+                            "fullStart": 6848,
+                            "start": 6849,
+                            "length": 2
+                        },
+                        "eachInKeyword": null,
+                        "rightOperand": {
+                            "kind": "FloatLiteral",
+                            "value": {
+                                "kind": "FloatLiteral",
+                                "fullStart": 6850,
+                                "start": 6851,
+                                "length": 5
+                            }
+                        }
                     }
                 },
                 {
-                    "type": "SkippedToken",
-                    "kind": "Identifier",
-                    "fullStart": 6857,
-                    "start": 6861,
-                    "length": 5
-                },
-                {
-                    "type": "SkippedToken",
-                    "kind": "EqualsSign",
-                    "fullStart": 6862,
-                    "start": 6863,
-                    "length": 2
-                },
-                {
-                    "type": "SkippedToken",
-                    "kind": "FloatLiteral",
-                    "fullStart": 6864,
-                    "start": 6865,
-                    "length": 6
-                },
-                {
-                    "kind": "EmptyStatement",
-                    "terminator": {
-                        "kind": "Newline",
-                        "fullStart": 6870,
-                        "start": 6871,
-                        "length": 2
+                    "kind": "ExpressionStatement",
+                    "expression": {
+                        "kind": "BinaryExpression",
+                        "leftOperand": {
+                            "kind": "Variable",
+                            "name": {
+                                "kind": "Identifier",
+                                "fullStart": 6857,
+                                "start": 6861,
+                                "length": 5
+                            }
+                        },
+                        "operator": {
+                            "kind": "EqualsSign",
+                            "fullStart": 6862,
+                            "start": 6863,
+                            "length": 2
+                        },
+                        "eachInKeyword": null,
+                        "rightOperand": {
+                            "kind": "FloatLiteral",
+                            "value": {
+                                "kind": "FloatLiteral",
+                                "fullStart": 6864,
+                                "start": 6865,
+                                "length": 6
+                            }
+                        }
                     }
                 },
                 {
-                    "type": "SkippedToken",
-                    "kind": "Identifier",
-                    "fullStart": 6872,
-                    "start": 6876,
-                    "length": 5
-                },
-                {
-                    "type": "SkippedToken",
-                    "kind": "EqualsSign",
-                    "fullStart": 6877,
-                    "start": 6878,
-                    "length": 2
-                },
-                {
-                    "type": "SkippedToken",
-                    "kind": "FloatLiteral",
-                    "fullStart": 6879,
-                    "start": 6880,
-                    "length": 7
-                },
-                {
-                    "kind": "EmptyStatement",
-                    "terminator": {
-                        "kind": "Newline",
-                        "fullStart": 6886,
-                        "start": 6887,
-                        "length": 2
+                    "kind": "ExpressionStatement",
+                    "expression": {
+                        "kind": "BinaryExpression",
+                        "leftOperand": {
+                            "kind": "Variable",
+                            "name": {
+                                "kind": "Identifier",
+                                "fullStart": 6872,
+                                "start": 6876,
+                                "length": 5
+                            }
+                        },
+                        "operator": {
+                            "kind": "EqualsSign",
+                            "fullStart": 6877,
+                            "start": 6878,
+                            "length": 2
+                        },
+                        "eachInKeyword": null,
+                        "rightOperand": {
+                            "kind": "FloatLiteral",
+                            "value": {
+                                "kind": "FloatLiteral",
+                                "fullStart": 6879,
+                                "start": 6880,
+                                "length": 7
+                            }
+                        }
                     }
                 }
             ],

@@ -43,6 +43,7 @@ export enum NodeKind {
     ThrowStatement = 'ThrowStatement',
     TryStatement = 'TryStatement',
     CatchStatement = 'CatchStatement',
+    ExpressionStatement = 'ExpressionStatement',
     EmptyStatement = 'EmptyStatement',
 
     ModulePath = 'ModulePath',
