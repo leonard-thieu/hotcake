@@ -54,6 +54,7 @@
                     },
                     "expression": {
                         "kind": "NullExpression",
+                        "newlines": null,
                         "nullKeyword": {
                             "kind": "NullKeyword",
                             "fullStart": 23,

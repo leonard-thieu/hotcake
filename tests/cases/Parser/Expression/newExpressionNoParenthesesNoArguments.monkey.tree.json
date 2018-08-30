@@ -48,6 +48,7 @@
                     "kind": "ExpressionStatement",
                     "expression": {
                         "kind": "NewExpression",
+                        "newlines": null,
                         "newKeyword": {
                             "kind": "NewKeyword",
                             "fullStart": 17,

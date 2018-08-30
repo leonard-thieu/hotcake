@@ -105,6 +105,7 @@
             "modulePath": null,
             "nativeFilePath": {
                 "kind": "StringLiteral",
+                "newlines": null,
                 "startQuote": {
                     "kind": "QuotationMark",
                     "fullStart": 633,
@@ -435,6 +436,7 @@
                     "eachInKeyword": null,
                     "expression": {
                         "kind": "IntegerLiteral",
+                        "newlines": null,
                         "value": {
                             "kind": "IntegerLiteral",
                             "fullStart": 1070,
@@ -494,6 +496,7 @@
                     "eachInKeyword": null,
                     "expression": {
                         "kind": "StringLiteral",
+                        "newlines": null,
                         "startQuote": {
                             "kind": "QuotationMark",
                             "fullStart": 1122,
@@ -553,6 +556,7 @@
                     "eachInKeyword": null,
                     "expression": {
                         "kind": "IntegerLiteral",
+                        "newlines": null,
                         "value": {
                             "kind": "IntegerLiteral",
                             "fullStart": 1179,
@@ -598,6 +602,7 @@
                     "eachInKeyword": null,
                     "expression": {
                         "kind": "IntegerLiteral",
+                        "newlines": null,
                         "value": {
                             "kind": "IntegerLiteral",
                             "fullStart": 1220,
@@ -643,6 +648,7 @@
                     "eachInKeyword": null,
                     "expression": {
                         "kind": "IntegerLiteral",
+                        "newlines": null,
                         "value": {
                             "kind": "IntegerLiteral",
                             "fullStart": 1263,
@@ -681,6 +687,7 @@
                     "eachInKeyword": null,
                     "expression": {
                         "kind": "IntegerLiteral",
+                        "newlines": null,
                         "value": {
                             "kind": "IntegerLiteral",
                             "fullStart": 1270,
@@ -751,6 +758,7 @@
                     "eachInKeyword": null,
                     "expression": {
                         "kind": "IntegerLiteral",
+                        "newlines": null,
                         "value": {
                             "kind": "IntegerLiteral",
                             "fullStart": 1325,
@@ -810,6 +818,7 @@
                     "eachInKeyword": null,
                     "expression": {
                         "kind": "StringLiteral",
+                        "newlines": null,
                         "startQuote": {
                             "kind": "QuotationMark",
                             "fullStart": 1377,
@@ -869,6 +878,7 @@
                     "eachInKeyword": null,
                     "expression": {
                         "kind": "IntegerLiteral",
+                        "newlines": null,
                         "value": {
                             "kind": "IntegerLiteral",
                             "fullStart": 1434,
@@ -914,6 +924,7 @@
                     "eachInKeyword": null,
                     "expression": {
                         "kind": "IntegerLiteral",
+                        "newlines": null,
                         "value": {
                             "kind": "IntegerLiteral",
                             "fullStart": 1475,
@@ -959,6 +970,7 @@
                     "eachInKeyword": null,
                     "expression": {
                         "kind": "IntegerLiteral",
+                        "newlines": null,
                         "value": {
                             "kind": "IntegerLiteral",
                             "fullStart": 1518,
@@ -997,6 +1009,7 @@
                     "eachInKeyword": null,
                     "expression": {
                         "kind": "IntegerLiteral",
+                        "newlines": null,
                         "value": {
                             "kind": "IntegerLiteral",
                             "fullStart": 1525,
@@ -1150,6 +1163,7 @@
                     "eachInKeyword": null,
                     "expression": {
                         "kind": "StringLiteral",
+                        "newlines": null,
                         "startQuote": {
                             "kind": "QuotationMark",
                             "fullStart": 1719,
@@ -1622,8 +1636,10 @@
                     },
                     "expression": {
                         "kind": "BinaryExpression",
+                        "newlines": null,
                         "leftOperand": {
                             "kind": "Variable",
+                            "newlines": null,
                             "name": {
                                 "kind": "Identifier",
                                 "fullStart": 2141,
@@ -1640,6 +1656,7 @@
                         "eachInKeyword": null,
                         "rightOperand": {
                             "kind": "IntegerLiteral",
+                            "newlines": null,
                             "value": {
                                 "kind": "IntegerLiteral",
                                 "fullStart": 2145,
@@ -1662,6 +1679,7 @@
                             "kind": "ExpressionStatement",
                             "expression": {
                                 "kind": "Variable",
+                                "newlines": null,
                                 "name": {
                                     "kind": "Identifier",
                                     "fullStart": 2149,
@@ -1674,13 +1692,15 @@
                                 "kind": "Newline",
                                 "fullStart": 2162,
                                 "start": 2162,
-                                "length": 0
+                                "length": 0,
+                                "newlines": null
                             }
                         },
                         {
                             "kind": "ExpressionStatement",
                             "expression": {
                                 "kind": "GroupingExpression",
+                                "newlines": null,
                                 "openingParenthesis": {
                                     "kind": "OpeningParenthesis",
                                     "fullStart": 2162,
@@ -1689,6 +1709,7 @@
                                 },
                                 "expression": {
                                     "kind": "Variable",
+                                    "newlines": null,
                                     "name": {
                                         "kind": "Identifier",
                                         "fullStart": 2163,
@@ -1902,6 +1923,7 @@
                                 "eachInKeyword": null,
                                 "expression": {
                                     "kind": "BooleanLiteral",
+                                    "newlines": null,
                                     "value": {
                                         "kind": "FalseKeyword",
                                         "fullStart": 2301,
@@ -2103,6 +2125,7 @@
                             "eachInKeyword": null,
                             "expression": {
                                 "kind": "FloatLiteral",
+                                "newlines": null,
                                 "value": {
                                     "kind": "FloatLiteral",
                                     "fullStart": 2485,
@@ -2289,6 +2312,7 @@
                             "eachInKeyword": null,
                             "expression": {
                                 "kind": "FloatLiteral",
+                                "newlines": null,
                                 "value": {
                                     "kind": "FloatLiteral",
                                     "fullStart": 2658,
@@ -2434,6 +2458,7 @@
                                 "eachInKeyword": null,
                                 "expression": {
                                     "kind": "BooleanLiteral",
+                                    "newlines": null,
                                     "value": {
                                         "kind": "FalseKeyword",
                                         "fullStart": 2761,
@@ -2612,6 +2637,7 @@
                             "eachInKeyword": null,
                             "expression": {
                                 "kind": "IntegerLiteral",
+                                "newlines": null,
                                 "value": {
                                     "kind": "IntegerLiteral",
                                     "fullStart": 2920,
@@ -2722,6 +2748,7 @@
                             "eachInKeyword": null,
                             "expression": {
                                 "kind": "StringLiteral",
+                                "newlines": null,
                                 "startQuote": {
                                     "kind": "QuotationMark",
                                     "fullStart": 3024,
@@ -2803,6 +2830,7 @@
                             "eachInKeyword": null,
                             "expression": {
                                 "kind": "IntegerLiteral",
+                                "newlines": null,
                                 "value": {
                                     "kind": "IntegerLiteral",
                                     "fullStart": 3125,
@@ -4582,8 +4610,10 @@
                     },
                     "expression": {
                         "kind": "BinaryExpression",
+                        "newlines": null,
                         "leftOperand": {
                             "kind": "Variable",
+                            "newlines": null,
                             "name": {
                                 "kind": "Identifier",
                                 "fullStart": 4908,
@@ -4600,6 +4630,7 @@
                         "eachInKeyword": null,
                         "rightOperand": {
                             "kind": "StringLiteral",
+                            "newlines": null,
                             "startQuote": {
                                 "kind": "QuotationMark",
                                 "fullStart": 4914,
@@ -4683,8 +4714,10 @@
                     },
                     "expression": {
                         "kind": "BinaryExpression",
+                        "newlines": null,
                         "leftOperand": {
                             "kind": "Variable",
+                            "newlines": null,
                             "name": {
                                 "kind": "Identifier",
                                 "fullStart": 4984,
@@ -4701,6 +4734,7 @@
                         "eachInKeyword": null,
                         "rightOperand": {
                             "kind": "StringLiteral",
+                            "newlines": null,
                             "startQuote": {
                                 "kind": "QuotationMark",
                                 "fullStart": 4990,
@@ -4812,8 +4846,10 @@
                     },
                     "expression": {
                         "kind": "BinaryExpression",
+                        "newlines": null,
                         "leftOperand": {
                             "kind": "Variable",
+                            "newlines": null,
                             "name": {
                                 "kind": "Identifier",
                                 "fullStart": 5103,
@@ -4830,6 +4866,7 @@
                         "eachInKeyword": null,
                         "rightOperand": {
                             "kind": "StringLiteral",
+                            "newlines": null,
                             "startQuote": {
                                 "kind": "QuotationMark",
                                 "fullStart": 5109,
@@ -4890,8 +4927,10 @@
                             },
                             "expression": {
                                 "kind": "BinaryExpression",
+                                "newlines": null,
                                 "leftOperand": {
                                     "kind": "Variable",
+                                    "newlines": null,
                                     "name": {
                                         "kind": "Identifier",
                                         "fullStart": 5170,
@@ -4908,6 +4947,7 @@
                                 "eachInKeyword": null,
                                 "rightOperand": {
                                     "kind": "StringLiteral",
+                                    "newlines": null,
                                     "startQuote": {
                                         "kind": "QuotationMark",
                                         "fullStart": 5177,
@@ -4985,8 +5025,10 @@
                     },
                     "expression": {
                         "kind": "BinaryExpression",
+                        "newlines": null,
                         "leftOperand": {
                             "kind": "Variable",
+                            "newlines": null,
                             "name": {
                                 "kind": "Identifier",
                                 "fullStart": 5240,
@@ -5003,6 +5045,7 @@
                         "eachInKeyword": null,
                         "rightOperand": {
                             "kind": "StringLiteral",
+                            "newlines": null,
                             "startQuote": {
                                 "kind": "QuotationMark",
                                 "fullStart": 5246,
@@ -5063,8 +5106,10 @@
                             },
                             "expression": {
                                 "kind": "BinaryExpression",
+                                "newlines": null,
                                 "leftOperand": {
                                     "kind": "Variable",
+                                    "newlines": null,
                                     "name": {
                                         "kind": "Identifier",
                                         "fullStart": 5307,
@@ -5081,6 +5126,7 @@
                                 "eachInKeyword": null,
                                 "rightOperand": {
                                     "kind": "StringLiteral",
+                                    "newlines": null,
                                     "startQuote": {
                                         "kind": "QuotationMark",
                                         "fullStart": 5314,
@@ -5181,8 +5227,10 @@
                     },
                     "expression": {
                         "kind": "BinaryExpression",
+                        "newlines": null,
                         "leftOperand": {
                             "kind": "Variable",
+                            "newlines": null,
                             "name": {
                                 "kind": "Identifier",
                                 "fullStart": 5415,
@@ -5199,6 +5247,7 @@
                         "eachInKeyword": null,
                         "rightOperand": {
                             "kind": "StringLiteral",
+                            "newlines": null,
                             "startQuote": {
                                 "kind": "QuotationMark",
                                 "fullStart": 5421,
@@ -5264,8 +5313,10 @@
                             },
                             "expression": {
                                 "kind": "BinaryExpression",
+                                "newlines": null,
                                 "leftOperand": {
                                     "kind": "Variable",
+                                    "newlines": null,
                                     "name": {
                                         "kind": "Identifier",
                                         "fullStart": 5487,
@@ -5282,6 +5333,7 @@
                                 "eachInKeyword": null,
                                 "rightOperand": {
                                     "kind": "StringLiteral",
+                                    "newlines": null,
                                     "startQuote": {
                                         "kind": "QuotationMark",
                                         "fullStart": 5494,
@@ -5482,8 +5534,10 @@
                     },
                     "expression": {
                         "kind": "BinaryExpression",
+                        "newlines": null,
                         "leftOperand": {
                             "kind": "Variable",
+                            "newlines": null,
                             "name": {
                                 "kind": "Identifier",
                                 "fullStart": 5657,
@@ -5500,6 +5554,7 @@
                         "eachInKeyword": null,
                         "rightOperand": {
                             "kind": "StringLiteral",
+                            "newlines": null,
                             "startQuote": {
                                 "kind": "QuotationMark",
                                 "fullStart": 5663,
@@ -5555,7 +5610,8 @@
                         "kind": "Newline",
                         "fullStart": 5690,
                         "start": 5690,
-                        "length": 0
+                        "length": 0,
+                        "newlines": null
                     }
                 },
                 {
@@ -5568,8 +5624,10 @@
                     },
                     "expression": {
                         "kind": "BinaryExpression",
+                        "newlines": null,
                         "leftOperand": {
                             "kind": "Variable",
+                            "newlines": null,
                             "name": {
                                 "kind": "Identifier",
                                 "fullStart": 5692,
@@ -5586,6 +5644,7 @@
                         "eachInKeyword": null,
                         "rightOperand": {
                             "kind": "StringLiteral",
+                            "newlines": null,
                             "startQuote": {
                                 "kind": "QuotationMark",
                                 "fullStart": 5699,
@@ -5629,7 +5688,8 @@
                         "kind": "Newline",
                         "fullStart": 5711,
                         "start": 5711,
-                        "length": 0
+                        "length": 0,
+                        "newlines": null
                     }
                 }
             ],
@@ -5802,6 +5862,7 @@
                     },
                     "expression": {
                         "kind": "IntegerLiteral",
+                        "newlines": null,
                         "value": {
                             "kind": "IntegerLiteral",
                             "fullStart": 5895,
@@ -5826,6 +5887,7 @@
                     },
                     "expression": {
                         "kind": "IntegerLiteral",
+                        "newlines": null,
                         "value": {
                             "kind": "IntegerLiteral",
                             "fullStart": 5936,
@@ -5859,6 +5921,7 @@
                     },
                     "expression": {
                         "kind": "IntegerLiteral",
+                        "newlines": null,
                         "value": {
                             "kind": "IntegerLiteral",
                             "fullStart": 5968,
@@ -5883,6 +5946,7 @@
                     },
                     "expression": {
                         "kind": "IntegerLiteral",
+                        "newlines": null,
                         "value": {
                             "kind": "IntegerLiteral",
                             "fullStart": 6002,
@@ -5925,8 +5989,10 @@
                     },
                     "expression": {
                         "kind": "BinaryExpression",
+                        "newlines": null,
                         "leftOperand": {
                             "kind": "BooleanLiteral",
+                            "newlines": null,
                             "value": {
                                 "kind": "TrueKeyword",
                                 "fullStart": 6049,
@@ -5942,55 +6008,50 @@
                         },
                         "eachInKeyword": null,
                         "rightOperand": {
-                            "type": "MissingToken",
-                            "kind": "Expression",
-                            "fullStart": 6057,
-                            "start": 6057,
-                            "length": 0
-                        }
-                    },
-                    "terminator": {
-                        "kind": "Newline",
-                        "fullStart": 6057,
-                        "start": 6089,
-                        "length": 33
-                    }
-                },
-                {
-                    "kind": "ExpressionStatement",
-                    "expression": {
-                        "kind": "BinaryExpression",
-                        "leftOperand": {
-                            "kind": "IntegerLiteral",
-                            "value": {
+                            "kind": "BinaryExpression",
+                            "newlines": null,
+                            "leftOperand": {
                                 "kind": "IntegerLiteral",
-                                "fullStart": 6090,
-                                "start": 6101,
-                                "length": 12
-                            }
-                        },
-                        "operator": {
-                            "kind": "LessThanSign",
-                            "fullStart": 6102,
-                            "start": 6103,
-                            "length": 2
-                        },
-                        "eachInKeyword": null,
-                        "rightOperand": {
-                            "kind": "UnaryOpExpression",
-                            "operator": {
-                                "kind": "HyphenMinus",
-                                "fullStart": 6104,
-                                "start": 6105,
-                                "length": 2
-                            },
-                            "operand": {
-                                "kind": "IntegerLiteral",
+                                "newlines": [
+                                    {
+                                        "kind": "Newline",
+                                        "fullStart": 6057,
+                                        "start": 6089,
+                                        "length": 33
+                                    }
+                                ],
                                 "value": {
                                     "kind": "IntegerLiteral",
-                                    "fullStart": 6106,
-                                    "start": 6106,
-                                    "length": 1
+                                    "fullStart": 6090,
+                                    "start": 6101,
+                                    "length": 12
+                                }
+                            },
+                            "operator": {
+                                "kind": "LessThanSign",
+                                "fullStart": 6102,
+                                "start": 6103,
+                                "length": 2
+                            },
+                            "eachInKeyword": null,
+                            "rightOperand": {
+                                "kind": "UnaryOpExpression",
+                                "newlines": null,
+                                "operator": {
+                                    "kind": "HyphenMinus",
+                                    "fullStart": 6104,
+                                    "start": 6105,
+                                    "length": 2
+                                },
+                                "operand": {
+                                    "kind": "IntegerLiteral",
+                                    "newlines": null,
+                                    "value": {
+                                        "kind": "IntegerLiteral",
+                                        "fullStart": 6106,
+                                        "start": 6106,
+                                        "length": 1
+                                    }
                                 }
                             }
                         }
@@ -6099,6 +6160,7 @@
                     },
                     "expression": {
                         "kind": "Variable",
+                        "newlines": null,
                         "name": {
                             "kind": "Identifier",
                             "fullStart": 6167,
@@ -6132,6 +6194,7 @@
                             "expressions": [
                                 {
                                     "kind": "IntegerLiteral",
+                                    "newlines": null,
                                     "value": {
                                         "kind": "IntegerLiteral",
                                         "fullStart": 6256,
@@ -6178,6 +6241,7 @@
                             "expressions": [
                                 {
                                     "kind": "IntegerLiteral",
+                                    "newlines": null,
                                     "value": {
                                         "kind": "IntegerLiteral",
                                         "fullStart": 6316,
@@ -6197,6 +6261,7 @@
                                 },
                                 {
                                     "kind": "IntegerLiteral",
+                                    "newlines": null,
                                     "value": {
                                         "kind": "IntegerLiteral",
                                         "fullStart": 6319,
@@ -6216,6 +6281,7 @@
                                 },
                                 {
                                     "kind": "IntegerLiteral",
+                                    "newlines": null,
                                     "value": {
                                         "kind": "IntegerLiteral",
                                         "fullStart": 6322,
@@ -6280,6 +6346,7 @@
                                 },
                                 "expression": {
                                     "kind": "Variable",
+                                    "newlines": null,
                                     "name": {
                                         "kind": "Identifier",
                                         "fullStart": 6441,
@@ -6307,6 +6374,7 @@
                                         "expressions": [
                                             {
                                                 "kind": "IntegerLiteral",
+                                                "newlines": null,
                                                 "value": {
                                                     "kind": "IntegerLiteral",
                                                     "fullStart": 6469,
@@ -6353,6 +6421,7 @@
                                         "expressions": [
                                             {
                                                 "kind": "IntegerLiteral",
+                                                "newlines": null,
                                                 "value": {
                                                     "kind": "IntegerLiteral",
                                                     "fullStart": 6519,
@@ -6379,6 +6448,7 @@
                                             },
                                             {
                                                 "kind": "IntegerLiteral",
+                                                "newlines": null,
                                                 "value": {
                                                     "kind": "IntegerLiteral",
                                                     "fullStart": 6556,
@@ -6405,6 +6475,7 @@
                                             },
                                             {
                                                 "kind": "IntegerLiteral",
+                                                "newlines": null,
                                                 "value": {
                                                     "kind": "IntegerLiteral",
                                                     "fullStart": 6581,
@@ -6643,8 +6714,10 @@
                     "kind": "ExpressionStatement",
                     "expression": {
                         "kind": "BinaryExpression",
+                        "newlines": null,
                         "leftOperand": {
                             "kind": "Variable",
+                            "newlines": null,
                             "name": {
                                 "kind": "Identifier",
                                 "fullStart": 6811,
@@ -6661,6 +6734,7 @@
                         "eachInKeyword": null,
                         "rightOperand": {
                             "kind": "FloatLiteral",
+                            "newlines": null,
                             "value": {
                                 "kind": "FloatLiteral",
                                 "fullStart": 6818,
@@ -6680,8 +6754,10 @@
                     "kind": "ExpressionStatement",
                     "expression": {
                         "kind": "BinaryExpression",
+                        "newlines": null,
                         "leftOperand": {
                             "kind": "Variable",
+                            "newlines": null,
                             "name": {
                                 "kind": "Identifier",
                                 "fullStart": 6828,
@@ -6698,6 +6774,7 @@
                         "eachInKeyword": null,
                         "rightOperand": {
                             "kind": "FloatLiteral",
+                            "newlines": null,
                             "value": {
                                 "kind": "FloatLiteral",
                                 "fullStart": 6835,
@@ -6717,8 +6794,10 @@
                     "kind": "ExpressionStatement",
                     "expression": {
                         "kind": "BinaryExpression",
+                        "newlines": null,
                         "leftOperand": {
                             "kind": "Variable",
+                            "newlines": null,
                             "name": {
                                 "kind": "Identifier",
                                 "fullStart": 6843,
@@ -6735,6 +6814,7 @@
                         "eachInKeyword": null,
                         "rightOperand": {
                             "kind": "FloatLiteral",
+                            "newlines": null,
                             "value": {
                                 "kind": "FloatLiteral",
                                 "fullStart": 6850,
@@ -6754,8 +6834,10 @@
                     "kind": "ExpressionStatement",
                     "expression": {
                         "kind": "BinaryExpression",
+                        "newlines": null,
                         "leftOperand": {
                             "kind": "Variable",
+                            "newlines": null,
                             "name": {
                                 "kind": "Identifier",
                                 "fullStart": 6857,
@@ -6772,6 +6854,7 @@
                         "eachInKeyword": null,
                         "rightOperand": {
                             "kind": "FloatLiteral",
+                            "newlines": null,
                             "value": {
                                 "kind": "FloatLiteral",
                                 "fullStart": 6864,
@@ -6791,8 +6874,10 @@
                     "kind": "ExpressionStatement",
                     "expression": {
                         "kind": "BinaryExpression",
+                        "newlines": null,
                         "leftOperand": {
                             "kind": "Variable",
+                            "newlines": null,
                             "name": {
                                 "kind": "Identifier",
                                 "fullStart": 6872,
@@ -6809,6 +6894,7 @@
                         "eachInKeyword": null,
                         "rightOperand": {
                             "kind": "FloatLiteral",
+                            "newlines": null,
                             "value": {
                                 "kind": "FloatLiteral",
                                 "fullStart": 6879,

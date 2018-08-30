@@ -72,6 +72,7 @@
                             "eachInKeyword": null,
                             "expression": {
                                 "kind": "IntegerLiteral",
+                                "newlines": null,
                                 "value": {
                                     "kind": "IntegerLiteral",
                                     "fullStart": 36,

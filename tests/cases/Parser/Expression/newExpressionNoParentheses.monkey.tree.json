@@ -48,6 +48,7 @@
                     "kind": "ExpressionStatement",
                     "expression": {
                         "kind": "NewExpression",
+                        "newlines": null,
                         "newKeyword": {
                             "kind": "NewKeyword",
                             "fullStart": 17,
@@ -73,6 +74,7 @@
                         "arguments": [
                             {
                                 "kind": "StringLiteral",
+                                "newlines": null,
                                 "startQuote": {
                                     "kind": "QuotationMark",
                                     "fullStart": 30,
@@ -116,6 +118,7 @@
                             },
                             {
                                 "kind": "IntegerLiteral",
+                                "newlines": null,
                                 "value": {
                                     "kind": "IntegerLiteral",
                                     "fullStart": 39,
