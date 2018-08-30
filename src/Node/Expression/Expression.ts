@@ -9,6 +9,7 @@ import { NewExpression } from './NewExpression';
 import { NullExpression } from './NullExpression';
 import { SelfExpression } from './SelfExpression';
 import { StringLiteral } from './StringLiteral';
+import { SuperExpression } from './SuperExpression';
 import { UnaryOpExpression } from './UnaryOpExpression';
 import { Variable } from './Variable';
 
@@ -28,5 +29,6 @@ export type Expressions =
     NewExpression |
     NullExpression |
     IndexExpression |
-    SelfExpression
+    SelfExpression |
+    SuperExpression
     ;

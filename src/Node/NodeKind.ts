@@ -58,6 +58,7 @@ export enum NodeKind {
     NullExpression = 'NullExpression',
     BooleanLiteral = 'BooleanLiteral',
     SelfExpression = 'SelfExpression',
+    SuperExpression = 'SuperExpression',
     FloatLiteral = 'FloatLiteral',
     IntegerLiteral = 'IntegerLiteral',
     StringLiteral = 'StringLiteral',

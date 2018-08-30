@@ -7,6 +7,7 @@ import { IndexExpression } from './Node/Expression/IndexExpression';
 import { IntegerLiteral } from './Node/Expression/IntegerLiteral';
 import { SelfExpression } from './Node/Expression/SelfExpression';
 import { StringLiteral } from './Node/Expression/StringLiteral';
+import { SuperExpression } from './Node/Expression/SuperExpression';
 import { UnaryOpExpression } from './Node/Expression/UnaryOpExpression';
 import { Variable } from './Node/Expression/Variable';
 import { Node } from './Node/Node';
@@ -149,6 +150,9 @@ export abstract class ParserBase {
             case TokenKind.SelfKeyword: {
                 return this.parseSelfExpression(parent);
             }
+            case TokenKind.SuperKeyword: {
+                return this.parseSuperExpression(parent);
+            }
         }
 
         console.error(`${JSON.stringify(token.kind)} not implemented.`);
@@ -244,6 +248,14 @@ export abstract class ParserBase {
         selfExpression.selfKeyword = this.eat(TokenKind.SelfKeyword);
 
         return selfExpression;
+    }
+
+    protected parseSuperExpression(parent: Node): SuperExpression {
+        const superExpression = new SuperExpression();
+        superExpression.parent = parent;
+        superExpression.superKeyword = this.eat(TokenKind.SuperKeyword);
+
+        return superExpression;
     }
 
     protected parsePostfixExpression(expression: Expressions | MissingToken) {
