@@ -5537,13 +5537,7 @@
                                 "start": 5678,
                                 "length": 7
                             },
-                            "expression": {
-                                "type": "MissingToken",
-                                "kind": "Expression",
-                                "fullStart": 5684,
-                                "start": 5684,
-                                "length": 0
-                            },
+                            "expression": null,
                             "terminator": {
                                 "kind": "Newline",
                                 "fullStart": 5684,
@@ -5617,13 +5611,7 @@
                                 "start": 5703,
                                 "length": 7
                             },
-                            "expression": {
-                                "type": "MissingToken",
-                                "kind": "Expression",
-                                "fullStart": 5709,
-                                "start": 5709,
-                                "length": 0
-                            },
+                            "expression": null,
                             "terminator": {
                                 "kind": "Newline",
                                 "fullStart": 5709,
@@ -5721,13 +5709,7 @@
                         "start": 5755,
                         "length": 6
                     },
-                    "expression": {
-                        "type": "MissingToken",
-                        "kind": "Expression",
-                        "fullStart": 5761,
-                        "start": 5761,
-                        "length": 0
-                    },
+                    "expression": null,
                     "terminator": {
                         "kind": "Newline",
                         "fullStart": 5761,
@@ -5743,13 +5725,7 @@
                         "start": 5792,
                         "length": 10
                     },
-                    "expression": {
-                        "type": "MissingToken",
-                        "kind": "Expression",
-                        "fullStart": 5798,
-                        "start": 5798,
-                        "length": 0
-                    },
+                    "expression": null,
                     "terminator": {
                         "kind": "Newline",
                         "fullStart": 5798,
@@ -5774,13 +5750,7 @@
                         "start": 5820,
                         "length": 6
                     },
-                    "expression": {
-                        "type": "MissingToken",
-                        "kind": "Expression",
-                        "fullStart": 5826,
-                        "start": 5826,
-                        "length": 0
-                    },
+                    "expression": null,
                     "terminator": {
                         "kind": "Newline",
                         "fullStart": 5826,
@@ -5796,13 +5766,7 @@
                         "start": 5850,
                         "length": 10
                     },
-                    "expression": {
-                        "type": "MissingToken",
-                        "kind": "Expression",
-                        "fullStart": 5856,
-                        "start": 5856,
-                        "length": 0
-                    },
+                    "expression": null,
                     "terminator": {
                         "kind": "Semicolon",
                         "fullStart": 5856,
@@ -6503,13 +6467,7 @@
                                                 "start": 6680,
                                                 "length": 26
                                             },
-                                            "expression": {
-                                                "type": "MissingToken",
-                                                "kind": "Expression",
-                                                "fullStart": 6686,
-                                                "start": 6686,
-                                                "length": 0
-                                            },
+                                            "expression": null,
                                             "terminator": {
                                                 "kind": "Newline",
                                                 "fullStart": 6686,
