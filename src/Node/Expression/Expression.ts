@@ -1,3 +1,5 @@
+import { MissingToken } from '../../Token/MissingToken';
+import { TokenKind } from '../../Token/TokenKind';
 import { Node } from '../Node';
 import { BinaryExpression } from './BinaryExpression';
 import { BooleanLiteral } from './BooleanLiteral';
@@ -34,3 +36,8 @@ export type Expressions =
     SelfExpression |
     SuperExpression
     ;
+
+
+export function isExpressionMissingToken(expression: Expressions | MissingToken): expression is MissingToken {
+    return expression.kind === TokenKind.Expression;
+}

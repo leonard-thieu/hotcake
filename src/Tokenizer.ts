@@ -1,7 +1,7 @@
 import { assertNever } from './assertNever';
 import { PreprocessorModuleDeclaration } from './Node/Declaration/PreprocessorModuleDeclaration';
 import { IfDirective } from './Node/Directive/IfDirective';
-import { Expressions } from './Node/Expression/Expression';
+import { Expressions, isExpressionMissingToken } from './Node/Expression/Expression';
 import { NodeKind } from './Node/NodeKind';
 import { PreprocessorParseContextElementArray } from './PreprocessorParser';
 import { MissingToken } from './Token/MissingToken';
@@ -119,7 +119,7 @@ export class Tokenizer {
     }
 
     private eval(expression: Expressions | MissingToken): any {
-        if (expression instanceof MissingToken) {
+        if (isExpressionMissingToken(expression)) {
             return false;
         }
 
@@ -273,6 +273,14 @@ export class Tokenizer {
                     return this.configVars[varName];
                 }
                 break;
+            }
+            case NodeKind.NewExpression:
+            case NodeKind.ScopeMemberAccessExpression:
+            case NodeKind.NullExpression:
+            case NodeKind.IndexExpression:
+            case NodeKind.SelfExpression:
+            case NodeKind.SuperExpression: {
+                throw new Error(`Unexpected expression: ${JSON.stringify(expression.kind)}`);
             }
             default: {
                 return assertNever(expression);

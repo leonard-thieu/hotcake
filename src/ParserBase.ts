@@ -1,6 +1,6 @@
 import { BinaryExpression } from './Node/Expression/BinaryExpression';
 import { BooleanLiteral } from './Node/Expression/BooleanLiteral';
-import { Expression, Expressions } from './Node/Expression/Expression';
+import { Expression, Expressions, isExpressionMissingToken } from './Node/Expression/Expression';
 import { FloatLiteral } from './Node/Expression/FloatLiteral';
 import { GroupingExpression } from './Node/Expression/GroupingExpression';
 import { IndexExpression } from './Node/Expression/IndexExpression';
@@ -260,10 +260,6 @@ export abstract class ParserBase {
     }
 
     protected parsePostfixExpression(expression: Expressions | MissingToken) {
-        function isExpressionMissingToken(expression: Expressions | MissingToken): expression is MissingToken {
-            return expression.kind === TokenKind.Expression;
-        }
-
         if (isExpressionMissingToken(expression)) {
             return expression;
         }
