@@ -24,22 +24,22 @@ export abstract class Expression extends Node {
 }
 
 export type Expressions =
-    BooleanLiteral |
-    FloatLiteral |
-    IntegerLiteral |
-    StringLiteral |
-    ArrayLiteral |
-    Variable |
-    BinaryExpression |
-    GroupingExpression |
-    UnaryOpExpression |
     NewExpression |
     NullExpression |
+    BooleanLiteral |
+    SelfExpression |
+    SuperExpression |
+    StringLiteral |
+    FloatLiteral |
+    IntegerLiteral |
+    ArrayLiteral |
+    Variable |
     ScopeMemberAccessExpression |
     InvokeExpression |
     IndexExpression |
-    SelfExpression |
-    SuperExpression
+    GroupingExpression |
+    UnaryOpExpression |
+    BinaryExpression
     ;
 
 
