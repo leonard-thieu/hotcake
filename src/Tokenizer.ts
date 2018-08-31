@@ -272,6 +272,7 @@ export class Tokenizer {
             }
             case NodeKind.NewExpression:
             case NodeKind.NullExpression:
+            case NodeKind.ArrayLiteral:
             case NodeKind.ScopeMemberAccessExpression:
             case NodeKind.InvokeExpression:
             case NodeKind.IndexExpression:

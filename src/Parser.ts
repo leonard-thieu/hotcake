@@ -13,6 +13,7 @@ import { InterfaceDeclaration } from './Node/Declaration/InterfaceDeclaration';
 import { InterfaceMethodDeclaration } from './Node/Declaration/InterfaceMethodDeclaration';
 import { ModuleDeclaration } from './Node/Declaration/ModuleDeclaration';
 import { StrictDirective } from './Node/Declaration/StrictDirective';
+import { ArrayLiteral } from './Node/Expression/ArrayLiteral';
 import { BinaryExpression } from './Node/Expression/BinaryExpression';
 import { Expressions, isExpressionMissingToken } from './Node/Expression/Expression';
 import { InvokeExpression } from './Node/Expression/InvokeExpression';
@@ -1359,6 +1360,9 @@ export class Parser extends ParserBase {
             case TokenKind.NullKeyword: {
                 return this.parseNullExpression(parent);
             }
+            case TokenKind.OpeningSquareBracket: {
+                return this.parseArrayLiteral(parent);
+            }
         }
 
         return super.parsePrimaryExpression(parent);
@@ -1382,6 +1386,16 @@ export class Parser extends ParserBase {
         nullExpression.nullKeyword = this.eat(TokenKind.NullKeyword);
 
         return nullExpression;
+    }
+
+    private parseArrayLiteral(parent: Node): ArrayLiteral {
+        const arrayLiteral = new ArrayLiteral();
+        arrayLiteral.parent = parent;
+        arrayLiteral.openingSquareBracket = this.eat(TokenKind.OpeningSquareBracket);
+        arrayLiteral.expressions = this.parseList(arrayLiteral, ParseContextKind.ExpressionSequence);
+        arrayLiteral.closingSquareBracket = this.eat(TokenKind.ClosingSquareBracket);
+
+        return arrayLiteral;
     }
 
     protected parsePostfixExpression(expression: Expressions | MissingToken) {

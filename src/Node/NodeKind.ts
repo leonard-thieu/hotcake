@@ -63,6 +63,7 @@ export enum NodeKind {
     FloatLiteral = 'FloatLiteral',
     IntegerLiteral = 'IntegerLiteral',
     StringLiteral = 'StringLiteral',
+    ArrayLiteral = 'ArrayLiteral',
     Variable = 'Variable',
     ScopeMemberAccessExpression = 'ScopeMemberAccessExpression',
     InvokeExpression = 'InvokeExpression',
