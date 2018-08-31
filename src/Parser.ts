@@ -1404,13 +1404,29 @@ export class Parser extends ParserBase {
         }
 
         const token = this.getToken();
-        switch (token.kind) {
-            case TokenKind.OpeningParenthesis: {
-                return this.parseInvokeExpression(expression);
-            }
+
+        if (this.isInvokeExpressionStart(token)) {
+            return this.parseInvokeExpression(expression);
         }
 
         return super.parsePostfixExpression(expression);
+    }
+
+    private isInvokeExpressionStart(token: Token): boolean {
+        if (token.kind === TokenKind.OpeningParenthesis) {
+            return true;
+        }
+
+        // Parentheses-less invocations are disallowed within a sequence context.
+        const currentParseContext = this.parseContexts[this.parseContexts.length - 1];
+        switch (currentParseContext) {
+            case NodeKind.DataDeclarationList:
+            case ParseContextKind.ExpressionSequence: {
+                return false;
+            }
+        }
+
+        return this.isExpressionSequenceMemberStart(token);
     }
 
     private parseInvokeExpression(expression: Expressions): InvokeExpression {
