@@ -340,7 +340,23 @@ export abstract class ParserBase {
         expression.parent = indexExpression;
         indexExpression.indexableExpression = expression;
         indexExpression.openingSquareBracket = this.eat(TokenKind.OpeningSquareBracket);
-        indexExpression.indexExpressionExpression = this.parseExpression(indexExpression);
+
+        if (this.getToken(1).kind === TokenKind.PeriodPeriod) {
+            indexExpression.startExpression = this.parseExpression(indexExpression);
+        }
+
+        if (this.getToken().kind === TokenKind.PeriodPeriod) {
+            indexExpression.sliceOperator = this.eat(TokenKind.PeriodPeriod);
+
+            if (this.getToken().kind !== TokenKind.ClosingSquareBracket) {
+                indexExpression.endExpression = this.parseExpression(indexExpression);
+            }
+        }
+
+        if (indexExpression.sliceOperator === null) {
+            indexExpression.indexExpressionExpression = this.parseExpression(indexExpression);
+        }
+
         indexExpression.closingSquareBracket = this.eat(TokenKind.ClosingSquareBracket);
 
         return indexExpression;

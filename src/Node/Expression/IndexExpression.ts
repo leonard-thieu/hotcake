@@ -9,6 +9,9 @@ export class IndexExpression extends Expression {
         'indexableExpression',
         'openingSquareBracket',
         'indexExpressionExpression',
+        'startExpression',
+        'sliceOperator',
+        'endExpression',
         'closingSquareBracket',
     ];
 
@@ -16,6 +19,12 @@ export class IndexExpression extends Expression {
     
     indexableExpression: Expressions;
     openingSquareBracket: Token;
-    indexExpressionExpression: Expressions | MissingToken;
+
+    indexExpressionExpression: Expressions | MissingToken | null = null;
+
+    startExpression: Expressions | MissingToken | null = null;
+    sliceOperator: Token | null = null;
+    endExpression: Expressions | MissingToken | null = null;
+
     closingSquareBracket: Token;
 }
