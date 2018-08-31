@@ -1399,27 +1399,23 @@ export class Parser extends ParserBase {
     }
 
     protected parsePostfixExpression(expression: Expressions | MissingToken) {
+        expression = super.parsePostfixExpression(expression);
         if (isExpressionMissingToken(expression)) {
             return expression;
         }
-
+        
         const token = this.getToken();
-
         if (this.isInvokeExpressionStart(token)) {
             return this.parseInvokeExpression(expression);
         }
 
-        return super.parsePostfixExpression(expression);
+        return expression;
     }
 
     private isInvokeExpressionStart(token: Token): boolean {
         switch (token.kind) {
             case TokenKind.OpeningParenthesis: {
                 return true;
-            }
-            // Treat as an index operation instead of an array literal.
-            case TokenKind.OpeningSquareBracket: {
-                return false;
             }
         }
 
