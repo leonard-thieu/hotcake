@@ -271,8 +271,9 @@ export class Tokenizer {
                 break;
             }
             case NodeKind.NewExpression:
-            case NodeKind.ScopeMemberAccessExpression:
             case NodeKind.NullExpression:
+            case NodeKind.ScopeMemberAccessExpression:
+            case NodeKind.InvokeExpression:
             case NodeKind.IndexExpression:
             case NodeKind.SelfExpression:
             case NodeKind.SuperExpression: {
