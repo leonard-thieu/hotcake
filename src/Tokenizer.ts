@@ -1,9 +1,9 @@
 import { assertNever, assertType } from './assertNever';
 import { PreprocessorModuleDeclaration } from './Node/Declaration/PreprocessorModuleDeclaration';
 import { IfDirective } from './Node/Directive/IfDirective';
-import { Expressions, isExpressionMissingToken } from './Node/Expression/Expression';
+import { Expressions, isMissingToken } from './Node/Expression/Expression';
 import { NodeKind } from './Node/NodeKind';
-import { PreprocessorParseContextElementArray } from './PreprocessorParser';
+import { ParseContextElementArray } from './ParserBase';
 import { MissingToken } from './Token/MissingToken';
 import { Token } from './Token/Token';
 import { TokenKind } from './Token/TokenKind';
@@ -31,11 +31,11 @@ export class Tokenizer {
      * TODO: Ensure operator semantics and implicit type conversions match Monkey X behavior.
      */
 
-    private * readMember(members: PreprocessorParseContextElementArray<PreprocessorModuleDeclaration['kind']>): IterableIterator<Token> {
+    private * readMember(members: ParseContextElementArray<PreprocessorModuleDeclaration['kind']>): IterableIterator<Token> {
         for (const member of members) {
             switch (member.kind) {
                 case NodeKind.IfDirective: {
-                    let branchMembers: PreprocessorParseContextElementArray<IfDirective['kind']> | undefined;
+                    let branchMembers: ParseContextElementArray<IfDirective['kind']> | undefined;
 
                     if (this.eval(member.expression)) {
                         branchMembers = member.members;
@@ -107,7 +107,7 @@ export class Tokenizer {
                 default: {
                     assertType<Token>(member);
                     yield member;
-                    
+
                     break;
                 }
             }
@@ -115,7 +115,7 @@ export class Tokenizer {
     }
 
     private eval(expression: Expressions | MissingToken): any {
-        if (isExpressionMissingToken(expression)) {
+        if (isMissingToken(expression)) {
             return false;
         }
 

@@ -1,11 +1,11 @@
-import { ParseContextElementArray } from '../../Parser';
+import { ParseContextElementArray } from '../../ParserBase';
 import { MissingToken } from '../../Token/MissingToken';
 import { Token } from '../../Token/Token';
-import { DataDeclarationList } from '../Declaration/DataDeclarationList';
 import { BinaryExpression } from '../Expression/BinaryExpression';
 import { Expression } from '../Expression/Expression';
 import { Node } from '../Node';
 import { NodeKind } from '../NodeKind';
+import { LocalDeclarationListStatement } from './LocalDeclarationListStatement';
 import { Statement } from './Statement';
 
 export class ForLoop extends Statement {
@@ -20,7 +20,7 @@ export class ForLoop extends Statement {
     readonly kind = NodeKind.ForLoop;
 
     forKeyword: Token;
-    header: NumericForLoopHeader | DataDeclarationList | BinaryExpression;
+    header: NumericForLoopHeader | LocalDeclarationListStatement | BinaryExpression;
     statements: ParseContextElementArray<ForLoop['kind']>;
     endKeyword: Token;
     endForKeyword: Token | null = null;
@@ -37,7 +37,7 @@ export class NumericForLoopHeader extends Node {
 
     readonly kind = NodeKind.NumericForLoopHeader;
 
-    loopVariableExpression: DataDeclarationList | BinaryExpression;
+    loopVariableExpression: LocalDeclarationListStatement | BinaryExpression;
     toOrUntilKeyword: Token;
     lastValueExpression: Expression | MissingToken;
     stepKeyword: Token | null = null;

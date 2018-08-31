@@ -1,4 +1,4 @@
-import { ParseContextElementArray, ParseContextKind } from '../Parser';
+import { ParseContextElementArray, ParseContextKind } from '../ParserBase';
 import { MissingToken } from '../Token/MissingToken';
 import { Token } from '../Token/Token';
 import { Expressions } from './Expression/Expression';

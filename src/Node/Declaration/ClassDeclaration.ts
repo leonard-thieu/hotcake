@@ -1,4 +1,4 @@
-import { ParseContextElementArray, ParseContextKind } from '../../Parser';
+import { ParseContextElementArray, ParseContextKind } from '../../ParserBase';
 import { Token } from '../../Token/Token';
 import { NodeKind } from '../NodeKind';
 import { TypeReference } from '../TypeReference';

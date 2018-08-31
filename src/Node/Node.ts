@@ -5,15 +5,29 @@ export abstract class Node {
     parent: Node | null = null;
 
     get root() {
-        let parent = this.parent;
-
-        if (parent !== null) {
-            while (parent.parent !== null) {
-                parent = parent.parent;
-            }
+        let root: Node = this;
+        
+        while (root.parent !== null) {
+            root = root.parent;
         }
 
-        return parent;
+        return root;
+    }
+
+    getFirstAncestor(...kinds: NodeKind[]) {
+        let ancestor: Node = this;
+        while (true) {
+            if (ancestor.parent === null) {
+                return null;
+            }
+
+            ancestor = ancestor.parent;
+            for (const kind of kinds) {
+                if (ancestor.kind === kind) {
+                    return ancestor;
+                }
+            }
+        }
     }
 
     toJSON(): any {

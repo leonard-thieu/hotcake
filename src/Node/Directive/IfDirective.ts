@@ -1,4 +1,4 @@
-import { PreprocessorParseContextElementArray } from '../../PreprocessorParser';
+import { ParseContextElementArray } from '../../ParserBase';
 import { MissingToken } from '../../Token/MissingToken';
 import { Token } from '../../Token/Token';
 import { Expressions } from '../Expression/Expression';
@@ -20,7 +20,7 @@ export class IfDirective extends Directive {
 
     ifDirectiveKeyword: Token;
     expression: Expressions | MissingToken;
-    members: PreprocessorParseContextElementArray<IfDirective['kind']>;
+    members: ParseContextElementArray<IfDirective['kind']>;
     elseIfDirectives: ElseIfDirective[] = [];
     elseDirective: ElseDirective | null = null;
     endDirective: EndDirective;
@@ -37,7 +37,7 @@ export class ElseIfDirective extends Directive {
 
     elseIfDirectiveKeyword: Token;
     expression: Expressions | MissingToken;
-    members: PreprocessorParseContextElementArray<ElseIfDirective['kind']>;
+    members: ParseContextElementArray<ElseIfDirective['kind']>;
 }
 
 export class ElseDirective extends Directive {
@@ -49,5 +49,5 @@ export class ElseDirective extends Directive {
     readonly kind = NodeKind.ElseDirective;
 
     elseDirectiveKeyword: Token;
-    members: PreprocessorParseContextElementArray<ElseDirective['kind']>;
+    members: ParseContextElementArray<ElseDirective['kind']>;
 }

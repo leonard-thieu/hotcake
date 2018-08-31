@@ -1,4 +1,4 @@
-import { ParseContextElementArray } from '../../Parser';
+import { ParseContextElementArray } from '../../ParserBase';
 import { NodeKind } from '../NodeKind';
 import { Declaration } from './Declaration';
 

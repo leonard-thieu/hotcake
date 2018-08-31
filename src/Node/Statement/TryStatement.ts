@@ -1,4 +1,4 @@
-import { ParseContextElementArray } from '../../Parser';
+import { ParseContextElementArray } from '../../ParserBase';
 import { Token } from '../../Token/Token';
 import { DataDeclaration } from '../DataDeclaration';
 import { NodeKind } from '../NodeKind';
@@ -18,7 +18,7 @@ export class TryStatement extends Statement {
 
     tryKeyword: Token;
     statements: ParseContextElementArray<TryStatement['kind']>;
-    catchStatements: CatchStatement[] = [];
+    catchStatements: CatchStatement[] | null = null;
     endKeyword: Token;
     endTryKeyword: Token | null = null;
 }

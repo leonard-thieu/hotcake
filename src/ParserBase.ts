@@ -1,17 +1,25 @@
+import { assertNever } from './assertNever';
+import { CommaSeparator } from './Node/CommaSeparator';
+import { ArrayLiteral } from './Node/Expression/ArrayLiteral';
 import { BinaryExpression } from './Node/Expression/BinaryExpression';
 import { BooleanLiteral } from './Node/Expression/BooleanLiteral';
-import { Expression, Expressions, isExpressionMissingToken } from './Node/Expression/Expression';
+import { Expressions, isMissingToken } from './Node/Expression/Expression';
 import { FloatLiteral } from './Node/Expression/FloatLiteral';
 import { GroupingExpression } from './Node/Expression/GroupingExpression';
 import { IndexExpression } from './Node/Expression/IndexExpression';
 import { IntegerLiteral } from './Node/Expression/IntegerLiteral';
+import { InvokeExpression } from './Node/Expression/InvokeExpression';
+import { NewExpression } from './Node/Expression/NewExpression';
+import { NullExpression } from './Node/Expression/NullExpression';
 import { ScopeMemberAccessExpression } from './Node/Expression/ScopeMemberAccessExpression';
 import { SelfExpression } from './Node/Expression/SelfExpression';
 import { StringLiteral } from './Node/Expression/StringLiteral';
 import { SuperExpression } from './Node/Expression/SuperExpression';
 import { UnaryOpExpression } from './Node/Expression/UnaryOpExpression';
 import { Variable } from './Node/Expression/Variable';
+import { ModulePath } from './Node/ModulePath';
 import { Node } from './Node/Node';
+import { ArrayTypeDeclaration, TypeReference } from './Node/TypeReference';
 import { GreaterThanSignEqualsSignToken } from './Token/GreaterThanSignEqualsSignToken';
 import { MissingToken } from './Token/MissingToken';
 import { SkippedToken } from './Token/SkippedToken';
@@ -28,9 +36,10 @@ export abstract class ParserBase {
         return this.parseBinaryExpression(Precedence.Initial, parent);
     }
 
+    // #region Binary expressions
+
     protected parseBinaryExpression(precedence: Precedence, parent: Node): Expressions | MissingToken {
         let expression = this.parseUnaryExpression(parent);
-
         let [prevNewPrecedence, prevAssociativity] = UNKNOWN_PRECEDENCE_AND_ASSOCIATIVITY;
 
         while (true) {
@@ -88,18 +97,20 @@ export abstract class ParserBase {
         const binaryExpression = new BinaryExpression();
         binaryExpression.parent = parent;
         binaryExpression.leftOperand = leftOperand;
-        if (leftOperand instanceof Expression) {
+        if (!isMissingToken(leftOperand)) {
             leftOperand.parent = binaryExpression;
         }
         binaryExpression.operator = operator;
         binaryExpression.eachInKeyword = eachInKeyword;
         binaryExpression.rightOperand = rightOperand;
-        if (rightOperand instanceof Expression) {
+        if (!isMissingToken(rightOperand)) {
             rightOperand.parent = binaryExpression;
         }
 
         return binaryExpression;
     }
+
+    // #region Unary expressions
 
     protected parseUnaryExpression(parent: Node): Expressions | MissingToken {
         let newlines: Token[] | null = null;
@@ -158,39 +169,50 @@ export abstract class ParserBase {
         return unaryOpExpression;
     }
 
+    // #region Primary expressions
+
     protected parsePrimaryExpression(parent: Node): Expressions | MissingToken {
         const token = this.getToken();
         switch (token.kind) {
-            case TokenKind.OpeningParenthesis: {
-                return this.parseGroupingExpression(parent);
+            case TokenKind.NewKeyword: {
+                return this.parseNewExpression(parent);
             }
-            case TokenKind.Identifier:
-            case TokenKind.StringKeyword:
-            case TokenKind.BoolKeyword:
-            case TokenKind.FloatKeyword:
-            case TokenKind.IntKeyword:
-            case TokenKind.ObjectKeyword:
-            case TokenKind.ThrowableKeyword: {
-                return this.parseVariable(parent);
-            }
-            case TokenKind.QuotationMark: {
-                return this.parseStringLiteral(parent);
+            case TokenKind.NullKeyword: {
+                return this.parseNullExpression(parent);
             }
             case TokenKind.TrueKeyword:
             case TokenKind.FalseKeyword: {
                 return this.parseBooleanLiteral(parent);
-            }
-            case TokenKind.IntegerLiteral: {
-                return this.parseIntegerLiteral(parent);
-            }
-            case TokenKind.FloatLiteral: {
-                return this.parseFloatLiteral(parent);
             }
             case TokenKind.SelfKeyword: {
                 return this.parseSelfExpression(parent);
             }
             case TokenKind.SuperKeyword: {
                 return this.parseSuperExpression(parent);
+            }
+            case TokenKind.QuotationMark: {
+                return this.parseStringLiteral(parent);
+            }
+            case TokenKind.FloatLiteral: {
+                return this.parseFloatLiteral(parent);
+            }
+            case TokenKind.IntegerLiteral: {
+                return this.parseIntegerLiteral(parent);
+            }
+            case TokenKind.OpeningSquareBracket: {
+                return this.parseArrayLiteral(parent);
+            }
+            case TokenKind.StringKeyword:
+            case TokenKind.BoolKeyword:
+            case TokenKind.FloatKeyword:
+            case TokenKind.IntKeyword:
+            case TokenKind.ObjectKeyword:
+            case TokenKind.ThrowableKeyword:
+            case TokenKind.Identifier: {
+                return this.parseVariable(parent);
+            }
+            case TokenKind.OpeningParenthesis: {
+                return this.parseGroupingExpression(parent);
             }
         }
 
@@ -199,30 +221,48 @@ export abstract class ParserBase {
         return new MissingToken(TokenKind.Expression, token.fullStart)
     }
 
-    protected parseGroupingExpression(parent: Node): GroupingExpression {
-        const groupingExpression = new GroupingExpression();
-        groupingExpression.parent = parent;
-        groupingExpression.openingParenthesis = this.eat(TokenKind.OpeningParenthesis);
-        groupingExpression.expression = this.parseExpression(groupingExpression);
-        groupingExpression.closingParenthesis = this.eat(TokenKind.ClosingParenthesis);
+    protected parseNewExpression(parent: Node): NewExpression {
+        const newExpression = new NewExpression();
+        newExpression.parent = parent;
+        newExpression.newKeyword = this.eat(TokenKind.NewKeyword);
+        newExpression.type = this.parseTypeReference(newExpression);
+        newExpression.openingParenthesis = this.eatOptional(TokenKind.OpeningParenthesis);
+        newExpression.arguments = this.parseList(newExpression, ParseContextKind.ExpressionSequence);
+        newExpression.closingParenthesis = this.eatOptional(TokenKind.ClosingParenthesis);
 
-        return groupingExpression;
+        return newExpression;
     }
 
-    protected parseVariable(parent: Node): Variable {
-        const variable = new Variable();
-        variable.parent = parent;
-        variable.name = this.eat(
-            TokenKind.Identifier,
-            TokenKind.StringKeyword,
-            TokenKind.BoolKeyword,
-            TokenKind.FloatKeyword,
-            TokenKind.IntKeyword,
-            TokenKind.ObjectKeyword,
-            TokenKind.ThrowableKeyword,
-        );
+    protected parseNullExpression(parent: Node): NullExpression {
+        const nullExpression = new NullExpression();
+        nullExpression.parent = parent;
+        nullExpression.nullKeyword = this.eat(TokenKind.NullKeyword);
 
-        return variable;
+        return nullExpression;
+    }
+
+    protected parseBooleanLiteral(parent: Node): BooleanLiteral {
+        const booleanLiteral = new BooleanLiteral();
+        booleanLiteral.parent = parent;
+        booleanLiteral.value = this.eat(TokenKind.TrueKeyword, TokenKind.FalseKeyword);
+
+        return booleanLiteral;
+    }
+
+    protected parseSelfExpression(parent: Node): SelfExpression {
+        const selfExpression = new SelfExpression();
+        selfExpression.parent = parent;
+        selfExpression.selfKeyword = this.eat(TokenKind.SelfKeyword);
+
+        return selfExpression;
+    }
+
+    protected parseSuperExpression(parent: Node): SuperExpression {
+        const superExpression = new SuperExpression();
+        superExpression.parent = parent;
+        superExpression.superKeyword = this.eat(TokenKind.SuperKeyword);
+
+        return superExpression;
     }
 
     protected parseStringLiteral(parent: Node): StringLiteral {
@@ -265,12 +305,12 @@ export abstract class ParserBase {
         return stringLiteral;
     }
 
-    protected parseBooleanLiteral(parent: Node): BooleanLiteral {
-        const booleanLiteral = new BooleanLiteral();
-        booleanLiteral.parent = parent;
-        booleanLiteral.value = this.eat(TokenKind.TrueKeyword, TokenKind.FalseKeyword);
+    protected parseFloatLiteral(parent: Node): FloatLiteral {
+        const floatLiteral = new FloatLiteral();
+        floatLiteral.parent = parent;
+        floatLiteral.value = this.eat(TokenKind.FloatLiteral);
 
-        return booleanLiteral;
+        return floatLiteral;
     }
 
     protected parseIntegerLiteral(parent: Node): IntegerLiteral {
@@ -281,32 +321,46 @@ export abstract class ParserBase {
         return integerLiteral;
     }
 
-    protected parseFloatLiteral(parent: Node): FloatLiteral {
-        const floatLiteral = new FloatLiteral();
-        floatLiteral.parent = parent;
-        floatLiteral.value = this.eat(TokenKind.FloatLiteral);
+    protected parseArrayLiteral(parent: Node): ArrayLiteral {
+        const arrayLiteral = new ArrayLiteral();
+        arrayLiteral.parent = parent;
+        arrayLiteral.openingSquareBracket = this.eat(TokenKind.OpeningSquareBracket);
+        arrayLiteral.expressions = this.parseList(arrayLiteral, ParseContextKind.ExpressionSequence);
+        arrayLiteral.closingSquareBracket = this.eat(TokenKind.ClosingSquareBracket);
 
-        return floatLiteral;
+        return arrayLiteral;
     }
 
-    protected parseSelfExpression(parent: Node): SelfExpression {
-        const selfExpression = new SelfExpression();
-        selfExpression.parent = parent;
-        selfExpression.selfKeyword = this.eat(TokenKind.SelfKeyword);
+    protected parseVariable(parent: Node): Variable {
+        const variable = new Variable();
+        variable.parent = parent;
+        variable.name = this.eat(
+            TokenKind.Identifier,
+            TokenKind.StringKeyword,
+            TokenKind.BoolKeyword,
+            TokenKind.FloatKeyword,
+            TokenKind.IntKeyword,
+            TokenKind.ObjectKeyword,
+            TokenKind.ThrowableKeyword,
+        );
 
-        return selfExpression;
+        return variable;
     }
 
-    protected parseSuperExpression(parent: Node): SuperExpression {
-        const superExpression = new SuperExpression();
-        superExpression.parent = parent;
-        superExpression.superKeyword = this.eat(TokenKind.SuperKeyword);
+    protected parseGroupingExpression(parent: Node): GroupingExpression {
+        const groupingExpression = new GroupingExpression();
+        groupingExpression.parent = parent;
+        groupingExpression.openingParenthesis = this.eat(TokenKind.OpeningParenthesis);
+        groupingExpression.expression = this.parseExpression(groupingExpression);
+        groupingExpression.closingParenthesis = this.eat(TokenKind.ClosingParenthesis);
 
-        return superExpression;
+        return groupingExpression;
     }
+
+    // #region Postfix expressions
 
     protected parsePostfixExpression(expression: Expressions | MissingToken) {
-        if (isExpressionMissingToken(expression)) {
+        if (isMissingToken(expression)) {
             return expression;
         }
 
@@ -318,6 +372,10 @@ export abstract class ParserBase {
             case TokenKind.OpeningSquareBracket: {
                 return this.parseIndexExpression(expression);
             }
+        }
+
+        if (this.isInvokeExpressionStart(token)) {
+            return this.parseInvokeExpression(expression);
         }
 
         return expression;
@@ -362,9 +420,372 @@ export abstract class ParserBase {
         return indexExpression;
     }
 
+    protected isInvokeExpressionStart(token: Token): boolean {
+        switch (token.kind) {
+            case TokenKind.OpeningParenthesis: {
+                return true;
+            }
+        }
+
+        // // Parentheses-less invocations are disallowed within a sequence context.
+        // const currentParseContext = this.parseContexts[this.parseContexts.length - 1];
+        // switch (currentParseContext) {
+        //     case NodeKind.DataDeclarationList:
+        //     case ParseContextKind.ExpressionSequence: {
+        //         return false;
+        //     }
+        // }
+
+        return this.isExpressionSequenceMemberStart(token);
+    }
+
+    protected parseInvokeExpression(expression: Expressions): InvokeExpression {
+        const invokeExpression = new InvokeExpression();
+        invokeExpression.parent = expression.parent;
+        expression.parent = invokeExpression;
+        invokeExpression.invokableExpression = expression;
+        invokeExpression.openingParenthesis = this.eatOptional(TokenKind.OpeningParenthesis);
+        invokeExpression.arguments = this.parseList(invokeExpression, ParseContextKind.ExpressionSequence);
+        if (invokeExpression.openingParenthesis !== null) {
+            invokeExpression.closingParenthesis = this.eat(TokenKind.ClosingParenthesis);
+        }
+
+        return invokeExpression;
+    }
+
     // #endregion
 
+    // #endregion
+
+    // #endregion
+
+    // #endregion
+
+    // #region Expression sequence
+
+    private isExpressionSequenceListTerminator(token: Token): boolean {
+        return !this.isExpressionSequenceMemberStart(token);
+    }
+
+    private isExpressionSequenceMemberStart(token: Token): boolean {
+        return token.kind === TokenKind.Comma ||
+            this.isExpressionStart(token);
+    }
+
+    private parseExpressionSequenceMember(parent: Node) {
+        const token = this.getToken();
+        switch (token.kind) {
+            case TokenKind.Comma: {
+                return this.parseCommaSeparator(parent);
+            }
+        }
+
+        return this.parseExpression(parent);
+    }
+
+    // #endregion
+
+    // #endregion
+
+    // #region Type reference sequence
+
+    private isTypeReferenceSequenceTerminator(token: Token): boolean {
+        return !this.isTypeReferenceSequenceMemberStart(token);
+    }
+
+    private isTypeReferenceSequenceMemberStart(token: Token): boolean {
+        return token.kind === TokenKind.Comma ||
+            this.isTypeReferenceStart(token);
+    }
+
+    private parseTypeReferenceSequenceMember(parent: Node) {
+        const token = this.getToken();
+        switch (token.kind) {
+            case TokenKind.Identifier: {
+                return this.parseTypeReference(parent);
+            }
+            case TokenKind.Comma: {
+                return this.parseCommaSeparator(parent);
+            }
+        }
+
+        throw new Error(`Unexpected token: ${JSON.stringify(token.kind)}`);
+    }
+
+    // #endregion
+
+    protected parseCommaSeparator(parent: Node): CommaSeparator {
+        const commaSeparator = new CommaSeparator();
+        commaSeparator.parent = parent;
+        commaSeparator.separator = this.eat(TokenKind.Comma);
+        let token: Token | null;
+        while ((token = this.eatOptional(TokenKind.Newline)) !== null) {
+            commaSeparator.newlines.push(token);
+        }
+
+        return commaSeparator;
+    }
+
+    protected isTypeReferenceStart(token: Token): boolean {
+        switch (token.kind) {
+            case TokenKind.DollarSign:
+            case TokenKind.QuestionMark:
+            case TokenKind.NumberSign:
+            case TokenKind.PercentSign:
+            case TokenKind.StringKeyword:
+            case TokenKind.BoolKeyword:
+            case TokenKind.FloatKeyword:
+            case TokenKind.IntKeyword:
+            case TokenKind.ObjectKeyword:
+            case TokenKind.ThrowableKeyword:
+            case TokenKind.VoidKeyword:
+            case TokenKind.Identifier:
+            case TokenKind.Period: {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    protected parseTypeReference(parent: Node): TypeReference {
+        const typeReference = new TypeReference();
+        typeReference.parent = parent;
+
+        const token = this.getToken();
+        switch (token.kind) {
+            case TokenKind.DollarSign:
+            case TokenKind.QuestionMark:
+            case TokenKind.NumberSign:
+            case TokenKind.PercentSign:
+            case TokenKind.StringKeyword:
+            case TokenKind.BoolKeyword:
+            case TokenKind.FloatKeyword:
+            case TokenKind.IntKeyword:
+            case TokenKind.ObjectKeyword:
+            case TokenKind.ThrowableKeyword:
+            case TokenKind.VoidKeyword: {
+                typeReference.identifier = token;
+                this.advanceToken();
+                break;
+            }
+            default: {
+                // Create a ModulePath only if necessary.
+                if (token.kind !== TokenKind.Identifier ||
+                    this.getToken(1).kind === TokenKind.Period) {
+                    typeReference.modulePath = this.parseModulePath(typeReference);
+
+                    const modulePathChildren = typeReference.modulePath.children;
+                    typeReference.identifier = modulePathChildren.pop()!;
+                    typeReference.scopeMemberAccessOperator = modulePathChildren.pop()!;
+                } else {
+                    typeReference.identifier = token;
+                    this.advanceToken();
+                }
+
+                // Generic type arguments
+                typeReference.lessThanSign = this.eatOptional(TokenKind.LessThanSign);
+                if (typeReference.lessThanSign !== null) {
+                    typeReference.typeArguments = this.parseList(typeReference, ParseContextKind.TypeReferenceSequence);
+                    typeReference.greaterThanSign = this.eat(TokenKind.GreaterThanSign);
+                }
+                break;
+            }
+        }
+
+        while (this.getToken().kind === TokenKind.OpeningSquareBracket) {
+            if (typeReference.arrayTypeDeclarations === null) {
+                typeReference.arrayTypeDeclarations = [];
+            }
+
+            typeReference.arrayTypeDeclarations.push(this.parseArrayTypeDeclaration(parent));
+        }
+
+        return typeReference;
+    }
+
+    protected parseModulePath(parent: Node): ModulePath {
+        const modulePath = new ModulePath();
+        modulePath.parent = parent;
+
+        let lastTokenKind: TokenKind | undefined;
+        while (true) {
+            const token = this.getToken();
+            if (token.kind === TokenKind.Identifier) {
+                if (lastTokenKind !== undefined &&
+                    lastTokenKind !== TokenKind.Period) {
+                    console.error(`Did not expect ${JSON.stringify(token.kind)} to follow ${JSON.stringify(lastTokenKind)}`);
+                    break;
+                }
+
+                modulePath.children.push(token);
+                this.advanceToken();
+            } else if (token.kind === TokenKind.Period) {
+                if (lastTokenKind !== undefined &&
+                    lastTokenKind !== TokenKind.Identifier) {
+                    console.error(`Did not expect ${JSON.stringify(token.kind)} to follow ${JSON.stringify(lastTokenKind)}`);
+                    break;
+                }
+
+                modulePath.children.push(token);
+                this.advanceToken();
+            } else {
+                break;
+            }
+        }
+
+        return modulePath;
+    }
+
+    protected parseArrayTypeDeclaration(parent: Node): ArrayTypeDeclaration {
+        const arrayTypeDeclaration = new ArrayTypeDeclaration();
+        arrayTypeDeclaration.parent = parent;
+        arrayTypeDeclaration.openingSquareBracket = this.eat(TokenKind.OpeningSquareBracket);
+        if (this.isExpressionStart(this.getToken())) {
+            arrayTypeDeclaration.expression = this.parseExpression(arrayTypeDeclaration);
+        }
+        arrayTypeDeclaration.closingSquareBracket = this.eat(TokenKind.ClosingSquareBracket);
+
+        return arrayTypeDeclaration;
+    }
+
+    protected isExpressionStart(token: Token): boolean {
+        switch (token.kind) {
+            case TokenKind.NewKeyword:
+            case TokenKind.NullKeyword:
+            case TokenKind.TrueKeyword:
+            case TokenKind.FalseKeyword:
+            case TokenKind.SelfKeyword:
+            case TokenKind.SuperKeyword:
+            case TokenKind.QuotationMark:
+            case TokenKind.FloatLiteral:
+            case TokenKind.IntegerLiteral:
+            case TokenKind.Identifier:
+            case TokenKind.Period:
+            case TokenKind.OpeningParenthesis:
+            case TokenKind.OpeningSquareBracket:
+            case TokenKind.PlusSign:
+            case TokenKind.HyphenMinus:
+            case TokenKind.Tilde:
+            case TokenKind.NotKeyword:
+            case TokenKind.StringKeyword:
+            case TokenKind.BoolKeyword:
+            case TokenKind.FloatKeyword:
+            case TokenKind.IntKeyword:
+            case TokenKind.ObjectKeyword:
+            case TokenKind.ThrowableKeyword: {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     // #region Core
+
+    // #region Parse lists
+
+    protected parseContexts: ParseContext[];
+
+    protected parseList<TParseContext extends ParseContext>(
+        parent: Node,
+        parseContext: TParseContext
+    ) {
+        this.parseContexts.push(parseContext);
+
+        const nodes: ParseContextElementArray<TParseContext> = [];
+        while (true) {
+            const token = this.getToken();
+
+            if (this.isListTerminator(parseContext, token)) {
+                break;
+            }
+
+            if (this.isValidListElement(parseContext, token)) {
+                const element = this.parseListElement(parseContext, parent);
+                nodes.push(element);
+
+                continue;
+            }
+
+            if (this.isValidInEnclosingContexts(token)) {
+                break;
+            }
+
+            const skippedToken = new SkippedToken(token);
+            nodes.push(skippedToken);
+            this.advanceToken();
+        }
+
+        this.parseContexts.pop();
+
+        return nodes;
+    }
+
+    protected abstract isListTerminator(parseContext: ParseContext, token: Token): boolean;
+
+    protected isListTerminatorCore(parseContext: ParseContextBase, token: Token): boolean {
+        if (token.kind === TokenKind.EOF) {
+            return true;
+        }
+
+        switch (parseContext) {
+            case ParseContextKind.TypeReferenceSequence: {
+                return this.isTypeReferenceSequenceTerminator(token);
+            }
+            case ParseContextKind.ExpressionSequence: {
+                return this.isExpressionSequenceListTerminator(token);
+            }
+        }
+
+        return assertNever(parseContext);
+    }
+
+    protected abstract isValidListElement(parseContext: ParseContext, token: Token): boolean;
+
+    protected isValidListElementCore(parseContext: ParseContextBase, token: Token): boolean {
+        switch (parseContext) {
+            case ParseContextKind.TypeReferenceSequence: {
+                return this.isTypeReferenceSequenceMemberStart(token);
+            }
+            case ParseContextKind.ExpressionSequence: {
+                return this.isExpressionSequenceMemberStart(token);
+            }
+        }
+
+        return assertNever(parseContext);
+    }
+
+    protected abstract parseListElement(parseContext: ParseContext, parent: Node): ParseContextElementMap[ParseContext];
+
+    protected parseListElementCore(parseContext: ParseContextBase, parent: Node) {
+        switch (parseContext) {
+            case ParseContextKind.TypeReferenceSequence: {
+                return this.parseTypeReferenceSequenceMember(parent);
+            }
+            case ParseContextKind.ExpressionSequence: {
+                return this.parseExpressionSequenceMember(parent);
+            }
+        }
+
+        return assertNever(parseContext);
+    }
+
+    private isValidInEnclosingContexts(token: Token): boolean {
+        for (let i = this.parseContexts.length - 2; i >= 0; i--) {
+            const parseContext = this.parseContexts[i];
+            if (this.isValidListElement(parseContext, token) ||
+                this.isListTerminator(parseContext, token)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    // #endregion
+
+    // #region Tokens
 
     protected eat(...kinds: TokenKind[]): Token {
         const eaten = this.eatOptional(...kinds);
@@ -397,6 +818,8 @@ export abstract class ParserBase {
             this.position++;
         }
     }
+
+    // #endregion
 
     // #endregion
 
@@ -462,5 +885,28 @@ function getBinaryOperatorPrecedenceAndAssociativity(token: Token): PrecedenceAn
     return OPERATOR_PRECEDENCE_AND_ASSOCIATIVITY[token.kind] ||
         UNKNOWN_PRECEDENCE_AND_ASSOCIATIVITY;
 }
+
+// #endregion
+
+// #region Parse contexts
+
+export enum ParseContextKind {
+    TypeReferenceSequence = 'TypeReferenceSequence',
+    ExpressionSequence = 'Expressions',
+}
+export interface ParseContextElementMapBase {
+    [ParseContextKind.TypeReferenceSequence]: ReturnType<ParserBase['parseTypeReferenceSequenceMember']>;
+    [ParseContextKind.ExpressionSequence]: ReturnType<ParserBase['parseExpressionSequenceMember']>;
+}
+
+type ParseContextBase = keyof ParseContextElementMapBase;
+
+export interface ParseContextElementMap extends ParseContextElementMapBase {
+
+}
+
+export type ParseContext = keyof ParseContextElementMap;
+
+export type ParseContextElementArray<TParseContext extends ParseContext> = Array<ParseContextElementMap[TParseContext] | SkippedToken>;
 
 // #endregion

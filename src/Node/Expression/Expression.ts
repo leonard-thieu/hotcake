@@ -43,6 +43,6 @@ export type Expressions =
     ;
 
 
-export function isExpressionMissingToken(expression: Expressions | MissingToken): expression is MissingToken {
+export function isMissingToken(expression: Expressions | MissingToken): expression is MissingToken {
     return expression.kind === TokenKind.Expression;
 }

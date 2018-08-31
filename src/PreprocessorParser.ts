@@ -1,4 +1,3 @@
-import { assertNever } from './assertNever';
 import { PreprocessorModuleDeclaration } from './Node/Declaration/PreprocessorModuleDeclaration';
 import { AssignmentDirective } from './Node/Directive/AssignmentDirective';
 import { Directive } from './Node/Directive/Directive';
@@ -9,8 +8,7 @@ import { PrintDirective } from './Node/Directive/PrintDirective';
 import { RemDirective } from './Node/Directive/RemDirective';
 import { Node } from './Node/Node';
 import { NodeKind } from './Node/NodeKind';
-import { ParserBase } from './ParserBase';
-import { SkippedToken } from './Token/SkippedToken';
+import { ParseContext, ParseContextElementMapBase, ParserBase } from './ParserBase';
 import { Token } from './Token/Token';
 import { TokenKind } from './Token/TokenKind';
 
@@ -207,44 +205,9 @@ export class PreprocessorParser extends ParserBase {
 
     // #region Core
 
-    private parseContexts: PreprocessorParseContext[];
+    protected isListTerminator(parseContext: ParseContext, token: Token): boolean {
+        parseContext = parseContext as PreprocessorParserParseContext;
 
-    private parseList<TParseContext extends PreprocessorParseContext>(
-        parent: Node,
-        parseContext: TParseContext
-    ) {
-        this.parseContexts.push(parseContext);
-
-        const nodes: PreprocessorParseContextElementArray<TParseContext> = [];
-        while (true) {
-            const token = this.getToken();
-
-            if (this.isListTerminator(parseContext, token)) {
-                break;
-            }
-
-            if (this.isValidListElement(parseContext, token)) {
-                const element = this.parseListElement(parseContext, parent);
-                nodes.push(element);
-
-                continue;
-            }
-
-            if (this.isValidInEnclosingContexts(token)) {
-                break;
-            }
-
-            const skippedToken = new SkippedToken(token);
-            nodes.push(skippedToken);
-            this.advanceToken();
-        }
-
-        this.parseContexts.pop();
-
-        return nodes;
-    }
-
-    private isListTerminator(parseContext: PreprocessorParseContext, token: Token): boolean {
         if (token.kind === TokenKind.EOF) {
             return true;
         }
@@ -263,10 +226,12 @@ export class PreprocessorParser extends ParserBase {
             }
         }
 
-        return assertNever(parseContext);
+        return super.isListTerminatorCore(parseContext, token);
     }
 
-    private isValidListElement(parseContext: PreprocessorParseContext, token: Token): boolean {
+    protected isValidListElement(parseContext: ParseContext, token: Token): boolean {
+        parseContext = parseContext as PreprocessorParserParseContext;
+
         switch (parseContext) {
             case NodeKind.PreprocessorModuleDeclaration:
             case NodeKind.IfDirective:
@@ -279,10 +244,12 @@ export class PreprocessorParser extends ParserBase {
             }
         }
 
-        return assertNever(parseContext);
+        return super.isValidListElementCore(parseContext, token);
     }
 
-    private parseListElement(parseContext: PreprocessorParseContext, parent: Node) {
+    protected parseListElement(parseContext: ParseContext, parent: Node) {
+        parseContext = parseContext as PreprocessorParserParseContext;
+
         switch (parseContext) {
             case NodeKind.PreprocessorModuleDeclaration:
             case NodeKind.IfDirective:
@@ -295,32 +262,26 @@ export class PreprocessorParser extends ParserBase {
             }
         }
 
-        return assertNever(parseContext);
-    }
-
-    private isValidInEnclosingContexts(token: Token): boolean {
-        for (let i = this.parseContexts.length - 2; i >= 0; i--) {
-            const parseContext = this.parseContexts[i];
-            if (this.isValidListElement(parseContext, token) ||
-                this.isListTerminator(parseContext, token)) {
-                return true;
-            }
-        }
-
-        return false;
+        return this.parseListElementCore(parseContext, parent);
     }
 
     // #endregion
 }
 
-export type PreprocessorParseContextElementArray<T extends PreprocessorParseContext> = Array<PreprocessorParseContextElementMap[T] | SkippedToken>;
+// #region Parse contexts
 
-type PreprocessorParseContext = keyof PreprocessorParseContextElementMap;
-
-export interface PreprocessorParseContextElementMap {
+interface PreprocessorParserParseContextElementMap extends ParseContextElementMapBase {
     [NodeKind.PreprocessorModuleDeclaration]: ReturnType<PreprocessorParser['parseModuleMember']>;
     [NodeKind.IfDirective]: ReturnType<PreprocessorParser['parseModuleMember']>;
     [NodeKind.ElseIfDirective]: ReturnType<PreprocessorParser['parseModuleMember']>;
     [NodeKind.ElseDirective]: ReturnType<PreprocessorParser['parseModuleMember']>;
     [NodeKind.RemDirective]: ReturnType<PreprocessorParser['parseRemDirectiveMember']>;
 }
+
+type PreprocessorParserParseContext = keyof PreprocessorParserParseContextElementMap;
+
+declare module './ParserBase' {
+    interface ParseContextElementMap extends PreprocessorParserParseContextElementMap { }
+}
+
+// #endregion

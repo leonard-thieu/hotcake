@@ -1,4 +1,4 @@
-import { ParseContextElementArray } from '../../Parser';
+import { ParseContextElementArray } from '../../ParserBase';
 import { MissingToken } from '../../Token/MissingToken';
 import { Token } from '../../Token/Token';
 import { Expression } from '../Expression/Expression';
@@ -24,8 +24,8 @@ export class IfStatement extends Statement {
     expression: Expression | MissingToken;
     thenKeyword: Token | null = null;
     statements: ParseContextElementArray<IfStatement['kind']>;
-    elseIfStatements: Statement[] | null = null;
-    elseStatement: Statement | null = null;
+    elseIfStatements: ElseIfStatement[] | null = null;
+    elseStatement: ElseStatement | null = null;
     endKeyword: Token | null = null;
     endIfKeyword: Token | null = null;
 }

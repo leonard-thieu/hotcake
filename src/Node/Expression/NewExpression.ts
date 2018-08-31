@@ -1,4 +1,4 @@
-import { ParseContextElementArray } from '../../Parser';
+import { ParseContextElementArray, ParseContextKind } from '../../ParserBase';
 import { Token } from '../../Token/Token';
 import { NodeKind } from '../NodeKind';
 import { TypeReference } from '../TypeReference';
@@ -19,6 +19,6 @@ export class NewExpression extends Expression {
     newKeyword: Token;
     type: TypeReference;
     openingParenthesis: Token | null;
-    arguments: ParseContextElementArray<any>;
+    arguments: ParseContextElementArray<ParseContextKind.ExpressionSequence>;
     closingParenthesis: Token | null;
 }
