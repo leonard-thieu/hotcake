@@ -1413,8 +1413,14 @@ export class Parser extends ParserBase {
     }
 
     private isInvokeExpressionStart(token: Token): boolean {
-        if (token.kind === TokenKind.OpeningParenthesis) {
-            return true;
+        switch (token.kind) {
+            case TokenKind.OpeningParenthesis: {
+                return true;
+            }
+            // Treat as an index operation instead of an array literal.
+            case TokenKind.OpeningSquareBracket: {
+                return false;
+            }
         }
 
         // Parentheses-less invocations are disallowed within a sequence context.
