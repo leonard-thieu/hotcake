@@ -349,10 +349,20 @@ export abstract class ParserBase {
         );
 
         // Generic type arguments
-        identifierExpression.lessThanSign = this.eatOptional(TokenKind.LessThanSign);
-        if (identifierExpression.lessThanSign !== null) {
-            identifierExpression.typeArguments = this.parseList(identifierExpression, ParseContextKind.TypeReferenceSequence);
-            identifierExpression.greaterThanSign = this.eat(TokenKind.GreaterThanSign);
+        const position = this.position;
+        const lessThanSign = this.eatOptional(TokenKind.LessThanSign);
+        if (lessThanSign !== null) {
+            const typeArguments = this.parseList(identifierExpression, ParseContextKind.TypeReferenceSequence);
+            const greaterThanSign = this.eatOptional(TokenKind.GreaterThanSign);
+
+            // Couldn't find terminating `>`. That means `<` is part of a binary expression and not the start of generic type arguments.
+            if (greaterThanSign === null) {
+                this.position = position;
+            } else {
+                identifierExpression.lessThanSign = lessThanSign;
+                identifierExpression.typeArguments = typeArguments;
+                identifierExpression.greaterThanSign = greaterThanSign;
+            }
         }
 
         return identifierExpression;
