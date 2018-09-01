@@ -11,6 +11,7 @@ import { Statement } from './Statement';
 export class ForLoop extends Statement {
     static CHILD_NAMES: (keyof ForLoop)[] = [
         'forKeyword',
+        'header',
         'statements',
         'endKeyword',
         'endForKeyword',

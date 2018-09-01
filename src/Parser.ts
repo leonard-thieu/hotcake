@@ -699,6 +699,17 @@ export class Parser extends ParserBase {
         return numericForLoopHeader;
     }
 
+    private isForLoopStatementsListTerminator(token: Token): boolean {
+        switch (token.kind) {
+            case TokenKind.NextKeyword:
+            case TokenKind.EndKeyword: {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     // #endregion
 
     private parseContinueStatement(parent: Node): ContinueStatement {
@@ -982,7 +993,6 @@ export class Parser extends ParserBase {
             case NodeKind.FunctionDeclaration:
             case NodeKind.ClassMethodDeclaration:
             case NodeKind.RepeatLoop:
-            case NodeKind.ForLoop:
             case NodeKind.TryStatement:
             case NodeKind.CatchStatement: {
                 return this.isBlockStatementsListTerminator(token);
@@ -999,6 +1009,9 @@ export class Parser extends ParserBase {
             case NodeKind.WhileLoop: {
                 return token.kind === TokenKind.WendKeyword ||
                     this.isBlockStatementsListTerminator(token);
+            }
+            case NodeKind.ForLoop: {
+                return this.isForLoopStatementsListTerminator(token);
             }
             case NodeKind.DataDeclarationList: {
                 return this.isDataDeclarationListMembersListTerminator(token);
