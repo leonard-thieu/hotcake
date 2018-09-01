@@ -204,10 +204,11 @@ export abstract class ParserBase {
             case TokenKind.OpeningSquareBracket: {
                 return this.parseArrayLiteral(parent);
             }
-            case TokenKind.StringKeyword:
+            case TokenKind.Period:
             case TokenKind.BoolKeyword:
-            case TokenKind.FloatKeyword:
             case TokenKind.IntKeyword:
+            case TokenKind.FloatKeyword:
+            case TokenKind.StringKeyword:
             case TokenKind.ObjectKeyword:
             case TokenKind.ThrowableKeyword:
             case TokenKind.Identifier: {
@@ -336,15 +337,23 @@ export abstract class ParserBase {
     protected parseIdentifierExpression(parent: Node): IdentifierExpression {
         const identifierExpression = new IdentifierExpression();
         identifierExpression.parent = parent;
+        identifierExpression.globalScopeMemberAccessOperator = this.eatOptional(TokenKind.Period);
         identifierExpression.name = this.eat(
-            TokenKind.Identifier,
-            TokenKind.StringKeyword,
             TokenKind.BoolKeyword,
-            TokenKind.FloatKeyword,
             TokenKind.IntKeyword,
+            TokenKind.FloatKeyword,
+            TokenKind.StringKeyword,
             TokenKind.ObjectKeyword,
             TokenKind.ThrowableKeyword,
+            TokenKind.Identifier,
         );
+
+        // Generic type arguments
+        identifierExpression.lessThanSign = this.eatOptional(TokenKind.LessThanSign);
+        if (identifierExpression.lessThanSign !== null) {
+            identifierExpression.typeArguments = this.parseList(identifierExpression, ParseContextKind.TypeReferenceSequence);
+            identifierExpression.greaterThanSign = this.eat(TokenKind.GreaterThanSign);
+        }
 
         return identifierExpression;
     }
