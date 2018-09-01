@@ -50,14 +50,18 @@
                         "kind": "InvokeExpression",
                         "newlines": null,
                         "invokableExpression": {
-                            "kind": "Variable",
+                            "kind": "IdentifierExpression",
                             "newlines": null,
+                            "globalScopeMemberAccessOperator": null,
                             "name": {
                                 "kind": "Identifier",
                                 "fullStart": 17,
                                 "start": 21,
                                 "length": 9
-                            }
+                            },
+                            "lessThanSign": null,
+                            "typeArguments": null,
+                            "greaterThanSign": null
                         },
                         "openingParenthesis": null,
                         "arguments": [
@@ -153,14 +157,18 @@
                         "kind": "InvokeExpression",
                         "newlines": null,
                         "invokableExpression": {
-                            "kind": "Variable",
+                            "kind": "IdentifierExpression",
                             "newlines": null,
+                            "globalScopeMemberAccessOperator": null,
                             "name": {
                                 "kind": "Identifier",
                                 "fullStart": 66,
                                 "start": 70,
                                 "length": 9
-                            }
+                            },
+                            "lessThanSign": null,
+                            "typeArguments": null,
+                            "greaterThanSign": null
                         },
                         "openingParenthesis": null,
                         "arguments": [
@@ -247,14 +255,18 @@
                         "kind": "InvokeExpression",
                         "newlines": null,
                         "invokableExpression": {
-                            "kind": "Variable",
+                            "kind": "IdentifierExpression",
                             "newlines": null,
+                            "globalScopeMemberAccessOperator": null,
                             "name": {
                                 "kind": "Identifier",
                                 "fullStart": 117,
                                 "start": 121,
                                 "length": 9
-                            }
+                            },
+                            "lessThanSign": null,
+                            "typeArguments": null,
+                            "greaterThanSign": null
                         },
                         "openingParenthesis": null,
                         "arguments": [
@@ -341,14 +353,18 @@
                         "kind": "InvokeExpression",
                         "newlines": null,
                         "invokableExpression": {
-                            "kind": "Variable",
+                            "kind": "IdentifierExpression",
                             "newlines": null,
+                            "globalScopeMemberAccessOperator": null,
                             "name": {
                                 "kind": "Identifier",
                                 "fullStart": 168,
                                 "start": 172,
                                 "length": 9
-                            }
+                            },
+                            "lessThanSign": null,
+                            "typeArguments": null,
+                            "greaterThanSign": null
                         },
                         "openingParenthesis": null,
                         "arguments": [

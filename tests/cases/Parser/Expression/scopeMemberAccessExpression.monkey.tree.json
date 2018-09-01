@@ -56,14 +56,18 @@
                         "kind": "ScopeMemberAccessExpression",
                         "newlines": null,
                         "scopableExpression": {
-                            "kind": "Variable",
+                            "kind": "IdentifierExpression",
                             "newlines": null,
+                            "globalScopeMemberAccessOperator": null,
                             "name": {
                                 "kind": "Identifier",
                                 "fullStart": 27,
                                 "start": 28,
                                 "length": 6
-                            }
+                            },
+                            "lessThanSign": null,
+                            "typeArguments": null,
+                            "greaterThanSign": null
                         },
                         "scopeMemberAccessOperator": {
                             "kind": "Period",

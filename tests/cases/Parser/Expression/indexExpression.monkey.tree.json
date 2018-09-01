@@ -56,14 +56,18 @@
                         "kind": "IndexExpression",
                         "newlines": null,
                         "indexableExpression": {
-                            "kind": "Variable",
+                            "kind": "IdentifierExpression",
                             "newlines": null,
+                            "globalScopeMemberAccessOperator": null,
                             "name": {
                                 "kind": "Identifier",
                                 "fullStart": 23,
                                 "start": 24,
                                 "length": 4
-                            }
+                            },
+                            "lessThanSign": null,
+                            "typeArguments": null,
+                            "greaterThanSign": null
                         },
                         "openingSquareBracket": {
                             "kind": "OpeningSquareBracket",

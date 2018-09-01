@@ -56,14 +56,18 @@
                         "kind": "BinaryExpression",
                         "newlines": null,
                         "leftOperand": {
-                            "kind": "Variable",
+                            "kind": "IdentifierExpression",
                             "newlines": null,
+                            "globalScopeMemberAccessOperator": null,
                             "name": {
                                 "kind": "Identifier",
                                 "fullStart": 23,
                                 "start": 24,
                                 "length": 3
-                            }
+                            },
+                            "lessThanSign": null,
+                            "typeArguments": null,
+                            "greaterThanSign": null
                         },
                         "operator": {
                             "kind": "GreaterThanSignEqualsSign",
@@ -104,14 +108,18 @@
                                 "kind": "BinaryExpression",
                                 "newlines": null,
                                 "leftOperand": {
-                                    "kind": "Variable",
+                                    "kind": "IdentifierExpression",
                                     "newlines": null,
+                                    "globalScopeMemberAccessOperator": null,
                                     "name": {
                                         "kind": "Identifier",
                                         "fullStart": 29,
                                         "start": 30,
                                         "length": 3
-                                    }
+                                    },
+                                    "lessThanSign": null,
+                                    "typeArguments": null,
+                                    "greaterThanSign": null
                                 },
                                 "operator": {
                                     "kind": "EqualsSign",
@@ -127,14 +135,18 @@
                                         "kind": "BinaryExpression",
                                         "newlines": null,
                                         "leftOperand": {
-                                            "kind": "Variable",
+                                            "kind": "IdentifierExpression",
                                             "newlines": null,
+                                            "globalScopeMemberAccessOperator": null,
                                             "name": {
                                                 "kind": "Identifier",
                                                 "fullStart": 33,
                                                 "start": 33,
                                                 "length": 2
-                                            }
+                                            },
+                                            "lessThanSign": null,
+                                            "typeArguments": null,
+                                            "greaterThanSign": null
                                         },
                                         "operator": {
                                             "kind": "ModKeyword",
@@ -144,14 +156,18 @@
                                         },
                                         "eachInKeyword": null,
                                         "rightOperand": {
-                                            "kind": "Variable",
+                                            "kind": "IdentifierExpression",
                                             "newlines": null,
+                                            "globalScopeMemberAccessOperator": null,
                                             "name": {
                                                 "kind": "Identifier",
                                                 "fullStart": 39,
                                                 "start": 40,
                                                 "length": 2
-                                            }
+                                            },
+                                            "lessThanSign": null,
+                                            "typeArguments": null,
+                                            "greaterThanSign": null
                                         }
                                     },
                                     "operator": {
@@ -162,14 +178,18 @@
                                     },
                                     "eachInKeyword": null,
                                     "rightOperand": {
-                                        "kind": "Variable",
+                                        "kind": "IdentifierExpression",
                                         "newlines": null,
+                                        "globalScopeMemberAccessOperator": null,
                                         "name": {
                                             "kind": "Identifier",
                                             "fullStart": 43,
                                             "start": 44,
                                             "length": 3
-                                        }
+                                        },
+                                        "lessThanSign": null,
+                                        "typeArguments": null,
+                                        "greaterThanSign": null
                                     }
                                 }
                             },
@@ -192,14 +212,18 @@
                                     "kind": "BinaryExpression",
                                     "newlines": null,
                                     "leftOperand": {
-                                        "kind": "Variable",
+                                        "kind": "IdentifierExpression",
                                         "newlines": null,
+                                        "globalScopeMemberAccessOperator": null,
                                         "name": {
                                             "kind": "Identifier",
                                             "fullStart": 51,
                                             "start": 52,
                                             "length": 3
-                                        }
+                                        },
+                                        "lessThanSign": null,
+                                        "typeArguments": null,
+                                        "greaterThanSign": null
                                     },
                                     "operator": {
                                         "kind": "EqualsSign",
@@ -215,14 +239,18 @@
                                             "kind": "BinaryExpression",
                                             "newlines": null,
                                             "leftOperand": {
-                                                "kind": "Variable",
+                                                "kind": "IdentifierExpression",
                                                 "newlines": null,
+                                                "globalScopeMemberAccessOperator": null,
                                                 "name": {
                                                     "kind": "Identifier",
                                                     "fullStart": 56,
                                                     "start": 57,
                                                     "length": 2
-                                                }
+                                                },
+                                                "lessThanSign": null,
+                                                "typeArguments": null,
+                                                "greaterThanSign": null
                                             },
                                             "operator": {
                                                 "kind": "HyphenMinus",
@@ -244,14 +272,18 @@
                                                         "length": 2
                                                     },
                                                     "operand": {
-                                                        "kind": "Variable",
+                                                        "kind": "IdentifierExpression",
                                                         "newlines": null,
+                                                        "globalScopeMemberAccessOperator": null,
                                                         "name": {
                                                             "kind": "Identifier",
                                                             "fullStart": 62,
                                                             "start": 62,
                                                             "length": 2
-                                                        }
+                                                        },
+                                                        "lessThanSign": null,
+                                                        "typeArguments": null,
+                                                        "greaterThanSign": null
                                                     }
                                                 },
                                                 "operator": {
@@ -262,14 +294,18 @@
                                                 },
                                                 "eachInKeyword": null,
                                                 "rightOperand": {
-                                                    "kind": "Variable",
+                                                    "kind": "IdentifierExpression",
                                                     "newlines": null,
+                                                    "globalScopeMemberAccessOperator": null,
                                                     "name": {
                                                         "kind": "Identifier",
                                                         "fullStart": 68,
                                                         "start": 69,
                                                         "length": 2
-                                                    }
+                                                    },
+                                                    "lessThanSign": null,
+                                                    "typeArguments": null,
+                                                    "greaterThanSign": null
                                                 }
                                             }
                                         },
@@ -281,14 +317,18 @@
                                         },
                                         "eachInKeyword": null,
                                         "rightOperand": {
-                                            "kind": "Variable",
+                                            "kind": "IdentifierExpression",
                                             "newlines": null,
+                                            "globalScopeMemberAccessOperator": null,
                                             "name": {
                                                 "kind": "Identifier",
                                                 "fullStart": 72,
                                                 "start": 73,
                                                 "length": 3
-                                            }
+                                            },
+                                            "lessThanSign": null,
+                                            "typeArguments": null,
+                                            "greaterThanSign": null
                                         }
                                     }
                                 },
