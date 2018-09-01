@@ -635,6 +635,17 @@ export class Parser extends ParserBase {
         return whileLoop;
     }
 
+    private isWhileLoopStatementsListTerminator(token: Token): boolean {
+        switch (token.kind) {
+            case TokenKind.WendKeyword:
+            case TokenKind.EndKeyword: {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     private parseRepeatLoop(parent: Node): RepeatLoop {
         const repeatLoop = new RepeatLoop();
         repeatLoop.parent = parent;
@@ -1007,8 +1018,7 @@ export class Parser extends ParserBase {
                 return this.isCaseOrDefaultStatementStatementsListTerminator(token);
             }
             case NodeKind.WhileLoop: {
-                return token.kind === TokenKind.WendKeyword ||
-                    this.isBlockStatementsListTerminator(token);
+                return this.isWhileLoopStatementsListTerminator(token);
             }
             case NodeKind.ForLoop: {
                 return this.isForLoopStatementsListTerminator(token);
