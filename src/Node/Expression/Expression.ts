@@ -7,6 +7,7 @@ import { BinaryExpression } from './BinaryExpression';
 import { BooleanLiteral } from './BooleanLiteral';
 import { FloatLiteral } from './FloatLiteral';
 import { GroupingExpression } from './GroupingExpression';
+import { IdentifierExpression } from './IdentifierExpression';
 import { IndexExpression } from './IndexExpression';
 import { IntegerLiteral } from './IntegerLiteral';
 import { InvokeExpression } from './InvokeExpression';
@@ -17,7 +18,6 @@ import { SelfExpression } from './SelfExpression';
 import { StringLiteral } from './StringLiteral';
 import { SuperExpression } from './SuperExpression';
 import { UnaryOpExpression } from './UnaryOpExpression';
-import { Variable } from './Variable';
 
 export abstract class Expression extends Node {
     newlines: Token[] | null = null;
@@ -33,7 +33,7 @@ export type Expressions =
     FloatLiteral |
     IntegerLiteral |
     ArrayLiteral |
-    Variable |
+    IdentifierExpression |
     ScopeMemberAccessExpression |
     InvokeExpression |
     IndexExpression |

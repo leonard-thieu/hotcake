@@ -263,10 +263,10 @@ export class Tokenizer {
             case NodeKind.FloatLiteral: {
                 return parseFloat(expression.value.getText(this.document));
             }
-            case NodeKind.Variable: {
-                const varName = expression.name.getText(this.document);
-                if (varName in this.configVars) {
-                    return this.configVars[varName];
+            case NodeKind.IdentifierExpression: {
+                const identifierName = expression.name.getText(this.document);
+                if (identifierName in this.configVars) {
+                    return this.configVars[identifierName];
                 }
                 break;
             }

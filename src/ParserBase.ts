@@ -6,6 +6,7 @@ import { BooleanLiteral } from './Node/Expression/BooleanLiteral';
 import { Expressions, isMissingToken } from './Node/Expression/Expression';
 import { FloatLiteral } from './Node/Expression/FloatLiteral';
 import { GroupingExpression } from './Node/Expression/GroupingExpression';
+import { IdentifierExpression } from './Node/Expression/IdentifierExpression';
 import { IndexExpression } from './Node/Expression/IndexExpression';
 import { IntegerLiteral } from './Node/Expression/IntegerLiteral';
 import { InvokeExpression } from './Node/Expression/InvokeExpression';
@@ -16,7 +17,6 @@ import { SelfExpression } from './Node/Expression/SelfExpression';
 import { StringLiteral } from './Node/Expression/StringLiteral';
 import { SuperExpression } from './Node/Expression/SuperExpression';
 import { UnaryOpExpression } from './Node/Expression/UnaryOpExpression';
-import { Variable } from './Node/Expression/Variable';
 import { ModulePath } from './Node/ModulePath';
 import { Node } from './Node/Node';
 import { ArrayTypeDeclaration, TypeReference } from './Node/TypeReference';
@@ -211,7 +211,7 @@ export abstract class ParserBase {
             case TokenKind.ObjectKeyword:
             case TokenKind.ThrowableKeyword:
             case TokenKind.Identifier: {
-                return this.parseVariable(parent);
+                return this.parseIdentifierExpression(parent);
             }
             case TokenKind.OpeningParenthesis: {
                 return this.parseGroupingExpression(parent);
@@ -333,10 +333,10 @@ export abstract class ParserBase {
         return arrayLiteral;
     }
 
-    protected parseVariable(parent: Node): Variable {
-        const variable = new Variable();
-        variable.parent = parent;
-        variable.name = this.eat(
+    protected parseIdentifierExpression(parent: Node): IdentifierExpression {
+        const identifierExpression = new IdentifierExpression();
+        identifierExpression.parent = parent;
+        identifierExpression.name = this.eat(
             TokenKind.Identifier,
             TokenKind.StringKeyword,
             TokenKind.BoolKeyword,
@@ -346,7 +346,7 @@ export abstract class ParserBase {
             TokenKind.ThrowableKeyword,
         );
 
-        return variable;
+        return identifierExpression;
     }
 
     protected parseGroupingExpression(parent: Node): GroupingExpression {

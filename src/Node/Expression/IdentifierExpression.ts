@@ -2,13 +2,13 @@ import { Token } from '../../Token/Token';
 import { NodeKind } from '../NodeKind';
 import { Expression } from './Expression';
 
-export class Variable extends Expression {
-    static CHILD_NAMES: (keyof Variable)[] = [
+export class IdentifierExpression extends Expression {
+    static CHILD_NAMES: (keyof IdentifierExpression)[] = [
         'newlines',
         'name',
     ];
 
-    readonly kind = NodeKind.Variable;
+    readonly kind = NodeKind.IdentifierExpression;
 
     name: Token;
 }
