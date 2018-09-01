@@ -545,10 +545,16 @@ export class Parser extends ParserBase {
     }
 
     private isIfStatementStatementsListTerminator(token: Token): boolean {
-        return token.kind === TokenKind.ElseIfKeyword ||
-            token.kind === TokenKind.ElseKeyword ||
-            token.kind === TokenKind.EndIfKeyword ||
-            token.kind === TokenKind.EndKeyword;
+        switch (token.kind) {
+            case TokenKind.ElseIfKeyword:
+            case TokenKind.ElseKeyword:
+            case TokenKind.EndIfKeyword:
+            case TokenKind.EndKeyword: {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     // #endregion
@@ -665,7 +671,7 @@ export class Parser extends ParserBase {
 
         return repeatLoop;
     }
-    
+
     private isRepeatLoopStatementsListTerminator(token: Token): boolean {
         switch (token.kind) {
             case TokenKind.ForeverKeyword:
@@ -673,7 +679,7 @@ export class Parser extends ParserBase {
                 return true;
             }
         }
-        
+
         return false;
     }
 
