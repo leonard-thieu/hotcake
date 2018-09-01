@@ -220,7 +220,7 @@ export abstract class ParserBase {
 
         console.error(`${JSON.stringify(token.kind)} not implemented.`);
 
-        return new MissingToken(TokenKind.Expression, token.fullStart)
+        return this.createMissingExpressionToken(token.fullStart);
     }
 
     protected parseNewExpression(parent: Node): NewExpression {
@@ -359,6 +359,10 @@ export abstract class ParserBase {
         return groupingExpression;
     }
 
+    private createMissingExpressionToken(fullStart: number): MissingToken {
+        return new MissingToken(TokenKind.Expression, fullStart);
+    }
+
     // #region Postfix expressions
 
     protected parsePostfixExpression(expression: Expressions | MissingToken) {
@@ -401,20 +405,22 @@ export abstract class ParserBase {
         indexExpression.indexableExpression = expression;
         indexExpression.openingSquareBracket = this.eat(TokenKind.OpeningSquareBracket);
 
-        if (this.getToken(1).kind === TokenKind.PeriodPeriod) {
-            indexExpression.startExpression = this.parseExpression(indexExpression);
+        let startExpression: Expressions | MissingToken | null = null;
+        if (this.isExpressionStart(this.getToken())) {
+            startExpression = this.parseExpression(indexExpression);
         }
-
-        if (this.getToken().kind === TokenKind.PeriodPeriod) {
+        if (this.getToken().kind !== TokenKind.ClosingSquareBracket) {
             indexExpression.sliceOperator = this.eat(TokenKind.PeriodPeriod);
-
-            if (this.getToken().kind !== TokenKind.ClosingSquareBracket) {
-                indexExpression.endExpression = this.parseExpression(indexExpression);
-            }
+        }
+        if (this.isExpressionStart(this.getToken())) {
+            indexExpression.endExpression = this.parseExpression(indexExpression);
         }
 
-        if (indexExpression.sliceOperator === null) {
-            indexExpression.indexExpressionExpression = this.parseExpression(indexExpression);
+        if (indexExpression.sliceOperator === null &&
+            indexExpression.endExpression === null) {
+            indexExpression.indexExpressionExpression = startExpression || this.createMissingExpressionToken(this.getToken().fullStart);
+        } else {
+            indexExpression.startExpression = startExpression;
         }
 
         indexExpression.closingSquareBracket = this.eat(TokenKind.ClosingSquareBracket);
