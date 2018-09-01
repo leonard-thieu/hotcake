@@ -2879,17 +2879,7 @@
                             },
                             "colonEqualsSign": null,
                             "colon": null,
-                            "type": {
-                                "kind": "TypeReference",
-                                "modulePath": {
-                                    "kind": "ModulePath",
-                                    "children": []
-                                },
-                                "lessThanSign": null,
-                                "typeArguments": null,
-                                "greaterThanSign": null,
-                                "arrayTypeDeclarations": null
-                            },
+                            "type": null,
                             "equalsSign": null,
                             "eachInKeyword": null,
                             "expression": null
@@ -2914,17 +2904,7 @@
                             },
                             "colonEqualsSign": null,
                             "colon": null,
-                            "type": {
-                                "kind": "TypeReference",
-                                "modulePath": {
-                                    "kind": "ModulePath",
-                                    "children": []
-                                },
-                                "lessThanSign": null,
-                                "typeArguments": null,
-                                "greaterThanSign": null,
-                                "arrayTypeDeclarations": null
-                            },
+                            "type": null,
                             "equalsSign": null,
                             "eachInKeyword": null,
                             "expression": null
@@ -3003,17 +2983,7 @@
                             },
                             "colonEqualsSign": null,
                             "colon": null,
-                            "type": {
-                                "kind": "TypeReference",
-                                "modulePath": {
-                                    "kind": "ModulePath",
-                                    "children": []
-                                },
-                                "lessThanSign": null,
-                                "typeArguments": null,
-                                "greaterThanSign": null,
-                                "arrayTypeDeclarations": null
-                            },
+                            "type": null,
                             "equalsSign": null,
                             "eachInKeyword": null,
                             "expression": null
@@ -3038,17 +3008,7 @@
                             },
                             "colonEqualsSign": null,
                             "colon": null,
-                            "type": {
-                                "kind": "TypeReference",
-                                "modulePath": {
-                                    "kind": "ModulePath",
-                                    "children": []
-                                },
-                                "lessThanSign": null,
-                                "typeArguments": null,
-                                "greaterThanSign": null,
-                                "arrayTypeDeclarations": null
-                            },
+                            "type": null,
                             "equalsSign": null,
                             "eachInKeyword": null,
                             "expression": null
@@ -4645,6 +4605,7 @@
                         }
                     },
                     "thenKeyword": null,
+                    "isSingleLine": false,
                     "statements": [
                         {
                             "kind": "EmptyStatement",
@@ -4665,7 +4626,7 @@
                             }
                         }
                     ],
-                    "elseIfStatements": [],
+                    "elseIfStatements": null,
                     "elseStatement": null,
                     "endKeyword": {
                         "kind": "EndKeyword",
@@ -4749,6 +4710,7 @@
                         }
                     },
                     "thenKeyword": null,
+                    "isSingleLine": false,
                     "statements": [
                         {
                             "kind": "EmptyStatement",
@@ -4769,7 +4731,7 @@
                             }
                         }
                     ],
-                    "elseIfStatements": [],
+                    "elseIfStatements": null,
                     "elseStatement": {
                         "kind": "ElseStatement",
                         "elseKeyword": {
@@ -4881,6 +4843,7 @@
                         }
                     },
                     "thenKeyword": null,
+                    "isSingleLine": false,
                     "statements": [
                         {
                             "kind": "EmptyStatement",
@@ -5060,6 +5023,7 @@
                         }
                     },
                     "thenKeyword": null,
+                    "isSingleLine": false,
                     "statements": [
                         {
                             "kind": "EmptyStatement",
@@ -5267,6 +5231,7 @@
                         "start": 5431,
                         "length": 5
                     },
+                    "isSingleLine": false,
                     "statements": [
                         {
                             "kind": "EmptyStatement",
@@ -5574,6 +5539,7 @@
                         "start": 5673,
                         "length": 5
                     },
+                    "isSingleLine": true,
                     "statements": [
                         {
                             "kind": "ReturnStatement",
@@ -5584,12 +5550,7 @@
                                 "length": 7
                             },
                             "expression": null,
-                            "terminator": {
-                                "kind": "Newline",
-                                "fullStart": 5684,
-                                "start": 5685,
-                                "length": 2
-                            }
+                            "terminator": null
                         }
                     ],
                     "elseIfStatements": null,
@@ -5597,12 +5558,10 @@
                     "endKeyword": null,
                     "endIfKeyword": null,
                     "terminator": {
-                        "type": "MissingToken",
                         "kind": "Newline",
-                        "fullStart": 5690,
-                        "start": 5690,
-                        "length": 0,
-                        "newlines": null
+                        "fullStart": 5684,
+                        "start": 5685,
+                        "length": 2
                     }
                 },
                 {
@@ -5652,6 +5611,7 @@
                         }
                     },
                     "thenKeyword": null,
+                    "isSingleLine": true,
                     "statements": [
                         {
                             "kind": "ReturnStatement",
@@ -5662,12 +5622,7 @@
                                 "length": 7
                             },
                             "expression": null,
-                            "terminator": {
-                                "kind": "Newline",
-                                "fullStart": 5709,
-                                "start": 5710,
-                                "length": 2
-                            }
+                            "terminator": null
                         }
                     ],
                     "elseIfStatements": null,
@@ -5675,12 +5630,10 @@
                     "endKeyword": null,
                     "endIfKeyword": null,
                     "terminator": {
-                        "type": "MissingToken",
                         "kind": "Newline",
-                        "fullStart": 5711,
-                        "start": 5711,
-                        "length": 0,
-                        "newlines": null
+                        "fullStart": 5709,
+                        "start": 5710,
+                        "length": 2
                     }
                 }
             ],

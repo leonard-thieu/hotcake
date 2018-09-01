@@ -63,6 +63,7 @@
                         }
                     },
                     "thenKeyword": null,
+                    "isSingleLine": false,
                     "statements": [
                         {
                             "kind": "EmptyStatement",
@@ -74,7 +75,7 @@
                             }
                         }
                     ],
-                    "elseIfStatements": [],
+                    "elseIfStatements": null,
                     "elseStatement": null,
                     "endKeyword": {
                         "kind": "EndKeyword",
