@@ -509,6 +509,13 @@ export abstract class ParserBase {
     private parseTypeReferenceSequenceMember(parent: Node) {
         const token = this.getToken();
         switch (token.kind) {
+            case TokenKind.BoolKeyword:
+            case TokenKind.IntKeyword:
+            case TokenKind.FloatKeyword:
+            case TokenKind.StringKeyword:
+            case TokenKind.ObjectKeyword:
+            case TokenKind.ThrowableKeyword:
+            case TokenKind.VoidKeyword:
             case TokenKind.Identifier: {
                 return this.parseTypeReference(parent);
             }
@@ -536,14 +543,14 @@ export abstract class ParserBase {
 
     protected isTypeReferenceStart(token: Token): boolean {
         switch (token.kind) {
-            case TokenKind.DollarSign:
             case TokenKind.QuestionMark:
-            case TokenKind.NumberSign:
             case TokenKind.PercentSign:
-            case TokenKind.StringKeyword:
+            case TokenKind.NumberSign:
+            case TokenKind.DollarSign:
             case TokenKind.BoolKeyword:
-            case TokenKind.FloatKeyword:
             case TokenKind.IntKeyword:
+            case TokenKind.FloatKeyword:
+            case TokenKind.StringKeyword:
             case TokenKind.ObjectKeyword:
             case TokenKind.ThrowableKeyword:
             case TokenKind.VoidKeyword:
@@ -562,14 +569,14 @@ export abstract class ParserBase {
 
         const token = this.getToken();
         switch (token.kind) {
-            case TokenKind.DollarSign:
             case TokenKind.QuestionMark:
-            case TokenKind.NumberSign:
             case TokenKind.PercentSign:
-            case TokenKind.StringKeyword:
+            case TokenKind.NumberSign:
+            case TokenKind.DollarSign:
             case TokenKind.BoolKeyword:
-            case TokenKind.FloatKeyword:
             case TokenKind.IntKeyword:
+            case TokenKind.FloatKeyword:
+            case TokenKind.StringKeyword:
             case TokenKind.ObjectKeyword:
             case TokenKind.ThrowableKeyword:
             case TokenKind.VoidKeyword: {
