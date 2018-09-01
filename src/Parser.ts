@@ -12,6 +12,7 @@ import { InterfaceMethodDeclaration } from './Node/Declaration/InterfaceMethodDe
 import { ModuleDeclaration } from './Node/Declaration/ModuleDeclaration';
 import { StrictDirective } from './Node/Declaration/StrictDirective';
 import { BinaryExpression } from './Node/Expression/BinaryExpression';
+import { Expressions } from './Node/Expression/Expression';
 import { Node } from './Node/Node';
 import { NodeKind } from './Node/NodeKind';
 import { ContinueStatement } from './Node/Statement/ContinueStatement';
@@ -24,6 +25,7 @@ import { LocalDeclarationListStatement } from './Node/Statement/LocalDeclaration
 import { RepeatLoop } from './Node/Statement/RepeatLoop';
 import { ReturnStatement } from './Node/Statement/ReturnStatement';
 import { CaseStatement, DefaultStatement, SelectStatement } from './Node/Statement/SelectStatement';
+import { Statement } from './Node/Statement/Statement';
 import { ThrowStatement } from './Node/Statement/ThrowStatement';
 import { CatchStatement, TryStatement } from './Node/Statement/TryStatement';
 import { WhileLoop } from './Node/Statement/WhileLoop';
@@ -439,7 +441,7 @@ export class Parser extends ParserBase {
         const localDeclarationListStatement = new LocalDeclarationListStatement();
         localDeclarationListStatement.parent = parent;
         localDeclarationListStatement.localDeclarationList = this.parseDataDeclarationList(localDeclarationListStatement);
-        localDeclarationListStatement.terminator = this.eatStatementTerminator();
+        localDeclarationListStatement.terminator = this.eatStatementTerminator(localDeclarationListStatement);
 
         return localDeclarationListStatement;
     }
@@ -452,7 +454,7 @@ export class Parser extends ParserBase {
         if (this.isExpressionStart(this.getToken())) {
             returnStatement.expression = this.parseExpression(returnStatement);
         }
-        returnStatement.terminator = this.eatStatementTerminator();
+        returnStatement.terminator = this.eatStatementTerminator(returnStatement);
 
         return returnStatement;
     }
@@ -485,6 +487,7 @@ export class Parser extends ParserBase {
                 ifStatement.endIfKeyword = this.eatOptional(TokenKind.IfKeyword);
             }
         } else {
+            ifStatement.isSingleLine = true;
             ifStatement.statements = [this.parseStatement(ifStatement)];
 
             if (this.getToken().kind === TokenKind.ElseKeyword) {
@@ -492,7 +495,7 @@ export class Parser extends ParserBase {
             }
         }
 
-        ifStatement.terminator = this.eatStatementTerminator();
+        ifStatement.terminator = this.eatStatementTerminator(ifStatement);
 
         return ifStatement;
     }
@@ -577,7 +580,7 @@ export class Parser extends ParserBase {
 
         selectStatement.endKeyword = this.eat(TokenKind.EndKeyword);
         selectStatement.endSelectKeyword = this.eatOptional(TokenKind.SelectKeyword);
-        selectStatement.terminator = this.eatStatementTerminator();
+        selectStatement.terminator = this.eatStatementTerminator(selectStatement);
 
         return selectStatement;
     }
@@ -627,7 +630,7 @@ export class Parser extends ParserBase {
         if (whileLoop.endKeyword.kind === TokenKind.EndKeyword) {
             whileLoop.endWhileKeyword = this.eatOptional(TokenKind.WhileKeyword);
         }
-        whileLoop.terminator = this.eatStatementTerminator();
+        whileLoop.terminator = this.eatStatementTerminator(whileLoop);
 
         return whileLoop;
     }
@@ -641,7 +644,7 @@ export class Parser extends ParserBase {
         if (repeatLoop.foreverOrUntilKeyword.kind === TokenKind.UntilKeyword) {
             repeatLoop.untilExpression = this.parseExpression(repeatLoop);
         }
-        repeatLoop.terminator = this.eatStatementTerminator();
+        repeatLoop.terminator = this.eatStatementTerminator(repeatLoop);
 
         return repeatLoop;
     }
@@ -658,7 +661,7 @@ export class Parser extends ParserBase {
         if (forLoop.endKeyword.kind === TokenKind.EndKeyword) {
             forLoop.endForKeyword = this.eatOptional(TokenKind.ForKeyword);
         }
-        forLoop.terminator = this.eatStatementTerminator();
+        forLoop.terminator = this.eatStatementTerminator(forLoop);
 
         return forLoop;
     }
@@ -702,7 +705,7 @@ export class Parser extends ParserBase {
         const continueStatement = new ContinueStatement();
         continueStatement.parent = parent;
         continueStatement.continueKeyword = this.eat(TokenKind.ContinueKeyword);
-        continueStatement.terminator = this.eatStatementTerminator();
+        continueStatement.terminator = this.eatStatementTerminator(continueStatement);
 
         return continueStatement;
     }
@@ -711,7 +714,7 @@ export class Parser extends ParserBase {
         const exitStatement = new ExitStatement();
         exitStatement.parent = parent;
         exitStatement.exitKeyword = this.eat(TokenKind.ExitKeyword);
-        exitStatement.terminator = this.eatStatementTerminator();
+        exitStatement.terminator = this.eatStatementTerminator(exitStatement);
 
         return exitStatement;
     }
@@ -723,7 +726,7 @@ export class Parser extends ParserBase {
         throwStatement.parent = parent;
         throwStatement.throwKeyword = this.eat(TokenKind.ThrowKeyword);
         throwStatement.expression = this.parseExpression(throwStatement);
-        throwStatement.terminator = this.eatStatementTerminator();
+        throwStatement.terminator = this.eatStatementTerminator(throwStatement);
 
         return throwStatement;
     }
@@ -745,7 +748,7 @@ export class Parser extends ParserBase {
 
         tryStatement.endKeyword = this.eat(TokenKind.EndKeyword);
         tryStatement.endTryKeyword = this.eatOptional(TokenKind.TryKeyword);
-        tryStatement.terminator = this.eatStatementTerminator();
+        tryStatement.terminator = this.eatStatementTerminator(tryStatement);
 
         return tryStatement;
     }
@@ -766,7 +769,7 @@ export class Parser extends ParserBase {
         const expressionStatement = new ExpressionStatement();
         expressionStatement.parent = parent;
         expressionStatement.expression = this.parseExpression(expressionStatement);
-        expressionStatement.terminator = this.eatStatementTerminator();
+        expressionStatement.terminator = this.eatStatementTerminator(expressionStatement);
 
         return expressionStatement;
     }
@@ -774,7 +777,7 @@ export class Parser extends ParserBase {
     private parseEmptyStatement(parent: Node): EmptyStatement {
         const emptyStatement = new EmptyStatement();
         emptyStatement.parent = parent;
-        emptyStatement.terminator = this.eatStatementTerminator();
+        emptyStatement.terminator = this.eatStatementTerminator(emptyStatement);
 
         return emptyStatement;
     }
@@ -921,6 +924,40 @@ export class Parser extends ParserBase {
 
     // #endregion
 
+    protected isInvokeExpressionStart(token: Token, expression: Expressions): boolean {
+        switch (token.kind) {
+            case TokenKind.OpeningParenthesis: {
+                return true;
+            }
+        }
+
+        /**
+         * Parentheses-less invocations are only valid in expression statements. For this purpose, 
+         * the expression statements in single line If statements do not count as expression statements.
+         */
+        const parent = expression.parent!;
+        if (parent.kind === NodeKind.ExpressionStatement &&
+            !this.isInlineStatement(parent as ExpressionStatement)) {
+            return super.isInvokeExpressionStart(token, expression);
+        }
+
+        return false;
+    }
+
+    private isInlineStatement(statement: Statement): boolean {
+        const parent = statement.parent!;
+        let ifStatement: IfStatement | undefined = undefined;
+
+        if (parent.kind === NodeKind.IfStatement) {
+            ifStatement = parent as IfStatement;
+        } else if (parent.kind === NodeKind.ElseStatement) {
+            ifStatement = parent.parent as IfStatement;
+        }
+
+        return ifStatement !== undefined &&
+            ifStatement.isSingleLine;
+    }
+
     // #endregion
 
     // #region Core
@@ -1066,8 +1103,12 @@ export class Parser extends ParserBase {
         throw new Error(`Unexpected token: ${JSON.stringify(token.kind)} in ${JSON.stringify(p.kind)}`);
     }
 
-    private eatStatementTerminator(): Token {
-        return this.eat(TokenKind.Newline, TokenKind.Semicolon);
+    private eatStatementTerminator(statement: Statement): Token | null {
+        if (!this.isInlineStatement(statement)) {
+            return this.eat(TokenKind.Newline, TokenKind.Semicolon);
+        }
+
+        return null;
     }
 
     // #endregion

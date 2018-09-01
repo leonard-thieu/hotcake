@@ -4,35 +4,37 @@
     // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
     "version": "0.2.0",
     "configurations": [
-      {
-          "type": "node",
-          "request": "launch",
-          "name": "Mocha All",
-          "program": "${workspaceFolder}/node_modules/mocha/bin/_mocha",
-          "args": [
-              "--timeout",
-              "999999",
-              "--colors",
-              "--require",
-              "source-map-support/register",
-              "${workspaceFolder}/tests/!(MonkeyTests)*.js"
-          ],
-          "console": "integratedTerminal",
-          "internalConsoleOptions": "neverOpen"
-      },
-      {
-          "type": "node",
-          "request": "launch",
-          "name": "Mocha Current File",
-          "program": "${workspaceFolder}/node_modules/mocha/bin/_mocha",
-          "args": [
-              "--timeout",
-              "999999",
-              "--colors",
-              "${file}"
-          ],
-          "console": "integratedTerminal",
-          "internalConsoleOptions": "neverOpen"
-      }
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "Mocha All",
+            "program": "${workspaceFolder}/node_modules/mocha/bin/_mocha",
+            "args": [
+                "--timeout",
+                "999999",
+                "--colors",
+                "--require",
+                "source-map-support/register",
+                "${workspaceFolder}/tests/!(MonkeyTests)*.js"
+            ],
+            "console": "integratedTerminal",
+            "internalConsoleOptions": "neverOpen"
+        },
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "Mocha Parser",
+            "program": "${workspaceFolder}/node_modules/mocha/bin/_mocha",
+            "args": [
+                "--timeout",
+                "999999",
+                "--colors",
+                "--require",
+                "source-map-support/register",
+                "${workspaceFolder}/tests/ParserTests.js"
+            ],
+            "console": "integratedTerminal",
+            "internalConsoleOptions": "neverOpen"
+        }
     ]
 }

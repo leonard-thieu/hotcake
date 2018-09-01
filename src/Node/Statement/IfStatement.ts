@@ -10,6 +10,7 @@ export class IfStatement extends Statement {
         'ifKeyword',
         'expression',
         'thenKeyword',
+        'isSingleLine',
         'statements',
         'elseIfStatements',
         'elseStatement',
@@ -23,6 +24,7 @@ export class IfStatement extends Statement {
     ifKeyword: Token;
     expression: Expression | MissingToken;
     thenKeyword: Token | null = null;
+    isSingleLine: boolean = false;
     statements: ParseContextElementArray<IfStatement['kind']>;
     elseIfStatements: ElseIfStatement[] | null = null;
     elseStatement: ElseStatement | null = null;

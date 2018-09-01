@@ -49,7 +49,6 @@ export abstract class ParserBase {
                 const nextToken = this.getToken(1);
                 if (nextToken.kind === TokenKind.EqualsSign) {
                     token = new GreaterThanSignEqualsSignToken(token, nextToken);
-                    this.advanceToken();
                 }
             }
 
@@ -69,6 +68,9 @@ export abstract class ParserBase {
             }
 
             this.advanceToken();
+            if (token.kind === TokenKind.GreaterThanSignEqualsSign) {
+                this.advanceToken();
+            }
 
             const eachInKeyword = this.eatOptional(TokenKind.EachInKeyword);
 
@@ -374,7 +376,7 @@ export abstract class ParserBase {
             }
         }
 
-        if (this.isInvokeExpressionStart(token)) {
+        if (this.isInvokeExpressionStart(token, expression)) {
             return this.parseInvokeExpression(expression);
         }
 
@@ -420,21 +422,12 @@ export abstract class ParserBase {
         return indexExpression;
     }
 
-    protected isInvokeExpressionStart(token: Token): boolean {
+    protected isInvokeExpressionStart(token: Token, expression: Expressions): boolean {
         switch (token.kind) {
             case TokenKind.OpeningParenthesis: {
                 return true;
             }
         }
-
-        // // Parentheses-less invocations are disallowed within a sequence context.
-        // const currentParseContext = this.parseContexts[this.parseContexts.length - 1];
-        // switch (currentParseContext) {
-        //     case NodeKind.DataDeclarationList:
-        //     case ParseContextKind.ExpressionSequence: {
-        //         return false;
-        //     }
-        // }
 
         return this.isExpressionSequenceMemberStart(token);
     }
