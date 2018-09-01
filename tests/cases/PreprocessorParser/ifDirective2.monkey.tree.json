@@ -13,14 +13,18 @@
                 "kind": "BinaryExpression",
                 "newlines": null,
                 "leftOperand": {
-                    "kind": "Variable",
+                    "kind": "IdentifierExpression",
                     "newlines": null,
+                    "globalScopeMemberAccessOperator": null,
                     "name": {
                         "kind": "Identifier",
                         "fullStart": 3,
                         "start": 4,
                         "length": 7
-                    }
+                    },
+                    "lessThanSign": null,
+                    "typeArguments": null,
+                    "greaterThanSign": null
                 },
                 "operator": {
                     "kind": "EqualsSign",
