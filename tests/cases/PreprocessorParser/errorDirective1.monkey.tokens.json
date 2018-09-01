@@ -1,0 +1,32 @@
+[
+    {
+        "kind": "ErrorDirectiveKeyword",
+        "fullStart": 0,
+        "start": 0,
+        "length": 6
+    },
+    {
+        "kind": "QuotationMark",
+        "fullStart": 6,
+        "start": 7,
+        "length": 2
+    },
+    {
+        "kind": "StringLiteralText",
+        "fullStart": 8,
+        "start": 8,
+        "length": 7
+    },
+    {
+        "kind": "QuotationMark",
+        "fullStart": 15,
+        "start": 15,
+        "length": 1
+    },
+    {
+        "kind": "EOF",
+        "fullStart": 16,
+        "start": 16,
+        "length": 0
+    }
+]

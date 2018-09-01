@@ -1,0 +1,26 @@
+{
+    "kind": "ModuleDeclaration",
+    "members": [
+        {
+            "kind": "ImportStatement",
+            "importKeyword": {
+                "kind": "ImportKeyword",
+                "fullStart": 0,
+                "start": 0,
+                "length": 6
+            },
+            "modulePath": {
+                "kind": "ModulePath",
+                "children": [
+                    {
+                        "kind": "Identifier",
+                        "fullStart": 6,
+                        "start": 7,
+                        "length": 6
+                    }
+                ]
+            },
+            "nativeFilePath": null
+        }
+    ]
+}

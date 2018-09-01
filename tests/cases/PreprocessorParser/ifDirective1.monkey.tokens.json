@@ -1,0 +1,56 @@
+[
+    {
+        "kind": "IfDirectiveKeyword",
+        "fullStart": 0,
+        "start": 0,
+        "length": 3
+    },
+    {
+        "kind": "Identifier",
+        "fullStart": 3,
+        "start": 4,
+        "length": 7
+    },
+    {
+        "kind": "EqualsSign",
+        "fullStart": 10,
+        "start": 11,
+        "length": 2
+    },
+    {
+        "kind": "QuotationMark",
+        "fullStart": 12,
+        "start": 13,
+        "length": 2
+    },
+    {
+        "kind": "StringLiteralText",
+        "fullStart": 14,
+        "start": 14,
+        "length": 3
+    },
+    {
+        "kind": "QuotationMark",
+        "fullStart": 17,
+        "start": 17,
+        "length": 1
+    },
+    {
+        "kind": "Newline",
+        "fullStart": 18,
+        "start": 19,
+        "length": 2
+    },
+    {
+        "kind": "EndDirectiveKeyword",
+        "fullStart": 20,
+        "start": 20,
+        "length": 6
+    },
+    {
+        "kind": "EOF",
+        "fullStart": 26,
+        "start": 26,
+        "length": 0
+    }
+]

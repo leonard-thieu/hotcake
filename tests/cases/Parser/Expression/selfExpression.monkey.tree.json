@@ -1,0 +1,120 @@
+{
+    "kind": "ModuleDeclaration",
+    "members": [
+        {
+            "kind": "ClassDeclaration",
+            "classKeyword": {
+                "kind": "ClassKeyword",
+                "fullStart": 0,
+                "start": 0,
+                "length": 5
+            },
+            "name": {
+                "kind": "Identifier",
+                "fullStart": 5,
+                "start": 6,
+                "length": 6
+            },
+            "lessThanSign": null,
+            "typeParameters": null,
+            "greaterThanSign": null,
+            "extendsKeyword": null,
+            "implementsKeyword": null,
+            "implementedTypes": null,
+            "attributes": [],
+            "members": [
+                {
+                    "kind": "Newline",
+                    "fullStart": 11,
+                    "start": 12,
+                    "length": 2
+                },
+                {
+                    "kind": "ClassMethodDeclaration",
+                    "methodKeyword": {
+                        "kind": "MethodKeyword",
+                        "fullStart": 13,
+                        "start": 17,
+                        "length": 10
+                    },
+                    "name": {
+                        "kind": "Identifier",
+                        "fullStart": 23,
+                        "start": 24,
+                        "length": 5
+                    },
+                    "colon": null,
+                    "returnType": null,
+                    "openingParenthesis": {
+                        "kind": "OpeningParenthesis",
+                        "fullStart": 28,
+                        "start": 28,
+                        "length": 1
+                    },
+                    "parameters": {
+                        "kind": "DataDeclarationList",
+                        "dataDeclarationKeyword": null,
+                        "children": []
+                    },
+                    "closingParenthesis": {
+                        "kind": "ClosingParenthesis",
+                        "fullStart": 29,
+                        "start": 29,
+                        "length": 1
+                    },
+                    "attributes": [],
+                    "statements": [
+                        {
+                            "kind": "EmptyStatement",
+                            "terminator": {
+                                "kind": "Newline",
+                                "fullStart": 30,
+                                "start": 31,
+                                "length": 2
+                            }
+                        },
+                        {
+                            "kind": "ExpressionStatement",
+                            "expression": {
+                                "kind": "SelfExpression",
+                                "newlines": null,
+                                "selfKeyword": {
+                                    "kind": "SelfKeyword",
+                                    "fullStart": 32,
+                                    "start": 40,
+                                    "length": 12
+                                }
+                            },
+                            "terminator": {
+                                "kind": "Newline",
+                                "fullStart": 44,
+                                "start": 45,
+                                "length": 2
+                            }
+                        }
+                    ],
+                    "endKeyword": {
+                        "kind": "EndKeyword",
+                        "fullStart": 46,
+                        "start": 50,
+                        "length": 7
+                    },
+                    "endMethodKeyword": null
+                },
+                {
+                    "kind": "Newline",
+                    "fullStart": 53,
+                    "start": 54,
+                    "length": 2
+                }
+            ],
+            "endKeyword": {
+                "kind": "EndKeyword",
+                "fullStart": 55,
+                "start": 55,
+                "length": 3
+            },
+            "endClassKeyword": null
+        }
+    ]
+}

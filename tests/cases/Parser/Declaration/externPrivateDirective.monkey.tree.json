@@ -1,0 +1,20 @@
+{
+    "kind": "ModuleDeclaration",
+    "members": [
+        {
+            "kind": "AccessibilityDirective",
+            "accessibilityKeyword": {
+                "kind": "ExternKeyword",
+                "fullStart": 0,
+                "start": 0,
+                "length": 6
+            },
+            "externPrivateKeyword": {
+                "kind": "PrivateKeyword",
+                "fullStart": 6,
+                "start": 7,
+                "length": 8
+            }
+        }
+    ]
+}

@@ -1,0 +1,14 @@
+{
+    "kind": "ModuleDeclaration",
+    "members": [
+        {
+            "kind": "StrictDirective",
+            "strictKeyword": {
+                "kind": "StrictKeyword",
+                "fullStart": 0,
+                "start": 0,
+                "length": 6
+            }
+        }
+    ]
+}

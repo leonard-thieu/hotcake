@@ -1,0 +1,49 @@
+{
+    "kind": "PreprocessorModuleDeclaration",
+    "members": [
+        {
+            "kind": "IfDirective",
+            "ifDirectiveKeyword": {
+                "kind": "IfDirectiveKeyword",
+                "fullStart": 0,
+                "start": 0,
+                "length": 3
+            },
+            "expression": {
+                "kind": "IntegerLiteral",
+                "newlines": null,
+                "value": {
+                    "kind": "IntegerLiteral",
+                    "fullStart": 3,
+                    "start": 4,
+                    "length": 5
+                }
+            },
+            "members": [
+                {
+                    "kind": "Newline",
+                    "fullStart": 8,
+                    "start": 9,
+                    "length": 2
+                }
+            ],
+            "elseIfDirectives": [],
+            "elseDirective": null,
+            "endDirective": {
+                "kind": "EndDirective",
+                "endDirectiveKeyword": {
+                    "kind": "EndDirectiveKeyword",
+                    "fullStart": 10,
+                    "start": 10,
+                    "length": 4
+                }
+            }
+        }
+    ],
+    "eofToken": {
+        "kind": "EOF",
+        "fullStart": 14,
+        "start": 14,
+        "length": 0
+    }
+}

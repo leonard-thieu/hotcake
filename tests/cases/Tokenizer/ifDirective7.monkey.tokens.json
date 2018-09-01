@@ -1,0 +1,116 @@
+[
+    {
+        "kind": "Newline",
+        "fullStart": 83,
+        "start": 84,
+        "length": 2
+    },
+    {
+        "kind": "Newline",
+        "fullStart": 85,
+        "start": 86,
+        "length": 2
+    },
+    {
+        "kind": "ImportKeyword",
+        "fullStart": 87,
+        "start": 91,
+        "length": 10
+    },
+    {
+        "kind": "QuotationMark",
+        "fullStart": 97,
+        "start": 98,
+        "length": 2
+    },
+    {
+        "kind": "StringLiteralText",
+        "fullStart": 99,
+        "start": 99,
+        "length": 28
+    },
+    {
+        "kind": "QuotationMark",
+        "fullStart": 127,
+        "start": 127,
+        "length": 1
+    },
+    {
+        "kind": "Newline",
+        "fullStart": 128,
+        "start": 129,
+        "length": 2
+    },
+    {
+        "kind": "Newline",
+        "fullStart": 130,
+        "start": 131,
+        "length": 2
+    },
+    {
+        "kind": "Newline",
+        "fullStart": 155,
+        "start": 156,
+        "length": 2
+    },
+    {
+        "kind": "Newline",
+        "fullStart": 157,
+        "start": 158,
+        "length": 2
+    },
+    {
+        "kind": "Newline",
+        "fullStart": 190,
+        "start": 191,
+        "length": 2
+    },
+    {
+        "kind": "Newline",
+        "fullStart": 192,
+        "start": 193,
+        "length": 2
+    },
+    {
+        "kind": "Newline",
+        "fullStart": 202,
+        "start": 203,
+        "length": 2
+    },
+    {
+        "kind": "Newline",
+        "fullStart": 204,
+        "start": 205,
+        "length": 2
+    },
+    {
+        "kind": "Newline",
+        "fullStart": 335,
+        "start": 336,
+        "length": 2
+    },
+    {
+        "kind": "Newline",
+        "fullStart": 337,
+        "start": 338,
+        "length": 2
+    },
+    {
+        "kind": "ImportKeyword",
+        "fullStart": 339,
+        "start": 339,
+        "length": 6
+    },
+    {
+        "kind": "Identifier",
+        "fullStart": 345,
+        "start": 346,
+        "length": 4
+    },
+    {
+        "kind": "EOF",
+        "fullStart": 349,
+        "start": 349,
+        "length": 0
+    }
+]

@@ -1,0 +1,14 @@
+[
+    {
+        "kind": "Identifier",
+        "fullStart": 0,
+        "start": 0,
+        "length": 14
+    },
+    {
+        "kind": "EOF",
+        "fullStart": 14,
+        "start": 14,
+        "length": 0
+    }
+]

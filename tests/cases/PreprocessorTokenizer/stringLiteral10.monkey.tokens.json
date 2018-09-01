@@ -1,0 +1,26 @@
+[
+    {
+        "kind": "QuotationMark",
+        "fullStart": 0,
+        "start": 0,
+        "length": 1
+    },
+    {
+        "kind": "InvalidEscapeSequence",
+        "fullStart": 1,
+        "start": 1,
+        "length": 4
+    },
+    {
+        "kind": "QuotationMark",
+        "fullStart": 5,
+        "start": 5,
+        "length": 1
+    },
+    {
+        "kind": "EOF",
+        "fullStart": 6,
+        "start": 6,
+        "length": 0
+    }
+]

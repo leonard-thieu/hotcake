@@ -1,0 +1,81 @@
+{
+    "kind": "ModuleDeclaration",
+    "members": [
+        {
+            "kind": "ClassDeclaration",
+            "classKeyword": {
+                "kind": "ClassKeyword",
+                "fullStart": 0,
+                "start": 0,
+                "length": 5
+            },
+            "name": {
+                "kind": "Identifier",
+                "fullStart": 5,
+                "start": 6,
+                "length": 6
+            },
+            "lessThanSign": {
+                "kind": "LessThanSign",
+                "fullStart": 11,
+                "start": 11,
+                "length": 1
+            },
+            "typeParameters": [
+                {
+                    "kind": "TypeParameter",
+                    "name": {
+                        "kind": "Identifier",
+                        "fullStart": 12,
+                        "start": 12,
+                        "length": 1
+                    }
+                },
+                {
+                    "kind": "CommaSeparator",
+                    "separator": {
+                        "kind": "Comma",
+                        "fullStart": 13,
+                        "start": 13,
+                        "length": 1
+                    },
+                    "newlines": []
+                },
+                {
+                    "kind": "TypeParameter",
+                    "name": {
+                        "kind": "Identifier",
+                        "fullStart": 14,
+                        "start": 15,
+                        "length": 2
+                    }
+                }
+            ],
+            "greaterThanSign": {
+                "kind": "GreaterThanSign",
+                "fullStart": 16,
+                "start": 16,
+                "length": 1
+            },
+            "extendsKeyword": null,
+            "implementsKeyword": null,
+            "implementedTypes": null,
+            "attributes": [],
+            "members": [
+                {
+                    "kind": "Newline",
+                    "fullStart": 17,
+                    "start": 18,
+                    "length": 2
+                }
+            ],
+            "endKeyword": {
+                "kind": "EndKeyword",
+                "fullStart": 19,
+                "start": 19,
+                "length": 3
+            },
+            "endClassKeyword": null
+        }
+    ]
+}

@@ -1,0 +1,1 @@
+Friend level.level_object

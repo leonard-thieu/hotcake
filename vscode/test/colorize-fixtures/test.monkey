@@ -200,8 +200,8 @@ Function IfStatement(val: String)
 End Function
 
 Function SingleLineIfStatement(val: String)
-    ' If val = "myVal1" Then Return
-    ' If val <> "" Return
+    If val = "myVal1" Then Return
+    If val <> "" Return
 End Function
 
 Function ReturnStatement()

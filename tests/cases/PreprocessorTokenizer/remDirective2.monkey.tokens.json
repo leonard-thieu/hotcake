@@ -1,0 +1,50 @@
+[
+    {
+        "kind": "RemDirectiveKeyword",
+        "fullStart": 0,
+        "start": 0,
+        "length": 4
+    },
+    {
+        "kind": "RemDirectiveBody",
+        "fullStart": 4,
+        "start": 5,
+        "length": 8
+    },
+    {
+        "kind": "RemDirectiveKeyword",
+        "fullStart": 12,
+        "start": 12,
+        "length": 4
+    },
+    {
+        "kind": "RemDirectiveBody",
+        "fullStart": 16,
+        "start": 17,
+        "length": 37
+    },
+    {
+        "kind": "EndDirectiveKeyword",
+        "fullStart": 53,
+        "start": 53,
+        "length": 4
+    },
+    {
+        "kind": "RemDirectiveBody",
+        "fullStart": 57,
+        "start": 58,
+        "length": 4
+    },
+    {
+        "kind": "EndDirectiveKeyword",
+        "fullStart": 61,
+        "start": 61,
+        "length": 4
+    },
+    {
+        "kind": "EOF",
+        "fullStart": 65,
+        "start": 65,
+        "length": 0
+    }
+]

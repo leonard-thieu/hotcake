@@ -1,0 +1,37 @@
+{
+    "kind": "ModuleDeclaration",
+    "members": [
+        {
+            "kind": "InterfaceDeclaration",
+            "interfaceKeyword": {
+                "kind": "InterfaceKeyword",
+                "fullStart": 0,
+                "start": 0,
+                "length": 9
+            },
+            "name": {
+                "kind": "Identifier",
+                "fullStart": 9,
+                "start": 10,
+                "length": 9
+            },
+            "extendsKeyword": null,
+            "baseTypes": null,
+            "members": [
+                {
+                    "kind": "Newline",
+                    "fullStart": 18,
+                    "start": 19,
+                    "length": 2
+                }
+            ],
+            "endKeyword": {
+                "kind": "EndKeyword",
+                "fullStart": 20,
+                "start": 20,
+                "length": 3
+            },
+            "endInterfaceKeyword": null
+        }
+    ]
+}
