@@ -6,6 +6,7 @@ import { ErrorDirective } from './Node/Directive/ErrorDirective';
 import { ElseDirective, ElseIfDirective, IfDirective } from './Node/Directive/IfDirective';
 import { PrintDirective } from './Node/Directive/PrintDirective';
 import { RemDirective } from './Node/Directive/RemDirective';
+import { Expressions } from './Node/Expression/Expression';
 import { Node } from './Node/Node';
 import { NodeKind } from './Node/NodeKind';
 import { ParseContext, ParseContextElementMapBase, ParserBase } from './ParserBase';
@@ -202,6 +203,16 @@ export class PreprocessorParser extends ParserBase {
     }
 
     // #endregion
+
+    protected isInvokeExpressionStart(token: Token, expression: Expressions): boolean {
+        switch (token.kind) {
+            case TokenKind.OpeningParenthesis: {
+                return true;
+            }
+        }
+
+        return false;
+    }
 
     // #region Core
 

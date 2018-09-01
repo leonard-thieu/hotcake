@@ -447,15 +447,7 @@ export abstract class ParserBase {
         return indexExpression;
     }
 
-    protected isInvokeExpressionStart(token: Token, expression: Expressions): boolean {
-        switch (token.kind) {
-            case TokenKind.OpeningParenthesis: {
-                return true;
-            }
-        }
-
-        return this.isExpressionSequenceMemberStart(token);
-    }
+    protected abstract isInvokeExpressionStart(token: Token, expression: Expressions): boolean;
 
     protected parseInvokeExpression(expression: Expressions): InvokeExpression {
         const invokeExpression = new InvokeExpression();
@@ -485,7 +477,7 @@ export abstract class ParserBase {
         return !this.isExpressionSequenceMemberStart(token);
     }
 
-    private isExpressionSequenceMemberStart(token: Token): boolean {
+    protected isExpressionSequenceMemberStart(token: Token): boolean {
         return token.kind === TokenKind.Comma ||
             this.isExpressionStart(token);
     }

@@ -985,7 +985,7 @@ export class Parser extends ParserBase {
         const parent = expression.parent!;
         if (parent.kind === NodeKind.ExpressionStatement &&
             !this.isInlineStatement(parent as ExpressionStatement)) {
-            return super.isInvokeExpressionStart(token, expression);
+            return this.isExpressionSequenceMemberStart(token);
         }
 
         return false;
