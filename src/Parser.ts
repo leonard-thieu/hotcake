@@ -620,6 +620,8 @@ export class Parser extends ParserBase {
 
     // #region Loops
 
+    // #region While loop
+
     private parseWhileLoop(parent: Node): WhileLoop {
         const whileLoop = new WhileLoop();
         whileLoop.parent = parent;
@@ -646,6 +648,10 @@ export class Parser extends ParserBase {
         return false;
     }
 
+    // #endregion
+
+    // #region Repeat loop
+
     private parseRepeatLoop(parent: Node): RepeatLoop {
         const repeatLoop = new RepeatLoop();
         repeatLoop.parent = parent;
@@ -659,6 +665,19 @@ export class Parser extends ParserBase {
 
         return repeatLoop;
     }
+    
+    private isRepeatLoopStatementsListTerminator(token: Token): boolean {
+        switch (token.kind) {
+            case TokenKind.ForeverKeyword:
+            case TokenKind.UntilKeyword: {
+                return true;
+            }
+        }
+        
+        return false;
+    }
+
+    // #endregion
 
     // #region For loop
 
@@ -1003,7 +1022,6 @@ export class Parser extends ParserBase {
             }
             case NodeKind.FunctionDeclaration:
             case NodeKind.ClassMethodDeclaration:
-            case NodeKind.RepeatLoop:
             case NodeKind.TryStatement:
             case NodeKind.CatchStatement: {
                 return this.isBlockStatementsListTerminator(token);
@@ -1019,6 +1037,9 @@ export class Parser extends ParserBase {
             }
             case NodeKind.WhileLoop: {
                 return this.isWhileLoopStatementsListTerminator(token);
+            }
+            case NodeKind.RepeatLoop: {
+                return this.isRepeatLoopStatementsListTerminator(token);
             }
             case NodeKind.ForLoop: {
                 return this.isForLoopStatementsListTerminator(token);
