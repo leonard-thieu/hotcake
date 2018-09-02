@@ -1,4 +1,4 @@
-import { MissingToken } from '../../Token/MissingToken';
+import { MissingExpressionToken } from '../../Token/Token';
 import { Expressions } from '../Expression/Expression';
 import { NodeKind } from '../NodeKind';
 import { Statement } from './Statement';
@@ -11,5 +11,5 @@ export class ExpressionStatement extends Statement {
 
     readonly kind = NodeKind.ExpressionStatement;
 
-    expression: Expressions | MissingToken;
+    expression: Expressions | MissingExpressionToken;
 }

@@ -1,6 +1,5 @@
 import { ParseContextElementArray } from '../../ParserBase';
-import { MissingToken } from '../../Token/MissingToken';
-import { EndKeywordToken, ForKeywordToken, NextKeywordToken, StepKeywordToken, ToKeywordToken, UntilKeywordToken } from '../../Token/Token';
+import { EndKeywordToken, ForKeywordToken, MissingExpressionToken, NextKeywordToken, StepKeywordToken, ToKeywordToken, UntilKeywordToken } from '../../Token/Token';
 import { BinaryExpression } from '../Expression/BinaryExpression';
 import { Expressions } from '../Expression/Expression';
 import { Node } from '../Node';
@@ -40,7 +39,7 @@ export class NumericForLoopHeader extends Node {
 
     loopVariableExpression: LocalDeclarationListStatement | BinaryExpression;
     toOrUntilKeyword: ToKeywordToken | UntilKeywordToken;
-    lastValueExpression: Expressions | MissingToken;
+    lastValueExpression: Expressions | MissingExpressionToken;
     stepKeyword: StepKeywordToken | null = null;
-    stepValueExpression: Expressions | MissingToken | null = null;
+    stepValueExpression: Expressions | MissingExpressionToken | null = null;
 }

@@ -24,7 +24,7 @@ import { ArrayTypeDeclaration, TypeReference } from './Node/TypeReference';
 import { GreaterThanSignEqualsSignToken } from './Token/GreaterThanSignEqualsSignToken';
 import { MissingToken } from './Token/MissingToken';
 import { SkippedToken } from './Token/SkippedToken';
-import { EachInKeywordToken, NewlineToken, TokenKinds, TokenKindTokenMap, Tokens } from './Token/Token';
+import { EachInKeywordToken, MissingExpressionToken, NewlineToken, TokenKinds, TokenKindTokenMap, Tokens } from './Token/Token';
 import { TokenKind } from './Token/TokenKind';
 
 export abstract class ParserBase {
@@ -33,13 +33,13 @@ export abstract class ParserBase {
 
     // #region Expressions
 
-    protected parseExpression(parent: Node): Expressions | MissingToken {
+    protected parseExpression(parent: Node): Expressions | MissingExpressionToken {
         return this.parseBinaryExpression(Precedence.Initial, parent);
     }
 
     // #region Binary expressions
 
-    protected parseBinaryExpression(precedence: Precedence, parent: Node): Expressions | MissingToken {
+    protected parseBinaryExpression(precedence: Precedence, parent: Node): Expressions | MissingExpressionToken {
         let expression = this.parseUnaryExpression(parent);
         let [prevNewPrecedence, prevAssociativity] = UNKNOWN_PRECEDENCE_AND_ASSOCIATIVITY;
 
@@ -91,10 +91,10 @@ export abstract class ParserBase {
     }
 
     protected makeBinaryExpression(
-        leftOperand: Expressions | MissingToken,
+        leftOperand: Expressions | MissingExpressionToken,
         operator: Tokens,
         eachInKeyword: EachInKeywordToken | null,
-        rightOperand: Expressions | MissingToken,
+        rightOperand: Expressions | MissingExpressionToken,
         parent: Node
     ): Expressions {
         const binaryExpression = new BinaryExpression();
@@ -115,7 +115,7 @@ export abstract class ParserBase {
 
     // #region Unary expressions
 
-    protected parseUnaryExpression(parent: Node): Expressions | MissingToken {
+    protected parseUnaryExpression(parent: Node): Expressions | MissingExpressionToken {
         let newlines: NewlineToken[] | null = null;
         while (true) {
             const token = this.getToken();
@@ -131,7 +131,7 @@ export abstract class ParserBase {
             newlines.push(token);
         }
 
-        let expression: Expressions | MissingToken;
+        let expression: Expressions | MissingExpressionToken;
 
         const token = this.getToken();
         switch (token.kind) {
@@ -174,7 +174,7 @@ export abstract class ParserBase {
 
     // #region Primary expressions
 
-    protected parsePrimaryExpression(parent: Node): Expressions | MissingToken {
+    protected parsePrimaryExpression(parent: Node): Expressions | MissingExpressionToken {
         const token = this.getToken();
         switch (token.kind) {
             case TokenKind.NewKeyword: {
@@ -349,13 +349,13 @@ export abstract class ParserBase {
         return groupingExpression;
     }
 
-    private createMissingExpressionToken(fullStart: number): MissingToken {
+    private createMissingExpressionToken(fullStart: number): MissingExpressionToken {
         return new MissingToken(TokenKind.Expression, fullStart);
     }
 
     // #region Postfix expressions
 
-    protected parsePostfixExpression(expression: Expressions | MissingToken) {
+    protected parsePostfixExpression(expression: Expressions | MissingExpressionToken) {
         if (isMissingToken(expression)) {
             return expression;
         }
@@ -395,7 +395,7 @@ export abstract class ParserBase {
         indexExpression.indexableExpression = expression;
         indexExpression.openingSquareBracket = this.eat(TokenKind.OpeningSquareBracket);
 
-        let startExpression: Expressions | MissingToken | null = null;
+        let startExpression: Expressions | MissingExpressionToken | null = null;
         if (this.isExpressionStart(this.getToken())) {
             startExpression = this.parseExpression(indexExpression);
         }
@@ -564,8 +564,8 @@ export abstract class ParserBase {
                     typeReference.modulePath = this.parseModulePath(typeReference);
 
                     const modulePathChildren = typeReference.modulePath.children;
-                    typeReference.identifier = modulePathChildren.pop()!;
-                    typeReference.scopeMemberAccessOperator = modulePathChildren.pop()!;
+                    typeReference.identifier = modulePathChildren.pop() as typeof typeReference.identifier;
+                    typeReference.scopeMemberAccessOperator = modulePathChildren.pop() as typeof typeReference.scopeMemberAccessOperator;
                 } else {
                     typeReference.identifier = token;
                     this.advanceToken();
@@ -837,7 +837,7 @@ export abstract class ParserBase {
 
     // #region Tokens
 
-    protected eat<TTokenKind extends TokenKinds>(...kinds: TTokenKind[]) {
+    protected eat<TTokenKind extends TokenKinds>(...kinds: TTokenKind[]): TokenKindTokenMap[TTokenKind] {
         const eaten = this.eatOptional(...kinds);
         if (eaten !== null) {
             return eaten;
@@ -845,12 +845,12 @@ export abstract class ParserBase {
 
         const token = this.getToken();
 
-        return new MissingToken(kinds[0], token.start) as TokenKindTokenMap[TTokenKind];
+        return new MissingToken(kinds[0], token.start);
     }
 
-    protected eatOptional<TTokenKind extends TokenKinds>(...kinds: TTokenKind[]): TokenKindTokenMap[TTokenKind] | null {
+    protected eatOptional<TTokenKind extends keyof TokenKindTokenMap>(...kinds: TTokenKind[]): TokenKindTokenMap[TTokenKind] | null {
         const token = this.getToken();
-        if (kinds.includes(token.kind as TTokenKind)) {
+        if (kinds.includes(token.kind)) {
             this.advanceToken();
 
             return token;
@@ -958,6 +958,6 @@ export interface ParseContextElementMap extends ParseContextElementMapBase {
 
 export type ParseContext = keyof ParseContextElementMap;
 
-export type ParseContextElementArray<TParseContext extends ParseContext> = Array<ParseContextElementMap[TParseContext] | SkippedToken>;
+export type ParseContextElementArray<TParseContext extends ParseContext> = Array<ParseContextElementMap[TParseContext] | SkippedToken<TokenKinds>>;
 
 // #endregion

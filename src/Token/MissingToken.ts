@@ -1,7 +1,7 @@
 import { NewlineToken, Token, TokenKinds } from './Token';
 
-export class MissingToken extends Token {
-    constructor(kind: TokenKinds, fullStart: number) {
+export class MissingToken<TTokenKind extends TokenKinds> extends Token<TTokenKind> {
+    constructor(kind: TTokenKind, fullStart: number) {
         super(kind, fullStart, fullStart, 0);
     }
 

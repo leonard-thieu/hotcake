@@ -4,9 +4,8 @@ import { IfDirective } from './Node/Directive/IfDirective';
 import { Expressions, isMissingToken } from './Node/Expression/Expression';
 import { NodeKind } from './Node/NodeKind';
 import { ParseContextElementArray } from './ParserBase';
-import { MissingToken } from './Token/MissingToken';
 import { SkippedToken } from './Token/SkippedToken';
-import { Tokens } from './Token/Token';
+import { MissingExpressionToken, TokenKinds, Tokens } from './Token/Token';
 import { TokenKind } from './Token/TokenKind';
 
 export class Tokenizer {
@@ -107,7 +106,7 @@ export class Tokenizer {
                 }
                 default: {
                     // TODO: What's producing SkippedTokens?
-                    assertType<Tokens | SkippedToken>(member);
+                    assertType<Tokens | SkippedToken<TokenKinds>>(member);
                     yield member as Tokens;
 
                     break;
@@ -116,7 +115,7 @@ export class Tokenizer {
         }
     }
 
-    private eval(expression: Expressions | MissingToken): any {
+    private eval(expression: Expressions | MissingExpressionToken): any {
         if (isMissingToken(expression)) {
             return false;
         }

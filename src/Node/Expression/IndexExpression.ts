@@ -1,5 +1,4 @@
-import { MissingToken } from '../../Token/MissingToken';
-import { ClosingSquareBracketToken, OpeningSquareBracketToken, PeriodPeriodToken } from '../../Token/Token';
+import { ClosingSquareBracketToken, MissingExpressionToken, OpeningSquareBracketToken, PeriodPeriodToken } from '../../Token/Token';
 import { NodeKind } from '../NodeKind';
 import { Expression, Expressions } from './Expression';
 
@@ -20,11 +19,11 @@ export class IndexExpression extends Expression {
     indexableExpression: Expressions;
     openingSquareBracket: OpeningSquareBracketToken;
 
-    indexExpressionExpression: Expressions | MissingToken | null = null;
+    indexExpressionExpression: Expressions | MissingExpressionToken | null = null;
 
-    startExpression: Expressions | MissingToken | null = null;
+    startExpression: Expressions | MissingExpressionToken | null = null;
     sliceOperator: PeriodPeriodToken | null = null;
-    endExpression: Expressions | MissingToken | null = null;
+    endExpression: Expressions | MissingExpressionToken | null = null;
 
     closingSquareBracket: ClosingSquareBracketToken;
 }

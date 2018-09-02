@@ -1,7 +1,7 @@
 import { EqualsSignToken, GreaterThanSignToken, Token } from './Token';
 import { TokenKind } from './TokenKind';
 
-export class GreaterThanSignEqualsSignToken extends Token {
+export class GreaterThanSignEqualsSignToken extends Token<TokenKind.GreaterThanSignEqualsSign> {
     constructor(public greaterThanSign: GreaterThanSignToken, public equalsSign: EqualsSignToken) {
         super(
             TokenKind.GreaterThanSignEqualsSign,
@@ -10,8 +10,6 @@ export class GreaterThanSignEqualsSignToken extends Token {
             greaterThanSign.length + equalsSign.length
         );
     }
-
-    kind: TokenKind.GreaterThanSignEqualsSign;
 
     toJSON(): any {
         return Object.assign({}, this, {

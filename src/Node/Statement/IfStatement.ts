@@ -1,7 +1,6 @@
 import { ParseContextElementArray } from '../../ParserBase';
-import { MissingToken } from '../../Token/MissingToken';
-import { ElseIfKeywordToken, ElseKeywordToken, EndIfKeywordToken, EndKeywordToken, IfKeywordToken, ThenKeywordToken } from '../../Token/Token';
-import { Expression } from '../Expression/Expression';
+import { ElseIfKeywordToken, ElseKeywordToken, EndIfKeywordToken, EndKeywordToken, IfKeywordToken, MissingExpressionToken, ThenKeywordToken } from '../../Token/Token';
+import { Expressions } from '../Expression/Expression';
 import { NodeKind } from '../NodeKind';
 import { Statement } from './Statement';
 
@@ -22,7 +21,7 @@ export class IfStatement extends Statement {
     readonly kind = NodeKind.IfStatement;
 
     ifKeyword: IfKeywordToken;
-    expression: Expression | MissingToken;
+    expression: Expressions | MissingExpressionToken;
     thenKeyword: ThenKeywordToken | null = null;
     isSingleLine: boolean = false;
     statements: ParseContextElementArray<IfStatement['kind']>;
@@ -45,7 +44,7 @@ export class ElseIfStatement extends Statement {
 
     elseIfKeyword: ElseIfKeywordToken | ElseKeywordToken;
     ifKeyword: IfKeywordToken | null = null;
-    expression: Expression | MissingToken;
+    expression: Expressions | MissingExpressionToken;
     thenKeyword: ThenKeywordToken | null = null;
     statements: ParseContextElementArray<ElseIfStatement['kind']>;
 }

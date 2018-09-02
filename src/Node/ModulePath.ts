@@ -1,4 +1,4 @@
-import { Token } from '../Token/Token';
+import { IdentifierToken, PeriodToken } from '../Token/Token';
 import { Node } from './Node';
 import { NodeKind } from './NodeKind';
 
@@ -9,5 +9,5 @@ export class ModulePath extends Node {
 
     readonly kind = NodeKind.ModulePath;
 
-    children: Token[] = [];
+    children: Array<IdentifierToken | PeriodToken> = [];
 }

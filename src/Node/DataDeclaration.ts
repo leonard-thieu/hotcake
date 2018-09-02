@@ -1,6 +1,5 @@
-import { MissingToken } from '../Token/MissingToken';
-import { ColonEqualsSignToken, ColonToken, EachInKeywordToken, EqualsSignToken, IdentifierToken } from '../Token/Token';
-import { Expression } from './Expression/Expression';
+import { ColonEqualsSignToken, ColonToken, EachInKeywordToken, EqualsSignToken, IdentifierToken, MissingExpressionToken } from '../Token/Token';
+import { Expressions } from './Expression/Expression';
 import { Node } from './Node';
 import { NodeKind } from './NodeKind';
 import { TypeReference } from './TypeReference';
@@ -44,5 +43,5 @@ export class DataDeclaration extends Node {
     equalsSign: EqualsSignToken | null = null;
 
     eachInKeyword: EachInKeywordToken | null = null;
-    expression: Expression | MissingToken | null = null;
+    expression: Expressions | MissingExpressionToken | null = null;
 }
