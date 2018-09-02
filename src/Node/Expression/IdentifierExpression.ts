@@ -1,5 +1,5 @@
 import { ParseContextElementArray, ParseContextKind } from '../../ParserBase';
-import { Token } from '../../Token/Token';
+import { BoolKeywordToken, FloatKeywordToken, GreaterThanSignToken, IdentifierToken, IntKeywordToken, LessThanSignToken, ObjectKeywordToken, PeriodToken, StringKeywordToken, ThrowableKeywordToken, Token } from '../../Token/Token';
 import { NodeKind } from '../NodeKind';
 import { Expression } from './Expression';
 
@@ -15,11 +15,21 @@ export class IdentifierExpression extends Expression {
 
     readonly kind = NodeKind.IdentifierExpression;
 
-    globalScopeMemberAccessOperator: Token | null = null;
-    name: Token;
+    globalScopeMemberAccessOperator: PeriodToken | null = null;
+    name: IdentifierNameTokens;
 
     // Generic type arguments
-    lessThanSign: Token | null = null;
+    lessThanSign: LessThanSignToken | null = null;
     typeArguments: ParseContextElementArray<ParseContextKind.TypeReferenceSequence> | null = null;
-    greaterThanSign: Token | null = null;
+    greaterThanSign: GreaterThanSignToken | null = null;
 }
+
+export type IdentifierNameTokens =
+    BoolKeywordToken |
+    IntKeywordToken |
+    FloatKeywordToken |
+    StringKeywordToken |
+    ObjectKeywordToken |
+    ThrowableKeywordToken |
+    IdentifierToken
+    ;

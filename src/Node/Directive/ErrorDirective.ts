@@ -1,5 +1,5 @@
 import { MissingToken } from '../../Token/MissingToken';
-import { Token } from '../../Token/Token';
+import { ErrorDirectiveKeywordToken } from '../../Token/Token';
 import { Expressions } from '../Expression/Expression';
 import { NodeKind } from '../NodeKind';
 import { Directive } from './Directive';
@@ -12,6 +12,6 @@ export class ErrorDirective extends Directive {
 
     readonly kind = NodeKind.ErrorDirective;
 
-    errorDirectiveKeyword: Token;
+    errorDirectiveKeyword: ErrorDirectiveKeywordToken;
     expression: Expressions | MissingToken;
 }

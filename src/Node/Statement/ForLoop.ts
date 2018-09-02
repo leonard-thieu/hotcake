@@ -1,6 +1,6 @@
 import { ParseContextElementArray } from '../../ParserBase';
 import { MissingToken } from '../../Token/MissingToken';
-import { Token } from '../../Token/Token';
+import { EndKeywordToken, ForKeywordToken, NextKeywordToken, StepKeywordToken, ToKeywordToken, UntilKeywordToken } from '../../Token/Token';
 import { BinaryExpression } from '../Expression/BinaryExpression';
 import { Expressions } from '../Expression/Expression';
 import { Node } from '../Node';
@@ -20,11 +20,11 @@ export class ForLoop extends Statement {
 
     readonly kind = NodeKind.ForLoop;
 
-    forKeyword: Token;
+    forKeyword: ForKeywordToken;
     header: NumericForLoopHeader | LocalDeclarationListStatement | BinaryExpression;
     statements: ParseContextElementArray<ForLoop['kind']>;
-    endKeyword: Token;
-    endForKeyword: Token | null = null;
+    endKeyword: NextKeywordToken | EndKeywordToken;
+    endForKeyword: ForKeywordToken | null = null;
 }
 
 export class NumericForLoopHeader extends Node {
@@ -39,8 +39,8 @@ export class NumericForLoopHeader extends Node {
     readonly kind = NodeKind.NumericForLoopHeader;
 
     loopVariableExpression: LocalDeclarationListStatement | BinaryExpression;
-    toOrUntilKeyword: Token;
+    toOrUntilKeyword: ToKeywordToken | UntilKeywordToken;
     lastValueExpression: Expressions | MissingToken;
-    stepKeyword: Token | null = null;
+    stepKeyword: StepKeywordToken | null = null;
     stepValueExpression: Expressions | MissingToken | null = null;
 }

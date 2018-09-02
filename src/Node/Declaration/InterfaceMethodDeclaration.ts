@@ -1,4 +1,4 @@
-import { Token } from '../../Token/Token';
+import { ClosingParenthesisToken, ColonToken, IdentifierToken, MethodKeywordToken, OpeningParenthesisToken } from '../../Token/Token';
 import { NodeKind } from '../NodeKind';
 import { TypeReference } from '../TypeReference';
 import { DataDeclarationList } from './DataDeclarationList';
@@ -17,11 +17,11 @@ export class InterfaceMethodDeclaration extends Declaration {
 
     readonly kind = NodeKind.InterfaceMethodDeclaration;
 
-    methodKeyword: Token;
-    name: Token;
-    colon: Token | null = null;
+    methodKeyword: MethodKeywordToken;
+    name: IdentifierToken;
+    colon: ColonToken | null = null;
     returnType: TypeReference | null = null;
-    openingParenthesis: Token;
+    openingParenthesis: OpeningParenthesisToken;
     parameters: DataDeclarationList;
-    closingParenthesis: Token;
+    closingParenthesis: ClosingParenthesisToken;
 }

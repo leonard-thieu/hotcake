@@ -1,5 +1,5 @@
 import { ParseContextElementArray } from '../../ParserBase';
-import { Token } from '../../Token/Token';
+import { CatchKeywordToken, EndKeywordToken, TryKeywordToken } from '../../Token/Token';
 import { DataDeclaration } from '../DataDeclaration';
 import { NodeKind } from '../NodeKind';
 import { Statement } from './Statement';
@@ -16,11 +16,11 @@ export class TryStatement extends Statement {
 
     readonly kind = NodeKind.TryStatement;
 
-    tryKeyword: Token;
+    tryKeyword: TryKeywordToken;
     statements: ParseContextElementArray<TryStatement['kind']>;
     catchStatements: CatchStatement[] | null = null;
-    endKeyword: Token;
-    endTryKeyword: Token | null = null;
+    endKeyword: EndKeywordToken;
+    endTryKeyword: TryKeywordToken | null = null;
 }
 
 export class CatchStatement extends Statement {
@@ -32,7 +32,7 @@ export class CatchStatement extends Statement {
 
     readonly kind = NodeKind.CatchStatement;
 
-    catchKeyword: Token;
+    catchKeyword: CatchKeywordToken;
     parameter: DataDeclaration;
     statements: ParseContextElementArray<CatchStatement['kind']>;
 }

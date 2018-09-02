@@ -1,12 +1,11 @@
-import { Token } from './Token';
-import { TokenKind } from './TokenKind';
+import { NewlineToken, Token, TokenKinds } from './Token';
 
 export class MissingToken extends Token {
-    constructor(kind: TokenKind, fullStart: number) {
+    constructor(kind: TokenKinds, fullStart: number) {
         super(kind, fullStart, fullStart, 0);
     }
 
-    newlines: Token[] | null = null;
+    newlines: NewlineToken[] | null = null;
 
     toJSON(): any {
         return Object.assign({

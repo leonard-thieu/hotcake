@@ -1,5 +1,5 @@
 import { ParseContextElementArray } from '../../ParserBase';
-import { Token } from '../../Token/Token';
+import { RemDirectiveKeywordToken } from '../../Token/Token';
 import { NodeKind } from '../NodeKind';
 import { Directive } from './Directive';
 import { EndDirective } from './EndDirective';
@@ -13,7 +13,7 @@ export class RemDirective extends Directive {
 
     readonly kind = NodeKind.RemDirective;
 
-    remDirectiveKeyword: Token;
+    remDirectiveKeyword: RemDirectiveKeywordToken;
     children: ParseContextElementArray<RemDirective['kind']>;
     endDirective: EndDirective;
 }

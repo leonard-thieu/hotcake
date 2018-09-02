@@ -1,6 +1,6 @@
 import { MissingToken } from '../Token/MissingToken';
-import { Token } from '../Token/Token';
-import { Expressions } from './Expression/Expression';
+import { ColonEqualsSignToken, ColonToken, EachInKeywordToken, EqualsSignToken, IdentifierToken } from '../Token/Token';
+import { Expression } from './Expression/Expression';
 import { Node } from './Node';
 import { NodeKind } from './NodeKind';
 import { TypeReference } from './TypeReference';
@@ -34,15 +34,15 @@ export class DataDeclaration extends Node {
 
     readonly kind = NodeKind.DataDeclaration;
 
-    name: Token;
+    name: IdentifierToken;
 
-    colonEqualsSign: Token | null = null;
+    colonEqualsSign: ColonEqualsSignToken | null = null;
 
-    colon: Token | null = null;
-    type: TypeReference | null = null;;
+    colon: ColonToken | null = null;
+    type: TypeReference | null = null;
 
-    equalsSign: Token | null = null;
+    equalsSign: EqualsSignToken | null = null;
 
-    eachInKeyword: Token | null = null;
-    expression: Expressions | MissingToken | null = null;
+    eachInKeyword: EachInKeywordToken | null = null;
+    expression: Expression | MissingToken | null = null;
 }

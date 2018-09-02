@@ -1,7 +1,7 @@
 import { ParseContextElementArray } from '../../ParserBase';
 import { MissingToken } from '../../Token/MissingToken';
-import { Token } from '../../Token/Token';
-import { Expressions } from '../Expression/Expression';
+import { EndKeywordToken, WendKeywordToken, WhileKeywordToken } from '../../Token/Token';
+import { Expression } from '../Expression/Expression';
 import { NodeKind } from '../NodeKind';
 import { Statement } from './Statement';
 
@@ -17,9 +17,9 @@ export class WhileLoop extends Statement {
 
     readonly kind = NodeKind.WhileLoop;
 
-    whileKeyword: Token;
-    expression: Expressions | MissingToken;
+    whileKeyword: WhileKeywordToken;
+    expression: Expression | MissingToken;
     statements: ParseContextElementArray<WhileLoop['kind']>;
-    endKeyword: Token;
-    endWhileKeyword: Token | null = null;
+    endKeyword: WendKeywordToken | EndKeywordToken;
+    endWhileKeyword: WhileKeywordToken | null = null;
 }

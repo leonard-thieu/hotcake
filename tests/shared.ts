@@ -8,7 +8,7 @@ import { PreprocessorModuleDeclaration } from '../src/Node/Declaration/Preproces
 import { Parser } from '../src/Parser';
 import { PreprocessorParser } from '../src/PreprocessorParser';
 import { PreprocessorTokenizer } from '../src/PreprocessorTokenizer';
-import { Token } from '../src/Token/Token';
+import { Tokens } from '../src/Token/Token';
 import { ConfigurationVariables, Tokenizer } from '../src/Tokenizer';
 
 interface TestCaseOptions {
@@ -147,7 +147,7 @@ export function executeParserTestCases(name: string, casesPath: string): void {
     });
 }
 
-export function getPreprocessorTokens(document: string): Token[] {
+export function getPreprocessorTokens(document: string): Tokens[] {
     const lexer = new PreprocessorTokenizer();
 
     return lexer.getTokens(document);
@@ -160,7 +160,7 @@ export function getPreprocessorParseTree(filePath: string, document: string): Pr
     return parser.parse(filePath, document, tokens);
 }
 
-export function getTokens(filePath: string, document: string): Token[] {
+export function getTokens(filePath: string, document: string): Tokens[] {
     const tree = getPreprocessorParseTree(filePath, document);
     const tokenizer = new Tokenizer();
     const configVars: ConfigurationVariables = {

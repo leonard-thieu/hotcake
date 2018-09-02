@@ -1,4 +1,4 @@
-import { Token } from '../../Token/Token';
+import { AliasKeywordToken, EqualsSignToken, IdentifierToken } from '../../Token/Token';
 import { NodeKind } from '../NodeKind';
 import { TypeReference } from '../TypeReference';
 import { Declaration } from './Declaration';
@@ -13,8 +13,8 @@ export class AliasDirective extends Declaration {
 
     readonly kind = NodeKind.AliasDirective;
 
-    aliasKeyword: Token;
-    name: Token;
-    equalsSign: Token;
+    aliasKeyword: AliasKeywordToken;
+    name: IdentifierToken;
+    equalsSign: EqualsSignToken;
     target: TypeReference;
 }

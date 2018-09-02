@@ -1,5 +1,5 @@
 import { ParseContextElementArray } from '../../ParserBase';
-import { Token } from '../../Token/Token';
+import { ClosingParenthesisToken, ColonToken, EndKeywordToken, IdentifierToken, MethodKeywordToken, OpeningParenthesisToken, Token, AbstractKeywordToken, FinalKeywordToken, PropertyKeywordToken } from '../../Token/Token';
 import { NodeKind } from '../NodeKind';
 import { TypeReference } from '../TypeReference';
 import { DataDeclarationList } from './DataDeclarationList';
@@ -22,15 +22,15 @@ export class ClassMethodDeclaration extends Declaration {
 
     readonly kind = NodeKind.ClassMethodDeclaration;
 
-    methodKeyword: Token;
-    name: Token;
-    colon: Token | null = null;
+    methodKeyword: MethodKeywordToken;
+    name: IdentifierToken;
+    colon: ColonToken | null = null;
     returnType: TypeReference | null = null;
-    openingParenthesis: Token;
+    openingParenthesis: OpeningParenthesisToken;
     parameters: DataDeclarationList;
-    closingParenthesis: Token;
-    attributes: Token[] = [];
+    closingParenthesis: ClosingParenthesisToken;
+    attributes: Array<AbstractKeywordToken | FinalKeywordToken | PropertyKeywordToken> = [];
     statements: ParseContextElementArray<ClassMethodDeclaration['kind']> | null = null;
-    endKeyword: Token | null = null;
-    endMethodKeyword: Token | null = null;
+    endKeyword: EndKeywordToken | null = null;
+    endMethodKeyword: MethodKeywordToken | null = null;
 }

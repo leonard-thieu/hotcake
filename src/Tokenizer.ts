@@ -5,7 +5,8 @@ import { Expressions, isMissingToken } from './Node/Expression/Expression';
 import { NodeKind } from './Node/NodeKind';
 import { ParseContextElementArray } from './ParserBase';
 import { MissingToken } from './Token/MissingToken';
-import { Token } from './Token/Token';
+import { SkippedToken } from './Token/SkippedToken';
+import { Tokens } from './Token/Token';
 import { TokenKind } from './Token/TokenKind';
 
 export class Tokenizer {
@@ -16,7 +17,7 @@ export class Tokenizer {
         document: string,
         preprocessorModuleDeclaration: PreprocessorModuleDeclaration,
         configVars: ConfigurationVariables
-    ): IterableIterator<Token> {
+    ) {
         this.document = document;
         this.configVars = Object.assign(configVars);
 
@@ -31,7 +32,7 @@ export class Tokenizer {
      * TODO: Ensure operator semantics and implicit type conversions match Monkey X behavior.
      */
 
-    private * readMember(members: ParseContextElementArray<PreprocessorModuleDeclaration['kind']>): IterableIterator<Token> {
+    private * readMember(members: ParseContextElementArray<PreprocessorModuleDeclaration['kind']>): IterableIterator<Tokens> {
         for (const member of members) {
             switch (member.kind) {
                 case NodeKind.IfDirective: {
@@ -105,8 +106,9 @@ export class Tokenizer {
                     break;
                 }
                 default: {
-                    assertType<Token>(member);
-                    yield member;
+                    // TODO: What's producing SkippedTokens?
+                    assertType<Tokens | SkippedToken>(member);
+                    yield member as Tokens;
 
                     break;
                 }

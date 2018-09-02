@@ -24,11 +24,11 @@ import { ArrayTypeDeclaration, TypeReference } from './Node/TypeReference';
 import { GreaterThanSignEqualsSignToken } from './Token/GreaterThanSignEqualsSignToken';
 import { MissingToken } from './Token/MissingToken';
 import { SkippedToken } from './Token/SkippedToken';
-import { Token } from './Token/Token';
+import { EachInKeywordToken, NewlineToken, TokenKinds, TokenKindTokenMap, Tokens } from './Token/Token';
 import { TokenKind } from './Token/TokenKind';
 
 export abstract class ParserBase {
-    protected tokens: Token[];
+    protected tokens: Tokens[];
     protected position: number;
 
     // #region Expressions
@@ -92,8 +92,8 @@ export abstract class ParserBase {
 
     protected makeBinaryExpression(
         leftOperand: Expressions | MissingToken,
-        operator: Token,
-        eachInKeyword: Token | null,
+        operator: Tokens,
+        eachInKeyword: EachInKeywordToken | null,
         rightOperand: Expressions | MissingToken,
         parent: Node
     ): Expressions {
@@ -116,7 +116,7 @@ export abstract class ParserBase {
     // #region Unary expressions
 
     protected parseUnaryExpression(parent: Node): Expressions | MissingToken {
-        let newlines: Token[] | null = null;
+        let newlines: NewlineToken[] | null = null;
         while (true) {
             const token = this.getToken();
             if (token.kind !== TokenKind.Newline) {
@@ -418,7 +418,7 @@ export abstract class ParserBase {
         return indexExpression;
     }
 
-    protected abstract isInvokeExpressionStart(token: Token, expression: Expressions): boolean;
+    protected abstract isInvokeExpressionStart(token: Tokens, expression: Expressions): boolean;
 
     protected parseInvokeExpression(expression: Expressions): InvokeExpression {
         const invokeExpression = new InvokeExpression();
@@ -444,11 +444,11 @@ export abstract class ParserBase {
 
     // #region Expression sequence
 
-    private isExpressionSequenceListTerminator(token: Token): boolean {
+    private isExpressionSequenceListTerminator(token: Tokens): boolean {
         return !this.isExpressionSequenceMemberStart(token);
     }
 
-    protected isExpressionSequenceMemberStart(token: Token): boolean {
+    protected isExpressionSequenceMemberStart(token: Tokens): boolean {
         return token.kind === TokenKind.Comma ||
             this.isExpressionStart(token);
     }
@@ -470,11 +470,11 @@ export abstract class ParserBase {
 
     // #region Type reference sequence
 
-    private isTypeReferenceSequenceTerminator(token: Token): boolean {
+    private isTypeReferenceSequenceTerminator(token: Tokens): boolean {
         return !this.isTypeReferenceSequenceMemberStart(token);
     }
 
-    private isTypeReferenceSequenceMemberStart(token: Token): boolean {
+    private isTypeReferenceSequenceMemberStart(token: Tokens): boolean {
         return token.kind === TokenKind.Comma ||
             this.isTypeReferenceStart(token);
     }
@@ -506,7 +506,7 @@ export abstract class ParserBase {
         const commaSeparator = new CommaSeparator();
         commaSeparator.parent = parent;
         commaSeparator.separator = this.eat(TokenKind.Comma);
-        let token: Token | null;
+        let token: typeof commaSeparator.newlines[0] | null;
         while ((token = this.eatOptional(TokenKind.Newline)) !== null) {
             commaSeparator.newlines.push(token);
         }
@@ -514,7 +514,7 @@ export abstract class ParserBase {
         return commaSeparator;
     }
 
-    protected isTypeReferenceStart(token: Token): boolean {
+    protected isTypeReferenceStart(token: Tokens): boolean {
         switch (token.kind) {
             case TokenKind.QuestionMark:
             case TokenKind.PercentSign:
@@ -637,7 +637,7 @@ export abstract class ParserBase {
         return arrayTypeDeclaration;
     }
 
-    protected isExpressionStart(token: Token): boolean {
+    protected isExpressionStart(token: Tokens): boolean {
         switch (token.kind) {
             case TokenKind.NewKeyword:
             case TokenKind.NullKeyword:
@@ -671,7 +671,7 @@ export abstract class ParserBase {
 
     // #region String literal children
 
-    protected isStringLiteralChildListTerminator(token: Token): boolean {
+    protected isStringLiteralChildListTerminator(token: Tokens): boolean {
         switch (token.kind) {
             case TokenKind.QuotationMark: {
                 return true;
@@ -681,7 +681,7 @@ export abstract class ParserBase {
         return false;
     }
 
-    protected isStringLiteralChildStart(token: Token): boolean {
+    protected isStringLiteralChildStart(token: Tokens): boolean {
         switch (token.kind) {
             case TokenKind.StringLiteralText:
             case TokenKind.EscapeNull:
@@ -763,9 +763,9 @@ export abstract class ParserBase {
         return nodes;
     }
 
-    protected abstract isListTerminator(parseContext: ParseContext, token: Token): boolean;
+    protected abstract isListTerminator(parseContext: ParseContext, token: Tokens): boolean;
 
-    protected isListTerminatorCore(parseContext: ParseContextBase, token: Token): boolean {
+    protected isListTerminatorCore(parseContext: ParseContextBase, token: Tokens): boolean {
         if (token.kind === TokenKind.EOF) {
             return true;
         }
@@ -785,9 +785,9 @@ export abstract class ParserBase {
         return assertNever(parseContext);
     }
 
-    protected abstract isValidListElement(parseContext: ParseContext, token: Token): boolean;
+    protected abstract isValidListElement(parseContext: ParseContext, token: Tokens): boolean;
 
-    protected isValidListElementCore(parseContext: ParseContextBase, token: Token): boolean {
+    protected isValidListElementCore(parseContext: ParseContextBase, token: Tokens): boolean {
         switch (parseContext) {
             case NodeKind.StringLiteral: {
                 return this.isStringLiteralChildStart(token);
@@ -821,7 +821,7 @@ export abstract class ParserBase {
         return assertNever(parseContext);
     }
 
-    private isValidInEnclosingContexts(token: Token): boolean {
+    private isValidInEnclosingContexts(token: Tokens): boolean {
         for (let i = this.parseContexts.length - 2; i >= 0; i--) {
             const parseContext = this.parseContexts[i];
             if (this.isValidListElement(parseContext, token) ||
@@ -837,7 +837,7 @@ export abstract class ParserBase {
 
     // #region Tokens
 
-    protected eat(...kinds: TokenKind[]): Token {
+    protected eat<TTokenKind extends TokenKinds>(...kinds: TTokenKind[]) {
         const eaten = this.eatOptional(...kinds);
         if (eaten !== null) {
             return eaten;
@@ -845,12 +845,12 @@ export abstract class ParserBase {
 
         const token = this.getToken();
 
-        return new MissingToken(kinds[0], token.start);
+        return new MissingToken(kinds[0], token.start) as TokenKindTokenMap[TTokenKind];
     }
 
-    protected eatOptional(...kinds: TokenKind[]): Token | null {
+    protected eatOptional<TTokenKind extends TokenKinds>(...kinds: TTokenKind[]): TokenKindTokenMap[TTokenKind] | null {
         const token = this.getToken();
-        if (kinds.includes(token.kind)) {
+        if (kinds.includes(token.kind as TTokenKind)) {
             this.advanceToken();
 
             return token;
@@ -859,7 +859,7 @@ export abstract class ParserBase {
         return null;
     }
 
-    protected getToken(offset: number = 0): Token {
+    protected getToken(offset: number = 0) {
         return this.tokens[this.position + offset];
     }
 
@@ -931,7 +931,7 @@ const OPERATOR_PRECEDENCE_AND_ASSOCIATIVITY: PrecedenceAndAssociativityMap = {
 
 const UNKNOWN_PRECEDENCE_AND_ASSOCIATIVITY: PrecedenceAndAssociativity = [Precedence.Unknown, Associativity.Unknown];
 
-function getBinaryOperatorPrecedenceAndAssociativity(token: Token): PrecedenceAndAssociativity {
+function getBinaryOperatorPrecedenceAndAssociativity(token: Tokens): PrecedenceAndAssociativity {
     return OPERATOR_PRECEDENCE_AND_ASSOCIATIVITY[token.kind] ||
         UNKNOWN_PRECEDENCE_AND_ASSOCIATIVITY;
 }

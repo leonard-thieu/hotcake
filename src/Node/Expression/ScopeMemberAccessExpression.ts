@@ -1,5 +1,5 @@
 import { MissingToken } from '../../Token/MissingToken';
-import { Token } from '../../Token/Token';
+import { IdentifierToken, PeriodToken } from '../../Token/Token';
 import { NodeKind } from '../NodeKind';
 import { Expression, Expressions } from './Expression';
 
@@ -14,6 +14,6 @@ export class ScopeMemberAccessExpression extends Expression {
     readonly kind = NodeKind.ScopeMemberAccessExpression;
 
     scopableExpression: Expressions | MissingToken;
-    scopeMemberAccessOperator: Token;
-    identifier: Token;
+    scopeMemberAccessOperator: PeriodToken;
+    identifier: IdentifierToken;
 }

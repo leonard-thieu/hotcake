@@ -1,5 +1,5 @@
 import { ParseContextElementArray, ParseContextKind } from '../../ParserBase';
-import { Token } from '../../Token/Token';
+import { EndKeywordToken, ExtendsKeywordToken, IdentifierToken, InterfaceKeywordToken } from '../../Token/Token';
 import { NodeKind } from '../NodeKind';
 import { Declaration } from './Declaration';
 
@@ -16,11 +16,11 @@ export class InterfaceDeclaration extends Declaration {
 
     readonly kind = NodeKind.InterfaceDeclaration;
 
-    interfaceKeyword: Token;
-    name: Token;
-    extendsKeyword: Token | null = null;
+    interfaceKeyword: InterfaceKeywordToken;
+    name: IdentifierToken;
+    extendsKeyword: ExtendsKeywordToken | null = null;
     baseTypes: ParseContextElementArray<ParseContextKind.TypeReferenceSequence> | null = null;
     members: ParseContextElementArray<InterfaceDeclaration['kind']>;
-    endKeyword: Token;
-    endInterfaceKeyword: Token | null = null;
+    endKeyword: EndKeywordToken;
+    endInterfaceKeyword: InterfaceKeywordToken | null = null;
 }

@@ -1,4 +1,4 @@
-import { Token } from './Token/Token';
+import { Token, TokenKinds, Tokens } from './Token/Token';
 import { TokenKind } from './Token/TokenKind';
 
 export class PreprocessorTokenizer {
@@ -12,7 +12,7 @@ export class PreprocessorTokenizer {
     private nesting: TokenKind[];
     private inString: boolean;
 
-    getTokens(document: string): Token[] {
+    getTokens(document: string): Tokens[] {
         this.document = document;
         this.position = 0;
         this.line = 1;
@@ -20,8 +20,8 @@ export class PreprocessorTokenizer {
         this.nesting = [];
         this.inString = false;
 
-        const tokens: Token[] = [];
-        let token: Token;
+        const tokens: Tokens[] = [];
+        let token: Tokens;
         do {
             token = this.next();
             tokens.push(token);
@@ -30,8 +30,8 @@ export class PreprocessorTokenizer {
         return tokens;
     }
 
-    private next(): Token {
-        let kind = TokenKind.Unknown;
+    private next(): Tokens {
+        let kind: TokenKinds = TokenKind.Unknown;
         const fullStart = this.position;
 
         if (!this.inString) {
@@ -59,7 +59,7 @@ export class PreprocessorTokenizer {
         if (this.getChar() === null) {
             kind = TokenKind.EOF;
 
-            return new Token(kind, fullStart, start, this.position - fullStart);
+            return new Token(kind, fullStart, start, this.position - fullStart) as Tokens;
         }
 
         const inDirective = this.nesting[this.nesting.length - 1];
@@ -522,7 +522,7 @@ export class PreprocessorTokenizer {
 
         const length = this.position - fullStart;
 
-        return new Token(kind, fullStart, start, length);
+        return new Token(kind, fullStart, start, length) as Tokens;
     }
 
     private tryReadPreprocessorDirective(): TokenKind {

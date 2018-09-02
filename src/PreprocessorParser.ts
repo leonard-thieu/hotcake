@@ -10,11 +10,11 @@ import { Expressions } from './Node/Expression/Expression';
 import { Node } from './Node/Node';
 import { NodeKind } from './Node/NodeKind';
 import { ParseContext, ParseContextElementMapBase, ParserBase } from './ParserBase';
-import { Token } from './Token/Token';
+import { Tokens } from './Token/Token';
 import { TokenKind } from './Token/TokenKind';
 
 export class PreprocessorParser extends ParserBase {
-    parse(filePath: string, document: string, tokens: Token[]): PreprocessorModuleDeclaration {
+    parse(filePath: string, document: string, tokens: Tokens[]): PreprocessorModuleDeclaration {
         this.tokens = [...tokens]
         this.position = 0;
         this.parseContexts = [];
@@ -107,7 +107,7 @@ export class PreprocessorParser extends ParserBase {
         return elseDirective;
     }
 
-    private isIfDirectiveMembersListTerminator(token: Token) {
+    private isIfDirectiveMembersListTerminator(token: Tokens) {
         switch (token.kind) {
             case TokenKind.ElseIfDirectiveKeyword:
             case TokenKind.ElseDirectiveKeyword:
@@ -118,6 +118,7 @@ export class PreprocessorParser extends ParserBase {
         return false;
     }
 
+    // TODO: Why is this not just a token?
     private parseEndDirective(parent: Directive): EndDirective {
         const endDirective = new EndDirective();
         endDirective.parent = parent;
@@ -138,11 +139,11 @@ export class PreprocessorParser extends ParserBase {
 
     // #region Rem directive members
 
-    private isRemDirectiveMembersListTerminator(token: Token): boolean {
+    private isRemDirectiveMembersListTerminator(token: Tokens): boolean {
         return token.kind === TokenKind.EndDirectiveKeyword;
     }
 
-    private isRemDirectiveMemberStart(token: Token) {
+    private isRemDirectiveMemberStart(token: Tokens) {
         switch (token.kind) {
             case TokenKind.IfDirectiveKeyword:
             case TokenKind.RemDirectiveKeyword:
@@ -204,7 +205,7 @@ export class PreprocessorParser extends ParserBase {
 
     // #endregion
 
-    protected isInvokeExpressionStart(token: Token, expression: Expressions): boolean {
+    protected isInvokeExpressionStart(token: Tokens, expression: Expressions): boolean {
         switch (token.kind) {
             case TokenKind.OpeningParenthesis: {
                 return true;
@@ -216,7 +217,7 @@ export class PreprocessorParser extends ParserBase {
 
     // #region Core
 
-    protected isListTerminator(parseContext: ParseContext, token: Token): boolean {
+    protected isListTerminator(parseContext: ParseContext, token: Tokens): boolean {
         parseContext = parseContext as PreprocessorParserParseContext;
 
         if (token.kind === TokenKind.EOF) {
@@ -240,7 +241,7 @@ export class PreprocessorParser extends ParserBase {
         return super.isListTerminatorCore(parseContext, token);
     }
 
-    protected isValidListElement(parseContext: ParseContext, token: Token): boolean {
+    protected isValidListElement(parseContext: ParseContext, token: Tokens): boolean {
         parseContext = parseContext as PreprocessorParserParseContext;
 
         switch (parseContext) {
