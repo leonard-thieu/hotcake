@@ -1,7 +1,7 @@
 import { ParseContextElementArray, ParseContextKind } from '../../ParserBase';
 import { MissingToken } from '../../Token/MissingToken';
 import { Token } from '../../Token/Token';
-import { Expression } from '../Expression/Expression';
+import { Expressions } from '../Expression/Expression';
 import { NodeKind } from '../NodeKind';
 import { Statement } from './Statement';
 
@@ -20,7 +20,7 @@ export class SelectStatement extends Statement {
     readonly kind = NodeKind.SelectStatement;
 
     selectKeyword: Token;
-    expression: Expression | MissingToken;
+    expression: Expressions | MissingToken;
     newlines: Token[] = [];
     caseStatements: CaseStatement[] = [];
     defaultStatement: DefaultStatement | null = null;

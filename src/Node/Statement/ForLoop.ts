@@ -2,7 +2,7 @@ import { ParseContextElementArray } from '../../ParserBase';
 import { MissingToken } from '../../Token/MissingToken';
 import { Token } from '../../Token/Token';
 import { BinaryExpression } from '../Expression/BinaryExpression';
-import { Expression } from '../Expression/Expression';
+import { Expressions } from '../Expression/Expression';
 import { Node } from '../Node';
 import { NodeKind } from '../NodeKind';
 import { LocalDeclarationListStatement } from './LocalDeclarationListStatement';
@@ -40,7 +40,7 @@ export class NumericForLoopHeader extends Node {
 
     loopVariableExpression: LocalDeclarationListStatement | BinaryExpression;
     toOrUntilKeyword: Token;
-    lastValueExpression: Expression | MissingToken;
+    lastValueExpression: Expressions | MissingToken;
     stepKeyword: Token | null = null;
-    stepValueExpression: Expression | MissingToken | null = null;
+    stepValueExpression: Expressions | MissingToken | null = null;
 }
