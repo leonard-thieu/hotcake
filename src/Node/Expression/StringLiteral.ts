@@ -1,3 +1,4 @@
+import { ParseContextElementArray } from '../../ParserBase';
 import { MissingToken } from '../../Token/MissingToken';
 import { Token } from '../../Token/Token';
 import { NodeKind } from '../NodeKind';
@@ -14,6 +15,6 @@ export class StringLiteral extends Expression {
     readonly kind = NodeKind.StringLiteral;
 
     startQuote: Token;
-    children: Array<Token> = [];
+    children: ParseContextElementArray<StringLiteral['kind']> = [];
     endQuote: Token | MissingToken;
 }

@@ -19,6 +19,7 @@ import { SuperExpression } from './Node/Expression/SuperExpression';
 import { UnaryOpExpression } from './Node/Expression/UnaryOpExpression';
 import { ModulePath } from './Node/ModulePath';
 import { Node } from './Node/Node';
+import { NodeKind } from './Node/NodeKind';
 import { ArrayTypeDeclaration, TypeReference } from './Node/TypeReference';
 import { GreaterThanSignEqualsSignToken } from './Token/GreaterThanSignEqualsSignToken';
 import { MissingToken } from './Token/MissingToken';
@@ -272,37 +273,7 @@ export abstract class ParserBase {
         const stringLiteral = new StringLiteral();
         stringLiteral.parent = parent;
         stringLiteral.startQuote = this.eat(TokenKind.QuotationMark);
-
-        let continueParsing = true;
-        do {
-            const token = this.getToken();
-            switch (token.kind) {
-                case TokenKind.QuotationMark:
-                case TokenKind.EOF: {
-                    continueParsing = false;
-                    break;
-                }
-                case TokenKind.StringLiteralText:
-                case TokenKind.EscapeNull:
-                case TokenKind.EscapeCharacterTabulation:
-                case TokenKind.EscapeLineFeedLf:
-                case TokenKind.EscapeCarriageReturnCr:
-                case TokenKind.EscapeQuotationMark:
-                case TokenKind.EscapeTilde:
-                case TokenKind.EscapeUnicodeHexValue:
-                case TokenKind.InvalidEscapeSequence: {
-                    const child = this.eat(token.kind);
-                    stringLiteral.children.push(child);
-                    break;
-                }
-                default: {
-                    const child = new SkippedToken(this.eat(token.kind));
-                    stringLiteral.children.push(child);
-                    break;
-                }
-            }
-        } while (continueParsing);
-
+        stringLiteral.children = this.parseList(stringLiteral, stringLiteral.kind);
         stringLiteral.endQuote = this.eat(TokenKind.QuotationMark);
 
         return stringLiteral;
@@ -698,6 +669,59 @@ export abstract class ParserBase {
         return false;
     }
 
+    // #region String literal children
+
+    protected isStringLiteralChildListTerminator(token: Token): boolean {
+        switch (token.kind) {
+            case TokenKind.QuotationMark: {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    protected isStringLiteralChildStart(token: Token): boolean {
+        switch (token.kind) {
+            case TokenKind.StringLiteralText:
+            case TokenKind.EscapeNull:
+            case TokenKind.EscapeCharacterTabulation:
+            case TokenKind.EscapeLineFeedLf:
+            case TokenKind.EscapeCarriageReturnCr:
+            case TokenKind.EscapeQuotationMark:
+            case TokenKind.EscapeTilde:
+            case TokenKind.EscapeUnicodeHexValue:
+            case TokenKind.InvalidEscapeSequence: {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    protected parseStringLiteralChild() {
+        const token = this.getToken();
+        switch (token.kind) {
+            case TokenKind.StringLiteralText:
+            case TokenKind.EscapeNull:
+            case TokenKind.EscapeCharacterTabulation:
+            case TokenKind.EscapeLineFeedLf:
+            case TokenKind.EscapeCarriageReturnCr:
+            case TokenKind.EscapeQuotationMark:
+            case TokenKind.EscapeTilde:
+            case TokenKind.EscapeUnicodeHexValue:
+            case TokenKind.InvalidEscapeSequence: {
+                this.advanceToken();
+
+                return token;
+            }
+        }
+
+        throw new Error(`Unexpected token: ${JSON.stringify(token.kind)}`);
+    }
+
+    // #endregion
+
     // #region Core
 
     // #region Parse lists
@@ -747,6 +771,9 @@ export abstract class ParserBase {
         }
 
         switch (parseContext) {
+            case NodeKind.StringLiteral: {
+                return this.isStringLiteralChildListTerminator(token);
+            }
             case ParseContextKind.TypeReferenceSequence: {
                 return this.isTypeReferenceSequenceTerminator(token);
             }
@@ -762,6 +789,9 @@ export abstract class ParserBase {
 
     protected isValidListElementCore(parseContext: ParseContextBase, token: Token): boolean {
         switch (parseContext) {
+            case NodeKind.StringLiteral: {
+                return this.isStringLiteralChildStart(token);
+            }
             case ParseContextKind.TypeReferenceSequence: {
                 return this.isTypeReferenceSequenceMemberStart(token);
             }
@@ -777,6 +807,9 @@ export abstract class ParserBase {
 
     protected parseListElementCore(parseContext: ParseContextBase, parent: Node) {
         switch (parseContext) {
+            case NodeKind.StringLiteral: {
+                return this.parseStringLiteralChild();
+            }
             case ParseContextKind.TypeReferenceSequence: {
                 return this.parseTypeReferenceSequenceMember(parent);
             }
@@ -912,6 +945,7 @@ export enum ParseContextKind {
     ExpressionSequence = 'Expressions',
 }
 export interface ParseContextElementMapBase {
+    [NodeKind.StringLiteral]: ReturnType<ParserBase['parseStringLiteralChild']>;
     [ParseContextKind.TypeReferenceSequence]: ReturnType<ParserBase['parseTypeReferenceSequenceMember']>;
     [ParseContextKind.ExpressionSequence]: ReturnType<ParserBase['parseExpressionSequenceMember']>;
 }
