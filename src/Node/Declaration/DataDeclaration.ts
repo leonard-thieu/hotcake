@@ -5,13 +5,13 @@ import { Declaration } from './Declaration';
 import { TypeDeclaration } from './TypeDeclaration';
 
 /**
+ * Explicit type (shorthand)
+ *   Identifier(?|%|#|$) = Expression
+ *   Identifier(?|%|#|$)
+ * 
  * Explicit type (longhand)
  *   Identifier: Type = Expression
  *   Identifier: Type
- * 
- * Explicit type (shorthand)
- *   Identifier($|?|#|%) = Expression
- *   Identifier($|?|#|%)
  * 
  * Inferred type
  *   Identifier := Expression
