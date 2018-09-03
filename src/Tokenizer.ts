@@ -27,10 +27,7 @@ export class Tokenizer {
         yield preprocessorModuleDeclaration.eofToken;
     }
 
-    /**
-     * TODO: Ensure operator semantics and implicit type conversions match Monkey X behavior.
-     */
-
+    // TODO: Ensure operator semantics and implicit type conversions match Monkey X behavior.
     private * readMember(members: ParseContextElementArray<PreprocessorModuleDeclaration['kind']>): IterableIterator<Tokens> {
         for (const member of members) {
             switch (member.kind) {
@@ -105,7 +102,8 @@ export class Tokenizer {
                     break;
                 }
                 default: {
-                    // TODO: What's producing SkippedTokens?
+                    // TODO: SkippedTokens shouldn't be possible at this point. Determine if there's a 
+                    //       decent way to make this known to the type system.
                     assertType<Tokens | SkippedToken<TokenKinds>>(member);
                     yield member as Tokens;
 

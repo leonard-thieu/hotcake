@@ -1,4 +1,4 @@
-import { Token, TokenKinds, Tokens } from './Token/Token';
+import { Token, Tokens } from './Token/Token';
 import { TokenKind } from './Token/TokenKind';
 
 export class PreprocessorTokenizer {
@@ -31,7 +31,7 @@ export class PreprocessorTokenizer {
     }
 
     private next(): Tokens {
-        let kind: TokenKinds = TokenKind.Unknown;
+        let kind = TokenKind.Unknown;
         const fullStart = this.position;
 
         if (!this.inString) {
@@ -59,7 +59,7 @@ export class PreprocessorTokenizer {
         if (this.getChar() === null) {
             kind = TokenKind.EOF;
 
-            return new Token(kind, fullStart, start, this.position - fullStart) as Tokens;
+            return new Token(kind, fullStart, start, this.position - fullStart);
         }
 
         const inDirective = this.nesting[this.nesting.length - 1];
@@ -522,10 +522,11 @@ export class PreprocessorTokenizer {
 
         const length = this.position - fullStart;
 
+        // TODO: Is there a way to drop this type assertion?
         return new Token(kind, fullStart, start, length) as Tokens;
     }
 
-    private tryReadPreprocessorDirective(): TokenKind {
+    private tryReadPreprocessorDirective() {
         const start = this.position;
         let kind = TokenKind.Unknown;
 
