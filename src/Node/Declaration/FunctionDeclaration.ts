@@ -1,8 +1,7 @@
-import { ParseContextElementArray } from '../../ParserBase';
+import { ParseContextElementArray, ParseContextKind } from '../../ParserBase';
 import { ClosingParenthesisToken, ColonToken, EndKeywordToken, FunctionKeywordToken, IdentifierToken, OpeningParenthesisToken } from '../../Token/Token';
 import { NodeKind } from '../NodeKind';
 import { TypeReference } from '../TypeReference';
-import { DataDeclarationList } from './DataDeclarationList';
 import { Declaration } from './Declaration';
 
 export class FunctionDeclaration extends Declaration {
@@ -26,7 +25,7 @@ export class FunctionDeclaration extends Declaration {
     colon: ColonToken | null = null;
     returnType: TypeReference | null = null;
     openingParenthesis: OpeningParenthesisToken;
-    parameters: DataDeclarationList;
+    parameters: ParseContextElementArray<ParseContextKind.DataDeclarationSequence>;
     closingParenthesis: ClosingParenthesisToken;
     statements: ParseContextElementArray<FunctionDeclaration['kind']>;
     endKeyword: EndKeywordToken;

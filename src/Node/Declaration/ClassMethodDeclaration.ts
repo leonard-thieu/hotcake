@@ -1,8 +1,7 @@
-import { ParseContextElementArray } from '../../ParserBase';
-import { ClosingParenthesisToken, ColonToken, EndKeywordToken, IdentifierToken, MethodKeywordToken, OpeningParenthesisToken, Token, AbstractKeywordToken, FinalKeywordToken, PropertyKeywordToken } from '../../Token/Token';
+import { ParseContextElementArray, ParseContextKind } from '../../ParserBase';
+import { AbstractKeywordToken, ClosingParenthesisToken, ColonToken, EndKeywordToken, FinalKeywordToken, IdentifierToken, MethodKeywordToken, OpeningParenthesisToken, PropertyKeywordToken } from '../../Token/Token';
 import { NodeKind } from '../NodeKind';
 import { TypeReference } from '../TypeReference';
-import { DataDeclarationList } from './DataDeclarationList';
 import { Declaration } from './Declaration';
 
 export class ClassMethodDeclaration extends Declaration {
@@ -27,7 +26,7 @@ export class ClassMethodDeclaration extends Declaration {
     colon: ColonToken | null = null;
     returnType: TypeReference | null = null;
     openingParenthesis: OpeningParenthesisToken;
-    parameters: DataDeclarationList;
+    parameters: ParseContextElementArray<ParseContextKind.DataDeclarationSequence>;
     closingParenthesis: ClosingParenthesisToken;
     attributes: Array<AbstractKeywordToken | FinalKeywordToken | PropertyKeywordToken> = [];
     statements: ParseContextElementArray<ClassMethodDeclaration['kind']> | null = null;

@@ -260,7 +260,7 @@ export class Parser extends ParserBase {
         }
 
         interfaceMethodDeclaration.openingParenthesis = this.eat(TokenKind.OpeningParenthesis);
-        interfaceMethodDeclaration.parameters = this.parseDataDeclarationList(interfaceMethodDeclaration);
+        interfaceMethodDeclaration.parameters = this.parseList(interfaceMethodDeclaration, ParseContextKind.DataDeclarationSequence);
         interfaceMethodDeclaration.closingParenthesis = this.eat(TokenKind.ClosingParenthesis);
 
         return interfaceMethodDeclaration;
@@ -328,7 +328,7 @@ export class Parser extends ParserBase {
         }
 
         classMethodDeclaration.openingParenthesis = this.eat(TokenKind.OpeningParenthesis);
-        classMethodDeclaration.parameters = this.parseDataDeclarationList(classMethodDeclaration);
+        classMethodDeclaration.parameters = this.parseList(classMethodDeclaration, ParseContextKind.DataDeclarationSequence);
         classMethodDeclaration.closingParenthesis = this.eat(TokenKind.ClosingParenthesis);
 
         let token: typeof classMethodDeclaration.attributes[0] | null;
@@ -846,7 +846,7 @@ export class Parser extends ParserBase {
         }
 
         functionDeclaration.openingParenthesis = this.eat(TokenKind.OpeningParenthesis);
-        functionDeclaration.parameters = this.parseDataDeclarationList(functionDeclaration);
+        functionDeclaration.parameters = this.parseList(functionDeclaration, ParseContextKind.DataDeclarationSequence);
         functionDeclaration.closingParenthesis = this.eat(TokenKind.ClosingParenthesis);
         functionDeclaration.statements = this.parseList(functionDeclaration, functionDeclaration.kind);
         functionDeclaration.endKeyword = this.eat(TokenKind.EndKeyword);
@@ -858,19 +858,19 @@ export class Parser extends ParserBase {
     private parseDataDeclarationList(parent: Node): DataDeclarationList {
         const dataDeclarationList = new DataDeclarationList();
         dataDeclarationList.parent = parent;
-        dataDeclarationList.dataDeclarationKeyword = this.eatOptional(TokenKind.ConstKeyword, TokenKind.GlobalKeyword, TokenKind.FieldKeyword, TokenKind.LocalKeyword);
-        dataDeclarationList.children = this.parseList(dataDeclarationList, dataDeclarationList.kind);
+        dataDeclarationList.dataDeclarationKeyword = this.eat(TokenKind.ConstKeyword, TokenKind.GlobalKeyword, TokenKind.FieldKeyword, TokenKind.LocalKeyword);
+        dataDeclarationList.children = this.parseList(dataDeclarationList, ParseContextKind.DataDeclarationSequence);
 
         return dataDeclarationList;
     }
 
-    // #region Data declaration list members
+    // #region Data declaration sequence members
 
-    private isDataDeclarationListMembersListTerminator(token: Tokens): boolean {
-        return !this.isDataDeclarationListMemberStart(token);
+    private isDataDeclarationSequenceTerminator(token: Tokens): boolean {
+        return !this.isDataDeclarationSequenceMemberStart(token);
     }
 
-    private isDataDeclarationListMemberStart(token: Tokens): boolean {
+    private isDataDeclarationSequenceMemberStart(token: Tokens): boolean {
         switch (token.kind) {
             // TODO: Is Period (global scope member access) allowed?
             case TokenKind.Identifier:
@@ -882,7 +882,7 @@ export class Parser extends ParserBase {
         return false;
     }
 
-    private parseDataDeclarationListMember(parent: Node) {
+    private parseDataDeclarationSequenceMember(parent: Node) {
         const token = this.getToken();
         switch (token.kind) {
             case TokenKind.Identifier: {
@@ -1039,8 +1039,8 @@ export class Parser extends ParserBase {
             case NodeKind.ForLoop: {
                 return this.isForLoopStatementsListTerminator(token);
             }
-            case NodeKind.DataDeclarationList: {
-                return this.isDataDeclarationListMembersListTerminator(token);
+            case ParseContextKind.DataDeclarationSequence: {
+                return this.isDataDeclarationSequenceTerminator(token);
             }
             case ParseContextKind.TypeParameterSequence: {
                 return this.isTypeParameterSequenceTerminator(token);
@@ -1077,8 +1077,8 @@ export class Parser extends ParserBase {
             case NodeKind.CatchStatement: {
                 return this.isStatementStart(token);
             }
-            case NodeKind.DataDeclarationList: {
-                return this.isDataDeclarationListMemberStart(token);
+            case ParseContextKind.DataDeclarationSequence: {
+                return this.isDataDeclarationSequenceMemberStart(token);
             }
             case ParseContextKind.TypeParameterSequence: {
                 return this.isTypeParameterSequenceMemberStart(token);
@@ -1115,8 +1115,8 @@ export class Parser extends ParserBase {
             case NodeKind.CatchStatement: {
                 return this.parseStatement(parent);
             }
-            case NodeKind.DataDeclarationList: {
-                return this.parseDataDeclarationListMember(parent);
+            case ParseContextKind.DataDeclarationSequence: {
+                return this.parseDataDeclarationSequenceMember(parent);
             }
             case ParseContextKind.TypeParameterSequence: {
                 return this.parseTypeParameterSequenceMember(parent);
@@ -1171,7 +1171,7 @@ interface ParserParseContextElementMap extends ParseContextElementMapBase {
     [NodeKind.TryStatement]: ReturnType<Parser['parseStatement']>;
     [NodeKind.CatchStatement]: ReturnType<Parser['parseStatement']>;
     [NodeKind.FunctionDeclaration]: ReturnType<Parser['parseStatement']>;
-    [NodeKind.DataDeclarationList]: ReturnType<Parser['parseDataDeclarationListMember']>;
+    [ParseContextKind.DataDeclarationSequence]: ReturnType<Parser['parseDataDeclarationSequenceMember']>;
     [ParseContextKind.TypeParameterSequence]: ReturnType<Parser['parseTypeParameterSequenceMember']>;
 }
 
@@ -1179,6 +1179,7 @@ type ParserParseContext = keyof ParserParseContextElementMap;
 
 declare module './ParserBase' {
     enum ParseContextKind {
+        DataDeclarationSequence = 'DataDeclarationSequence',
         TypeParameterSequence = 'TypeParameters',
     }
 

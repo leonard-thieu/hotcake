@@ -1,7 +1,7 @@
+import { ParseContextElementArray, ParseContextKind } from '../../ParserBase';
 import { ClosingParenthesisToken, ColonToken, IdentifierToken, MethodKeywordToken, OpeningParenthesisToken } from '../../Token/Token';
 import { NodeKind } from '../NodeKind';
 import { TypeReference } from '../TypeReference';
-import { DataDeclarationList } from './DataDeclarationList';
 import { Declaration } from './Declaration';
 
 export class InterfaceMethodDeclaration extends Declaration {
@@ -22,6 +22,6 @@ export class InterfaceMethodDeclaration extends Declaration {
     colon: ColonToken | null = null;
     returnType: TypeReference | null = null;
     openingParenthesis: OpeningParenthesisToken;
-    parameters: DataDeclarationList;
+    parameters: ParseContextElementArray<ParseContextKind.DataDeclarationSequence>;
     closingParenthesis: ClosingParenthesisToken;
 }
