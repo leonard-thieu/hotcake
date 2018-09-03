@@ -1177,10 +1177,14 @@ interface ParserParseContextElementMap extends ParseContextElementMapBase {
 
 type ParserParseContext = keyof ParserParseContextElementMap;
 
+const _ParseContextKind: { -readonly [P in keyof typeof ParseContextKind]: typeof ParseContextKind[P]; } = ParseContextKind;
+_ParseContextKind.DataDeclarationSequence = 'DataDeclarationSequence' as ParseContextKind.DataDeclarationSequence;
+_ParseContextKind.TypeParameterSequence = 'TypeParameterSequence' as ParseContextKind.TypeParameterSequence;
+
 declare module './ParserBase' {
     enum ParseContextKind {
         DataDeclarationSequence = 'DataDeclarationSequence',
-        TypeParameterSequence = 'TypeParameters',
+        TypeParameterSequence = 'TypeParameterSequence',
     }
 
     interface ParseContextElementMap extends ParserParseContextElementMap { }

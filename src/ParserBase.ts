@@ -734,6 +734,10 @@ export abstract class ParserBase {
         parent: Node,
         parseContext: TParseContext
     ) {
+        if (typeof parseContext === 'undefined') {
+            throw new Error('parseContext is undefined.');
+        }
+
         this.parseContexts.push(parseContext);
 
         const nodes: ParseContextElementArray<TParseContext> = [];
@@ -947,6 +951,7 @@ export enum ParseContextKind {
     TypeReferenceSequence = 'TypeReferenceSequence',
     ExpressionSequence = 'Expressions',
 }
+
 export interface ParseContextElementMapBase {
     [NodeKind.StringLiteral]: ReturnType<ParserBase['parseStringLiteralChild']>;
     [ParseContextKind.TypeReferenceSequence]: ReturnType<ParserBase['parseTypeReferenceSequenceMember']>;
