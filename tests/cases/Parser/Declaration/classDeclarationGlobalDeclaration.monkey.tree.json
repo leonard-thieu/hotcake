@@ -46,21 +46,14 @@
                                 "start": 24,
                                 "length": 10
                             },
-                            "colonEqualsSign": null,
-                            "colon": null,
                             "type": {
-                                "kind": "TypeReference",
-                                "modulePath": null,
-                                "scopeMemberAccessOperator": null,
-                                "identifier": {
+                                "kind": "ShorthandTypeDeclaration",
+                                "shorthandType": {
                                     "kind": "PercentSign",
                                     "fullStart": 33,
                                     "start": 33,
                                     "length": 1
                                 },
-                                "lessThanSign": null,
-                                "typeArguments": null,
-                                "greaterThanSign": null,
                                 "arrayTypeDeclarations": null
                             },
                             "equalsSign": {

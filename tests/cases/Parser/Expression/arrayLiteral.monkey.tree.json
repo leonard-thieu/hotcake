@@ -15,7 +15,6 @@
                 "start": 9,
                 "length": 5
             },
-            "colon": null,
             "returnType": null,
             "openingParenthesis": {
                 "kind": "OpeningParenthesis",
@@ -59,15 +58,13 @@
                                     "start": 27,
                                     "length": 4
                                 },
-                                "colonEqualsSign": {
+                                "type": null,
+                                "equalsSign": {
                                     "kind": "ColonEqualsSign",
                                     "fullStart": 30,
                                     "start": 31,
                                     "length": 3
                                 },
-                                "colon": null,
-                                "type": null,
-                                "equalsSign": null,
                                 "eachInKeyword": null,
                                 "expression": {
                                     "kind": "ArrayLiteral",

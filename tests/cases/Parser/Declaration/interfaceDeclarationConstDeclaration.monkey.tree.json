@@ -41,8 +41,6 @@
                                 "start": 30,
                                 "length": 6
                             },
-                            "colonEqualsSign": null,
-                            "colon": null,
                             "type": null,
                             "equalsSign": {
                                 "kind": "EqualsSign",

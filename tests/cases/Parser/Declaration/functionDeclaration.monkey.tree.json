@@ -15,7 +15,6 @@
                 "start": 9,
                 "length": 5
             },
-            "colon": null,
             "returnType": null,
             "openingParenthesis": {
                 "kind": "OpeningParenthesis",

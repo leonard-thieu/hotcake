@@ -46,21 +46,14 @@
                                 "start": 23,
                                 "length": 13
                             },
-                            "colonEqualsSign": null,
-                            "colon": null,
                             "type": {
-                                "kind": "TypeReference",
-                                "modulePath": null,
-                                "scopeMemberAccessOperator": null,
-                                "identifier": {
+                                "kind": "ShorthandTypeDeclaration",
+                                "shorthandType": {
                                     "kind": "DollarSign",
                                     "fullStart": 35,
                                     "start": 35,
                                     "length": 1
                                 },
-                                "lessThanSign": null,
-                                "typeArguments": null,
-                                "greaterThanSign": null,
                                 "arrayTypeDeclarations": null
                             },
                             "equalsSign": {

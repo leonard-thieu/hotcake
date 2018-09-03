@@ -46,27 +46,29 @@
                                 "start": 23,
                                 "length": 5
                             },
-                            "colonEqualsSign": null,
-                            "colon": {
-                                "kind": "Colon",
-                                "fullStart": 27,
-                                "start": 27,
-                                "length": 1
-                            },
                             "type": {
-                                "kind": "TypeReference",
-                                "modulePath": null,
-                                "scopeMemberAccessOperator": null,
-                                "identifier": {
-                                    "kind": "StringKeyword",
-                                    "fullStart": 28,
-                                    "start": 29,
-                                    "length": 7
+                                "kind": "LonghandTypeDeclaration",
+                                "colon": {
+                                    "kind": "Colon",
+                                    "fullStart": 27,
+                                    "start": 27,
+                                    "length": 1
                                 },
-                                "lessThanSign": null,
-                                "typeArguments": null,
-                                "greaterThanSign": null,
-                                "arrayTypeDeclarations": null
+                                "typeReference": {
+                                    "kind": "TypeReference",
+                                    "modulePath": null,
+                                    "scopeMemberAccessOperator": null,
+                                    "identifier": {
+                                        "kind": "StringKeyword",
+                                        "fullStart": 28,
+                                        "start": 29,
+                                        "length": 7
+                                    },
+                                    "lessThanSign": null,
+                                    "typeArguments": null,
+                                    "greaterThanSign": null,
+                                    "arrayTypeDeclarations": null
+                                }
                             },
                             "equalsSign": null,
                             "eachInKeyword": null,

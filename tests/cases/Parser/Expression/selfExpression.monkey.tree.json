@@ -43,7 +43,6 @@
                         "start": 24,
                         "length": 5
                     },
-                    "colon": null,
                     "returnType": null,
                     "openingParenthesis": {
                         "kind": "OpeningParenthesis",
