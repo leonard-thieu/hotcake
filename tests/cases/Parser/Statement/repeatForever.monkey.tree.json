@@ -23,11 +23,7 @@
                 "start": 13,
                 "length": 1
             },
-            "parameters": {
-                "kind": "DataDeclarationList",
-                "dataDeclarationKeyword": null,
-                "children": []
-            },
+            "parameters": [],
             "closingParenthesis": {
                 "kind": "ClosingParenthesis",
                 "fullStart": 14,
