@@ -1,6 +1,6 @@
 import { ParseContextElementArray } from '../../ParserBase';
 import { CatchKeywordToken, EndKeywordToken, TryKeywordToken } from '../../Token/Token';
-import { DataDeclaration } from '../DataDeclaration';
+import { DataDeclaration } from '../Declaration/DataDeclaration';
 import { NodeKind } from '../NodeKind';
 import { Statement } from './Statement';
 

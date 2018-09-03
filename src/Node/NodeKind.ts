@@ -52,6 +52,8 @@ export enum NodeKind {
     ArrayTypeDeclaration = 'ArrayTypeDeclaration',
     DataDeclaration = 'DataDeclaration',
     DataDeclarationList = 'DataDeclarationList',
+    ShorthandTypeDeclaration = 'ShorthandTypeDeclaration',
+    LonghandTypeDeclaration = 'LonghandTypeDeclaration',
     TypeParameter = 'TypeParameter',
     CommaSeparator = 'CommaSeparator',
 

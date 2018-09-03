@@ -1,8 +1,8 @@
-import { DataDeclaration } from './Node/DataDeclaration';
 import { AccessibilityDirective } from './Node/Declaration/AccessibilityDirective';
 import { AliasDirective } from './Node/Declaration/AliasDirective';
 import { ClassDeclaration } from './Node/Declaration/ClassDeclaration';
 import { ClassMethodDeclaration } from './Node/Declaration/ClassMethodDeclaration';
+import { DataDeclaration } from './Node/Declaration/DataDeclaration';
 import { DataDeclarationList } from './Node/Declaration/DataDeclarationList';
 import { FriendDirective } from './Node/Declaration/FriendDirective';
 import { FunctionDeclaration } from './Node/Declaration/FunctionDeclaration';
@@ -11,6 +11,7 @@ import { InterfaceDeclaration } from './Node/Declaration/InterfaceDeclaration';
 import { InterfaceMethodDeclaration } from './Node/Declaration/InterfaceMethodDeclaration';
 import { ModuleDeclaration } from './Node/Declaration/ModuleDeclaration';
 import { StrictDirective } from './Node/Declaration/StrictDirective';
+import { LonghandTypeDeclaration, ShorthandTypeDeclaration } from './Node/Declaration/TypeDeclaration';
 import { TypeParameter } from './Node/Declaration/TypeParameter';
 import { BinaryExpression } from './Node/Expression/BinaryExpression';
 import { Expressions } from './Node/Expression/Expression';
@@ -253,12 +254,7 @@ export class Parser extends ParserBase {
         interfaceMethodDeclaration.parent = parent;
         interfaceMethodDeclaration.methodKeyword = this.eat(TokenKind.MethodKeyword);
         interfaceMethodDeclaration.name = this.eat(TokenKind.Identifier);
-
-        if (this.getToken().kind !== TokenKind.OpeningParenthesis) {
-            interfaceMethodDeclaration.colon = this.eatOptional(TokenKind.Colon);
-            interfaceMethodDeclaration.returnType = this.parseTypeReference(interfaceMethodDeclaration);
-        }
-
+        interfaceMethodDeclaration.returnType = this.parseTypeDeclaration(interfaceMethodDeclaration);
         interfaceMethodDeclaration.openingParenthesis = this.eat(TokenKind.OpeningParenthesis);
         interfaceMethodDeclaration.parameters = this.parseList(interfaceMethodDeclaration, ParseContextKind.DataDeclarationSequence);
         interfaceMethodDeclaration.closingParenthesis = this.eat(TokenKind.ClosingParenthesis);
@@ -321,12 +317,7 @@ export class Parser extends ParserBase {
         classMethodDeclaration.parent = parent;
         classMethodDeclaration.methodKeyword = this.eat(TokenKind.MethodKeyword);
         classMethodDeclaration.name = this.eat(TokenKind.Identifier);
-
-        if (this.getToken().kind !== TokenKind.OpeningParenthesis) {
-            classMethodDeclaration.colon = this.eatOptional(TokenKind.Colon);
-            classMethodDeclaration.returnType = this.parseTypeReference(classMethodDeclaration);
-        }
-
+        classMethodDeclaration.returnType = this.parseTypeDeclaration(classMethodDeclaration);
         classMethodDeclaration.openingParenthesis = this.eat(TokenKind.OpeningParenthesis);
         classMethodDeclaration.parameters = this.parseList(classMethodDeclaration, ParseContextKind.DataDeclarationSequence);
         classMethodDeclaration.closingParenthesis = this.eat(TokenKind.ClosingParenthesis);
@@ -838,13 +829,7 @@ export class Parser extends ParserBase {
         functionDeclaration.parent = parent;
         functionDeclaration.functionKeyword = this.eat(TokenKind.FunctionKeyword);
         functionDeclaration.name = this.eat(TokenKind.Identifier);
-
-        if (this.getToken().kind !== TokenKind.OpeningParenthesis) {
-            // TODO: Consolidate type declaration handling logic.
-            functionDeclaration.colon = this.eatOptional(TokenKind.Colon);
-            functionDeclaration.returnType = this.parseTypeReference(functionDeclaration);
-        }
-
+        functionDeclaration.returnType = this.parseTypeDeclaration(functionDeclaration);
         functionDeclaration.openingParenthesis = this.eat(TokenKind.OpeningParenthesis);
         functionDeclaration.parameters = this.parseList(functionDeclaration, ParseContextKind.DataDeclarationSequence);
         functionDeclaration.closingParenthesis = this.eat(TokenKind.ClosingParenthesis);
@@ -900,21 +885,58 @@ export class Parser extends ParserBase {
         const dataDeclaration = new DataDeclaration();
         dataDeclaration.parent = parent;
         dataDeclaration.name = this.eat(TokenKind.Identifier);
-        dataDeclaration.colonEqualsSign = this.eatOptional(TokenKind.ColonEqualsSign);
-        if (dataDeclaration.colonEqualsSign === null) {
-            dataDeclaration.colon = this.eatOptional(TokenKind.Colon);
-            if (this.isTypeReferenceStart(this.getToken())) {
-                dataDeclaration.type = this.parseTypeReference(dataDeclaration);
-            }
-            dataDeclaration.equalsSign = this.eatOptional(TokenKind.EqualsSign);
-        }
-        if (dataDeclaration.colonEqualsSign !== null ||
-            dataDeclaration.equalsSign !== null) {
-            dataDeclaration.eachInKeyword = this.eatOptional(TokenKind.EachInKeyword);
+        dataDeclaration.type = this.parseTypeDeclaration(dataDeclaration);
+        dataDeclaration.equalsSign = this.eatOptional(TokenKind.EqualsSign, TokenKind.ColonEqualsSign);
+        if (dataDeclaration.equalsSign !== null) {
             dataDeclaration.expression = this.parseExpression(dataDeclaration);
         }
 
         return dataDeclaration;
+    }
+
+    // #endregion
+
+    // #region Type declaration
+
+    private parseTypeDeclaration(parent: Node) {
+        const token = this.getToken();
+        switch (token.kind) {
+            case TokenKind.QuestionMark:
+            case TokenKind.PercentSign:
+            case TokenKind.NumberSign:
+            case TokenKind.DollarSign: {
+                return this.parseShorthandTypeDeclaration(parent);
+            }
+            case TokenKind.Colon: {
+                return this.parseLonghandTypeDeclaration(parent);
+            }
+        }
+
+        return null;
+    }
+
+    private parseShorthandTypeDeclaration(parent: Node): ShorthandTypeDeclaration {
+        const shorthandTypeDeclaration = new ShorthandTypeDeclaration();
+        shorthandTypeDeclaration.parent = parent;
+        shorthandTypeDeclaration.shorthandType = this.eat(TokenKind.QuestionMark, TokenKind.PercentSign, TokenKind.NumberSign, TokenKind.DollarSign);
+        while (this.getToken().kind === TokenKind.OpeningSquareBracket) {
+            if (shorthandTypeDeclaration.arrayTypeDeclarations === null) {
+                shorthandTypeDeclaration.arrayTypeDeclarations = [];
+            }
+
+            shorthandTypeDeclaration.arrayTypeDeclarations.push(this.parseArrayTypeDeclaration(shorthandTypeDeclaration));
+        }
+
+        return shorthandTypeDeclaration;
+    }
+
+    private parseLonghandTypeDeclaration(parent: Node): LonghandTypeDeclaration {
+        const longhandTypeDeclaration = new LonghandTypeDeclaration();
+        longhandTypeDeclaration.parent = parent;
+        longhandTypeDeclaration.colon = this.eat(TokenKind.Colon);
+        longhandTypeDeclaration.typeReference = this.parseTypeReference(longhandTypeDeclaration);
+
+        return longhandTypeDeclaration;
     }
 
     // #endregion

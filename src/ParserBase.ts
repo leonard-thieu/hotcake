@@ -1,4 +1,5 @@
 import { assertNever } from './assertNever';
+import { ArrayTypeDeclaration } from "./Node/ArrayTypeDeclaration";
 import { CommaSeparator } from './Node/CommaSeparator';
 import { ArrayLiteral } from './Node/Expression/ArrayLiteral';
 import { BinaryExpression } from './Node/Expression/BinaryExpression';
@@ -20,7 +21,7 @@ import { UnaryOpExpression } from './Node/Expression/UnaryOpExpression';
 import { ModulePath } from './Node/ModulePath';
 import { Node } from './Node/Node';
 import { NodeKind } from './Node/NodeKind';
-import { ArrayTypeDeclaration, TypeReference } from './Node/TypeReference';
+import { TypeReference } from './Node/TypeReference';
 import { GreaterThanSignEqualsSignToken } from './Token/GreaterThanSignEqualsSignToken';
 import { MissingToken } from './Token/MissingToken';
 import { SkippedToken } from './Token/SkippedToken';
@@ -517,10 +518,6 @@ export abstract class ParserBase {
 
     protected isTypeReferenceStart(token: Tokens): boolean {
         switch (token.kind) {
-            case TokenKind.QuestionMark:
-            case TokenKind.PercentSign:
-            case TokenKind.NumberSign:
-            case TokenKind.DollarSign:
             case TokenKind.BoolKeyword:
             case TokenKind.IntKeyword:
             case TokenKind.FloatKeyword:
@@ -543,10 +540,6 @@ export abstract class ParserBase {
 
         const token = this.getToken();
         switch (token.kind) {
-            case TokenKind.QuestionMark:
-            case TokenKind.PercentSign:
-            case TokenKind.NumberSign:
-            case TokenKind.DollarSign:
             case TokenKind.BoolKeyword:
             case TokenKind.IntKeyword:
             case TokenKind.FloatKeyword:
@@ -588,7 +581,7 @@ export abstract class ParserBase {
                 typeReference.arrayTypeDeclarations = [];
             }
 
-            typeReference.arrayTypeDeclarations.push(this.parseArrayTypeDeclaration(parent));
+            typeReference.arrayTypeDeclarations.push(this.parseArrayTypeDeclaration(typeReference));
         }
 
         return typeReference;

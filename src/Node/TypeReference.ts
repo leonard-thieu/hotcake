@@ -1,6 +1,6 @@
 import { ParseContextElementArray, ParseContextKind } from '../ParserBase';
-import { BoolKeywordToken, ClosingSquareBracketToken, DollarSignToken, FloatKeywordToken, GreaterThanSignToken, IntKeywordToken, LessThanSignToken, MissingExpressionToken, NumberSignToken, ObjectKeywordToken, OpeningSquareBracketToken, PercentSignToken, PeriodToken, QuestionMarkToken, StringKeywordToken, ThrowableKeywordToken, VoidKeywordToken, IdentifierToken } from '../Token/Token';
-import { Expressions } from './Expression/Expression';
+import { BoolKeywordToken, FloatKeywordToken, GreaterThanSignToken, IdentifierToken, IntKeywordToken, LessThanSignToken, ObjectKeywordToken, PeriodToken, StringKeywordToken, ThrowableKeywordToken, VoidKeywordToken } from '../Token/Token';
+import { ArrayTypeDeclaration } from './ArrayTypeDeclaration';
 import { ModulePath } from './ModulePath';
 import { Node } from './Node';
 import { NodeKind } from './NodeKind';
@@ -31,10 +31,6 @@ export class TypeReference extends Node {
 }
 
 export type TypeReferenceIdentifierToken =
-    QuestionMarkToken |
-    PercentSignToken |
-    NumberSignToken |
-    DollarSignToken |
     BoolKeywordToken |
     IntKeywordToken |
     FloatKeywordToken |
@@ -44,17 +40,3 @@ export type TypeReferenceIdentifierToken =
     VoidKeywordToken |
     IdentifierToken
     ;
-
-export class ArrayTypeDeclaration extends Node {
-    static CHILD_NAMES: (keyof ArrayTypeDeclaration)[] = [
-        'openingSquareBracket',
-        'expression',
-        'closingSquareBracket',
-    ];
-
-    readonly kind = NodeKind.ArrayTypeDeclaration;
-
-    openingSquareBracket: OpeningSquareBracketToken;
-    expression: Expressions | MissingExpressionToken | null = null;
-    closingSquareBracket: ClosingSquareBracketToken;
-}
