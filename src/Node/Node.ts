@@ -1,8 +1,9 @@
+import { BoundSymbolTable } from '../Binder';
+import { SerializationOptions } from '../SerializationOptions';
 import { ArrayTypeDeclaration } from './ArrayTypeDeclaration';
 import { CommaSeparator } from './CommaSeparator';
 import { ConfigurationTag } from './ConfigurationTag';
 import { Declarations } from './Declaration/Declaration';
-import { ExternDeclarations } from './Declaration/ExternDeclaration/ExternDeclaration';
 import { Directives } from './Directive/Directive';
 import { Expressions } from './Expression/Expression';
 import { EscapedIdentifier } from './Identifier';
@@ -15,6 +16,8 @@ import { TypeReference } from './TypeReference';
 export abstract class Node {
     abstract readonly kind: NodeKind;
     parent: Nodes | null = null;
+
+    locals: BoundSymbolTable | null = null;
 
     get root() {
         let root: Node = this;
@@ -47,6 +50,10 @@ export abstract class Node {
             kind: this.kind,
         };
 
+        if (SerializationOptions.serializeSymbols) {
+            obj.locals = this.locals;
+        }
+
         for (const childName of this.getChildNames()) {
             obj[childName] = this[childName];
         }
@@ -62,7 +69,6 @@ export abstract class Node {
 }
 
 export type Nodes =
-    ExternDeclarations |
     Declarations |
     Directives |
     Expressions |

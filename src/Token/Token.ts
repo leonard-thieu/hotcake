@@ -1,3 +1,4 @@
+import { SerializationOptions } from '../SerializationOptions';
 import { MissableTokenKinds } from './MissingToken';
 import { TokenKind } from './TokenKind';
 
@@ -14,6 +15,12 @@ export class Token<TTokenKind extends FullTokenKinds> {
 
     getText(document: string): string {
         return document.slice(this.start, this.fullStart + this.length);
+    }
+
+    toJSON(): any {
+        if (!SerializationOptions.serializeSymbols) {
+            return this;
+        }
     }
 }
 

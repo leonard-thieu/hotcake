@@ -3,11 +3,13 @@ import fs = require('fs');
 import path = require('path');
 import mkdirp = require('mkdirp');
 import { orderBy } from 'natural-orderby';
+import { Binder } from '../src/Binder';
 import { ModuleDeclaration } from '../src/Node/Declaration/ModuleDeclaration';
 import { PreprocessorModuleDeclaration } from '../src/Node/Declaration/PreprocessorModuleDeclaration';
 import { Parser } from '../src/Parser';
 import { PreprocessorParser } from '../src/PreprocessorParser';
 import { PreprocessorTokenizer } from '../src/PreprocessorTokenizer';
+import { SerializationOptions } from '../src/SerializationOptions';
 import { Tokens } from '../src/Token/Token';
 import { ConfigurationVariables, Tokenizer } from '../src/Tokenizer';
 
@@ -15,6 +17,8 @@ interface TestCaseOptions {
     name: string;
     casesPath: string;
     testCallback: TestCallback;
+    beforeCallback?: Mocha.Func;
+    afterCallback?: Mocha.Func;
 }
 
 interface TestContext {
@@ -30,6 +34,8 @@ export function executeTestCases(options: TestCaseOptions): void {
         name,
         casesPath,
         testCallback,
+        beforeCallback,
+        afterCallback,
     } = options;
 
     let skippedCases: string[];
@@ -40,6 +46,14 @@ export function executeTestCases(options: TestCaseOptions): void {
     }
 
     describe(name, function () {
+        if (beforeCallback) {
+            before(beforeCallback);
+        }
+
+        if (afterCallback) {
+            after(afterCallback);
+        }
+
         const casesGlobPath = path.join(casesPath, '**', '*.monkey');
         const sourcePaths = orderBy(glob.sync(casesGlobPath));
 
@@ -147,6 +161,32 @@ export function executeParserTestCases(name: string, casesPath: string): void {
     });
 }
 
+export function executeBinderTestCases(name: string, casesPath: string): void {
+    let serializeSymbols: boolean;
+
+    executeTestCases({
+        name: name,
+        casesPath: casesPath,
+        testCallback: function (context) {
+            const { _it, sourceRelativePath, contents } = context;
+
+            _it(sourceRelativePath, function () {
+                const outputPath = path.resolve(__dirname, 'cases', name, sourceRelativePath) + '.symbols.json';
+                executeBaselineTestCase(outputPath, () => {
+                    return getBoundParseTree(sourceRelativePath, contents);
+                });
+            });
+        },
+        beforeCallback: function () {
+            serializeSymbols = SerializationOptions.serializeSymbols;
+            SerializationOptions.serializeSymbols = true;
+        },
+        afterCallback: function () {
+            SerializationOptions.serializeSymbols = serializeSymbols;
+        },
+    });
+}
+
 export function getPreprocessorTokens(document: string): Tokens[] {
     const lexer = new PreprocessorTokenizer();
 
@@ -180,4 +220,12 @@ export function getParseTree(filePath: string, document: string): ModuleDeclarat
     const parser = new Parser();
 
     return parser.parse(filePath, document, tokens);
+}
+
+export function getBoundParseTree(filePath: string, document: string): ModuleDeclaration {
+    const tree = getParseTree(filePath, document);
+    const binder = new Binder();
+    binder.bind(tree);
+
+    return tree;
 }

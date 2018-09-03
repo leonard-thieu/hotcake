@@ -12,6 +12,7 @@
     "test:preprocessorParser": "mocha --require source-map-support/register \"./tests/PreprocessorParserTests.js\"",
     "test:tokenizer": "mocha --require source-map-support/register \"./tests/TokenizerTests.js\"",
     "test:parser": "mocha --require source-map-support/register \"./tests/ParserTests.js\"",
+    "test:binder": "mocha --require source-map-support/register \"./tests/BinderTests.js\"",
     "watch": "tsc --watch"
   },
   "author": "Leonard Thieu",
