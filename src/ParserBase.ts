@@ -33,13 +33,13 @@ export abstract class ParserBase {
 
     // #region Expressions
 
-    protected parseExpression(parent: Node): Expressions | MissingExpressionToken {
+    protected parseExpression(parent: Node) {
         return this.parseBinaryExpression(Precedence.Initial, parent);
     }
 
     // #region Binary expressions
 
-    protected parseBinaryExpression(precedence: Precedence, parent: Node): Expressions | MissingExpressionToken {
+    protected parseBinaryExpression(precedence: Precedence, parent: Node) {
         let expression = this.parseUnaryExpression(parent);
         let [prevNewPrecedence, prevAssociativity] = UNKNOWN_PRECEDENCE_AND_ASSOCIATIVITY;
 
@@ -55,7 +55,8 @@ export abstract class ParserBase {
 
             const [newPrecedence, associativity] = getBinaryOperatorPrecedenceAndAssociativity(token);
 
-            if (prevAssociativity === Associativity.None && prevNewPrecedence === newPrecedence) {
+            if (prevAssociativity === Associativity.None &&
+                prevNewPrecedence === newPrecedence) {
                 break;
             }
 
@@ -80,7 +81,7 @@ export abstract class ParserBase {
                 token,
                 eachInKeyword,
                 this.parseBinaryExpression(newPrecedence, parent),
-                parent
+                parent,
             );
 
             prevNewPrecedence = newPrecedence;
@@ -96,7 +97,7 @@ export abstract class ParserBase {
         eachInKeyword: EachInKeywordToken | null,
         rightOperand: Expressions | MissingExpressionToken,
         parent: Node
-    ): Expressions {
+    ): BinaryExpression {
         const binaryExpression = new BinaryExpression();
         binaryExpression.parent = parent;
         binaryExpression.leftOperand = leftOperand;
@@ -123,7 +124,7 @@ export abstract class ParserBase {
                 break;
             }
 
-            if (!newlines) {
+            if (newlines === null) {
                 newlines = [];
             }
 
@@ -564,6 +565,7 @@ export abstract class ParserBase {
                     typeReference.modulePath = this.parseModulePath(typeReference);
 
                     const modulePathChildren = typeReference.modulePath.children;
+                    // TODO: This is type unsafe.
                     typeReference.identifier = modulePathChildren.pop() as typeof typeReference.identifier;
                     typeReference.scopeMemberAccessOperator = modulePathChildren.pop() as typeof typeReference.scopeMemberAccessOperator;
                 } else {
@@ -838,17 +840,18 @@ export abstract class ParserBase {
     // #region Tokens
 
     protected eat<TTokenKind extends TokenKinds>(...kinds: TTokenKind[]): TokenKindTokenMap[TTokenKind] {
-        const eaten = this.eatOptional(...kinds);
-        if (eaten !== null) {
-            return eaten;
+        const token = this.getToken();
+        if (kinds.includes(token.kind as TTokenKind)) {
+            this.advanceToken();
+
+            return token;
         }
 
-        const token = this.getToken();
-
-        return new MissingToken(kinds[0], token.start) as TokenKindTokenMap[typeof kinds[0]];
+        // TODO: A bit type unsafe.
+        return new MissingToken(kinds[0], token.start) as TokenKindTokenMap[TTokenKind];
     }
 
-    protected eatOptional<TTokenKind extends keyof TokenKindTokenMap>(...kinds: TTokenKind[]): TokenKindTokenMap[TTokenKind] | null {
+    protected eatOptional<TTokenKind extends TokenKinds>(...kinds: TTokenKind[]): TokenKindTokenMap[TTokenKind] | null {
         const token = this.getToken();
         if (kinds.includes(token.kind as TTokenKind)) {
             this.advanceToken();
