@@ -845,12 +845,12 @@ export abstract class ParserBase {
 
         const token = this.getToken();
 
-        return new MissingToken(kinds[0], token.start);
+        return new MissingToken(kinds[0], token.start) as TokenKindTokenMap[typeof kinds[0]];
     }
 
     protected eatOptional<TTokenKind extends keyof TokenKindTokenMap>(...kinds: TTokenKind[]): TokenKindTokenMap[TTokenKind] | null {
         const token = this.getToken();
-        if (kinds.includes(token.kind)) {
+        if (kinds.includes(token.kind as TTokenKind)) {
             this.advanceToken();
 
             return token;
