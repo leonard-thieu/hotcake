@@ -1,4 +1,4 @@
-import { Token } from '../../Token/Token';
+import { FloatLiteralToken } from '../../Token/Token';
 import { NodeKind } from '../NodeKind';
 import { Expression } from './Expression';
 
@@ -10,5 +10,5 @@ export class FloatLiteral extends Expression {
 
     readonly kind = NodeKind.FloatLiteral;
 
-    value: Token;
+    value: FloatLiteralToken;
 }

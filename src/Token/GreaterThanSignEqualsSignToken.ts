@@ -1,8 +1,8 @@
-import { Token } from './Token';
+import { EqualsSignToken, GreaterThanSignToken, Token } from './Token';
 import { TokenKind } from './TokenKind';
 
-export class GreaterThanSignEqualsSignToken extends Token {
-    constructor(public greaterThanSign: Token, public equalsSign: Token) {
+export class GreaterThanSignEqualsSignToken extends Token<TokenKind.GreaterThanSignEqualsSign> {
+    constructor(public greaterThanSign: GreaterThanSignToken, public equalsSign: EqualsSignToken) {
         super(
             TokenKind.GreaterThanSignEqualsSign,
             greaterThanSign.fullStart,

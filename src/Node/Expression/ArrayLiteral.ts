@@ -1,5 +1,5 @@
 import { ParseContextElementArray, ParseContextKind } from '../../ParserBase';
-import { Token } from '../../Token/Token';
+import { ClosingSquareBracketToken, OpeningSquareBracketToken } from '../../Token/Token';
 import { NodeKind } from '../NodeKind';
 import { Expression } from './Expression';
 
@@ -12,7 +12,7 @@ export class ArrayLiteral extends Expression {
 
     readonly kind = NodeKind.ArrayLiteral;
 
-    openingSquareBracket: Token;
+    openingSquareBracket: OpeningSquareBracketToken;
     expressions: ParseContextElementArray<ParseContextKind.ExpressionSequence>;
-    closingSquareBracket: Token;
+    closingSquareBracket: ClosingSquareBracketToken;
 }

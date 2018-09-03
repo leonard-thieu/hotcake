@@ -1,6 +1,5 @@
 import { ParseContextElementArray, ParseContextKind } from '../../ParserBase';
-import { MissingToken } from '../../Token/MissingToken';
-import { Token } from '../../Token/Token';
+import { CaseKeywordToken, DefaultKeywordToken, EndKeywordToken, MissingExpressionToken, NewlineToken, SelectKeywordToken } from '../../Token/Token';
 import { Expressions } from '../Expression/Expression';
 import { NodeKind } from '../NodeKind';
 import { Statement } from './Statement';
@@ -19,13 +18,13 @@ export class SelectStatement extends Statement {
 
     readonly kind = NodeKind.SelectStatement;
 
-    selectKeyword: Token;
-    expression: Expressions | MissingToken;
-    newlines: Token[] = [];
+    selectKeyword: SelectKeywordToken;
+    expression: Expressions | MissingExpressionToken;
+    newlines: NewlineToken[] = [];
     caseStatements: CaseStatement[] = [];
     defaultStatement: DefaultStatement | null = null;
-    endKeyword: Token;
-    endSelectKeyword: Token | null = null;
+    endKeyword: EndKeywordToken;
+    endSelectKeyword: SelectKeywordToken | null = null;
 }
 
 export class CaseStatement extends Statement {
@@ -37,7 +36,7 @@ export class CaseStatement extends Statement {
 
     readonly kind = NodeKind.CaseStatement;
 
-    caseKeyword: Token;
+    caseKeyword: CaseKeywordToken;
     expressions: ParseContextElementArray<ParseContextKind.ExpressionSequence>;
     statements: ParseContextElementArray<CaseStatement['kind']>;
 }
@@ -50,6 +49,6 @@ export class DefaultStatement extends Statement {
 
     readonly kind = NodeKind.DefaultStatement;
 
-    defaultKeyword: Token;
+    defaultKeyword: DefaultKeywordToken;
     statements: ParseContextElementArray<DefaultStatement['kind']>;
 }

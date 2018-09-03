@@ -1,5 +1,4 @@
-import { MissingToken } from '../../Token/MissingToken';
-import { Token } from '../../Token/Token';
+import { HyphenMinusToken, MissingExpressionToken, NotKeywordToken, PlusSignToken, TildeToken } from '../../Token/Token';
 import { NodeKind } from '../NodeKind';
 import { Expression, Expressions } from './Expression';
 
@@ -12,6 +11,13 @@ export class UnaryOpExpression extends Expression {
 
     readonly kind = NodeKind.UnaryOpExpression;
 
-    operator: Token;
-    operand: Expressions | MissingToken;
+    operator: UnaryOpTokens;
+    operand: Expressions | MissingExpressionToken;
 }
+
+export type UnaryOpTokens =
+    PlusSignToken |
+    HyphenMinusToken |
+    TildeToken |
+    NotKeywordToken
+    ;

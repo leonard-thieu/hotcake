@@ -1,4 +1,4 @@
-import { Token } from '../../Token/Token';
+import { ExternKeywordToken, PrivateKeywordToken, ProtectedKeywordToken, PublicKeywordToken } from '../../Token/Token';
 import { NodeKind } from '../NodeKind';
 import { Declaration } from './Declaration';
 
@@ -10,6 +10,6 @@ export class AccessibilityDirective extends Declaration {
 
     readonly kind = NodeKind.AccessibilityDirective;
 
-    accessibilityKeyword: Token;
-    externPrivateKeyword: Token | null = null;
+    accessibilityKeyword: PrivateKeywordToken | PublicKeywordToken | ProtectedKeywordToken | ExternKeywordToken;
+    externPrivateKeyword: PrivateKeywordToken | null = null;
 }

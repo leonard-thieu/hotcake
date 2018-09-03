@@ -1,5 +1,4 @@
-import { MissingToken } from '../../Token/MissingToken';
-import { Token } from '../../Token/Token';
+import { EachInKeywordToken, MissingExpressionToken, Tokens } from '../../Token/Token';
 import { NodeKind } from '../NodeKind';
 import { Expression, Expressions } from './Expression';
 
@@ -14,8 +13,8 @@ export class BinaryExpression extends Expression {
 
     readonly kind = NodeKind.BinaryExpression;
 
-    leftOperand: Expressions | MissingToken;
-    operator: Token;
-    eachInKeyword: Token | null = null;
-    rightOperand: Expressions | MissingToken;
+    leftOperand: Expressions | MissingExpressionToken;
+    operator: Tokens;
+    eachInKeyword: EachInKeywordToken | null = null;
+    rightOperand: Expressions | MissingExpressionToken;
 }

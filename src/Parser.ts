@@ -30,12 +30,12 @@ import { ThrowStatement } from './Node/Statement/ThrowStatement';
 import { CatchStatement, TryStatement } from './Node/Statement/TryStatement';
 import { WhileLoop } from './Node/Statement/WhileLoop';
 import { TypeParameter } from './Node/TypeParameter';
-import { ParseContext, ParseContextElementMap, ParseContextElementMapBase, ParseContextKind, ParserBase } from './ParserBase';
-import { Token } from './Token/Token';
+import { ParseContext, ParseContextElementMapBase, ParseContextKind, ParserBase } from './ParserBase';
+import { Tokens } from './Token/Token';
 import { TokenKind } from './Token/TokenKind';
 
 export class Parser extends ParserBase {
-    parse(filePath: string, document: string, tokens: Token[]): ModuleDeclaration {
+    parse(filePath: string, document: string, tokens: Tokens[]): ModuleDeclaration {
         this.tokens = [...tokens];
         this.position = 0;
         this.parseContexts = [];
@@ -59,7 +59,7 @@ export class Parser extends ParserBase {
         return false;
     }
 
-    private isModuleMemberStart(token: Token): boolean {
+    private isModuleMemberStart(token: Tokens): boolean {
         switch (token.kind) {
             case TokenKind.StrictKeyword:
             case TokenKind.ImportKeyword:
@@ -202,13 +202,8 @@ export class Parser extends ParserBase {
             classDeclaration.implementedTypes = this.parseList(classDeclaration, ParseContextKind.TypeReferenceSequence);
         }
 
-        while (true) {
-            const token = this.getToken();
-            if (token.kind !== TokenKind.AbstractKeyword &&
-                token.kind !== TokenKind.FinalKeyword) {
-                break;
-            }
-            this.advanceToken();
+        let token: typeof classDeclaration.attributes[0] | null;
+        while ((token = this.eatOptional(TokenKind.AbstractKeyword, TokenKind.FinalKeyword)) !== null) {
             classDeclaration.attributes.push(token);
         }
 
@@ -223,11 +218,11 @@ export class Parser extends ParserBase {
 
     // #region Interface members
 
-    private isInterfaceMembersListTerminator(token: Token): boolean {
+    private isInterfaceMembersListTerminator(token: Tokens): boolean {
         return token.kind === TokenKind.EndKeyword;
     }
 
-    private isInterfaceMemberStart(token: Token): boolean {
+    private isInterfaceMemberStart(token: Tokens): boolean {
         switch (token.kind) {
             case TokenKind.ConstKeyword:
             case TokenKind.MethodKeyword:
@@ -275,11 +270,11 @@ export class Parser extends ParserBase {
 
     // #region Class members
 
-    private isClassMembersListTerminator(token: Token): boolean {
+    private isClassMembersListTerminator(token: Tokens): boolean {
         return token.kind === TokenKind.EndKeyword;
     }
 
-    private isClassMemberStart(token: Token): boolean {
+    private isClassMemberStart(token: Tokens): boolean {
         switch (token.kind) {
             case TokenKind.ConstKeyword:
             case TokenKind.GlobalKeyword:
@@ -336,18 +331,12 @@ export class Parser extends ParserBase {
         classMethodDeclaration.parameters = this.parseDataDeclarationList(classMethodDeclaration);
         classMethodDeclaration.closingParenthesis = this.eat(TokenKind.ClosingParenthesis);
 
-        while (true) {
-            const token = this.getToken();
-            if (token.kind !== TokenKind.PropertyKeyword &&
-                token.kind !== TokenKind.AbstractKeyword &&
-                token.kind !== TokenKind.FinalKeyword) {
-                break;
-            }
-            this.advanceToken();
+        let token: typeof classMethodDeclaration.attributes[0] | null;
+        while ((token = this.eatOptional(TokenKind.AbstractKeyword, TokenKind.FinalKeyword, TokenKind.PropertyKeyword)) !== null) {
             classMethodDeclaration.attributes.push(token);
         }
 
-        if (classMethodDeclaration.attributes.findIndex(a => a.kind === TokenKind.AbstractKeyword) === -1) {
+        if (classMethodDeclaration.attributes.findIndex(attribute => attribute.kind === TokenKind.AbstractKeyword) === -1) {
             classMethodDeclaration.statements = this.parseList(classMethodDeclaration, classMethodDeclaration.kind);
             classMethodDeclaration.endKeyword = this.eat(TokenKind.EndKeyword);
             classMethodDeclaration.endMethodKeyword = this.eatOptional(TokenKind.MethodKeyword);
@@ -360,11 +349,11 @@ export class Parser extends ParserBase {
 
     // #region Statements
 
-    private isBlockStatementsListTerminator(token: Token): boolean {
+    private isBlockStatementsListTerminator(token: Tokens): boolean {
         return token.kind === TokenKind.EndKeyword;
     }
 
-    private isStatementStart(token: Token): boolean {
+    private isStatementStart(token: Tokens): boolean {
         switch (token.kind) {
             case TokenKind.LocalKeyword:
             case TokenKind.ReturnKeyword:
@@ -544,7 +533,7 @@ export class Parser extends ParserBase {
         return elseStatement;
     }
 
-    private isIfStatementStatementsListTerminator(token: Token): boolean {
+    private isIfStatementStatementsListTerminator(token: Tokens): boolean {
         switch (token.kind) {
             case TokenKind.ElseIfKeyword:
             case TokenKind.ElseKeyword:
@@ -610,7 +599,7 @@ export class Parser extends ParserBase {
         return defaultStatement;
     }
 
-    private isCaseOrDefaultStatementStatementsListTerminator(token: Token): boolean {
+    private isCaseOrDefaultStatementStatementsListTerminator(token: Tokens): boolean {
         switch (token.kind) {
             case TokenKind.CaseKeyword:
             case TokenKind.DefaultKeyword:
@@ -643,7 +632,7 @@ export class Parser extends ParserBase {
         return whileLoop;
     }
 
-    private isWhileLoopStatementsListTerminator(token: Token): boolean {
+    private isWhileLoopStatementsListTerminator(token: Tokens): boolean {
         switch (token.kind) {
             case TokenKind.WendKeyword:
             case TokenKind.EndKeyword: {
@@ -672,7 +661,7 @@ export class Parser extends ParserBase {
         return repeatLoop;
     }
 
-    private isRepeatLoopStatementsListTerminator(token: Token): boolean {
+    private isRepeatLoopStatementsListTerminator(token: Tokens): boolean {
         switch (token.kind) {
             case TokenKind.ForeverKeyword:
             case TokenKind.UntilKeyword: {
@@ -735,7 +724,7 @@ export class Parser extends ParserBase {
         return numericForLoopHeader;
     }
 
-    private isForLoopStatementsListTerminator(token: Token): boolean {
+    private isForLoopStatementsListTerminator(token: Tokens): boolean {
         switch (token.kind) {
             case TokenKind.NextKeyword:
             case TokenKind.EndKeyword: {
@@ -877,11 +866,11 @@ export class Parser extends ParserBase {
 
     // #region Data declaration list members
 
-    private isDataDeclarationListMembersListTerminator(token: Token): boolean {
+    private isDataDeclarationListMembersListTerminator(token: Tokens): boolean {
         return !this.isDataDeclarationListMemberStart(token);
     }
 
-    private isDataDeclarationListMemberStart(token: Token): boolean {
+    private isDataDeclarationListMemberStart(token: Tokens): boolean {
         switch (token.kind) {
             // TODO: Is Period (global scope member access) allowed?
             case TokenKind.Identifier:
@@ -932,11 +921,11 @@ export class Parser extends ParserBase {
 
     // #region Type parameter sequence
 
-    private isTypeParameterSequenceTerminator(token: Token): boolean {
+    private isTypeParameterSequenceTerminator(token: Tokens): boolean {
         return !this.isTypeParameterSequenceMemberStart(token);
     }
 
-    private isTypeParameterSequenceMemberStart(token: Token): boolean {
+    private isTypeParameterSequenceMemberStart(token: Tokens): boolean {
         switch (token.kind) {
             case TokenKind.Identifier:
             case TokenKind.Comma: {
@@ -971,7 +960,7 @@ export class Parser extends ParserBase {
 
     // #endregion
 
-    protected isInvokeExpressionStart(token: Token, expression: Expressions): boolean {
+    protected isInvokeExpressionStart(token: Tokens, expression: Expressions): boolean {
         switch (token.kind) {
             case TokenKind.OpeningParenthesis: {
                 return true;
@@ -1009,7 +998,7 @@ export class Parser extends ParserBase {
 
     // #region Core
 
-    protected isListTerminator(parseContext: ParseContext, token: Token): boolean {
+    protected isListTerminator(parseContext: ParseContext, token: Tokens): boolean {
         parseContext = parseContext as ParserParseContext;
 
         if (token.kind === TokenKind.EOF) {
@@ -1061,7 +1050,7 @@ export class Parser extends ParserBase {
         return super.isListTerminatorCore(parseContext, token);
     }
 
-    protected isValidListElement(parseContext: ParseContext, token: Token): boolean {
+    protected isValidListElement(parseContext: ParseContext, token: Tokens): boolean {
         parseContext = parseContext as ParserParseContext;
 
         switch (parseContext) {
@@ -1099,7 +1088,7 @@ export class Parser extends ParserBase {
         return super.isValidListElementCore(parseContext, token);
     }
 
-    protected parseListElement(parseContext: ParseContext, parent: Node): ParseContextElementMap[ParseContext] {
+    protected parseListElement(parseContext: ParseContext, parent: Node) {
         parseContext = parseContext as ParserParseContext;
 
         switch (parseContext) {
@@ -1153,7 +1142,7 @@ export class Parser extends ParserBase {
         throw new Error(`Unexpected token: ${JSON.stringify(token.kind)} in ${JSON.stringify(p.kind)}`);
     }
 
-    private eatStatementTerminator(statement: Statement): Token | null {
+    private eatStatementTerminator(statement: Statement) {
         if (!this.isInlineStatement(statement)) {
             return this.eat(TokenKind.Newline, TokenKind.Semicolon);
         }

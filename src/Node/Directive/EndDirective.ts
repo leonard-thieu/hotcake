@@ -1,4 +1,4 @@
-import { Token } from '../../Token/Token';
+import { EndDirectiveKeywordToken } from '../../Token/Token';
 import { NodeKind } from '../NodeKind';
 import { Directive } from './Directive';
 
@@ -9,5 +9,5 @@ export class EndDirective extends Directive {
 
     readonly kind = NodeKind.EndDirective;
 
-    endDirectiveKeyword: Token;
+    endDirectiveKeyword: EndDirectiveKeywordToken;
 }

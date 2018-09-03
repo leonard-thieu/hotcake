@@ -1,4 +1,4 @@
-import { Token } from '../../Token/Token';
+import { FalseKeywordToken, TrueKeywordToken } from '../../Token/Token';
 import { NodeKind } from '../NodeKind';
 import { Expression } from './Expression';
 
@@ -10,5 +10,5 @@ export class BooleanLiteral extends Expression {
 
     readonly kind = NodeKind.BooleanLiteral;
 
-    value: Token;
+    value: TrueKeywordToken | FalseKeywordToken;
 }

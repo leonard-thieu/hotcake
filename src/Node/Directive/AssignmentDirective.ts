@@ -1,5 +1,4 @@
-import { MissingToken } from '../../Token/MissingToken';
-import { Token } from '../../Token/Token';
+import { ConfigurationVariableToken, EqualsSignToken, MissingExpressionToken, PlusSignEqualsSignToken } from '../../Token/Token';
 import { Expressions } from '../Expression/Expression';
 import { NodeKind } from '../NodeKind';
 import { Directive } from './Directive';
@@ -13,7 +12,7 @@ export class AssignmentDirective extends Directive {
 
     readonly kind = NodeKind.AssignmentDirective;
 
-    name: Token;
-    operator: Token;
-    expression: Expressions | MissingToken;
+    name: ConfigurationVariableToken;
+    operator: EqualsSignToken | PlusSignEqualsSignToken;
+    expression: Expressions | MissingExpressionToken;
 }

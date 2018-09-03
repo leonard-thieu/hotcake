@@ -1,6 +1,5 @@
 import { ParseContextElementArray } from '../../ParserBase';
-import { MissingToken } from '../../Token/MissingToken';
-import { Token } from '../../Token/Token';
+import { ElseIfKeywordToken, ElseKeywordToken, EndIfKeywordToken, EndKeywordToken, IfKeywordToken, MissingExpressionToken, ThenKeywordToken } from '../../Token/Token';
 import { Expressions } from '../Expression/Expression';
 import { NodeKind } from '../NodeKind';
 import { Statement } from './Statement';
@@ -21,15 +20,15 @@ export class IfStatement extends Statement {
 
     readonly kind = NodeKind.IfStatement;
 
-    ifKeyword: Token;
-    expression: Expressions | MissingToken;
-    thenKeyword: Token | null = null;
+    ifKeyword: IfKeywordToken;
+    expression: Expressions | MissingExpressionToken;
+    thenKeyword: ThenKeywordToken | null = null;
     isSingleLine: boolean = false;
     statements: ParseContextElementArray<IfStatement['kind']>;
     elseIfStatements: ElseIfStatement[] | null = null;
     elseStatement: ElseStatement | null = null;
-    endKeyword: Token | null = null;
-    endIfKeyword: Token | null = null;
+    endKeyword: EndIfKeywordToken | EndKeywordToken | null = null;
+    endIfKeyword: IfKeywordToken | null = null;
 }
 
 export class ElseIfStatement extends Statement {
@@ -43,10 +42,10 @@ export class ElseIfStatement extends Statement {
 
     readonly kind = NodeKind.ElseIfStatement;
 
-    elseIfKeyword: Token;
-    ifKeyword: Token | null = null;
-    expression: Expressions | MissingToken;
-    thenKeyword: Token | null = null;
+    elseIfKeyword: ElseIfKeywordToken | ElseKeywordToken;
+    ifKeyword: IfKeywordToken | null = null;
+    expression: Expressions | MissingExpressionToken;
+    thenKeyword: ThenKeywordToken | null = null;
     statements: ParseContextElementArray<ElseIfStatement['kind']>;
 }
 
@@ -58,6 +57,6 @@ export class ElseStatement extends Statement {
 
     readonly kind = NodeKind.ElseStatement;
 
-    elseKeyword: Token;
+    elseKeyword: ElseKeywordToken;
     statements: ParseContextElementArray<ElseStatement['kind']>;
 }

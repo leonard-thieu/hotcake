@@ -1,5 +1,5 @@
 import { ParseContextElementArray } from '../../ParserBase';
-import { Token } from '../../Token/Token';
+import { ConstKeywordToken, FieldKeywordToken, GlobalKeywordToken, LocalKeywordToken } from '../../Token/Token';
 import { NodeKind } from '../NodeKind';
 import { Declaration } from './Declaration';
 
@@ -15,6 +15,6 @@ export class DataDeclarationList extends Declaration {
      * Const, Global, Field, or Local
      * null for parameters
      */
-    dataDeclarationKeyword: Token | null = null;
+    dataDeclarationKeyword: ConstKeywordToken | GlobalKeywordToken | FieldKeywordToken | LocalKeywordToken | null = null;
     children: ParseContextElementArray<DataDeclarationList['kind']>;
 }

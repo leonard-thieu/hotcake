@@ -1,6 +1,5 @@
 import { ParseContextElementArray, ParseContextKind } from '../ParserBase';
-import { MissingToken } from '../Token/MissingToken';
-import { Token } from '../Token/Token';
+import { BoolKeywordToken, ClosingSquareBracketToken, DollarSignToken, FloatKeywordToken, GreaterThanSignToken, IntKeywordToken, LessThanSignToken, MissingExpressionToken, NumberSignToken, ObjectKeywordToken, OpeningSquareBracketToken, PercentSignToken, PeriodToken, QuestionMarkToken, StringKeywordToken, ThrowableKeywordToken, VoidKeywordToken, IdentifierToken } from '../Token/Token';
 import { Expressions } from './Expression/Expression';
 import { ModulePath } from './ModulePath';
 import { Node } from './Node';
@@ -20,16 +19,31 @@ export class TypeReference extends Node {
     readonly kind = NodeKind.TypeReference;
 
     modulePath: ModulePath | null = null;
-    scopeMemberAccessOperator: Token | null = null;
-    identifier: Token;
+    scopeMemberAccessOperator: PeriodToken | null = null;
+    identifier: TypeReferenceIdentifierToken;
 
     // Generic type arguments
-    lessThanSign: Token | null = null;
+    lessThanSign: LessThanSignToken | null = null;
     typeArguments: ParseContextElementArray<ParseContextKind.TypeReferenceSequence> | null = null;
-    greaterThanSign: Token | null = null;
+    greaterThanSign: GreaterThanSignToken | null = null;
 
     arrayTypeDeclarations: ArrayTypeDeclaration[] | null = null;
 }
+
+export type TypeReferenceIdentifierToken =
+    QuestionMarkToken |
+    PercentSignToken |
+    NumberSignToken |
+    DollarSignToken |
+    BoolKeywordToken |
+    IntKeywordToken |
+    FloatKeywordToken |
+    StringKeywordToken |
+    ObjectKeywordToken |
+    ThrowableKeywordToken |
+    VoidKeywordToken |
+    IdentifierToken
+    ;
 
 export class ArrayTypeDeclaration extends Node {
     static CHILD_NAMES: (keyof ArrayTypeDeclaration)[] = [
@@ -40,7 +54,7 @@ export class ArrayTypeDeclaration extends Node {
 
     readonly kind = NodeKind.ArrayTypeDeclaration;
 
-    openingSquareBracket: Token;
-    expression: Expressions | MissingToken | null = null;
-    closingSquareBracket: Token;
+    openingSquareBracket: OpeningSquareBracketToken;
+    expression: Expressions | MissingExpressionToken | null = null;
+    closingSquareBracket: ClosingSquareBracketToken;
 }

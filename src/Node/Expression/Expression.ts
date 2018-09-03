@@ -1,5 +1,4 @@
-import { MissingToken } from '../../Token/MissingToken';
-import { Token } from '../../Token/Token';
+import { MissingExpressionToken, NewlineToken } from '../../Token/Token';
 import { TokenKind } from '../../Token/TokenKind';
 import { Node } from '../Node';
 import { ArrayLiteral } from './ArrayLiteral';
@@ -20,7 +19,7 @@ import { SuperExpression } from './SuperExpression';
 import { UnaryOpExpression } from './UnaryOpExpression';
 
 export abstract class Expression extends Node {
-    newlines: Token[] | null = null;
+    newlines: NewlineToken[] | null = null;
 }
 
 export type Expressions =
@@ -43,6 +42,6 @@ export type Expressions =
     ;
 
 
-export function isMissingToken(expression: Expressions | MissingToken): expression is MissingToken {
+export function isMissingToken(expression: Expressions | MissingExpressionToken): expression is MissingExpressionToken {
     return expression.kind === TokenKind.Expression;
 }

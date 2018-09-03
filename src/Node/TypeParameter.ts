@@ -1,4 +1,4 @@
-import { Token } from '../Token/Token';
+import { IdentifierToken } from '../Token/Token';
 import { Node } from './Node';
 import { NodeKind } from './NodeKind';
 
@@ -9,5 +9,5 @@ export class TypeParameter extends Node {
 
     readonly kind = NodeKind.TypeParameter;
 
-    name: Token;
+    name: IdentifierToken;
 }

@@ -1,5 +1,4 @@
-import { MissingToken } from '../../Token/MissingToken';
-import { Token } from '../../Token/Token';
+import { MissingExpressionToken, ReturnKeywordToken } from '../../Token/Token';
 import { Expressions } from '../Expression/Expression';
 import { NodeKind } from '../NodeKind';
 import { Statement } from './Statement';
@@ -13,6 +12,6 @@ export class ReturnStatement extends Statement {
 
     readonly kind = NodeKind.ReturnStatement;
 
-    returnKeyword: Token;
-    expression: Expressions | MissingToken | null = null;
+    returnKeyword: ReturnKeywordToken;
+    expression: Expressions | MissingExpressionToken | null = null;
 }

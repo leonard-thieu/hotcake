@@ -1,4 +1,4 @@
-import { Token } from '../Token/Token';
+import { CommaToken, NewlineToken } from '../Token/Token';
 import { Node } from './Node';
 import { NodeKind } from './NodeKind';
 
@@ -10,6 +10,6 @@ export class CommaSeparator extends Node {
 
     readonly kind = NodeKind.CommaSeparator;
 
-    separator: Token;
-    newlines: Token[] = [];
+    separator: CommaToken;
+    newlines: NewlineToken[] = [];
 }
