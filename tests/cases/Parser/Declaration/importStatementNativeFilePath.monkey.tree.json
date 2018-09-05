@@ -9,8 +9,7 @@
                 "start": 0,
                 "length": 6
             },
-            "modulePath": null,
-            "nativeFilePath": {
+            "path": {
                 "kind": "StringLiteral",
                 "newlines": null,
                 "startQuote": {

@@ -9,7 +9,7 @@
                 "start": 0,
                 "length": 6
             },
-            "modulePath": {
+            "path": {
                 "kind": "ModulePath",
                 "children": [
                     {
@@ -19,8 +19,7 @@
                         "length": 6
                     }
                 ]
-            },
-            "nativeFilePath": null
+            }
         }
     ]
 }

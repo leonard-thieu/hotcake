@@ -102,8 +102,7 @@
                 "start": 627,
                 "length": 6
             },
-            "modulePath": null,
-            "nativeFilePath": {
+            "path": {
                 "kind": "StringLiteral",
                 "newlines": null,
                 "startQuote": {
@@ -142,7 +141,7 @@
                 "start": 680,
                 "length": 6
             },
-            "modulePath": {
+            "path": {
                 "kind": "ModulePath",
                 "children": [
                     {
@@ -152,8 +151,7 @@
                         "length": 5
                     }
                 ]
-            },
-            "nativeFilePath": null
+            }
         },
         {
             "kind": "Newline",
@@ -169,7 +167,7 @@
                 "start": 738,
                 "length": 6
             },
-            "modulePath": {
+            "path": {
                 "kind": "ModulePath",
                 "children": [
                     {
@@ -191,8 +189,7 @@
                         "length": 10
                     }
                 ]
-            },
-            "nativeFilePath": null
+            }
         },
         {
             "kind": "Newline",
