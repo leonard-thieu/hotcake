@@ -2495,6 +2495,7 @@
             "typeParameters": null,
             "greaterThanSign": null,
             "extendsKeyword": null,
+            "baseType": null,
             "implementsKeyword": null,
             "implementedTypes": null,
             "attributes": [],
@@ -3000,6 +3001,7 @@
             "typeParameters": null,
             "greaterThanSign": null,
             "extendsKeyword": null,
+            "baseType": null,
             "implementsKeyword": null,
             "implementedTypes": null,
             "attributes": [
@@ -3648,6 +3650,21 @@
                 "start": 3928,
                 "length": 8
             },
+            "baseType": {
+                "kind": "TypeReference",
+                "modulePath": null,
+                "scopeMemberAccessOperator": null,
+                "identifier": {
+                    "kind": "Identifier",
+                    "fullStart": 3935,
+                    "start": 3936,
+                    "length": 8
+                },
+                "lessThanSign": null,
+                "typeArguments": null,
+                "greaterThanSign": null,
+                "arrayTypeDeclarations": null
+            },
             "implementsKeyword": null,
             "implementedTypes": null,
             "attributes": [],
@@ -3727,6 +3744,21 @@
                 "fullStart": 4054,
                 "start": 4055,
                 "length": 8
+            },
+            "baseType": {
+                "kind": "TypeReference",
+                "modulePath": null,
+                "scopeMemberAccessOperator": null,
+                "identifier": {
+                    "kind": "Identifier",
+                    "fullStart": 4062,
+                    "start": 4063,
+                    "length": 8
+                },
+                "lessThanSign": null,
+                "typeArguments": null,
+                "greaterThanSign": null,
+                "arrayTypeDeclarations": null
             },
             "implementsKeyword": null,
             "implementedTypes": null,
@@ -3810,6 +3842,7 @@
                 "length": 1
             },
             "extendsKeyword": null,
+            "baseType": null,
             "implementsKeyword": {
                 "kind": "ImplementsKeyword",
                 "fullStart": 4189,
@@ -3906,6 +3939,7 @@
                 "length": 1
             },
             "extendsKeyword": null,
+            "baseType": null,
             "implementsKeyword": {
                 "kind": "ImplementsKeyword",
                 "fullStart": 4310,
@@ -4009,6 +4043,7 @@
                 "length": 1
             },
             "extendsKeyword": null,
+            "baseType": null,
             "implementsKeyword": {
                 "kind": "ImplementsKeyword",
                 "fullStart": 4447,
@@ -4134,6 +4169,21 @@
                 "fullStart": 4569,
                 "start": 4570,
                 "length": 8
+            },
+            "baseType": {
+                "kind": "TypeReference",
+                "modulePath": null,
+                "scopeMemberAccessOperator": null,
+                "identifier": {
+                    "kind": "Identifier",
+                    "fullStart": 4577,
+                    "start": 4578,
+                    "length": 8
+                },
+                "lessThanSign": null,
+                "typeArguments": null,
+                "greaterThanSign": null,
+                "arrayTypeDeclarations": null
             },
             "implementsKeyword": {
                 "kind": "ImplementsKeyword",
@@ -4265,6 +4315,21 @@
                 "fullStart": 4721,
                 "start": 4722,
                 "length": 8
+            },
+            "baseType": {
+                "kind": "TypeReference",
+                "modulePath": null,
+                "scopeMemberAccessOperator": null,
+                "identifier": {
+                    "kind": "Identifier",
+                    "fullStart": 4729,
+                    "start": 4730,
+                    "length": 8
+                },
+                "lessThanSign": null,
+                "typeArguments": null,
+                "greaterThanSign": null,
+                "arrayTypeDeclarations": null
             },
             "implementsKeyword": {
                 "kind": "ImplementsKeyword",

@@ -42,136 +42,144 @@
                 {
                     "kind": "ExpressionStatement",
                     "expression": {
-                        "kind": "InvokeExpression",
+                        "kind": "ScopeMemberAccessExpression",
                         "newlines": null,
-                        "invokableExpression": {
-                            "kind": "ScopeMemberAccessExpression",
+                        "scopableExpression": {
+                            "kind": "IdentifierExpression",
                             "newlines": null,
-                            "scopableExpression": {
-                                "kind": "IdentifierExpression",
-                                "newlines": null,
-                                "globalScopeMemberAccessOperator": null,
-                                "name": {
-                                    "kind": "Identifier",
-                                    "fullStart": 17,
-                                    "start": 21,
-                                    "length": 15
-                                },
-                                "lessThanSign": {
-                                    "kind": "LessThanSign",
-                                    "fullStart": 32,
-                                    "start": 32,
-                                    "length": 1
-                                },
-                                "typeArguments": [
-                                    {
-                                        "kind": "TypeReference",
-                                        "modulePath": null,
-                                        "scopeMemberAccessOperator": null,
-                                        "identifier": {
-                                            "kind": "IntKeyword",
-                                            "fullStart": 33,
-                                            "start": 33,
-                                            "length": 3
-                                        },
-                                        "lessThanSign": null,
-                                        "typeArguments": null,
-                                        "greaterThanSign": null,
-                                        "arrayTypeDeclarations": null
-                                    }
-                                ],
-                                "greaterThanSign": {
-                                    "kind": "GreaterThanSign",
-                                    "fullStart": 36,
-                                    "start": 36,
-                                    "length": 1
-                                }
+                            "globalScopeMemberAccessOperator": null,
+                            "name": {
+                                "kind": "Identifier",
+                                "fullStart": 17,
+                                "start": 21,
+                                "length": 15
                             },
-                            "scopeMemberAccessOperator": {
-                                "kind": "Period",
-                                "fullStart": 37,
-                                "start": 37,
+                            "lessThanSign": {
+                                "kind": "LessThanSign",
+                                "fullStart": 32,
+                                "start": 32,
                                 "length": 1
                             },
-                            "identifier": {
-                                "kind": "Identifier",
-                                "fullStart": 38,
-                                "start": 38,
-                                "length": 7
+                            "typeArguments": [
+                                {
+                                    "kind": "TypeReference",
+                                    "modulePath": null,
+                                    "scopeMemberAccessOperator": null,
+                                    "identifier": {
+                                        "kind": "IntKeyword",
+                                        "fullStart": 33,
+                                        "start": 33,
+                                        "length": 3
+                                    },
+                                    "lessThanSign": null,
+                                    "typeArguments": null,
+                                    "greaterThanSign": null,
+                                    "arrayTypeDeclarations": null
+                                }
+                            ],
+                            "greaterThanSign": {
+                                "kind": "GreaterThanSign",
+                                "fullStart": 36,
+                                "start": 36,
+                                "length": 1
                             }
                         },
-                        "openingParenthesis": {
-                            "kind": "OpeningParenthesis",
-                            "fullStart": 45,
-                            "start": 45,
+                        "scopeMemberAccessOperator": {
+                            "kind": "Period",
+                            "fullStart": 37,
+                            "start": 37,
                             "length": 1
                         },
-                        "arguments": [
-                            {
+                        "member": {
+                            "kind": "InvokeExpression",
+                            "newlines": null,
+                            "invokableExpression": {
                                 "kind": "IdentifierExpression",
                                 "newlines": null,
                                 "globalScopeMemberAccessOperator": null,
                                 "name": {
                                     "kind": "Identifier",
-                                    "fullStart": 46,
-                                    "start": 46,
-                                    "length": 9
+                                    "fullStart": 38,
+                                    "start": 38,
+                                    "length": 7
                                 },
                                 "lessThanSign": null,
                                 "typeArguments": null,
                                 "greaterThanSign": null
                             },
-                            {
-                                "kind": "CommaSeparator",
-                                "separator": {
-                                    "kind": "Comma",
-                                    "fullStart": 55,
-                                    "start": 55,
-                                    "length": 1
-                                },
-                                "newlines": []
+                            "openingParenthesis": {
+                                "kind": "OpeningParenthesis",
+                                "fullStart": 45,
+                                "start": 45,
+                                "length": 1
                             },
-                            {
-                                "kind": "BinaryExpression",
-                                "newlines": null,
-                                "leftOperand": {
+                            "arguments": [
+                                {
                                     "kind": "IdentifierExpression",
                                     "newlines": null,
                                     "globalScopeMemberAccessOperator": null,
                                     "name": {
                                         "kind": "Identifier",
-                                        "fullStart": 56,
-                                        "start": 57,
+                                        "fullStart": 46,
+                                        "start": 46,
                                         "length": 9
                                     },
                                     "lessThanSign": null,
                                     "typeArguments": null,
                                     "greaterThanSign": null
                                 },
-                                "operator": {
-                                    "kind": "Asterisk",
-                                    "fullStart": 65,
-                                    "start": 66,
-                                    "length": 2
+                                {
+                                    "kind": "CommaSeparator",
+                                    "separator": {
+                                        "kind": "Comma",
+                                        "fullStart": 55,
+                                        "start": 55,
+                                        "length": 1
+                                    },
+                                    "newlines": []
                                 },
-                                "eachInKeyword": null,
-                                "rightOperand": {
-                                    "kind": "IntegerLiteral",
+                                {
+                                    "kind": "BinaryExpression",
                                     "newlines": null,
-                                    "value": {
-                                        "kind": "IntegerLiteral",
-                                        "fullStart": 67,
-                                        "start": 68,
+                                    "leftOperand": {
+                                        "kind": "IdentifierExpression",
+                                        "newlines": null,
+                                        "globalScopeMemberAccessOperator": null,
+                                        "name": {
+                                            "kind": "Identifier",
+                                            "fullStart": 56,
+                                            "start": 57,
+                                            "length": 9
+                                        },
+                                        "lessThanSign": null,
+                                        "typeArguments": null,
+                                        "greaterThanSign": null
+                                    },
+                                    "operator": {
+                                        "kind": "Asterisk",
+                                        "fullStart": 65,
+                                        "start": 66,
                                         "length": 2
+                                    },
+                                    "eachInKeyword": null,
+                                    "rightOperand": {
+                                        "kind": "IntegerLiteral",
+                                        "newlines": null,
+                                        "value": {
+                                            "kind": "IntegerLiteral",
+                                            "fullStart": 67,
+                                            "start": 68,
+                                            "length": 2
+                                        }
                                     }
                                 }
+                            ],
+                            "closingParenthesis": {
+                                "kind": "ClosingParenthesis",
+                                "fullStart": 69,
+                                "start": 69,
+                                "length": 1
                             }
-                        ],
-                        "closingParenthesis": {
-                            "kind": "ClosingParenthesis",
-                            "fullStart": 69,
-                            "start": 69,
-                            "length": 1
                         }
                     },
                     "terminator": {

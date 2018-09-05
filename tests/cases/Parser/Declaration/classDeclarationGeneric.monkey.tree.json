@@ -58,6 +58,7 @@
                 "length": 1
             },
             "extendsKeyword": null,
+            "baseType": null,
             "implementsKeyword": null,
             "implementedTypes": null,
             "attributes": [],

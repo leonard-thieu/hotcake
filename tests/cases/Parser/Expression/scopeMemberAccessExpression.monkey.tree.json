@@ -70,11 +70,19 @@
                             "start": 33,
                             "length": 1
                         },
-                        "identifier": {
-                            "kind": "Identifier",
-                            "fullStart": 34,
-                            "start": 34,
-                            "length": 4
+                        "member": {
+                            "kind": "IdentifierExpression",
+                            "newlines": null,
+                            "globalScopeMemberAccessOperator": null,
+                            "name": {
+                                "kind": "Identifier",
+                                "fullStart": 34,
+                                "start": 34,
+                                "length": 4
+                            },
+                            "lessThanSign": null,
+                            "typeArguments": null,
+                            "greaterThanSign": null
                         }
                     },
                     "terminator": {

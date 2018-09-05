@@ -19,6 +19,7 @@
             "typeParameters": null,
             "greaterThanSign": null,
             "extendsKeyword": null,
+            "baseType": null,
             "implementsKeyword": {
                 "kind": "ImplementsKeyword",
                 "fullStart": 11,
