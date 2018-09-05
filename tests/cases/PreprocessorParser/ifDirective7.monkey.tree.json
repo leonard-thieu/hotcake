@@ -32,7 +32,6 @@
                     "start": 11,
                     "length": 2
                 },
-                "eachInKeyword": null,
                 "rightOperand": {
                     "kind": "StringLiteral",
                     "newlines": null,
@@ -140,7 +139,6 @@
                             "start": 74,
                             "length": 2
                         },
-                        "eachInKeyword": null,
                         "rightOperand": {
                             "kind": "StringLiteral",
                             "newlines": null,
@@ -242,7 +240,6 @@
                                     "start": 149,
                                     "length": 2
                                 },
-                                "eachInKeyword": null,
                                 "rightOperand": {
                                     "kind": "IdentifierExpression",
                                     "newlines": null,
@@ -371,7 +368,6 @@
                             "start": 219,
                             "length": 2
                         },
-                        "eachInKeyword": null,
                         "rightOperand": {
                             "kind": "StringLiteral",
                             "newlines": null,

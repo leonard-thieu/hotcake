@@ -88,7 +88,6 @@
                                 "start": 27,
                                 "length": 1
                             },
-                            "eachInKeyword": null,
                             "rightOperand": {
                                 "kind": "IntegerLiteral",
                                 "newlines": null,
@@ -129,7 +128,6 @@
                                 "start": 32,
                                 "length": 1
                             },
-                            "eachInKeyword": null,
                             "rightOperand": {
                                 "kind": "IntegerLiteral",
                                 "newlines": null,

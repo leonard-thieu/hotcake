@@ -70,7 +70,6 @@
                             "start": 26,
                             "length": 2
                         },
-                        "eachInKeyword": null,
                         "rightOperand": {
                             "kind": "IntegerLiteral",
                             "newlines": null,

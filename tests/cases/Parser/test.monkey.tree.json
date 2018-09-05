@@ -1614,7 +1614,6 @@
                             "start": 2144,
                             "length": 2
                         },
-                        "eachInKeyword": null,
                         "rightOperand": {
                             "kind": "IntegerLiteral",
                             "newlines": null,
@@ -4532,7 +4531,6 @@
                             "start": 4913,
                             "length": 2
                         },
-                        "eachInKeyword": null,
                         "rightOperand": {
                             "kind": "StringLiteral",
                             "newlines": null,
@@ -4641,7 +4639,6 @@
                             "start": 4989,
                             "length": 2
                         },
-                        "eachInKeyword": null,
                         "rightOperand": {
                             "kind": "StringLiteral",
                             "newlines": null,
@@ -4778,7 +4775,6 @@
                             "start": 5108,
                             "length": 2
                         },
-                        "eachInKeyword": null,
                         "rightOperand": {
                             "kind": "StringLiteral",
                             "newlines": null,
@@ -4864,7 +4860,6 @@
                                     "start": 5175,
                                     "length": 3
                                 },
-                                "eachInKeyword": null,
                                 "rightOperand": {
                                     "kind": "StringLiteral",
                                     "newlines": null,
@@ -4966,7 +4961,6 @@
                             "start": 5245,
                             "length": 2
                         },
-                        "eachInKeyword": null,
                         "rightOperand": {
                             "kind": "StringLiteral",
                             "newlines": null,
@@ -5052,7 +5046,6 @@
                                     "start": 5312,
                                     "length": 3
                                 },
-                                "eachInKeyword": null,
                                 "rightOperand": {
                                     "kind": "StringLiteral",
                                     "newlines": null,
@@ -5177,7 +5170,6 @@
                             "start": 5420,
                             "length": 2
                         },
-                        "eachInKeyword": null,
                         "rightOperand": {
                             "kind": "StringLiteral",
                             "newlines": null,
@@ -5268,7 +5260,6 @@
                                     "start": 5492,
                                     "length": 3
                                 },
-                                "eachInKeyword": null,
                                 "rightOperand": {
                                     "kind": "StringLiteral",
                                     "newlines": null,
@@ -5490,7 +5481,6 @@
                             "start": 5662,
                             "length": 2
                         },
-                        "eachInKeyword": null,
                         "rightOperand": {
                             "kind": "StringLiteral",
                             "newlines": null,
@@ -5578,7 +5568,6 @@
                             "start": 5697,
                             "length": 3
                         },
-                        "eachInKeyword": null,
                         "rightOperand": {
                             "kind": "StringLiteral",
                             "newlines": null,
@@ -5932,7 +5921,6 @@
                             "start": 6055,
                             "length": 3
                         },
-                        "eachInKeyword": null,
                         "rightOperand": {
                             "kind": "BinaryExpression",
                             "newlines": null,
@@ -5959,7 +5947,6 @@
                                 "start": 6103,
                                 "length": 2
                             },
-                            "eachInKeyword": null,
                             "rightOperand": {
                                 "kind": "UnaryOpExpression",
                                 "newlines": null,

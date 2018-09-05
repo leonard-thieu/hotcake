@@ -187,7 +187,6 @@
                                 "start": 63,
                                 "length": 2
                             },
-                            "eachInKeyword": null,
                             "rightOperand": {
                                 "kind": "IdentifierExpression",
                                 "newlines": null,
