@@ -12,6 +12,7 @@ export class ClassDeclaration extends Declaration {
         'typeParameters',
         'greaterThanSign',
         'extendsKeyword',
+        'baseType',
         'implementsKeyword',
         'implementedTypes',
         'attributes',
