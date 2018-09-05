@@ -100,7 +100,7 @@
                         {
                             "kind": "ExpressionStatement",
                             "expression": {
-                                "kind": "BinaryExpression",
+                                "kind": "AssignmentExpression",
                                 "newlines": null,
                                 "leftOperand": {
                                     "kind": "IdentifierExpression",
@@ -204,7 +204,7 @@
                             {
                                 "kind": "ExpressionStatement",
                                 "expression": {
-                                    "kind": "BinaryExpression",
+                                    "kind": "AssignmentExpression",
                                     "newlines": null,
                                     "leftOperand": {
                                         "kind": "IdentifierExpression",

@@ -1,0 +1,114 @@
+{
+    "kind": "ModuleDeclaration",
+    "members": [
+        {
+            "kind": "FunctionDeclaration",
+            "functionKeyword": {
+                "kind": "FunctionKeyword",
+                "fullStart": 0,
+                "start": 0,
+                "length": 8
+            },
+            "name": {
+                "kind": "Identifier",
+                "fullStart": 8,
+                "start": 9,
+                "length": 5
+            },
+            "returnType": null,
+            "openingParenthesis": {
+                "kind": "OpeningParenthesis",
+                "fullStart": 13,
+                "start": 13,
+                "length": 1
+            },
+            "parameters": [],
+            "closingParenthesis": {
+                "kind": "ClosingParenthesis",
+                "fullStart": 14,
+                "start": 14,
+                "length": 1
+            },
+            "statements": [
+                {
+                    "kind": "EmptyStatement",
+                    "terminator": {
+                        "kind": "Newline",
+                        "fullStart": 15,
+                        "start": 16,
+                        "length": 2
+                    }
+                },
+                {
+                    "kind": "ExpressionStatement",
+                    "expression": {
+                        "kind": "InvokeExpression",
+                        "newlines": null,
+                        "invokableExpression": {
+                            "kind": "IdentifierExpression",
+                            "newlines": null,
+                            "globalScopeMemberAccessOperator": null,
+                            "name": {
+                                "kind": "Identifier",
+                                "fullStart": 17,
+                                "start": 21,
+                                "length": 9
+                            },
+                            "lessThanSign": null,
+                            "typeArguments": null,
+                            "greaterThanSign": null
+                        },
+                        "openingParenthesis": null,
+                        "arguments": [
+                            {
+                                "kind": "BinaryExpression",
+                                "newlines": null,
+                                "leftOperand": {
+                                    "kind": "IntegerLiteral",
+                                    "newlines": null,
+                                    "value": {
+                                        "kind": "IntegerLiteral",
+                                        "fullStart": 26,
+                                        "start": 27,
+                                        "length": 2
+                                    }
+                                },
+                                "operator": {
+                                    "kind": "EqualsSign",
+                                    "fullStart": 28,
+                                    "start": 29,
+                                    "length": 2
+                                },
+                                "eachInKeyword": null,
+                                "rightOperand": {
+                                    "kind": "IntegerLiteral",
+                                    "newlines": null,
+                                    "value": {
+                                        "kind": "IntegerLiteral",
+                                        "fullStart": 30,
+                                        "start": 31,
+                                        "length": 2
+                                    }
+                                }
+                            }
+                        ],
+                        "closingParenthesis": null
+                    },
+                    "terminator": {
+                        "kind": "Newline",
+                        "fullStart": 32,
+                        "start": 33,
+                        "length": 2
+                    }
+                }
+            ],
+            "endKeyword": {
+                "kind": "EndKeyword",
+                "fullStart": 34,
+                "start": 34,
+                "length": 3
+            },
+            "endFunctionKeyword": null
+        }
+    ]
+}
