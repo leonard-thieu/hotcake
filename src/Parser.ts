@@ -790,6 +790,17 @@ export class Parser extends ParserBase {
         return catchStatement;
     }
 
+    private isTryStatementStatementsListTerminator(token: Tokens): boolean {
+        switch (token.kind) {
+            case TokenKind.CatchKeyword:
+            case TokenKind.EndKeyword: {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     // #endregion
 
     private parseExpressionStatement(parent: Nodes): ExpressionStatement {
@@ -1042,9 +1053,7 @@ export class Parser extends ParserBase {
                 return this.isClassMembersListTerminator(token);
             }
             case NodeKind.FunctionDeclaration:
-            case NodeKind.ClassMethodDeclaration:
-            case NodeKind.TryStatement:
-            case NodeKind.CatchStatement: {
+            case NodeKind.ClassMethodDeclaration: {
                 return this.isBlockStatementsListTerminator(token);
             }
             case NodeKind.IfStatement:
@@ -1064,6 +1073,10 @@ export class Parser extends ParserBase {
             }
             case NodeKind.ForLoop: {
                 return this.isForLoopStatementsListTerminator(token);
+            }
+            case NodeKind.TryStatement:
+            case NodeKind.CatchStatement: {
+                return this.isTryStatementStatementsListTerminator(token);
             }
             case ParseContextKind.DataDeclarationSequence: {
                 return this.isDataDeclarationSequenceTerminator(token);
