@@ -385,7 +385,7 @@ export abstract class ParserBase {
         expression.parent = scopeMemberAccessExpression;
         scopeMemberAccessExpression.scopableExpression = expression;
         scopeMemberAccessExpression.scopeMemberAccessOperator = this.eat(TokenKind.Period);
-        scopeMemberAccessExpression.identifier = this.eat(TokenKind.Identifier);
+        scopeMemberAccessExpression.member = this.parseUnaryExpression(scopeMemberAccessExpression);
 
         return scopeMemberAccessExpression;
     }
@@ -591,6 +591,7 @@ export abstract class ParserBase {
         const modulePath = new ModulePath();
         modulePath.parent = parent;
 
+        // TODO: Should probably use parseList and be less strict.
         let lastTokenKind: TokenKind | undefined;
         while (true) {
             const token = this.getToken();
@@ -634,6 +635,7 @@ export abstract class ParserBase {
 
     protected isExpressionStart(token: Tokens): boolean {
         switch (token.kind) {
+            // TODO: Might need to include Newline?
             case TokenKind.NewKeyword:
             case TokenKind.NullKeyword:
             case TokenKind.TrueKeyword:
