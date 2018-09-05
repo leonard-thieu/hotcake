@@ -888,6 +888,7 @@ export class Parser extends ParserBase {
         dataDeclaration.type = this.parseTypeDeclaration(dataDeclaration);
         dataDeclaration.equalsSign = this.eatOptional(TokenKind.EqualsSign, TokenKind.ColonEqualsSign);
         if (dataDeclaration.equalsSign !== null) {
+            dataDeclaration.eachInKeyword = this.eatOptional(TokenKind.EachInKeyword);
             dataDeclaration.expression = this.parseExpression(dataDeclaration);
         }
 
