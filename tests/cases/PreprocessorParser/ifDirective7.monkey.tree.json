@@ -319,14 +319,11 @@
                             ],
                             "elseIfDirectives": [],
                             "elseDirective": null,
-                            "endDirective": {
-                                "kind": "EndDirective",
-                                "endDirectiveKeyword": {
-                                    "kind": "EndDirectiveKeyword",
-                                    "fullStart": 194,
-                                    "start": 198,
-                                    "length": 8
-                                }
+                            "endDirectiveKeyword": {
+                                "kind": "EndDirectiveKeyword",
+                                "fullStart": 194,
+                                "start": 198,
+                                "length": 8
                             }
                         },
                         {
@@ -511,14 +508,11 @@
                     }
                 ]
             },
-            "endDirective": {
-                "kind": "EndDirective",
-                "endDirectiveKeyword": {
-                    "kind": "EndDirectiveKeyword",
-                    "fullStart": 331,
-                    "start": 331,
-                    "length": 4
-                }
+            "endDirectiveKeyword": {
+                "kind": "EndDirectiveKeyword",
+                "fullStart": 331,
+                "start": 331,
+                "length": 4
             }
         },
         {

@@ -32,14 +32,11 @@
                             "length": 6
                         }
                     ],
-                    "endDirective": {
-                        "kind": "EndDirective",
-                        "endDirectiveKeyword": {
-                            "kind": "EndDirectiveKeyword",
-                            "fullStart": 22,
-                            "start": 22,
-                            "length": 4
-                        }
+                    "endDirectiveKeyword": {
+                        "kind": "EndDirectiveKeyword",
+                        "fullStart": 22,
+                        "start": 22,
+                        "length": 4
                     }
                 },
                 {
@@ -49,14 +46,11 @@
                     "length": 4
                 }
             ],
-            "endDirective": {
-                "kind": "EndDirective",
-                "endDirectiveKeyword": {
-                    "kind": "EndDirectiveKeyword",
-                    "fullStart": 30,
-                    "start": 30,
-                    "length": 4
-                }
+            "endDirectiveKeyword": {
+                "kind": "EndDirectiveKeyword",
+                "fullStart": 30,
+                "start": 30,
+                "length": 4
             }
         }
     ],

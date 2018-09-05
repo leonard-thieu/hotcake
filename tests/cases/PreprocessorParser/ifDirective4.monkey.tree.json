@@ -168,14 +168,11 @@
                     }
                 ]
             },
-            "endDirective": {
-                "kind": "EndDirective",
-                "endDirectiveKeyword": {
-                    "kind": "EndDirectiveKeyword",
-                    "fullStart": 115,
-                    "start": 115,
-                    "length": 4
-                }
+            "endDirectiveKeyword": {
+                "kind": "EndDirectiveKeyword",
+                "fullStart": 115,
+                "start": 115,
+                "length": 4
             }
         },
         {

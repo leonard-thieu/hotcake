@@ -385,14 +385,11 @@
                     }
                 ]
             },
-            "endDirective": {
-                "kind": "EndDirective",
-                "endDirectiveKeyword": {
-                    "kind": "EndDirectiveKeyword",
-                    "fullStart": 257,
-                    "start": 257,
-                    "length": 4
-                }
+            "endDirectiveKeyword": {
+                "kind": "EndDirectiveKeyword",
+                "fullStart": 257,
+                "start": 257,
+                "length": 4
             }
         },
         {

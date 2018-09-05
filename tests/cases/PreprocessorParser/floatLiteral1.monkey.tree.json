@@ -29,14 +29,11 @@
             ],
             "elseIfDirectives": [],
             "elseDirective": null,
-            "endDirective": {
-                "kind": "EndDirective",
-                "endDirectiveKeyword": {
-                    "kind": "EndDirectiveKeyword",
-                    "fullStart": 10,
-                    "start": 10,
-                    "length": 4
-                }
+            "endDirectiveKeyword": {
+                "kind": "EndDirectiveKeyword",
+                "fullStart": 10,
+                "start": 10,
+                "length": 4
             }
         }
     ],

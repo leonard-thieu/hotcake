@@ -39,14 +39,11 @@
             ],
             "elseIfDirectives": [],
             "elseDirective": null,
-            "endDirective": {
-                "kind": "EndDirective",
-                "endDirectiveKeyword": {
-                    "kind": "EndDirectiveKeyword",
-                    "fullStart": 8,
-                    "start": 8,
-                    "length": 4
-                }
+            "endDirectiveKeyword": {
+                "kind": "EndDirectiveKeyword",
+                "fullStart": 8,
+                "start": 8,
+                "length": 4
             }
         }
     ],
