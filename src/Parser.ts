@@ -133,9 +133,9 @@ export class Parser extends ParserBase {
         importStatement.parent = parent;
         importStatement.importKeyword = this.eat(TokenKind.ImportKeyword);
         if (this.getToken().kind === TokenKind.QuotationMark) {
-            importStatement.nativeFilePath = this.parseStringLiteral(importStatement);
+            importStatement.path = this.parseStringLiteral(importStatement);
         } else {
-            importStatement.modulePath = this.parseModulePath(importStatement);
+            importStatement.path = this.parseModulePath(importStatement);
         }
 
         return importStatement;

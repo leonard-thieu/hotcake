@@ -7,13 +7,11 @@ import { Declaration } from './Declaration';
 export class ImportStatement extends Declaration {
     static CHILD_NAMES: (keyof ImportStatement)[] = [
         'importKeyword',
-        'modulePath',
-        'nativeFilePath',
+        'path',
     ];
 
     readonly kind = NodeKind.ImportStatement;
 
     importKeyword: ImportKeywordToken;
-    modulePath: ModulePath | null = null;
-    nativeFilePath: StringLiteral | null = null;
+    path: ModulePath | StringLiteral | null = null;
 }
