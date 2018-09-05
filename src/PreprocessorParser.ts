@@ -1,7 +1,5 @@
 import { PreprocessorModuleDeclaration } from './Node/Declaration/PreprocessorModuleDeclaration';
 import { AssignmentDirective } from './Node/Directive/AssignmentDirective';
-import { Directive } from './Node/Directive/Directive';
-import { EndDirective } from './Node/Directive/EndDirective';
 import { ErrorDirective } from './Node/Directive/ErrorDirective';
 import { ElseDirective, ElseIfDirective, IfDirective } from './Node/Directive/IfDirective';
 import { PrintDirective } from './Node/Directive/PrintDirective';
@@ -83,7 +81,7 @@ export class PreprocessorParser extends ParserBase {
             ifDirective.elseDirective = this.parseElseDirective(ifDirective);
         }
 
-        ifDirective.endDirective = this.parseEndDirective(ifDirective);
+        ifDirective.endDirectiveKeyword = this.eat(TokenKind.EndDirectiveKeyword);
 
         return ifDirective;
     }
@@ -118,21 +116,12 @@ export class PreprocessorParser extends ParserBase {
         return false;
     }
 
-    // TODO: Why is this not just a token?
-    private parseEndDirective(parent: Directive): EndDirective {
-        const endDirective = new EndDirective();
-        endDirective.parent = parent;
-        endDirective.endDirectiveKeyword = this.eat(TokenKind.EndDirectiveKeyword);
-
-        return endDirective;
-    }
-
     private parseRemDirective(parent: Node): RemDirective {
         const remDirective = new RemDirective();
         remDirective.parent = parent;
         remDirective.remDirectiveKeyword = this.eat(TokenKind.RemDirectiveKeyword);
         remDirective.children = this.parseList(remDirective, remDirective.kind);
-        remDirective.endDirective = this.parseEndDirective(remDirective);
+        remDirective.endDirectiveKeyword = this.eat(TokenKind.EndDirectiveKeyword);
 
         return remDirective;
     }

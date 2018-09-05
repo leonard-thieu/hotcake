@@ -1,9 +1,8 @@
 import { ParseContextElementArray } from '../../ParserBase';
-import { ElseDirectiveKeywordToken, ElseIfDirectiveKeywordToken, IfDirectiveKeywordToken, MissingExpressionToken } from '../../Token/Token';
+import { ElseDirectiveKeywordToken, ElseIfDirectiveKeywordToken, EndDirectiveKeywordToken, IfDirectiveKeywordToken, MissingExpressionToken } from '../../Token/Token';
 import { Expressions } from '../Expression/Expression';
 import { NodeKind } from '../NodeKind';
 import { Directive } from './Directive';
-import { EndDirective } from './EndDirective';
 
 export class IfDirective extends Directive {
     static CHILD_NAMES: (keyof IfDirective)[] = [
@@ -12,7 +11,7 @@ export class IfDirective extends Directive {
         'members',
         'elseIfDirectives',
         'elseDirective',
-        'endDirective',
+        'endDirectiveKeyword',
     ];
 
     readonly kind = NodeKind.IfDirective;
@@ -22,7 +21,7 @@ export class IfDirective extends Directive {
     members: ParseContextElementArray<IfDirective['kind']>;
     elseIfDirectives: ElseIfDirective[] = [];
     elseDirective: ElseDirective | null = null;
-    endDirective: EndDirective;
+    endDirectiveKeyword: EndDirectiveKeywordToken;
 }
 
 export class ElseIfDirective extends Directive {
