@@ -20,7 +20,7 @@ import { StringLiteral } from './Node/Expression/StringLiteral';
 import { SuperExpression } from './Node/Expression/SuperExpression';
 import { UnaryOpExpression } from './Node/Expression/UnaryOpExpression';
 import { ModulePath } from './Node/ModulePath';
-import { Node } from './Node/Node';
+import { Nodes } from './Node/Node';
 import { NodeKind } from './Node/NodeKind';
 import { TypeReference } from './Node/TypeReference';
 import { GreaterThanSignEqualsSignToken } from './Token/GreaterThanSignEqualsSignToken';
@@ -38,13 +38,13 @@ export abstract class ParserBase {
 
     // #region Expressions
 
-    protected parseExpression(parent: Node) {
+    protected parseExpression(parent: Nodes) {
         return this.parseBinaryExpression(Precedence.Initial, parent);
     }
 
     // #region Binary expressions
 
-    protected parseBinaryExpression(precedence: Precedence, parent: Node) {
+    protected parseBinaryExpression(precedence: Precedence, parent: Nodes) {
         let expression = this.parseUnaryExpression(parent);
         let [prevNewPrecedence, prevAssociativity] = UnknownPrecedenceAndAssociativity;
 
@@ -131,7 +131,7 @@ export abstract class ParserBase {
         operator: Tokens,
         eachInKeyword: EachInKeywordToken | null,
         rightOperand: Expressions | MissingExpressionToken,
-        parent: Node,
+        parent: Nodes,
     ) {
         let binaryExpression: AssignmentExpression | BinaryExpression;
         if (operator.kind === TokenKind.EqualsSign &&
@@ -158,7 +158,7 @@ export abstract class ParserBase {
 
     // #region Unary expressions
 
-    protected parseUnaryExpression(parent: Node): Expressions | MissingExpressionToken {
+    protected parseUnaryExpression(parent: Nodes): Expressions | MissingExpressionToken {
         let newlines: NewlineToken[] | null = null;
         while (true) {
             const token = this.getToken();
@@ -206,7 +206,7 @@ export abstract class ParserBase {
         return expression;
     }
 
-    protected parseUnaryOpExpression(parent: Node): UnaryOpExpression {
+    protected parseUnaryOpExpression(parent: Nodes): UnaryOpExpression {
         const unaryOpExpression = new UnaryOpExpression();
         unaryOpExpression.parent = parent;
         unaryOpExpression.operator = this.eat(TokenKind.PlusSign, TokenKind.HyphenMinus, TokenKind.Tilde, TokenKind.NotKeyword);
@@ -217,7 +217,7 @@ export abstract class ParserBase {
 
     // #region Primary expressions
 
-    protected parsePrimaryExpression(parent: Node): Expressions | MissingExpressionToken {
+    protected parsePrimaryExpression(parent: Nodes): Expressions | MissingExpressionToken {
         const token = this.getToken();
         switch (token.kind) {
             case TokenKind.NewKeyword: {
@@ -268,7 +268,7 @@ export abstract class ParserBase {
         return this.createMissingExpressionToken(token.fullStart);
     }
 
-    protected parseNewExpression(parent: Node): NewExpression {
+    protected parseNewExpression(parent: Nodes): NewExpression {
         const newExpression = new NewExpression();
         newExpression.parent = parent;
         newExpression.newKeyword = this.eat(TokenKind.NewKeyword);
@@ -280,7 +280,7 @@ export abstract class ParserBase {
         return newExpression;
     }
 
-    protected parseNullExpression(parent: Node): NullExpression {
+    protected parseNullExpression(parent: Nodes): NullExpression {
         const nullExpression = new NullExpression();
         nullExpression.parent = parent;
         nullExpression.nullKeyword = this.eat(TokenKind.NullKeyword);
@@ -288,7 +288,7 @@ export abstract class ParserBase {
         return nullExpression;
     }
 
-    protected parseBooleanLiteral(parent: Node): BooleanLiteral {
+    protected parseBooleanLiteral(parent: Nodes): BooleanLiteral {
         const booleanLiteral = new BooleanLiteral();
         booleanLiteral.parent = parent;
         booleanLiteral.value = this.eat(TokenKind.TrueKeyword, TokenKind.FalseKeyword);
@@ -296,7 +296,7 @@ export abstract class ParserBase {
         return booleanLiteral;
     }
 
-    protected parseSelfExpression(parent: Node): SelfExpression {
+    protected parseSelfExpression(parent: Nodes): SelfExpression {
         const selfExpression = new SelfExpression();
         selfExpression.parent = parent;
         selfExpression.selfKeyword = this.eat(TokenKind.SelfKeyword);
@@ -304,7 +304,7 @@ export abstract class ParserBase {
         return selfExpression;
     }
 
-    protected parseSuperExpression(parent: Node): SuperExpression {
+    protected parseSuperExpression(parent: Nodes): SuperExpression {
         const superExpression = new SuperExpression();
         superExpression.parent = parent;
         superExpression.superKeyword = this.eat(TokenKind.SuperKeyword);
@@ -312,7 +312,7 @@ export abstract class ParserBase {
         return superExpression;
     }
 
-    protected parseStringLiteral(parent: Node): StringLiteral {
+    protected parseStringLiteral(parent: Nodes): StringLiteral {
         const stringLiteral = new StringLiteral();
         stringLiteral.parent = parent;
         stringLiteral.startQuote = this.eat(TokenKind.QuotationMark);
@@ -322,7 +322,7 @@ export abstract class ParserBase {
         return stringLiteral;
     }
 
-    protected parseFloatLiteral(parent: Node): FloatLiteral {
+    protected parseFloatLiteral(parent: Nodes): FloatLiteral {
         const floatLiteral = new FloatLiteral();
         floatLiteral.parent = parent;
         floatLiteral.value = this.eat(TokenKind.FloatLiteral);
@@ -330,7 +330,7 @@ export abstract class ParserBase {
         return floatLiteral;
     }
 
-    protected parseIntegerLiteral(parent: Node): IntegerLiteral {
+    protected parseIntegerLiteral(parent: Nodes): IntegerLiteral {
         const integerLiteral = new IntegerLiteral();
         integerLiteral.parent = parent;
         integerLiteral.value = this.eat(TokenKind.IntegerLiteral);
@@ -338,7 +338,7 @@ export abstract class ParserBase {
         return integerLiteral;
     }
 
-    protected parseArrayLiteral(parent: Node): ArrayLiteral {
+    protected parseArrayLiteral(parent: Nodes): ArrayLiteral {
         const arrayLiteral = new ArrayLiteral();
         arrayLiteral.parent = parent;
         arrayLiteral.openingSquareBracket = this.eat(TokenKind.OpeningSquareBracket);
@@ -348,7 +348,7 @@ export abstract class ParserBase {
         return arrayLiteral;
     }
 
-    protected parseIdentifierExpression(parent: Node): IdentifierExpression {
+    protected parseIdentifierExpression(parent: Nodes): IdentifierExpression {
         const identifierExpression = new IdentifierExpression();
         identifierExpression.parent = parent;
         identifierExpression.globalScopeMemberAccessOperator = this.eatOptional(TokenKind.Period);
@@ -382,7 +382,7 @@ export abstract class ParserBase {
         return identifierExpression;
     }
 
-    protected parseGroupingExpression(parent: Node): GroupingExpression {
+    protected parseGroupingExpression(parent: Nodes): GroupingExpression {
         const groupingExpression = new GroupingExpression();
         groupingExpression.parent = parent;
         groupingExpression.openingParenthesis = this.eat(TokenKind.OpeningParenthesis);
@@ -496,7 +496,7 @@ export abstract class ParserBase {
             this.isExpressionStart(token);
     }
 
-    private parseExpressionSequenceMember(parent: Node) {
+    private parseExpressionSequenceMember(parent: Nodes) {
         const token = this.getToken();
         switch (token.kind) {
             case TokenKind.Comma: {
@@ -522,7 +522,7 @@ export abstract class ParserBase {
             this.isTypeReferenceStart(token);
     }
 
-    private parseTypeReferenceSequenceMember(parent: Node) {
+    private parseTypeReferenceSequenceMember(parent: Nodes) {
         const token = this.getToken();
         switch (token.kind) {
             case TokenKind.BoolKeyword:
@@ -545,7 +545,7 @@ export abstract class ParserBase {
 
     // #endregion
 
-    protected parseCommaSeparator(parent: Node): CommaSeparator {
+    protected parseCommaSeparator(parent: Nodes): CommaSeparator {
         const commaSeparator = new CommaSeparator();
         commaSeparator.parent = parent;
         commaSeparator.separator = this.eat(TokenKind.Comma);
@@ -575,7 +575,7 @@ export abstract class ParserBase {
         return false;
     }
 
-    protected parseTypeReference(parent: Node): TypeReference {
+    protected parseTypeReference(parent: Nodes): TypeReference {
         const typeReference = new TypeReference();
         typeReference.parent = parent;
 
@@ -628,7 +628,7 @@ export abstract class ParserBase {
         return typeReference;
     }
 
-    protected parseModulePath(parent: Node): ModulePath {
+    protected parseModulePath(parent: Nodes): ModulePath {
         const modulePath = new ModulePath();
         modulePath.parent = parent;
 
@@ -662,7 +662,7 @@ export abstract class ParserBase {
         return modulePath;
     }
 
-    protected parseArrayTypeDeclaration(parent: Node): ArrayTypeDeclaration {
+    protected parseArrayTypeDeclaration(parent: Nodes): ArrayTypeDeclaration {
         const arrayTypeDeclaration = new ArrayTypeDeclaration();
         arrayTypeDeclaration.parent = parent;
         arrayTypeDeclaration.openingSquareBracket = this.eat(TokenKind.OpeningSquareBracket);
@@ -767,7 +767,7 @@ export abstract class ParserBase {
     protected parseContexts: ParseContext[];
 
     protected parseList<TParseContext extends ParseContext>(
-        parent: Node,
+        parent: Nodes,
         parseContext: TParseContext
     ) {
         if (typeof parseContext === 'undefined') {
@@ -845,9 +845,9 @@ export abstract class ParserBase {
         return assertNever(parseContext);
     }
 
-    protected abstract parseListElement(parseContext: ParseContext, parent: Node): ParseContextElementMap[ParseContext];
+    protected abstract parseListElement(parseContext: ParseContext, parent: Nodes): ParseContextElementMap[ParseContext];
 
-    protected parseListElementCore(parseContext: ParseContextBase, parent: Node) {
+    protected parseListElementCore(parseContext: ParseContextBase, parent: Nodes) {
         switch (parseContext) {
             case NodeKind.StringLiteral: {
                 return this.parseStringLiteralChild();
@@ -993,7 +993,7 @@ const OperatorPrecedenceAndAssociativityMap: PrecedenceAndAssociativityMap = {
     [TokenKind.Asterisk]: ShiftMultiplicativePrecedenceAndAssociativity,
 };
 
-function getBinaryOperatorPrecedenceAndAssociativity(token: Tokens, parent: Node | null): PrecedenceAndAssociativity {
+function getBinaryOperatorPrecedenceAndAssociativity(token: Tokens, parent: Nodes | null): PrecedenceAndAssociativity {
     if (token.kind === TokenKind.EqualsSign) {
         return parent && parent.kind === NodeKind.ExpressionStatement ?
             AssignmentPrecedenceAndAssociativity :

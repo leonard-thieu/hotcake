@@ -5,7 +5,7 @@ import { ElseDirective, ElseIfDirective, IfDirective } from './Node/Directive/If
 import { PrintDirective } from './Node/Directive/PrintDirective';
 import { RemDirective } from './Node/Directive/RemDirective';
 import { Expressions } from './Node/Expression/Expression';
-import { Node } from './Node/Node';
+import { Nodes } from './Node/Node';
 import { NodeKind } from './Node/NodeKind';
 import { ParseContext, ParseContextElementMapBase, ParserBase } from './ParserBase';
 import { Tokens } from './Token/Token';
@@ -41,7 +41,7 @@ export class PreprocessorParser extends ParserBase {
         return true;
     }
 
-    private parseModuleMember(parent: Node) {
+    private parseModuleMember(parent: Nodes) {
         const token = this.getToken();
         switch (token.kind) {
             case TokenKind.IfDirectiveKeyword: {
@@ -66,7 +66,7 @@ export class PreprocessorParser extends ParserBase {
         return token;
     }
 
-    private parseIfDirective(parent: Node): IfDirective {
+    private parseIfDirective(parent: Nodes): IfDirective {
         const ifDirective = new IfDirective();
         ifDirective.parent = parent;
         ifDirective.ifDirectiveKeyword = this.eat(TokenKind.IfDirectiveKeyword);
@@ -116,7 +116,7 @@ export class PreprocessorParser extends ParserBase {
         return false;
     }
 
-    private parseRemDirective(parent: Node): RemDirective {
+    private parseRemDirective(parent: Nodes): RemDirective {
         const remDirective = new RemDirective();
         remDirective.parent = parent;
         remDirective.remDirectiveKeyword = this.eat(TokenKind.RemDirectiveKeyword);
@@ -143,7 +143,7 @@ export class PreprocessorParser extends ParserBase {
         return false;
     }
 
-    private parseRemDirectiveMember(parent: Node) {
+    private parseRemDirectiveMember(parent: Nodes) {
         const token = this.getToken();
         switch (token.kind) {
             case TokenKind.IfDirectiveKeyword: {
@@ -164,7 +164,7 @@ export class PreprocessorParser extends ParserBase {
 
     // #endregion
 
-    private parsePrintDirective(parent: Node): PrintDirective {
+    private parsePrintDirective(parent: Nodes): PrintDirective {
         const printDirective = new PrintDirective();
         printDirective.parent = parent;
         printDirective.printDirectiveKeyword = this.eat(TokenKind.PrintDirectiveKeyword);
@@ -173,7 +173,7 @@ export class PreprocessorParser extends ParserBase {
         return printDirective;
     }
 
-    private parseErrorDirective(parent: Node): ErrorDirective {
+    private parseErrorDirective(parent: Nodes): ErrorDirective {
         const errorDirective = new ErrorDirective();
         errorDirective.parent = parent;
         errorDirective.errorDirectiveKeyword = this.eat(TokenKind.ErrorDirectiveKeyword);
@@ -182,7 +182,7 @@ export class PreprocessorParser extends ParserBase {
         return errorDirective;
     }
 
-    private parseAssignmentDirective(parent: Node): AssignmentDirective {
+    private parseAssignmentDirective(parent: Nodes): AssignmentDirective {
         const assignmentDirective = new AssignmentDirective();
         assignmentDirective.parent = parent;
         assignmentDirective.name = this.eat(TokenKind.ConfigurationVariable);
@@ -248,7 +248,7 @@ export class PreprocessorParser extends ParserBase {
         return super.isValidListElementCore(parseContext, token);
     }
 
-    protected parseListElement(parseContext: ParseContext, parent: Node) {
+    protected parseListElement(parseContext: ParseContext, parent: Nodes) {
         parseContext = parseContext as PreprocessorParserParseContext;
 
         switch (parseContext) {

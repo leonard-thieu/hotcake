@@ -15,7 +15,7 @@ import { LonghandTypeDeclaration, ShorthandTypeDeclaration } from './Node/Declar
 import { TypeParameter } from './Node/Declaration/TypeParameter';
 import { BinaryExpression } from './Node/Expression/BinaryExpression';
 import { Expressions } from './Node/Expression/Expression';
-import { Node } from './Node/Node';
+import { Nodes } from './Node/Node';
 import { NodeKind } from './Node/NodeKind';
 import { ContinueStatement } from './Node/Statement/ContinueStatement';
 import { EmptyStatement } from './Node/Statement/EmptyStatement';
@@ -82,7 +82,7 @@ export class Parser extends ParserBase {
         return false;
     }
 
-    private parseModuleMember(parent: Node) {
+    private parseModuleMember(parent: Nodes) {
         const token = this.getToken();
         switch (token.kind) {
             case TokenKind.StrictKeyword: {
@@ -120,7 +120,7 @@ export class Parser extends ParserBase {
         return this.parseCore(parent);
     }
 
-    private parseStrictDirective(parent: Node): StrictDirective {
+    private parseStrictDirective(parent: Nodes): StrictDirective {
         const strictDirective = new StrictDirective();
         strictDirective.parent = parent;
         strictDirective.strictKeyword = this.eat(TokenKind.StrictKeyword);
@@ -128,7 +128,7 @@ export class Parser extends ParserBase {
         return strictDirective;
     }
 
-    private parseImportStatement(parent: Node): ImportStatement {
+    private parseImportStatement(parent: Nodes): ImportStatement {
         const importStatement = new ImportStatement();
         importStatement.parent = parent;
         importStatement.importKeyword = this.eat(TokenKind.ImportKeyword);
@@ -141,7 +141,7 @@ export class Parser extends ParserBase {
         return importStatement;
     }
 
-    private parseFriendDirective(parent: Node): FriendDirective {
+    private parseFriendDirective(parent: Nodes): FriendDirective {
         const friendDirective = new FriendDirective();
         friendDirective.parent = parent;
         friendDirective.friendKeyword = this.eat(TokenKind.FriendKeyword);
@@ -150,7 +150,7 @@ export class Parser extends ParserBase {
         return friendDirective;
     }
 
-    private parseAliasDirective(parent: Node): AliasDirective {
+    private parseAliasDirective(parent: Nodes): AliasDirective {
         /**
          * TODO: Comma separated aliases allowed?
          * TODO: Explicit data type declaration allowed?
@@ -165,7 +165,7 @@ export class Parser extends ParserBase {
         return aliasDirective;
     }
 
-    private parseInterfaceDeclaration(parent: Node): InterfaceDeclaration {
+    private parseInterfaceDeclaration(parent: Nodes): InterfaceDeclaration {
         const interfaceDeclaration = new InterfaceDeclaration();
         interfaceDeclaration.parent = parent;
         interfaceDeclaration.interfaceKeyword = this.eat(TokenKind.InterfaceKeyword);
@@ -181,7 +181,7 @@ export class Parser extends ParserBase {
         return interfaceDeclaration;
     }
 
-    private parseClassDeclaration(parent: Node): ClassDeclaration {
+    private parseClassDeclaration(parent: Nodes): ClassDeclaration {
         const classDeclaration = new ClassDeclaration();
         classDeclaration.parent = parent;
         classDeclaration.classKeyword = this.eat(TokenKind.ClassKeyword);
@@ -235,7 +235,7 @@ export class Parser extends ParserBase {
         return false;
     }
 
-    private parseInterfaceMember(parent: Node) {
+    private parseInterfaceMember(parent: Nodes) {
         const token = this.getToken();
         switch (token.kind) {
             case TokenKind.ConstKeyword: {
@@ -249,7 +249,7 @@ export class Parser extends ParserBase {
         return this.parseCore(parent);
     }
 
-    private parseInterfaceMethodDeclaration(parent: Node): InterfaceMethodDeclaration {
+    private parseInterfaceMethodDeclaration(parent: Nodes): InterfaceMethodDeclaration {
         const interfaceMethodDeclaration = new InterfaceMethodDeclaration();
         interfaceMethodDeclaration.parent = parent;
         interfaceMethodDeclaration.methodKeyword = this.eat(TokenKind.MethodKeyword);
@@ -288,7 +288,7 @@ export class Parser extends ParserBase {
         return false;
     }
 
-    private parseClassMember(parent: Node) {
+    private parseClassMember(parent: Nodes) {
         const token = this.getToken();
         switch (token.kind) {
             case TokenKind.ConstKeyword:
@@ -312,7 +312,7 @@ export class Parser extends ParserBase {
         return this.parseCore(parent);
     }
 
-    private parseClassMethodDeclaration(parent: Node): ClassMethodDeclaration {
+    private parseClassMethodDeclaration(parent: Nodes): ClassMethodDeclaration {
         const classMethodDeclaration = new ClassMethodDeclaration();
         classMethodDeclaration.parent = parent;
         classMethodDeclaration.methodKeyword = this.eat(TokenKind.MethodKeyword);
@@ -366,7 +366,7 @@ export class Parser extends ParserBase {
         return this.isExpressionStart(token);
     }
 
-    private parseStatement(parent: Node) {
+    private parseStatement(parent: Nodes) {
         const token = this.getToken();
         switch (token.kind) {
             case TokenKind.LocalKeyword: {
@@ -417,7 +417,7 @@ export class Parser extends ParserBase {
         return this.parseExpressionStatement(parent);
     }
 
-    private parseLocalDeclarationListStatement(parent: Node): LocalDeclarationListStatement {
+    private parseLocalDeclarationListStatement(parent: Nodes): LocalDeclarationListStatement {
         const localDeclarationListStatement = new LocalDeclarationListStatement();
         localDeclarationListStatement.parent = parent;
         localDeclarationListStatement.localDeclarationList = this.parseDataDeclarationList(localDeclarationListStatement);
@@ -426,7 +426,7 @@ export class Parser extends ParserBase {
         return localDeclarationListStatement;
     }
 
-    private parseReturnStatement(parent: Node): ReturnStatement {
+    private parseReturnStatement(parent: Nodes): ReturnStatement {
         const returnStatement = new ReturnStatement();
         returnStatement.parent = parent;
         returnStatement.returnKeyword = this.eat(TokenKind.ReturnKeyword);
@@ -441,7 +441,7 @@ export class Parser extends ParserBase {
 
     // #region If statement
 
-    private parseIfStatement(parent: Node): IfStatement {
+    private parseIfStatement(parent: Nodes): IfStatement {
         const ifStatement = new IfStatement();
         ifStatement.parent = parent;
         ifStatement.ifKeyword = this.eat(TokenKind.IfKeyword);
@@ -541,7 +541,7 @@ export class Parser extends ParserBase {
 
     // #region Select statement
 
-    private parseSelectStatement(parent: Node): SelectStatement {
+    private parseSelectStatement(parent: Nodes): SelectStatement {
         const selectStatement = new SelectStatement();
         selectStatement.parent = parent;
         selectStatement.selectKeyword = this.eat(TokenKind.SelectKeyword);
@@ -571,7 +571,7 @@ export class Parser extends ParserBase {
         return selectStatement;
     }
 
-    private parseCaseStatement(parent: Node): CaseStatement {
+    private parseCaseStatement(parent: Nodes): CaseStatement {
         const caseStatement = new CaseStatement();
         caseStatement.parent = parent;
         caseStatement.caseKeyword = this.eat(TokenKind.CaseKeyword);
@@ -581,7 +581,7 @@ export class Parser extends ParserBase {
         return caseStatement;
     }
 
-    private parseDefaultStatement(parent: Node): DefaultStatement {
+    private parseDefaultStatement(parent: Nodes): DefaultStatement {
         const defaultStatement = new DefaultStatement();
         defaultStatement.parent = parent;
         defaultStatement.defaultKeyword = this.eat(TokenKind.DefaultKeyword);
@@ -608,7 +608,7 @@ export class Parser extends ParserBase {
 
     // #region While loop
 
-    private parseWhileLoop(parent: Node): WhileLoop {
+    private parseWhileLoop(parent: Nodes): WhileLoop {
         const whileLoop = new WhileLoop();
         whileLoop.parent = parent;
         whileLoop.whileKeyword = this.eat(TokenKind.WhileKeyword);
@@ -638,7 +638,7 @@ export class Parser extends ParserBase {
 
     // #region Repeat loop
 
-    private parseRepeatLoop(parent: Node): RepeatLoop {
+    private parseRepeatLoop(parent: Nodes): RepeatLoop {
         const repeatLoop = new RepeatLoop();
         repeatLoop.parent = parent;
         repeatLoop.repeatKeyword = this.eat(TokenKind.RepeatKeyword);
@@ -667,7 +667,7 @@ export class Parser extends ParserBase {
 
     // #region For loop
 
-    private parseForLoop(parent: Node): ForLoop {
+    private parseForLoop(parent: Nodes): ForLoop {
         const forLoop = new ForLoop();
         forLoop.parent = parent;
         forLoop.forKeyword = this.eat(TokenKind.ForKeyword);
@@ -728,7 +728,7 @@ export class Parser extends ParserBase {
 
     // #endregion
 
-    private parseContinueStatement(parent: Node): ContinueStatement {
+    private parseContinueStatement(parent: Nodes): ContinueStatement {
         const continueStatement = new ContinueStatement();
         continueStatement.parent = parent;
         continueStatement.continueKeyword = this.eat(TokenKind.ContinueKeyword);
@@ -737,7 +737,7 @@ export class Parser extends ParserBase {
         return continueStatement;
     }
 
-    private parseExitStatement(parent: Node): ExitStatement {
+    private parseExitStatement(parent: Nodes): ExitStatement {
         const exitStatement = new ExitStatement();
         exitStatement.parent = parent;
         exitStatement.exitKeyword = this.eat(TokenKind.ExitKeyword);
@@ -748,7 +748,7 @@ export class Parser extends ParserBase {
 
     // #endregion
 
-    private parseThrowStatement(parent: Node): ThrowStatement {
+    private parseThrowStatement(parent: Nodes): ThrowStatement {
         const throwStatement = new ThrowStatement();
         throwStatement.parent = parent;
         throwStatement.throwKeyword = this.eat(TokenKind.ThrowKeyword);
@@ -760,7 +760,7 @@ export class Parser extends ParserBase {
 
     // #region Try statement
 
-    private parseTryStatement(parent: Node): TryStatement {
+    private parseTryStatement(parent: Nodes): TryStatement {
         const tryStatement = new TryStatement();
         tryStatement.parent = parent;
         tryStatement.tryKeyword = this.eat(TokenKind.TryKeyword);
@@ -780,7 +780,7 @@ export class Parser extends ParserBase {
         return tryStatement;
     }
 
-    private parseCatchStatement(parent: Node): CatchStatement {
+    private parseCatchStatement(parent: Nodes): CatchStatement {
         const catchStatement = new CatchStatement();
         catchStatement.parent = parent;
         catchStatement.catchKeyword = this.eat(TokenKind.CatchKeyword);
@@ -792,7 +792,7 @@ export class Parser extends ParserBase {
 
     // #endregion
 
-    private parseExpressionStatement(parent: Node): ExpressionStatement {
+    private parseExpressionStatement(parent: Nodes): ExpressionStatement {
         const expressionStatement = new ExpressionStatement();
         expressionStatement.parent = parent;
         expressionStatement.expression = this.parseExpression(expressionStatement);
@@ -801,7 +801,7 @@ export class Parser extends ParserBase {
         return expressionStatement;
     }
 
-    private parseEmptyStatement(parent: Node): EmptyStatement {
+    private parseEmptyStatement(parent: Nodes): EmptyStatement {
         const emptyStatement = new EmptyStatement();
         emptyStatement.parent = parent;
         emptyStatement.terminator = this.eatStatementTerminator(emptyStatement);
@@ -813,7 +813,7 @@ export class Parser extends ParserBase {
 
     // #region Common
 
-    private parseAccessibilityDirective(parent: Node): AccessibilityDirective {
+    private parseAccessibilityDirective(parent: Nodes): AccessibilityDirective {
         const accessibilityDirective = new AccessibilityDirective();
         accessibilityDirective.parent = parent;
         accessibilityDirective.accessibilityKeyword = this.eat(TokenKind.PrivateKeyword, TokenKind.PublicKeyword, TokenKind.ProtectedKeyword, TokenKind.ExternKeyword);
@@ -824,7 +824,7 @@ export class Parser extends ParserBase {
         return accessibilityDirective;
     }
 
-    private parseFunctionDeclaration(parent: Node): FunctionDeclaration {
+    private parseFunctionDeclaration(parent: Nodes): FunctionDeclaration {
         const functionDeclaration = new FunctionDeclaration();
         functionDeclaration.parent = parent;
         functionDeclaration.functionKeyword = this.eat(TokenKind.FunctionKeyword);
@@ -840,7 +840,7 @@ export class Parser extends ParserBase {
         return functionDeclaration;
     }
 
-    private parseDataDeclarationList(parent: Node): DataDeclarationList {
+    private parseDataDeclarationList(parent: Nodes): DataDeclarationList {
         const dataDeclarationList = new DataDeclarationList();
         dataDeclarationList.parent = parent;
         dataDeclarationList.dataDeclarationKeyword = this.eat(TokenKind.ConstKeyword, TokenKind.GlobalKeyword, TokenKind.FieldKeyword, TokenKind.LocalKeyword);
@@ -867,7 +867,7 @@ export class Parser extends ParserBase {
         return false;
     }
 
-    private parseDataDeclarationSequenceMember(parent: Node) {
+    private parseDataDeclarationSequenceMember(parent: Nodes) {
         const token = this.getToken();
         switch (token.kind) {
             case TokenKind.Identifier: {
@@ -881,7 +881,7 @@ export class Parser extends ParserBase {
         throw new Error(`Unexpected token: ${JSON.stringify(token.kind)}`);
     }
 
-    private parseDataDeclaration(parent: Node): DataDeclaration {
+    private parseDataDeclaration(parent: Nodes): DataDeclaration {
         const dataDeclaration = new DataDeclaration();
         dataDeclaration.parent = parent;
         dataDeclaration.name = this.eat(TokenKind.Identifier);
@@ -899,7 +899,7 @@ export class Parser extends ParserBase {
 
     // #region Type declaration
 
-    private parseTypeDeclaration(parent: Node) {
+    private parseTypeDeclaration(parent: Nodes) {
         const token = this.getToken();
         switch (token.kind) {
             case TokenKind.QuestionMark:
@@ -916,7 +916,7 @@ export class Parser extends ParserBase {
         return null;
     }
 
-    private parseShorthandTypeDeclaration(parent: Node): ShorthandTypeDeclaration {
+    private parseShorthandTypeDeclaration(parent: Nodes): ShorthandTypeDeclaration {
         const shorthandTypeDeclaration = new ShorthandTypeDeclaration();
         shorthandTypeDeclaration.parent = parent;
         shorthandTypeDeclaration.shorthandType = this.eat(TokenKind.QuestionMark, TokenKind.PercentSign, TokenKind.NumberSign, TokenKind.DollarSign);
@@ -931,7 +931,7 @@ export class Parser extends ParserBase {
         return shorthandTypeDeclaration;
     }
 
-    private parseLonghandTypeDeclaration(parent: Node): LonghandTypeDeclaration {
+    private parseLonghandTypeDeclaration(parent: Nodes): LonghandTypeDeclaration {
         const longhandTypeDeclaration = new LonghandTypeDeclaration();
         longhandTypeDeclaration.parent = parent;
         longhandTypeDeclaration.colon = this.eat(TokenKind.Colon);
@@ -959,7 +959,7 @@ export class Parser extends ParserBase {
         return false;
     }
 
-    private parseTypeParameterSequenceMember(parent: Node) {
+    private parseTypeParameterSequenceMember(parent: Nodes) {
         const token = this.getToken();
         switch (token.kind) {
             case TokenKind.Identifier: {
@@ -973,7 +973,7 @@ export class Parser extends ParserBase {
         throw new Error(`Unexpected token: ${JSON.stringify(token.kind)}`);
     }
 
-    private parseTypeParameter(parent: Node): TypeParameter {
+    private parseTypeParameter(parent: Nodes): TypeParameter {
         const typeParameter = new TypeParameter();
         typeParameter.parent = parent;
         typeParameter.name = this.eat(TokenKind.Identifier);
@@ -996,7 +996,7 @@ export class Parser extends ParserBase {
          */
         const parent = expression.parent;
         if (parent && parent.kind === NodeKind.ExpressionStatement &&
-            !this.isInlineStatement(parent as ExpressionStatement)) {
+            !this.isInlineStatement(parent)) {
             return this.isExpressionSequenceMemberStart(token);
         }
 
@@ -1004,13 +1004,16 @@ export class Parser extends ParserBase {
     }
 
     private isInlineStatement(statement: Statement): boolean {
-        const parent = statement.parent!;
+        let parent = statement.parent!;
         let ifStatement: IfStatement | undefined = undefined;
 
         if (parent.kind === NodeKind.IfStatement) {
-            ifStatement = parent as IfStatement;
+            ifStatement = parent;
         } else if (parent.kind === NodeKind.ElseStatement) {
-            ifStatement = parent.parent as IfStatement;
+            parent = parent.parent!;
+            if (parent.kind === NodeKind.IfStatement) {
+                ifStatement = parent;
+            }
         }
 
         return ifStatement !== undefined &&
@@ -1111,7 +1114,7 @@ export class Parser extends ParserBase {
         return super.isValidListElementCore(parseContext, token);
     }
 
-    protected parseListElement(parseContext: ParseContext, parent: Node) {
+    protected parseListElement(parseContext: ParseContext, parent: Nodes) {
         parseContext = parseContext as ParserParseContext;
 
         switch (parseContext) {
@@ -1149,7 +1152,7 @@ export class Parser extends ParserBase {
         return super.parseListElementCore(parseContext, parent);
     }
 
-    private parseCore(parent: Node) {
+    private parseCore(parent: Nodes) {
         const token = this.getToken();
         switch (token.kind) {
             case TokenKind.Newline: {
