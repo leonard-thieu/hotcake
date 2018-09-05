@@ -17,7 +17,7 @@ export class ShorthandTypeDeclaration extends Declaration {
 
     readonly kind = NodeKind.ShorthandTypeDeclaration;
 
-    shorthandType: ShorthandTypeToken | null = null;
+    shorthandType: ShorthandTypeToken;
     arrayTypeDeclarations: ArrayTypeDeclaration[] | null = null;
 }
 
@@ -36,6 +36,6 @@ export class LonghandTypeDeclaration extends Declaration {
 
     readonly kind = NodeKind.LonghandTypeDeclaration;
 
-    colon: ColonToken | null = null;
-    typeReference: TypeReference | null = null;
+    colon: ColonToken;
+    typeReference: TypeReference;
 }
