@@ -11,13 +11,6 @@ export class UnaryOpExpression extends Expression {
 
     readonly kind = NodeKind.UnaryOpExpression;
 
-    operator: UnaryOpTokens;
+    operator: PlusSignToken | HyphenMinusToken | TildeToken | NotKeywordToken;
     operand: Expressions | MissingExpressionToken;
 }
-
-export type UnaryOpTokens =
-    PlusSignToken |
-    HyphenMinusToken |
-    TildeToken |
-    NotKeywordToken
-    ;

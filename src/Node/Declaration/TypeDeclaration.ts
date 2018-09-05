@@ -17,16 +17,9 @@ export class ShorthandTypeDeclaration extends Declaration {
 
     readonly kind = NodeKind.ShorthandTypeDeclaration;
 
-    shorthandType: ShorthandTypeToken;
+    shorthandType: QuestionMarkToken | PercentSignToken | NumberSignToken | DollarSignToken;
     arrayTypeDeclarations: ArrayTypeDeclaration[] | null = null;
 }
-
-export type ShorthandTypeToken =
-    QuestionMarkToken |
-    PercentSignToken |
-    NumberSignToken |
-    DollarSignToken
-    ;
 
 export class LonghandTypeDeclaration extends Declaration {
     static CHILD_NAMES: (keyof LonghandTypeDeclaration)[] = [

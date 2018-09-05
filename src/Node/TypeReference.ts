@@ -20,7 +20,8 @@ export class TypeReference extends Node {
 
     modulePath: ModulePath | null = null;
     scopeMemberAccessOperator: PeriodToken | null = null;
-    identifier: TypeReferenceIdentifierToken;
+    identifier: BoolKeywordToken | IntKeywordToken | FloatKeywordToken | StringKeywordToken |
+        ObjectKeywordToken | ThrowableKeywordToken | VoidKeywordToken | IdentifierToken;
 
     // Generic type arguments
     lessThanSign: LessThanSignToken | null = null;
@@ -29,14 +30,3 @@ export class TypeReference extends Node {
 
     arrayTypeDeclarations: ArrayTypeDeclaration[] | null = null;
 }
-
-export type TypeReferenceIdentifierToken =
-    BoolKeywordToken |
-    IntKeywordToken |
-    FloatKeywordToken |
-    StringKeywordToken |
-    ObjectKeywordToken |
-    ThrowableKeywordToken |
-    VoidKeywordToken |
-    IdentifierToken
-    ;
