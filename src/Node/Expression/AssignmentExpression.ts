@@ -1,3 +1,4 @@
+import { EachInKeywordToken } from '../../Token/Token';
 import { NodeKind } from '../NodeKind';
 import { BinaryExpressionBase } from './BinaryExpressionBase';
 
@@ -11,4 +12,6 @@ export class AssignmentExpression extends BinaryExpressionBase {
     ];
 
     readonly kind = NodeKind.AssignmentExpression;
+
+    eachInKeyword: EachInKeywordToken | null = null;
 }

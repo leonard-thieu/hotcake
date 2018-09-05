@@ -13,7 +13,7 @@ import { ModuleDeclaration } from './Node/Declaration/ModuleDeclaration';
 import { StrictDirective } from './Node/Declaration/StrictDirective';
 import { LonghandTypeDeclaration, ShorthandTypeDeclaration } from './Node/Declaration/TypeDeclaration';
 import { TypeParameter } from './Node/Declaration/TypeParameter';
-import { BinaryExpression } from './Node/Expression/BinaryExpression';
+import { AssignmentExpression } from './Node/Expression/AssignmentExpression';
 import { Expressions } from './Node/Expression/Expression';
 import { Nodes } from './Node/Node';
 import { NodeKind } from './Node/NodeKind';
@@ -683,7 +683,7 @@ export class Parser extends ParserBase {
     }
 
     private parseForLoopHeader(parent: ForLoop) {
-        let loopVariableExpression: LocalDeclarationListStatement | BinaryExpression;
+        let loopVariableExpression: LocalDeclarationListStatement | AssignmentExpression;
         if (this.getToken().kind === TokenKind.LocalKeyword) {
             loopVariableExpression = this.parseLocalDeclarationListStatement(parent);
             const declaration = loopVariableExpression.localDeclarationList.children[0];
@@ -694,7 +694,7 @@ export class Parser extends ParserBase {
             }
         } else {
             // TODO: Is this a safe assertion?
-            loopVariableExpression = this.parseExpression(parent) as BinaryExpression;
+            loopVariableExpression = this.parseExpression(parent) as AssignmentExpression;
             if (loopVariableExpression.eachInKeyword !== null) {
                 return loopVariableExpression;
             }

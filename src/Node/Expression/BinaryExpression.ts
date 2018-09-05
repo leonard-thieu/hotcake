@@ -6,7 +6,6 @@ export class BinaryExpression extends BinaryExpressionBase {
         'newlines',
         'leftOperand',
         'operator',
-        'eachInKeyword',
         'rightOperand',
     ];
 
