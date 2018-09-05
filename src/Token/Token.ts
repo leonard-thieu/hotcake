@@ -75,6 +75,9 @@ export interface LessThanSignEqualsSignToken extends Token<TokenKind.LessThanSig
 export interface GreaterThanSignEqualsSignToken extends Token<TokenKind.GreaterThanSignEqualsSign> { }
 export interface VerticalBarEqualsSignToken extends Token<TokenKind.VerticalBarEqualsSign> { }
 export interface TildeEqualsSignToken extends Token<TokenKind.TildeEqualsSign> { }
+export interface ShlKeywordEqualsSignToken extends Token<TokenKind.ShlKeywordEqualsSign> { }
+export interface ShrKeywordEqualsSignToken extends Token<TokenKind.ShrKeywordEqualsSign> { }
+export interface ModKeywordEqualsSignToken extends Token<TokenKind.ModKeywordEqualsSign> { }
 export interface LessThanSignGreaterThanSignToken extends Token<TokenKind.LessThanSignGreaterThanSign> { }
 export interface IdentifierToken extends Token<TokenKind.Identifier> { }
 export interface VoidKeywordToken extends Token<TokenKind.VoidKeyword> { }
@@ -207,6 +210,9 @@ export interface TokenKindTokenMap {
     [TokenKind.GreaterThanSignEqualsSign]: GreaterThanSignEqualsSignToken;
     [TokenKind.VerticalBarEqualsSign]: VerticalBarEqualsSignToken;
     [TokenKind.TildeEqualsSign]: TildeEqualsSignToken;
+    [TokenKind.ShlKeywordEqualsSign]: ShlKeywordEqualsSignToken;
+    [TokenKind.ShrKeywordEqualsSign]: ShrKeywordEqualsSignToken;
+    [TokenKind.ModKeywordEqualsSign]: ModKeywordEqualsSignToken;
     [TokenKind.LessThanSignGreaterThanSign]: LessThanSignGreaterThanSignToken;
     [TokenKind.Identifier]: IdentifierToken;
     [TokenKind.VoidKeyword]: VoidKeywordToken;

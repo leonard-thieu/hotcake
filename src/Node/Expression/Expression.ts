@@ -2,6 +2,7 @@ import { MissingExpressionToken, NewlineToken } from '../../Token/Token';
 import { TokenKind } from '../../Token/TokenKind';
 import { Node } from '../Node';
 import { ArrayLiteral } from './ArrayLiteral';
+import { AssignmentExpression } from './AssignmentExpression';
 import { BinaryExpression } from './BinaryExpression';
 import { BooleanLiteral } from './BooleanLiteral';
 import { FloatLiteral } from './FloatLiteral';
@@ -38,7 +39,8 @@ export type Expressions =
     IndexExpression |
     GroupingExpression |
     UnaryOpExpression |
-    BinaryExpression
+    BinaryExpression |
+    AssignmentExpression
     ;
 
 

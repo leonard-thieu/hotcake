@@ -2,6 +2,7 @@ import { assertNever } from './assertNever';
 import { ArrayTypeDeclaration } from "./Node/ArrayTypeDeclaration";
 import { CommaSeparator } from './Node/CommaSeparator';
 import { ArrayLiteral } from './Node/Expression/ArrayLiteral';
+import { AssignmentExpression } from './Node/Expression/AssignmentExpression';
 import { BinaryExpression } from './Node/Expression/BinaryExpression';
 import { BooleanLiteral } from './Node/Expression/BooleanLiteral';
 import { Expressions, isMissingToken } from './Node/Expression/Expression';
@@ -24,6 +25,9 @@ import { NodeKind } from './Node/NodeKind';
 import { TypeReference } from './Node/TypeReference';
 import { GreaterThanSignEqualsSignToken } from './Token/GreaterThanSignEqualsSignToken';
 import { MissingToken } from './Token/MissingToken';
+import { ModKeywordEqualsSignToken } from './Token/ModKeywordEqualsSignToken';
+import { ShlKeywordEqualsSignToken } from './Token/ShlKeywordEqualsSignToken';
+import { ShrKeywordEqualsSignToken } from './Token/ShrKeywordEqualsSignToken';
 import { SkippedToken } from './Token/SkippedToken';
 import { EachInKeywordToken, MissingExpressionToken, NewlineToken, TokenKinds, TokenKindTokenMap, Tokens } from './Token/Token';
 import { TokenKind } from './Token/TokenKind';
@@ -42,19 +46,43 @@ export abstract class ParserBase {
 
     protected parseBinaryExpression(precedence: Precedence, parent: Node) {
         let expression = this.parseUnaryExpression(parent);
-        let [prevNewPrecedence, prevAssociativity] = UNKNOWN_PRECEDENCE_AND_ASSOCIATIVITY;
+        let [prevNewPrecedence, prevAssociativity] = UnknownPrecedenceAndAssociativity;
 
         while (true) {
             let token = this.getToken();
 
-            if (token.kind === TokenKind.GreaterThanSign) {
-                const nextToken = this.getToken(1);
-                if (nextToken.kind === TokenKind.EqualsSign) {
-                    token = new GreaterThanSignEqualsSignToken(token, nextToken);
+            switch (token.kind) {
+                case TokenKind.GreaterThanSign: {
+                    const nextToken = this.getToken(1);
+                    if (nextToken.kind === TokenKind.EqualsSign) {
+                        token = new GreaterThanSignEqualsSignToken(token, nextToken);
+                    }
+                    break;
+                }
+                case TokenKind.ShlKeyword: {
+                    const nextToken = this.getToken(1);
+                    if (nextToken.kind === TokenKind.EqualsSign) {
+                        token = new ShlKeywordEqualsSignToken(token, nextToken);
+                    }
+                    break;
+                }
+                case TokenKind.ShrKeyword: {
+                    const nextToken = this.getToken(1);
+                    if (nextToken.kind === TokenKind.EqualsSign) {
+                        token = new ShrKeywordEqualsSignToken(token, nextToken);
+                    }
+                    break;
+                }
+                case TokenKind.ModKeyword: {
+                    const nextToken = this.getToken(1);
+                    if (nextToken.kind === TokenKind.EqualsSign) {
+                        token = new ModKeywordEqualsSignToken(token, nextToken);
+                    }
+                    break;
                 }
             }
 
-            const [newPrecedence, associativity] = getBinaryOperatorPrecedenceAndAssociativity(token);
+            const [newPrecedence, associativity] = getBinaryOperatorPrecedenceAndAssociativity(token, parent);
 
             if (prevAssociativity === Associativity.None &&
                 prevNewPrecedence === newPrecedence) {
@@ -71,8 +99,14 @@ export abstract class ParserBase {
             }
 
             this.advanceToken();
-            if (token.kind === TokenKind.GreaterThanSignEqualsSign) {
-                this.advanceToken();
+            switch (token.kind) {
+                case TokenKind.GreaterThanSignEqualsSign:
+                case TokenKind.ShlKeywordEqualsSign:
+                case TokenKind.ShrKeywordEqualsSign:
+                case TokenKind.ModKeywordEqualsSign: {
+                    this.advanceToken();
+                    break;
+                }
             }
 
             const eachInKeyword = this.eatOptional(TokenKind.EachInKeyword);
@@ -81,7 +115,7 @@ export abstract class ParserBase {
                 expression,
                 token,
                 eachInKeyword,
-                this.parseBinaryExpression(newPrecedence, parent),
+                this.parseBinaryExpression(newPrecedence, null as any),
                 parent,
             );
 
@@ -97,9 +131,16 @@ export abstract class ParserBase {
         operator: Tokens,
         eachInKeyword: EachInKeywordToken | null,
         rightOperand: Expressions | MissingExpressionToken,
-        parent: Node
-    ): BinaryExpression {
-        const binaryExpression = new BinaryExpression();
+        parent: Node,
+    ) {
+        let binaryExpression: AssignmentExpression | BinaryExpression;
+        if (operator.kind === TokenKind.EqualsSign &&
+            parent && parent.kind === NodeKind.ExpressionStatement) {
+            binaryExpression = new AssignmentExpression();
+        } else {
+            binaryExpression = new BinaryExpression();
+        }
+
         binaryExpression.parent = parent;
         binaryExpression.leftOperand = leftOperand;
         if (!isMissingToken(leftOperand)) {
@@ -882,13 +923,14 @@ export abstract class ParserBase {
 enum Precedence {
     Unknown = -1,
     Initial = 0,
-    LogicalOr = 6,
-    LogicalAnd = 7,
-    EqualityRelational = 8,
-    BitwiseOr = 9,
-    BitwiseXorBitwiseAnd = 10,
-    Additive = 11,
-    ShiftMultiplicative = 12,
+    LogicalOr = 1,
+    LogicalAnd = 2,
+    Assignment = 3,
+    EqualityRelational = 4,
+    BitwiseOr = 5,
+    BitwiseXorBitwiseAnd = 6,
+    Additive = 7,
+    ShiftMultiplicative = 8,
 }
 
 enum Associativity {
@@ -901,41 +943,65 @@ enum Associativity {
 type PrecedenceAndAssociativity = [Precedence, Associativity];
 
 type PrecedenceAndAssociativityMap = {
-    readonly [P in keyof typeof TokenKind]?: PrecedenceAndAssociativity;
+    readonly [P in TokenKinds]?: PrecedenceAndAssociativity;
 };
 
-const OPERATOR_PRECEDENCE_AND_ASSOCIATIVITY: PrecedenceAndAssociativityMap = {
-    [TokenKind.OrKeyword]: [Precedence.LogicalOr, Associativity.Left],
+const LogicalOrPrecedenceAndAssociativity: PrecedenceAndAssociativity = [Precedence.LogicalOr, Associativity.Left];
+const LogicalAndPrecedenceAndAssociativity: PrecedenceAndAssociativity = [Precedence.LogicalAnd, Associativity.Left];
+const AssignmentPrecedenceAndAssociativity: PrecedenceAndAssociativity = [Precedence.Assignment, Associativity.Right];
+const EqualityRelationalPrecedenceAndAssociativity: PrecedenceAndAssociativity = [Precedence.EqualityRelational, Associativity.None];
+const BitwiseOrPrecedenceAndAssociativity: PrecedenceAndAssociativity = [Precedence.BitwiseOr, Associativity.Left];
+const BitwiseXorBitwiseAndPrecedenceAndAssociativity: PrecedenceAndAssociativity = [Precedence.BitwiseXorBitwiseAnd, Associativity.Left];
+const AdditivePrecedenceAndAssociativity: PrecedenceAndAssociativity = [Precedence.Additive, Associativity.Left];
+const ShiftMultiplicativePrecedenceAndAssociativity: PrecedenceAndAssociativity = [Precedence.ShiftMultiplicative, Associativity.Left];
+const UnknownPrecedenceAndAssociativity: PrecedenceAndAssociativity = [Precedence.Unknown, Associativity.Unknown];
 
-    [TokenKind.AndKeyword]: [Precedence.LogicalAnd, Associativity.Left],
+const OperatorPrecedenceAndAssociativityMap: PrecedenceAndAssociativityMap = {
+    [TokenKind.OrKeyword]: LogicalOrPrecedenceAndAssociativity,
 
-    [TokenKind.LessThanSignGreaterThanSign]: [Precedence.EqualityRelational, Associativity.None],
-    [TokenKind.GreaterThanSignEqualsSign]: [Precedence.EqualityRelational, Associativity.None],
-    [TokenKind.LessThanSignEqualsSign]: [Precedence.EqualityRelational, Associativity.None],
-    [TokenKind.GreaterThanSign]: [Precedence.EqualityRelational, Associativity.None],
-    [TokenKind.LessThanSign]: [Precedence.EqualityRelational, Associativity.None],
-    [TokenKind.EqualsSign]: [Precedence.EqualityRelational, Associativity.None],
+    [TokenKind.AndKeyword]: LogicalAndPrecedenceAndAssociativity,
 
-    [TokenKind.VerticalBar]: [Precedence.BitwiseOr, Associativity.Left],
+    [TokenKind.VerticalBarEqualsSign]: AssignmentPrecedenceAndAssociativity,
+    [TokenKind.TildeEqualsSign]: AssignmentPrecedenceAndAssociativity,
+    [TokenKind.AmpersandEqualsSign]: AssignmentPrecedenceAndAssociativity,
+    [TokenKind.HyphenMinusEqualsSign]: AssignmentPrecedenceAndAssociativity,
+    [TokenKind.PlusSignEqualsSign]: AssignmentPrecedenceAndAssociativity,
+    [TokenKind.ModKeywordEqualsSign]: AssignmentPrecedenceAndAssociativity,
+    [TokenKind.ShrKeywordEqualsSign]: AssignmentPrecedenceAndAssociativity,
+    [TokenKind.ShlKeywordEqualsSign]: AssignmentPrecedenceAndAssociativity,
+    [TokenKind.SlashEqualsSign]: AssignmentPrecedenceAndAssociativity,
+    [TokenKind.AsteriskEqualsSign]: AssignmentPrecedenceAndAssociativity,
 
-    [TokenKind.Tilde]: [Precedence.BitwiseXorBitwiseAnd, Associativity.Left],
-    [TokenKind.Ampersand]: [Precedence.BitwiseXorBitwiseAnd, Associativity.Left],
+    [TokenKind.LessThanSignGreaterThanSign]: EqualityRelationalPrecedenceAndAssociativity,
+    [TokenKind.GreaterThanSignEqualsSign]: EqualityRelationalPrecedenceAndAssociativity,
+    [TokenKind.LessThanSignEqualsSign]: EqualityRelationalPrecedenceAndAssociativity,
+    [TokenKind.GreaterThanSign]: EqualityRelationalPrecedenceAndAssociativity,
+    [TokenKind.LessThanSign]: EqualityRelationalPrecedenceAndAssociativity,
 
-    [TokenKind.HyphenMinus]: [Precedence.Additive, Associativity.Left],
-    [TokenKind.PlusSign]: [Precedence.Additive, Associativity.Left],
+    [TokenKind.VerticalBar]: BitwiseOrPrecedenceAndAssociativity,
 
-    [TokenKind.ShrKeyword]: [Precedence.ShiftMultiplicative, Associativity.Left],
-    [TokenKind.ShlKeyword]: [Precedence.ShiftMultiplicative, Associativity.Left],
-    [TokenKind.ModKeyword]: [Precedence.ShiftMultiplicative, Associativity.Left],
-    [TokenKind.Slash]: [Precedence.ShiftMultiplicative, Associativity.Left],
-    [TokenKind.Asterisk]: [Precedence.ShiftMultiplicative, Associativity.Left],
+    [TokenKind.Tilde]: BitwiseXorBitwiseAndPrecedenceAndAssociativity,
+    [TokenKind.Ampersand]: BitwiseXorBitwiseAndPrecedenceAndAssociativity,
+
+    [TokenKind.HyphenMinus]: AdditivePrecedenceAndAssociativity,
+    [TokenKind.PlusSign]: AdditivePrecedenceAndAssociativity,
+
+    [TokenKind.ShrKeyword]: ShiftMultiplicativePrecedenceAndAssociativity,
+    [TokenKind.ShlKeyword]: ShiftMultiplicativePrecedenceAndAssociativity,
+    [TokenKind.ModKeyword]: ShiftMultiplicativePrecedenceAndAssociativity,
+    [TokenKind.Slash]: ShiftMultiplicativePrecedenceAndAssociativity,
+    [TokenKind.Asterisk]: ShiftMultiplicativePrecedenceAndAssociativity,
 };
 
-const UNKNOWN_PRECEDENCE_AND_ASSOCIATIVITY: PrecedenceAndAssociativity = [Precedence.Unknown, Associativity.Unknown];
+function getBinaryOperatorPrecedenceAndAssociativity(token: Tokens, parent: Node | null): PrecedenceAndAssociativity {
+    if (token.kind === TokenKind.EqualsSign) {
+        return parent && parent.kind === NodeKind.ExpressionStatement ?
+            AssignmentPrecedenceAndAssociativity :
+            EqualityRelationalPrecedenceAndAssociativity;
+    }
 
-function getBinaryOperatorPrecedenceAndAssociativity(token: Tokens): PrecedenceAndAssociativity {
-    return OPERATOR_PRECEDENCE_AND_ASSOCIATIVITY[token.kind] ||
-        UNKNOWN_PRECEDENCE_AND_ASSOCIATIVITY;
+    return OperatorPrecedenceAndAssociativityMap[token.kind] ||
+        UnknownPrecedenceAndAssociativity;
 }
 
 // #endregion

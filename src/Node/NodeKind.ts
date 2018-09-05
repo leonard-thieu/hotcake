@@ -72,5 +72,6 @@ export enum NodeKind {
     IndexExpression = 'IndexExpression',
     UnaryOpExpression = 'UnaryOpExpression',
     BinaryExpression = 'BinaryExpression',
+    AssignmentExpression = 'AssignmentExpression',
     GroupingExpression = 'GroupingExpression',
 }

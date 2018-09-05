@@ -994,8 +994,8 @@ export class Parser extends ParserBase {
          * Parentheses-less invocations are only valid in expression statements. For this purpose, 
          * the expression statements in single line If statements do not count as expression statements.
          */
-        const parent = expression.parent!;
-        if (parent.kind === NodeKind.ExpressionStatement &&
+        const parent = expression.parent;
+        if (parent && parent.kind === NodeKind.ExpressionStatement &&
             !this.isInlineStatement(parent as ExpressionStatement)) {
             return this.isExpressionSequenceMemberStart(token);
         }

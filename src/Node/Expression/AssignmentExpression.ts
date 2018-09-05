@@ -1,8 +1,8 @@
 import { NodeKind } from '../NodeKind';
 import { BinaryExpressionBase } from './BinaryExpressionBase';
 
-export class BinaryExpression extends BinaryExpressionBase {
-    static CHILD_NAMES: (keyof BinaryExpression)[] = [
+export class AssignmentExpression extends BinaryExpressionBase {
+    static CHILD_NAMES: (keyof AssignmentExpression)[] = [
         'newlines',
         'leftOperand',
         'operator',
@@ -10,5 +10,5 @@ export class BinaryExpression extends BinaryExpressionBase {
         'rightOperand',
     ];
 
-    readonly kind = NodeKind.BinaryExpression;
+    readonly kind = NodeKind.AssignmentExpression;
 }

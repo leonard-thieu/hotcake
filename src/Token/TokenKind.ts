@@ -61,6 +61,9 @@ export enum TokenKind {
     GreaterThanSignEqualsSign = 'GreaterThanSignEqualsSign',
     VerticalBarEqualsSign = 'VerticalBarEqualsSign',
     TildeEqualsSign = 'TildeEqualsSign',
+    ShlKeywordEqualsSign = 'ShlKeywordEqualsSign',
+    ShrKeywordEqualsSign = 'ShrKeywordEqualsSign',
+    ModKeywordEqualsSign = 'ModKeywordEqualsSign',
     LessThanSignGreaterThanSign = 'LessThanSignGreaterThanSign',
 
     Identifier = 'Identifier',
