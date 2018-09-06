@@ -1,6 +1,7 @@
 import { assertNever } from './assertNever';
 import { ArrayTypeDeclaration } from "./Node/ArrayTypeDeclaration";
 import { CommaSeparator } from './Node/CommaSeparator';
+import { ConfigurationTag } from './Node/ConfigurationTag';
 import { ArrayLiteral } from './Node/Expression/ArrayLiteral';
 import { AssignmentExpression } from './Node/Expression/AssignmentExpression';
 import { BinaryExpression } from './Node/Expression/BinaryExpression';
@@ -747,7 +748,8 @@ export abstract class ParserBase {
             case TokenKind.EscapeQuotationMark:
             case TokenKind.EscapeTilde:
             case TokenKind.EscapeUnicodeHexValue:
-            case TokenKind.InvalidEscapeSequence: {
+            case TokenKind.InvalidEscapeSequence:
+            case TokenKind.ConfigurationTagStart: {
                 return true;
             }
         }
@@ -755,7 +757,7 @@ export abstract class ParserBase {
         return false;
     }
 
-    protected parseStringLiteralChild() {
+    protected parseStringLiteralChild(parent: Nodes) {
         const token = this.getToken();
         switch (token.kind) {
             case TokenKind.StringLiteralText:
@@ -771,9 +773,22 @@ export abstract class ParserBase {
 
                 return token;
             }
+            case TokenKind.ConfigurationTagStart: {
+                return this.parseConfigurationTag(parent);
+            }
         }
 
         throw new Error(`Unexpected token: ${JSON.stringify(token.kind)}`);
+    }
+
+    protected parseConfigurationTag(parent: Nodes): ConfigurationTag {
+        const configurationTag = new ConfigurationTag();
+        configurationTag.parent = parent;
+        configurationTag.startToken = this.eat(TokenKind.ConfigurationTagStart);
+        configurationTag.name = this.eat(TokenKind.Identifier);
+        configurationTag.endToken = this.eat(TokenKind.ConfigurationTagEnd);
+
+        return configurationTag;
     }
 
     // #endregion
@@ -868,7 +883,7 @@ export abstract class ParserBase {
     protected parseListElementCore(parseContext: ParseContextBase, parent: Nodes) {
         switch (parseContext) {
             case NodeKind.StringLiteral: {
-                return this.parseStringLiteralChild();
+                return this.parseStringLiteralChild(parent);
             }
             case ParseContextKind.TypeReferenceSequence: {
                 return this.parseTypeReferenceSequenceMember(parent);

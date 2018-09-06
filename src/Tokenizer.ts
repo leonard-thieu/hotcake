@@ -5,12 +5,12 @@ import { Expressions, isMissingToken } from './Node/Expression/Expression';
 import { NodeKind } from './Node/NodeKind';
 import { ParseContextElementArray } from './ParserBase';
 import { SkippedToken } from './Token/SkippedToken';
-import { MissingExpressionToken, TokenKinds, Tokens } from './Token/Token';
+import { InvalidEscapeSequenceToken, MissingExpressionToken, TokenKinds, Tokens } from './Token/Token';
 import { TokenKind } from './Token/TokenKind';
 
 export class Tokenizer {
     private document: string;
-    private configVars: ConfigurationVariables;
+    private configVars: Map<string, any>;
 
     * getTokens(
         document: string,
@@ -18,7 +18,7 @@ export class Tokenizer {
         configVars: ConfigurationVariables
     ) {
         this.document = document;
-        this.configVars = Object.assign(configVars);
+        this.configVars = new Map<string, any>(Object.entries(configVars));
 
         for (const member of this.readMember(preprocessorModuleDeclaration.members)) {
             yield member;
@@ -69,7 +69,7 @@ export class Tokenizer {
                     const kind = member.operator.kind;
                     switch (kind) {
                         case TokenKind.EqualsSign: {
-                            this.configVars[varName] = value;
+                            this.configVars.set(varName, value);
                             break;
                         }
                         case TokenKind.PlusSignEqualsSign: {
@@ -77,7 +77,8 @@ export class Tokenizer {
                             if (!v.startsWith(';')) {
                                 v = ';' + v;
                             }
-                            this.configVars[varName] += v;
+                            v = this.configVars.get(varName) + v;
+                            this.configVars.set(varName, v);
                             break;
                         }
                         default: {
@@ -215,8 +216,7 @@ export class Tokenizer {
             case NodeKind.StringLiteral: {
                 let value = '';
                 for (const child of expression.children) {
-                    const kind = child.kind;
-                    switch (kind) {
+                    switch (child.kind) {
                         case TokenKind.StringLiteralText: {
                             value += child.getFullText(this.document);
                             break;
@@ -232,8 +232,16 @@ export class Tokenizer {
                             value += JSON.parse(`"\\${text.slice(1)}"`);
                             break;
                         }
+                        case NodeKind.ConfigurationTag: {
+                            const configurationTagName = child.name.getFullText(this.document);
+                            if (this.configVars.has(configurationTagName)) {
+                                value += this.configVars.get(configurationTagName);
+                            }
+                            break;
+                        }
                         default: {
-                            console.log(`Skipped ${JSON.stringify(kind)}`);
+                            assertType<SkippedToken<TokenKinds> | InvalidEscapeSequenceToken>(child);
+                            console.log(`Skipped ${JSON.stringify(child.kind)}`);
                             break;
                         }
                     }
@@ -264,8 +272,8 @@ export class Tokenizer {
             }
             case NodeKind.IdentifierExpression: {
                 const identifierName = expression.name.getText(this.document);
-                if (identifierName in this.configVars) {
-                    return this.configVars[identifierName];
+                if (this.configVars.has(identifierName)) {
+                    return this.configVars.get(identifierName);
                 }
                 break;
             }

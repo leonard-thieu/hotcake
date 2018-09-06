@@ -2,6 +2,6 @@ import path = require('path');
 import { executeTokenizerTestCases } from './shared';
 
 const name = 'Tokenizer';
-const casesPath = path.resolve(__dirname, 'cases', 'PreprocessorParser');
 
-executeTokenizerTestCases(name, casesPath);
+executeTokenizerTestCases(name, path.resolve(__dirname, 'cases', 'PreprocessorParser'));
+executeTokenizerTestCases(name, path.resolve(__dirname, 'cases', name));

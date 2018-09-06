@@ -1,5 +1,6 @@
 import { ArrayTypeDeclaration } from './ArrayTypeDeclaration';
 import { CommaSeparator } from './CommaSeparator';
+import { ConfigurationTag } from './ConfigurationTag';
 import { Declarations } from './Declaration/Declaration';
 import { Directives } from './Directive/Directive';
 import { Expressions } from './Expression/Expression';
@@ -63,6 +64,7 @@ export type Nodes =
     Directives |
     Expressions |
     Statements |
+    ConfigurationTag |
     NumericForLoopHeader |
     ArrayTypeDeclaration |
     CommaSeparator |

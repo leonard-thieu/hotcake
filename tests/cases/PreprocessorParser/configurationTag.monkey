@@ -1,0 +1,1 @@
+#LIBS+="${CD}/configurationTag.monkey"

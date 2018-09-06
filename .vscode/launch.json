@@ -23,6 +23,54 @@
         {
             "type": "node",
             "request": "launch",
+            "name": "Mocha Preprocessor Tokenizer",
+            "program": "${workspaceFolder}/node_modules/mocha/bin/_mocha",
+            "args": [
+                "--timeout",
+                "999999",
+                "--colors",
+                "--require",
+                "source-map-support/register",
+                "${workspaceFolder}/tests/PreprocessorTokenizer*Tests.js"
+            ],
+            "console": "integratedTerminal",
+            "internalConsoleOptions": "neverOpen"
+        },
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "Mocha Preprocessor Parser",
+            "program": "${workspaceFolder}/node_modules/mocha/bin/_mocha",
+            "args": [
+                "--timeout",
+                "999999",
+                "--colors",
+                "--require",
+                "source-map-support/register",
+                "${workspaceFolder}/tests/PreprocessorParserTests.js"
+            ],
+            "console": "integratedTerminal",
+            "internalConsoleOptions": "neverOpen"
+        },
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "Mocha Tokenizer",
+            "program": "${workspaceFolder}/node_modules/mocha/bin/_mocha",
+            "args": [
+                "--timeout",
+                "999999",
+                "--colors",
+                "--require",
+                "source-map-support/register",
+                "${workspaceFolder}/tests/TokenizerTests.js"
+            ],
+            "console": "integratedTerminal",
+            "internalConsoleOptions": "neverOpen"
+        },
+        {
+            "type": "node",
+            "request": "launch",
             "name": "Mocha Parser",
             "program": "${workspaceFolder}/node_modules/mocha/bin/_mocha",
             "args": [
