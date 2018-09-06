@@ -80,9 +80,6 @@
                                 "length": 1
                             }
                         },
-                        "startExpression": null,
-                        "sliceOperator": null,
-                        "endExpression": null,
                         "closingSquareBracket": {
                             "kind": "ClosingSquareBracket",
                             "fullStart": 29,

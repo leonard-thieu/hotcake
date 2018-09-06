@@ -42,9 +42,9 @@
                 {
                     "kind": "ExpressionStatement",
                     "expression": {
-                        "kind": "IndexExpression",
+                        "kind": "SliceExpression",
                         "newlines": null,
-                        "indexableExpression": {
+                        "sliceableExpression": {
                             "kind": "IdentifierExpression",
                             "newlines": null,
                             "globalScopeMemberAccessOperator": null,
@@ -64,7 +64,6 @@
                             "start": 25,
                             "length": 1
                         },
-                        "indexExpressionExpression": null,
                         "startExpression": {
                             "kind": "BinaryExpression",
                             "newlines": null,

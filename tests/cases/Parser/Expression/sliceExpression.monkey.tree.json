@@ -61,9 +61,9 @@
                         "openingParenthesis": null,
                         "arguments": [
                             {
-                                "kind": "IndexExpression",
+                                "kind": "SliceExpression",
                                 "newlines": null,
-                                "indexableExpression": {
+                                "sliceableExpression": {
                                     "kind": "StringLiteral",
                                     "newlines": null,
                                     "startQuote": {
@@ -93,7 +93,6 @@
                                     "start": 40,
                                     "length": 1
                                 },
-                                "indexExpressionExpression": null,
                                 "startExpression": {
                                     "kind": "IntegerLiteral",
                                     "newlines": null,
@@ -168,9 +167,9 @@
                         "openingParenthesis": null,
                         "arguments": [
                             {
-                                "kind": "IndexExpression",
+                                "kind": "SliceExpression",
                                 "newlines": null,
-                                "indexableExpression": {
+                                "sliceableExpression": {
                                     "kind": "StringLiteral",
                                     "newlines": null,
                                     "startQuote": {
@@ -200,7 +199,6 @@
                                     "start": 89,
                                     "length": 1
                                 },
-                                "indexExpressionExpression": null,
                                 "startExpression": null,
                                 "sliceOperator": {
                                     "kind": "PeriodPeriod",
@@ -266,9 +264,9 @@
                         "openingParenthesis": null,
                         "arguments": [
                             {
-                                "kind": "IndexExpression",
+                                "kind": "SliceExpression",
                                 "newlines": null,
-                                "indexableExpression": {
+                                "sliceableExpression": {
                                     "kind": "StringLiteral",
                                     "newlines": null,
                                     "startQuote": {
@@ -298,7 +296,6 @@
                                     "start": 140,
                                     "length": 1
                                 },
-                                "indexExpressionExpression": null,
                                 "startExpression": {
                                     "kind": "IntegerLiteral",
                                     "newlines": null,
@@ -364,9 +361,9 @@
                         "openingParenthesis": null,
                         "arguments": [
                             {
-                                "kind": "IndexExpression",
+                                "kind": "SliceExpression",
                                 "newlines": null,
-                                "indexableExpression": {
+                                "sliceableExpression": {
                                     "kind": "StringLiteral",
                                     "newlines": null,
                                     "startQuote": {
@@ -396,7 +393,6 @@
                                     "start": 191,
                                     "length": 1
                                 },
-                                "indexExpressionExpression": null,
                                 "startExpression": null,
                                 "sliceOperator": {
                                     "kind": "PeriodPeriod",
