@@ -195,12 +195,16 @@ export class PreprocessorTokenizer {
                     this.lineStart = this.position + 1;
                     break;
                 }
-                // TODO: Should this scan ahead to check if the string literal is terminated?
                 case '"': {
                     kind = TokenKind.QuotationMark;
                     this.position++;
 
-                    this.inString = true;
+                    // Search for the string literal terminator. If it can't be found, don't switch to string literal
+                    // tokenizing mode. This allows the parser to handle it as an incomplete string literal without 
+                    // consuming the entire rest of the document.
+                    if (this.document.includes('"', this.position)) {
+                        this.inString = true;
+                    }
                     break;
                 }
                 case '%': {
