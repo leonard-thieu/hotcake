@@ -10,7 +10,8 @@ export class PreprocessorTokenizer {
      * Track directive nesting.
      */
     private nesting: TokenKind[];
-    private inString: boolean;
+    private stringLiteralTerminatorIndex: number;
+    private configurationTagTerminatorIndex: number;
 
     getTokens(document: string): Tokens[] {
         this.document = document;
@@ -18,7 +19,8 @@ export class PreprocessorTokenizer {
         this.line = 1;
         this.lineStart = 0;
         this.nesting = [];
-        this.inString = false;
+        this.stringLiteralTerminatorIndex = -1;
+        this.configurationTagTerminatorIndex = -1;
 
         const tokens: Tokens[] = [];
         let token: Tokens;
@@ -34,7 +36,7 @@ export class PreprocessorTokenizer {
         let kind = TokenKind.Unknown;
         const fullStart = this.position;
 
-        if (!this.inString) {
+        if (this.stringLiteralTerminatorIndex === -1) {
             // Read trivia
 
             // Read whitespace
@@ -114,13 +116,13 @@ export class PreprocessorTokenizer {
                     }
                 }
             }
-        } else if (this.inString) {
+        } else if (this.stringLiteralTerminatorIndex !== -1) {
             switch (this.getChar()) {
                 case '"': {
                     kind = TokenKind.QuotationMark;
                     this.position++;
 
-                    this.inString = false;
+                    this.stringLiteralTerminatorIndex = -1;
                     break;
                 }
                 case '~': {
@@ -175,14 +177,46 @@ export class PreprocessorTokenizer {
                     }
                     break;
                 }
-                default: {
+                case '$': {
+                    if (this.getChar(1) === '{') {
+                        const configurationTagTerminatorIndex = this.document.indexOf('}', this.position + 2);
+                        if (configurationTagTerminatorIndex !== -1 &&
+                            configurationTagTerminatorIndex < this.stringLiteralTerminatorIndex) {
+                            kind = TokenKind.ConfigurationTagStart;
+                            this.position += 2;
+
+                            this.configurationTagTerminatorIndex = configurationTagTerminatorIndex;
+                            break;
+                        }
+                    }
+                    break;
+                }
+                case '}': {
+                    if (this.configurationTagTerminatorIndex !== -1) {
+                        kind = TokenKind.ConfigurationTagEnd;
+                        this.position++;
+
+                        this.configurationTagTerminatorIndex = -1;
+                    }
+                    break;
+                }
+            }
+
+            if (kind === TokenKind.Unknown) {
+                if (this.configurationTagTerminatorIndex !== -1) {
+                    kind = TokenKind.Identifier;
+                    this.position++;
+
+                    while (isConfigurationTagChar(this.getChar())) {
+                        this.position++;
+                    }
+                } else {
                     kind = TokenKind.StringLiteralText;
                     this.position++;
 
                     while (isStringLiteralTextChar(this.getChar())) {
                         this.position++;
                     }
-                    break;
                 }
             }
         } else {
@@ -202,9 +236,7 @@ export class PreprocessorTokenizer {
                     // Search for the string literal terminator. If it can't be found, don't switch to string literal
                     // tokenizing mode. This allows the parser to handle it as an incomplete string literal without 
                     // consuming the entire rest of the document.
-                    if (this.document.includes('"', this.position)) {
-                        this.inString = true;
-                    }
+                    this.stringLiteralTerminatorIndex = this.document.indexOf('"', this.position);
                     break;
                 }
                 case '%': {
@@ -868,6 +900,16 @@ function isStringLiteralTextChar(c: string | null): boolean {
         case null:
         case '"':
         case '~':
+            return false;
+    }
+
+    return true;
+}
+
+function isConfigurationTagChar(c: string | null): boolean {
+    switch (c) {
+        case null:
+        case '}':
             return false;
     }
 

@@ -31,6 +31,8 @@ export interface EscapeQuotationMarkToken extends Token<TokenKind.EscapeQuotatio
 export interface EscapeTildeToken extends Token<TokenKind.EscapeTilde> { }
 export interface EscapeUnicodeHexValueToken extends Token<TokenKind.EscapeUnicodeHexValue> { }
 export interface InvalidEscapeSequenceToken extends Token<TokenKind.InvalidEscapeSequence> { }
+export interface ConfigurationTagStartToken extends Token<TokenKind.ConfigurationTagStart> { }
+export interface ConfigurationTagEndToken extends Token<TokenKind.ConfigurationTagEnd> { }
 export interface IfDirectiveKeywordToken extends Token<TokenKind.IfDirectiveKeyword> { }
 export interface ElseIfDirectiveKeywordToken extends Token<TokenKind.ElseIfDirectiveKeyword> { }
 export interface ElseDirectiveKeywordToken extends Token<TokenKind.ElseDirectiveKeyword> { }
@@ -166,6 +168,8 @@ export interface TokenKindTokenMap {
     [TokenKind.EscapeTilde]: EscapeTildeToken;
     [TokenKind.EscapeUnicodeHexValue]: EscapeUnicodeHexValueToken;
     [TokenKind.InvalidEscapeSequence]: InvalidEscapeSequenceToken;
+    [TokenKind.ConfigurationTagStart]: ConfigurationTagStartToken;
+    [TokenKind.ConfigurationTagEnd]: ConfigurationTagEndToken;
     [TokenKind.IfDirectiveKeyword]: IfDirectiveKeywordToken;
     [TokenKind.ElseIfDirectiveKeyword]: ElseIfDirectiveKeywordToken;
     [TokenKind.ElseDirectiveKeyword]: ElseDirectiveKeywordToken;

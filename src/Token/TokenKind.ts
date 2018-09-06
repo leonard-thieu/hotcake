@@ -14,6 +14,8 @@ export enum TokenKind {
     EscapeTilde = 'EscapeTilde',
     EscapeUnicodeHexValue = 'EscapeUnicodeHexValue',
     InvalidEscapeSequence = 'InvalidEscapeSequence',
+    ConfigurationTagStart = 'ConfigurationTagStart',
+    ConfigurationTagEnd = 'ConfigurationTagEnd',
 
     IfDirectiveKeyword = 'IfDirectiveKeyword',
     ElseIfDirectiveKeyword = 'ElseIfDirectiveKeyword',
