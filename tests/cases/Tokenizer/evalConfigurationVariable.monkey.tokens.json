@@ -1,0 +1,32 @@
+[
+    {
+        "kind": "Newline",
+        "fullStart": 40,
+        "start": 41,
+        "length": 2
+    },
+    {
+        "kind": "Newline",
+        "fullStart": 42,
+        "start": 43,
+        "length": 2
+    },
+    {
+        "kind": "Newline",
+        "fullStart": 87,
+        "start": 88,
+        "length": 2
+    },
+    {
+        "kind": "Newline",
+        "fullStart": 118,
+        "start": 119,
+        "length": 2
+    },
+    {
+        "kind": "EOF",
+        "fullStart": 162,
+        "start": 162,
+        "length": 0
+    }
+]
