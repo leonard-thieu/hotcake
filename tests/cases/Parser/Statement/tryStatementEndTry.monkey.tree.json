@@ -66,28 +66,32 @@
                                 "length": 13
                             },
                             "expression": {
-                                "kind": "NewExpression",
+                                "kind": "InvokeExpression",
                                 "newlines": null,
-                                "newKeyword": {
-                                    "kind": "NewKeyword",
-                                    "fullStart": 39,
-                                    "start": 40,
-                                    "length": 4
-                                },
-                                "type": {
-                                    "kind": "TypeReference",
-                                    "modulePath": null,
-                                    "scopeMemberAccessOperator": null,
-                                    "identifier": {
-                                        "kind": "ThrowableKeyword",
-                                        "fullStart": 43,
-                                        "start": 44,
-                                        "length": 10
+                                "invokableExpression": {
+                                    "kind": "NewExpression",
+                                    "newlines": null,
+                                    "newKeyword": {
+                                        "kind": "NewKeyword",
+                                        "fullStart": 39,
+                                        "start": 40,
+                                        "length": 4
                                     },
-                                    "lessThanSign": null,
-                                    "typeArguments": null,
-                                    "greaterThanSign": null,
-                                    "arrayTypeDeclarations": null
+                                    "type": {
+                                        "kind": "TypeReference",
+                                        "modulePath": null,
+                                        "scopeMemberAccessOperator": null,
+                                        "identifier": {
+                                            "kind": "ThrowableKeyword",
+                                            "fullStart": 43,
+                                            "start": 44,
+                                            "length": 10
+                                        },
+                                        "lessThanSign": null,
+                                        "typeArguments": null,
+                                        "greaterThanSign": null,
+                                        "arrayTypeDeclarations": null
+                                    }
                                 },
                                 "openingParenthesis": {
                                     "kind": "OpeningParenthesis",

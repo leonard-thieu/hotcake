@@ -64,10 +64,7 @@
                             "typeArguments": null,
                             "greaterThanSign": null,
                             "arrayTypeDeclarations": null
-                        },
-                        "openingParenthesis": null,
-                        "arguments": [],
-                        "closingParenthesis": null
+                        }
                     },
                     "terminator": {
                         "kind": "Newline",
