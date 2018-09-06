@@ -18,7 +18,7 @@ export class Tokenizer {
         configVars: ConfigurationVariables
     ) {
         this.document = document;
-        this.configVars = new Map<string, any>(Object.entries(configVars));
+        this.configVars = createConfigurationVariableMap(configVars);
 
         for (const member of this.readMember(preprocessorModuleDeclaration.members)) {
             yield member;
@@ -63,7 +63,7 @@ export class Tokenizer {
                      * TODO: Verify Monkey X transpiler behavior wrt setting CD and MODPATH.
                      *       Looks like CD and MODPATH are settable but are always overwritten.
                      */
-                    const varName = member.name.getText(this.document);
+                    const varName = member.getConfigurationVariableName(this.document);
                     const value = this.eval(member.expression);
 
                     const { kind } = member.operator;
@@ -269,10 +269,8 @@ export class Tokenizer {
             }
             case NodeKind.IdentifierExpression: {
                 const identifierName = expression.name.getText(this.document);
-                if (this.configVars.has(identifierName)) {
-                    return this.configVars.get(identifierName);
-                }
-                break;
+
+                return this.configVars.get(identifierName);
             }
             case NodeKind.NewExpression:
             case NodeKind.NullExpression:
@@ -285,12 +283,9 @@ export class Tokenizer {
             case NodeKind.AssignmentExpression: {
                 throw new Error(`Unexpected expression: ${JSON.stringify(expression.kind)}`);
             }
-            default: {
-                return assertNever(expression);
-            }
         }
 
-        return false;
+        return assertNever(expression);
     }
 }
 
@@ -303,4 +298,19 @@ export interface ConfigurationVariables {
     MODPATH: string;
 
     [key: string]: any;
+}
+
+function createConfigurationVariableMap(configVars: ConfigurationVariables) {
+    const configVarMap = new Map<string, any>(Object.entries(configVars));
+    const mapGet = configVarMap.get.bind(configVarMap);
+    configVarMap.get = function get(key: string) {
+        let value = mapGet(key);
+        if (typeof value === 'undefined') {
+            value = '';
+        }
+
+        return value;
+    };
+
+    return configVarMap;
 }
