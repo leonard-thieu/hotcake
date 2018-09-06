@@ -3,8 +3,8 @@ import { ArrayTypeDeclaration } from "./Node/ArrayTypeDeclaration";
 import { CommaSeparator } from './Node/CommaSeparator';
 import { ConfigurationTag } from './Node/ConfigurationTag';
 import { ArrayLiteral } from './Node/Expression/ArrayLiteral';
-import { AssignmentExpression } from './Node/Expression/AssignmentExpression';
-import { BinaryExpression } from './Node/Expression/BinaryExpression';
+import { AssignmentExpression, AssignmentOperatorToken } from './Node/Expression/AssignmentExpression';
+import { BinaryExpression, BinaryExpressionOperatorToken } from './Node/Expression/BinaryExpression';
 import { BooleanLiteral } from './Node/Expression/BooleanLiteral';
 import { Expressions, isMissingToken } from './Node/Expression/Expression';
 import { FloatLiteral } from './Node/Expression/FloatLiteral';
@@ -110,12 +110,49 @@ export abstract class ParserBase {
                 }
             }
 
-            expression = this.parseBinaryExpressionLike(
-                parent,
-                expression,
-                token,
-                newPrecedence,
-            );
+            switch (token.kind) {
+                case TokenKind.VerticalBarEqualsSign:
+                case TokenKind.TildeEqualsSign:
+                case TokenKind.AmpersandEqualsSign:
+                case TokenKind.HyphenMinusEqualsSign:
+                case TokenKind.PlusSignEqualsSign:
+                case TokenKind.ShrKeywordEqualsSign:
+                case TokenKind.ShlKeywordEqualsSign:
+                case TokenKind.ModKeywordEqualsSign:
+                case TokenKind.SlashEqualsSign:
+                case TokenKind.AsteriskEqualsSign: {
+                    expression = this.parseAssignmentExpression(parent, expression, token, newPrecedence);
+                    break;
+                }
+                case TokenKind.OrKeyword:
+                case TokenKind.AndKeyword:
+                case TokenKind.LessThanSignGreaterThanSign:
+                case TokenKind.GreaterThanSignEqualsSign:
+                case TokenKind.LessThanSignEqualsSign:
+                case TokenKind.GreaterThanSign:
+                case TokenKind.LessThanSign:
+                case TokenKind.VerticalBar:
+                case TokenKind.Tilde:
+                case TokenKind.Ampersand:
+                case TokenKind.HyphenMinus:
+                case TokenKind.PlusSign:
+                case TokenKind.ShrKeyword:
+                case TokenKind.ShlKeyword:
+                case TokenKind.ModKeyword:
+                case TokenKind.Slash:
+                case TokenKind.Asterisk: {
+                    expression = this.parseBinaryExpression(parent, expression, token, newPrecedence);
+                    break;
+                }
+                case TokenKind.EqualsSign: {
+                    if (parent && parent.kind === NodeKind.ExpressionStatement) {
+                        expression = this.parseAssignmentExpression(parent, expression, token, newPrecedence);
+                    } else {
+                        expression = this.parseBinaryExpression(parent, expression, token, newPrecedence);
+                    }
+                    break;
+                }
+            }
 
             prevNewPrecedence = newPrecedence;
             prevAssociativity = associativity;
@@ -124,24 +161,10 @@ export abstract class ParserBase {
         return expression;
     }
 
-    protected parseBinaryExpressionLike(
-        parent: Nodes,
-        leftOperand: Expressions | MissingExpressionToken,
-        operator: Tokens,
-        newPrecedence: Precedence,
-    ) {
-        if (operator.kind === TokenKind.EqualsSign &&
-            parent && parent.kind === NodeKind.ExpressionStatement) {
-            return this.parseAssignmentExpression(parent, leftOperand, operator, newPrecedence);
-        }
-
-        return this.parseBinaryExpression(parent, leftOperand, operator, newPrecedence);
-    }
-
     private parseAssignmentExpression(
         parent: Nodes,
         leftOperand: Expressions | MissingExpressionToken,
-        operator: Tokens,
+        operator: AssignmentOperatorToken,
         newPrecedence: Precedence,
     ) {
         const assignmentExpression = new AssignmentExpression();
@@ -160,7 +183,7 @@ export abstract class ParserBase {
     private parseBinaryExpression(
         parent: Nodes,
         leftOperand: Expressions | MissingExpressionToken,
-        operator: Tokens,
+        operator: BinaryExpressionOperatorToken,
         newPrecedence: Precedence,
     ) {
         const binaryExpression = new BinaryExpression();
