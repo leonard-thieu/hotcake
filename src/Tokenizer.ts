@@ -278,6 +278,7 @@ export class Tokenizer {
             case NodeKind.ScopeMemberAccessExpression:
             case NodeKind.InvokeExpression:
             case NodeKind.IndexExpression:
+            case NodeKind.SliceExpression:
             case NodeKind.SelfExpression:
             case NodeKind.SuperExpression:
             case NodeKind.AssignmentExpression: {

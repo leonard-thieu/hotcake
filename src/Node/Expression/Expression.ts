@@ -15,6 +15,7 @@ import { NewExpression } from './NewExpression';
 import { NullExpression } from './NullExpression';
 import { ScopeMemberAccessExpression } from './ScopeMemberAccessExpression';
 import { SelfExpression } from './SelfExpression';
+import { SliceExpression } from './SliceExpression';
 import { StringLiteral } from './StringLiteral';
 import { SuperExpression } from './SuperExpression';
 import { UnaryOpExpression } from './UnaryOpExpression';
@@ -37,6 +38,7 @@ export type Expressions =
     ScopeMemberAccessExpression |
     InvokeExpression |
     IndexExpression |
+    SliceExpression |
     GroupingExpression |
     UnaryOpExpression |
     BinaryExpression |

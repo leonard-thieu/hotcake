@@ -17,6 +17,7 @@ import { NewExpression } from './Node/Expression/NewExpression';
 import { NullExpression } from './Node/Expression/NullExpression';
 import { ScopeMemberAccessExpression } from './Node/Expression/ScopeMemberAccessExpression';
 import { SelfExpression } from './Node/Expression/SelfExpression';
+import { SliceExpression } from './Node/Expression/SliceExpression';
 import { StringLiteral } from './Node/Expression/StringLiteral';
 import { SuperExpression } from './Node/Expression/SuperExpression';
 import { UnaryOpExpression } from './Node/Expression/UnaryOpExpression';
@@ -448,7 +449,7 @@ export abstract class ParserBase {
                 return this.parseScopeMemberAccessExpression(expression);
             }
             case TokenKind.OpeningSquareBracket: {
-                return this.parseIndexExpression(expression);
+                return this.parseIndexOrSliceExpression(expression);
             }
         }
 
@@ -470,34 +471,43 @@ export abstract class ParserBase {
         return scopeMemberAccessExpression;
     }
 
-    protected parseIndexExpression(expression: Expressions): IndexExpression {
-        const indexExpression = new IndexExpression();
-        indexExpression.parent = expression.parent;
-        expression.parent = indexExpression;
-        indexExpression.indexableExpression = expression;
-        indexExpression.openingSquareBracket = this.eat(TokenKind.OpeningSquareBracket);
+    protected parseIndexOrSliceExpression(expression: Expressions) {
+        const openingSquareBracket = this.eat(TokenKind.OpeningSquareBracket);
 
-        let startExpression: Expressions | MissingExpressionToken | null = null;
+        let indexExpressionExpressionOrstartExpression: Expressions | MissingExpressionToken | null = null;
         if (this.isExpressionStart(this.getToken())) {
-            startExpression = this.parseExpression(indexExpression);
+            indexExpressionExpressionOrstartExpression = this.parseExpression(null as any);
+
+            if (this.getToken().kind === TokenKind.ClosingSquareBracket) {
+                const indexExpression = new IndexExpression();
+                indexExpression.parent = expression.parent;
+                expression.parent = indexExpression;
+                indexExpression.indexableExpression = expression;
+                indexExpression.openingSquareBracket = openingSquareBracket;
+                indexExpression.indexExpressionExpression = indexExpressionExpressionOrstartExpression;
+                indexExpression.closingSquareBracket = this.eat(TokenKind.ClosingSquareBracket);
+
+                return indexExpression;
+            }
         }
+
+        const sliceExpression = new SliceExpression();
+        sliceExpression.parent = expression.parent;
+        expression.parent = sliceExpression;
+        sliceExpression.sliceableExpression = expression;
+        sliceExpression.openingSquareBracket = openingSquareBracket;
+        sliceExpression.startExpression = indexExpressionExpressionOrstartExpression;
+
         if (this.getToken().kind !== TokenKind.ClosingSquareBracket) {
-            indexExpression.sliceOperator = this.eat(TokenKind.PeriodPeriod);
+            sliceExpression.sliceOperator = this.eat(TokenKind.PeriodPeriod);
         }
         if (this.isExpressionStart(this.getToken())) {
-            indexExpression.endExpression = this.parseExpression(indexExpression);
+            sliceExpression.endExpression = this.parseExpression(sliceExpression);
         }
 
-        if (indexExpression.sliceOperator === null &&
-            indexExpression.endExpression === null) {
-            indexExpression.indexExpressionExpression = startExpression || this.createMissingExpressionToken(this.getToken().fullStart);
-        } else {
-            indexExpression.startExpression = startExpression;
-        }
+        sliceExpression.closingSquareBracket = this.eat(TokenKind.ClosingSquareBracket);
 
-        indexExpression.closingSquareBracket = this.eat(TokenKind.ClosingSquareBracket);
-
-        return indexExpression;
+        return sliceExpression;
     }
 
     protected abstract isInvokeExpressionStart(token: Tokens, expression: Expressions): boolean;

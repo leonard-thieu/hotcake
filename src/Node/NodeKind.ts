@@ -67,6 +67,7 @@ export enum NodeKind {
     ScopeMemberAccessExpression = 'ScopeMemberAccessExpression',
     InvokeExpression = 'InvokeExpression',
     IndexExpression = 'IndexExpression',
+    SliceExpression = 'SliceExpression',
     GroupingExpression = 'GroupingExpression',
     UnaryOpExpression = 'UnaryOpExpression',
     BinaryExpression = 'BinaryExpression',
