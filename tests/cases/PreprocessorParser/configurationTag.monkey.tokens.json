@@ -1,0 +1,56 @@
+[
+    {
+        "kind": "ConfigurationVariable",
+        "fullStart": 0,
+        "start": 0,
+        "length": 5
+    },
+    {
+        "kind": "PlusSignEqualsSign",
+        "fullStart": 5,
+        "start": 5,
+        "length": 2
+    },
+    {
+        "kind": "QuotationMark",
+        "fullStart": 7,
+        "start": 7,
+        "length": 1
+    },
+    {
+        "kind": "ConfigurationTagStart",
+        "fullStart": 8,
+        "start": 8,
+        "length": 2
+    },
+    {
+        "kind": "Identifier",
+        "fullStart": 10,
+        "start": 10,
+        "length": 2
+    },
+    {
+        "kind": "ConfigurationTagEnd",
+        "fullStart": 12,
+        "start": 12,
+        "length": 1
+    },
+    {
+        "kind": "StringLiteralText",
+        "fullStart": 13,
+        "start": 13,
+        "length": 24
+    },
+    {
+        "kind": "QuotationMark",
+        "fullStart": 37,
+        "start": 37,
+        "length": 1
+    },
+    {
+        "kind": "EOF",
+        "fullStart": 38,
+        "start": 38,
+        "length": 0
+    }
+]
