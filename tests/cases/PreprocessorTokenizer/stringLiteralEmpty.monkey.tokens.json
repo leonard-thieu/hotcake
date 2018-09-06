@@ -1,0 +1,20 @@
+[
+    {
+        "kind": "QuotationMark",
+        "fullStart": 0,
+        "start": 0,
+        "length": 1
+    },
+    {
+        "kind": "QuotationMark",
+        "fullStart": 1,
+        "start": 1,
+        "length": 1
+    },
+    {
+        "kind": "EOF",
+        "fullStart": 2,
+        "start": 2,
+        "length": 0
+    }
+]

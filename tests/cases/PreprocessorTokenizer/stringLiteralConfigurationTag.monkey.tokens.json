@@ -1,0 +1,38 @@
+[
+    {
+        "kind": "QuotationMark",
+        "fullStart": 0,
+        "start": 0,
+        "length": 1
+    },
+    {
+        "kind": "ConfigurationTagStart",
+        "fullStart": 1,
+        "start": 1,
+        "length": 2
+    },
+    {
+        "kind": "Identifier",
+        "fullStart": 3,
+        "start": 3,
+        "length": 2
+    },
+    {
+        "kind": "ConfigurationTagEnd",
+        "fullStart": 5,
+        "start": 5,
+        "length": 1
+    },
+    {
+        "kind": "QuotationMark",
+        "fullStart": 6,
+        "start": 6,
+        "length": 1
+    },
+    {
+        "kind": "EOF",
+        "fullStart": 7,
+        "start": 7,
+        "length": 0
+    }
+]

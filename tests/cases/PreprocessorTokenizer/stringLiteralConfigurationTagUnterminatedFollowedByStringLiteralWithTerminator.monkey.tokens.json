@@ -1,0 +1,50 @@
+[
+    {
+        "kind": "QuotationMark",
+        "fullStart": 0,
+        "start": 0,
+        "length": 1
+    },
+    {
+        "kind": "StringLiteralText",
+        "fullStart": 1,
+        "start": 1,
+        "length": 4
+    },
+    {
+        "kind": "QuotationMark",
+        "fullStart": 5,
+        "start": 5,
+        "length": 1
+    },
+    {
+        "kind": "PlusSign",
+        "fullStart": 6,
+        "start": 7,
+        "length": 2
+    },
+    {
+        "kind": "QuotationMark",
+        "fullStart": 8,
+        "start": 9,
+        "length": 2
+    },
+    {
+        "kind": "StringLiteralText",
+        "fullStart": 10,
+        "start": 10,
+        "length": 1
+    },
+    {
+        "kind": "QuotationMark",
+        "fullStart": 11,
+        "start": 11,
+        "length": 1
+    },
+    {
+        "kind": "EOF",
+        "fullStart": 12,
+        "start": 12,
+        "length": 0
+    }
+]
