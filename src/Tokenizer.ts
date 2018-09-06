@@ -66,7 +66,7 @@ export class Tokenizer {
                     const varName = member.name.getText(this.document);
                     const value = this.eval(member.expression);
 
-                    const kind = member.operator.kind;
+                    const { kind } = member.operator;
                     switch (kind) {
                         case TokenKind.EqualsSign: {
                             this.configVars.set(varName, value);
@@ -82,7 +82,7 @@ export class Tokenizer {
                             break;
                         }
                         default: {
-                            console.log(`Unexpected binary operator ${JSON.stringify(kind)}`);
+                            assertNever(kind);
                             break;
                         }
                     }
@@ -127,7 +127,7 @@ export class Tokenizer {
                 const leftValue = this.eval(expression.leftOperand);
                 const rightValue = this.eval(expression.rightOperand);
 
-                const kind = expression.operator.kind;
+                const { kind } = expression.operator;
                 switch (kind) {
                     case TokenKind.Asterisk: {
                         return leftValue * rightValue;
@@ -184,15 +184,14 @@ export class Tokenizer {
                         return leftValue || rightValue;
                     }
                     default: {
-                        console.log(`Unexpected binary operator ${JSON.stringify(kind)}`);
-                        break;
+                        return assertNever(kind);
                     }
                 }
-                break;
             }
             case NodeKind.UnaryOpExpression: {
                 const operand = this.eval(expression.operand);
-                const kind = expression.operator.kind;
+
+                const { kind } = expression.operator;
                 switch (kind) {
                     case TokenKind.PlusSign: {
                         return +operand;
@@ -207,14 +206,13 @@ export class Tokenizer {
                         return !operand;
                     }
                     default: {
-                        console.log(`Unexpected unary operator ${JSON.stringify(kind)}`);
-                        break;
+                        return assertNever(kind);
                     }
                 }
-                break;
             }
             case NodeKind.StringLiteral: {
                 let value = '';
+
                 for (const child of expression.children) {
                     switch (child.kind) {
                         case TokenKind.StringLiteralText: {
@@ -250,7 +248,7 @@ export class Tokenizer {
                 return value;
             }
             case NodeKind.BooleanLiteral: {
-                const kind = expression.value.kind;
+                const { kind } = expression.value;
                 switch (kind) {
                     case TokenKind.TrueKeyword: {
                         return true;
@@ -259,8 +257,7 @@ export class Tokenizer {
                         return false;
                     }
                     default: {
-                        console.log(`Skipped ${JSON.stringify(kind)}`);
-                        break;
+                        return assertNever(kind);
                     }
                 }
             }
