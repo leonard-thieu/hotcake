@@ -1,5 +1,4 @@
-import { ParseContextElementArray, ParseContextKind } from '../../ParserBase';
-import { ClosingParenthesisToken, NewKeywordToken, OpeningParenthesisToken } from '../../Token/Token';
+import { NewKeywordToken } from '../../Token/Token';
 import { NodeKind } from '../NodeKind';
 import { TypeReference } from '../TypeReference';
 import { Expression } from './Expression';
@@ -9,16 +8,10 @@ export class NewExpression extends Expression {
         'newlines',
         'newKeyword',
         'type',
-        'openingParenthesis',
-        'arguments',
-        'closingParenthesis',
     ];
 
     readonly kind = NodeKind.NewExpression;
 
     newKeyword: NewKeywordToken;
     type: TypeReference;
-    openingParenthesis: OpeningParenthesisToken | null;
-    arguments: ParseContextElementArray<ParseContextKind.ExpressionSequence>;
-    closingParenthesis: ClosingParenthesisToken | null;
 }

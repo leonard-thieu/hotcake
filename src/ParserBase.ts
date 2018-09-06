@@ -315,9 +315,6 @@ export abstract class ParserBase {
         newExpression.parent = parent;
         newExpression.newKeyword = this.eat(TokenKind.NewKeyword);
         newExpression.type = this.parseTypeReference(newExpression);
-        newExpression.openingParenthesis = this.eatOptional(TokenKind.OpeningParenthesis);
-        newExpression.arguments = this.parseList(newExpression, ParseContextKind.ExpressionSequence);
-        newExpression.closingParenthesis = this.eatOptional(TokenKind.ClosingParenthesis);
 
         return newExpression;
     }
