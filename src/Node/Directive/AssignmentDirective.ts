@@ -1,5 +1,6 @@
-import { ConfigurationVariableToken, EqualsSignToken, MissingExpressionToken, PlusSignEqualsSignToken } from '../../Token/Token';
-import { Expressions } from '../Expression/Expression';
+import { MissableToken } from '../../Token/MissingToken';
+import { ConfigurationVariableToken, EqualsSignToken, PlusSignEqualsSignToken } from '../../Token/Token';
+import { MissableExpression } from '../Expression/Expression';
 import { NodeKind } from '../NodeKind';
 import { Directive } from './Directive';
 
@@ -13,8 +14,8 @@ export class AssignmentDirective extends Directive {
     readonly kind = NodeKind.AssignmentDirective;
 
     name: ConfigurationVariableToken;
-    operator: EqualsSignToken | PlusSignEqualsSignToken;
-    expression: Expressions | MissingExpressionToken;
+    operator: MissableToken<EqualsSignToken | PlusSignEqualsSignToken>;
+    expression: MissableExpression;
 
     // Reconsider splitting `#` from directive tokens so this isn't necessary.
     getConfigurationVariableName(document: string) {

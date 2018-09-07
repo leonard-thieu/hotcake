@@ -1,4 +1,5 @@
-import { MissingExpressionToken, NewlineToken } from '../../Token/Token';
+import { MissingToken } from '../../Token/MissingToken';
+import { NewlineToken } from '../../Token/Token';
 import { TokenKind } from '../../Token/TokenKind';
 import { Node } from '../Node';
 import { ArrayLiteral } from './ArrayLiteral';
@@ -45,7 +46,4 @@ export type Expressions =
     AssignmentExpression
     ;
 
-
-export function isMissingToken(expression: Expressions | MissingExpressionToken): expression is MissingExpressionToken {
-    return expression.kind === TokenKind.Expression;
-}
+export type MissableExpression = Expressions | MissingToken<TokenKind.Expression>;

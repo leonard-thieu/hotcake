@@ -1,4 +1,5 @@
 import { ParseContextElementArray, ParseContextKind } from '../ParserBase';
+import { MissableToken, MissingToken } from '../Token/MissingToken';
 import { BoolKeywordToken, FloatKeywordToken, GreaterThanSignToken, IdentifierToken, IntKeywordToken, LessThanSignToken, ObjectKeywordToken, PeriodToken, StringKeywordToken, ThrowableKeywordToken, VoidKeywordToken } from '../Token/Token';
 import { ArrayTypeDeclaration } from './ArrayTypeDeclaration';
 import { ModulePath } from './ModulePath';
@@ -20,13 +21,25 @@ export class TypeReference extends Node {
 
     modulePath: ModulePath | null = null;
     scopeMemberAccessOperator: PeriodToken | null = null;
-    identifier: BoolKeywordToken | IntKeywordToken | FloatKeywordToken | StringKeywordToken |
-        ObjectKeywordToken | ThrowableKeywordToken | VoidKeywordToken | IdentifierToken;
+    identifier: TypeReferenceIdentifierToken;
 
     // Generic type arguments
     lessThanSign: LessThanSignToken | null = null;
     typeArguments: ParseContextElementArray<ParseContextKind.TypeReferenceSequence> | null = null;
-    greaterThanSign: GreaterThanSignToken | null = null;
+    greaterThanSign: MissableToken<GreaterThanSignToken> | null = null;
 
     arrayTypeDeclarations: ArrayTypeDeclaration[] | null = null;
 }
+
+export type TypeReferenceIdentifierToken =
+    BoolKeywordToken |
+    IntKeywordToken |
+    FloatKeywordToken |
+    StringKeywordToken |
+    ObjectKeywordToken |
+    ThrowableKeywordToken |
+    VoidKeywordToken |
+    IdentifierToken
+    ;
+
+export type MissableTypeReference = TypeReference | MissingToken<TypeReference['kind']>;

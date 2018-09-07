@@ -1,6 +1,6 @@
-import { MissingExpressionToken, PeriodToken } from '../../Token/Token';
+import { PeriodToken } from '../../Token/Token';
 import { NodeKind } from '../NodeKind';
-import { Expression, Expressions } from './Expression';
+import { Expression, MissableExpression } from './Expression';
 
 export class ScopeMemberAccessExpression extends Expression {
     static CHILD_NAMES: (keyof ScopeMemberAccessExpression)[] = [
@@ -12,7 +12,7 @@ export class ScopeMemberAccessExpression extends Expression {
 
     readonly kind = NodeKind.ScopeMemberAccessExpression;
 
-    scopableExpression: Expressions | MissingExpressionToken;
+    scopableExpression: MissableExpression;
     scopeMemberAccessOperator: PeriodToken;
-    member: Expressions | MissingExpressionToken;
+    member: MissableExpression;
 }

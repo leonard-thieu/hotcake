@@ -10,6 +10,13 @@ export class AccessibilityDirective extends Declaration {
 
     readonly kind = NodeKind.AccessibilityDirective;
 
-    accessibilityKeyword: PrivateKeywordToken | PublicKeywordToken | ProtectedKeywordToken | ExternKeywordToken;
+    accessibilityKeyword: AccessibilityKeywordToken;
     externPrivateKeyword: PrivateKeywordToken | null = null;
 }
+
+export type AccessibilityKeywordToken =
+    PrivateKeywordToken |
+    PublicKeywordToken |
+    ProtectedKeywordToken |
+    ExternKeywordToken
+    ;

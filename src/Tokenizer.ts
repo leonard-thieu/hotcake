@@ -1,11 +1,11 @@
 import { assertNever, assertType } from './assertNever';
 import { PreprocessorModuleDeclaration } from './Node/Declaration/PreprocessorModuleDeclaration';
 import { IfDirective } from './Node/Directive/IfDirective';
-import { Expressions, isMissingToken } from './Node/Expression/Expression';
+import { MissableExpression } from './Node/Expression/Expression';
 import { NodeKind } from './Node/NodeKind';
 import { ParseContextElementArray } from './ParserBase';
 import { SkippedToken } from './Token/SkippedToken';
-import { InvalidEscapeSequenceToken, MissingExpressionToken, TokenKinds, Tokens } from './Token/Token';
+import { InvalidEscapeSequenceToken, TokenKinds, Tokens } from './Token/Token';
 import { TokenKind } from './Token/TokenKind';
 
 export class Tokenizer {
@@ -81,6 +81,9 @@ export class Tokenizer {
                             this.configVars.set(varName, v);
                             break;
                         }
+                        case TokenKind.Missing: {
+                            break;
+                        }
                         default: {
                             assertNever(kind);
                             break;
@@ -114,8 +117,8 @@ export class Tokenizer {
         }
     }
 
-    private eval(expression: Expressions | MissingExpressionToken): any {
-        if (isMissingToken(expression)) {
+    private eval(expression: MissableExpression): any {
+        if (expression.kind === TokenKind.Missing) {
             return false;
         }
 
@@ -231,9 +234,11 @@ export class Tokenizer {
                             break;
                         }
                         case NodeKind.ConfigurationTag: {
-                            const configurationTagName = child.name.getFullText(this.document);
-                            if (this.configVars.has(configurationTagName)) {
-                                value += this.configVars.get(configurationTagName);
+                            if (child.name) {
+                                const configurationTagName = child.name.getFullText(this.document);
+                                if (this.configVars.has(configurationTagName)) {
+                                    value += this.configVars.get(configurationTagName);
+                                }
                             }
                             break;
                         }

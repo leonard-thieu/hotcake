@@ -1,4 +1,5 @@
 import { ParseContextElementArray } from '../../ParserBase';
+import { MissableToken } from '../../Token/MissingToken';
 import { EndDirectiveKeywordToken, RemDirectiveKeywordToken } from '../../Token/Token';
 import { NodeKind } from '../NodeKind';
 import { Directive } from './Directive';
@@ -14,5 +15,5 @@ export class RemDirective extends Directive {
 
     remDirectiveKeyword: RemDirectiveKeywordToken;
     children: ParseContextElementArray<RemDirective['kind']>;
-    endDirectiveKeyword: EndDirectiveKeywordToken;
+    endDirectiveKeyword: MissableToken<EndDirectiveKeywordToken>;
 }

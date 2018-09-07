@@ -1,6 +1,7 @@
 import { ParseContextElementArray } from '../../ParserBase';
-import { ForeverKeywordToken, MissingExpressionToken, RepeatKeywordToken, UntilKeywordToken } from '../../Token/Token';
-import { Expressions } from '../Expression/Expression';
+import { MissableToken } from '../../Token/MissingToken';
+import { ForeverKeywordToken, RepeatKeywordToken, UntilKeywordToken } from '../../Token/Token';
+import { MissableExpression } from '../Expression/Expression';
 import { NodeKind } from '../NodeKind';
 import { Statement } from './Statement';
 
@@ -17,6 +18,6 @@ export class RepeatLoop extends Statement {
 
     repeatKeyword: RepeatKeywordToken;
     statements: ParseContextElementArray<RepeatLoop['kind']>;
-    foreverOrUntilKeyword: ForeverKeywordToken | UntilKeywordToken;
-    untilExpression: Expressions | MissingExpressionToken | null = null;
+    foreverOrUntilKeyword: MissableToken<ForeverKeywordToken | UntilKeywordToken>;
+    untilExpression: MissableExpression | null = null;
 }

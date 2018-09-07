@@ -1,4 +1,5 @@
 import { ParseContextElementArray, ParseContextKind } from '../../ParserBase';
+import { MissableToken } from '../../Token/MissingToken';
 import { ClosingSquareBracketToken, OpeningSquareBracketToken } from '../../Token/Token';
 import { NodeKind } from '../NodeKind';
 import { Expression } from './Expression';
@@ -14,5 +15,5 @@ export class ArrayLiteral extends Expression {
 
     openingSquareBracket: OpeningSquareBracketToken;
     expressions: ParseContextElementArray<ParseContextKind.ExpressionSequence>;
-    closingSquareBracket: ClosingSquareBracketToken;
+    closingSquareBracket: MissableToken<ClosingSquareBracketToken>;
 }

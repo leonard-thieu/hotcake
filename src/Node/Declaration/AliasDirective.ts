@@ -1,6 +1,7 @@
+import { MissableToken } from '../../Token/MissingToken';
 import { AliasKeywordToken, EqualsSignToken, IdentifierToken } from '../../Token/Token';
 import { NodeKind } from '../NodeKind';
-import { TypeReference } from '../TypeReference';
+import { MissableTypeReference } from '../TypeReference';
 import { Declaration } from './Declaration';
 
 export class AliasDirective extends Declaration {
@@ -14,7 +15,7 @@ export class AliasDirective extends Declaration {
     readonly kind = NodeKind.AliasDirective;
 
     aliasKeyword: AliasKeywordToken;
-    name: IdentifierToken;
-    equalsSign: EqualsSignToken;
-    target: TypeReference;
+    name: MissableToken<IdentifierToken>;
+    equalsSign: MissableToken<EqualsSignToken>;
+    target: MissableTypeReference;
 }

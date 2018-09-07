@@ -1,9 +1,9 @@
-import { AccessibilityDirective } from './Node/Declaration/AccessibilityDirective';
+import { AccessibilityDirective, AccessibilityKeywordToken } from './Node/Declaration/AccessibilityDirective';
 import { AliasDirective } from './Node/Declaration/AliasDirective';
 import { ClassDeclaration } from './Node/Declaration/ClassDeclaration';
 import { ClassMethodDeclaration } from './Node/Declaration/ClassMethodDeclaration';
-import { DataDeclaration } from './Node/Declaration/DataDeclaration';
-import { DataDeclarationList } from './Node/Declaration/DataDeclarationList';
+import { DataDeclaration, MissableDataDeclaration } from './Node/Declaration/DataDeclaration';
+import { DataDeclarationKeywordToken, DataDeclarationList } from './Node/Declaration/DataDeclarationList';
 import { FriendDirective } from './Node/Declaration/FriendDirective';
 import { FunctionDeclaration } from './Node/Declaration/FunctionDeclaration';
 import { ImportStatement } from './Node/Declaration/ImportStatement';
@@ -11,7 +11,7 @@ import { InterfaceDeclaration } from './Node/Declaration/InterfaceDeclaration';
 import { InterfaceMethodDeclaration } from './Node/Declaration/InterfaceMethodDeclaration';
 import { ModuleDeclaration } from './Node/Declaration/ModuleDeclaration';
 import { StrictDirective } from './Node/Declaration/StrictDirective';
-import { LonghandTypeDeclaration, ShorthandTypeDeclaration } from './Node/Declaration/TypeDeclaration';
+import { LonghandTypeDeclaration, ShorthandTypeDeclaration, ShorthandTypeToken } from './Node/Declaration/TypeDeclaration';
 import { TypeParameter } from './Node/Declaration/TypeParameter';
 import { AssignmentExpression } from './Node/Expression/AssignmentExpression';
 import { Expressions } from './Node/Expression/Expression';
@@ -32,7 +32,8 @@ import { ThrowStatement } from './Node/Statement/ThrowStatement';
 import { CatchStatement, TryStatement } from './Node/Statement/TryStatement';
 import { WhileLoop } from './Node/Statement/WhileLoop';
 import { ParseContext, ParseContextElementMapBase, ParseContextKind, ParserBase } from './ParserBase';
-import { Tokens } from './Token/Token';
+import { MissingToken } from './Token/MissingToken';
+import { AliasKeywordToken, CaseKeywordToken, CatchKeywordToken, ClassKeywordToken, ColonToken, ContinueKeywordToken, DefaultKeywordToken, ElseIfKeywordToken, ElseKeywordToken, ExitKeywordToken, ForKeywordToken, FriendKeywordToken, FunctionKeywordToken, IdentifierToken, IfKeywordToken, ImportKeywordToken, InterfaceKeywordToken, LocalKeywordToken, MethodKeywordToken, RepeatKeywordToken, ReturnKeywordToken, SelectKeywordToken, StrictKeywordToken, ThrowKeywordToken, Tokens, TryKeywordToken, WhileKeywordToken } from './Token/Token';
 import { TokenKind } from './Token/TokenKind';
 
 export class Parser extends ParserBase {
@@ -86,89 +87,116 @@ export class Parser extends ParserBase {
         const token = this.getToken();
         switch (token.kind) {
             case TokenKind.StrictKeyword: {
-                return this.parseStrictDirective(parent);
+                this.advanceToken();
+
+                return this.parseStrictDirective(parent, token);
             }
             case TokenKind.ImportKeyword: {
-                return this.parseImportStatement(parent);
+                this.advanceToken();
+
+                return this.parseImportStatement(parent, token);
             }
             case TokenKind.FriendKeyword: {
-                return this.parseFriendDirective(parent);
+                this.advanceToken();
+
+                return this.parseFriendDirective(parent, token);
             }
             case TokenKind.PrivateKeyword:
             case TokenKind.PublicKeyword:
             case TokenKind.ExternKeyword: {
-                return this.parseAccessibilityDirective(parent);
+                this.advanceToken();
+
+                return this.parseAccessibilityDirective(parent, token);
             }
             case TokenKind.AliasKeyword: {
-                return this.parseAliasDirective(parent);
+                this.advanceToken();
+
+                return this.parseAliasDirective(parent, token);
             }
             case TokenKind.ConstKeyword:
             case TokenKind.GlobalKeyword: {
-                return this.parseDataDeclarationList(parent);
+                this.advanceToken();
+
+                return this.parseDataDeclarationList(parent, token);
             }
             case TokenKind.FunctionKeyword: {
-                return this.parseFunctionDeclaration(parent);
+                this.advanceToken();
+
+                return this.parseFunctionDeclaration(parent, token);
             }
             case TokenKind.InterfaceKeyword: {
-                return this.parseInterfaceDeclaration(parent);
+                this.advanceToken();
+
+                return this.parseInterfaceDeclaration(parent, token);
             }
             case TokenKind.ClassKeyword: {
-                return this.parseClassDeclaration(parent);
+                this.advanceToken();
+
+                return this.parseClassDeclaration(parent, token);
             }
         }
 
         return this.parseCore(parent);
     }
 
-    private parseStrictDirective(parent: Nodes): StrictDirective {
+    private parseStrictDirective(parent: Nodes, strictKeyword: StrictKeywordToken): StrictDirective {
         const strictDirective = new StrictDirective();
         strictDirective.parent = parent;
-        strictDirective.strictKeyword = this.eat(TokenKind.StrictKeyword);
+        strictDirective.strictKeyword = strictKeyword;
 
         return strictDirective;
     }
 
-    private parseImportStatement(parent: Nodes): ImportStatement {
+    private parseImportStatement(parent: Nodes, importKeyword: ImportKeywordToken): ImportStatement {
         const importStatement = new ImportStatement();
         importStatement.parent = parent;
-        importStatement.importKeyword = this.eat(TokenKind.ImportKeyword);
-        if (this.getToken().kind === TokenKind.QuotationMark) {
-            importStatement.path = this.parseStringLiteral(importStatement);
-        } else {
-            importStatement.path = this.parseModulePath(importStatement);
+        importStatement.importKeyword = importKeyword;
+
+        const token = this.getToken();
+        switch (token.kind) {
+            case TokenKind.QuotationMark: {
+                this.advanceToken();
+
+                importStatement.path = this.parseStringLiteral(importStatement, token);
+                break;
+            }
+            default: {
+                importStatement.path = this.parseModulePath(importStatement);
+                break;
+            }
         }
 
         return importStatement;
     }
 
-    private parseFriendDirective(parent: Nodes): FriendDirective {
+    private parseFriendDirective(parent: Nodes, friendKeyword: FriendKeywordToken): FriendDirective {
         const friendDirective = new FriendDirective();
         friendDirective.parent = parent;
-        friendDirective.friendKeyword = this.eat(TokenKind.FriendKeyword);
+        friendDirective.friendKeyword = friendKeyword;
         friendDirective.modulePath = this.parseModulePath(friendDirective);
 
         return friendDirective;
     }
 
-    private parseAliasDirective(parent: Nodes): AliasDirective {
+    private parseAliasDirective(parent: Nodes, aliasKeyword: AliasKeywordToken): AliasDirective {
         /**
          * TODO: Comma separated aliases allowed?
          * TODO: Explicit data type declaration allowed?
          */
         const aliasDirective = new AliasDirective();
         aliasDirective.parent = parent;
-        aliasDirective.aliasKeyword = this.eat(TokenKind.AliasKeyword);
+        aliasDirective.aliasKeyword = aliasKeyword;
         aliasDirective.name = this.eat(TokenKind.Identifier);
         aliasDirective.equalsSign = this.eat(TokenKind.EqualsSign);
-        aliasDirective.target = this.parseTypeReference(aliasDirective);
+        aliasDirective.target = this.parseMissableTypeReference(aliasDirective);
 
         return aliasDirective;
     }
 
-    private parseInterfaceDeclaration(parent: Nodes): InterfaceDeclaration {
+    private parseInterfaceDeclaration(parent: Nodes, interfaceKeyword: InterfaceKeywordToken): InterfaceDeclaration {
         const interfaceDeclaration = new InterfaceDeclaration();
         interfaceDeclaration.parent = parent;
-        interfaceDeclaration.interfaceKeyword = this.eat(TokenKind.InterfaceKeyword);
+        interfaceDeclaration.interfaceKeyword = interfaceKeyword;
         interfaceDeclaration.name = this.eat(TokenKind.Identifier);
         interfaceDeclaration.extendsKeyword = this.eatOptional(TokenKind.ExtendsKeyword);
         if (interfaceDeclaration.extendsKeyword !== null) {
@@ -181,10 +209,10 @@ export class Parser extends ParserBase {
         return interfaceDeclaration;
     }
 
-    private parseClassDeclaration(parent: Nodes): ClassDeclaration {
+    private parseClassDeclaration(parent: Nodes, classKeyword: ClassKeywordToken): ClassDeclaration {
         const classDeclaration = new ClassDeclaration();
         classDeclaration.parent = parent;
-        classDeclaration.classKeyword = this.eat(TokenKind.ClassKeyword);
+        classDeclaration.classKeyword = classKeyword;
         classDeclaration.name = this.eat(TokenKind.Identifier);
 
         classDeclaration.lessThanSign = this.eatOptional(TokenKind.LessThanSign);
@@ -195,7 +223,7 @@ export class Parser extends ParserBase {
 
         classDeclaration.extendsKeyword = this.eatOptional(TokenKind.ExtendsKeyword);
         if (classDeclaration.extendsKeyword !== null) {
-            classDeclaration.baseType = this.parseTypeReference(classDeclaration);
+            classDeclaration.baseType = this.parseMissableTypeReference(classDeclaration);
         }
 
         classDeclaration.implementsKeyword = this.eatOptional(TokenKind.ImplementsKeyword);
@@ -239,20 +267,24 @@ export class Parser extends ParserBase {
         const token = this.getToken();
         switch (token.kind) {
             case TokenKind.ConstKeyword: {
-                return this.parseDataDeclarationList(parent);
+                this.advanceToken();
+
+                return this.parseDataDeclarationList(parent, token);
             }
             case TokenKind.MethodKeyword: {
-                return this.parseInterfaceMethodDeclaration(parent);
+                this.advanceToken();
+
+                return this.parseInterfaceMethodDeclaration(parent, token);
             }
         }
 
         return this.parseCore(parent);
     }
 
-    private parseInterfaceMethodDeclaration(parent: Nodes): InterfaceMethodDeclaration {
+    private parseInterfaceMethodDeclaration(parent: Nodes, methodKeyword: MethodKeywordToken): InterfaceMethodDeclaration {
         const interfaceMethodDeclaration = new InterfaceMethodDeclaration();
         interfaceMethodDeclaration.parent = parent;
-        interfaceMethodDeclaration.methodKeyword = this.eat(TokenKind.MethodKeyword);
+        interfaceMethodDeclaration.methodKeyword = methodKeyword;
         interfaceMethodDeclaration.name = this.eat(TokenKind.Identifier);
         interfaceMethodDeclaration.returnType = this.parseTypeDeclaration(interfaceMethodDeclaration);
         interfaceMethodDeclaration.openingParenthesis = this.eat(TokenKind.OpeningParenthesis);
@@ -294,28 +326,36 @@ export class Parser extends ParserBase {
             case TokenKind.ConstKeyword:
             case TokenKind.GlobalKeyword:
             case TokenKind.FieldKeyword: {
-                return this.parseDataDeclarationList(parent);
+                this.advanceToken();
+
+                return this.parseDataDeclarationList(parent, token);
             }
             case TokenKind.FunctionKeyword: {
-                return this.parseFunctionDeclaration(parent);
+                this.advanceToken();
+
+                return this.parseFunctionDeclaration(parent, token);
             }
             case TokenKind.MethodKeyword: {
-                return this.parseClassMethodDeclaration(parent);
+                this.advanceToken();
+
+                return this.parseClassMethodDeclaration(parent, token);
             }
             case TokenKind.PrivateKeyword:
             case TokenKind.PublicKeyword:
             case TokenKind.ProtectedKeyword: {
-                return this.parseAccessibilityDirective(parent);
+                this.advanceToken();
+
+                return this.parseAccessibilityDirective(parent, token);
             }
         }
 
         return this.parseCore(parent);
     }
 
-    private parseClassMethodDeclaration(parent: Nodes): ClassMethodDeclaration {
+    private parseClassMethodDeclaration(parent: Nodes, methodKeyword: MethodKeywordToken): ClassMethodDeclaration {
         const classMethodDeclaration = new ClassMethodDeclaration();
         classMethodDeclaration.parent = parent;
-        classMethodDeclaration.methodKeyword = this.eat(TokenKind.MethodKeyword);
+        classMethodDeclaration.methodKeyword = methodKeyword;
         classMethodDeclaration.name = this.eat(TokenKind.Identifier);
         classMethodDeclaration.returnType = this.parseTypeDeclaration(classMethodDeclaration);
         classMethodDeclaration.openingParenthesis = this.eat(TokenKind.OpeningParenthesis);
@@ -370,43 +410,69 @@ export class Parser extends ParserBase {
         const token = this.getToken();
         switch (token.kind) {
             case TokenKind.LocalKeyword: {
-                return this.parseLocalDeclarationListStatement(parent);
+                this.advanceToken();
+
+                return this.parseLocalDeclarationListStatement(parent, token);
             }
             case TokenKind.ReturnKeyword: {
-                return this.parseReturnStatement(parent);
+                this.advanceToken();
+
+                return this.parseReturnStatement(parent, token);
             }
             case TokenKind.IfKeyword: {
-                return this.parseIfStatement(parent);
+                this.advanceToken();
+
+                return this.parseIfStatement(parent, token);
             }
             case TokenKind.SelectKeyword: {
-                return this.parseSelectStatement(parent);
+                this.advanceToken();
+
+                return this.parseSelectStatement(parent, token);
             }
             case TokenKind.CaseKeyword: {
-                return this.parseCaseStatement(parent);
+                this.advanceToken();
+
+                return this.parseCaseStatement(parent, token);
             }
             case TokenKind.DefaultKeyword: {
-                return this.parseDefaultStatement(parent);
+                this.advanceToken();
+
+                return this.parseDefaultStatement(parent, token);
             }
             case TokenKind.WhileKeyword: {
-                return this.parseWhileLoop(parent);
+                this.advanceToken();
+
+                return this.parseWhileLoop(parent, token);
             }
             case TokenKind.RepeatKeyword: {
-                return this.parseRepeatLoop(parent);
+                this.advanceToken();
+
+                return this.parseRepeatLoop(parent, token);
             }
             case TokenKind.ForKeyword: {
-                return this.parseForLoop(parent);
+                this.advanceToken();
+
+                return this.parseForLoop(parent, token);
             }
             case TokenKind.ContinueKeyword: {
-                return this.parseContinueStatement(parent);
+                this.advanceToken();
+
+                return this.parseContinueStatement(parent, token);
             }
             case TokenKind.ExitKeyword: {
-                return this.parseExitStatement(parent);
+                this.advanceToken();
+
+                return this.parseExitStatement(parent, token);
             }
             case TokenKind.ThrowKeyword: {
-                return this.parseThrowStatement(parent);
+                this.advanceToken();
+
+                return this.parseThrowStatement(parent, token);
             }
             case TokenKind.TryKeyword: {
-                return this.parseTryStatement(parent);
+                this.advanceToken();
+
+                return this.parseTryStatement(parent, token);
             }
             case TokenKind.Newline:
             case TokenKind.Semicolon: {
@@ -417,19 +483,19 @@ export class Parser extends ParserBase {
         return this.parseExpressionStatement(parent);
     }
 
-    private parseLocalDeclarationListStatement(parent: Nodes): LocalDeclarationListStatement {
+    private parseLocalDeclarationListStatement(parent: Nodes, localKeyword: LocalKeywordToken): LocalDeclarationListStatement {
         const localDeclarationListStatement = new LocalDeclarationListStatement();
         localDeclarationListStatement.parent = parent;
-        localDeclarationListStatement.localDeclarationList = this.parseDataDeclarationList(localDeclarationListStatement);
+        localDeclarationListStatement.localDeclarationList = this.parseDataDeclarationList(localDeclarationListStatement, localKeyword);
         localDeclarationListStatement.terminator = this.eatStatementTerminator(localDeclarationListStatement);
 
         return localDeclarationListStatement;
     }
 
-    private parseReturnStatement(parent: Nodes): ReturnStatement {
+    private parseReturnStatement(parent: Nodes, returnKeyword: ReturnKeywordToken): ReturnStatement {
         const returnStatement = new ReturnStatement();
         returnStatement.parent = parent;
-        returnStatement.returnKeyword = this.eat(TokenKind.ReturnKeyword);
+        returnStatement.returnKeyword = returnKeyword;
         // TODO: Is there sufficient information at this point to determine whether the return expression is required?
         if (this.isExpressionStart(this.getToken())) {
             returnStatement.expression = this.parseExpression(returnStatement);
@@ -441,25 +507,45 @@ export class Parser extends ParserBase {
 
     // #region If statement
 
-    private parseIfStatement(parent: Nodes): IfStatement {
+    private parseIfStatement(parent: Nodes, ifKeyword: IfKeywordToken): IfStatement {
         const ifStatement = new IfStatement();
         ifStatement.parent = parent;
-        ifStatement.ifKeyword = this.eat(TokenKind.IfKeyword);
+        ifStatement.ifKeyword = ifKeyword;
         ifStatement.expression = this.parseExpression(ifStatement);
         ifStatement.thenKeyword = this.eatOptional(TokenKind.ThenKeyword);
 
         if (this.getToken().kind === TokenKind.Newline) {
             ifStatement.statements = this.parseList(ifStatement, ifStatement.kind);
 
-            while (this.isElseIfStatementStart()) {
+            while (true) {
+                const elseIfKeyword = this.getToken();
+                let ifKeyword: Tokens | null = null;
+                if (elseIfKeyword.kind === TokenKind.ElseIfKeyword) {
+                    this.advanceToken();
+                } else if (elseIfKeyword.kind === TokenKind.ElseKeyword) {
+                    ifKeyword = this.getToken(1);
+                    if (ifKeyword.kind === TokenKind.IfKeyword) {
+                        this.advanceToken();
+                        this.advanceToken();
+                    } else {
+                        break;
+                    }
+                } else {
+                    break;
+                }
+
                 if (ifStatement.elseIfStatements === null) {
                     ifStatement.elseIfStatements = [];
                 }
-                ifStatement.elseIfStatements.push(this.parseElseIfStatement(ifStatement));
+
+                ifStatement.elseIfStatements.push(this.parseElseIfStatement(ifStatement, elseIfKeyword, ifKeyword));
             }
 
-            if (this.getToken().kind === TokenKind.ElseKeyword) {
-                ifStatement.elseStatement = this.parseElseStatement(ifStatement);
+            const elseKeyword = this.getToken();
+            if (elseKeyword.kind === TokenKind.ElseKeyword) {
+                this.advanceToken();
+
+                ifStatement.elseStatement = this.parseElseStatement(ifStatement, elseKeyword);
             }
 
             ifStatement.endKeyword = this.eat(TokenKind.EndIfKeyword, TokenKind.EndKeyword);
@@ -470,8 +556,11 @@ export class Parser extends ParserBase {
             ifStatement.isSingleLine = true;
             ifStatement.statements = [this.parseStatement(ifStatement)];
 
-            if (this.getToken().kind === TokenKind.ElseKeyword) {
-                ifStatement.elseStatement = this.parseElseStatement(ifStatement);
+            const elseKeyword = this.getToken();
+            if (elseKeyword.kind === TokenKind.ElseKeyword) {
+                this.advanceToken();
+
+                ifStatement.elseStatement = this.parseElseStatement(ifStatement, elseKeyword);
             }
         }
 
@@ -480,29 +569,11 @@ export class Parser extends ParserBase {
         return ifStatement;
     }
 
-    private isElseIfStatementStart(): boolean {
-        const token = this.getToken();
-        if (token.kind === TokenKind.ElseIfKeyword) {
-            return true;
-        }
-
-        if (token.kind === TokenKind.ElseKeyword) {
-            const nextToken = this.getToken(1);
-            if (nextToken.kind === TokenKind.IfKeyword) {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    private parseElseIfStatement(parent: IfStatement): ElseIfStatement {
+    private parseElseIfStatement(parent: IfStatement, elseIfKeyword: ElseIfKeywordToken | ElseKeywordToken, ifKeyword: IfKeywordToken | null): ElseIfStatement {
         const elseIfStatement = new ElseIfStatement();
         elseIfStatement.parent = parent;
-        elseIfStatement.elseIfKeyword = this.eat(TokenKind.ElseIfKeyword, TokenKind.ElseKeyword);
-        if (elseIfStatement.elseIfKeyword.kind === TokenKind.ElseKeyword) {
-            elseIfStatement.ifKeyword = this.eat(TokenKind.IfKeyword);
-        }
+        elseIfStatement.elseIfKeyword = elseIfKeyword;
+        elseIfStatement.ifKeyword = ifKeyword;
         elseIfStatement.expression = this.parseExpression(elseIfStatement);
         elseIfStatement.thenKeyword = this.eatOptional(TokenKind.ThenKeyword);
         elseIfStatement.statements = this.parseList(elseIfStatement, elseIfStatement.kind);
@@ -510,11 +581,12 @@ export class Parser extends ParserBase {
         return elseIfStatement;
     }
 
-    private parseElseStatement(parent: IfStatement): ElseStatement {
+    private parseElseStatement(parent: IfStatement, elseKeyword: ElseKeywordToken): ElseStatement {
         const elseStatement = new ElseStatement();
         elseStatement.parent = parent;
-        elseStatement.elseKeyword = this.eat(TokenKind.ElseKeyword);
+        elseStatement.elseKeyword = elseKeyword;
 
+        // TODO: Should just check if parent is single line.
         if (this.getToken().kind === TokenKind.Newline) {
             elseStatement.statements = this.parseList(elseStatement, elseStatement.kind);
         } else {
@@ -541,10 +613,10 @@ export class Parser extends ParserBase {
 
     // #region Select statement
 
-    private parseSelectStatement(parent: Nodes): SelectStatement {
+    private parseSelectStatement(parent: Nodes, selectKeyword: SelectKeywordToken): SelectStatement {
         const selectStatement = new SelectStatement();
         selectStatement.parent = parent;
-        selectStatement.selectKeyword = this.eat(TokenKind.SelectKeyword);
+        selectStatement.selectKeyword = selectKeyword;
         selectStatement.expression = this.parseExpression(selectStatement);
 
         while (true) {
@@ -552,16 +624,28 @@ export class Parser extends ParserBase {
             if (token.kind !== TokenKind.Newline) {
                 break;
             }
-            selectStatement.newlines.push(token);
+
             this.advanceToken();
+
+            selectStatement.newlines.push(token);
         }
 
-        while (this.getToken().kind === TokenKind.CaseKeyword) {
-            selectStatement.caseStatements.push(this.parseCaseStatement(selectStatement));
+        while (true) {
+            const caseKeyword = this.getToken();
+            if (caseKeyword.kind !== TokenKind.CaseKeyword) {
+                break;
+            }
+
+            this.advanceToken();
+
+            selectStatement.caseStatements.push(this.parseCaseStatement(selectStatement, caseKeyword));
         }
 
-        if (this.getToken().kind === TokenKind.DefaultKeyword) {
-            selectStatement.defaultStatement = this.parseDefaultStatement(selectStatement);
+        const defaultKeyword = this.getToken();
+        if (defaultKeyword.kind === TokenKind.DefaultKeyword) {
+            this.advanceToken();
+
+            selectStatement.defaultStatement = this.parseDefaultStatement(selectStatement, defaultKeyword);
         }
 
         selectStatement.endKeyword = this.eat(TokenKind.EndKeyword);
@@ -571,20 +655,20 @@ export class Parser extends ParserBase {
         return selectStatement;
     }
 
-    private parseCaseStatement(parent: Nodes): CaseStatement {
+    private parseCaseStatement(parent: Nodes, caseKeyword: CaseKeywordToken): CaseStatement {
         const caseStatement = new CaseStatement();
         caseStatement.parent = parent;
-        caseStatement.caseKeyword = this.eat(TokenKind.CaseKeyword);
+        caseStatement.caseKeyword = caseKeyword;
         caseStatement.expressions = this.parseList(caseStatement, ParseContextKind.ExpressionSequence);
         caseStatement.statements = this.parseList(caseStatement, caseStatement.kind);
 
         return caseStatement;
     }
 
-    private parseDefaultStatement(parent: Nodes): DefaultStatement {
+    private parseDefaultStatement(parent: Nodes, defaultKeyword: DefaultKeywordToken): DefaultStatement {
         const defaultStatement = new DefaultStatement();
         defaultStatement.parent = parent;
-        defaultStatement.defaultKeyword = this.eat(TokenKind.DefaultKeyword);
+        defaultStatement.defaultKeyword = defaultKeyword;
         defaultStatement.statements = this.parseList(defaultStatement, defaultStatement.kind);
 
         return defaultStatement;
@@ -608,10 +692,10 @@ export class Parser extends ParserBase {
 
     // #region While loop
 
-    private parseWhileLoop(parent: Nodes): WhileLoop {
+    private parseWhileLoop(parent: Nodes, whileKeyword: WhileKeywordToken): WhileLoop {
         const whileLoop = new WhileLoop();
         whileLoop.parent = parent;
-        whileLoop.whileKeyword = this.eat(TokenKind.WhileKeyword);
+        whileLoop.whileKeyword = whileKeyword;
         whileLoop.expression = this.parseExpression(whileLoop);
         whileLoop.statements = this.parseList(whileLoop, whileLoop.kind);
         whileLoop.endKeyword = this.eat(TokenKind.WendKeyword, TokenKind.EndKeyword);
@@ -638,10 +722,10 @@ export class Parser extends ParserBase {
 
     // #region Repeat loop
 
-    private parseRepeatLoop(parent: Nodes): RepeatLoop {
+    private parseRepeatLoop(parent: Nodes, repeatKeyword: RepeatKeywordToken): RepeatLoop {
         const repeatLoop = new RepeatLoop();
         repeatLoop.parent = parent;
-        repeatLoop.repeatKeyword = this.eat(TokenKind.RepeatKeyword);
+        repeatLoop.repeatKeyword = repeatKeyword;
         repeatLoop.statements = this.parseList(repeatLoop, repeatLoop.kind);
         repeatLoop.foreverOrUntilKeyword = this.eat(TokenKind.ForeverKeyword, TokenKind.UntilKeyword);
         if (repeatLoop.foreverOrUntilKeyword.kind === TokenKind.UntilKeyword) {
@@ -667,10 +751,10 @@ export class Parser extends ParserBase {
 
     // #region For loop
 
-    private parseForLoop(parent: Nodes): ForLoop {
+    private parseForLoop(parent: Nodes, forKeyword: ForKeywordToken): ForLoop {
         const forLoop = new ForLoop();
         forLoop.parent = parent;
-        forLoop.forKeyword = this.eat(TokenKind.ForKeyword);
+        forLoop.forKeyword = forKeyword;
         forLoop.header = this.parseForLoopHeader(forLoop);
         forLoop.statements = this.parseList(forLoop, forLoop.kind);
         forLoop.endKeyword = this.eat(TokenKind.NextKeyword, TokenKind.EndKeyword);
@@ -684,8 +768,11 @@ export class Parser extends ParserBase {
 
     private parseForLoopHeader(parent: ForLoop) {
         let loopVariableExpression: LocalDeclarationListStatement | AssignmentExpression;
-        if (this.getToken().kind === TokenKind.LocalKeyword) {
-            loopVariableExpression = this.parseLocalDeclarationListStatement(parent);
+        const localKeyword = this.getToken();
+        if (localKeyword.kind === TokenKind.LocalKeyword) {
+            this.advanceToken();
+
+            loopVariableExpression = this.parseLocalDeclarationListStatement(parent, localKeyword);
             const declaration = loopVariableExpression.localDeclarationList.children[0];
             if (declaration &&
                 declaration.kind === NodeKind.DataDeclaration &&
@@ -728,19 +815,19 @@ export class Parser extends ParserBase {
 
     // #endregion
 
-    private parseContinueStatement(parent: Nodes): ContinueStatement {
+    private parseContinueStatement(parent: Nodes, continueKeyword: ContinueKeywordToken): ContinueStatement {
         const continueStatement = new ContinueStatement();
         continueStatement.parent = parent;
-        continueStatement.continueKeyword = this.eat(TokenKind.ContinueKeyword);
+        continueStatement.continueKeyword = continueKeyword;
         continueStatement.terminator = this.eatStatementTerminator(continueStatement);
 
         return continueStatement;
     }
 
-    private parseExitStatement(parent: Nodes): ExitStatement {
+    private parseExitStatement(parent: Nodes, exitKeyword: ExitKeywordToken): ExitStatement {
         const exitStatement = new ExitStatement();
         exitStatement.parent = parent;
-        exitStatement.exitKeyword = this.eat(TokenKind.ExitKeyword);
+        exitStatement.exitKeyword = exitKeyword;
         exitStatement.terminator = this.eatStatementTerminator(exitStatement);
 
         return exitStatement;
@@ -748,10 +835,10 @@ export class Parser extends ParserBase {
 
     // #endregion
 
-    private parseThrowStatement(parent: Nodes): ThrowStatement {
+    private parseThrowStatement(parent: Nodes, throwKeyword: ThrowKeywordToken): ThrowStatement {
         const throwStatement = new ThrowStatement();
         throwStatement.parent = parent;
-        throwStatement.throwKeyword = this.eat(TokenKind.ThrowKeyword);
+        throwStatement.throwKeyword = throwKeyword;
         throwStatement.expression = this.parseExpression(throwStatement);
         throwStatement.terminator = this.eatStatementTerminator(throwStatement);
 
@@ -760,17 +847,25 @@ export class Parser extends ParserBase {
 
     // #region Try statement
 
-    private parseTryStatement(parent: Nodes): TryStatement {
+    private parseTryStatement(parent: Nodes, tryKeyword: TryKeywordToken): TryStatement {
         const tryStatement = new TryStatement();
         tryStatement.parent = parent;
-        tryStatement.tryKeyword = this.eat(TokenKind.TryKeyword);
+        tryStatement.tryKeyword = tryKeyword;
         tryStatement.statements = this.parseList(tryStatement, tryStatement.kind);
 
-        while (this.getToken().kind === TokenKind.CatchKeyword) {
+        while (true) {
+            const catchKeyword = this.getToken();
+            if (catchKeyword.kind !== TokenKind.CatchKeyword) {
+                break;
+            }
+
             if (tryStatement.catchStatements === null) {
                 tryStatement.catchStatements = [];
             }
-            tryStatement.catchStatements.push(this.parseCatchStatement(tryStatement));
+
+            this.advanceToken();
+
+            tryStatement.catchStatements.push(this.parseCatchStatement(tryStatement, catchKeyword));
         }
 
         tryStatement.endKeyword = this.eat(TokenKind.EndKeyword);
@@ -780,11 +875,11 @@ export class Parser extends ParserBase {
         return tryStatement;
     }
 
-    private parseCatchStatement(parent: Nodes): CatchStatement {
+    private parseCatchStatement(parent: Nodes, catchKeyword: CatchKeywordToken): CatchStatement {
         const catchStatement = new CatchStatement();
         catchStatement.parent = parent;
-        catchStatement.catchKeyword = this.eat(TokenKind.CatchKeyword);
-        catchStatement.parameter = this.parseDataDeclaration(catchStatement);
+        catchStatement.catchKeyword = catchKeyword;
+        catchStatement.parameter = this.parseMissableDataDeclaration(catchStatement);
         catchStatement.statements = this.parseList(catchStatement, catchStatement.kind);
 
         return catchStatement;
@@ -824,10 +919,10 @@ export class Parser extends ParserBase {
 
     // #region Common
 
-    private parseAccessibilityDirective(parent: Nodes): AccessibilityDirective {
+    private parseAccessibilityDirective(parent: Nodes, accessibilityKeyword: AccessibilityKeywordToken): AccessibilityDirective {
         const accessibilityDirective = new AccessibilityDirective();
         accessibilityDirective.parent = parent;
-        accessibilityDirective.accessibilityKeyword = this.eat(TokenKind.PrivateKeyword, TokenKind.PublicKeyword, TokenKind.ProtectedKeyword, TokenKind.ExternKeyword);
+        accessibilityDirective.accessibilityKeyword = accessibilityKeyword;
         if (accessibilityDirective.accessibilityKeyword.kind === TokenKind.ExternKeyword) {
             accessibilityDirective.externPrivateKeyword = this.eatOptional(TokenKind.PrivateKeyword);
         }
@@ -835,10 +930,10 @@ export class Parser extends ParserBase {
         return accessibilityDirective;
     }
 
-    private parseFunctionDeclaration(parent: Nodes): FunctionDeclaration {
+    private parseFunctionDeclaration(parent: Nodes, functionKeyword: FunctionKeywordToken): FunctionDeclaration {
         const functionDeclaration = new FunctionDeclaration();
         functionDeclaration.parent = parent;
-        functionDeclaration.functionKeyword = this.eat(TokenKind.FunctionKeyword);
+        functionDeclaration.functionKeyword = functionKeyword;
         functionDeclaration.name = this.eat(TokenKind.Identifier);
         functionDeclaration.returnType = this.parseTypeDeclaration(functionDeclaration);
         functionDeclaration.openingParenthesis = this.eat(TokenKind.OpeningParenthesis);
@@ -851,10 +946,10 @@ export class Parser extends ParserBase {
         return functionDeclaration;
     }
 
-    private parseDataDeclarationList(parent: Nodes): DataDeclarationList {
+    private parseDataDeclarationList(parent: Nodes, dataDeclarationKeyword: DataDeclarationKeywordToken): DataDeclarationList {
         const dataDeclarationList = new DataDeclarationList();
         dataDeclarationList.parent = parent;
-        dataDeclarationList.dataDeclarationKeyword = this.eat(TokenKind.ConstKeyword, TokenKind.GlobalKeyword, TokenKind.FieldKeyword, TokenKind.LocalKeyword);
+        dataDeclarationList.dataDeclarationKeyword = dataDeclarationKeyword;
         dataDeclarationList.children = this.parseList(dataDeclarationList, ParseContextKind.DataDeclarationSequence);
 
         return dataDeclarationList;
@@ -882,21 +977,39 @@ export class Parser extends ParserBase {
         const token = this.getToken();
         switch (token.kind) {
             case TokenKind.Identifier: {
-                return this.parseDataDeclaration(parent);
+                this.advanceToken();
+
+                return this.parseDataDeclaration(parent, token);
             }
             case TokenKind.Comma: {
-                return this.parseCommaSeparator(parent);
+                this.advanceToken();
+
+                return this.parseCommaSeparator(parent, token);
             }
         }
 
         throw new Error(`Unexpected token: ${JSON.stringify(token.kind)}`);
     }
 
-    private parseDataDeclaration(parent: Nodes): DataDeclaration {
+    private parseMissableDataDeclaration(parent: Nodes): MissableDataDeclaration {
+        const name = this.getToken();
+        switch (name.kind) {
+            case TokenKind.Identifier: {
+                this.advanceToken();
+    
+                return this.parseDataDeclaration(parent, name);
+            }
+        }
+
+        return new MissingToken(name.fullStart, NodeKind.DataDeclaration);
+    }
+
+    private parseDataDeclaration(parent: Nodes, name: IdentifierToken): DataDeclaration {
         const dataDeclaration = new DataDeclaration();
         dataDeclaration.parent = parent;
-        dataDeclaration.name = this.eat(TokenKind.Identifier);
+        dataDeclaration.name = name;
         dataDeclaration.type = this.parseTypeDeclaration(dataDeclaration);
+        // TODO: Check if parent is Const.
         dataDeclaration.equalsSign = this.eatOptional(TokenKind.EqualsSign, TokenKind.ColonEqualsSign);
         if (dataDeclaration.equalsSign !== null) {
             dataDeclaration.eachInKeyword = this.eatOptional(TokenKind.EachInKeyword);
@@ -917,36 +1030,48 @@ export class Parser extends ParserBase {
             case TokenKind.PercentSign:
             case TokenKind.NumberSign:
             case TokenKind.DollarSign: {
-                return this.parseShorthandTypeDeclaration(parent);
+                this.advanceToken();
+
+                return this.parseShorthandTypeDeclaration(parent, token);
             }
             case TokenKind.Colon: {
-                return this.parseLonghandTypeDeclaration(parent);
+                this.advanceToken();
+
+                return this.parseLonghandTypeDeclaration(parent, token);
             }
         }
 
         return null;
     }
 
-    private parseShorthandTypeDeclaration(parent: Nodes): ShorthandTypeDeclaration {
+    private parseShorthandTypeDeclaration(parent: Nodes, shorthandType: ShorthandTypeToken): ShorthandTypeDeclaration {
         const shorthandTypeDeclaration = new ShorthandTypeDeclaration();
         shorthandTypeDeclaration.parent = parent;
-        shorthandTypeDeclaration.shorthandType = this.eat(TokenKind.QuestionMark, TokenKind.PercentSign, TokenKind.NumberSign, TokenKind.DollarSign);
-        while (this.getToken().kind === TokenKind.OpeningSquareBracket) {
+        shorthandTypeDeclaration.shorthandType = shorthandType;
+
+        while (true) {
+            const openingSquareBracket = this.getToken();
+            if (openingSquareBracket.kind !== TokenKind.OpeningSquareBracket) {
+                break;
+            }
+
             if (shorthandTypeDeclaration.arrayTypeDeclarations === null) {
                 shorthandTypeDeclaration.arrayTypeDeclarations = [];
             }
 
-            shorthandTypeDeclaration.arrayTypeDeclarations.push(this.parseArrayTypeDeclaration(shorthandTypeDeclaration));
+            this.advanceToken();
+
+            shorthandTypeDeclaration.arrayTypeDeclarations.push(this.parseArrayTypeDeclaration(shorthandTypeDeclaration, openingSquareBracket));
         }
 
         return shorthandTypeDeclaration;
     }
 
-    private parseLonghandTypeDeclaration(parent: Nodes): LonghandTypeDeclaration {
+    private parseLonghandTypeDeclaration(parent: Nodes, colon: ColonToken): LonghandTypeDeclaration {
         const longhandTypeDeclaration = new LonghandTypeDeclaration();
         longhandTypeDeclaration.parent = parent;
-        longhandTypeDeclaration.colon = this.eat(TokenKind.Colon);
-        longhandTypeDeclaration.typeReference = this.parseTypeReference(longhandTypeDeclaration);
+        longhandTypeDeclaration.colon = colon;
+        longhandTypeDeclaration.typeReference = this.parseMissableTypeReference(longhandTypeDeclaration);
 
         return longhandTypeDeclaration;
     }
@@ -974,20 +1099,24 @@ export class Parser extends ParserBase {
         const token = this.getToken();
         switch (token.kind) {
             case TokenKind.Identifier: {
-                return this.parseTypeParameter(parent);
+                this.advanceToken();
+
+                return this.parseTypeParameter(parent, token);
             }
             case TokenKind.Comma: {
-                return this.parseCommaSeparator(parent);
+                this.advanceToken();
+
+                return this.parseCommaSeparator(parent, token);
             }
         }
 
         throw new Error(`Unexpected token: ${JSON.stringify(token.kind)}`);
     }
 
-    private parseTypeParameter(parent: Nodes): TypeParameter {
+    private parseTypeParameter(parent: Nodes, name: IdentifierToken): TypeParameter {
         const typeParameter = new TypeParameter();
         typeParameter.parent = parent;
-        typeParameter.name = this.eat(TokenKind.Identifier);
+        typeParameter.name = name;
 
         return typeParameter;
     }
@@ -1183,7 +1312,7 @@ export class Parser extends ParserBase {
 
     private eatStatementTerminator(statement: Statement) {
         if (!this.isInlineStatement(statement)) {
-            return this.eat(TokenKind.Newline, TokenKind.Semicolon);
+            return this.eatOptional(TokenKind.Newline, TokenKind.Semicolon);
         }
 
         return null;

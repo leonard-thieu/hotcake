@@ -139,5 +139,7 @@ export enum TokenKind {
     ThrowKeyword = 'ThrowKeyword',
     ThrowableKeyword = 'ThrowableKeyword',
 
+    Missing = 'Missing',
+    Skipped = 'Skipped',
     Expression = 'Expression',
 }

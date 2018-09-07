@@ -1,7 +1,8 @@
 import { ParseContextElementArray } from '../../ParserBase';
-import { EndKeywordToken, ForKeywordToken, MissingExpressionToken, NextKeywordToken, StepKeywordToken, ToKeywordToken, UntilKeywordToken } from '../../Token/Token';
+import { MissableToken } from '../../Token/MissingToken';
+import { EndKeywordToken, ForKeywordToken, NextKeywordToken, StepKeywordToken, ToKeywordToken, UntilKeywordToken } from '../../Token/Token';
 import { AssignmentExpression } from '../Expression/AssignmentExpression';
-import { Expressions } from '../Expression/Expression';
+import { MissableExpression } from '../Expression/Expression';
 import { Node } from '../Node';
 import { NodeKind } from '../NodeKind';
 import { LocalDeclarationListStatement } from './LocalDeclarationListStatement';
@@ -22,7 +23,7 @@ export class ForLoop extends Statement {
     forKeyword: ForKeywordToken;
     header: NumericForLoopHeader | LocalDeclarationListStatement | AssignmentExpression;
     statements: ParseContextElementArray<ForLoop['kind']>;
-    endKeyword: NextKeywordToken | EndKeywordToken;
+    endKeyword: MissableToken<NextKeywordToken | EndKeywordToken>;
     endForKeyword: ForKeywordToken | null = null;
 }
 
@@ -38,8 +39,8 @@ export class NumericForLoopHeader extends Node {
     readonly kind = NodeKind.NumericForLoopHeader;
 
     loopVariableExpression: LocalDeclarationListStatement | AssignmentExpression;
-    toOrUntilKeyword: ToKeywordToken | UntilKeywordToken;
-    lastValueExpression: Expressions | MissingExpressionToken;
+    toOrUntilKeyword: MissableToken<ToKeywordToken | UntilKeywordToken>;
+    lastValueExpression: MissableExpression;
     stepKeyword: StepKeywordToken | null = null;
-    stepValueExpression: Expressions | MissingExpressionToken | null = null;
+    stepValueExpression: MissableExpression | null = null;
 }

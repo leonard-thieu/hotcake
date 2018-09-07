@@ -5,11 +5,11 @@ import { ConfigurationTag } from './Node/ConfigurationTag';
 import { ArrayLiteral } from './Node/Expression/ArrayLiteral';
 import { AssignmentExpression, AssignmentOperatorToken } from './Node/Expression/AssignmentExpression';
 import { BinaryExpression, BinaryExpressionOperatorToken } from './Node/Expression/BinaryExpression';
-import { BooleanLiteral } from './Node/Expression/BooleanLiteral';
-import { Expressions, isMissingToken } from './Node/Expression/Expression';
+import { BooleanLiteral, BooleanLiteralValueToken } from './Node/Expression/BooleanLiteral';
+import { Expressions, MissableExpression } from './Node/Expression/Expression';
 import { FloatLiteral } from './Node/Expression/FloatLiteral';
 import { GroupingExpression } from './Node/Expression/GroupingExpression';
-import { IdentifierExpression } from './Node/Expression/IdentifierExpression';
+import { IdentifierExpression, IdentifierNameToken } from './Node/Expression/IdentifierExpression';
 import { IndexExpression } from './Node/Expression/IndexExpression';
 import { IntegerLiteral } from './Node/Expression/IntegerLiteral';
 import { InvokeExpression } from './Node/Expression/InvokeExpression';
@@ -20,18 +20,18 @@ import { SelfExpression } from './Node/Expression/SelfExpression';
 import { SliceExpression } from './Node/Expression/SliceExpression';
 import { StringLiteral } from './Node/Expression/StringLiteral';
 import { SuperExpression } from './Node/Expression/SuperExpression';
-import { UnaryOpExpression } from './Node/Expression/UnaryOpExpression';
+import { UnaryOperatorToken, UnaryOpExpression } from './Node/Expression/UnaryOpExpression';
 import { ModulePath } from './Node/ModulePath';
 import { Nodes } from './Node/Node';
 import { NodeKind } from './Node/NodeKind';
-import { TypeReference } from './Node/TypeReference';
+import { TypeReference, TypeReferenceIdentifierToken } from './Node/TypeReference';
 import { GreaterThanSignEqualsSignToken } from './Token/GreaterThanSignEqualsSignToken';
 import { MissingToken } from './Token/MissingToken';
 import { ModKeywordEqualsSignToken } from './Token/ModKeywordEqualsSignToken';
 import { ShlKeywordEqualsSignToken } from './Token/ShlKeywordEqualsSignToken';
 import { ShrKeywordEqualsSignToken } from './Token/ShrKeywordEqualsSignToken';
 import { SkippedToken } from './Token/SkippedToken';
-import { MissingExpressionToken, NewlineToken, TokenKinds, TokenKindTokenMap, Tokens } from './Token/Token';
+import { CommaToken, ConfigurationTagEndToken, ConfigurationTagStartToken, FloatLiteralToken, IntegerLiteralToken, NewKeywordToken, NewlineToken, NullKeywordToken, OpeningParenthesisToken, OpeningSquareBracketToken, PeriodToken, QuotationMarkToken, SelfKeywordToken, SuperKeywordToken, TokenKinds, TokenKindTokenMap, Tokens } from './Token/Token';
 import { TokenKind } from './Token/TokenKind';
 
 export abstract class ParserBase {
@@ -164,14 +164,14 @@ export abstract class ParserBase {
 
     private parseAssignmentExpression(
         parent: Nodes,
-        leftOperand: Expressions | MissingExpressionToken,
+        leftOperand: MissableExpression,
         operator: AssignmentOperatorToken,
         newPrecedence: Precedence,
     ) {
         const assignmentExpression = new AssignmentExpression();
         assignmentExpression.parent = parent;
         assignmentExpression.leftOperand = leftOperand;
-        if (!isMissingToken(leftOperand)) {
+        if (leftOperand.kind !== TokenKind.Missing) {
             leftOperand.parent = assignmentExpression;
         }
         assignmentExpression.operator = operator;
@@ -183,14 +183,14 @@ export abstract class ParserBase {
 
     private parseBinaryExpression(
         parent: Nodes,
-        leftOperand: Expressions | MissingExpressionToken,
+        leftOperand: MissableExpression,
         operator: BinaryExpressionOperatorToken,
         newPrecedence: Precedence,
     ) {
         const binaryExpression = new BinaryExpression();
         binaryExpression.parent = parent;
         binaryExpression.leftOperand = leftOperand;
-        if (!isMissingToken(leftOperand)) {
+        if (leftOperand.kind !== TokenKind.Missing) {
             leftOperand.parent = binaryExpression;
         }
         binaryExpression.operator = operator;
@@ -201,7 +201,7 @@ export abstract class ParserBase {
 
     // #region Unary expressions
 
-    protected parseUnaryExpressionOrHigher(parent: Nodes): Expressions | MissingExpressionToken {
+    protected parseUnaryExpressionOrHigher(parent: Nodes): MissableExpression {
         let newlines: NewlineToken[] | null = null;
         while (true) {
             const token = this.getToken();
@@ -217,7 +217,7 @@ export abstract class ParserBase {
             newlines.push(token);
         }
 
-        let expression: Expressions | MissingExpressionToken;
+        let expression: MissableExpression;
 
         const token = this.getToken();
         switch (token.kind) {
@@ -225,7 +225,9 @@ export abstract class ParserBase {
             case TokenKind.HyphenMinus:
             case TokenKind.Tilde:
             case TokenKind.NotKeyword: {
-                expression = this.parseUnaryOpExpression(parent);
+                this.advanceToken();
+
+                expression = this.parseUnaryOpExpression(parent, token);
                 break;
             }
             default: {
@@ -249,10 +251,10 @@ export abstract class ParserBase {
         return expression;
     }
 
-    protected parseUnaryOpExpression(parent: Nodes): UnaryOpExpression {
+    protected parseUnaryOpExpression(parent: Nodes, operator: UnaryOperatorToken): UnaryOpExpression {
         const unaryOpExpression = new UnaryOpExpression();
         unaryOpExpression.parent = parent;
-        unaryOpExpression.operator = this.eat(TokenKind.PlusSign, TokenKind.HyphenMinus, TokenKind.Tilde, TokenKind.NotKeyword);
+        unaryOpExpression.operator = operator;
         unaryOpExpression.operand = this.parseUnaryExpressionOrHigher(unaryOpExpression);
 
         return unaryOpExpression;
@@ -260,36 +262,54 @@ export abstract class ParserBase {
 
     // #region Primary expressions
 
-    protected parsePrimaryExpression(parent: Nodes): Expressions | MissingExpressionToken {
+    protected parsePrimaryExpression(parent: Nodes): MissableExpression {
         const token = this.getToken();
         switch (token.kind) {
             case TokenKind.NewKeyword: {
-                return this.parseNewExpression(parent);
+                this.advanceToken();
+
+                return this.parseNewExpression(parent, token);
             }
             case TokenKind.NullKeyword: {
-                return this.parseNullExpression(parent);
+                this.advanceToken();
+
+                return this.parseNullExpression(parent, token);
             }
             case TokenKind.TrueKeyword:
             case TokenKind.FalseKeyword: {
-                return this.parseBooleanLiteral(parent);
+                this.advanceToken();
+
+                return this.parseBooleanLiteral(parent, token);
             }
             case TokenKind.SelfKeyword: {
-                return this.parseSelfExpression(parent);
+                this.advanceToken();
+
+                return this.parseSelfExpression(parent, token);
             }
             case TokenKind.SuperKeyword: {
-                return this.parseSuperExpression(parent);
+                this.advanceToken();
+
+                return this.parseSuperExpression(parent, token);
             }
             case TokenKind.QuotationMark: {
-                return this.parseStringLiteral(parent);
+                this.advanceToken();
+
+                return this.parseStringLiteral(parent, token);
             }
             case TokenKind.FloatLiteral: {
-                return this.parseFloatLiteral(parent);
+                this.advanceToken();
+
+                return this.parseFloatLiteral(parent, token);
             }
             case TokenKind.IntegerLiteral: {
-                return this.parseIntegerLiteral(parent);
+                this.advanceToken();
+
+                return this.parseIntegerLiteral(parent, token);
             }
             case TokenKind.OpeningSquareBracket: {
-                return this.parseArrayLiteral(parent);
+                this.advanceToken();
+
+                return this.parseArrayLiteral(parent, token);
             }
             case TokenKind.Period:
             case TokenKind.BoolKeyword:
@@ -299,108 +319,116 @@ export abstract class ParserBase {
             case TokenKind.ObjectKeyword:
             case TokenKind.ThrowableKeyword:
             case TokenKind.Identifier: {
-                return this.parseIdentifierExpression(parent);
+                this.advanceToken();
+
+                return this.parseIdentifierExpression(parent, token);
             }
             case TokenKind.OpeningParenthesis: {
-                return this.parseGroupingExpression(parent);
+                this.advanceToken();
+
+                return this.parseGroupingExpression(parent, token);
             }
         }
 
         console.error(`${JSON.stringify(token.kind)} not implemented.`);
 
-        return this.createMissingExpressionToken(token.fullStart);
+        return new MissingToken(token.fullStart, TokenKind.Expression);
     }
 
-    protected parseNewExpression(parent: Nodes): NewExpression {
+    protected parseNewExpression(parent: Nodes, newKeyword: NewKeywordToken): NewExpression {
         const newExpression = new NewExpression();
         newExpression.parent = parent;
-        newExpression.newKeyword = this.eat(TokenKind.NewKeyword);
-        newExpression.type = this.parseTypeReference(newExpression);
+        newExpression.newKeyword = newKeyword;
+        newExpression.type = this.parseMissableTypeReference(newExpression);
 
         return newExpression;
     }
 
-    protected parseNullExpression(parent: Nodes): NullExpression {
+    protected parseNullExpression(parent: Nodes, nullKeyword: NullKeywordToken): NullExpression {
         const nullExpression = new NullExpression();
         nullExpression.parent = parent;
-        nullExpression.nullKeyword = this.eat(TokenKind.NullKeyword);
+        nullExpression.nullKeyword = nullKeyword;
 
         return nullExpression;
     }
 
-    protected parseBooleanLiteral(parent: Nodes): BooleanLiteral {
+    protected parseBooleanLiteral(parent: Nodes, value: BooleanLiteralValueToken): BooleanLiteral {
         const booleanLiteral = new BooleanLiteral();
         booleanLiteral.parent = parent;
-        booleanLiteral.value = this.eat(TokenKind.TrueKeyword, TokenKind.FalseKeyword);
+        booleanLiteral.value = value;
 
         return booleanLiteral;
     }
 
-    protected parseSelfExpression(parent: Nodes): SelfExpression {
+    protected parseSelfExpression(parent: Nodes, selfKeyword: SelfKeywordToken): SelfExpression {
         const selfExpression = new SelfExpression();
         selfExpression.parent = parent;
-        selfExpression.selfKeyword = this.eat(TokenKind.SelfKeyword);
+        selfExpression.selfKeyword = selfKeyword;
 
         return selfExpression;
     }
 
-    protected parseSuperExpression(parent: Nodes): SuperExpression {
+    protected parseSuperExpression(parent: Nodes, superKeyword: SuperKeywordToken): SuperExpression {
         const superExpression = new SuperExpression();
         superExpression.parent = parent;
-        superExpression.superKeyword = this.eat(TokenKind.SuperKeyword);
+        superExpression.superKeyword = superKeyword;
 
         return superExpression;
     }
 
-    protected parseStringLiteral(parent: Nodes): StringLiteral {
+    protected parseStringLiteral(parent: Nodes, startQuote: QuotationMarkToken): StringLiteral {
         const stringLiteral = new StringLiteral();
         stringLiteral.parent = parent;
-        stringLiteral.startQuote = this.eat(TokenKind.QuotationMark);
+        stringLiteral.startQuote = startQuote;
         stringLiteral.children = this.parseList(stringLiteral, stringLiteral.kind);
         stringLiteral.endQuote = this.eat(TokenKind.QuotationMark);
 
         return stringLiteral;
     }
 
-    protected parseFloatLiteral(parent: Nodes): FloatLiteral {
+    protected parseFloatLiteral(parent: Nodes, value: FloatLiteralToken): FloatLiteral {
         const floatLiteral = new FloatLiteral();
         floatLiteral.parent = parent;
-        floatLiteral.value = this.eat(TokenKind.FloatLiteral);
+        floatLiteral.value = value;
 
         return floatLiteral;
     }
 
-    protected parseIntegerLiteral(parent: Nodes): IntegerLiteral {
+    protected parseIntegerLiteral(parent: Nodes, value: IntegerLiteralToken): IntegerLiteral {
         const integerLiteral = new IntegerLiteral();
         integerLiteral.parent = parent;
-        integerLiteral.value = this.eat(TokenKind.IntegerLiteral);
+        integerLiteral.value = value;
 
         return integerLiteral;
     }
 
-    protected parseArrayLiteral(parent: Nodes): ArrayLiteral {
+    protected parseArrayLiteral(parent: Nodes, openingSquareBracket: OpeningSquareBracketToken): ArrayLiteral {
         const arrayLiteral = new ArrayLiteral();
         arrayLiteral.parent = parent;
-        arrayLiteral.openingSquareBracket = this.eat(TokenKind.OpeningSquareBracket);
+        arrayLiteral.openingSquareBracket = openingSquareBracket;
         arrayLiteral.expressions = this.parseList(arrayLiteral, ParseContextKind.ExpressionSequence);
         arrayLiteral.closingSquareBracket = this.eat(TokenKind.ClosingSquareBracket);
 
         return arrayLiteral;
     }
 
-    protected parseIdentifierExpression(parent: Nodes): IdentifierExpression {
+    protected parseIdentifierExpression(parent: Nodes, name: IdentifierNameToken | PeriodToken): IdentifierExpression {
         const identifierExpression = new IdentifierExpression();
         identifierExpression.parent = parent;
-        identifierExpression.globalScopeMemberAccessOperator = this.eatOptional(TokenKind.Period);
-        identifierExpression.name = this.eat(
-            TokenKind.BoolKeyword,
-            TokenKind.IntKeyword,
-            TokenKind.FloatKeyword,
-            TokenKind.StringKeyword,
-            TokenKind.ObjectKeyword,
-            TokenKind.ThrowableKeyword,
-            TokenKind.Identifier,
-        );
+        if (name.kind === TokenKind.Period) {
+            identifierExpression.globalScopeMemberAccessOperator = name;
+            identifierExpression.name = this.eat(
+                TokenKind.BoolKeyword,
+                TokenKind.IntKeyword,
+                TokenKind.FloatKeyword,
+                TokenKind.StringKeyword,
+                TokenKind.ObjectKeyword,
+                TokenKind.ThrowableKeyword,
+                TokenKind.Identifier,
+            );
+        } else {
+            identifierExpression.name = name;
+        }
 
         // Generic type arguments
         const position = this.position;
@@ -422,34 +450,34 @@ export abstract class ParserBase {
         return identifierExpression;
     }
 
-    protected parseGroupingExpression(parent: Nodes): GroupingExpression {
+    protected parseGroupingExpression(parent: Nodes, openingParenthesis: OpeningParenthesisToken): GroupingExpression {
         const groupingExpression = new GroupingExpression();
         groupingExpression.parent = parent;
-        groupingExpression.openingParenthesis = this.eat(TokenKind.OpeningParenthesis);
+        groupingExpression.openingParenthesis = openingParenthesis;
         groupingExpression.expression = this.parseExpression(groupingExpression);
         groupingExpression.closingParenthesis = this.eat(TokenKind.ClosingParenthesis);
 
         return groupingExpression;
     }
 
-    private createMissingExpressionToken(fullStart: number): MissingExpressionToken {
-        return new MissingToken(TokenKind.Expression, fullStart);
-    }
-
     // #region Postfix expressions
 
-    protected parsePostfixExpression(expression: Expressions | MissingExpressionToken) {
-        if (isMissingToken(expression)) {
+    protected parsePostfixExpression(expression: MissableExpression) {
+        if (expression.kind === TokenKind.Missing) {
             return expression;
         }
 
         const token = this.getToken();
         switch (token.kind) {
             case TokenKind.Period: {
-                return this.parseScopeMemberAccessExpression(expression);
+                this.advanceToken();
+
+                return this.parseScopeMemberAccessExpression(expression, token);
             }
             case TokenKind.OpeningSquareBracket: {
-                return this.parseIndexOrSliceExpression(expression);
+                this.advanceToken();
+
+                return this.parseIndexOrSliceExpression(expression, token);
             }
         }
 
@@ -460,21 +488,19 @@ export abstract class ParserBase {
         return expression;
     }
 
-    protected parseScopeMemberAccessExpression(expression: Expressions): ScopeMemberAccessExpression {
+    protected parseScopeMemberAccessExpression(expression: Expressions, scopeMemberAccessOperator: PeriodToken): ScopeMemberAccessExpression {
         const scopeMemberAccessExpression = new ScopeMemberAccessExpression();
         scopeMemberAccessExpression.parent = expression.parent;
         expression.parent = scopeMemberAccessExpression;
         scopeMemberAccessExpression.scopableExpression = expression;
-        scopeMemberAccessExpression.scopeMemberAccessOperator = this.eat(TokenKind.Period);
+        scopeMemberAccessExpression.scopeMemberAccessOperator = scopeMemberAccessOperator;
         scopeMemberAccessExpression.member = this.parseUnaryExpressionOrHigher(scopeMemberAccessExpression);
 
         return scopeMemberAccessExpression;
     }
 
-    protected parseIndexOrSliceExpression(expression: Expressions) {
-        const openingSquareBracket = this.eat(TokenKind.OpeningSquareBracket);
-
-        let indexExpressionExpressionOrstartExpression: Expressions | MissingExpressionToken | null = null;
+    protected parseIndexOrSliceExpression(expression: Expressions, openingSquareBracket: OpeningSquareBracketToken) {
+        let indexExpressionExpressionOrstartExpression: MissableExpression | null = null;
         if (this.isExpressionStart(this.getToken())) {
             indexExpressionExpressionOrstartExpression = this.parseExpression(null as any);
 
@@ -549,7 +575,9 @@ export abstract class ParserBase {
         const token = this.getToken();
         switch (token.kind) {
             case TokenKind.Comma: {
-                return this.parseCommaSeparator(parent);
+                this.advanceToken();
+
+                return this.parseCommaSeparator(parent, token);
             }
         }
 
@@ -574,19 +602,17 @@ export abstract class ParserBase {
     private parseTypeReferenceSequenceMember(parent: Nodes) {
         const token = this.getToken();
         switch (token.kind) {
-            case TokenKind.BoolKeyword:
-            case TokenKind.IntKeyword:
-            case TokenKind.FloatKeyword:
-            case TokenKind.StringKeyword:
-            case TokenKind.ObjectKeyword:
-            case TokenKind.ThrowableKeyword:
-            case TokenKind.VoidKeyword:
-            case TokenKind.Identifier: {
-                return this.parseTypeReference(parent);
-            }
             case TokenKind.Comma: {
-                return this.parseCommaSeparator(parent);
+                this.advanceToken();
+
+                return this.parseCommaSeparator(parent, token);
             }
+        }
+
+        if (this.isTypeReferenceStart(token)) {
+            this.advanceToken();
+
+            return this.parseTypeReference(parent, token);
         }
 
         throw new Error(`Unexpected token: ${JSON.stringify(token.kind)}`);
@@ -594,10 +620,10 @@ export abstract class ParserBase {
 
     // #endregion
 
-    protected parseCommaSeparator(parent: Nodes): CommaSeparator {
+    protected parseCommaSeparator(parent: Nodes, separator: CommaToken): CommaSeparator {
         const commaSeparator = new CommaSeparator();
         commaSeparator.parent = parent;
-        commaSeparator.separator = this.eat(TokenKind.Comma);
+        commaSeparator.separator = separator;
         let token: typeof commaSeparator.newlines[0] | null;
         while ((token = this.eatOptional(TokenKind.Newline)) !== null) {
             commaSeparator.newlines.push(token);
@@ -606,7 +632,7 @@ export abstract class ParserBase {
         return commaSeparator;
     }
 
-    protected isTypeReferenceStart(token: Tokens): boolean {
+    protected isTypeReferenceStart(token: Tokens): token is TypeReferenceIdentifierToken | PeriodToken {
         switch (token.kind) {
             case TokenKind.BoolKeyword:
             case TokenKind.IntKeyword:
@@ -624,12 +650,22 @@ export abstract class ParserBase {
         return false;
     }
 
-    protected parseTypeReference(parent: Nodes): TypeReference {
+    protected parseMissableTypeReference(parent: Nodes): TypeReference | MissingToken<NodeKind.TypeReference> {
+        const token = this.getToken();
+        if (this.isTypeReferenceStart(token)) {
+            this.advanceToken();
+
+            return this.parseTypeReference(parent, token);
+        }
+
+        return new MissingToken(token.fullStart, NodeKind.TypeReference);
+    }
+
+    protected parseTypeReference(parent: Nodes, identifierOrModulePathStart: TypeReferenceIdentifierToken | PeriodToken): TypeReference {
         const typeReference = new TypeReference();
         typeReference.parent = parent;
 
-        const token = this.getToken();
-        switch (token.kind) {
+        switch (identifierOrModulePathStart.kind) {
             case TokenKind.BoolKeyword:
             case TokenKind.IntKeyword:
             case TokenKind.FloatKeyword:
@@ -637,14 +673,14 @@ export abstract class ParserBase {
             case TokenKind.ObjectKeyword:
             case TokenKind.ThrowableKeyword:
             case TokenKind.VoidKeyword: {
-                typeReference.identifier = token;
-                this.advanceToken();
+                typeReference.identifier = identifierOrModulePathStart;
                 break;
             }
             default: {
                 // Create a ModulePath only if necessary.
-                if (token.kind !== TokenKind.Identifier ||
-                    this.getToken(1).kind === TokenKind.Period) {
+                if (identifierOrModulePathStart.kind !== TokenKind.Identifier ||
+                    this.getToken().kind === TokenKind.Period) {
+                    this.position--;
                     typeReference.modulePath = this.parseModulePath(typeReference);
 
                     const modulePathChildren = typeReference.modulePath.children;
@@ -652,8 +688,7 @@ export abstract class ParserBase {
                     typeReference.identifier = modulePathChildren.pop() as typeof typeReference.identifier;
                     typeReference.scopeMemberAccessOperator = modulePathChildren.pop() as typeof typeReference.scopeMemberAccessOperator;
                 } else {
-                    typeReference.identifier = token;
-                    this.advanceToken();
+                    typeReference.identifier = identifierOrModulePathStart;
                 }
 
                 // Generic type arguments
@@ -666,12 +701,19 @@ export abstract class ParserBase {
             }
         }
 
-        while (this.getToken().kind === TokenKind.OpeningSquareBracket) {
+        while (true) {
+            const openingSquareBracketToken = this.getToken();
+            if (openingSquareBracketToken.kind !== TokenKind.OpeningSquareBracket) {
+                break;
+            }
+
             if (typeReference.arrayTypeDeclarations === null) {
                 typeReference.arrayTypeDeclarations = [];
             }
 
-            typeReference.arrayTypeDeclarations.push(this.parseArrayTypeDeclaration(typeReference));
+            this.advanceToken();
+
+            typeReference.arrayTypeDeclarations.push(this.parseArrayTypeDeclaration(typeReference, openingSquareBracketToken));
         }
 
         return typeReference;
@@ -711,10 +753,10 @@ export abstract class ParserBase {
         return modulePath;
     }
 
-    protected parseArrayTypeDeclaration(parent: Nodes): ArrayTypeDeclaration {
+    protected parseArrayTypeDeclaration(parent: Nodes, openingSquareBracket: OpeningSquareBracketToken): ArrayTypeDeclaration {
         const arrayTypeDeclaration = new ArrayTypeDeclaration();
         arrayTypeDeclaration.parent = parent;
-        arrayTypeDeclaration.openingSquareBracket = this.eat(TokenKind.OpeningSquareBracket);
+        arrayTypeDeclaration.openingSquareBracket = openingSquareBracket;
         if (this.isExpressionStart(this.getToken())) {
             arrayTypeDeclaration.expression = this.parseExpression(arrayTypeDeclaration);
         }
@@ -804,19 +846,22 @@ export abstract class ParserBase {
                 return token;
             }
             case TokenKind.ConfigurationTagStart: {
-                return this.parseConfigurationTag(parent);
+                this.advanceToken();
+
+                return this.parseConfigurationTag(parent, token);
             }
         }
 
         throw new Error(`Unexpected token: ${JSON.stringify(token.kind)}`);
     }
 
-    protected parseConfigurationTag(parent: Nodes): ConfigurationTag {
+    protected parseConfigurationTag(parent: Nodes, startToken: ConfigurationTagStartToken): ConfigurationTag {
         const configurationTag = new ConfigurationTag();
         configurationTag.parent = parent;
-        configurationTag.startToken = this.eat(TokenKind.ConfigurationTagStart);
-        configurationTag.name = this.eat(TokenKind.Identifier);
-        configurationTag.endToken = this.eat(TokenKind.ConfigurationTagEnd);
+        configurationTag.startToken = startToken;
+        configurationTag.name = this.eatOptional(TokenKind.Identifier);
+        // Guaranteed by tokenizer.
+        configurationTag.endToken = this.eat(TokenKind.ConfigurationTagEnd) as ConfigurationTagEndToken;
 
         return configurationTag;
     }
@@ -942,7 +987,7 @@ export abstract class ParserBase {
 
     // #region Tokens
 
-    protected eat<TTokenKind extends TokenKinds>(...kinds: TTokenKind[]): TokenKindTokenMap[TTokenKind] {
+    protected eat<TTokenKind extends TokenKinds>(...kinds: TTokenKind[]): TokenKindTokenMap[TTokenKind] | MissingToken<TTokenKind> {
         const token = this.getToken();
         if (kinds.includes(token.kind as TTokenKind)) {
             this.advanceToken();
@@ -950,8 +995,7 @@ export abstract class ParserBase {
             return token;
         }
 
-        // TODO: A bit type unsafe.
-        return new MissingToken(kinds[0], token.start) as TokenKindTokenMap[TTokenKind];
+        return new MissingToken(token.start, kinds[0]);
     }
 
     protected eatOptional<TTokenKind extends TokenKinds>(...kinds: TTokenKind[]): TokenKindTokenMap[TTokenKind] | null {

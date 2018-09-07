@@ -10,5 +10,10 @@ export class BooleanLiteral extends Expression {
 
     readonly kind = NodeKind.BooleanLiteral;
 
-    value: TrueKeywordToken | FalseKeywordToken;
+    value: BooleanLiteralValueToken;
 }
+
+export type BooleanLiteralValueToken =
+    TrueKeywordToken |
+    FalseKeywordToken
+    ;

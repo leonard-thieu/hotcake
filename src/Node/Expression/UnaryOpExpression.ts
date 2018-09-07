@@ -1,6 +1,6 @@
-import { HyphenMinusToken, MissingExpressionToken, NotKeywordToken, PlusSignToken, TildeToken } from '../../Token/Token';
+import { HyphenMinusToken, NotKeywordToken, PlusSignToken, TildeToken } from '../../Token/Token';
 import { NodeKind } from '../NodeKind';
-import { Expression, Expressions } from './Expression';
+import { Expression, MissableExpression } from './Expression';
 
 export class UnaryOpExpression extends Expression {
     static CHILD_NAMES: (keyof UnaryOpExpression)[] = [
@@ -11,6 +11,13 @@ export class UnaryOpExpression extends Expression {
 
     readonly kind = NodeKind.UnaryOpExpression;
 
-    operator: PlusSignToken | HyphenMinusToken | TildeToken | NotKeywordToken;
-    operand: Expressions | MissingExpressionToken;
+    operator: UnaryOperatorToken;
+    operand: MissableExpression;
 }
+
+export type UnaryOperatorToken =
+    PlusSignToken |
+    HyphenMinusToken |
+    TildeToken |
+    NotKeywordToken
+    ;

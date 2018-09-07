@@ -1,7 +1,7 @@
-import { MissingToken } from './MissingToken';
+import { MissableTokenKinds } from './MissingToken';
 import { TokenKind } from './TokenKind';
 
-export class Token<TTokenKind extends TokenKinds> {
+export class Token<TTokenKind extends FullTokenKinds> {
     constructor(
         public kind: TTokenKind,
         public fullStart: number,
@@ -16,6 +16,8 @@ export class Token<TTokenKind extends TokenKinds> {
         return document.slice(this.start, this.fullStart + this.length);
     }
 }
+
+// #region Tokens
 
 export interface UnknownToken extends Token<TokenKind.Unknown> { }
 export interface EOFToken extends Token<TokenKind.EOF> { }
@@ -151,7 +153,8 @@ export interface TryKeywordToken extends Token<TokenKind.TryKeyword> { }
 export interface CatchKeywordToken extends Token<TokenKind.CatchKeyword> { }
 export interface ThrowKeywordToken extends Token<TokenKind.ThrowKeyword> { }
 export interface ThrowableKeywordToken extends Token<TokenKind.ThrowableKeyword> { }
-export interface MissingExpressionToken extends MissingToken<TokenKind.Expression> { }
+
+// #endregion
 
 export interface TokenKindTokenMap {
     [TokenKind.Unknown]: UnknownToken;
@@ -288,9 +291,12 @@ export interface TokenKindTokenMap {
     [TokenKind.CatchKeyword]: CatchKeywordToken;
     [TokenKind.ThrowKeyword]: ThrowKeywordToken;
     [TokenKind.ThrowableKeyword]: ThrowableKeywordToken;
-    [TokenKind.Expression]: MissingExpressionToken;
-    [TokenKind.GreaterThanSignEqualsSign]: GreaterThanSignEqualsSignToken;
 }
 
 export type TokenKinds = keyof TokenKindTokenMap;
+export type FullTokenKinds =
+    TokenKind.Missing |
+    MissableTokenKinds |
+    TokenKind.Skipped
+    ;
 export type Tokens = TokenKindTokenMap[TokenKinds];

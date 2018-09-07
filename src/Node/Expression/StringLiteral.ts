@@ -1,4 +1,5 @@
 import { ParseContextElementArray } from '../../ParserBase';
+import { MissableToken } from '../../Token/MissingToken';
 import { QuotationMarkToken } from '../../Token/Token';
 import { NodeKind } from '../NodeKind';
 import { Expression } from './Expression';
@@ -15,5 +16,5 @@ export class StringLiteral extends Expression {
 
     startQuote: QuotationMarkToken;
     children: ParseContextElementArray<StringLiteral['kind']>;
-    endQuote: QuotationMarkToken;
+    endQuote: MissableToken<QuotationMarkToken>;
 }

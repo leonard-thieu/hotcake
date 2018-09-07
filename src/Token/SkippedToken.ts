@@ -1,13 +1,12 @@
 import { Token, TokenKinds } from './Token';
+import { TokenKind } from './TokenKind';
 
-export class SkippedToken<TTokenKind extends TokenKinds> extends Token<TTokenKind> {
+export class SkippedToken<TTokenKind extends TokenKinds> extends Token<TokenKind.Skipped> {
     constructor(token: Token<TTokenKind>) {
-        super(token.kind, token.fullStart, token.start, token.length);
+        super(TokenKind.Skipped, token.fullStart, token.start, token.length);
+
+        this.originalKind = token.kind;
     }
 
-    toJSON(): any {
-        return Object.assign({
-            type: this.constructor.name,
-        }, this);
-    }
+    originalKind: TTokenKind;
 }

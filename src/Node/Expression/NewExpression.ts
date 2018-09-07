@@ -1,6 +1,6 @@
 import { NewKeywordToken } from '../../Token/Token';
 import { NodeKind } from '../NodeKind';
-import { TypeReference } from '../TypeReference';
+import { MissableTypeReference } from '../TypeReference';
 import { Expression } from './Expression';
 
 export class NewExpression extends Expression {
@@ -13,5 +13,5 @@ export class NewExpression extends Expression {
     readonly kind = NodeKind.NewExpression;
 
     newKeyword: NewKeywordToken;
-    type: TypeReference;
+    type: MissableTypeReference;
 }

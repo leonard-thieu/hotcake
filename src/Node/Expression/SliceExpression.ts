@@ -1,6 +1,7 @@
-import { ClosingSquareBracketToken, MissingExpressionToken, OpeningSquareBracketToken, PeriodPeriodToken } from '../../Token/Token';
+import { MissableToken } from '../../Token/MissingToken';
+import { ClosingSquareBracketToken, OpeningSquareBracketToken, PeriodPeriodToken } from '../../Token/Token';
 import { NodeKind } from '../NodeKind';
-import { Expression, Expressions } from './Expression';
+import { Expression, Expressions, MissableExpression } from './Expression';
 
 export class SliceExpression extends Expression {
     static CHILD_NAMES: (keyof SliceExpression)[] = [
@@ -17,8 +18,8 @@ export class SliceExpression extends Expression {
 
     sliceableExpression: Expressions;
     openingSquareBracket: OpeningSquareBracketToken;
-    startExpression: Expressions | MissingExpressionToken | null = null;
-    sliceOperator: PeriodPeriodToken;
-    endExpression: Expressions | MissingExpressionToken | null = null;
-    closingSquareBracket: ClosingSquareBracketToken;
+    startExpression: MissableExpression | null = null;
+    sliceOperator: MissableToken<PeriodPeriodToken>;
+    endExpression: MissableExpression | null = null;
+    closingSquareBracket: MissableToken<ClosingSquareBracketToken>;
 }

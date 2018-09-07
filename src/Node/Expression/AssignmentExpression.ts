@@ -1,6 +1,6 @@
-import { AmpersandEqualsSignToken, AsteriskEqualsSignToken, EachInKeywordToken, EqualsSignToken, HyphenMinusEqualsSignToken, MissingExpressionToken, ModKeywordEqualsSignToken, PlusSignEqualsSignToken, ShlKeywordEqualsSignToken, ShrKeywordEqualsSignToken, SlashEqualsSignToken, TildeEqualsSignToken, VerticalBarEqualsSignToken } from '../../Token/Token';
+import { AmpersandEqualsSignToken, AsteriskEqualsSignToken, EachInKeywordToken, EqualsSignToken, HyphenMinusEqualsSignToken, ModKeywordEqualsSignToken, PlusSignEqualsSignToken, ShlKeywordEqualsSignToken, ShrKeywordEqualsSignToken, SlashEqualsSignToken, TildeEqualsSignToken, VerticalBarEqualsSignToken } from '../../Token/Token';
 import { NodeKind } from '../NodeKind';
-import { Expression, Expressions } from './Expression';
+import { Expression, MissableExpression } from './Expression';
 
 export class AssignmentExpression extends Expression {
     static CHILD_NAMES: (keyof AssignmentExpression)[] = [
@@ -13,10 +13,10 @@ export class AssignmentExpression extends Expression {
 
     readonly kind = NodeKind.AssignmentExpression;
 
-    leftOperand: Expressions | MissingExpressionToken;
+    leftOperand: MissableExpression;
     operator: AssignmentOperatorToken;
     eachInKeyword: EachInKeywordToken | null = null;
-    rightOperand: Expressions | MissingExpressionToken;
+    rightOperand: MissableExpression;
 }
 
 export type AssignmentOperatorToken =

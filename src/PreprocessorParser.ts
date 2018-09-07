@@ -8,7 +8,7 @@ import { Expressions } from './Node/Expression/Expression';
 import { Nodes } from './Node/Node';
 import { NodeKind } from './Node/NodeKind';
 import { ParseContext, ParseContextElementMapBase, ParserBase } from './ParserBase';
-import { Tokens } from './Token/Token';
+import { ConfigurationVariableToken, ElseDirectiveKeywordToken, ElseIfDirectiveKeywordToken, EOFToken, ErrorDirectiveKeywordToken, IfDirectiveKeywordToken, PrintDirectiveKeywordToken, RemDirectiveKeywordToken, Tokens } from './Token/Token';
 import { TokenKind } from './Token/TokenKind';
 
 export class PreprocessorParser extends ParserBase {
@@ -26,7 +26,8 @@ export class PreprocessorParser extends ParserBase {
         preprocessorModuleDeclaration.document = document;
 
         preprocessorModuleDeclaration.members = this.parseList(preprocessorModuleDeclaration, preprocessorModuleDeclaration.kind);
-        preprocessorModuleDeclaration.eofToken = this.eat(TokenKind.EOF);
+        // Guaranteed by tokenizer and parser.
+        preprocessorModuleDeclaration.eofToken = this.eat(TokenKind.EOF) as EOFToken;
 
         return preprocessorModuleDeclaration;
     }
@@ -45,19 +46,29 @@ export class PreprocessorParser extends ParserBase {
         const token = this.getToken();
         switch (token.kind) {
             case TokenKind.IfDirectiveKeyword: {
-                return this.parseIfDirective(parent);
+                this.advanceToken();
+
+                return this.parseIfDirective(parent, token);
             }
             case TokenKind.RemDirectiveKeyword: {
-                return this.parseRemDirective(parent);
+                this.advanceToken();
+
+                return this.parseRemDirective(parent, token);
             }
             case TokenKind.PrintDirectiveKeyword: {
-                return this.parsePrintDirective(parent);
+                this.advanceToken();
+
+                return this.parsePrintDirective(parent, token);
             }
             case TokenKind.ErrorDirectiveKeyword: {
-                return this.parseErrorDirective(parent);
+                this.advanceToken();
+
+                return this.parseErrorDirective(parent, token);
             }
             case TokenKind.ConfigurationVariable: {
-                return this.parseAssignmentDirective(parent);
+                this.advanceToken();
+
+                return this.parseAssignmentDirective(parent, token);
             }
         }
 
@@ -66,19 +77,29 @@ export class PreprocessorParser extends ParserBase {
         return token;
     }
 
-    private parseIfDirective(parent: Nodes): IfDirective {
+    private parseIfDirective(parent: Nodes, ifDirectiveKeyword: IfDirectiveKeywordToken): IfDirective {
         const ifDirective = new IfDirective();
         ifDirective.parent = parent;
-        ifDirective.ifDirectiveKeyword = this.eat(TokenKind.IfDirectiveKeyword);
+        ifDirective.ifDirectiveKeyword = ifDirectiveKeyword;
         ifDirective.expression = this.parseExpression(ifDirective);
         ifDirective.members = this.parseList(ifDirective, ifDirective.kind);
 
-        while (this.getToken().kind === TokenKind.ElseIfDirectiveKeyword) {
-            ifDirective.elseIfDirectives.push(this.parseElseIfDirective(ifDirective));
+        while (true) {
+            const token = this.getToken();
+            if (token.kind !== TokenKind.ElseIfDirectiveKeyword) {
+                break;
+            }
+
+            this.advanceToken();
+
+            ifDirective.elseIfDirectives.push(this.parseElseIfDirective(ifDirective, token));
         }
 
-        if (this.getToken().kind === TokenKind.ElseDirectiveKeyword) {
-            ifDirective.elseDirective = this.parseElseDirective(ifDirective);
+        const elseDirectiveKeyword = this.getToken();
+        if (elseDirectiveKeyword.kind === TokenKind.ElseDirectiveKeyword) {
+            this.advanceToken();
+
+            ifDirective.elseDirective = this.parseElseDirective(ifDirective, elseDirectiveKeyword);
         }
 
         ifDirective.endDirectiveKeyword = this.eat(TokenKind.EndDirectiveKeyword);
@@ -86,20 +107,20 @@ export class PreprocessorParser extends ParserBase {
         return ifDirective;
     }
 
-    private parseElseIfDirective(parent: IfDirective): ElseIfDirective {
+    private parseElseIfDirective(parent: IfDirective, elseIfDirectiveKeyword: ElseIfDirectiveKeywordToken): ElseIfDirective {
         const elseIfDirective = new ElseIfDirective();
         elseIfDirective.parent = parent;
-        elseIfDirective.elseIfDirectiveKeyword = this.eat(TokenKind.ElseIfDirectiveKeyword);
+        elseIfDirective.elseIfDirectiveKeyword = elseIfDirectiveKeyword;
         elseIfDirective.expression = this.parseExpression(elseIfDirective);
         elseIfDirective.members = this.parseList(elseIfDirective, elseIfDirective.kind);
 
         return elseIfDirective;
     }
 
-    private parseElseDirective(parent: IfDirective): ElseDirective {
+    private parseElseDirective(parent: IfDirective, elseDirectiveKeyword: ElseDirectiveKeywordToken): ElseDirective {
         const elseDirective = new ElseDirective();
         elseDirective.parent = parent;
-        elseDirective.elseDirectiveKeyword = this.eat(TokenKind.ElseDirectiveKeyword);
+        elseDirective.elseDirectiveKeyword = elseDirectiveKeyword;
         elseDirective.members = this.parseList(elseDirective, elseDirective.kind);
 
         return elseDirective;
@@ -116,10 +137,10 @@ export class PreprocessorParser extends ParserBase {
         return false;
     }
 
-    private parseRemDirective(parent: Nodes): RemDirective {
+    private parseRemDirective(parent: Nodes, remDirectiveKeyword: RemDirectiveKeywordToken): RemDirective {
         const remDirective = new RemDirective();
         remDirective.parent = parent;
-        remDirective.remDirectiveKeyword = this.eat(TokenKind.RemDirectiveKeyword);
+        remDirective.remDirectiveKeyword = remDirectiveKeyword;
         remDirective.children = this.parseList(remDirective, remDirective.kind);
         remDirective.endDirectiveKeyword = this.eat(TokenKind.EndDirectiveKeyword);
 
@@ -147,10 +168,14 @@ export class PreprocessorParser extends ParserBase {
         const token = this.getToken();
         switch (token.kind) {
             case TokenKind.IfDirectiveKeyword: {
-                return this.parseIfDirective(parent);
+                this.advanceToken();
+
+                return this.parseIfDirective(parent, token);
             }
             case TokenKind.RemDirectiveKeyword: {
-                return this.parseRemDirective(parent);
+                this.advanceToken();
+
+                return this.parseRemDirective(parent, token);
             }
             case TokenKind.RemDirectiveBody: {
                 this.advanceToken();
@@ -164,28 +189,28 @@ export class PreprocessorParser extends ParserBase {
 
     // #endregion
 
-    private parsePrintDirective(parent: Nodes): PrintDirective {
+    private parsePrintDirective(parent: Nodes, printDirectiveKeyword: PrintDirectiveKeywordToken): PrintDirective {
         const printDirective = new PrintDirective();
         printDirective.parent = parent;
-        printDirective.printDirectiveKeyword = this.eat(TokenKind.PrintDirectiveKeyword);
+        printDirective.printDirectiveKeyword = printDirectiveKeyword;
         printDirective.expression = this.parseExpression(printDirective);
 
         return printDirective;
     }
 
-    private parseErrorDirective(parent: Nodes): ErrorDirective {
+    private parseErrorDirective(parent: Nodes, errorDirectiveKeyword: ErrorDirectiveKeywordToken): ErrorDirective {
         const errorDirective = new ErrorDirective();
         errorDirective.parent = parent;
-        errorDirective.errorDirectiveKeyword = this.eat(TokenKind.ErrorDirectiveKeyword);
+        errorDirective.errorDirectiveKeyword = errorDirectiveKeyword;
         errorDirective.expression = this.parseExpression(errorDirective);
 
         return errorDirective;
     }
 
-    private parseAssignmentDirective(parent: Nodes): AssignmentDirective {
+    private parseAssignmentDirective(parent: Nodes, name: ConfigurationVariableToken): AssignmentDirective {
         const assignmentDirective = new AssignmentDirective();
         assignmentDirective.parent = parent;
-        assignmentDirective.name = this.eat(TokenKind.ConfigurationVariable);
+        assignmentDirective.name = name;
         assignmentDirective.operator = this.eat(TokenKind.EqualsSign, TokenKind.PlusSignEqualsSign);
         assignmentDirective.expression = this.parseExpression(assignmentDirective);
 

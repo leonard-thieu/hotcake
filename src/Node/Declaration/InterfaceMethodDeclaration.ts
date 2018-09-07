@@ -1,4 +1,5 @@
 import { ParseContextElementArray, ParseContextKind } from '../../ParserBase';
+import { MissableToken } from '../../Token/MissingToken';
 import { ClosingParenthesisToken, IdentifierToken, MethodKeywordToken, OpeningParenthesisToken } from '../../Token/Token';
 import { NodeKind } from '../NodeKind';
 import { Declaration } from './Declaration';
@@ -17,9 +18,9 @@ export class InterfaceMethodDeclaration extends Declaration {
     readonly kind = NodeKind.InterfaceMethodDeclaration;
 
     methodKeyword: MethodKeywordToken;
-    name: IdentifierToken;
+    name: MissableToken<IdentifierToken>;
     returnType: TypeDeclaration | null = null;
-    openingParenthesis: OpeningParenthesisToken;
+    openingParenthesis: MissableToken<OpeningParenthesisToken>;
     parameters: ParseContextElementArray<ParseContextKind.DataDeclarationSequence>;
-    closingParenthesis: ClosingParenthesisToken;
+    closingParenthesis: MissableToken<ClosingParenthesisToken>;
 }

@@ -1,5 +1,6 @@
-import { ClosingSquareBracketToken, MissingExpressionToken, OpeningSquareBracketToken } from '../Token/Token';
-import { Expressions } from './Expression/Expression';
+import { MissableToken } from '../Token/MissingToken';
+import { ClosingSquareBracketToken, OpeningSquareBracketToken } from '../Token/Token';
+import { MissableExpression } from './Expression/Expression';
 import { Node } from './Node';
 import { NodeKind } from './NodeKind';
 
@@ -13,6 +14,6 @@ export class ArrayTypeDeclaration extends Node {
     readonly kind = NodeKind.ArrayTypeDeclaration;
 
     openingSquareBracket: OpeningSquareBracketToken;
-    expression: Expressions | MissingExpressionToken | null = null;
-    closingSquareBracket: ClosingSquareBracketToken;
+    expression: MissableExpression | null = null;
+    closingSquareBracket: MissableToken<ClosingSquareBracketToken>;
 }

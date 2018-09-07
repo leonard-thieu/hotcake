@@ -1,6 +1,7 @@
 import { ParseContextElementArray } from '../../ParserBase';
+import { MissableToken } from '../../Token/MissingToken';
 import { CatchKeywordToken, EndKeywordToken, TryKeywordToken } from '../../Token/Token';
-import { DataDeclaration } from '../Declaration/DataDeclaration';
+import { MissableDataDeclaration } from '../Declaration/DataDeclaration';
 import { NodeKind } from '../NodeKind';
 import { Statement } from './Statement';
 
@@ -19,7 +20,7 @@ export class TryStatement extends Statement {
     tryKeyword: TryKeywordToken;
     statements: ParseContextElementArray<TryStatement['kind']>;
     catchStatements: CatchStatement[] | null = null;
-    endKeyword: EndKeywordToken;
+    endKeyword: MissableToken<EndKeywordToken>;
     endTryKeyword: TryKeywordToken | null = null;
 }
 
@@ -33,6 +34,6 @@ export class CatchStatement extends Statement {
     readonly kind = NodeKind.CatchStatement;
 
     catchKeyword: CatchKeywordToken;
-    parameter: DataDeclaration;
+    parameter: MissableDataDeclaration;
     statements: ParseContextElementArray<CatchStatement['kind']>;
 }

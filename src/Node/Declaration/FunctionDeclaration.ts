@@ -1,4 +1,5 @@
 import { ParseContextElementArray, ParseContextKind } from '../../ParserBase';
+import { MissableToken } from '../../Token/MissingToken';
 import { ClosingParenthesisToken, EndKeywordToken, FunctionKeywordToken, IdentifierToken, OpeningParenthesisToken } from '../../Token/Token';
 import { NodeKind } from '../NodeKind';
 import { Declaration } from './Declaration';
@@ -20,12 +21,12 @@ export class FunctionDeclaration extends Declaration {
     readonly kind = NodeKind.FunctionDeclaration;
 
     functionKeyword: FunctionKeywordToken;
-    name: IdentifierToken;
+    name: MissableToken<IdentifierToken>;
     returnType: TypeDeclaration | null = null;
-    openingParenthesis: OpeningParenthesisToken;
+    openingParenthesis: MissableToken<OpeningParenthesisToken>;
     parameters: ParseContextElementArray<ParseContextKind.DataDeclarationSequence>;
-    closingParenthesis: ClosingParenthesisToken;
+    closingParenthesis: MissableToken<ClosingParenthesisToken>;
     statements: ParseContextElementArray<FunctionDeclaration['kind']>;
-    endKeyword: EndKeywordToken;
+    endKeyword: MissableToken<EndKeywordToken>;
     endFunctionKeyword: FunctionKeywordToken | null = null;
 }

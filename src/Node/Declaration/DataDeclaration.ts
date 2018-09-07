@@ -1,5 +1,6 @@
-import { ColonEqualsSignToken, EachInKeywordToken, EqualsSignToken, IdentifierToken, MissingExpressionToken } from '../../Token/Token';
-import { Expressions } from '../Expression/Expression';
+import { MissingToken } from '../../Token/MissingToken';
+import { ColonEqualsSignToken, EachInKeywordToken, EqualsSignToken, IdentifierToken } from '../../Token/Token';
+import { MissableExpression } from '../Expression/Expression';
 import { NodeKind } from '../NodeKind';
 import { Declaration } from './Declaration';
 import { TypeDeclaration } from './TypeDeclaration';
@@ -35,5 +36,7 @@ export class DataDeclaration extends Declaration {
     type: TypeDeclaration | null = null;
     equalsSign: EqualsSignToken | ColonEqualsSignToken | null = null;
     eachInKeyword: EachInKeywordToken | null = null;
-    expression: Expressions | MissingExpressionToken | null = null;
+    expression: MissableExpression | null = null;
 }
+
+export type MissableDataDeclaration = DataDeclaration | MissingToken<DataDeclaration['kind']>;

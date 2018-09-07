@@ -1,6 +1,7 @@
-import { ClosingSquareBracketToken, MissingExpressionToken, OpeningSquareBracketToken } from '../../Token/Token';
+import { MissableToken } from '../../Token/MissingToken';
+import { ClosingSquareBracketToken, OpeningSquareBracketToken } from '../../Token/Token';
 import { NodeKind } from '../NodeKind';
-import { Expression, Expressions } from './Expression';
+import { Expression, Expressions, MissableExpression } from './Expression';
 
 export class IndexExpression extends Expression {
     static CHILD_NAMES: (keyof IndexExpression)[] = [
@@ -15,6 +16,6 @@ export class IndexExpression extends Expression {
 
     indexableExpression: Expressions;
     openingSquareBracket: OpeningSquareBracketToken;
-    indexExpressionExpression: Expressions | MissingExpressionToken;
-    closingSquareBracket: ClosingSquareBracketToken;
+    indexExpressionExpression: MissableExpression;
+    closingSquareBracket: MissableToken<ClosingSquareBracketToken>;
 }

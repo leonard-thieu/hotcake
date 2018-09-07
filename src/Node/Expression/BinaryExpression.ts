@@ -1,6 +1,6 @@
-import { AmpersandToken, AndKeywordToken, AsteriskToken, EqualsSignToken, GreaterThanSignEqualsSignToken, GreaterThanSignToken, HyphenMinusToken, LessThanSignEqualsSignToken, LessThanSignGreaterThanSignToken, LessThanSignToken, MissingExpressionToken, ModKeywordToken, OrKeywordToken, PlusSignToken, ShlKeywordToken, ShrKeywordToken, SlashToken, TildeToken, VerticalBarToken } from '../../Token/Token';
+import { AmpersandToken, AndKeywordToken, AsteriskToken, EqualsSignToken, GreaterThanSignEqualsSignToken, GreaterThanSignToken, HyphenMinusToken, LessThanSignEqualsSignToken, LessThanSignGreaterThanSignToken, LessThanSignToken, ModKeywordToken, OrKeywordToken, PlusSignToken, ShlKeywordToken, ShrKeywordToken, SlashToken, TildeToken, VerticalBarToken } from '../../Token/Token';
 import { NodeKind } from '../NodeKind';
-import { Expression, Expressions } from './Expression';
+import { Expression, MissableExpression } from './Expression';
 
 export class BinaryExpression extends Expression {
     static CHILD_NAMES: (keyof BinaryExpression)[] = [
@@ -12,9 +12,9 @@ export class BinaryExpression extends Expression {
 
     readonly kind = NodeKind.BinaryExpression;
 
-    leftOperand: Expressions | MissingExpressionToken;
+    leftOperand: MissableExpression;
     operator: BinaryExpressionOperatorToken;
-    rightOperand: Expressions | MissingExpressionToken;
+    rightOperand: MissableExpression;
 }
 
 export type BinaryExpressionOperatorToken =

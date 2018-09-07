@@ -1,7 +1,8 @@
 import { ParseContextElementArray, ParseContextKind } from '../../ParserBase';
+import { MissableToken } from '../../Token/MissingToken';
 import { AbstractKeywordToken, ClassKeywordToken, EndKeywordToken, ExtendsKeywordToken, FinalKeywordToken, GreaterThanSignToken, IdentifierToken, ImplementsKeywordToken, LessThanSignToken } from '../../Token/Token';
 import { NodeKind } from '../NodeKind';
-import { TypeReference } from '../TypeReference';
+import { MissableTypeReference } from '../TypeReference';
 import { Declaration } from './Declaration';
 
 export class ClassDeclaration extends Declaration {
@@ -24,16 +25,16 @@ export class ClassDeclaration extends Declaration {
     readonly kind = NodeKind.ClassDeclaration;
 
     classKeyword: ClassKeywordToken;
-    name: IdentifierToken;
+    name: MissableToken<IdentifierToken>;
 
     // Generic
     lessThanSign: LessThanSignToken | null = null;
     typeParameters: ParseContextElementArray<ParseContextKind.TypeParameterSequence> | null = null;
-    greaterThanSign: GreaterThanSignToken | null = null;
+    greaterThanSign: MissableToken<GreaterThanSignToken> | null = null;
 
     // Extends
     extendsKeyword: ExtendsKeywordToken | null = null;
-    baseType: TypeReference | null = null;
+    baseType: MissableTypeReference | null = null;
 
     // Implements
     implementsKeyword: ImplementsKeywordToken | null = null;
@@ -43,6 +44,6 @@ export class ClassDeclaration extends Declaration {
     attributes: Array<AbstractKeywordToken | FinalKeywordToken> = [];
 
     members: ParseContextElementArray<ClassDeclaration['kind']>;
-    endKeyword: EndKeywordToken;
+    endKeyword: MissableToken<EndKeywordToken>;
     endClassKeyword: ClassKeywordToken | null = null;
 }

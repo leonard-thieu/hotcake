@@ -1,6 +1,7 @@
-import { ClosingParenthesisToken, MissingExpressionToken, OpeningParenthesisToken } from '../../Token/Token';
+import { MissableToken } from '../../Token/MissingToken';
+import { ClosingParenthesisToken, OpeningParenthesisToken } from '../../Token/Token';
 import { NodeKind } from '../NodeKind';
-import { Expression, Expressions } from './Expression';
+import { Expression, MissableExpression } from './Expression';
 
 export class GroupingExpression extends Expression {
     static CHILD_NAMES: (keyof GroupingExpression)[] = [
@@ -13,6 +14,6 @@ export class GroupingExpression extends Expression {
     readonly kind = NodeKind.GroupingExpression;
 
     openingParenthesis: OpeningParenthesisToken;
-    expression: Expressions | MissingExpressionToken;
-    closingParenthesis: ClosingParenthesisToken;
+    expression: MissableExpression;
+    closingParenthesis: MissableToken<ClosingParenthesisToken>;
 }

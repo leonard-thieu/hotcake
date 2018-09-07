@@ -11,9 +11,13 @@ export class DataDeclarationList extends Declaration {
 
     readonly kind = NodeKind.DataDeclarationList;
 
-    /**
-     * Const, Global, Field, or Local
-     */
-    dataDeclarationKeyword: ConstKeywordToken | GlobalKeywordToken | FieldKeywordToken | LocalKeywordToken;
+    dataDeclarationKeyword: DataDeclarationKeywordToken;
     children: ParseContextElementArray<ParseContextKind.DataDeclarationSequence>;
 }
+
+export type DataDeclarationKeywordToken =
+    ConstKeywordToken |
+    GlobalKeywordToken |
+    FieldKeywordToken |
+    LocalKeywordToken
+    ;

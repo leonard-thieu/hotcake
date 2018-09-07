@@ -1,4 +1,5 @@
 import { ParseContextElementArray, ParseContextKind } from '../../ParserBase';
+import { MissableToken } from '../../Token/MissingToken';
 import { ClosingParenthesisToken, OpeningParenthesisToken } from '../../Token/Token';
 import { NodeKind } from '../NodeKind';
 import { Expression, Expressions } from './Expression';
@@ -17,5 +18,5 @@ export class InvokeExpression extends Expression {
     invokableExpression: Expressions;
     openingParenthesis: OpeningParenthesisToken | null = null;
     arguments: ParseContextElementArray<ParseContextKind.ExpressionSequence>;
-    closingParenthesis: ClosingParenthesisToken | null = null;
+    closingParenthesis: MissableToken<ClosingParenthesisToken> | null = null;
 }
