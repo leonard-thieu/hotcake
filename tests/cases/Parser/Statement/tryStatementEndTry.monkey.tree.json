@@ -81,7 +81,7 @@
                                         "kind": "TypeReference",
                                         "modulePath": null,
                                         "scopeMemberAccessOperator": null,
-                                        "identifier": {
+                                        "name": {
                                             "kind": "ThrowableKeyword",
                                             "fullStart": 43,
                                             "start": 44,
@@ -144,7 +144,7 @@
                                         "kind": "TypeReference",
                                         "modulePath": null,
                                         "scopeMemberAccessOperator": null,
-                                        "identifier": {
+                                        "name": {
                                             "kind": "ThrowableKeyword",
                                             "fullStart": 70,
                                             "start": 71,

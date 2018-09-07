@@ -54,7 +54,7 @@
                             "kind": "TypeReference",
                             "modulePath": null,
                             "scopeMemberAccessOperator": null,
-                            "identifier": {
+                            "name": {
                                 "kind": "Identifier",
                                 "fullStart": 24,
                                 "start": 25,

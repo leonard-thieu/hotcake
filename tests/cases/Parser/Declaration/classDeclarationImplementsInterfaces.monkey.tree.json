@@ -31,7 +31,7 @@
                     "kind": "TypeReference",
                     "modulePath": null,
                     "scopeMemberAccessOperator": null,
-                    "identifier": {
+                    "name": {
                         "kind": "Identifier",
                         "fullStart": 22,
                         "start": 23,
@@ -56,7 +56,7 @@
                     "kind": "TypeReference",
                     "modulePath": null,
                     "scopeMemberAccessOperator": null,
-                    "identifier": {
+                    "name": {
                         "kind": "Identifier",
                         "fullStart": 32,
                         "start": 32,

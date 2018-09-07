@@ -59,7 +59,7 @@
                                     "kind": "TypeReference",
                                     "modulePath": null,
                                     "scopeMemberAccessOperator": null,
-                                    "identifier": {
+                                    "name": {
                                         "kind": "StringKeyword",
                                         "fullStart": 28,
                                         "start": 29,

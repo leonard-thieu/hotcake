@@ -364,7 +364,7 @@
                             "start": 1015,
                             "length": 1
                         },
-                        "identifier": {
+                        "name": {
                             "kind": "Identifier",
                             "fullStart": 1016,
                             "start": 1016,
@@ -419,7 +419,7 @@
                             "kind": "TypeReference",
                             "modulePath": null,
                             "scopeMemberAccessOperator": null,
-                            "identifier": {
+                            "name": {
                                 "kind": "IntKeyword",
                                 "fullStart": 1064,
                                 "start": 1065,
@@ -728,7 +728,7 @@
                             "kind": "TypeReference",
                             "modulePath": null,
                             "scopeMemberAccessOperator": null,
-                            "identifier": {
+                            "name": {
                                 "kind": "IntKeyword",
                                 "fullStart": 1319,
                                 "start": 1320,
@@ -1031,7 +1031,7 @@
                             "kind": "TypeReference",
                             "modulePath": null,
                             "scopeMemberAccessOperator": null,
-                            "identifier": {
+                            "name": {
                                 "kind": "FloatKeyword",
                                 "fullStart": 1571,
                                 "start": 1572,
@@ -1120,7 +1120,7 @@
                             "kind": "TypeReference",
                             "modulePath": null,
                             "scopeMemberAccessOperator": null,
-                            "identifier": {
+                            "name": {
                                 "kind": "Identifier",
                                 "fullStart": 1712,
                                 "start": 1712,
@@ -1204,7 +1204,7 @@
                     "kind": "TypeReference",
                     "modulePath": null,
                     "scopeMemberAccessOperator": null,
-                    "identifier": {
+                    "name": {
                         "kind": "VoidKeyword",
                         "fullStart": 1763,
                         "start": 1763,
@@ -1243,7 +1243,7 @@
                             "kind": "TypeReference",
                             "modulePath": null,
                             "scopeMemberAccessOperator": null,
-                            "identifier": {
+                            "name": {
                                 "kind": "IntKeyword",
                                 "fullStart": 1776,
                                 "start": 1776,
@@ -1348,7 +1348,7 @@
                             "kind": "TypeReference",
                             "modulePath": null,
                             "scopeMemberAccessOperator": null,
-                            "identifier": {
+                            "name": {
                                 "kind": "IntKeyword",
                                 "fullStart": 1859,
                                 "start": 1859,
@@ -1787,7 +1787,7 @@
                             "kind": "TypeReference",
                             "modulePath": null,
                             "scopeMemberAccessOperator": null,
-                            "identifier": {
+                            "name": {
                                 "kind": "VoidKeyword",
                                 "fullStart": 2274,
                                 "start": 2275,
@@ -1858,7 +1858,7 @@
                                     "kind": "TypeReference",
                                     "modulePath": null,
                                     "scopeMemberAccessOperator": null,
-                                    "identifier": {
+                                    "name": {
                                         "kind": "BoolKeyword",
                                         "fullStart": 2296,
                                         "start": 2296,
@@ -2027,7 +2027,7 @@
                     "kind": "TypeReference",
                     "modulePath": null,
                     "scopeMemberAccessOperator": null,
-                    "identifier": {
+                    "name": {
                         "kind": "Identifier",
                         "fullStart": 2413,
                         "start": 2414,
@@ -2182,7 +2182,7 @@
                     "kind": "TypeReference",
                     "modulePath": null,
                     "scopeMemberAccessOperator": null,
-                    "identifier": {
+                    "name": {
                         "kind": "Identifier",
                         "fullStart": 2574,
                         "start": 2575,
@@ -2207,7 +2207,7 @@
                     "kind": "TypeReference",
                     "modulePath": null,
                     "scopeMemberAccessOperator": null,
-                    "identifier": {
+                    "name": {
                         "kind": "Identifier",
                         "fullStart": 2585,
                         "start": 2586,
@@ -2302,7 +2302,7 @@
                             "kind": "TypeReference",
                             "modulePath": null,
                             "scopeMemberAccessOperator": null,
-                            "identifier": {
+                            "name": {
                                 "kind": "VoidKeyword",
                                 "fullStart": 2734,
                                 "start": 2735,
@@ -2373,7 +2373,7 @@
                                     "kind": "TypeReference",
                                     "modulePath": null,
                                     "scopeMemberAccessOperator": null,
-                                    "identifier": {
+                                    "name": {
                                         "kind": "BoolKeyword",
                                         "fullStart": 2756,
                                         "start": 2756,
@@ -2610,7 +2610,7 @@
                                     "kind": "TypeReference",
                                     "modulePath": null,
                                     "scopeMemberAccessOperator": null,
-                                    "identifier": {
+                                    "name": {
                                         "kind": "FloatKeyword",
                                         "fullStart": 2974,
                                         "start": 2975,
@@ -3236,7 +3236,7 @@
                                     "kind": "TypeReference",
                                     "modulePath": null,
                                     "scopeMemberAccessOperator": null,
-                                    "identifier": {
+                                    "name": {
                                         "kind": "Identifier",
                                         "fullStart": 3657,
                                         "start": 3657,
@@ -3331,7 +3331,7 @@
                             "kind": "TypeReference",
                             "modulePath": null,
                             "scopeMemberAccessOperator": null,
-                            "identifier": {
+                            "name": {
                                 "kind": "Identifier",
                                 "fullStart": 3717,
                                 "start": 3717,
@@ -3426,7 +3426,7 @@
                                     "kind": "TypeReference",
                                     "modulePath": null,
                                     "scopeMemberAccessOperator": null,
-                                    "identifier": {
+                                    "name": {
                                         "kind": "Identifier",
                                         "fullStart": 3773,
                                         "start": 3773,
@@ -3655,7 +3655,7 @@
                 "kind": "TypeReference",
                 "modulePath": null,
                 "scopeMemberAccessOperator": null,
-                "identifier": {
+                "name": {
                     "kind": "Identifier",
                     "fullStart": 3935,
                     "start": 3936,
@@ -3750,7 +3750,7 @@
                 "kind": "TypeReference",
                 "modulePath": null,
                 "scopeMemberAccessOperator": null,
-                "identifier": {
+                "name": {
                     "kind": "Identifier",
                     "fullStart": 4062,
                     "start": 4063,
@@ -3855,7 +3855,7 @@
                     "kind": "TypeReference",
                     "modulePath": null,
                     "scopeMemberAccessOperator": null,
-                    "identifier": {
+                    "name": {
                         "kind": "Identifier",
                         "fullStart": 4200,
                         "start": 4201,
@@ -3952,7 +3952,7 @@
                     "kind": "TypeReference",
                     "modulePath": null,
                     "scopeMemberAccessOperator": null,
-                    "identifier": {
+                    "name": {
                         "kind": "Identifier",
                         "fullStart": 4321,
                         "start": 4322,
@@ -4056,7 +4056,7 @@
                     "kind": "TypeReference",
                     "modulePath": null,
                     "scopeMemberAccessOperator": null,
-                    "identifier": {
+                    "name": {
                         "kind": "Identifier",
                         "fullStart": 4458,
                         "start": 4459,
@@ -4081,7 +4081,7 @@
                     "kind": "TypeReference",
                     "modulePath": null,
                     "scopeMemberAccessOperator": null,
-                    "identifier": {
+                    "name": {
                         "kind": "Identifier",
                         "fullStart": 4468,
                         "start": 4468,
@@ -4175,7 +4175,7 @@
                 "kind": "TypeReference",
                 "modulePath": null,
                 "scopeMemberAccessOperator": null,
-                "identifier": {
+                "name": {
                     "kind": "Identifier",
                     "fullStart": 4577,
                     "start": 4578,
@@ -4197,7 +4197,7 @@
                     "kind": "TypeReference",
                     "modulePath": null,
                     "scopeMemberAccessOperator": null,
-                    "identifier": {
+                    "name": {
                         "kind": "Identifier",
                         "fullStart": 4596,
                         "start": 4597,
@@ -4222,7 +4222,7 @@
                     "kind": "TypeReference",
                     "modulePath": null,
                     "scopeMemberAccessOperator": null,
-                    "identifier": {
+                    "name": {
                         "kind": "Identifier",
                         "fullStart": 4606,
                         "start": 4606,
@@ -4321,7 +4321,7 @@
                 "kind": "TypeReference",
                 "modulePath": null,
                 "scopeMemberAccessOperator": null,
-                "identifier": {
+                "name": {
                     "kind": "Identifier",
                     "fullStart": 4729,
                     "start": 4730,
@@ -4343,7 +4343,7 @@
                     "kind": "TypeReference",
                     "modulePath": null,
                     "scopeMemberAccessOperator": null,
-                    "identifier": {
+                    "name": {
                         "kind": "Identifier",
                         "fullStart": 4748,
                         "start": 4749,
@@ -4368,7 +4368,7 @@
                     "kind": "TypeReference",
                     "modulePath": null,
                     "scopeMemberAccessOperator": null,
-                    "identifier": {
+                    "name": {
                         "kind": "Identifier",
                         "fullStart": 4758,
                         "start": 4758,
@@ -4469,7 +4469,7 @@
                             "kind": "TypeReference",
                             "modulePath": null,
                             "scopeMemberAccessOperator": null,
-                            "identifier": {
+                            "name": {
                                 "kind": "StringKeyword",
                                 "fullStart": 4892,
                                 "start": 4893,
@@ -5419,7 +5419,7 @@
                             "kind": "TypeReference",
                             "modulePath": null,
                             "scopeMemberAccessOperator": null,
-                            "identifier": {
+                            "name": {
                                 "kind": "StringKeyword",
                                 "fullStart": 5641,
                                 "start": 5642,
@@ -6600,7 +6600,7 @@
                                         "kind": "TypeReference",
                                         "modulePath": null,
                                         "scopeMemberAccessOperator": null,
-                                        "identifier": {
+                                        "name": {
                                             "kind": "FloatKeyword",
                                             "fullStart": 6803,
                                             "start": 6804,

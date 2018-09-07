@@ -28,7 +28,7 @@
                 "kind": "TypeReference",
                 "modulePath": null,
                 "scopeMemberAccessOperator": null,
-                "identifier": {
+                "name": {
                     "kind": "ThrowableKeyword",
                     "fullStart": 17,
                     "start": 18,
@@ -97,7 +97,7 @@
                 "kind": "TypeReference",
                 "modulePath": null,
                 "scopeMemberAccessOperator": null,
-                "identifier": {
+                "name": {
                     "kind": "ThrowableKeyword",
                     "fullStart": 53,
                     "start": 54,
@@ -358,7 +358,7 @@
                                                     "kind": "TypeReference",
                                                     "modulePath": null,
                                                     "scopeMemberAccessOperator": null,
-                                                    "identifier": {
+                                                    "name": {
                                                         "kind": "Identifier",
                                                         "fullStart": 160,
                                                         "start": 161,
@@ -404,7 +404,7 @@
                                                         "kind": "TypeReference",
                                                         "modulePath": null,
                                                         "scopeMemberAccessOperator": null,
-                                                        "identifier": {
+                                                        "name": {
                                                             "kind": "Identifier",
                                                             "fullStart": 179,
                                                             "start": 180,
@@ -459,7 +459,7 @@
                                                 "kind": "TypeReference",
                                                 "modulePath": null,
                                                 "scopeMemberAccessOperator": null,
-                                                "identifier": {
+                                                "name": {
                                                     "kind": "Identifier",
                                                     "fullStart": 202,
                                                     "start": 202,
@@ -570,7 +570,7 @@
                                                 "kind": "TypeReference",
                                                 "modulePath": null,
                                                 "scopeMemberAccessOperator": null,
-                                                "identifier": {
+                                                "name": {
                                                     "kind": "Identifier",
                                                     "fullStart": 260,
                                                     "start": 260,
