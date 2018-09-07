@@ -11,14 +11,14 @@
             },
             "path": {
                 "kind": "ModulePath",
-                "children": [
-                    {
-                        "kind": "Identifier",
-                        "fullStart": 6,
-                        "start": 7,
-                        "length": 6
-                    }
-                ]
+                "children": [],
+                "scopeMemberAccessOperator": null,
+                "name": {
+                    "kind": "Identifier",
+                    "fullStart": 6,
+                    "start": 7,
+                    "length": 6
+                }
             }
         }
     ]

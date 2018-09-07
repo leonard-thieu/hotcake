@@ -143,14 +143,14 @@
             },
             "path": {
                 "kind": "ModulePath",
-                "children": [
-                    {
-                        "kind": "Identifier",
-                        "fullStart": 686,
-                        "start": 687,
-                        "length": 5
-                    }
-                ]
+                "children": [],
+                "scopeMemberAccessOperator": null,
+                "name": {
+                    "kind": "Identifier",
+                    "fullStart": 686,
+                    "start": 687,
+                    "length": 5
+                }
             }
         },
         {
@@ -175,20 +175,20 @@
                         "fullStart": 744,
                         "start": 745,
                         "length": 4
-                    },
-                    {
-                        "kind": "Period",
-                        "fullStart": 748,
-                        "start": 748,
-                        "length": 1
-                    },
-                    {
-                        "kind": "Identifier",
-                        "fullStart": 749,
-                        "start": 749,
-                        "length": 10
                     }
-                ]
+                ],
+                "scopeMemberAccessOperator": {
+                    "kind": "Period",
+                    "fullStart": 748,
+                    "start": 748,
+                    "length": 1
+                },
+                "name": {
+                    "kind": "Identifier",
+                    "fullStart": 749,
+                    "start": 749,
+                    "length": 10
+                }
             }
         },
         {
@@ -219,20 +219,20 @@
                         "fullStart": 811,
                         "start": 812,
                         "length": 7
-                    },
-                    {
-                        "kind": "Period",
-                        "fullStart": 818,
-                        "start": 818,
-                        "length": 1
-                    },
-                    {
-                        "kind": "Identifier",
-                        "fullStart": 819,
-                        "start": 819,
-                        "length": 4
                     }
-                ]
+                ],
+                "scopeMemberAccessOperator": {
+                    "kind": "Period",
+                    "fullStart": 818,
+                    "start": 818,
+                    "length": 1
+                },
+                "name": {
+                    "kind": "Identifier",
+                    "fullStart": 819,
+                    "start": 819,
+                    "length": 4
+                }
             }
         },
         {
@@ -346,14 +346,14 @@
                 "kind": "TypeReference",
                 "modulePath": {
                     "kind": "ModulePath",
-                    "children": [
-                        {
-                            "kind": "Identifier",
-                            "fullStart": 1010,
-                            "start": 1010,
-                            "length": 5
-                        }
-                    ]
+                    "children": [],
+                    "scopeMemberAccessOperator": null,
+                    "name": {
+                        "kind": "Identifier",
+                        "fullStart": 1010,
+                        "start": 1010,
+                        "length": 5
+                    }
                 },
                 "scopeMemberAccessOperator": {
                     "kind": "Period",

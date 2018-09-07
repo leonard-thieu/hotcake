@@ -25,14 +25,14 @@
                 "kind": "TypeReference",
                 "modulePath": {
                     "kind": "ModulePath",
-                    "children": [
-                        {
-                            "kind": "Identifier",
-                            "fullStart": 8,
-                            "start": 8,
-                            "length": 5
-                        }
-                    ]
+                    "children": [],
+                    "scopeMemberAccessOperator": null,
+                    "name": {
+                        "kind": "Identifier",
+                        "fullStart": 8,
+                        "start": 8,
+                        "length": 5
+                    }
                 },
                 "scopeMemberAccessOperator": {
                     "kind": "Period",
