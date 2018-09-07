@@ -146,11 +146,15 @@ export abstract class ParserBase {
                     break;
                 }
                 case TokenKind.EqualsSign: {
-                    if (parent && parent.kind === NodeKind.ExpressionStatement) {
-                        expression = this.parseAssignmentExpression(parent, expression, token, newPrecedence);
-                    } else {
-                        expression = this.parseBinaryExpression(parent, expression, token, newPrecedence);
+                    if (parent) {
+                        if (parent.kind === NodeKind.ExpressionStatement ||
+                            parent.kind === NodeKind.ForLoop) {
+                            expression = this.parseAssignmentExpression(parent, expression, token, newPrecedence);
+                            break;
+                        }
                     }
+
+                    expression = this.parseBinaryExpression(parent, expression, token, newPrecedence);
                     break;
                 }
             }
