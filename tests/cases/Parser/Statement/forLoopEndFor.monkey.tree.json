@@ -89,14 +89,7 @@
                                     }
                                 ]
                             },
-                            "terminator": {
-                                "type": "MissingToken",
-                                "kind": "Newline",
-                                "fullStart": 38,
-                                "start": 38,
-                                "length": 0,
-                                "newlines": null
-                            }
+                            "terminator": null
                         },
                         "toOrUntilKeyword": {
                             "kind": "UntilKeyword",

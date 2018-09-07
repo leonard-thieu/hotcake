@@ -227,14 +227,7 @@
                                     }
                                 ]
                             },
-                            "terminator": {
-                                "type": "MissingToken",
-                                "kind": "Newline",
-                                "fullStart": 108,
-                                "start": 108,
-                                "length": 0,
-                                "newlines": null
-                            }
+                            "terminator": null
                         },
                         "toOrUntilKeyword": {
                             "kind": "ToKeyword",
