@@ -15,6 +15,7 @@ import { LonghandTypeDeclaration, ShorthandTypeDeclaration, ShorthandTypeToken }
 import { TypeParameter } from './Node/Declaration/TypeParameter';
 import { AssignmentExpression } from './Node/Expression/AssignmentExpression';
 import { Expressions } from './Node/Expression/Expression';
+import { MissableModulePath } from './Node/ModulePath';
 import { Nodes } from './Node/Node';
 import { NodeKind } from './Node/NodeKind';
 import { ContinueStatement } from './Node/Statement/ContinueStatement';
@@ -161,7 +162,7 @@ export class Parser extends ParserBase {
                 break;
             }
             default: {
-                importStatement.path = this.parseModulePath(importStatement);
+                importStatement.path = this.parseMissableModulePath(importStatement);
                 break;
             }
         }
@@ -173,7 +174,7 @@ export class Parser extends ParserBase {
         const friendDirective = new FriendDirective();
         friendDirective.parent = parent;
         friendDirective.friendKeyword = friendKeyword;
-        friendDirective.modulePath = this.parseModulePath(friendDirective);
+        friendDirective.modulePath = this.parseMissableModulePath(friendDirective);
 
         return friendDirective;
     }
@@ -918,6 +919,17 @@ export class Parser extends ParserBase {
     // #endregion
 
     // #region Common
+
+    private parseMissableModulePath(parent: Nodes): MissableModulePath {
+        const token = this.getToken();
+        if (this.isModulePathChildStart(token)) {
+            this.advanceToken();
+
+            return this.parseModulePath(parent, token);
+        }
+
+        return new MissingToken(token.fullStart, NodeKind.ModulePath);
+    }
 
     private parseAccessibilityDirective(parent: Nodes, accessibilityKeyword: AccessibilityKeywordToken): AccessibilityDirective {
         const accessibilityDirective = new AccessibilityDirective();

@@ -31,7 +31,7 @@ import { ModKeywordEqualsSignToken } from './Token/ModKeywordEqualsSignToken';
 import { ShlKeywordEqualsSignToken } from './Token/ShlKeywordEqualsSignToken';
 import { ShrKeywordEqualsSignToken } from './Token/ShrKeywordEqualsSignToken';
 import { SkippedToken } from './Token/SkippedToken';
-import { CommaToken, ConfigurationTagEndToken, ConfigurationTagStartToken, FloatLiteralToken, IntegerLiteralToken, NewKeywordToken, NewlineToken, NullKeywordToken, OpeningParenthesisToken, OpeningSquareBracketToken, PeriodToken, QuotationMarkToken, SelfKeywordToken, SuperKeywordToken, TokenKinds, TokenKindTokenMap, Tokens } from './Token/Token';
+import { CommaToken, ConfigurationTagEndToken, ConfigurationTagStartToken, FloatLiteralToken, IdentifierToken, IntegerLiteralToken, NewKeywordToken, NewlineToken, NullKeywordToken, OpeningParenthesisToken, OpeningSquareBracketToken, PeriodToken, QuotationMarkToken, SelfKeywordToken, SuperKeywordToken, TokenKinds, TokenKindTokenMap, Tokens } from './Token/Token';
 import { TokenKind } from './Token/TokenKind';
 
 export abstract class ParserBase {
@@ -677,18 +677,14 @@ export abstract class ParserBase {
                 break;
             }
             default: {
-                // Create a ModulePath only if necessary.
-                if (identifierOrModulePathStart.kind !== TokenKind.Identifier ||
-                    this.getToken().kind === TokenKind.Period) {
-                    this.position--;
-                    typeReference.modulePath = this.parseModulePath(typeReference);
-
-                    const modulePathChildren = typeReference.modulePath.children;
-                    // TODO: This is type unsafe.
-                    typeReference.identifier = modulePathChildren.pop() as typeof typeReference.identifier;
-                    typeReference.scopeMemberAccessOperator = modulePathChildren.pop() as typeof typeReference.scopeMemberAccessOperator;
-                } else {
+                if (identifierOrModulePathStart.kind === TokenKind.Identifier &&
+                    !this.isModulePathChildStart(this.getToken())) {
                     typeReference.identifier = identifierOrModulePathStart;
+                } else {
+                    typeReference.modulePath = this.parseModulePath(typeReference, identifierOrModulePathStart);
+                    typeReference.identifier = typeReference.modulePath.name!;
+                    typeReference.scopeMemberAccessOperator = typeReference.modulePath.scopeMemberAccessOperator;
+                    this.setModulePathProperties(typeReference.modulePath);
                 }
 
                 // Generic type arguments
@@ -719,39 +715,68 @@ export abstract class ParserBase {
         return typeReference;
     }
 
-    protected parseModulePath(parent: Nodes): ModulePath {
+    protected parseModulePath(parent: Nodes, firstChild: IdentifierToken | PeriodToken): ModulePath {
         const modulePath = new ModulePath();
         modulePath.parent = parent;
-
-        // TODO: Should probably use parseList and be less strict.
-        let lastTokenKind: TokenKind | undefined;
-        while (true) {
-            const token = this.getToken();
-            if (token.kind === TokenKind.Identifier) {
-                if (lastTokenKind !== undefined &&
-                    lastTokenKind !== TokenKind.Period) {
-                    console.error(`Did not expect ${JSON.stringify(token.kind)} to follow ${JSON.stringify(lastTokenKind)}`);
-                    break;
-                }
-
-                modulePath.children.push(token);
-                this.advanceToken();
-            } else if (token.kind === TokenKind.Period) {
-                if (lastTokenKind !== undefined &&
-                    lastTokenKind !== TokenKind.Identifier) {
-                    console.error(`Did not expect ${JSON.stringify(token.kind)} to follow ${JSON.stringify(lastTokenKind)}`);
-                    break;
-                }
-
-                modulePath.children.push(token);
-                this.advanceToken();
-            } else {
-                break;
-            }
-        }
+        modulePath.children = this.parseList(modulePath, modulePath.kind);
+        modulePath.children.unshift(firstChild);
+        this.setModulePathProperties(modulePath);
 
         return modulePath;
     }
+
+    private setModulePathProperties(modulePath: ModulePath) {
+        let lastChild = modulePath.children[modulePath.children.length - 1];
+        if (!lastChild) {
+            modulePath.name = null;
+        } else if (lastChild.kind === TokenKind.Identifier) {
+            modulePath.children.pop();
+            modulePath.name = lastChild;
+        }
+
+        lastChild = modulePath.children[modulePath.children.length - 1];
+        if (!lastChild) {
+            modulePath.scopeMemberAccessOperator = null;
+        } else if (lastChild.kind === TokenKind.Period) {
+            modulePath.children.pop();
+            modulePath.scopeMemberAccessOperator = lastChild;
+        } else {
+            modulePath.scopeMemberAccessOperator = new MissingToken(lastChild.fullStart, TokenKind.Period);
+        }
+    }
+
+    // #region Module path
+
+    private isModulePathTerminator(token: Tokens): boolean {
+        return !this.isModulePathChildStart(token);
+    }
+
+    protected isModulePathChildStart(token: Tokens): token is IdentifierToken | PeriodToken {
+        switch (token.kind) {
+            case TokenKind.Identifier:
+            case TokenKind.Period: {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    protected parseModulePathChild() {
+        const token = this.getToken();
+        switch (token.kind) {
+            case TokenKind.Identifier:
+            case TokenKind.Period: {
+                this.advanceToken();
+
+                return token;
+            }
+        }
+
+        throw new Error(`Unexpected token: ${JSON.stringify(token.kind)}`);
+    }
+
+    // #endregion
 
     protected parseArrayTypeDeclaration(parent: Nodes, openingSquareBracket: OpeningSquareBracketToken): ArrayTypeDeclaration {
         const arrayTypeDeclaration = new ArrayTypeDeclaration();
@@ -924,6 +949,9 @@ export abstract class ParserBase {
             case NodeKind.StringLiteral: {
                 return this.isStringLiteralChildListTerminator(token);
             }
+            case NodeKind.ModulePath: {
+                return this.isModulePathTerminator(token);
+            }
             case ParseContextKind.TypeReferenceSequence: {
                 return this.isTypeReferenceSequenceTerminator(token);
             }
@@ -942,6 +970,9 @@ export abstract class ParserBase {
             case NodeKind.StringLiteral: {
                 return this.isStringLiteralChildStart(token);
             }
+            case NodeKind.ModulePath: {
+                return this.isModulePathChildStart(token);
+            }
             case ParseContextKind.TypeReferenceSequence: {
                 return this.isTypeReferenceSequenceMemberStart(token);
             }
@@ -959,6 +990,9 @@ export abstract class ParserBase {
         switch (parseContext) {
             case NodeKind.StringLiteral: {
                 return this.parseStringLiteralChild(parent);
+            }
+            case NodeKind.ModulePath: {
+                return this.parseModulePathChild();
             }
             case ParseContextKind.TypeReferenceSequence: {
                 return this.parseTypeReferenceSequenceMember(parent);
@@ -1122,6 +1156,7 @@ export enum ParseContextKind {
 
 export interface ParseContextElementMapBase {
     [NodeKind.StringLiteral]: ReturnType<ParserBase['parseStringLiteralChild']>;
+    [NodeKind.ModulePath]: ReturnType<ParserBase['parseModulePathChild']>;
     [ParseContextKind.TypeReferenceSequence]: ReturnType<ParserBase['parseTypeReferenceSequenceMember']>;
     [ParseContextKind.ExpressionSequence]: ReturnType<ParserBase['parseExpressionSequenceMember']>;
 }

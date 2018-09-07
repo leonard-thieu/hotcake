@@ -20,8 +20,8 @@ export class TypeReference extends Node {
     readonly kind = NodeKind.TypeReference;
 
     modulePath: ModulePath | null = null;
-    scopeMemberAccessOperator: PeriodToken | null = null;
-    identifier: TypeReferenceIdentifierToken;
+    scopeMemberAccessOperator: MissableToken<PeriodToken> | null = null;
+    identifier: TypeReferenceIdentifierToken | MissableToken<IdentifierToken>;
 
     // Generic type arguments
     lessThanSign: LessThanSignToken | null = null;
