@@ -60,4 +60,12 @@ export class ElseStatement extends Statement {
 
     elseKeyword: ElseKeywordToken;
     statements: ParseContextElementArray<ElseStatement['kind']>;
+
+    get isSingleLine() {
+        if (this.parent && this.parent.kind === NodeKind.IfStatement) {
+            return this.parent.isSingleLine;
+        }
+
+        return false;
+    }
 }

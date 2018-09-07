@@ -996,7 +996,7 @@ export class Parser extends ParserBase {
         switch (name.kind) {
             case TokenKind.Identifier: {
                 this.advanceToken();
-    
+
                 return this.parseDataDeclaration(parent, name);
             }
         }
@@ -1145,19 +1145,24 @@ export class Parser extends ParserBase {
 
     private isInlineStatement(statement: Statement): boolean {
         let parent = statement.parent!;
-        let ifStatement: IfStatement | undefined = undefined;
 
-        if (parent.kind === NodeKind.IfStatement) {
-            ifStatement = parent;
-        } else if (parent.kind === NodeKind.ElseStatement) {
-            parent = parent.parent!;
-            if (parent.kind === NodeKind.IfStatement) {
-                ifStatement = parent;
+        switch (parent.kind) {
+            case NodeKind.IfStatement:
+            case NodeKind.ElseStatement: {
+                return parent.isSingleLine;
+            }
+            case NodeKind.ForLoop: {
+                // Check if this statement is the header.
+                const currentParseContext = this.parseContexts[this.parseContexts.length - 1];
+
+                return currentParseContext !== NodeKind.ForLoop;
+            }
+            case NodeKind.NumericForLoopHeader: {
+                return true;
             }
         }
 
-        return ifStatement !== undefined &&
-            ifStatement.isSingleLine;
+        return false;
     }
 
     // #endregion
