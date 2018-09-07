@@ -1,6 +1,6 @@
 import { Node } from '../Node';
 import { AccessibilityDirective } from './AccessibilityDirective';
-import { AliasDirective } from './AliasDirective';
+import { AliasDirective, AliasDirectiveSequence } from './AliasDirectiveSequence';
 import { ClassDeclaration } from './ClassDeclaration';
 import { ClassMethodDeclaration } from './ClassMethodDeclaration';
 import { DataDeclaration } from './DataDeclaration';
@@ -22,7 +22,7 @@ export abstract class Declaration extends Node {
 
 export type Declarations =
     AccessibilityDirective |
-    AliasDirective |
+    AliasDirectiveSequence | AliasDirective |
     ClassDeclaration |
     ClassMethodDeclaration |
     DataDeclaration |

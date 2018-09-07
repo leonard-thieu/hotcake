@@ -1,5 +1,5 @@
 import { AccessibilityDirective, AccessibilityKeywordToken } from './Node/Declaration/AccessibilityDirective';
-import { AliasDirective } from './Node/Declaration/AliasDirective';
+import { AliasDirectiveSequence, AliasDirective } from './Node/Declaration/AliasDirectiveSequence';
 import { ClassDeclaration } from './Node/Declaration/ClassDeclaration';
 import { ClassMethodDeclaration } from './Node/Declaration/ClassMethodDeclaration';
 import { DataDeclaration, MissableDataDeclaration } from './Node/Declaration/DataDeclaration';
@@ -112,7 +112,7 @@ export class Parser extends ParserBase {
             case TokenKind.AliasKeyword: {
                 this.advanceToken();
 
-                return this.parseAliasDirective(parent, token);
+                return this.parseAliasDirectiveSequence(parent, token);
             }
             case TokenKind.ConstKeyword:
             case TokenKind.GlobalKeyword: {
@@ -179,19 +179,13 @@ export class Parser extends ParserBase {
         return friendDirective;
     }
 
-    private parseAliasDirective(parent: Nodes, aliasKeyword: AliasKeywordToken): AliasDirective {
-        /**
-         * TODO: Comma separated aliases allowed?
-         * TODO: Explicit data type declaration allowed?
-         */
-        const aliasDirective = new AliasDirective();
-        aliasDirective.parent = parent;
-        aliasDirective.aliasKeyword = aliasKeyword;
-        aliasDirective.name = this.eat(TokenKind.Identifier);
-        aliasDirective.equalsSign = this.eat(TokenKind.EqualsSign);
-        aliasDirective.target = this.parseMissableTypeReference(aliasDirective);
+    private parseAliasDirectiveSequence(parent: Nodes, aliasKeyword: AliasKeywordToken): AliasDirectiveSequence {
+        const aliasDirectiveSequence = new AliasDirectiveSequence();
+        aliasDirectiveSequence.parent = parent;
+        aliasDirectiveSequence.aliasKeyword = aliasKeyword;
+        aliasDirectiveSequence.children = this.parseList(aliasDirectiveSequence, aliasDirectiveSequence.kind);
 
-        return aliasDirective;
+        return aliasDirectiveSequence;
     }
 
     private parseInterfaceDeclaration(parent: Nodes, interfaceKeyword: InterfaceKeywordToken): InterfaceDeclaration {
@@ -242,6 +236,53 @@ export class Parser extends ParserBase {
         classDeclaration.endClassKeyword = this.eatOptional(TokenKind.ClassKeyword);
 
         return classDeclaration;
+    }
+
+    // #endregion
+
+    // #region Alias directive members
+
+    private isAliasDirectiveSequenceTerminator(token: Tokens): boolean {
+        return !this.isAliasDirectiveSequenceMemberStart(token);
+    }
+
+    private isAliasDirectiveSequenceMemberStart(token: Tokens): boolean {
+        switch (token.kind) {
+            case TokenKind.Identifier:
+            case TokenKind.Comma: {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    private parseAliasDirectiveSequenceMember(parent: Nodes) {
+        const token = this.getToken();
+        switch (token.kind) {
+            case TokenKind.Identifier: {
+                this.advanceToken();
+
+                return this.parseAliasDirective(parent, token);
+            }
+            case TokenKind.Comma: {
+                this.advanceToken();
+
+                return this.parseCommaSeparator(parent, token);
+            }
+        }
+
+        throw new Error(`Unexpected token: ${JSON.stringify(token.kind)}`);
+    }
+
+    private parseAliasDirective(parent: Nodes, name: IdentifierToken) {
+        const aliasDirective = new AliasDirective();
+        aliasDirective.parent = parent;
+        aliasDirective.name = name;
+        aliasDirective.equalsSign = this.eat(TokenKind.EqualsSign);
+        aliasDirective.target = this.parseMissableTypeReference(aliasDirective);
+
+        return aliasDirective;
     }
 
     // #endregion
@@ -1224,6 +1265,9 @@ export class Parser extends ParserBase {
             case NodeKind.CatchStatement: {
                 return this.isTryStatementStatementsListTerminator(token);
             }
+            case NodeKind.AliasDirectiveSequence: {
+                return this.isAliasDirectiveSequenceTerminator(token);
+            }
             case ParseContextKind.DataDeclarationSequence: {
                 return this.isDataDeclarationSequenceTerminator(token);
             }
@@ -1262,6 +1306,9 @@ export class Parser extends ParserBase {
             case NodeKind.CatchStatement: {
                 return this.isStatementStart(token);
             }
+            case NodeKind.AliasDirectiveSequence: {
+                return this.isAliasDirectiveSequenceMemberStart(token);
+            }
             case ParseContextKind.DataDeclarationSequence: {
                 return this.isDataDeclarationSequenceMemberStart(token);
             }
@@ -1299,6 +1346,9 @@ export class Parser extends ParserBase {
             case NodeKind.TryStatement:
             case NodeKind.CatchStatement: {
                 return this.parseStatement(parent);
+            }
+            case NodeKind.AliasDirectiveSequence: {
+                return this.parseAliasDirectiveSequenceMember(parent);
             }
             case ParseContextKind.DataDeclarationSequence: {
                 return this.parseDataDeclarationSequenceMember(parent);
@@ -1356,6 +1406,7 @@ interface ParserParseContextElementMap extends ParseContextElementMapBase {
     [NodeKind.TryStatement]: ReturnType<Parser['parseStatement']>;
     [NodeKind.CatchStatement]: ReturnType<Parser['parseStatement']>;
     [NodeKind.FunctionDeclaration]: ReturnType<Parser['parseStatement']>;
+    [NodeKind.AliasDirectiveSequence]: ReturnType<Parser['parseAliasDirectiveSequenceMember']>;
     [ParseContextKind.DataDeclarationSequence]: ReturnType<Parser['parseDataDeclarationSequenceMember']>;
     [ParseContextKind.TypeParameterSequence]: ReturnType<Parser['parseTypeParameterSequenceMember']>;
 }

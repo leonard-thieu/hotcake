@@ -16,6 +16,7 @@ export enum NodeKind {
     ImportStatement = 'ImportStatement',
     FriendDirective = 'FriendDirective',
     AccessibilityDirective = 'AccessibilityDirective',
+    AliasDirectiveSequence = 'AliasDirectiveSequence',
     AliasDirective = 'AliasDirective',
     FunctionDeclaration = 'FunctionDeclaration',
     InterfaceDeclaration = 'InterfaceDeclaration',
