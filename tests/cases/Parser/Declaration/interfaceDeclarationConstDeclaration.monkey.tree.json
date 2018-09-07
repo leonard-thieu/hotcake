@@ -25,7 +25,7 @@
                     "length": 2
                 },
                 {
-                    "kind": "DataDeclarationList",
+                    "kind": "DataDeclarationSequence",
                     "dataDeclarationKeyword": {
                         "kind": "ConstKeyword",
                         "fullStart": 20,

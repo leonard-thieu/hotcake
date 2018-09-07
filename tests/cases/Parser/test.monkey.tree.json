@@ -391,7 +391,7 @@
             "length": 2
         },
         {
-            "kind": "DataDeclarationList",
+            "kind": "DataDeclarationSequence",
             "dataDeclarationKeyword": {
                 "kind": "ConstKeyword",
                 "fullStart": 1054,
@@ -458,7 +458,7 @@
             "length": 38
         },
         {
-            "kind": "DataDeclarationList",
+            "kind": "DataDeclarationSequence",
             "dataDeclarationKeyword": {
                 "kind": "ConstKeyword",
                 "fullStart": 1110,
@@ -525,7 +525,7 @@
             "length": 31
         },
         {
-            "kind": "DataDeclarationList",
+            "kind": "DataDeclarationSequence",
             "dataDeclarationKeyword": {
                 "kind": "ConstKeyword",
                 "fullStart": 1167,
@@ -569,7 +569,7 @@
             "length": 28
         },
         {
-            "kind": "DataDeclarationList",
+            "kind": "DataDeclarationSequence",
             "dataDeclarationKeyword": {
                 "kind": "ConstKeyword",
                 "fullStart": 1209,
@@ -613,7 +613,7 @@
             "length": 31
         },
         {
-            "kind": "DataDeclarationList",
+            "kind": "DataDeclarationSequence",
             "dataDeclarationKeyword": {
                 "kind": "ConstKeyword",
                 "fullStart": 1253,
@@ -700,7 +700,7 @@
             "length": 2
         },
         {
-            "kind": "DataDeclarationList",
+            "kind": "DataDeclarationSequence",
             "dataDeclarationKeyword": {
                 "kind": "GlobalKeyword",
                 "fullStart": 1308,
@@ -767,7 +767,7 @@
             "length": 37
         },
         {
-            "kind": "DataDeclarationList",
+            "kind": "DataDeclarationSequence",
             "dataDeclarationKeyword": {
                 "kind": "GlobalKeyword",
                 "fullStart": 1364,
@@ -834,7 +834,7 @@
             "length": 32
         },
         {
-            "kind": "DataDeclarationList",
+            "kind": "DataDeclarationSequence",
             "dataDeclarationKeyword": {
                 "kind": "GlobalKeyword",
                 "fullStart": 1421,
@@ -878,7 +878,7 @@
             "length": 27
         },
         {
-            "kind": "DataDeclarationList",
+            "kind": "DataDeclarationSequence",
             "dataDeclarationKeyword": {
                 "kind": "GlobalKeyword",
                 "fullStart": 1463,
@@ -922,7 +922,7 @@
             "length": 30
         },
         {
-            "kind": "DataDeclarationList",
+            "kind": "DataDeclarationSequence",
             "dataDeclarationKeyword": {
                 "kind": "GlobalKeyword",
                 "fullStart": 1507,
@@ -1003,7 +1003,7 @@
             "length": 34
         },
         {
-            "kind": "DataDeclarationList",
+            "kind": "DataDeclarationSequence",
             "dataDeclarationKeyword": {
                 "kind": "GlobalKeyword",
                 "fullStart": 1560,
@@ -1056,7 +1056,7 @@
             "length": 54
         },
         {
-            "kind": "DataDeclarationList",
+            "kind": "DataDeclarationSequence",
             "dataDeclarationKeyword": {
                 "kind": "GlobalKeyword",
                 "fullStart": 1631,
@@ -1092,7 +1092,7 @@
             "length": 2
         },
         {
-            "kind": "DataDeclarationList",
+            "kind": "DataDeclarationSequence",
             "dataDeclarationKeyword": {
                 "kind": "GlobalKeyword",
                 "fullStart": 1692,
@@ -2047,7 +2047,7 @@
                     "length": 47
                 },
                 {
-                    "kind": "DataDeclarationList",
+                    "kind": "DataDeclarationSequence",
                     "dataDeclarationKeyword": {
                         "kind": "ConstKeyword",
                         "fullStart": 2469,
@@ -2227,7 +2227,7 @@
                     "length": 48
                 },
                 {
-                    "kind": "DataDeclarationList",
+                    "kind": "DataDeclarationSequence",
                     "dataDeclarationKeyword": {
                         "kind": "ConstKeyword",
                         "fullStart": 2642,
@@ -2508,7 +2508,7 @@
                     "length": 24
                 },
                 {
-                    "kind": "DataDeclarationList",
+                    "kind": "DataDeclarationSequence",
                     "dataDeclarationKeyword": {
                         "kind": "FieldKeyword",
                         "fullStart": 2864,
@@ -2538,7 +2538,7 @@
                     "length": 31
                 },
                 {
-                    "kind": "DataDeclarationList",
+                    "kind": "DataDeclarationSequence",
                     "dataDeclarationKeyword": {
                         "kind": "FieldKeyword",
                         "fullStart": 2906,
@@ -2582,7 +2582,7 @@
                     "length": 40
                 },
                 {
-                    "kind": "DataDeclarationList",
+                    "kind": "DataDeclarationSequence",
                     "dataDeclarationKeyword": {
                         "kind": "FieldKeyword",
                         "fullStart": 2962,
@@ -2635,7 +2635,7 @@
                     "length": 30
                 },
                 {
-                    "kind": "DataDeclarationList",
+                    "kind": "DataDeclarationSequence",
                     "dataDeclarationKeyword": {
                         "kind": "FieldKeyword",
                         "fullStart": 3010,
@@ -2724,7 +2724,7 @@
                     "length": 26
                 },
                 {
-                    "kind": "DataDeclarationList",
+                    "kind": "DataDeclarationSequence",
                     "dataDeclarationKeyword": {
                         "kind": "FieldKeyword",
                         "fullStart": 3112,
@@ -2790,7 +2790,7 @@
                     "length": 26
                 },
                 {
-                    "kind": "DataDeclarationList",
+                    "kind": "DataDeclarationSequence",
                     "dataDeclarationKeyword": {
                         "kind": "FieldKeyword",
                         "fullStart": 3206,
@@ -2888,7 +2888,7 @@
                     "length": 26
                 },
                 {
-                    "kind": "DataDeclarationList",
+                    "kind": "DataDeclarationSequence",
                     "dataDeclarationKeyword": {
                         "kind": "FieldKeyword",
                         "fullStart": 3308,
@@ -3398,7 +3398,7 @@
                     "length": 2
                 },
                 {
-                    "kind": "DataDeclarationList",
+                    "kind": "DataDeclarationSequence",
                     "dataDeclarationKeyword": {
                         "kind": "FieldKeyword",
                         "fullStart": 3757,
@@ -6570,9 +6570,9 @@
                     }
                 },
                 {
-                    "kind": "LocalDeclarationListStatement",
-                    "localDeclarationList": {
-                        "kind": "DataDeclarationList",
+                    "kind": "LocalDataDeclarationSequenceStatement",
+                    "localDataDeclarationSequence": {
+                        "kind": "DataDeclarationSequence",
                         "dataDeclarationKeyword": {
                             "kind": "LocalKeyword",
                             "fullStart": 6791,

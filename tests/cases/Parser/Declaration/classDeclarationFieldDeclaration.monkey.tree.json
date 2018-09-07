@@ -31,7 +31,7 @@
                     "length": 2
                 },
                 {
-                    "kind": "DataDeclarationList",
+                    "kind": "DataDeclarationSequence",
                     "dataDeclarationKeyword": {
                         "kind": "FieldKeyword",
                         "fullStart": 13,
