@@ -73,7 +73,7 @@
                             "kind": "ExpressionStatement",
                             "expression": {
                                 "kind": "SuperExpression",
-                                "newlines": null,
+                                "newlines": [],
                                 "superKeyword": {
                                     "kind": "SuperKeyword",
                                     "fullStart": 32,

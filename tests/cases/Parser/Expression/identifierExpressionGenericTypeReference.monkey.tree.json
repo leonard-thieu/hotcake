@@ -43,7 +43,7 @@
                     "kind": "ExpressionStatement",
                     "expression": {
                         "kind": "ScopeMemberAccessExpression",
-                        "newlines": null,
+                        "newlines": [],
                         "scopableExpression": {
                             "kind": "IdentifierExpression",
                             "newlines": null,
@@ -92,7 +92,7 @@
                         },
                         "member": {
                             "kind": "InvokeExpression",
-                            "newlines": null,
+                            "newlines": [],
                             "invokableExpression": {
                                 "kind": "IdentifierExpression",
                                 "newlines": null,
@@ -116,7 +116,7 @@
                             "arguments": [
                                 {
                                     "kind": "IdentifierExpression",
-                                    "newlines": null,
+                                    "newlines": [],
                                     "globalScopeMemberAccessOperator": null,
                                     "name": {
                                         "kind": "Identifier",
@@ -143,7 +143,7 @@
                                     "newlines": null,
                                     "leftOperand": {
                                         "kind": "IdentifierExpression",
-                                        "newlines": null,
+                                        "newlines": [],
                                         "globalScopeMemberAccessOperator": null,
                                         "name": {
                                             "kind": "Identifier",
@@ -163,7 +163,7 @@
                                     },
                                     "rightOperand": {
                                         "kind": "IntegerLiteral",
-                                        "newlines": null,
+                                        "newlines": [],
                                         "value": {
                                             "kind": "IntegerLiteral",
                                             "fullStart": 67,

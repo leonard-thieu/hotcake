@@ -78,7 +78,7 @@
                                         "eachInKeyword": null,
                                         "expression": {
                                             "kind": "IntegerLiteral",
-                                            "newlines": null,
+                                            "newlines": [],
                                             "value": {
                                                 "kind": "IntegerLiteral",
                                                 "fullStart": 35,
@@ -99,7 +99,7 @@
                         },
                         "lastValueExpression": {
                             "kind": "IntegerLiteral",
-                            "newlines": null,
+                            "newlines": [],
                             "value": {
                                 "kind": "IntegerLiteral",
                                 "fullStart": 43,

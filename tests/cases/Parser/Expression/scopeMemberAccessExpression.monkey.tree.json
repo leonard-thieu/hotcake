@@ -49,7 +49,7 @@
                     },
                     "expression": {
                         "kind": "ScopeMemberAccessExpression",
-                        "newlines": null,
+                        "newlines": [],
                         "scopableExpression": {
                             "kind": "IdentifierExpression",
                             "newlines": null,
@@ -72,7 +72,7 @@
                         },
                         "member": {
                             "kind": "IdentifierExpression",
-                            "newlines": null,
+                            "newlines": [],
                             "globalScopeMemberAccessOperator": null,
                             "name": {
                                 "kind": "Identifier",

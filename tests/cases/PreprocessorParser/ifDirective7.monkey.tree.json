@@ -14,7 +14,7 @@
                 "newlines": null,
                 "leftOperand": {
                     "kind": "IdentifierExpression",
-                    "newlines": null,
+                    "newlines": [],
                     "globalScopeMemberAccessOperator": null,
                     "name": {
                         "kind": "Identifier",
@@ -34,7 +34,7 @@
                 },
                 "rightOperand": {
                     "kind": "StringLiteral",
-                    "newlines": null,
+                    "newlines": [],
                     "startQuote": {
                         "kind": "QuotationMark",
                         "fullStart": 12,
@@ -121,7 +121,7 @@
                         "newlines": null,
                         "leftOperand": {
                             "kind": "IdentifierExpression",
-                            "newlines": null,
+                            "newlines": [],
                             "globalScopeMemberAccessOperator": null,
                             "name": {
                                 "kind": "Identifier",
@@ -141,7 +141,7 @@
                         },
                         "rightOperand": {
                             "kind": "StringLiteral",
-                            "newlines": null,
+                            "newlines": [],
                             "startQuote": {
                                 "kind": "QuotationMark",
                                 "fullStart": 75,
@@ -226,7 +226,7 @@
                                 "newlines": null,
                                 "leftOperand": {
                                     "kind": "IntegerLiteral",
-                                    "newlines": null,
+                                    "newlines": [],
                                     "value": {
                                         "kind": "IntegerLiteral",
                                         "fullStart": 139,
@@ -242,7 +242,7 @@
                                 },
                                 "rightOperand": {
                                     "kind": "IdentifierExpression",
-                                    "newlines": null,
+                                    "newlines": [],
                                     "globalScopeMemberAccessOperator": null,
                                     "name": {
                                         "kind": "Identifier",
@@ -278,7 +278,7 @@
                                     },
                                     "expression": {
                                         "kind": "StringLiteral",
-                                        "newlines": null,
+                                        "newlines": [],
                                         "startQuote": {
                                             "kind": "QuotationMark",
                                             "fullStart": 173,
@@ -350,7 +350,7 @@
                         "newlines": null,
                         "leftOperand": {
                             "kind": "IdentifierExpression",
-                            "newlines": null,
+                            "newlines": [],
                             "globalScopeMemberAccessOperator": null,
                             "name": {
                                 "kind": "Identifier",
@@ -370,7 +370,7 @@
                         },
                         "rightOperand": {
                             "kind": "StringLiteral",
-                            "newlines": null,
+                            "newlines": [],
                             "startQuote": {
                                 "kind": "QuotationMark",
                                 "fullStart": 220,

@@ -43,7 +43,7 @@
                     "kind": "ExpressionStatement",
                     "expression": {
                         "kind": "SliceExpression",
-                        "newlines": null,
+                        "newlines": [],
                         "sliceableExpression": {
                             "kind": "IdentifierExpression",
                             "newlines": null,
@@ -69,7 +69,7 @@
                             "newlines": null,
                             "leftOperand": {
                                 "kind": "IdentifierExpression",
-                                "newlines": null,
+                                "newlines": [],
                                 "globalScopeMemberAccessOperator": null,
                                 "name": {
                                     "kind": "Identifier",
@@ -89,7 +89,7 @@
                             },
                             "rightOperand": {
                                 "kind": "IntegerLiteral",
-                                "newlines": null,
+                                "newlines": [],
                                 "value": {
                                     "kind": "IntegerLiteral",
                                     "fullStart": 28,
@@ -109,7 +109,7 @@
                             "newlines": null,
                             "leftOperand": {
                                 "kind": "IdentifierExpression",
-                                "newlines": null,
+                                "newlines": [],
                                 "globalScopeMemberAccessOperator": null,
                                 "name": {
                                     "kind": "Identifier",
@@ -129,7 +129,7 @@
                             },
                             "rightOperand": {
                                 "kind": "IntegerLiteral",
-                                "newlines": null,
+                                "newlines": [],
                                 "value": {
                                     "kind": "IntegerLiteral",
                                     "fullStart": 33,

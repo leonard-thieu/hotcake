@@ -43,7 +43,7 @@
                     "kind": "ExpressionStatement",
                     "expression": {
                         "kind": "InvokeExpression",
-                        "newlines": null,
+                        "newlines": [],
                         "invokableExpression": {
                             "kind": "IdentifierExpression",
                             "newlines": null,
@@ -62,7 +62,7 @@
                         "arguments": [
                             {
                                 "kind": "SliceExpression",
-                                "newlines": null,
+                                "newlines": [],
                                 "sliceableExpression": {
                                     "kind": "StringLiteral",
                                     "newlines": null,
@@ -95,7 +95,7 @@
                                 },
                                 "startExpression": {
                                     "kind": "IntegerLiteral",
-                                    "newlines": null,
+                                    "newlines": [],
                                     "value": {
                                         "kind": "IntegerLiteral",
                                         "fullStart": 41,
@@ -111,7 +111,7 @@
                                 },
                                 "endExpression": {
                                     "kind": "IntegerLiteral",
-                                    "newlines": null,
+                                    "newlines": [],
                                     "value": {
                                         "kind": "IntegerLiteral",
                                         "fullStart": 44,
@@ -149,7 +149,7 @@
                     "kind": "ExpressionStatement",
                     "expression": {
                         "kind": "InvokeExpression",
-                        "newlines": null,
+                        "newlines": [],
                         "invokableExpression": {
                             "kind": "IdentifierExpression",
                             "newlines": null,
@@ -168,7 +168,7 @@
                         "arguments": [
                             {
                                 "kind": "SliceExpression",
-                                "newlines": null,
+                                "newlines": [],
                                 "sliceableExpression": {
                                     "kind": "StringLiteral",
                                     "newlines": null,
@@ -208,7 +208,7 @@
                                 },
                                 "endExpression": {
                                     "kind": "IntegerLiteral",
-                                    "newlines": null,
+                                    "newlines": [],
                                     "value": {
                                         "kind": "IntegerLiteral",
                                         "fullStart": 92,
@@ -246,7 +246,7 @@
                     "kind": "ExpressionStatement",
                     "expression": {
                         "kind": "InvokeExpression",
-                        "newlines": null,
+                        "newlines": [],
                         "invokableExpression": {
                             "kind": "IdentifierExpression",
                             "newlines": null,
@@ -265,7 +265,7 @@
                         "arguments": [
                             {
                                 "kind": "SliceExpression",
-                                "newlines": null,
+                                "newlines": [],
                                 "sliceableExpression": {
                                     "kind": "StringLiteral",
                                     "newlines": null,
@@ -298,7 +298,7 @@
                                 },
                                 "startExpression": {
                                     "kind": "IntegerLiteral",
-                                    "newlines": null,
+                                    "newlines": [],
                                     "value": {
                                         "kind": "IntegerLiteral",
                                         "fullStart": 141,
@@ -343,7 +343,7 @@
                     "kind": "ExpressionStatement",
                     "expression": {
                         "kind": "InvokeExpression",
-                        "newlines": null,
+                        "newlines": [],
                         "invokableExpression": {
                             "kind": "IdentifierExpression",
                             "newlines": null,
@@ -362,7 +362,7 @@
                         "arguments": [
                             {
                                 "kind": "SliceExpression",
-                                "newlines": null,
+                                "newlines": [],
                                 "sliceableExpression": {
                                     "kind": "StringLiteral",
                                     "newlines": null,

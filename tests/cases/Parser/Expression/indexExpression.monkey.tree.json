@@ -49,7 +49,7 @@
                     },
                     "expression": {
                         "kind": "IndexExpression",
-                        "newlines": null,
+                        "newlines": [],
                         "indexableExpression": {
                             "kind": "IdentifierExpression",
                             "newlines": null,
@@ -72,7 +72,7 @@
                         },
                         "indexExpressionExpression": {
                             "kind": "IntegerLiteral",
-                            "newlines": null,
+                            "newlines": [],
                             "value": {
                                 "kind": "IntegerLiteral",
                                 "fullStart": 28,

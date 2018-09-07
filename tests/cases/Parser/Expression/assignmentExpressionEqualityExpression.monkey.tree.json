@@ -124,7 +124,7 @@
                                 "eachInKeyword": null,
                                 "expression": {
                                     "kind": "IntegerLiteral",
-                                    "newlines": null,
+                                    "newlines": [],
                                     "value": {
                                         "kind": "IntegerLiteral",
                                         "fullStart": 49,
@@ -149,7 +149,7 @@
                         "newlines": null,
                         "leftOperand": {
                             "kind": "IdentifierExpression",
-                            "newlines": null,
+                            "newlines": [],
                             "globalScopeMemberAccessOperator": null,
                             "name": {
                                 "kind": "Identifier",
@@ -173,7 +173,7 @@
                             "newlines": null,
                             "leftOperand": {
                                 "kind": "IntegerLiteral",
-                                "newlines": null,
+                                "newlines": [],
                                 "value": {
                                     "kind": "IntegerLiteral",
                                     "fullStart": 60,
@@ -189,7 +189,7 @@
                             },
                             "rightOperand": {
                                 "kind": "IdentifierExpression",
-                                "newlines": null,
+                                "newlines": [],
                                 "globalScopeMemberAccessOperator": null,
                                 "name": {
                                     "kind": "Identifier",

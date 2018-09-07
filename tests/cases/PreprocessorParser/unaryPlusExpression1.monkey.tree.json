@@ -11,7 +11,7 @@
             },
             "expression": {
                 "kind": "UnaryOpExpression",
-                "newlines": null,
+                "newlines": [],
                 "operator": {
                     "kind": "PlusSign",
                     "fullStart": 3,
@@ -20,7 +20,7 @@
                 },
                 "operand": {
                     "kind": "IntegerLiteral",
-                    "newlines": null,
+                    "newlines": [],
                     "value": {
                         "kind": "IntegerLiteral",
                         "fullStart": 5,

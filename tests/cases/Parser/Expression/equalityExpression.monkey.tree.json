@@ -43,7 +43,7 @@
                     "kind": "ExpressionStatement",
                     "expression": {
                         "kind": "InvokeExpression",
-                        "newlines": null,
+                        "newlines": [],
                         "invokableExpression": {
                             "kind": "IdentifierExpression",
                             "newlines": null,
@@ -65,7 +65,7 @@
                                 "newlines": null,
                                 "leftOperand": {
                                     "kind": "IntegerLiteral",
-                                    "newlines": null,
+                                    "newlines": [],
                                     "value": {
                                         "kind": "IntegerLiteral",
                                         "fullStart": 26,
@@ -81,7 +81,7 @@
                                 },
                                 "rightOperand": {
                                     "kind": "IntegerLiteral",
-                                    "newlines": null,
+                                    "newlines": [],
                                     "value": {
                                         "kind": "IntegerLiteral",
                                         "fullStart": 30,

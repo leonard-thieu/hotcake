@@ -14,7 +14,7 @@
                 "newlines": null,
                 "leftOperand": {
                     "kind": "IdentifierExpression",
-                    "newlines": null,
+                    "newlines": [],
                     "globalScopeMemberAccessOperator": null,
                     "name": {
                         "kind": "Identifier",
@@ -34,7 +34,7 @@
                 },
                 "rightOperand": {
                     "kind": "StringLiteral",
-                    "newlines": null,
+                    "newlines": [],
                     "startQuote": {
                         "kind": "QuotationMark",
                         "fullStart": 12,
@@ -121,7 +121,7 @@
                         "newlines": null,
                         "leftOperand": {
                             "kind": "IdentifierExpression",
-                            "newlines": null,
+                            "newlines": [],
                             "globalScopeMemberAccessOperator": null,
                             "name": {
                                 "kind": "Identifier",
@@ -141,7 +141,7 @@
                         },
                         "rightOperand": {
                             "kind": "StringLiteral",
-                            "newlines": null,
+                            "newlines": [],
                             "startQuote": {
                                 "kind": "QuotationMark",
                                 "fullStart": 75,
@@ -228,7 +228,7 @@
                         "newlines": null,
                         "leftOperand": {
                             "kind": "IdentifierExpression",
-                            "newlines": null,
+                            "newlines": [],
                             "globalScopeMemberAccessOperator": null,
                             "name": {
                                 "kind": "Identifier",
@@ -248,7 +248,7 @@
                         },
                         "rightOperand": {
                             "kind": "StringLiteral",
-                            "newlines": null,
+                            "newlines": [],
                             "startQuote": {
                                 "kind": "QuotationMark",
                                 "fullStart": 146,

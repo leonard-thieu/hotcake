@@ -216,7 +216,7 @@
                                         "eachInKeyword": null,
                                         "expression": {
                                             "kind": "IntegerLiteral",
-                                            "newlines": null,
+                                            "newlines": [],
                                             "value": {
                                                 "kind": "IntegerLiteral",
                                                 "fullStart": 106,
@@ -237,7 +237,7 @@
                         },
                         "lastValueExpression": {
                             "kind": "IntegerLiteral",
-                            "newlines": null,
+                            "newlines": [],
                             "value": {
                                 "kind": "IntegerLiteral",
                                 "fullStart": 110,
@@ -286,7 +286,7 @@
                                     },
                                     "expression": {
                                         "kind": "GroupingExpression",
-                                        "newlines": null,
+                                        "newlines": [],
                                         "openingParenthesis": {
                                             "kind": "OpeningParenthesis",
                                             "fullStart": 142,
@@ -298,7 +298,7 @@
                                             "newlines": null,
                                             "leftOperand": {
                                                 "kind": "IdentifierExpression",
-                                                "newlines": null,
+                                                "newlines": [],
                                                 "globalScopeMemberAccessOperator": null,
                                                 "name": {
                                                     "kind": "Identifier",
@@ -318,7 +318,7 @@
                                             },
                                             "rightOperand": {
                                                 "kind": "IntegerLiteral",
-                                                "newlines": null,
+                                                "newlines": [],
                                                 "value": {
                                                     "kind": "IntegerLiteral",
                                                     "fullStart": 147,
@@ -347,7 +347,7 @@
                                             },
                                             "expression": {
                                                 "kind": "NewExpression",
-                                                "newlines": null,
+                                                "newlines": [],
                                                 "newKeyword": {
                                                     "kind": "NewKeyword",
                                                     "fullStart": 156,
@@ -393,7 +393,7 @@
                                                 },
                                                 "expression": {
                                                     "kind": "NewExpression",
-                                                    "newlines": null,
+                                                    "newlines": [],
                                                     "newKeyword": {
                                                         "kind": "NewKeyword",
                                                         "fullStart": 175,
@@ -489,7 +489,7 @@
                                             "kind": "ExpressionStatement",
                                             "expression": {
                                                 "kind": "InvokeExpression",
-                                                "newlines": null,
+                                                "newlines": [],
                                                 "invokableExpression": {
                                                     "kind": "IdentifierExpression",
                                                     "newlines": null,
@@ -508,7 +508,7 @@
                                                 "arguments": [
                                                     {
                                                         "kind": "StringLiteral",
-                                                        "newlines": null,
+                                                        "newlines": [],
                                                         "startQuote": {
                                                             "kind": "QuotationMark",
                                                             "fullStart": 224,
@@ -600,7 +600,7 @@
                                             "kind": "ExpressionStatement",
                                             "expression": {
                                                 "kind": "InvokeExpression",
-                                                "newlines": null,
+                                                "newlines": [],
                                                 "invokableExpression": {
                                                     "kind": "IdentifierExpression",
                                                     "newlines": null,
@@ -619,7 +619,7 @@
                                                 "arguments": [
                                                     {
                                                         "kind": "StringLiteral",
-                                                        "newlines": null,
+                                                        "newlines": [],
                                                         "startQuote": {
                                                             "kind": "QuotationMark",
                                                             "fullStart": 282,

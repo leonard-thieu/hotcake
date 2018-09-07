@@ -102,7 +102,7 @@
                         "newlines": null,
                         "leftOperand": {
                             "kind": "IdentifierExpression",
-                            "newlines": null,
+                            "newlines": [],
                             "globalScopeMemberAccessOperator": null,
                             "name": {
                                 "kind": "Identifier",
@@ -123,7 +123,7 @@
                         "eachInKeyword": null,
                         "rightOperand": {
                             "kind": "IntegerLiteral",
-                            "newlines": null,
+                            "newlines": [],
                             "value": {
                                 "kind": "IntegerLiteral",
                                 "fullStart": 42,

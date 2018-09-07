@@ -52,7 +52,7 @@
                         "newlines": null,
                         "leftOperand": {
                             "kind": "IdentifierExpression",
-                            "newlines": null,
+                            "newlines": [],
                             "globalScopeMemberAccessOperator": null,
                             "name": {
                                 "kind": "Identifier",
@@ -72,7 +72,7 @@
                         },
                         "rightOperand": {
                             "kind": "IntegerLiteral",
-                            "newlines": null,
+                            "newlines": [],
                             "value": {
                                 "kind": "IntegerLiteral",
                                 "fullStart": 27,

@@ -81,7 +81,7 @@
                                     },
                                     "expression": {
                                         "kind": "IdentifierExpression",
-                                        "newlines": null,
+                                        "newlines": [],
                                         "globalScopeMemberAccessOperator": null,
                                         "name": {
                                             "kind": "Identifier",

@@ -43,7 +43,7 @@
                     "kind": "ExpressionStatement",
                     "expression": {
                         "kind": "InvokeExpression",
-                        "newlines": null,
+                        "newlines": [],
                         "invokableExpression": {
                             "kind": "NewExpression",
                             "newlines": null,
@@ -73,7 +73,7 @@
                         "arguments": [
                             {
                                 "kind": "StringLiteral",
-                                "newlines": null,
+                                "newlines": [],
                                 "startQuote": {
                                     "kind": "QuotationMark",
                                     "fullStart": 30,
@@ -117,7 +117,7 @@
                             },
                             {
                                 "kind": "IntegerLiteral",
-                                "newlines": null,
+                                "newlines": [],
                                 "value": {
                                     "kind": "IntegerLiteral",
                                     "fullStart": 39,

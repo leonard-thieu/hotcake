@@ -67,7 +67,7 @@
                             },
                             "expression": {
                                 "kind": "InvokeExpression",
-                                "newlines": null,
+                                "newlines": [],
                                 "invokableExpression": {
                                     "kind": "NewExpression",
                                     "newlines": null,

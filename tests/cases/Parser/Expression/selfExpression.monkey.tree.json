@@ -73,7 +73,7 @@
                             "kind": "ExpressionStatement",
                             "expression": {
                                 "kind": "SelfExpression",
-                                "newlines": null,
+                                "newlines": [],
                                 "selfKeyword": {
                                     "kind": "SelfKeyword",
                                     "fullStart": 32,

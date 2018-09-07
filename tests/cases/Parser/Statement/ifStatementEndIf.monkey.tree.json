@@ -49,7 +49,7 @@
                     },
                     "expression": {
                         "kind": "BooleanLiteral",
-                        "newlines": null,
+                        "newlines": [],
                         "value": {
                             "kind": "TrueKeyword",
                             "fullStart": 23,

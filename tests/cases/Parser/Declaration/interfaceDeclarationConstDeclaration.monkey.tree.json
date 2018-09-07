@@ -51,7 +51,7 @@
                             "eachInKeyword": null,
                             "expression": {
                                 "kind": "FloatLiteral",
-                                "newlines": null,
+                                "newlines": [],
                                 "value": {
                                     "kind": "FloatLiteral",
                                     "fullStart": 36,
