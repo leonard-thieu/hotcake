@@ -1,0 +1,158 @@
+{
+    "kind": "ModuleDeclaration",
+    "members": [
+        {
+            "kind": "FunctionDeclaration",
+            "functionKeyword": {
+                "kind": "FunctionKeyword",
+                "fullStart": 0,
+                "start": 0,
+                "length": 8
+            },
+            "name": {
+                "kind": "Identifier",
+                "fullStart": 8,
+                "start": 9,
+                "length": 5
+            },
+            "returnType": null,
+            "openingParenthesis": {
+                "kind": "OpeningParenthesis",
+                "fullStart": 13,
+                "start": 13,
+                "length": 1
+            },
+            "parameters": [],
+            "closingParenthesis": {
+                "kind": "ClosingParenthesis",
+                "fullStart": 14,
+                "start": 14,
+                "length": 1
+            },
+            "statements": [
+                {
+                    "kind": "EmptyStatement",
+                    "terminator": {
+                        "kind": "Newline",
+                        "fullStart": 15,
+                        "start": 16,
+                        "length": 2
+                    }
+                },
+                {
+                    "kind": "ForLoop",
+                    "forKeyword": {
+                        "kind": "ForKeyword",
+                        "fullStart": 17,
+                        "start": 21,
+                        "length": 7
+                    },
+                    "header": {
+                        "kind": "AssignmentExpression",
+                        "newlines": null,
+                        "leftOperand": {
+                            "kind": "IdentifierExpression",
+                            "newlines": null,
+                            "globalScopeMemberAccessOperator": null,
+                            "name": {
+                                "kind": "Identifier",
+                                "fullStart": 24,
+                                "start": 25,
+                                "length": 13
+                            },
+                            "lessThanSign": null,
+                            "typeArguments": null,
+                            "greaterThanSign": null
+                        },
+                        "operator": {
+                            "kind": "EqualsSign",
+                            "fullStart": 37,
+                            "start": 38,
+                            "length": 2
+                        },
+                        "eachInKeyword": {
+                            "kind": "EachInKeyword",
+                            "fullStart": 39,
+                            "start": 40,
+                            "length": 7
+                        },
+                        "rightOperand": {
+                            "kind": "ScopeMemberAccessExpression",
+                            "newlines": null,
+                            "scopableExpression": {
+                                "kind": "IdentifierExpression",
+                                "newlines": null,
+                                "globalScopeMemberAccessOperator": null,
+                                "name": {
+                                    "kind": "Identifier",
+                                    "fullStart": 46,
+                                    "start": 47,
+                                    "length": 6
+                                },
+                                "lessThanSign": null,
+                                "typeArguments": null,
+                                "greaterThanSign": null
+                            },
+                            "scopeMemberAccessOperator": {
+                                "kind": "Period",
+                                "fullStart": 52,
+                                "start": 52,
+                                "length": 1
+                            },
+                            "member": {
+                                "kind": "IdentifierExpression",
+                                "newlines": null,
+                                "globalScopeMemberAccessOperator": null,
+                                "name": {
+                                    "kind": "Identifier",
+                                    "fullStart": 53,
+                                    "start": 53,
+                                    "length": 5
+                                },
+                                "lessThanSign": null,
+                                "typeArguments": null,
+                                "greaterThanSign": null
+                            }
+                        }
+                    },
+                    "statements": [
+                        {
+                            "kind": "EmptyStatement",
+                            "terminator": {
+                                "kind": "Newline",
+                                "fullStart": 58,
+                                "start": 59,
+                                "length": 2
+                            }
+                        }
+                    ],
+                    "endKeyword": {
+                        "kind": "EndKeyword",
+                        "fullStart": 60,
+                        "start": 64,
+                        "length": 7
+                    },
+                    "endForKeyword": {
+                        "kind": "ForKeyword",
+                        "fullStart": 67,
+                        "start": 68,
+                        "length": 4
+                    },
+                    "terminator": {
+                        "kind": "Newline",
+                        "fullStart": 71,
+                        "start": 72,
+                        "length": 2
+                    }
+                }
+            ],
+            "endKeyword": {
+                "kind": "EndKeyword",
+                "fullStart": 73,
+                "start": 73,
+                "length": 3
+            },
+            "endFunctionKeyword": null
+        }
+    ]
+}
