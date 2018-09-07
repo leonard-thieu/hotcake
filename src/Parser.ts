@@ -1,9 +1,8 @@
 import { AccessibilityDirective, AccessibilityKeywordToken } from './Node/Declaration/AccessibilityDirective';
-import { AliasDirectiveSequence, AliasDirective } from './Node/Declaration/AliasDirectiveSequence';
+import { AliasDirective, AliasDirectiveSequence } from './Node/Declaration/AliasDirectiveSequence';
 import { ClassDeclaration } from './Node/Declaration/ClassDeclaration';
 import { ClassMethodDeclaration } from './Node/Declaration/ClassMethodDeclaration';
-import { DataDeclaration, MissableDataDeclaration } from './Node/Declaration/DataDeclaration';
-import { DataDeclarationKeywordToken, DataDeclarationList } from './Node/Declaration/DataDeclarationList';
+import { DataDeclaration, DataDeclarationKeywordToken, DataDeclarationSequence, MissableDataDeclaration } from './Node/Declaration/DataDeclarationSequence';
 import { FriendDirective } from './Node/Declaration/FriendDirective';
 import { FunctionDeclaration } from './Node/Declaration/FunctionDeclaration';
 import { ImportStatement } from './Node/Declaration/ImportStatement';
@@ -24,7 +23,7 @@ import { ExitStatement } from './Node/Statement/ExitStatement';
 import { ExpressionStatement } from './Node/Statement/ExpressionStatement';
 import { ForLoop, NumericForLoopHeader } from './Node/Statement/ForLoop';
 import { ElseIfStatement, ElseStatement, IfStatement } from './Node/Statement/IfStatement';
-import { LocalDeclarationListStatement } from './Node/Statement/LocalDeclarationListStatement';
+import { LocalDataDeclarationSequenceStatement } from './Node/Statement/LocalDataDeclarationSequenceStatement';
 import { RepeatLoop } from './Node/Statement/RepeatLoop';
 import { ReturnStatement } from './Node/Statement/ReturnStatement';
 import { CaseStatement, DefaultStatement, SelectStatement } from './Node/Statement/SelectStatement';
@@ -118,7 +117,7 @@ export class Parser extends ParserBase {
             case TokenKind.GlobalKeyword: {
                 this.advanceToken();
 
-                return this.parseDataDeclarationList(parent, token);
+                return this.parseDataDeclarationSequence(parent, token);
             }
             case TokenKind.FunctionKeyword: {
                 this.advanceToken();
@@ -311,7 +310,7 @@ export class Parser extends ParserBase {
             case TokenKind.ConstKeyword: {
                 this.advanceToken();
 
-                return this.parseDataDeclarationList(parent, token);
+                return this.parseDataDeclarationSequence(parent, token);
             }
             case TokenKind.MethodKeyword: {
                 this.advanceToken();
@@ -370,7 +369,7 @@ export class Parser extends ParserBase {
             case TokenKind.FieldKeyword: {
                 this.advanceToken();
 
-                return this.parseDataDeclarationList(parent, token);
+                return this.parseDataDeclarationSequence(parent, token);
             }
             case TokenKind.FunctionKeyword: {
                 this.advanceToken();
@@ -454,7 +453,7 @@ export class Parser extends ParserBase {
             case TokenKind.LocalKeyword: {
                 this.advanceToken();
 
-                return this.parseLocalDeclarationListStatement(parent, token);
+                return this.parseLocalDataDeclarationSequenceStatement(parent, token);
             }
             case TokenKind.ReturnKeyword: {
                 this.advanceToken();
@@ -525,13 +524,13 @@ export class Parser extends ParserBase {
         return this.parseExpressionStatement(parent);
     }
 
-    private parseLocalDeclarationListStatement(parent: Nodes, localKeyword: LocalKeywordToken): LocalDeclarationListStatement {
-        const localDeclarationListStatement = new LocalDeclarationListStatement();
-        localDeclarationListStatement.parent = parent;
-        localDeclarationListStatement.localDeclarationList = this.parseDataDeclarationList(localDeclarationListStatement, localKeyword);
-        localDeclarationListStatement.terminator = this.eatStatementTerminator(localDeclarationListStatement);
+    private parseLocalDataDeclarationSequenceStatement(parent: Nodes, localKeyword: LocalKeywordToken): LocalDataDeclarationSequenceStatement {
+        const localDataDeclarationSequenceStatement = new LocalDataDeclarationSequenceStatement();
+        localDataDeclarationSequenceStatement.parent = parent;
+        localDataDeclarationSequenceStatement.localDataDeclarationSequence = this.parseDataDeclarationSequence(localDataDeclarationSequenceStatement, localKeyword);
+        localDataDeclarationSequenceStatement.terminator = this.eatStatementTerminator(localDataDeclarationSequenceStatement);
 
-        return localDeclarationListStatement;
+        return localDataDeclarationSequenceStatement;
     }
 
     private parseReturnStatement(parent: Nodes, returnKeyword: ReturnKeywordToken): ReturnStatement {
@@ -809,13 +808,13 @@ export class Parser extends ParserBase {
     }
 
     private parseForLoopHeader(parent: ForLoop) {
-        let loopVariableExpression: LocalDeclarationListStatement | AssignmentExpression;
+        let loopVariableExpression: LocalDataDeclarationSequenceStatement | AssignmentExpression;
         const localKeyword = this.getToken();
         if (localKeyword.kind === TokenKind.LocalKeyword) {
             this.advanceToken();
 
-            loopVariableExpression = this.parseLocalDeclarationListStatement(parent, localKeyword);
-            const declaration = loopVariableExpression.localDeclarationList.children[0];
+            loopVariableExpression = this.parseLocalDataDeclarationSequenceStatement(parent, localKeyword);
+            const declaration = loopVariableExpression.localDataDeclarationSequence.children[0];
             if (declaration &&
                 declaration.kind === NodeKind.DataDeclaration &&
                 declaration.eachInKeyword !== null) {
@@ -999,13 +998,13 @@ export class Parser extends ParserBase {
         return functionDeclaration;
     }
 
-    private parseDataDeclarationList(parent: Nodes, dataDeclarationKeyword: DataDeclarationKeywordToken): DataDeclarationList {
-        const dataDeclarationList = new DataDeclarationList();
-        dataDeclarationList.parent = parent;
-        dataDeclarationList.dataDeclarationKeyword = dataDeclarationKeyword;
-        dataDeclarationList.children = this.parseList(dataDeclarationList, ParseContextKind.DataDeclarationSequence);
+    private parseDataDeclarationSequence(parent: Nodes, dataDeclarationKeyword: DataDeclarationKeywordToken): DataDeclarationSequence {
+        const dataDeclarationSequence = new DataDeclarationSequence();
+        dataDeclarationSequence.parent = parent;
+        dataDeclarationSequence.dataDeclarationKeyword = dataDeclarationKeyword;
+        dataDeclarationSequence.children = this.parseList(dataDeclarationSequence, ParseContextKind.DataDeclarationSequence);
 
-        return dataDeclarationList;
+        return dataDeclarationSequence;
     }
 
     // #region Data declaration sequence members

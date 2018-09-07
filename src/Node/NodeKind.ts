@@ -24,7 +24,7 @@ export enum NodeKind {
 
     InterfaceMethodDeclaration = 'InterfaceMethodDeclaration',
     ClassMethodDeclaration = 'ClassMethodDeclaration',
-    LocalDeclarationListStatement = 'LocalDeclarationListStatement',
+    LocalDataDeclarationSequenceStatement = 'LocalDataDeclarationSequenceStatement',
     ReturnStatement = 'ReturnStatement',
     IfStatement = 'IfStatement',
     ElseIfStatement = 'ElseIfStatement',
@@ -48,7 +48,7 @@ export enum NodeKind {
     TypeReference = 'TypeReference',
     ArrayTypeDeclaration = 'ArrayTypeDeclaration',
     DataDeclaration = 'DataDeclaration',
-    DataDeclarationList = 'DataDeclarationList',
+    DataDeclarationSequence = 'DataDeclarationSequence',
     ShorthandTypeDeclaration = 'ShorthandTypeDeclaration',
     LonghandTypeDeclaration = 'LonghandTypeDeclaration',
     TypeParameter = 'TypeParameter',

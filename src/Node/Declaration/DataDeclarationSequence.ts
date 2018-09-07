@@ -1,9 +1,29 @@
+import { ParseContextElementArray, ParseContextKind } from '../../ParserBase';
 import { MissingToken } from '../../Token/MissingToken';
-import { ColonEqualsSignToken, EachInKeywordToken, EqualsSignToken, IdentifierToken } from '../../Token/Token';
+import { ColonEqualsSignToken, ConstKeywordToken, EachInKeywordToken, EqualsSignToken, FieldKeywordToken, GlobalKeywordToken, IdentifierToken, LocalKeywordToken } from '../../Token/Token';
 import { MissableExpression } from '../Expression/Expression';
 import { NodeKind } from '../NodeKind';
 import { Declaration } from './Declaration';
 import { TypeDeclaration } from './TypeDeclaration';
+
+export class DataDeclarationSequence extends Declaration {
+    static CHILD_NAMES: (keyof DataDeclarationSequence)[] = [
+        'dataDeclarationKeyword',
+        'children',
+    ];
+
+    readonly kind = NodeKind.DataDeclarationSequence;
+
+    dataDeclarationKeyword: DataDeclarationKeywordToken;
+    children: ParseContextElementArray<ParseContextKind.DataDeclarationSequence>;
+}
+
+export type DataDeclarationKeywordToken =
+    ConstKeywordToken |
+    GlobalKeywordToken |
+    FieldKeywordToken |
+    LocalKeywordToken
+    ;
 
 /**
  * Explicit type (shorthand)

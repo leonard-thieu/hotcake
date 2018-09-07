@@ -1,7 +1,7 @@
 import { ParseContextElementArray } from '../../ParserBase';
 import { MissableToken } from '../../Token/MissingToken';
 import { CatchKeywordToken, EndKeywordToken, TryKeywordToken } from '../../Token/Token';
-import { MissableDataDeclaration } from '../Declaration/DataDeclaration';
+import { MissableDataDeclaration } from '../Declaration/DataDeclarationSequence';
 import { NodeKind } from '../NodeKind';
 import { Statement } from './Statement';
 

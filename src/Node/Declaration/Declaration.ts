@@ -3,8 +3,7 @@ import { AccessibilityDirective } from './AccessibilityDirective';
 import { AliasDirective, AliasDirectiveSequence } from './AliasDirectiveSequence';
 import { ClassDeclaration } from './ClassDeclaration';
 import { ClassMethodDeclaration } from './ClassMethodDeclaration';
-import { DataDeclaration } from './DataDeclaration';
-import { DataDeclarationList } from './DataDeclarationList';
+import { DataDeclaration, DataDeclarationSequence } from './DataDeclarationSequence';
 import { FriendDirective } from './FriendDirective';
 import { FunctionDeclaration } from './FunctionDeclaration';
 import { ImportStatement } from './ImportStatement';
@@ -25,8 +24,7 @@ export type Declarations =
     AliasDirectiveSequence | AliasDirective |
     ClassDeclaration |
     ClassMethodDeclaration |
-    DataDeclaration |
-    DataDeclarationList |
+    DataDeclarationSequence | DataDeclaration |
     FriendDirective |
     FunctionDeclaration |
     ImportStatement |
