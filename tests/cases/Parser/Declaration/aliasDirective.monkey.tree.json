@@ -37,7 +37,7 @@
                         "lessThanSign": null,
                         "typeArguments": null,
                         "greaterThanSign": null,
-                        "arrayTypeDeclarations": null
+                        "arrayTypeDeclarations": []
                     }
                 }
             ]
@@ -84,7 +84,7 @@
                         "lessThanSign": null,
                         "typeArguments": null,
                         "greaterThanSign": null,
-                        "arrayTypeDeclarations": null
+                        "arrayTypeDeclarations": []
                     }
                 }
             ]
@@ -131,7 +131,7 @@
                         "lessThanSign": null,
                         "typeArguments": null,
                         "greaterThanSign": null,
-                        "arrayTypeDeclarations": null
+                        "arrayTypeDeclarations": []
                     }
                 }
             ]
@@ -178,7 +178,7 @@
                         "lessThanSign": null,
                         "typeArguments": null,
                         "greaterThanSign": null,
-                        "arrayTypeDeclarations": null
+                        "arrayTypeDeclarations": []
                     }
                 }
             ]
@@ -225,7 +225,7 @@
                         "lessThanSign": null,
                         "typeArguments": null,
                         "greaterThanSign": null,
-                        "arrayTypeDeclarations": null
+                        "arrayTypeDeclarations": []
                     }
                 }
             ]
@@ -272,7 +272,7 @@
                         "lessThanSign": null,
                         "typeArguments": null,
                         "greaterThanSign": null,
-                        "arrayTypeDeclarations": null
+                        "arrayTypeDeclarations": []
                     }
                 },
                 {
@@ -319,7 +319,7 @@
                         "lessThanSign": null,
                         "typeArguments": null,
                         "greaterThanSign": null,
-                        "arrayTypeDeclarations": null
+                        "arrayTypeDeclarations": []
                     }
                 }
             ]

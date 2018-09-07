@@ -40,7 +40,7 @@
                     "lessThanSign": null,
                     "typeArguments": null,
                     "greaterThanSign": null,
-                    "arrayTypeDeclarations": null
+                    "arrayTypeDeclarations": []
                 },
                 {
                     "kind": "CommaSeparator",
@@ -65,7 +65,7 @@
                     "lessThanSign": null,
                     "typeArguments": null,
                     "greaterThanSign": null,
-                    "arrayTypeDeclarations": null
+                    "arrayTypeDeclarations": []
                 }
             ],
             "attributes": [],

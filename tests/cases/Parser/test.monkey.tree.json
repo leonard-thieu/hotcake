@@ -373,7 +373,7 @@
                         "lessThanSign": null,
                         "typeArguments": null,
                         "greaterThanSign": null,
-                        "arrayTypeDeclarations": null
+                        "arrayTypeDeclarations": []
                     }
                 }
             ]
@@ -428,7 +428,7 @@
                             "lessThanSign": null,
                             "typeArguments": null,
                             "greaterThanSign": null,
-                            "arrayTypeDeclarations": null
+                            "arrayTypeDeclarations": []
                         }
                     },
                     "equalsSign": {
@@ -482,7 +482,7 @@
                             "start": 1119,
                             "length": 1
                         },
-                        "arrayTypeDeclarations": null
+                        "arrayTypeDeclarations": []
                     },
                     "equalsSign": {
                         "kind": "EqualsSign",
@@ -737,7 +737,7 @@
                             "lessThanSign": null,
                             "typeArguments": null,
                             "greaterThanSign": null,
-                            "arrayTypeDeclarations": null
+                            "arrayTypeDeclarations": []
                         }
                     },
                     "equalsSign": {
@@ -791,7 +791,7 @@
                             "start": 1374,
                             "length": 1
                         },
-                        "arrayTypeDeclarations": null
+                        "arrayTypeDeclarations": []
                     },
                     "equalsSign": {
                         "kind": "EqualsSign",
@@ -1040,7 +1040,7 @@
                             "lessThanSign": null,
                             "typeArguments": null,
                             "greaterThanSign": null,
-                            "arrayTypeDeclarations": null
+                            "arrayTypeDeclarations": []
                         }
                     },
                     "equalsSign": null,
@@ -1129,7 +1129,7 @@
                             "lessThanSign": null,
                             "typeArguments": null,
                             "greaterThanSign": null,
-                            "arrayTypeDeclarations": null
+                            "arrayTypeDeclarations": []
                         }
                     },
                     "equalsSign": {
@@ -1213,7 +1213,7 @@
                     "lessThanSign": null,
                     "typeArguments": null,
                     "greaterThanSign": null,
-                    "arrayTypeDeclarations": null
+                    "arrayTypeDeclarations": []
                 }
             },
             "openingParenthesis": {
@@ -1252,7 +1252,7 @@
                             "lessThanSign": null,
                             "typeArguments": null,
                             "greaterThanSign": null,
-                            "arrayTypeDeclarations": null
+                            "arrayTypeDeclarations": []
                         }
                     },
                     "equalsSign": null,
@@ -1357,7 +1357,7 @@
                             "lessThanSign": null,
                             "typeArguments": null,
                             "greaterThanSign": null,
-                            "arrayTypeDeclarations": null
+                            "arrayTypeDeclarations": []
                         }
                     },
                     "equalsSign": null,
@@ -1390,7 +1390,7 @@
                             "start": 1869,
                             "length": 1
                         },
-                        "arrayTypeDeclarations": null
+                        "arrayTypeDeclarations": []
                     },
                     "equalsSign": null,
                     "eachInKeyword": null,
@@ -1796,7 +1796,7 @@
                             "lessThanSign": null,
                             "typeArguments": null,
                             "greaterThanSign": null,
-                            "arrayTypeDeclarations": null
+                            "arrayTypeDeclarations": []
                         }
                     },
                     "openingParenthesis": {
@@ -1822,7 +1822,7 @@
                                     "start": 2288,
                                     "length": 1
                                 },
-                                "arrayTypeDeclarations": null
+                                "arrayTypeDeclarations": []
                             },
                             "equalsSign": null,
                             "eachInKeyword": null,
@@ -1867,7 +1867,7 @@
                                     "lessThanSign": null,
                                     "typeArguments": null,
                                     "greaterThanSign": null,
-                                    "arrayTypeDeclarations": null
+                                    "arrayTypeDeclarations": []
                                 }
                             },
                             "equalsSign": {
@@ -2036,7 +2036,7 @@
                     "lessThanSign": null,
                     "typeArguments": null,
                     "greaterThanSign": null,
-                    "arrayTypeDeclarations": null
+                    "arrayTypeDeclarations": []
                 }
             ],
             "members": [
@@ -2191,7 +2191,7 @@
                     "lessThanSign": null,
                     "typeArguments": null,
                     "greaterThanSign": null,
-                    "arrayTypeDeclarations": null
+                    "arrayTypeDeclarations": []
                 },
                 {
                     "kind": "CommaSeparator",
@@ -2216,7 +2216,7 @@
                     "lessThanSign": null,
                     "typeArguments": null,
                     "greaterThanSign": null,
-                    "arrayTypeDeclarations": null
+                    "arrayTypeDeclarations": []
                 }
             ],
             "members": [
@@ -2311,7 +2311,7 @@
                             "lessThanSign": null,
                             "typeArguments": null,
                             "greaterThanSign": null,
-                            "arrayTypeDeclarations": null
+                            "arrayTypeDeclarations": []
                         }
                     },
                     "openingParenthesis": {
@@ -2337,7 +2337,7 @@
                                     "start": 2748,
                                     "length": 1
                                 },
-                                "arrayTypeDeclarations": null
+                                "arrayTypeDeclarations": []
                             },
                             "equalsSign": null,
                             "eachInKeyword": null,
@@ -2382,7 +2382,7 @@
                                     "lessThanSign": null,
                                     "typeArguments": null,
                                     "greaterThanSign": null,
-                                    "arrayTypeDeclarations": null
+                                    "arrayTypeDeclarations": []
                                 }
                             },
                             "equalsSign": {
@@ -2619,7 +2619,7 @@
                                     "lessThanSign": null,
                                     "typeArguments": null,
                                     "greaterThanSign": null,
-                                    "arrayTypeDeclarations": null
+                                    "arrayTypeDeclarations": []
                                 }
                             },
                             "equalsSign": null,
@@ -2659,7 +2659,7 @@
                                     "start": 3021,
                                     "length": 1
                                 },
-                                "arrayTypeDeclarations": null
+                                "arrayTypeDeclarations": []
                             },
                             "equalsSign": {
                                 "kind": "EqualsSign",
@@ -3245,7 +3245,7 @@
                                     "lessThanSign": null,
                                     "typeArguments": null,
                                     "greaterThanSign": null,
-                                    "arrayTypeDeclarations": null
+                                    "arrayTypeDeclarations": []
                                 }
                             },
                             "equalsSign": null,
@@ -3340,7 +3340,7 @@
                             "lessThanSign": null,
                             "typeArguments": null,
                             "greaterThanSign": null,
-                            "arrayTypeDeclarations": null
+                            "arrayTypeDeclarations": []
                         }
                     },
                     "openingParenthesis": {
@@ -3435,7 +3435,7 @@
                                     "lessThanSign": null,
                                     "typeArguments": null,
                                     "greaterThanSign": null,
-                                    "arrayTypeDeclarations": null
+                                    "arrayTypeDeclarations": []
                                 }
                             },
                             "equalsSign": null,
@@ -3664,7 +3664,7 @@
                 "lessThanSign": null,
                 "typeArguments": null,
                 "greaterThanSign": null,
-                "arrayTypeDeclarations": null
+                "arrayTypeDeclarations": []
             },
             "implementsKeyword": null,
             "implementedTypes": null,
@@ -3759,7 +3759,7 @@
                 "lessThanSign": null,
                 "typeArguments": null,
                 "greaterThanSign": null,
-                "arrayTypeDeclarations": null
+                "arrayTypeDeclarations": []
             },
             "implementsKeyword": null,
             "implementedTypes": null,
@@ -3864,7 +3864,7 @@
                     "lessThanSign": null,
                     "typeArguments": null,
                     "greaterThanSign": null,
-                    "arrayTypeDeclarations": null
+                    "arrayTypeDeclarations": []
                 }
             ],
             "attributes": [],
@@ -3961,7 +3961,7 @@
                     "lessThanSign": null,
                     "typeArguments": null,
                     "greaterThanSign": null,
-                    "arrayTypeDeclarations": null
+                    "arrayTypeDeclarations": []
                 }
             ],
             "attributes": [
@@ -4065,7 +4065,7 @@
                     "lessThanSign": null,
                     "typeArguments": null,
                     "greaterThanSign": null,
-                    "arrayTypeDeclarations": null
+                    "arrayTypeDeclarations": []
                 },
                 {
                     "kind": "CommaSeparator",
@@ -4090,7 +4090,7 @@
                     "lessThanSign": null,
                     "typeArguments": null,
                     "greaterThanSign": null,
-                    "arrayTypeDeclarations": null
+                    "arrayTypeDeclarations": []
                 }
             ],
             "attributes": [],
@@ -4184,7 +4184,7 @@
                 "lessThanSign": null,
                 "typeArguments": null,
                 "greaterThanSign": null,
-                "arrayTypeDeclarations": null
+                "arrayTypeDeclarations": []
             },
             "implementsKeyword": {
                 "kind": "ImplementsKeyword",
@@ -4206,7 +4206,7 @@
                     "lessThanSign": null,
                     "typeArguments": null,
                     "greaterThanSign": null,
-                    "arrayTypeDeclarations": null
+                    "arrayTypeDeclarations": []
                 },
                 {
                     "kind": "CommaSeparator",
@@ -4231,7 +4231,7 @@
                     "lessThanSign": null,
                     "typeArguments": null,
                     "greaterThanSign": null,
-                    "arrayTypeDeclarations": null
+                    "arrayTypeDeclarations": []
                 }
             ],
             "attributes": [],
@@ -4330,7 +4330,7 @@
                 "lessThanSign": null,
                 "typeArguments": null,
                 "greaterThanSign": null,
-                "arrayTypeDeclarations": null
+                "arrayTypeDeclarations": []
             },
             "implementsKeyword": {
                 "kind": "ImplementsKeyword",
@@ -4352,7 +4352,7 @@
                     "lessThanSign": null,
                     "typeArguments": null,
                     "greaterThanSign": null,
-                    "arrayTypeDeclarations": null
+                    "arrayTypeDeclarations": []
                 },
                 {
                     "kind": "CommaSeparator",
@@ -4377,7 +4377,7 @@
                     "lessThanSign": null,
                     "typeArguments": null,
                     "greaterThanSign": null,
-                    "arrayTypeDeclarations": null
+                    "arrayTypeDeclarations": []
                 }
             ],
             "attributes": [
@@ -4478,7 +4478,7 @@
                             "lessThanSign": null,
                             "typeArguments": null,
                             "greaterThanSign": null,
-                            "arrayTypeDeclarations": null
+                            "arrayTypeDeclarations": []
                         }
                     },
                     "equalsSign": null,
@@ -5428,7 +5428,7 @@
                             "lessThanSign": null,
                             "typeArguments": null,
                             "greaterThanSign": null,
-                            "arrayTypeDeclarations": null
+                            "arrayTypeDeclarations": []
                         }
                     },
                     "equalsSign": null,
@@ -6609,7 +6609,7 @@
                                         "lessThanSign": null,
                                         "typeArguments": null,
                                         "greaterThanSign": null,
-                                        "arrayTypeDeclarations": null
+                                        "arrayTypeDeclarations": []
                                     }
                                 },
                                 "equalsSign": null,

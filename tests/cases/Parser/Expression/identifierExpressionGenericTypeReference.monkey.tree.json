@@ -74,7 +74,7 @@
                                     "lessThanSign": null,
                                     "typeArguments": null,
                                     "greaterThanSign": null,
-                                    "arrayTypeDeclarations": null
+                                    "arrayTypeDeclarations": []
                                 }
                             ],
                             "greaterThanSign": {

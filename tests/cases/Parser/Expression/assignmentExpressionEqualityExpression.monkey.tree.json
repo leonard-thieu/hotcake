@@ -79,7 +79,7 @@
                                         "lessThanSign": null,
                                         "typeArguments": null,
                                         "greaterThanSign": null,
-                                        "arrayTypeDeclarations": null
+                                        "arrayTypeDeclarations": []
                                     }
                                 },
                                 "equalsSign": null,

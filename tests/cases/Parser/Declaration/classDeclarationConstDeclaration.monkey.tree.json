@@ -55,7 +55,7 @@
                                     "start": 35,
                                     "length": 1
                                 },
-                                "arrayTypeDeclarations": null
+                                "arrayTypeDeclarations": []
                             },
                             "equalsSign": {
                                 "kind": "EqualsSign",

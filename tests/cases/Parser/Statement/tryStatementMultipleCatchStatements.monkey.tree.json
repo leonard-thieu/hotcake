@@ -37,7 +37,7 @@
                 "lessThanSign": null,
                 "typeArguments": null,
                 "greaterThanSign": null,
-                "arrayTypeDeclarations": null
+                "arrayTypeDeclarations": []
             },
             "implementsKeyword": null,
             "implementedTypes": null,
@@ -106,7 +106,7 @@
                 "lessThanSign": null,
                 "typeArguments": null,
                 "greaterThanSign": null,
-                "arrayTypeDeclarations": null
+                "arrayTypeDeclarations": []
             },
             "implementsKeyword": null,
             "implementedTypes": null,
@@ -367,7 +367,7 @@
                                                     "lessThanSign": null,
                                                     "typeArguments": null,
                                                     "greaterThanSign": null,
-                                                    "arrayTypeDeclarations": null
+                                                    "arrayTypeDeclarations": []
                                                 }
                                             },
                                             "terminator": null
@@ -413,7 +413,7 @@
                                                         "lessThanSign": null,
                                                         "typeArguments": null,
                                                         "greaterThanSign": null,
-                                                        "arrayTypeDeclarations": null
+                                                        "arrayTypeDeclarations": []
                                                     }
                                                 },
                                                 "terminator": null
@@ -468,7 +468,7 @@
                                                 "lessThanSign": null,
                                                 "typeArguments": null,
                                                 "greaterThanSign": null,
-                                                "arrayTypeDeclarations": null
+                                                "arrayTypeDeclarations": []
                                             }
                                         },
                                         "equalsSign": null,
@@ -579,7 +579,7 @@
                                                 "lessThanSign": null,
                                                 "typeArguments": null,
                                                 "greaterThanSign": null,
-                                                "arrayTypeDeclarations": null
+                                                "arrayTypeDeclarations": []
                                             }
                                         },
                                         "equalsSign": null,
