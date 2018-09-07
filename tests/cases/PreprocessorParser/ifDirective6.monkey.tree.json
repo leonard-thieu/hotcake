@@ -35,7 +35,7 @@
                 "rightOperand": {
                     "kind": "StringLiteral",
                     "newlines": [],
-                    "startQuote": {
+                    "startQuotationMark": {
                         "kind": "QuotationMark",
                         "fullStart": 12,
                         "start": 13,
@@ -49,7 +49,7 @@
                             "length": 3
                         }
                     ],
-                    "endQuote": {
+                    "endQuotationMark": {
                         "kind": "QuotationMark",
                         "fullStart": 17,
                         "start": 17,
@@ -142,7 +142,7 @@
                         "rightOperand": {
                             "kind": "StringLiteral",
                             "newlines": [],
-                            "startQuote": {
+                            "startQuotationMark": {
                                 "kind": "QuotationMark",
                                 "fullStart": 75,
                                 "start": 76,
@@ -156,7 +156,7 @@
                                     "length": 5
                                 }
                             ],
-                            "endQuote": {
+                            "endQuotationMark": {
                                 "kind": "QuotationMark",
                                 "fullStart": 82,
                                 "start": 82,
@@ -249,7 +249,7 @@
                         "rightOperand": {
                             "kind": "StringLiteral",
                             "newlines": [],
-                            "startQuote": {
+                            "startQuotationMark": {
                                 "kind": "QuotationMark",
                                 "fullStart": 146,
                                 "start": 147,
@@ -263,7 +263,7 @@
                                     "length": 5
                                 }
                             ],
-                            "endQuote": {
+                            "endQuotationMark": {
                                 "kind": "QuotationMark",
                                 "fullStart": 153,
                                 "start": 153,

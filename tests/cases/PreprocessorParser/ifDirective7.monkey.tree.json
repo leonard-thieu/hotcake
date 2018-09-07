@@ -35,7 +35,7 @@
                 "rightOperand": {
                     "kind": "StringLiteral",
                     "newlines": [],
-                    "startQuote": {
+                    "startQuotationMark": {
                         "kind": "QuotationMark",
                         "fullStart": 12,
                         "start": 13,
@@ -49,7 +49,7 @@
                             "length": 3
                         }
                     ],
-                    "endQuote": {
+                    "endQuotationMark": {
                         "kind": "QuotationMark",
                         "fullStart": 17,
                         "start": 17,
@@ -142,7 +142,7 @@
                         "rightOperand": {
                             "kind": "StringLiteral",
                             "newlines": [],
-                            "startQuote": {
+                            "startQuotationMark": {
                                 "kind": "QuotationMark",
                                 "fullStart": 75,
                                 "start": 76,
@@ -156,7 +156,7 @@
                                     "length": 5
                                 }
                             ],
-                            "endQuote": {
+                            "endQuotationMark": {
                                 "kind": "QuotationMark",
                                 "fullStart": 82,
                                 "start": 82,
@@ -279,7 +279,7 @@
                                     "expression": {
                                         "kind": "StringLiteral",
                                         "newlines": [],
-                                        "startQuote": {
+                                        "startQuotationMark": {
                                             "kind": "QuotationMark",
                                             "fullStart": 173,
                                             "start": 174,
@@ -293,7 +293,7 @@
                                                 "length": 14
                                             }
                                         ],
-                                        "endQuote": {
+                                        "endQuotationMark": {
                                             "kind": "QuotationMark",
                                             "fullStart": 189,
                                             "start": 189,
@@ -371,7 +371,7 @@
                         "rightOperand": {
                             "kind": "StringLiteral",
                             "newlines": [],
-                            "startQuote": {
+                            "startQuotationMark": {
                                 "kind": "QuotationMark",
                                 "fullStart": 220,
                                 "start": 221,
@@ -385,7 +385,7 @@
                                     "length": 5
                                 }
                             ],
-                            "endQuote": {
+                            "endQuotationMark": {
                                 "kind": "QuotationMark",
                                 "fullStart": 227,
                                 "start": 227,

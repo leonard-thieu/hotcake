@@ -35,7 +35,7 @@
                 "rightOperand": {
                     "kind": "StringLiteral",
                     "newlines": [],
-                    "startQuote": {
+                    "startQuotationMark": {
                         "kind": "QuotationMark",
                         "fullStart": 12,
                         "start": 13,
@@ -49,7 +49,7 @@
                             "length": 3
                         }
                     ],
-                    "endQuote": {
+                    "endQuotationMark": {
                         "kind": "QuotationMark",
                         "fullStart": 17,
                         "start": 17,

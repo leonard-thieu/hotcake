@@ -12,7 +12,7 @@
             "path": {
                 "kind": "StringLiteral",
                 "newlines": null,
-                "startQuote": {
+                "startQuotationMark": {
                     "kind": "QuotationMark",
                     "fullStart": 6,
                     "start": 7,
@@ -26,7 +26,7 @@
                         "length": 16
                     }
                 ],
-                "endQuote": {
+                "endQuotationMark": {
                     "kind": "QuotationMark",
                     "fullStart": 24,
                     "start": 24,

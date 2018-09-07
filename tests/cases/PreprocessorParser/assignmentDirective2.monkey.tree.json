@@ -18,7 +18,7 @@
             "expression": {
                 "kind": "StringLiteral",
                 "newlines": [],
-                "startQuote": {
+                "startQuotationMark": {
                     "kind": "QuotationMark",
                     "fullStart": 10,
                     "start": 11,
@@ -32,7 +32,7 @@
                         "length": 7
                     }
                 ],
-                "endQuote": {
+                "endQuotationMark": {
                     "kind": "QuotationMark",
                     "fullStart": 19,
                     "start": 19,

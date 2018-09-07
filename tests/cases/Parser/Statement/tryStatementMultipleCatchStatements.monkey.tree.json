@@ -509,7 +509,7 @@
                                                     {
                                                         "kind": "StringLiteral",
                                                         "newlines": [],
-                                                        "startQuote": {
+                                                        "startQuotationMark": {
                                                             "kind": "QuotationMark",
                                                             "fullStart": 224,
                                                             "start": 225,
@@ -523,7 +523,7 @@
                                                                 "length": 14
                                                             }
                                                         ],
-                                                        "endQuote": {
+                                                        "endQuotationMark": {
                                                             "kind": "QuotationMark",
                                                             "fullStart": 240,
                                                             "start": 240,
@@ -620,7 +620,7 @@
                                                     {
                                                         "kind": "StringLiteral",
                                                         "newlines": [],
-                                                        "startQuote": {
+                                                        "startQuotationMark": {
                                                             "kind": "QuotationMark",
                                                             "fullStart": 282,
                                                             "start": 283,
@@ -634,7 +634,7 @@
                                                                 "length": 14
                                                             }
                                                         ],
-                                                        "endQuote": {
+                                                        "endQuotationMark": {
                                                             "kind": "QuotationMark",
                                                             "fullStart": 298,
                                                             "start": 298,

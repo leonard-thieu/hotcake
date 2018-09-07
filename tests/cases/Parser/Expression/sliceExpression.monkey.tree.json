@@ -66,7 +66,7 @@
                                 "sliceableExpression": {
                                     "kind": "StringLiteral",
                                     "newlines": null,
-                                    "startQuote": {
+                                    "startQuotationMark": {
                                         "kind": "QuotationMark",
                                         "fullStart": 26,
                                         "start": 27,
@@ -80,7 +80,7 @@
                                             "length": 11
                                         }
                                     ],
-                                    "endQuote": {
+                                    "endQuotationMark": {
                                         "kind": "QuotationMark",
                                         "fullStart": 39,
                                         "start": 39,
@@ -172,7 +172,7 @@
                                 "sliceableExpression": {
                                     "kind": "StringLiteral",
                                     "newlines": null,
-                                    "startQuote": {
+                                    "startQuotationMark": {
                                         "kind": "QuotationMark",
                                         "fullStart": 75,
                                         "start": 76,
@@ -186,7 +186,7 @@
                                             "length": 11
                                         }
                                     ],
-                                    "endQuote": {
+                                    "endQuotationMark": {
                                         "kind": "QuotationMark",
                                         "fullStart": 88,
                                         "start": 88,
@@ -269,7 +269,7 @@
                                 "sliceableExpression": {
                                     "kind": "StringLiteral",
                                     "newlines": null,
-                                    "startQuote": {
+                                    "startQuotationMark": {
                                         "kind": "QuotationMark",
                                         "fullStart": 126,
                                         "start": 127,
@@ -283,7 +283,7 @@
                                             "length": 11
                                         }
                                     ],
-                                    "endQuote": {
+                                    "endQuotationMark": {
                                         "kind": "QuotationMark",
                                         "fullStart": 139,
                                         "start": 139,
@@ -366,7 +366,7 @@
                                 "sliceableExpression": {
                                     "kind": "StringLiteral",
                                     "newlines": null,
-                                    "startQuote": {
+                                    "startQuotationMark": {
                                         "kind": "QuotationMark",
                                         "fullStart": 177,
                                         "start": 178,
@@ -380,7 +380,7 @@
                                             "length": 11
                                         }
                                     ],
-                                    "endQuote": {
+                                    "endQuotationMark": {
                                         "kind": "QuotationMark",
                                         "fullStart": 190,
                                         "start": 190,

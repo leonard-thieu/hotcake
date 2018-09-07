@@ -105,7 +105,7 @@
             "path": {
                 "kind": "StringLiteral",
                 "newlines": null,
-                "startQuote": {
+                "startQuotationMark": {
                     "kind": "QuotationMark",
                     "fullStart": 633,
                     "start": 634,
@@ -119,7 +119,7 @@
                         "length": 9
                     }
                 ],
-                "endQuote": {
+                "endQuotationMark": {
                     "kind": "QuotationMark",
                     "fullStart": 644,
                     "start": 644,
@@ -494,7 +494,7 @@
                     "expression": {
                         "kind": "StringLiteral",
                         "newlines": [],
-                        "startQuote": {
+                        "startQuotationMark": {
                             "kind": "QuotationMark",
                             "fullStart": 1122,
                             "start": 1123,
@@ -508,7 +508,7 @@
                                 "length": 11
                             }
                         ],
-                        "endQuote": {
+                        "endQuotationMark": {
                             "kind": "QuotationMark",
                             "fullStart": 1135,
                             "start": 1135,
@@ -803,7 +803,7 @@
                     "expression": {
                         "kind": "StringLiteral",
                         "newlines": [],
-                        "startQuote": {
+                        "startQuotationMark": {
                             "kind": "QuotationMark",
                             "fullStart": 1377,
                             "start": 1378,
@@ -817,7 +817,7 @@
                                 "length": 9
                             }
                         ],
-                        "endQuote": {
+                        "endQuotationMark": {
                             "kind": "QuotationMark",
                             "fullStart": 1388,
                             "start": 1388,
@@ -1142,7 +1142,7 @@
                     "expression": {
                         "kind": "StringLiteral",
                         "newlines": [],
-                        "startQuote": {
+                        "startQuotationMark": {
                             "kind": "QuotationMark",
                             "fullStart": 1719,
                             "start": 1719,
@@ -1156,7 +1156,7 @@
                                 "length": 15
                             }
                         ],
-                        "endQuote": {
+                        "endQuotationMark": {
                             "kind": "QuotationMark",
                             "fullStart": 1735,
                             "start": 1735,
@@ -2671,7 +2671,7 @@
                             "expression": {
                                 "kind": "StringLiteral",
                                 "newlines": [],
-                                "startQuote": {
+                                "startQuotationMark": {
                                     "kind": "QuotationMark",
                                     "fullStart": 3024,
                                     "start": 3025,
@@ -2685,7 +2685,7 @@
                                         "length": 8
                                     }
                                 ],
-                                "endQuote": {
+                                "endQuotationMark": {
                                     "kind": "QuotationMark",
                                     "fullStart": 3034,
                                     "start": 3034,
@@ -4536,7 +4536,7 @@
                         "rightOperand": {
                             "kind": "StringLiteral",
                             "newlines": [],
-                            "startQuote": {
+                            "startQuotationMark": {
                                 "kind": "QuotationMark",
                                 "fullStart": 4914,
                                 "start": 4915,
@@ -4550,7 +4550,7 @@
                                     "length": 6
                                 }
                             ],
-                            "endQuote": {
+                            "endQuotationMark": {
                                 "kind": "QuotationMark",
                                 "fullStart": 4922,
                                 "start": 4922,
@@ -4644,7 +4644,7 @@
                         "rightOperand": {
                             "kind": "StringLiteral",
                             "newlines": [],
-                            "startQuote": {
+                            "startQuotationMark": {
                                 "kind": "QuotationMark",
                                 "fullStart": 4990,
                                 "start": 4991,
@@ -4658,7 +4658,7 @@
                                     "length": 6
                                 }
                             ],
-                            "endQuote": {
+                            "endQuotationMark": {
                                 "kind": "QuotationMark",
                                 "fullStart": 4998,
                                 "start": 4998,
@@ -4780,7 +4780,7 @@
                         "rightOperand": {
                             "kind": "StringLiteral",
                             "newlines": [],
-                            "startQuote": {
+                            "startQuotationMark": {
                                 "kind": "QuotationMark",
                                 "fullStart": 5109,
                                 "start": 5110,
@@ -4794,7 +4794,7 @@
                                     "length": 6
                                 }
                             ],
-                            "endQuote": {
+                            "endQuotationMark": {
                                 "kind": "QuotationMark",
                                 "fullStart": 5117,
                                 "start": 5117,
@@ -4865,14 +4865,14 @@
                                 "rightOperand": {
                                     "kind": "StringLiteral",
                                     "newlines": [],
-                                    "startQuote": {
+                                    "startQuotationMark": {
                                         "kind": "QuotationMark",
                                         "fullStart": 5177,
                                         "start": 5178,
                                         "length": 2
                                     },
                                     "children": [],
-                                    "endQuote": {
+                                    "endQuotationMark": {
                                         "kind": "QuotationMark",
                                         "fullStart": 5179,
                                         "start": 5179,
@@ -4966,7 +4966,7 @@
                         "rightOperand": {
                             "kind": "StringLiteral",
                             "newlines": [],
-                            "startQuote": {
+                            "startQuotationMark": {
                                 "kind": "QuotationMark",
                                 "fullStart": 5246,
                                 "start": 5247,
@@ -4980,7 +4980,7 @@
                                     "length": 6
                                 }
                             ],
-                            "endQuote": {
+                            "endQuotationMark": {
                                 "kind": "QuotationMark",
                                 "fullStart": 5254,
                                 "start": 5254,
@@ -5051,14 +5051,14 @@
                                 "rightOperand": {
                                     "kind": "StringLiteral",
                                     "newlines": [],
-                                    "startQuote": {
+                                    "startQuotationMark": {
                                         "kind": "QuotationMark",
                                         "fullStart": 5314,
                                         "start": 5315,
                                         "length": 2
                                     },
                                     "children": [],
-                                    "endQuote": {
+                                    "endQuotationMark": {
                                         "kind": "QuotationMark",
                                         "fullStart": 5316,
                                         "start": 5316,
@@ -5175,7 +5175,7 @@
                         "rightOperand": {
                             "kind": "StringLiteral",
                             "newlines": [],
-                            "startQuote": {
+                            "startQuotationMark": {
                                 "kind": "QuotationMark",
                                 "fullStart": 5421,
                                 "start": 5422,
@@ -5189,7 +5189,7 @@
                                     "length": 6
                                 }
                             ],
-                            "endQuote": {
+                            "endQuotationMark": {
                                 "kind": "QuotationMark",
                                 "fullStart": 5429,
                                 "start": 5429,
@@ -5265,14 +5265,14 @@
                                 "rightOperand": {
                                     "kind": "StringLiteral",
                                     "newlines": [],
-                                    "startQuote": {
+                                    "startQuotationMark": {
                                         "kind": "QuotationMark",
                                         "fullStart": 5494,
                                         "start": 5495,
                                         "length": 2
                                     },
                                     "children": [],
-                                    "endQuote": {
+                                    "endQuotationMark": {
                                         "kind": "QuotationMark",
                                         "fullStart": 5496,
                                         "start": 5496,
@@ -5486,7 +5486,7 @@
                         "rightOperand": {
                             "kind": "StringLiteral",
                             "newlines": [],
-                            "startQuote": {
+                            "startQuotationMark": {
                                 "kind": "QuotationMark",
                                 "fullStart": 5663,
                                 "start": 5664,
@@ -5500,7 +5500,7 @@
                                     "length": 6
                                 }
                             ],
-                            "endQuote": {
+                            "endQuotationMark": {
                                 "kind": "QuotationMark",
                                 "fullStart": 5671,
                                 "start": 5671,
@@ -5573,14 +5573,14 @@
                         "rightOperand": {
                             "kind": "StringLiteral",
                             "newlines": [],
-                            "startQuote": {
+                            "startQuotationMark": {
                                 "kind": "QuotationMark",
                                 "fullStart": 5699,
                                 "start": 5700,
                                 "length": 2
                             },
                             "children": [],
-                            "endQuote": {
+                            "endQuotationMark": {
                                 "kind": "QuotationMark",
                                 "fullStart": 5701,
                                 "start": 5701,
