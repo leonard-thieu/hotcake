@@ -31,7 +31,7 @@ import { ModKeywordEqualsSignToken } from './Token/ModKeywordEqualsSignToken';
 import { ShlKeywordEqualsSignToken } from './Token/ShlKeywordEqualsSignToken';
 import { ShrKeywordEqualsSignToken } from './Token/ShrKeywordEqualsSignToken';
 import { SkippedToken } from './Token/SkippedToken';
-import { CommaToken, ConfigurationTagEndToken, ConfigurationTagStartToken, FloatLiteralToken, IdentifierToken, IntegerLiteralToken, NewKeywordToken, NewlineToken, NullKeywordToken, OpeningParenthesisToken, OpeningSquareBracketToken, PeriodToken, QuotationMarkToken, SelfKeywordToken, SuperKeywordToken, TokenKinds, TokenKindTokenMap, Tokens } from './Token/Token';
+import { CommaToken, ConfigurationTagEndToken, ConfigurationTagStartToken, FloatLiteralToken, IdentifierToken, IntegerLiteralToken, NewKeywordToken, NullKeywordToken, OpeningParenthesisToken, OpeningSquareBracketToken, PeriodToken, QuotationMarkToken, SelfKeywordToken, SuperKeywordToken, TokenKinds, TokenKindTokenMap, Tokens } from './Token/Token';
 import { TokenKind } from './Token/TokenKind';
 
 export abstract class ParserBase {
@@ -206,20 +206,7 @@ export abstract class ParserBase {
     // #region Unary expressions
 
     protected parseUnaryExpressionOrHigher(parent: Nodes): MissableExpression {
-        let newlines: NewlineToken[] | null = null;
-        while (true) {
-            const token = this.getToken();
-            if (token.kind !== TokenKind.Newline) {
-                break;
-            }
-
-            if (newlines === null) {
-                newlines = [];
-            }
-
-            this.advanceToken();
-            newlines.push(token);
-        }
+        let newlines = this.parseList(null as any, ParseContextKind.NewlineList);
 
         let expression: MissableExpression;
 
@@ -592,6 +579,37 @@ export abstract class ParserBase {
 
     // #endregion
 
+    // #region Newline list
+
+    private isNewlineListTerminator(token: Tokens): boolean {
+        return !this.isNewlineListMemberStart(token);
+    }
+
+    private isNewlineListMemberStart(token: Tokens): boolean {
+        switch (token.kind) {
+            case TokenKind.Newline: {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    private parseNewlineListMember() {
+        const token = this.getToken();
+        switch (token.kind) {
+            case TokenKind.Newline: {
+                this.advanceToken();
+
+                return token;
+            }
+        }
+
+        throw new Error(`Unexpected token: ${JSON.stringify(token.kind)}`);
+    }
+
+    // #endregion
+
     // #region Type reference sequence
 
     private isTypeReferenceSequenceTerminator(token: Tokens): boolean {
@@ -628,10 +646,7 @@ export abstract class ParserBase {
         const commaSeparator = new CommaSeparator();
         commaSeparator.parent = parent;
         commaSeparator.separator = separator;
-        let token: typeof commaSeparator.newlines[0] | null;
-        while ((token = this.eatOptional(TokenKind.Newline)) !== null) {
-            commaSeparator.newlines.push(token);
-        }
+        commaSeparator.newlines = this.parseList(commaSeparator, ParseContextKind.NewlineList);
 
         return commaSeparator;
     }
@@ -956,6 +971,9 @@ export abstract class ParserBase {
             case NodeKind.ModulePath: {
                 return this.isModulePathTerminator(token);
             }
+            case ParseContextKind.NewlineList: {
+                return this.isNewlineListTerminator(token);
+            }
             case ParseContextKind.TypeReferenceSequence: {
                 return this.isTypeReferenceSequenceTerminator(token);
             }
@@ -977,6 +995,9 @@ export abstract class ParserBase {
             case NodeKind.ModulePath: {
                 return this.isModulePathChildStart(token);
             }
+            case ParseContextKind.NewlineList: {
+                return this.isNewlineListMemberStart(token);
+            }
             case ParseContextKind.TypeReferenceSequence: {
                 return this.isTypeReferenceSequenceMemberStart(token);
             }
@@ -997,6 +1018,9 @@ export abstract class ParserBase {
             }
             case NodeKind.ModulePath: {
                 return this.parseModulePathChild();
+            }
+            case ParseContextKind.NewlineList: {
+                return this.parseNewlineListMember();
             }
             case ParseContextKind.TypeReferenceSequence: {
                 return this.parseTypeReferenceSequenceMember(parent);
@@ -1154,6 +1178,7 @@ function getBinaryOperatorPrecedenceAndAssociativity(token: Tokens, parent: Node
 // #region Parse contexts
 
 export enum ParseContextKind {
+    NewlineList = 'NewlineList',
     TypeReferenceSequence = 'TypeReferenceSequence',
     ExpressionSequence = 'ExpressionSequence',
 }
@@ -1161,6 +1186,7 @@ export enum ParseContextKind {
 export interface ParseContextElementMapBase {
     [NodeKind.StringLiteral]: ReturnType<ParserBase['parseStringLiteralChild']>;
     [NodeKind.ModulePath]: ReturnType<ParserBase['parseModulePathChild']>;
+    [ParseContextKind.NewlineList]: ReturnType<ParserBase['parseNewlineListMember']>;
     [ParseContextKind.TypeReferenceSequence]: ReturnType<ParserBase['parseTypeReferenceSequenceMember']>;
     [ParseContextKind.ExpressionSequence]: ReturnType<ParserBase['parseExpressionSequenceMember']>;
 }
