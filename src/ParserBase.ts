@@ -1155,7 +1155,7 @@ function getBinaryOperatorPrecedenceAndAssociativity(token: Tokens, parent: Node
 
 export enum ParseContextKind {
     TypeReferenceSequence = 'TypeReferenceSequence',
-    ExpressionSequence = 'Expressions',
+    ExpressionSequence = 'ExpressionSequence',
 }
 
 export interface ParseContextElementMapBase {
@@ -1167,9 +1167,7 @@ export interface ParseContextElementMapBase {
 
 type ParseContextBase = keyof ParseContextElementMapBase;
 
-export interface ParseContextElementMap extends ParseContextElementMapBase {
-
-}
+export interface ParseContextElementMap extends ParseContextElementMapBase { }
 
 export type ParseContext = keyof ParseContextElementMap;
 
