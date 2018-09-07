@@ -1,7 +1,6 @@
 import { ParseContextElementArray, ParseContextKind } from '../ParserBase';
 import { MissableToken, MissingToken } from '../Token/MissingToken';
 import { BoolKeywordToken, FloatKeywordToken, GreaterThanSignToken, IdentifierToken, IntKeywordToken, LessThanSignToken, ObjectKeywordToken, PeriodToken, StringKeywordToken, ThrowableKeywordToken, VoidKeywordToken } from '../Token/Token';
-import { ArrayTypeDeclaration } from './ArrayTypeDeclaration';
 import { ModulePath } from './ModulePath';
 import { Node } from './Node';
 import { NodeKind } from './NodeKind';
@@ -28,7 +27,7 @@ export class TypeReference extends Node {
     typeArguments: ParseContextElementArray<ParseContextKind.TypeReferenceSequence> | null = null;
     greaterThanSign: MissableToken<GreaterThanSignToken> | null = null;
 
-    arrayTypeDeclarations: ArrayTypeDeclaration[] | null = null;
+    arrayTypeDeclarations: ParseContextElementArray<ParseContextKind.ArrayTypeDeclarationList>;
 }
 
 export type TypeReferenceIdentifierToken =

@@ -1100,21 +1100,7 @@ export class Parser extends ParserBase {
         const shorthandTypeDeclaration = new ShorthandTypeDeclaration();
         shorthandTypeDeclaration.parent = parent;
         shorthandTypeDeclaration.shorthandType = shorthandType;
-
-        while (true) {
-            const openingSquareBracket = this.getToken();
-            if (openingSquareBracket.kind !== TokenKind.OpeningSquareBracket) {
-                break;
-            }
-
-            if (shorthandTypeDeclaration.arrayTypeDeclarations === null) {
-                shorthandTypeDeclaration.arrayTypeDeclarations = [];
-            }
-
-            this.advanceToken();
-
-            shorthandTypeDeclaration.arrayTypeDeclarations.push(this.parseArrayTypeDeclaration(shorthandTypeDeclaration, openingSquareBracket));
-        }
+        shorthandTypeDeclaration.arrayTypeDeclarations = this.parseList(shorthandTypeDeclaration, ParseContextKind.ArrayTypeDeclarationList);
 
         return shorthandTypeDeclaration;
     }
