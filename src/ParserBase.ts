@@ -661,11 +661,11 @@ export abstract class ParserBase {
         return new MissingToken(token.fullStart, NodeKind.TypeReference);
     }
 
-    protected parseTypeReference(parent: Nodes, identifierOrModulePathStart: TypeReferenceIdentifierToken | PeriodToken): TypeReference {
+    protected parseTypeReference(parent: Nodes, nameOrModulePathStart: TypeReferenceIdentifierToken | PeriodToken): TypeReference {
         const typeReference = new TypeReference();
         typeReference.parent = parent;
 
-        switch (identifierOrModulePathStart.kind) {
+        switch (nameOrModulePathStart.kind) {
             case TokenKind.BoolKeyword:
             case TokenKind.IntKeyword:
             case TokenKind.FloatKeyword:
@@ -673,16 +673,16 @@ export abstract class ParserBase {
             case TokenKind.ObjectKeyword:
             case TokenKind.ThrowableKeyword:
             case TokenKind.VoidKeyword: {
-                typeReference.identifier = identifierOrModulePathStart;
+                typeReference.name = nameOrModulePathStart;
                 break;
             }
             default: {
-                if (identifierOrModulePathStart.kind === TokenKind.Identifier &&
+                if (nameOrModulePathStart.kind === TokenKind.Identifier &&
                     !this.isModulePathChildStart(this.getToken())) {
-                    typeReference.identifier = identifierOrModulePathStart;
+                    typeReference.name = nameOrModulePathStart;
                 } else {
-                    typeReference.modulePath = this.parseModulePath(typeReference, identifierOrModulePathStart);
-                    typeReference.identifier = typeReference.modulePath.name!;
+                    typeReference.modulePath = this.parseModulePath(typeReference, nameOrModulePathStart);
+                    typeReference.name = typeReference.modulePath.name!;
                     typeReference.scopeMemberAccessOperator = typeReference.modulePath.scopeMemberAccessOperator;
                     this.setModulePathProperties(typeReference.modulePath);
                 }

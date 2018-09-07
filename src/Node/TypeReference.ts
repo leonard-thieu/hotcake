@@ -10,7 +10,7 @@ export class TypeReference extends Node {
     static CHILD_NAMES: (keyof TypeReference)[] = [
         'modulePath',
         'scopeMemberAccessOperator',
-        'identifier',
+        'name',
         'lessThanSign',
         'typeArguments',
         'greaterThanSign',
@@ -21,7 +21,7 @@ export class TypeReference extends Node {
 
     modulePath: ModulePath | null = null;
     scopeMemberAccessOperator: MissableToken<PeriodToken> | null = null;
-    identifier: TypeReferenceIdentifierToken | MissableToken<IdentifierToken>;
+    name: TypeReferenceIdentifierToken | MissableToken<IdentifierToken>;
 
     // Generic type arguments
     lessThanSign: LessThanSignToken | null = null;
