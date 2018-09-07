@@ -7,14 +7,14 @@ import { Expression } from './Expression';
 export class StringLiteral extends Expression {
     static CHILD_NAMES: (keyof StringLiteral)[] = [
         'newlines',
-        'startQuote',
+        'startQuotationMark',
         'children',
-        'endQuote',
+        'endQuotationMark',
     ];
 
     readonly kind = NodeKind.StringLiteral;
 
-    startQuote: QuotationMarkToken;
+    startQuotationMark: QuotationMarkToken;
     children: ParseContextElementArray<StringLiteral['kind']>;
-    endQuote: MissableToken<QuotationMarkToken>;
+    endQuotationMark: MissableToken<QuotationMarkToken>;
 }

@@ -367,12 +367,12 @@ export abstract class ParserBase {
         return superExpression;
     }
 
-    protected parseStringLiteral(parent: Nodes, startQuote: QuotationMarkToken): StringLiteral {
+    protected parseStringLiteral(parent: Nodes, startQuotationMark: QuotationMarkToken): StringLiteral {
         const stringLiteral = new StringLiteral();
         stringLiteral.parent = parent;
-        stringLiteral.startQuote = startQuote;
+        stringLiteral.startQuotationMark = startQuotationMark;
         stringLiteral.children = this.parseList(stringLiteral, stringLiteral.kind);
-        stringLiteral.endQuote = this.eat(TokenKind.QuotationMark);
+        stringLiteral.endQuotationMark = this.eat(TokenKind.QuotationMark);
 
         return stringLiteral;
     }
