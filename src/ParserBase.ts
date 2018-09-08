@@ -319,9 +319,14 @@ export abstract class ParserBase {
 
                 return this.parseGroupingExpression(parent, token);
             }
+            case TokenKind.EOF: {
+                break;
+            }
+            default: {
+                console.error(`${JSON.stringify(token.kind)} not implemented.`);
+                break;
+            }
         }
-
-        console.error(`${JSON.stringify(token.kind)} not implemented.`);
 
         return new MissingToken(token.fullStart, TokenKind.Expression);
     }
