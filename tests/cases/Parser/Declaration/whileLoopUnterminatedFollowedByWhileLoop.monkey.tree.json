@@ -1,0 +1,151 @@
+{
+    "kind": "ModuleDeclaration",
+    "members": [
+        {
+            "kind": "FunctionDeclaration",
+            "functionKeyword": {
+                "kind": "FunctionKeyword",
+                "fullStart": 0,
+                "start": 0,
+                "length": 8
+            },
+            "name": {
+                "kind": "Identifier",
+                "fullStart": 8,
+                "start": 9,
+                "length": 2
+            },
+            "returnType": null,
+            "openingParenthesis": {
+                "kind": "OpeningParenthesis",
+                "fullStart": 10,
+                "start": 10,
+                "length": 1
+            },
+            "parameters": [],
+            "closingParenthesis": {
+                "kind": "ClosingParenthesis",
+                "fullStart": 11,
+                "start": 11,
+                "length": 1
+            },
+            "statements": [
+                {
+                    "kind": "EmptyStatement",
+                    "terminator": {
+                        "kind": "Newline",
+                        "fullStart": 12,
+                        "start": 13,
+                        "length": 2
+                    }
+                },
+                {
+                    "kind": "WhileLoop",
+                    "whileKeyword": {
+                        "kind": "WhileKeyword",
+                        "fullStart": 14,
+                        "start": 18,
+                        "length": 9
+                    },
+                    "expression": {
+                        "kind": "IdentifierExpression",
+                        "newlines": [],
+                        "globalScopeMemberAccessOperator": null,
+                        "name": {
+                            "kind": "Identifier",
+                            "fullStart": 23,
+                            "start": 24,
+                            "length": 2
+                        },
+                        "lessThanSign": null,
+                        "typeArguments": null,
+                        "greaterThanSign": null
+                    },
+                    "statements": [
+                        {
+                            "kind": "EmptyStatement",
+                            "terminator": {
+                                "kind": "Newline",
+                                "fullStart": 25,
+                                "start": 26,
+                                "length": 2
+                            }
+                        },
+                        {
+                            "kind": "EmptyStatement",
+                            "terminator": {
+                                "kind": "Newline",
+                                "fullStart": 27,
+                                "start": 28,
+                                "length": 2
+                            }
+                        },
+                        {
+                            "kind": "WhileLoop",
+                            "whileKeyword": {
+                                "kind": "WhileKeyword",
+                                "fullStart": 29,
+                                "start": 33,
+                                "length": 9
+                            },
+                            "expression": {
+                                "kind": "IdentifierExpression",
+                                "newlines": [],
+                                "globalScopeMemberAccessOperator": null,
+                                "name": {
+                                    "kind": "Identifier",
+                                    "fullStart": 38,
+                                    "start": 39,
+                                    "length": 2
+                                },
+                                "lessThanSign": null,
+                                "typeArguments": null,
+                                "greaterThanSign": null
+                            },
+                            "statements": [
+                                {
+                                    "kind": "EmptyStatement",
+                                    "terminator": {
+                                        "kind": "Newline",
+                                        "fullStart": 40,
+                                        "start": 41,
+                                        "length": 2
+                                    }
+                                }
+                            ],
+                            "endKeyword": {
+                                "kind": "EndKeyword",
+                                "fullStart": 42,
+                                "start": 46,
+                                "length": 7
+                            },
+                            "endWhileKeyword": null,
+                            "terminator": {
+                                "kind": "Newline",
+                                "fullStart": 49,
+                                "start": 50,
+                                "length": 2
+                            }
+                        }
+                    ],
+                    "endKeyword": {
+                        "kind": "EndKeyword",
+                        "fullStart": 51,
+                        "start": 51,
+                        "length": 3
+                    },
+                    "endWhileKeyword": null,
+                    "terminator": null
+                }
+            ],
+            "endKeyword": {
+                "kind": "Missing",
+                "fullStart": 54,
+                "start": 54,
+                "length": 0,
+                "originalKind": "EndKeyword"
+            },
+            "endFunctionKeyword": null
+        }
+    ]
+}

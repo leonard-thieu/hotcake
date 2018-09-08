@@ -1,0 +1,76 @@
+{
+    "kind": "ModuleDeclaration",
+    "members": [
+        {
+            "kind": "InterfaceDeclaration",
+            "interfaceKeyword": {
+                "kind": "InterfaceKeyword",
+                "fullStart": 0,
+                "start": 0,
+                "length": 9
+            },
+            "name": {
+                "kind": "Identifier",
+                "fullStart": 9,
+                "start": 10,
+                "length": 2
+            },
+            "extendsKeyword": null,
+            "baseTypes": null,
+            "members": [
+                {
+                    "kind": "Newline",
+                    "fullStart": 11,
+                    "start": 12,
+                    "length": 2
+                },
+                {
+                    "kind": "Newline",
+                    "fullStart": 13,
+                    "start": 14,
+                    "length": 2
+                }
+            ],
+            "endKeyword": {
+                "kind": "Missing",
+                "fullStart": 15,
+                "start": 15,
+                "length": 0,
+                "originalKind": "EndKeyword"
+            },
+            "endInterfaceKeyword": null
+        },
+        {
+            "kind": "InterfaceDeclaration",
+            "interfaceKeyword": {
+                "kind": "InterfaceKeyword",
+                "fullStart": 15,
+                "start": 15,
+                "length": 9
+            },
+            "name": {
+                "kind": "Identifier",
+                "fullStart": 24,
+                "start": 25,
+                "length": 2
+            },
+            "extendsKeyword": null,
+            "baseTypes": null,
+            "members": [
+                {
+                    "kind": "Newline",
+                    "fullStart": 26,
+                    "start": 27,
+                    "length": 2
+                }
+            ],
+            "endKeyword": {
+                "kind": "EndKeyword",
+                "fullStart": 28,
+                "start": 28,
+                "length": 3
+            },
+            "endInterfaceKeyword": null
+        }
+    ]
+}

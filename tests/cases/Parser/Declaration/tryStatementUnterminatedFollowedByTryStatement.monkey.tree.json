@@ -1,0 +1,125 @@
+{
+    "kind": "ModuleDeclaration",
+    "members": [
+        {
+            "kind": "FunctionDeclaration",
+            "functionKeyword": {
+                "kind": "FunctionKeyword",
+                "fullStart": 0,
+                "start": 0,
+                "length": 8
+            },
+            "name": {
+                "kind": "Identifier",
+                "fullStart": 8,
+                "start": 9,
+                "length": 2
+            },
+            "returnType": null,
+            "openingParenthesis": {
+                "kind": "OpeningParenthesis",
+                "fullStart": 10,
+                "start": 10,
+                "length": 1
+            },
+            "parameters": [],
+            "closingParenthesis": {
+                "kind": "ClosingParenthesis",
+                "fullStart": 11,
+                "start": 11,
+                "length": 1
+            },
+            "statements": [
+                {
+                    "kind": "EmptyStatement",
+                    "terminator": {
+                        "kind": "Newline",
+                        "fullStart": 12,
+                        "start": 13,
+                        "length": 2
+                    }
+                },
+                {
+                    "kind": "TryStatement",
+                    "tryKeyword": {
+                        "kind": "TryKeyword",
+                        "fullStart": 14,
+                        "start": 18,
+                        "length": 7
+                    },
+                    "statements": [
+                        {
+                            "kind": "EmptyStatement",
+                            "terminator": {
+                                "kind": "Newline",
+                                "fullStart": 21,
+                                "start": 22,
+                                "length": 2
+                            }
+                        },
+                        {
+                            "kind": "EmptyStatement",
+                            "terminator": {
+                                "kind": "Newline",
+                                "fullStart": 23,
+                                "start": 24,
+                                "length": 2
+                            }
+                        },
+                        {
+                            "kind": "TryStatement",
+                            "tryKeyword": {
+                                "kind": "TryKeyword",
+                                "fullStart": 25,
+                                "start": 29,
+                                "length": 7
+                            },
+                            "statements": [
+                                {
+                                    "kind": "EmptyStatement",
+                                    "terminator": {
+                                        "kind": "Newline",
+                                        "fullStart": 32,
+                                        "start": 33,
+                                        "length": 2
+                                    }
+                                }
+                            ],
+                            "catchStatements": null,
+                            "endKeyword": {
+                                "kind": "EndKeyword",
+                                "fullStart": 34,
+                                "start": 38,
+                                "length": 7
+                            },
+                            "endTryKeyword": null,
+                            "terminator": {
+                                "kind": "Newline",
+                                "fullStart": 41,
+                                "start": 42,
+                                "length": 2
+                            }
+                        }
+                    ],
+                    "catchStatements": null,
+                    "endKeyword": {
+                        "kind": "EndKeyword",
+                        "fullStart": 43,
+                        "start": 43,
+                        "length": 3
+                    },
+                    "endTryKeyword": null,
+                    "terminator": null
+                }
+            ],
+            "endKeyword": {
+                "kind": "Missing",
+                "fullStart": 46,
+                "start": 46,
+                "length": 0,
+                "originalKind": "EndKeyword"
+            },
+            "endFunctionKeyword": null
+        }
+    ]
+}

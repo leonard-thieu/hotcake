@@ -1,0 +1,146 @@
+{
+    "kind": "ModuleDeclaration",
+    "members": [
+        {
+            "kind": "FunctionDeclaration",
+            "functionKeyword": {
+                "kind": "FunctionKeyword",
+                "fullStart": 0,
+                "start": 0,
+                "length": 8
+            },
+            "name": {
+                "kind": "Identifier",
+                "fullStart": 8,
+                "start": 9,
+                "length": 2
+            },
+            "returnType": null,
+            "openingParenthesis": {
+                "kind": "OpeningParenthesis",
+                "fullStart": 10,
+                "start": 10,
+                "length": 1
+            },
+            "parameters": [],
+            "closingParenthesis": {
+                "kind": "ClosingParenthesis",
+                "fullStart": 11,
+                "start": 11,
+                "length": 1
+            },
+            "statements": [
+                {
+                    "kind": "EmptyStatement",
+                    "terminator": {
+                        "kind": "Newline",
+                        "fullStart": 12,
+                        "start": 13,
+                        "length": 2
+                    }
+                },
+                {
+                    "kind": "SelectStatement",
+                    "selectKeyword": {
+                        "kind": "SelectKeyword",
+                        "fullStart": 14,
+                        "start": 18,
+                        "length": 10
+                    },
+                    "expression": {
+                        "kind": "IdentifierExpression",
+                        "newlines": [],
+                        "globalScopeMemberAccessOperator": null,
+                        "name": {
+                            "kind": "Identifier",
+                            "fullStart": 24,
+                            "start": 25,
+                            "length": 2
+                        },
+                        "lessThanSign": null,
+                        "typeArguments": null,
+                        "greaterThanSign": null
+                    },
+                    "newlines": [
+                        {
+                            "kind": "Newline",
+                            "fullStart": 26,
+                            "start": 27,
+                            "length": 2
+                        },
+                        {
+                            "kind": "Newline",
+                            "fullStart": 28,
+                            "start": 29,
+                            "length": 2
+                        }
+                    ],
+                    "caseStatements": [],
+                    "defaultStatement": null,
+                    "endKeyword": {
+                        "kind": "Missing",
+                        "fullStart": 34,
+                        "start": 34,
+                        "length": 0,
+                        "originalKind": "EndKeyword"
+                    },
+                    "endSelectKeyword": null,
+                    "terminator": null
+                },
+                {
+                    "kind": "SelectStatement",
+                    "selectKeyword": {
+                        "kind": "SelectKeyword",
+                        "fullStart": 30,
+                        "start": 34,
+                        "length": 10
+                    },
+                    "expression": {
+                        "kind": "IdentifierExpression",
+                        "newlines": [],
+                        "globalScopeMemberAccessOperator": null,
+                        "name": {
+                            "kind": "Identifier",
+                            "fullStart": 40,
+                            "start": 41,
+                            "length": 2
+                        },
+                        "lessThanSign": null,
+                        "typeArguments": null,
+                        "greaterThanSign": null
+                    },
+                    "newlines": [
+                        {
+                            "kind": "Newline",
+                            "fullStart": 42,
+                            "start": 43,
+                            "length": 2
+                        }
+                    ],
+                    "caseStatements": [],
+                    "defaultStatement": null,
+                    "endKeyword": {
+                        "kind": "EndKeyword",
+                        "fullStart": 44,
+                        "start": 48,
+                        "length": 7
+                    },
+                    "endSelectKeyword": null,
+                    "terminator": {
+                        "kind": "Newline",
+                        "fullStart": 51,
+                        "start": 52,
+                        "length": 2
+                    }
+                }
+            ],
+            "endKeyword": {
+                "kind": "EndKeyword",
+                "fullStart": 53,
+                "start": 53,
+                "length": 3
+            },
+            "endFunctionKeyword": null
+        }
+    ]
+}

@@ -1,0 +1,88 @@
+{
+    "kind": "ModuleDeclaration",
+    "members": [
+        {
+            "kind": "ClassDeclaration",
+            "classKeyword": {
+                "kind": "ClassKeyword",
+                "fullStart": 0,
+                "start": 0,
+                "length": 5
+            },
+            "name": {
+                "kind": "Identifier",
+                "fullStart": 5,
+                "start": 6,
+                "length": 2
+            },
+            "lessThanSign": null,
+            "typeParameters": null,
+            "greaterThanSign": null,
+            "extendsKeyword": null,
+            "baseType": null,
+            "implementsKeyword": null,
+            "implementedTypes": null,
+            "attributes": [],
+            "members": [
+                {
+                    "kind": "Newline",
+                    "fullStart": 7,
+                    "start": 8,
+                    "length": 2
+                },
+                {
+                    "kind": "Newline",
+                    "fullStart": 9,
+                    "start": 10,
+                    "length": 2
+                }
+            ],
+            "endKeyword": {
+                "kind": "Missing",
+                "fullStart": 11,
+                "start": 11,
+                "length": 0,
+                "originalKind": "EndKeyword"
+            },
+            "endClassKeyword": null
+        },
+        {
+            "kind": "ClassDeclaration",
+            "classKeyword": {
+                "kind": "ClassKeyword",
+                "fullStart": 11,
+                "start": 11,
+                "length": 5
+            },
+            "name": {
+                "kind": "Identifier",
+                "fullStart": 16,
+                "start": 17,
+                "length": 2
+            },
+            "lessThanSign": null,
+            "typeParameters": null,
+            "greaterThanSign": null,
+            "extendsKeyword": null,
+            "baseType": null,
+            "implementsKeyword": null,
+            "implementedTypes": null,
+            "attributes": [],
+            "members": [
+                {
+                    "kind": "Newline",
+                    "fullStart": 18,
+                    "start": 19,
+                    "length": 2
+                }
+            ],
+            "endKeyword": {
+                "kind": "EndKeyword",
+                "fullStart": 20,
+                "start": 20,
+                "length": 3
+            },
+            "endClassKeyword": null
+        }
+    ]
+}
