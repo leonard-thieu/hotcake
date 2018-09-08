@@ -12,6 +12,7 @@ export class PreprocessorTokenizer {
     private nesting: Array<TokenKind.RemDirectiveKeyword | TokenKind.IfDirectiveKeyword>;
     private stringLiteralTerminatorIndex: number;
     private configurationTagTerminatorIndex: number;
+    private tokens: Tokens[];
 
     getTokens(document: string): Tokens[] {
         this.document = document;
@@ -21,15 +22,15 @@ export class PreprocessorTokenizer {
         this.nesting = [];
         this.stringLiteralTerminatorIndex = -1;
         this.configurationTagTerminatorIndex = -1;
+        this.tokens = [];
 
-        const tokens: Tokens[] = [];
         let token: Tokens;
         do {
             token = this.next();
-            tokens.push(token);
+            this.tokens.push(token);
         } while (token.kind !== TokenKind.EOF);
 
-        return tokens;
+        return this.tokens;
     }
 
     private next(): Tokens {
@@ -618,6 +619,29 @@ export class PreprocessorTokenizer {
 
     private tryReadPreprocessorDirective() {
         const start = this.position;
+
+        const lastToken = this.tokens[this.tokens.length - 1];
+        if (lastToken) {
+            switch (lastToken.kind) {
+                case TokenKind.ElseDirectiveKeyword:
+                case TokenKind.EndDirectiveKeyword: {
+                    const id = this.tryReadIdentifier();
+                    if (id !== null) {
+                        switch (id.toLowerCase()) {
+                            case 'if': {
+                                return TokenKind.IfDirectiveKeyword;
+                            }
+                            default: {
+                                this.position = start;
+                                break;
+                            }
+                        }
+                    }
+                    break;
+                }
+            }
+        }
+
         let kind = TokenKind.Unknown;
 
         if (this.isPreprocessorDirectiveAllowed()) {
@@ -692,10 +716,8 @@ export class PreprocessorTokenizer {
                         break;
                     }
                     case 'if': { kind = TokenKind.IfDirectiveKeyword; break; }
-                    // TODO: Check if spaces are allowed between else and if.
                     case 'elseif': { kind = TokenKind.ElseIfDirectiveKeyword; break; }
                     case 'else': { kind = TokenKind.ElseDirectiveKeyword; break; }
-                    // TODO: Check if spaces are allowed between end and if.
                     case 'endif':
                     case 'end': {
                         // Both #End and #EndIf may terminate #If and #Rem directives.

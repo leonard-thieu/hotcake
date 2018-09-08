@@ -15,6 +15,7 @@ export class IfDirective extends Directive {
         'elseDirective',
         'endDirectiveNumberSign',
         'endDirectiveKeyword',
+        'endIfDirectiveKeyword',
     ];
 
     readonly kind = NodeKind.IfDirective;
@@ -26,19 +27,22 @@ export class IfDirective extends Directive {
     elseDirective: ElseDirective | null = null;
     endDirectiveNumberSign: MissableToken<NumberSignToken>;
     endDirectiveKeyword: MissableToken<EndDirectiveKeywordToken>;
+    endIfDirectiveKeyword: IfDirectiveKeywordToken | null = null;
 }
 
 export class ElseIfDirective extends Directive {
     static CHILD_NAMES: (keyof ElseIfDirective)[] = [
         'numberSign',
         'elseIfDirectiveKeyword',
+        'ifDirectiveKeyword',
         'expression',
         'members',
     ];
 
     readonly kind = NodeKind.ElseIfDirective;
 
-    elseIfDirectiveKeyword: ElseIfDirectiveKeywordToken;
+    elseIfDirectiveKeyword: ElseIfDirectiveKeywordToken | ElseDirectiveKeywordToken;
+    ifDirectiveKeyword: IfDirectiveKeywordToken | null = null;
     expression: MissableExpression;
     members: ParseContextElementArray<ElseIfDirective['kind']>;
 }

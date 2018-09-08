@@ -1,6 +1,6 @@
 import { ParseContextElementArray } from '../../ParserBase';
 import { MissableToken } from '../../Token/MissingToken';
-import { EndDirectiveKeywordToken, NumberSignToken, RemDirectiveKeywordToken } from '../../Token/Token';
+import { EndDirectiveKeywordToken, IfDirectiveKeywordToken, NumberSignToken, RemDirectiveKeywordToken } from '../../Token/Token';
 import { NodeKind } from '../NodeKind';
 import { Directive } from './Directive';
 
@@ -11,6 +11,7 @@ export class RemDirective extends Directive {
         'children',
         'endDirectiveNumberSign',
         'endDirectiveKeyword',
+        'endIfDirectiveKeyword',
     ];
 
     readonly kind = NodeKind.RemDirective;
@@ -19,4 +20,5 @@ export class RemDirective extends Directive {
     children: ParseContextElementArray<RemDirective['kind']>;
     endDirectiveNumberSign: MissableToken<NumberSignToken>;
     endDirectiveKeyword: MissableToken<EndDirectiveKeywordToken>;
+    endIfDirectiveKeyword: IfDirectiveKeywordToken | null = null;
 }

@@ -98,16 +98,29 @@ export class PreprocessorParser extends ParserBase {
 
         while (true) {
             const token = this.getToken();
+            if (token.kind !== TokenKind.NumberSign) {
+                break;
+            }
+
             const nextToken = this.getToken(1);
-            if (token.kind !== TokenKind.NumberSign ||
-                nextToken.kind !== TokenKind.ElseIfDirectiveKeyword) {
+
+            let nextNextToken: Tokens | null = null;
+            if (nextToken.kind === TokenKind.ElseDirectiveKeyword) {
+                nextNextToken = this.getToken(2);
+                if (nextNextToken.kind !== TokenKind.IfDirectiveKeyword) {
+                    break;
+                }
+            } else if (nextToken.kind !== TokenKind.ElseIfDirectiveKeyword) {
                 break;
             }
 
             this.advanceToken();
             this.advanceToken();
+            if (nextNextToken) {
+                this.advanceToken();
+            }
 
-            ifDirective.elseIfDirectives.push(this.parseElseIfDirective(ifDirective, token, nextToken));
+            ifDirective.elseIfDirectives.push(this.parseElseIfDirective(ifDirective, token, nextToken, nextNextToken));
         }
 
         const elseDirectiveNumberSign = this.getToken();
@@ -122,15 +135,24 @@ export class PreprocessorParser extends ParserBase {
 
         ifDirective.endDirectiveNumberSign = this.eat(TokenKind.NumberSign);
         ifDirective.endDirectiveKeyword = this.eat(TokenKind.EndDirectiveKeyword);
+        if (ifDirective.endDirectiveKeyword.kind === TokenKind.EndDirectiveKeyword) {
+            ifDirective.endIfDirectiveKeyword = this.eatOptional(TokenKind.IfDirectiveKeyword);
+        }
 
         return ifDirective;
     }
 
-    private parseElseIfDirective(parent: IfDirective, numberSign: NumberSignToken, elseIfDirectiveKeyword: ElseIfDirectiveKeywordToken): ElseIfDirective {
+    private parseElseIfDirective(
+        parent: IfDirective,
+        numberSign: NumberSignToken,
+        elseIfDirectiveKeyword: ElseIfDirectiveKeywordToken | ElseDirectiveKeywordToken,
+        ifDirectiveKeyword: IfDirectiveKeywordToken | null,
+    ): ElseIfDirective {
         const elseIfDirective = new ElseIfDirective();
         elseIfDirective.parent = parent;
         elseIfDirective.numberSign = numberSign;
         elseIfDirective.elseIfDirectiveKeyword = elseIfDirectiveKeyword;
+        elseIfDirective.ifDirectiveKeyword = ifDirectiveKeyword;
         elseIfDirective.expression = this.parseExpression(elseIfDirective);
         elseIfDirective.members = this.parseList(elseIfDirective, elseIfDirective.kind);
 
@@ -173,6 +195,9 @@ export class PreprocessorParser extends ParserBase {
         remDirective.children = this.parseList(remDirective, remDirective.kind);
         remDirective.endDirectiveNumberSign = this.eat(TokenKind.NumberSign);
         remDirective.endDirectiveKeyword = this.eat(TokenKind.EndDirectiveKeyword);
+        if (remDirective.endDirectiveKeyword.kind === TokenKind.EndDirectiveKeyword) {
+            remDirective.endIfDirectiveKeyword = this.eatOptional(TokenKind.IfDirectiveKeyword);
+        }
 
         return remDirective;
     }
