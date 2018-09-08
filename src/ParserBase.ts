@@ -1116,7 +1116,7 @@ export abstract class ParserBase {
             return token;
         }
 
-        return new MissingToken(token.start, kinds[0]);
+        return new MissingToken(token.fullStart, kinds[0]);
     }
 
     protected eatOptional<TTokenKind extends TokenKinds>(...kinds: TTokenKind[]): TokenKindTokenMap[TTokenKind] | null {
