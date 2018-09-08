@@ -660,8 +660,7 @@ export class Parser extends ParserBase {
         elseStatement.parent = parent;
         elseStatement.elseKeyword = elseKeyword;
 
-        // TODO: Should just check if parent is single line.
-        if (this.getToken().kind === TokenKind.Newline) {
+        if (!elseStatement.isSingleLine) {
             elseStatement.statements = this.parseList(elseStatement, elseStatement.kind);
         } else {
             elseStatement.statements = [this.parseStatement(elseStatement)];
