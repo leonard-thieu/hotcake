@@ -79,8 +79,8 @@
                     "defaultStatement": null,
                     "endKeyword": {
                         "kind": "Missing",
-                        "fullStart": 34,
-                        "start": 34,
+                        "fullStart": 30,
+                        "start": 30,
                         "length": 0,
                         "originalKind": "EndKeyword"
                     },

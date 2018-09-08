@@ -81,8 +81,8 @@
                     ],
                     "endKeyword": {
                         "kind": "Missing",
-                        "fullStart": 31,
-                        "start": 31,
+                        "fullStart": 27,
+                        "start": 27,
                         "length": 0,
                         "originalKind": "EndKeyword"
                     },
