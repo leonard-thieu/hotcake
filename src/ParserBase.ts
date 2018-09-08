@@ -31,7 +31,7 @@ import { ModKeywordEqualsSignToken } from './Token/ModKeywordEqualsSignToken';
 import { ShlKeywordEqualsSignToken } from './Token/ShlKeywordEqualsSignToken';
 import { ShrKeywordEqualsSignToken } from './Token/ShrKeywordEqualsSignToken';
 import { SkippedToken } from './Token/SkippedToken';
-import { CommaToken, ConfigurationTagEndToken, ConfigurationTagStartToken, FloatLiteralToken, IdentifierToken, IntegerLiteralToken, NewKeywordToken, NullKeywordToken, OpeningParenthesisToken, OpeningSquareBracketToken, PeriodToken, QuotationMarkToken, SelfKeywordToken, SuperKeywordToken, TokenKinds, TokenKindTokenMap, Tokens } from './Token/Token';
+import { CommaToken, ConfigurationTagEndToken, ConfigurationTagStartToken, FloatLiteralToken, IdentifierToken, IntegerLiteralToken, NewKeywordToken, NullKeywordToken, OpeningParenthesisToken, OpeningSquareBracketToken, PeriodPeriodToken, PeriodToken, QuotationMarkToken, SelfKeywordToken, SuperKeywordToken, TokenKinds, TokenKindTokenMap, Tokens } from './Token/Token';
 import { TokenKind } from './Token/TokenKind';
 
 export abstract class ParserBase {
@@ -497,37 +497,55 @@ export abstract class ParserBase {
 
     protected parseIndexOrSliceExpression(expression: Expressions, openingSquareBracket: OpeningSquareBracketToken) {
         let indexExpressionExpressionOrstartExpression: MissableExpression | null = null;
-        if (this.isExpressionStart(this.getToken())) {
-            indexExpressionExpressionOrstartExpression = this.parseExpression(null as any);
-
-            // TODO: What if ClosingSquareBracket is missing?
-            if (this.getToken().kind === TokenKind.ClosingSquareBracket) {
-                const indexExpression = new IndexExpression();
-                indexExpression.parent = expression.parent;
-                expression.parent = indexExpression;
-                indexExpression.indexableExpression = expression;
-                indexExpression.openingSquareBracket = openingSquareBracket;
-                indexExpression.indexExpressionExpression = indexExpressionExpressionOrstartExpression;
-                indexExpression.closingSquareBracket = this.eat(TokenKind.ClosingSquareBracket);
-
-                return indexExpression;
-            }
+        const token = this.getToken();
+        if (this.isExpressionStart(token)) {
+            indexExpressionExpressionOrstartExpression = this.parseExpression(null as any) as Expressions;
         }
 
+        const sliceOperator = this.eatOptional(TokenKind.PeriodPeriod);
+        if (!sliceOperator) {
+            if (!indexExpressionExpressionOrstartExpression) {
+                indexExpressionExpressionOrstartExpression = new MissingToken(token.fullStart, TokenKind.Expression);
+            }
+
+            return this.parseIndexExpression(expression, openingSquareBracket, indexExpressionExpressionOrstartExpression);
+        }
+
+        return this.parseSliceExpression(expression, openingSquareBracket, indexExpressionExpressionOrstartExpression, sliceOperator);
+    }
+
+    protected parseIndexExpression(
+        expression: Expressions,
+        openingSquareBracket: OpeningSquareBracketToken,
+        indexExpressionExpression: MissableExpression
+    ): IndexExpression {
+        const indexExpression = new IndexExpression();
+        indexExpression.parent = expression.parent;
+        expression.parent = indexExpression;
+        indexExpression.indexableExpression = expression;
+        indexExpression.openingSquareBracket = openingSquareBracket;
+        indexExpression.indexExpressionExpression = indexExpressionExpression;
+        indexExpression.closingSquareBracket = this.eat(TokenKind.ClosingSquareBracket);
+
+        return indexExpression;
+    }
+
+    protected parseSliceExpression(
+        expression: Expressions,
+        openingSquareBracket: OpeningSquareBracketToken,
+        startExpression: Expressions | null,
+        sliceOperator: PeriodPeriodToken
+    ): SliceExpression {
         const sliceExpression = new SliceExpression();
         sliceExpression.parent = expression.parent;
         expression.parent = sliceExpression;
         sliceExpression.sliceableExpression = expression;
         sliceExpression.openingSquareBracket = openingSquareBracket;
-        sliceExpression.startExpression = indexExpressionExpressionOrstartExpression;
-
-        if (this.getToken().kind !== TokenKind.ClosingSquareBracket) {
-            sliceExpression.sliceOperator = this.eat(TokenKind.PeriodPeriod);
-        }
+        sliceExpression.startExpression = startExpression;
+        sliceExpression.sliceOperator = sliceOperator;
         if (this.isExpressionStart(this.getToken())) {
-            sliceExpression.endExpression = this.parseExpression(sliceExpression);
+            sliceExpression.endExpression = this.parseExpression(sliceExpression) as Expressions;
         }
-
         sliceExpression.closingSquareBracket = this.eat(TokenKind.ClosingSquareBracket);
 
         return sliceExpression;
