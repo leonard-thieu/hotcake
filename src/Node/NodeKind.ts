@@ -23,7 +23,7 @@ export enum NodeKind {
 
     InterfaceMethodDeclaration = 'InterfaceMethodDeclaration',
     ClassMethodDeclaration = 'ClassMethodDeclaration',
-    LocalDataDeclarationSequenceStatement = 'LocalDataDeclarationSequenceStatement',
+    DataDeclarationSequenceStatement = 'DataDeclarationSequenceStatement',
     ReturnStatement = 'ReturnStatement',
     IfStatement = 'IfStatement',
     ElseIfStatement = 'ElseIfStatement',

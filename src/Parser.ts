@@ -18,12 +18,12 @@ import { MissableModulePath } from './Node/ModulePath';
 import { Nodes } from './Node/Node';
 import { NodeKind } from './Node/NodeKind';
 import { ContinueStatement } from './Node/Statement/ContinueStatement';
+import { DataDeclarationSequenceStatement } from './Node/Statement/DataDeclarationSequenceStatement';
 import { EmptyStatement } from './Node/Statement/EmptyStatement';
 import { ExitStatement } from './Node/Statement/ExitStatement';
 import { ExpressionStatement } from './Node/Statement/ExpressionStatement';
 import { ForLoop, NumericForLoopHeader } from './Node/Statement/ForLoop';
 import { ElseIfStatement, ElseStatement, IfStatement } from './Node/Statement/IfStatement';
-import { LocalDataDeclarationSequenceStatement } from './Node/Statement/LocalDataDeclarationSequenceStatement';
 import { RepeatLoop } from './Node/Statement/RepeatLoop';
 import { ReturnStatement } from './Node/Statement/ReturnStatement';
 import { CaseStatement, DefaultStatement, SelectStatement } from './Node/Statement/SelectStatement';
@@ -33,7 +33,7 @@ import { CatchStatement, TryStatement } from './Node/Statement/TryStatement';
 import { WhileLoop } from './Node/Statement/WhileLoop';
 import { ParseContext, ParseContextElementMapBase, ParseContextKind, ParserBase } from './ParserBase';
 import { MissingToken } from './Token/MissingToken';
-import { AliasKeywordToken, CaseKeywordToken, CatchKeywordToken, ClassKeywordToken, ColonToken, ContinueKeywordToken, DefaultKeywordToken, ElseIfKeywordToken, ElseKeywordToken, ExitKeywordToken, ForKeywordToken, FriendKeywordToken, FunctionKeywordToken, IdentifierToken, IfKeywordToken, ImportKeywordToken, InterfaceKeywordToken, LocalKeywordToken, MethodKeywordToken, RepeatKeywordToken, ReturnKeywordToken, SelectKeywordToken, StrictKeywordToken, ThrowKeywordToken, Tokens, TryKeywordToken, WhileKeywordToken } from './Token/Token';
+import { AliasKeywordToken, CaseKeywordToken, CatchKeywordToken, ClassKeywordToken, ColonToken, ConstKeywordToken, ContinueKeywordToken, DefaultKeywordToken, ElseIfKeywordToken, ElseKeywordToken, ExitKeywordToken, ForKeywordToken, FriendKeywordToken, FunctionKeywordToken, IdentifierToken, IfKeywordToken, ImportKeywordToken, InterfaceKeywordToken, LocalKeywordToken, MethodKeywordToken, RepeatKeywordToken, ReturnKeywordToken, SelectKeywordToken, StrictKeywordToken, ThrowKeywordToken, Tokens, TryKeywordToken, WhileKeywordToken } from './Token/Token';
 import { TokenKind } from './Token/TokenKind';
 
 export class Parser extends ParserBase {
@@ -460,6 +460,7 @@ export class Parser extends ParserBase {
 
     private isStatementStart(token: Tokens): boolean {
         switch (token.kind) {
+            case TokenKind.ConstKeyword:
             case TokenKind.LocalKeyword:
             case TokenKind.ReturnKeyword:
             case TokenKind.IfKeyword:
@@ -483,10 +484,11 @@ export class Parser extends ParserBase {
     private parseStatement(parent: Nodes) {
         const token = this.getToken();
         switch (token.kind) {
+            case TokenKind.ConstKeyword:
             case TokenKind.LocalKeyword: {
                 this.advanceToken();
 
-                return this.parseLocalDataDeclarationSequenceStatement(parent, token);
+                return this.parseDataDeclarationSequenceStatement(parent, token);
             }
             case TokenKind.ReturnKeyword: {
                 this.advanceToken();
@@ -557,13 +559,16 @@ export class Parser extends ParserBase {
         return this.parseExpressionStatement(parent);
     }
 
-    private parseLocalDataDeclarationSequenceStatement(parent: Nodes, localKeyword: LocalKeywordToken): LocalDataDeclarationSequenceStatement {
-        const localDataDeclarationSequenceStatement = new LocalDataDeclarationSequenceStatement();
-        localDataDeclarationSequenceStatement.parent = parent;
-        localDataDeclarationSequenceStatement.localDataDeclarationSequence = this.parseDataDeclarationSequence(localDataDeclarationSequenceStatement, localKeyword);
-        localDataDeclarationSequenceStatement.terminator = this.eatStatementTerminator(localDataDeclarationSequenceStatement);
+    private parseDataDeclarationSequenceStatement(
+        parent: Nodes,
+        dataDeclarationKeyword: ConstKeywordToken | LocalKeywordToken
+    ): DataDeclarationSequenceStatement {
+        const dataDeclarationSequenceStatement = new DataDeclarationSequenceStatement();
+        dataDeclarationSequenceStatement.parent = parent;
+        dataDeclarationSequenceStatement.dataDeclarationSequence = this.parseDataDeclarationSequence(dataDeclarationSequenceStatement, dataDeclarationKeyword);
+        dataDeclarationSequenceStatement.terminator = this.eatStatementTerminator(dataDeclarationSequenceStatement);
 
-        return localDataDeclarationSequenceStatement;
+        return dataDeclarationSequenceStatement;
     }
 
     private parseReturnStatement(parent: Nodes, returnKeyword: ReturnKeywordToken): ReturnStatement {
@@ -832,13 +837,13 @@ export class Parser extends ParserBase {
     }
 
     private parseForLoopHeader(parent: ForLoop) {
-        let loopVariableExpression: LocalDataDeclarationSequenceStatement | AssignmentExpression;
+        let loopVariableExpression: DataDeclarationSequenceStatement | AssignmentExpression;
         const localKeyword = this.getToken();
         if (localKeyword.kind === TokenKind.LocalKeyword) {
             this.advanceToken();
 
-            loopVariableExpression = this.parseLocalDataDeclarationSequenceStatement(parent, localKeyword);
-            const declaration = loopVariableExpression.localDataDeclarationSequence.children[0];
+            loopVariableExpression = this.parseDataDeclarationSequenceStatement(parent, localKeyword);
+            const declaration = loopVariableExpression.dataDeclarationSequence.children[0];
             if (declaration &&
                 declaration.kind === NodeKind.DataDeclaration &&
                 declaration.eachInKeyword !== null) {

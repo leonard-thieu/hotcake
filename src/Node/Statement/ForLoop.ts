@@ -5,7 +5,7 @@ import { AssignmentExpression } from '../Expression/AssignmentExpression';
 import { MissableExpression } from '../Expression/Expression';
 import { Node } from '../Node';
 import { NodeKind } from '../NodeKind';
-import { LocalDataDeclarationSequenceStatement } from './LocalDataDeclarationSequenceStatement';
+import { DataDeclarationSequenceStatement } from './DataDeclarationSequenceStatement';
 import { Statement } from './Statement';
 
 export class ForLoop extends Statement {
@@ -21,7 +21,7 @@ export class ForLoop extends Statement {
     readonly kind = NodeKind.ForLoop;
 
     forKeyword: ForKeywordToken;
-    header: NumericForLoopHeader | LocalDataDeclarationSequenceStatement | AssignmentExpression;
+    header: NumericForLoopHeader | DataDeclarationSequenceStatement | AssignmentExpression;
     statements: ParseContextElementArray<ForLoop['kind']>;
     endKeyword: MissableToken<NextKeywordToken | EndKeywordToken>;
     endForKeyword: ForKeywordToken | null = null;
@@ -38,7 +38,7 @@ export class NumericForLoopHeader extends Node {
 
     readonly kind = NodeKind.NumericForLoopHeader;
 
-    loopVariableExpression: LocalDataDeclarationSequenceStatement | AssignmentExpression;
+    loopVariableExpression: DataDeclarationSequenceStatement | AssignmentExpression;
     toOrUntilKeyword: MissableToken<ToKeywordToken | UntilKeywordToken>;
     lastValueExpression: MissableExpression;
     stepKeyword: StepKeywordToken | null = null;

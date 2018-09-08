@@ -1,12 +1,12 @@
 import { NewlineToken, SemicolonToken } from '../../Token/Token';
 import { Node } from '../Node';
 import { ContinueStatement } from './ContinueStatement';
+import { DataDeclarationSequenceStatement } from './DataDeclarationSequenceStatement';
 import { EmptyStatement } from './EmptyStatement';
 import { ExitStatement } from './ExitStatement';
 import { ExpressionStatement } from './ExpressionStatement';
 import { ForLoop } from './ForLoop';
 import { ElseIfStatement, ElseStatement, IfStatement } from './IfStatement';
-import { LocalDataDeclarationSequenceStatement } from './LocalDataDeclarationSequenceStatement';
 import { RepeatLoop } from './RepeatLoop';
 import { ReturnStatement } from './ReturnStatement';
 import { CaseStatement, DefaultStatement, SelectStatement } from './SelectStatement';
@@ -20,12 +20,12 @@ export abstract class Statement extends Node {
 
 export type Statements =
     ContinueStatement |
+    DataDeclarationSequenceStatement |
     EmptyStatement |
     ExitStatement |
     ExpressionStatement |
     ForLoop |
     IfStatement | ElseIfStatement | ElseStatement |
-    LocalDataDeclarationSequenceStatement |
     RepeatLoop |
     ReturnStatement |
     SelectStatement | CaseStatement | DefaultStatement |
