@@ -40,8 +40,8 @@
                     }
                 },
                 {
-                    "kind": "LocalDataDeclarationSequenceStatement",
-                    "localDataDeclarationSequence": {
+                    "kind": "DataDeclarationSequenceStatement",
+                    "dataDeclarationSequence": {
                         "kind": "DataDeclarationSequence",
                         "dataDeclarationKeyword": {
                             "kind": "LocalKeyword",
@@ -96,8 +96,8 @@
                     }
                 },
                 {
-                    "kind": "LocalDataDeclarationSequenceStatement",
-                    "localDataDeclarationSequence": {
+                    "kind": "DataDeclarationSequenceStatement",
+                    "dataDeclarationSequence": {
                         "kind": "DataDeclarationSequence",
                         "dataDeclarationKeyword": {
                             "kind": "LocalKeyword",

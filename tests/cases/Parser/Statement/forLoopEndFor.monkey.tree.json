@@ -50,8 +50,8 @@
                     "header": {
                         "kind": "NumericForLoopHeader",
                         "loopVariableExpression": {
-                            "kind": "LocalDataDeclarationSequenceStatement",
-                            "localDataDeclarationSequence": {
+                            "kind": "DataDeclarationSequenceStatement",
+                            "dataDeclarationSequence": {
                                 "kind": "DataDeclarationSequence",
                                 "dataDeclarationKeyword": {
                                     "kind": "LocalKeyword",

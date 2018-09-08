@@ -48,8 +48,8 @@
                         "length": 7
                     },
                     "header": {
-                        "kind": "LocalDataDeclarationSequenceStatement",
-                        "localDataDeclarationSequence": {
+                        "kind": "DataDeclarationSequenceStatement",
+                        "dataDeclarationSequence": {
                             "kind": "DataDeclarationSequence",
                             "dataDeclarationKeyword": {
                                 "kind": "LocalKeyword",
