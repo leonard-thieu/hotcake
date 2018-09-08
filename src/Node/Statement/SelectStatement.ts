@@ -1,6 +1,6 @@
 import { ParseContextElementArray, ParseContextKind } from '../../ParserBase';
 import { MissableToken } from '../../Token/MissingToken';
-import { CaseKeywordToken, DefaultKeywordToken, EndKeywordToken, NewlineToken, SelectKeywordToken } from '../../Token/Token';
+import { CaseKeywordToken, DefaultKeywordToken, EndKeywordToken, SelectKeywordToken } from '../../Token/Token';
 import { MissableExpression } from '../Expression/Expression';
 import { NodeKind } from '../NodeKind';
 import { Statement } from './Statement';
@@ -21,7 +21,7 @@ export class SelectStatement extends Statement {
 
     selectKeyword: SelectKeywordToken;
     expression: MissableExpression;
-    newlines: NewlineToken[] = [];
+    newlines: ParseContextElementArray<ParseContextKind.NewlineList>;
     caseStatements: CaseStatement[] = [];
     defaultStatement: DefaultStatement | null = null;
     endKeyword: MissableToken<EndKeywordToken>;

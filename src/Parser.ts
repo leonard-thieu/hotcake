@@ -659,17 +659,7 @@ export class Parser extends ParserBase {
         selectStatement.parent = parent;
         selectStatement.selectKeyword = selectKeyword;
         selectStatement.expression = this.parseExpression(selectStatement);
-
-        while (true) {
-            const token = this.getToken();
-            if (token.kind !== TokenKind.Newline) {
-                break;
-            }
-
-            this.advanceToken();
-
-            selectStatement.newlines.push(token);
-        }
+        selectStatement.newlines = this.parseList(selectStatement, ParseContextKind.NewlineList);
 
         while (true) {
             const caseKeyword = this.getToken();

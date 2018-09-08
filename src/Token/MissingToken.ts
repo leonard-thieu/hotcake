@@ -1,5 +1,6 @@
 import { NodeKind } from '../Node/NodeKind';
-import { NewlineToken, Token, TokenKinds, TokenKindTokenMap, Tokens } from './Token';
+import { ParseContextElementArray, ParseContextKind } from '../ParserBase';
+import { Token, TokenKinds, TokenKindTokenMap, Tokens } from './Token';
 import { TokenKind } from './TokenKind';
 
 export class MissingToken<TTokenKind extends MissableTokenKinds> extends Token<TokenKind.Missing> {
@@ -7,7 +8,7 @@ export class MissingToken<TTokenKind extends MissableTokenKinds> extends Token<T
         super(TokenKind.Missing, fullStart, fullStart, 0);
     }
 
-    newlines: NewlineToken[] | null = null;
+    newlines: ParseContextElementArray<ParseContextKind.NewlineList>;
 }
 
 export type MissableTokenKinds =
