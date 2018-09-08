@@ -403,11 +403,7 @@ export class Parser extends ParserBase {
         classMethodDeclaration.parameters = this.parseList(classMethodDeclaration, ParseContextKind.DataDeclarationSequence);
         classMethodDeclaration.closingParenthesis = this.eat(TokenKind.ClosingParenthesis);
 
-        let token: typeof classMethodDeclaration.attributes[0] | null;
-        while ((token = this.eatOptional(TokenKind.AbstractKeyword, TokenKind.FinalKeyword, TokenKind.PropertyKeyword)) !== null) {
-            classMethodDeclaration.attributes.push(token);
-        }
-
+        classMethodDeclaration.attributes = this.parseList(classMethodDeclaration, ParseContextKind.ClassMethodAttributes);
         if (classMethodDeclaration.attributes.findIndex(attribute => attribute.kind === TokenKind.AbstractKeyword) === -1) {
             classMethodDeclaration.statements = this.parseList(classMethodDeclaration, classMethodDeclaration.kind);
             classMethodDeclaration.endKeyword = this.eat(TokenKind.EndKeyword);
@@ -418,6 +414,41 @@ export class Parser extends ParserBase {
 
         return classMethodDeclaration;
     }
+
+    // #region Class method attributes
+
+    private isClassMethodAttributesTerminator(token: Tokens): boolean {
+        return !this.isClassMethodAttributeStart(token);
+    }
+
+    private isClassMethodAttributeStart(token: Tokens): boolean {
+        switch (token.kind) {
+            case TokenKind.AbstractKeyword:
+            case TokenKind.FinalKeyword:
+            case TokenKind.PropertyKeyword: {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    private parseClassMethodAttribute(parent: Nodes) {
+        const token = this.getToken();
+        switch (token.kind) {
+            case TokenKind.AbstractKeyword:
+            case TokenKind.FinalKeyword:
+            case TokenKind.PropertyKeyword: {
+                this.advanceToken();
+
+                return token;
+            }
+        }
+
+        return this.parseCore(parent, token);
+    }
+
+    // #endregion
 
     // #endregion
 
@@ -1257,6 +1288,9 @@ export class Parser extends ParserBase {
             case ParseContextKind.TypeParameterSequence: {
                 return this.isTypeParameterSequenceTerminator(token);
             }
+            case ParseContextKind.ClassMethodAttributes: {
+                return this.isClassMethodAttributesTerminator(token);
+            }
         }
 
         return super.isListTerminatorCore(parseContext, token);
@@ -1297,6 +1331,9 @@ export class Parser extends ParserBase {
             }
             case ParseContextKind.TypeParameterSequence: {
                 return this.isTypeParameterSequenceMemberStart(token);
+            }
+            case ParseContextKind.ClassMethodAttributes: {
+                return this.isClassMethodAttributeStart(token);
             }
         }
 
@@ -1339,6 +1376,9 @@ export class Parser extends ParserBase {
             case ParseContextKind.TypeParameterSequence: {
                 return this.parseTypeParameterSequenceMember(parent);
             }
+            case ParseContextKind.ClassMethodAttributes: {
+                return this.parseClassMethodAttribute(parent);
+            }
         }
 
         return super.parseListElementCore(parseContext, parent);
@@ -1376,6 +1416,7 @@ interface ParserParseContextElementMap extends ParseContextElementMapBase {
     [NodeKind.AliasDirectiveSequence]: ReturnType<Parser['parseAliasDirectiveSequenceMember']>;
     [ParseContextKind.DataDeclarationSequence]: ReturnType<Parser['parseDataDeclarationSequenceMember']>;
     [ParseContextKind.TypeParameterSequence]: ReturnType<Parser['parseTypeParameterSequenceMember']>;
+    [ParseContextKind.ClassMethodAttributes]: ReturnType<Parser['parseClassMethodAttribute']>;
 }
 
 type ParserParseContext = keyof ParserParseContextElementMap;
@@ -1383,11 +1424,13 @@ type ParserParseContext = keyof ParserParseContextElementMap;
 const _ParseContextKind: { -readonly [P in keyof typeof ParseContextKind]: typeof ParseContextKind[P]; } = ParseContextKind;
 _ParseContextKind.DataDeclarationSequence = 'DataDeclarationSequence' as ParseContextKind.DataDeclarationSequence;
 _ParseContextKind.TypeParameterSequence = 'TypeParameterSequence' as ParseContextKind.TypeParameterSequence;
+_ParseContextKind.ClassMethodAttributes = 'ClassMethodAttributes' as ParseContextKind.ClassMethodAttributes;
 
 declare module './ParserBase' {
     enum ParseContextKind {
         DataDeclarationSequence = 'DataDeclarationSequence',
         TypeParameterSequence = 'TypeParameterSequence',
+        ClassMethodAttributes = 'ClassMethodAttributes',
     }
 
     interface ParseContextElementMap extends ParserParseContextElementMap { }
