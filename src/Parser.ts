@@ -198,7 +198,9 @@ export class Parser extends ParserBase {
         }
         interfaceDeclaration.members = this.parseList(interfaceDeclaration, interfaceDeclaration.kind);
         interfaceDeclaration.endKeyword = this.eat(TokenKind.EndKeyword);
-        interfaceDeclaration.endInterfaceKeyword = this.eatOptional(TokenKind.InterfaceKeyword);
+        if (interfaceDeclaration.endKeyword.kind === TokenKind.EndKeyword) {
+            interfaceDeclaration.endInterfaceKeyword = this.eatOptional(TokenKind.InterfaceKeyword);
+        }
 
         return interfaceDeclaration;
     }
@@ -232,7 +234,9 @@ export class Parser extends ParserBase {
 
         classDeclaration.members = this.parseList(classDeclaration, classDeclaration.kind);
         classDeclaration.endKeyword = this.eat(TokenKind.EndKeyword);
-        classDeclaration.endClassKeyword = this.eatOptional(TokenKind.ClassKeyword);
+        if (classDeclaration.endKeyword.kind === TokenKind.EndKeyword) {
+            classDeclaration.endClassKeyword = this.eatOptional(TokenKind.ClassKeyword);
+        }
 
         return classDeclaration;
     }
@@ -411,7 +415,9 @@ export class Parser extends ParserBase {
         if (classMethodDeclaration.attributes.findIndex(attribute => attribute.kind === TokenKind.AbstractKeyword) === -1) {
             classMethodDeclaration.statements = this.parseList(classMethodDeclaration, classMethodDeclaration.kind);
             classMethodDeclaration.endKeyword = this.eat(TokenKind.EndKeyword);
-            classMethodDeclaration.endMethodKeyword = this.eatOptional(TokenKind.MethodKeyword);
+            if (classMethodDeclaration.endKeyword.kind === TokenKind.EndKeyword) {
+                classMethodDeclaration.endMethodKeyword = this.eatOptional(TokenKind.MethodKeyword);
+            }
         }
 
         return classMethodDeclaration;
@@ -680,7 +686,9 @@ export class Parser extends ParserBase {
         }
 
         selectStatement.endKeyword = this.eat(TokenKind.EndKeyword);
-        selectStatement.endSelectKeyword = this.eatOptional(TokenKind.SelectKeyword);
+        if (selectStatement.endKeyword.kind === TokenKind.EndKeyword) {
+            selectStatement.endSelectKeyword = this.eatOptional(TokenKind.SelectKeyword);
+        }
         selectStatement.terminator = this.eatStatementTerminator(selectStatement);
 
         return selectStatement;
@@ -900,7 +908,9 @@ export class Parser extends ParserBase {
         }
 
         tryStatement.endKeyword = this.eat(TokenKind.EndKeyword);
-        tryStatement.endTryKeyword = this.eatOptional(TokenKind.TryKeyword);
+        if (tryStatement.endKeyword.kind === TokenKind.EndKeyword) {
+            tryStatement.endTryKeyword = this.eatOptional(TokenKind.TryKeyword);
+        }
         tryStatement.terminator = this.eatStatementTerminator(tryStatement);
 
         return tryStatement;
@@ -983,7 +993,9 @@ export class Parser extends ParserBase {
         functionDeclaration.closingParenthesis = this.eat(TokenKind.ClosingParenthesis);
         functionDeclaration.statements = this.parseList(functionDeclaration, functionDeclaration.kind);
         functionDeclaration.endKeyword = this.eat(TokenKind.EndKeyword);
-        functionDeclaration.endFunctionKeyword = this.eatOptional(TokenKind.FunctionKeyword);
+        if (functionDeclaration.endKeyword.kind === TokenKind.EndKeyword) {
+            functionDeclaration.endFunctionKeyword = this.eatOptional(TokenKind.FunctionKeyword);
+        }
 
         return functionDeclaration;
     }
