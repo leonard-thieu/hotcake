@@ -421,6 +421,7 @@ export abstract class ParserBase {
         const arrayLiteral = new ArrayLiteral();
         arrayLiteral.parent = parent;
         arrayLiteral.openingSquareBracket = openingSquareBracket;
+        arrayLiteral.newline = this.eatOptional(TokenKind.Newline);
         arrayLiteral.expressions = this.parseList(arrayLiteral, ParseContextKind.ExpressionSequence);
         arrayLiteral.closingSquareBracket = this.eat(TokenKind.ClosingSquareBracket);
 
@@ -601,8 +602,13 @@ export abstract class ParserBase {
     }
 
     protected isExpressionSequenceMemberStart(token: Tokens): boolean {
-        return token.kind === TokenKind.Comma ||
-            this.isExpressionStart(token);
+        switch (token.kind) {
+            case TokenKind.Comma: {
+                return true;
+            }
+        }
+
+        return this.isExpressionStart(token);
     }
 
     private parseExpressionSequenceMember(parent: Nodes) {
