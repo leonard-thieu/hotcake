@@ -3,11 +3,17 @@
     "members": [
         {
             "kind": "IfDirective",
-            "ifDirectiveKeyword": {
-                "kind": "IfDirectiveKeyword",
+            "numberSign": {
+                "kind": "NumberSign",
                 "fullStart": 0,
                 "start": 0,
-                "length": 3
+                "length": 1
+            },
+            "ifDirectiveKeyword": {
+                "kind": "IfDirectiveKeyword",
+                "fullStart": 1,
+                "start": 1,
+                "length": 2
             },
             "expression": {
                 "kind": "BinaryExpression",
@@ -109,11 +115,17 @@
             ],
             "elseIfDirectives": [],
             "elseDirective": null,
-            "endDirectiveKeyword": {
-                "kind": "EndDirectiveKeyword",
+            "endDirectiveNumberSign": {
+                "kind": "NumberSign",
                 "fullStart": 61,
                 "start": 61,
-                "length": 4
+                "length": 1
+            },
+            "endDirectiveKeyword": {
+                "kind": "EndDirectiveKeyword",
+                "fullStart": 62,
+                "start": 62,
+                "length": 3
             }
         },
         {

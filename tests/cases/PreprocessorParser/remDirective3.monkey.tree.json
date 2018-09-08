@@ -3,11 +3,17 @@
     "members": [
         {
             "kind": "RemDirective",
-            "remDirectiveKeyword": {
-                "kind": "RemDirectiveKeyword",
+            "numberSign": {
+                "kind": "NumberSign",
                 "fullStart": 0,
                 "start": 0,
-                "length": 4
+                "length": 1
+            },
+            "remDirectiveKeyword": {
+                "kind": "RemDirectiveKeyword",
+                "fullStart": 1,
+                "start": 1,
+                "length": 3
             },
             "children": [
                 {
@@ -18,11 +24,17 @@
                 },
                 {
                     "kind": "RemDirective",
-                    "remDirectiveKeyword": {
-                        "kind": "RemDirectiveKeyword",
+                    "numberSign": {
+                        "kind": "NumberSign",
                         "fullStart": 12,
                         "start": 12,
-                        "length": 4
+                        "length": 1
+                    },
+                    "remDirectiveKeyword": {
+                        "kind": "RemDirectiveKeyword",
+                        "fullStart": 13,
+                        "start": 13,
+                        "length": 3
                     },
                     "children": [
                         {
@@ -32,11 +44,17 @@
                             "length": 6
                         }
                     ],
-                    "endDirectiveKeyword": {
-                        "kind": "EndDirectiveKeyword",
+                    "endDirectiveNumberSign": {
+                        "kind": "NumberSign",
                         "fullStart": 22,
                         "start": 22,
-                        "length": 4
+                        "length": 1
+                    },
+                    "endDirectiveKeyword": {
+                        "kind": "EndDirectiveKeyword",
+                        "fullStart": 23,
+                        "start": 23,
+                        "length": 3
                     }
                 },
                 {
@@ -46,11 +64,17 @@
                     "length": 4
                 }
             ],
-            "endDirectiveKeyword": {
-                "kind": "EndDirectiveKeyword",
+            "endDirectiveNumberSign": {
+                "kind": "NumberSign",
                 "fullStart": 30,
                 "start": 30,
-                "length": 4
+                "length": 1
+            },
+            "endDirectiveKeyword": {
+                "kind": "EndDirectiveKeyword",
+                "fullStart": 31,
+                "start": 31,
+                "length": 3
             }
         }
     ],

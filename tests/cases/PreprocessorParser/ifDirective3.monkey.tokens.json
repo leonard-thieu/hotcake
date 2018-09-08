@@ -1,9 +1,15 @@
 [
     {
-        "kind": "IfDirectiveKeyword",
+        "kind": "NumberSign",
         "fullStart": 0,
         "start": 0,
-        "length": 3
+        "length": 1
+    },
+    {
+        "kind": "IfDirectiveKeyword",
+        "fullStart": 1,
+        "start": 1,
+        "length": 2
     },
     {
         "kind": "Identifier",
@@ -84,10 +90,16 @@
         "length": 2
     },
     {
-        "kind": "EndDirectiveKeyword",
+        "kind": "NumberSign",
         "fullStart": 61,
         "start": 61,
-        "length": 4
+        "length": 1
+    },
+    {
+        "kind": "EndDirectiveKeyword",
+        "fullStart": 62,
+        "start": 62,
+        "length": 3
     },
     {
         "kind": "Newline",

@@ -3,11 +3,17 @@
     "members": [
         {
             "kind": "RemDirective",
-            "remDirectiveKeyword": {
-                "kind": "RemDirectiveKeyword",
+            "numberSign": {
+                "kind": "NumberSign",
                 "fullStart": 0,
                 "start": 0,
-                "length": 4
+                "length": 1
+            },
+            "remDirectiveKeyword": {
+                "kind": "RemDirectiveKeyword",
+                "fullStart": 1,
+                "start": 1,
+                "length": 3
             },
             "children": [
                 {
@@ -17,11 +23,17 @@
                     "length": 2
                 }
             ],
-            "endDirectiveKeyword": {
-                "kind": "EndDirectiveKeyword",
+            "endDirectiveNumberSign": {
+                "kind": "NumberSign",
                 "fullStart": 6,
                 "start": 6,
-                "length": 4
+                "length": 1
+            },
+            "endDirectiveKeyword": {
+                "kind": "EndDirectiveKeyword",
+                "fullStart": 7,
+                "start": 7,
+                "length": 3
             }
         }
     ],

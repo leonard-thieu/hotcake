@@ -3,11 +3,17 @@
     "members": [
         {
             "kind": "IfDirective",
-            "ifDirectiveKeyword": {
-                "kind": "IfDirectiveKeyword",
+            "numberSign": {
+                "kind": "NumberSign",
                 "fullStart": 0,
                 "start": 0,
-                "length": 3
+                "length": 1
+            },
+            "ifDirectiveKeyword": {
+                "kind": "IfDirectiveKeyword",
+                "fullStart": 1,
+                "start": 1,
+                "length": 2
             },
             "expression": {
                 "kind": "BinaryExpression",
@@ -110,11 +116,17 @@
             "elseIfDirectives": [
                 {
                     "kind": "ElseIfDirective",
-                    "elseIfDirectiveKeyword": {
-                        "kind": "ElseIfDirectiveKeyword",
+                    "numberSign": {
+                        "kind": "NumberSign",
                         "fullStart": 61,
                         "start": 61,
-                        "length": 7
+                        "length": 1
+                    },
+                    "elseIfDirectiveKeyword": {
+                        "kind": "ElseIfDirectiveKeyword",
+                        "fullStart": 62,
+                        "start": 62,
+                        "length": 6
                     },
                     "expression": {
                         "kind": "BinaryExpression",
@@ -217,11 +229,17 @@
                 },
                 {
                     "kind": "ElseIfDirective",
-                    "elseIfDirectiveKeyword": {
-                        "kind": "ElseIfDirectiveKeyword",
+                    "numberSign": {
+                        "kind": "NumberSign",
                         "fullStart": 132,
                         "start": 132,
-                        "length": 7
+                        "length": 1
+                    },
+                    "elseIfDirectiveKeyword": {
+                        "kind": "ElseIfDirectiveKeyword",
+                        "fullStart": 133,
+                        "start": 133,
+                        "length": 6
                     },
                     "expression": {
                         "kind": "BinaryExpression",
@@ -325,11 +343,17 @@
             ],
             "elseDirective": {
                 "kind": "ElseDirective",
-                "elseDirectiveKeyword": {
-                    "kind": "ElseDirectiveKeyword",
+                "numberSign": {
+                    "kind": "NumberSign",
                     "fullStart": 203,
                     "start": 203,
-                    "length": 5
+                    "length": 1
+                },
+                "elseDirectiveKeyword": {
+                    "kind": "ElseDirectiveKeyword",
+                    "fullStart": 204,
+                    "start": 204,
+                    "length": 4
                 },
                 "members": [
                     {
@@ -382,11 +406,17 @@
                     }
                 ]
             },
-            "endDirectiveKeyword": {
-                "kind": "EndDirectiveKeyword",
+            "endDirectiveNumberSign": {
+                "kind": "NumberSign",
                 "fullStart": 257,
                 "start": 257,
-                "length": 4
+                "length": 1
+            },
+            "endDirectiveKeyword": {
+                "kind": "EndDirectiveKeyword",
+                "fullStart": 258,
+                "start": 258,
+                "length": 3
             }
         },
         {
