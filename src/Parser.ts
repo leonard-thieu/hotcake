@@ -1043,7 +1043,6 @@ export class Parser extends ParserBase {
 
     private isDataDeclarationSequenceMemberStart(token: Tokens): boolean {
         switch (token.kind) {
-            // TODO: Is Period (global scope member access) allowed?
             case TokenKind.Identifier:
             case TokenKind.Comma: {
                 return true;
