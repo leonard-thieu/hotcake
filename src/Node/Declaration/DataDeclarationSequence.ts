@@ -1,5 +1,5 @@
 import { ParseContextElementArray, ParseContextKind } from '../../ParserBase';
-import { MissingToken } from '../../Token/MissingToken';
+import { MissableToken, MissingToken } from '../../Token/MissingToken';
 import { ColonEqualsSignToken, ConstKeywordToken, EachInKeywordToken, EqualsSignToken, FieldKeywordToken, GlobalKeywordToken, IdentifierToken, LocalKeywordToken } from '../../Token/Token';
 import { MissableExpression } from '../Expression/Expression';
 import { NodeKind } from '../NodeKind';
@@ -54,7 +54,7 @@ export class DataDeclaration extends Declaration {
 
     name: IdentifierToken;
     type: TypeDeclaration | null = null;
-    equalsSign: EqualsSignToken | ColonEqualsSignToken | null = null;
+    equalsSign: MissableToken<EqualsSignToken | ColonEqualsSignToken> | null = null;
     eachInKeyword: EachInKeywordToken | null = null;
     expression: MissableExpression | null = null;
 }

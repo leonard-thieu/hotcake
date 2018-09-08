@@ -1088,11 +1088,16 @@ export class Parser extends ParserBase {
         dataDeclaration.parent = parent;
         dataDeclaration.name = name;
         dataDeclaration.type = this.parseTypeDeclaration(dataDeclaration);
-        // TODO: Check if parent is Const.
-        dataDeclaration.equalsSign = this.eatOptional(TokenKind.EqualsSign, TokenKind.ColonEqualsSign);
-        if (dataDeclaration.equalsSign !== null) {
-            dataDeclaration.eachInKeyword = this.eatOptional(TokenKind.EachInKeyword);
+        if (parent.kind === NodeKind.DataDeclarationSequence &&
+            parent.dataDeclarationKeyword.kind === TokenKind.ConstKeyword) {
+            dataDeclaration.equalsSign = this.eat(TokenKind.EqualsSign, TokenKind.ColonEqualsSign);
             dataDeclaration.expression = this.parseExpression(dataDeclaration);
+        } else {
+            dataDeclaration.equalsSign = this.eatOptional(TokenKind.EqualsSign, TokenKind.ColonEqualsSign);
+            if (dataDeclaration.equalsSign !== null) {
+                dataDeclaration.eachInKeyword = this.eatOptional(TokenKind.EachInKeyword);
+                dataDeclaration.expression = this.parseExpression(dataDeclaration);
+            }
         }
 
         return dataDeclaration;
