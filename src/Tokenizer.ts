@@ -63,7 +63,7 @@ export class Tokenizer {
                      * TODO: Verify Monkey X transpiler behavior wrt setting CD and MODPATH.
                      *       Looks like CD and MODPATH are settable but are always overwritten.
                      */
-                    const varName = member.getConfigurationVariableName(this.document);
+                    const varName = member.name.getText(this.document);
                     const value = this.eval(member.expression);
 
                     const { kind } = member.operator;

@@ -1,17 +1,19 @@
 import { ParseContextElementArray } from '../../ParserBase';
 import { MissableToken } from '../../Token/MissingToken';
-import { ElseDirectiveKeywordToken, ElseIfDirectiveKeywordToken, EndDirectiveKeywordToken, IfDirectiveKeywordToken } from '../../Token/Token';
+import { ElseDirectiveKeywordToken, ElseIfDirectiveKeywordToken, EndDirectiveKeywordToken, IfDirectiveKeywordToken, NumberSignToken } from '../../Token/Token';
 import { MissableExpression } from '../Expression/Expression';
 import { NodeKind } from '../NodeKind';
 import { Directive } from './Directive';
 
 export class IfDirective extends Directive {
     static CHILD_NAMES: (keyof IfDirective)[] = [
+        'numberSign',
         'ifDirectiveKeyword',
         'expression',
         'members',
         'elseIfDirectives',
         'elseDirective',
+        'endDirectiveNumberSign',
         'endDirectiveKeyword',
     ];
 
@@ -22,11 +24,13 @@ export class IfDirective extends Directive {
     members: ParseContextElementArray<IfDirective['kind']>;
     elseIfDirectives: ElseIfDirective[] = [];
     elseDirective: ElseDirective | null = null;
+    endDirectiveNumberSign: MissableToken<NumberSignToken>;
     endDirectiveKeyword: MissableToken<EndDirectiveKeywordToken>;
 }
 
 export class ElseIfDirective extends Directive {
     static CHILD_NAMES: (keyof ElseIfDirective)[] = [
+        'numberSign',
         'elseIfDirectiveKeyword',
         'expression',
         'members',
@@ -41,6 +45,7 @@ export class ElseIfDirective extends Directive {
 
 export class ElseDirective extends Directive {
     static CHILD_NAMES: (keyof ElseDirective)[] = [
+        'numberSign',
         'elseDirectiveKeyword',
         'members',
     ];

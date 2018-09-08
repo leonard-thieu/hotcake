@@ -9,7 +9,7 @@ export class PreprocessorTokenizer {
     /**
      * Track directive nesting.
      */
-    private nesting: TokenKind[];
+    private nesting: Array<TokenKind.RemDirectiveKeyword | TokenKind.IfDirectiveKeyword>;
     private stringLiteralTerminatorIndex: number;
     private configurationTagTerminatorIndex: number;
 
@@ -70,47 +70,90 @@ export class PreprocessorTokenizer {
          * End directives from those directives do not cause Rem directive body tokenizing to end early.
          */
         if (inDirective === TokenKind.RemDirectiveKeyword) {
-            kind = this.tryReadPreprocessorDirective();
-            switch (kind) {
-                case TokenKind.RemDirectiveKeyword:
-                case TokenKind.IfDirectiveKeyword: {
-                    this.nesting.push(kind);
-                    break;
+            if (this.getChar() === '#') {
+                const position = this.position;
+
+                this.position++;
+
+                while (isWhitespace(this.getChar())) {
+                    this.position++;
                 }
-                case TokenKind.EndDirectiveKeyword: {
-                    this.nesting.pop();
-                    break;
+
+                kind = this.tryReadPreprocessorDirective();
+                switch (kind) {
+                    case TokenKind.RemDirectiveKeyword:
+                    case TokenKind.IfDirectiveKeyword:
+                    case TokenKind.EndDirectiveKeyword: {
+                        this.position = position;
+
+                        kind = TokenKind.NumberSign;
+                        this.position++;
+                        break;
+                    }
                 }
-                default: {
-                    kind = TokenKind.RemDirectiveBody;
+            }
 
-                    let continueReading = true;
-                    while (continueReading) {
-                        if (this.getChar() === null) {
-                            break;
-                        }
+            if (kind !== TokenKind.NumberSign) {
+                kind = this.tryReadPreprocessorDirective();
+                switch (kind) {
+                    case TokenKind.RemDirectiveKeyword:
+                    case TokenKind.IfDirectiveKeyword: {
+                        this.nesting.push(kind);
+                        break;
+                    }
+                    case TokenKind.EndDirectiveKeyword: {
+                        this.nesting.pop();
+                        break;
+                    }
+                    default: {
+                        kind = TokenKind.RemDirectiveBody;
 
-                        if (this.getChar() === '\n') {
-                            this.line++;
-                            this.lineStart = this.position + 1;
-                        }
+                        let continueReading = true;
+                        while (continueReading) {
+                            switch (this.getChar()) {
+                                case null: {
+                                    continueReading = false;
+                                    break;
+                                }
+                                case '\n': {
+                                    this.position++;
 
-                        const position = this.position;
-                        switch (this.tryReadPreprocessorDirective()) {
-                            case TokenKind.RemDirectiveKeyword:
-                            case TokenKind.IfDirectiveKeyword:
-                            case TokenKind.EndDirectiveKeyword: {
-                                /**
-                                 * Found a directive token that should be consumed on next call. Stop reading the current token and
-                                 * rewind the tokenizer to the `#` character.
-                                 */
-                                continueReading = false;
-                                this.position = position;
-                                break;
-                            }
-                            default: {
-                                this.position++;
-                                break;
+                                    this.line++;
+                                    this.lineStart = this.position;
+                                    break;
+                                }
+                                case '#': {
+                                    const position = this.position;
+
+                                    this.position++;
+
+                                    while (isWhitespace(this.getChar())) {
+                                        this.position++;
+                                    }
+
+                                    switch (this.tryReadPreprocessorDirective()) {
+                                        case TokenKind.RemDirectiveKeyword:
+                                        case TokenKind.IfDirectiveKeyword:
+                                        case TokenKind.EndDirectiveKeyword: {
+                                            /**
+                                             * Found a directive token that should be consumed on next call. Stop reading the current token and
+                                             * rewind the tokenizer to the `#` character.
+                                             */
+                                            continueReading = false;
+                                            this.position = position;
+                                            break;
+                                        }
+                                        default: {
+                                            this.position++;
+                                            break;
+                                        }
+                                    }
+                                    break;
+                                }
+                                default: {
+                                    this.position++;
+                                    break;
+                                }
                             }
                         }
                     }
@@ -226,7 +269,7 @@ export class PreprocessorTokenizer {
                     this.position++;
 
                     this.line++;
-                    this.lineStart = this.position + 1;
+                    this.lineStart = this.position;
                     break;
                 }
                 case '"': {
@@ -237,6 +280,11 @@ export class PreprocessorTokenizer {
                     // tokenizing mode. This allows the parser to handle it as an incomplete string literal without 
                     // consuming the entire rest of the document.
                     this.stringLiteralTerminatorIndex = this.document.indexOf('"', this.position);
+                    break;
+                }
+                case '#': {
+                    kind = TokenKind.NumberSign;
+                    this.position++;
                     break;
                 }
                 case '%': {
@@ -409,139 +457,145 @@ export class PreprocessorTokenizer {
                 }
                 default: {
                     kind = this.tryReadPreprocessorDirective();
-                    if (kind !== TokenKind.Unknown) {
-                        break;
-                    }
-
-                    if (this.getChar() === '#') {
-                        kind = TokenKind.NumberSign;
-                        this.position++;
-                    } else if (isDecimal(this.getChar()) ||
-                        (this.getChar() === '.' && isDecimal(this.getChar(1)))) {
-                        kind = this.getChar() === '.' ?
-                            TokenKind.FloatLiteral :
-                            TokenKind.IntegerLiteral;
-                        this.position++;
-
-                        while (isDecimal(this.getChar())) {
-                            this.position++;
+                    switch (kind) {
+                        case TokenKind.EndDirectiveKeyword: {
+                            this.nesting.pop();
+                            break;
                         }
-
-                        if (kind === TokenKind.IntegerLiteral &&
-                            this.getChar() === '.' &&
-                            isDecimal(this.getChar(1))) {
-                            kind = TokenKind.FloatLiteral;
-                            this.position += 2;
-
-                            while (isDecimal(this.getChar())) {
-                                this.position++;
-                            }
+                        case TokenKind.RemDirectiveKeyword: {
+                            this.nesting.push(kind);
+                            break;
                         }
-
-                        switch (this.getChar()) {
-                            case 'E':
-                            case 'e': {
-                                kind = TokenKind.FloatLiteral;
+                        case TokenKind.Unknown: {
+                            if (isDecimal(this.getChar()) ||
+                                (this.getChar() === '.' && isDecimal(this.getChar(1)))) {
+                                kind = this.getChar() === '.' ?
+                                    TokenKind.FloatLiteral :
+                                    TokenKind.IntegerLiteral;
                                 this.position++;
-
-                                switch (this.getChar()) {
-                                    case '+':
-                                    case '-': {
-                                        this.position++;
-                                        break;
-                                    }
-                                }
 
                                 while (isDecimal(this.getChar())) {
                                     this.position++;
                                 }
-                                break;
-                            }
-                        }
-                    } else if (this.getChar() === '.') {
-                        kind = TokenKind.Period;
-                        this.position++;
 
-                        if (this.getChar() === '.') {
-                            kind = TokenKind.PeriodPeriod;
-                            this.position++;
-                        }
-                    } else {
-                        const id = this.tryReadIdentifier();
-                        if (id !== null) {
-                            kind = TokenKind.Identifier;
+                                if (kind === TokenKind.IntegerLiteral &&
+                                    this.getChar() === '.' &&
+                                    isDecimal(this.getChar(1))) {
+                                    kind = TokenKind.FloatLiteral;
+                                    this.position += 2;
 
-                            switch (id.toLowerCase()) {
-                                case 'void': { kind = TokenKind.VoidKeyword; break; }
-                                case 'strict': { kind = TokenKind.StrictKeyword; break; }
-                                case 'public': { kind = TokenKind.PublicKeyword; break; }
-                                case 'private': { kind = TokenKind.PrivateKeyword; break; }
-                                case 'protected': { kind = TokenKind.ProtectedKeyword; break; }
-                                case 'friend': { kind = TokenKind.FriendKeyword; break; }
-                                case 'property': { kind = TokenKind.PropertyKeyword; break; }
-                                case 'bool': { kind = TokenKind.BoolKeyword; break; }
-                                case 'int': { kind = TokenKind.IntKeyword; break; }
-                                case 'float': { kind = TokenKind.FloatKeyword; break; }
-                                case 'string': { kind = TokenKind.StringKeyword; break; }
-                                case 'array': { kind = TokenKind.ArrayKeyword; break; }
-                                case 'object': { kind = TokenKind.ObjectKeyword; break; }
-                                case 'mod': { kind = TokenKind.ModKeyword; break; }
-                                case 'continue': { kind = TokenKind.ContinueKeyword; break; }
-                                case 'exit': { kind = TokenKind.ExitKeyword; break; }
-                                case 'include': { kind = TokenKind.IncludeKeyword; break; }
-                                case 'import': { kind = TokenKind.ImportKeyword; break; }
-                                case 'module': { kind = TokenKind.ModuleKeyword; break; }
-                                case 'extern': { kind = TokenKind.ExternKeyword; break; }
-                                case 'new': { kind = TokenKind.NewKeyword; break; }
-                                case 'self': { kind = TokenKind.SelfKeyword; break; }
-                                case 'super': { kind = TokenKind.SuperKeyword; break; }
-                                case 'eachin': { kind = TokenKind.EachInKeyword; break; }
-                                case 'true': { kind = TokenKind.TrueKeyword; break; }
-                                case 'false': { kind = TokenKind.FalseKeyword; break; }
-                                case 'null': { kind = TokenKind.NullKeyword; break; }
-                                case 'not': { kind = TokenKind.NotKeyword; break; }
-                                case 'extends': { kind = TokenKind.ExtendsKeyword; break; }
-                                case 'abstract': { kind = TokenKind.AbstractKeyword; break; }
-                                case 'final': { kind = TokenKind.FinalKeyword; break; }
-                                case 'select': { kind = TokenKind.SelectKeyword; break; }
-                                case 'case': { kind = TokenKind.CaseKeyword; break; }
-                                case 'default': { kind = TokenKind.DefaultKeyword; break; }
-                                case 'const': { kind = TokenKind.ConstKeyword; break; }
-                                case 'local': { kind = TokenKind.LocalKeyword; break; }
-                                case 'global': { kind = TokenKind.GlobalKeyword; break; }
-                                case 'field': { kind = TokenKind.FieldKeyword; break; }
-                                case 'method': { kind = TokenKind.MethodKeyword; break; }
-                                case 'function': { kind = TokenKind.FunctionKeyword; break; }
-                                case 'class': { kind = TokenKind.ClassKeyword; break; }
-                                case 'and': { kind = TokenKind.AndKeyword; break; }
-                                case 'or': { kind = TokenKind.OrKeyword; break; }
-                                case 'shl': { kind = TokenKind.ShlKeyword; break; }
-                                case 'shr': { kind = TokenKind.ShrKeyword; break; }
-                                case 'end': { kind = TokenKind.EndKeyword; break; }
-                                case 'if': { kind = TokenKind.IfKeyword; break; }
-                                case 'then': { kind = TokenKind.ThenKeyword; break; }
-                                case 'else': { kind = TokenKind.ElseKeyword; break; }
-                                case 'elseif': { kind = TokenKind.ElseIfKeyword; break; }
-                                case 'endif': { kind = TokenKind.EndIfKeyword; break; }
-                                case 'while': { kind = TokenKind.WhileKeyword; break; }
-                                case 'wend': { kind = TokenKind.WendKeyword; break; }
-                                case 'repeat': { kind = TokenKind.RepeatKeyword; break; }
-                                case 'until': { kind = TokenKind.UntilKeyword; break; }
-                                case 'forever': { kind = TokenKind.ForeverKeyword; break; }
-                                case 'for': { kind = TokenKind.ForKeyword; break; }
-                                case 'to': { kind = TokenKind.ToKeyword; break; }
-                                case 'step': { kind = TokenKind.StepKeyword; break; }
-                                case 'next': { kind = TokenKind.NextKeyword; break; }
-                                case 'return': { kind = TokenKind.ReturnKeyword; break; }
-                                case 'interface': { kind = TokenKind.InterfaceKeyword; break; }
-                                case 'implements': { kind = TokenKind.ImplementsKeyword; break; }
-                                case 'inline': { kind = TokenKind.InlineKeyword; break; }
-                                case 'alias': { kind = TokenKind.AliasKeyword; break; }
-                                case 'try': { kind = TokenKind.TryKeyword; break; }
-                                case 'catch': { kind = TokenKind.CatchKeyword; break; }
-                                case 'throw': { kind = TokenKind.ThrowKeyword; break; }
-                                case 'throwable': { kind = TokenKind.ThrowableKeyword; break; }
+                                    while (isDecimal(this.getChar())) {
+                                        this.position++;
+                                    }
+                                }
+
+                                switch (this.getChar()) {
+                                    case 'E':
+                                    case 'e': {
+                                        kind = TokenKind.FloatLiteral;
+                                        this.position++;
+
+                                        switch (this.getChar()) {
+                                            case '+':
+                                            case '-': {
+                                                this.position++;
+                                                break;
+                                            }
+                                        }
+
+                                        while (isDecimal(this.getChar())) {
+                                            this.position++;
+                                        }
+                                        break;
+                                    }
+                                }
+                            } else if (this.getChar() === '.') {
+                                kind = TokenKind.Period;
+                                this.position++;
+
+                                if (this.getChar() === '.') {
+                                    kind = TokenKind.PeriodPeriod;
+                                    this.position++;
+                                }
+                            } else {
+                                const id = this.tryReadIdentifier();
+                                if (id !== null) {
+                                    kind = TokenKind.Identifier;
+
+                                    switch (id.toLowerCase()) {
+                                        case 'void': { kind = TokenKind.VoidKeyword; break; }
+                                        case 'strict': { kind = TokenKind.StrictKeyword; break; }
+                                        case 'public': { kind = TokenKind.PublicKeyword; break; }
+                                        case 'private': { kind = TokenKind.PrivateKeyword; break; }
+                                        case 'protected': { kind = TokenKind.ProtectedKeyword; break; }
+                                        case 'friend': { kind = TokenKind.FriendKeyword; break; }
+                                        case 'property': { kind = TokenKind.PropertyKeyword; break; }
+                                        case 'bool': { kind = TokenKind.BoolKeyword; break; }
+                                        case 'int': { kind = TokenKind.IntKeyword; break; }
+                                        case 'float': { kind = TokenKind.FloatKeyword; break; }
+                                        case 'string': { kind = TokenKind.StringKeyword; break; }
+                                        case 'array': { kind = TokenKind.ArrayKeyword; break; }
+                                        case 'object': { kind = TokenKind.ObjectKeyword; break; }
+                                        case 'mod': { kind = TokenKind.ModKeyword; break; }
+                                        case 'continue': { kind = TokenKind.ContinueKeyword; break; }
+                                        case 'exit': { kind = TokenKind.ExitKeyword; break; }
+                                        case 'include': { kind = TokenKind.IncludeKeyword; break; }
+                                        case 'import': { kind = TokenKind.ImportKeyword; break; }
+                                        case 'module': { kind = TokenKind.ModuleKeyword; break; }
+                                        case 'extern': { kind = TokenKind.ExternKeyword; break; }
+                                        case 'new': { kind = TokenKind.NewKeyword; break; }
+                                        case 'self': { kind = TokenKind.SelfKeyword; break; }
+                                        case 'super': { kind = TokenKind.SuperKeyword; break; }
+                                        case 'eachin': { kind = TokenKind.EachInKeyword; break; }
+                                        case 'true': { kind = TokenKind.TrueKeyword; break; }
+                                        case 'false': { kind = TokenKind.FalseKeyword; break; }
+                                        case 'null': { kind = TokenKind.NullKeyword; break; }
+                                        case 'not': { kind = TokenKind.NotKeyword; break; }
+                                        case 'extends': { kind = TokenKind.ExtendsKeyword; break; }
+                                        case 'abstract': { kind = TokenKind.AbstractKeyword; break; }
+                                        case 'final': { kind = TokenKind.FinalKeyword; break; }
+                                        case 'select': { kind = TokenKind.SelectKeyword; break; }
+                                        case 'case': { kind = TokenKind.CaseKeyword; break; }
+                                        case 'default': { kind = TokenKind.DefaultKeyword; break; }
+                                        case 'const': { kind = TokenKind.ConstKeyword; break; }
+                                        case 'local': { kind = TokenKind.LocalKeyword; break; }
+                                        case 'global': { kind = TokenKind.GlobalKeyword; break; }
+                                        case 'field': { kind = TokenKind.FieldKeyword; break; }
+                                        case 'method': { kind = TokenKind.MethodKeyword; break; }
+                                        case 'function': { kind = TokenKind.FunctionKeyword; break; }
+                                        case 'class': { kind = TokenKind.ClassKeyword; break; }
+                                        case 'and': { kind = TokenKind.AndKeyword; break; }
+                                        case 'or': { kind = TokenKind.OrKeyword; break; }
+                                        case 'shl': { kind = TokenKind.ShlKeyword; break; }
+                                        case 'shr': { kind = TokenKind.ShrKeyword; break; }
+                                        case 'end': { kind = TokenKind.EndKeyword; break; }
+                                        case 'if': { kind = TokenKind.IfKeyword; break; }
+                                        case 'then': { kind = TokenKind.ThenKeyword; break; }
+                                        case 'else': { kind = TokenKind.ElseKeyword; break; }
+                                        case 'elseif': { kind = TokenKind.ElseIfKeyword; break; }
+                                        case 'endif': { kind = TokenKind.EndIfKeyword; break; }
+                                        case 'while': { kind = TokenKind.WhileKeyword; break; }
+                                        case 'wend': { kind = TokenKind.WendKeyword; break; }
+                                        case 'repeat': { kind = TokenKind.RepeatKeyword; break; }
+                                        case 'until': { kind = TokenKind.UntilKeyword; break; }
+                                        case 'forever': { kind = TokenKind.ForeverKeyword; break; }
+                                        case 'for': { kind = TokenKind.ForKeyword; break; }
+                                        case 'to': { kind = TokenKind.ToKeyword; break; }
+                                        case 'step': { kind = TokenKind.StepKeyword; break; }
+                                        case 'next': { kind = TokenKind.NextKeyword; break; }
+                                        case 'return': { kind = TokenKind.ReturnKeyword; break; }
+                                        case 'interface': { kind = TokenKind.InterfaceKeyword; break; }
+                                        case 'implements': { kind = TokenKind.ImplementsKeyword; break; }
+                                        case 'inline': { kind = TokenKind.InlineKeyword; break; }
+                                        case 'alias': { kind = TokenKind.AliasKeyword; break; }
+                                        case 'try': { kind = TokenKind.TryKeyword; break; }
+                                        case 'catch': { kind = TokenKind.CatchKeyword; break; }
+                                        case 'throw': { kind = TokenKind.ThrowKeyword; break; }
+                                        case 'throwable': { kind = TokenKind.ThrowableKeyword; break; }
+                                    }
+                                }
                             }
+                            break;
                         }
                     }
                     break;
@@ -567,118 +621,108 @@ export class PreprocessorTokenizer {
         let kind = TokenKind.Unknown;
 
         if (this.isPreprocessorDirectiveAllowed()) {
-            if (this.getChar() === '#') {
-                this.position++;
-
-                while (isWhitespace(this.getChar())) {
-                    this.position++;
-                }
-
-                const id = this.tryReadIdentifier();
-                if (id !== null) {
-                    switch (id.toLowerCase()) {
-                        case 'void':
-                        case 'strict':
-                        case 'public':
-                        case 'private':
-                        case 'protected':
-                        case 'friend':
-                        case 'property':
-                        case 'bool':
-                        case 'int':
-                        case 'float':
-                        case 'string':
-                        case 'array':
-                        case 'object':
-                        case 'mod':
-                        case 'continue':
-                        case 'exit':
-                        case 'include':
-                        case 'import':
-                        case 'module':
-                        case 'extern':
-                        case 'new':
-                        case 'self':
-                        case 'super':
-                        case 'eachin':
-                        case 'true':
-                        case 'false':
-                        case 'null':
-                        case 'not':
-                        case 'extends':
-                        case 'abstract':
-                        case 'final':
-                        case 'select':
-                        case 'case':
-                        case 'default':
-                        case 'const':
-                        case 'local':
-                        case 'global':
-                        case 'field':
-                        case 'method':
-                        case 'function':
-                        case 'class':
-                        case 'and':
-                        case 'or':
-                        case 'shl':
-                        case 'shr':
-                        case 'then':
-                        case 'while':
-                        case 'wend':
-                        case 'repeat':
-                        case 'until':
-                        case 'forever':
-                        case 'for':
-                        case 'to':
-                        case 'step':
-                        case 'next':
-                        case 'return':
-                        case 'interface':
-                        case 'implements':
-                        case 'inline':
-                        case 'alias':
-                        case 'try':
-                        case 'catch':
-                        case 'throw':
-                        case 'throwable': {
-                            this.position = start;
-                            break;
-                        }
-                        case 'if': { kind = TokenKind.IfDirectiveKeyword; break; }
-                        // TODO: Check if spaces are allowed between else and if.
-                        case 'elseif': { kind = TokenKind.ElseIfDirectiveKeyword; break; }
-                        case 'else': { kind = TokenKind.ElseDirectiveKeyword; break; }
-                        // TODO: Check if spaces are allowed between end and if.
-                        case 'endif':
-                        case 'end': {
-                            // Both #End and #EndIf may terminate #If and #Rem directives.
-                            kind = TokenKind.EndDirectiveKeyword;
-                            this.nesting.pop();
-                            break;
-                        }
-                        case 'print': { kind = TokenKind.PrintDirectiveKeyword; break; }
-                        case 'error': { kind = TokenKind.ErrorDirectiveKeyword; break; }
-                        case 'rem': {
-                            kind = TokenKind.RemDirectiveKeyword;
-                            this.nesting.push(kind);
-                            break;
-                        }
-                        default: {
-                            switch (id) {
-                                // TODO: Block CD and MODPATH too?
-                                case 'HOST':
-                                case 'LANG':
-                                case 'CONFIG':
-                                case 'TARGET':
-                                case 'SAFEMODE': {
-                                    // App config vars cannot be modified.
-                                    this.position = start;
-                                    break;
-                                }
-                                default: {
-                                    kind = TokenKind.ConfigurationVariable;
-                                    break;
-                                }
+            const id = this.tryReadIdentifier();
+            if (id !== null) {
+                switch (id.toLowerCase()) {
+                    case 'void':
+                    case 'strict':
+                    case 'public':
+                    case 'private':
+                    case 'protected':
+                    case 'friend':
+                    case 'property':
+                    case 'bool':
+                    case 'int':
+                    case 'float':
+                    case 'string':
+                    case 'array':
+                    case 'object':
+                    case 'mod':
+                    case 'continue':
+                    case 'exit':
+                    case 'include':
+                    case 'import':
+                    case 'module':
+                    case 'extern':
+                    case 'new':
+                    case 'self':
+                    case 'super':
+                    case 'eachin':
+                    case 'true':
+                    case 'false':
+                    case 'null':
+                    case 'not':
+                    case 'extends':
+                    case 'abstract':
+                    case 'final':
+                    case 'select':
+                    case 'case':
+                    case 'default':
+                    case 'const':
+                    case 'local':
+                    case 'global':
+                    case 'field':
+                    case 'method':
+                    case 'function':
+                    case 'class':
+                    case 'and':
+                    case 'or':
+                    case 'shl':
+                    case 'shr':
+                    case 'then':
+                    case 'while':
+                    case 'wend':
+                    case 'repeat':
+                    case 'until':
+                    case 'forever':
+                    case 'for':
+                    case 'to':
+                    case 'step':
+                    case 'next':
+                    case 'return':
+                    case 'interface':
+                    case 'implements':
+                    case 'inline':
+                    case 'alias':
+                    case 'try':
+                    case 'catch':
+                    case 'throw':
+                    case 'throwable': {
+                        this.position = start;
+                        break;
+                    }
+                    case 'if': { kind = TokenKind.IfDirectiveKeyword; break; }
+                    // TODO: Check if spaces are allowed between else and if.
+                    case 'elseif': { kind = TokenKind.ElseIfDirectiveKeyword; break; }
+                    case 'else': { kind = TokenKind.ElseDirectiveKeyword; break; }
+                    // TODO: Check if spaces are allowed between end and if.
+                    case 'endif':
+                    case 'end': {
+                        // Both #End and #EndIf may terminate #If and #Rem directives.
+                        kind = TokenKind.EndDirectiveKeyword;
+                        break;
+                    }
+                    case 'print': { kind = TokenKind.PrintDirectiveKeyword; break; }
+                    case 'error': { kind = TokenKind.ErrorDirectiveKeyword; break; }
+                    case 'rem': {
+                        kind = TokenKind.RemDirectiveKeyword;
+                        break;
+                    }
+                    default: {
+                        switch (id) {
+                            // TODO: Block CD and MODPATH too?
+                            case 'HOST':
+                            case 'LANG':
+                            case 'CONFIG':
+                            case 'TARGET':
+                            case 'SAFEMODE': {
+                                // App config vars cannot be modified.
+                                this.position = start;
+                                break;
+                            }
+                            default: {
+                                kind = TokenKind.ConfigurationVariable;
+                                break;
                             }
                         }
                     }
@@ -691,13 +735,25 @@ export class PreprocessorTokenizer {
 
     // Preprocessor directives must start on their own line and may be preceded by whitespace.
     private isPreprocessorDirectiveAllowed(): boolean {
+        // Search for whitespace until we hit a `#`, then search for whitespace until we hit the 
+        // beginning of the line.
         for (let i = this.position - 1; i >= this.lineStart; i--) {
+            if (this.document[i] === '#') {
+                for (let j = i - 1; j >= this.lineStart; j--) {
+                    if (!isWhitespace(this.document[j])) {
+                        return false;
+                    }
+                }
+
+                return true;
+            }
+
             if (!isWhitespace(this.document[i])) {
                 return false;
             }
         }
 
-        return true;
+        return false;
     }
 
     private tryReadIdentifier(): string | null {

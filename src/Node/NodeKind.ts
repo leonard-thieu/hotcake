@@ -4,7 +4,6 @@ export enum NodeKind {
     IfDirective = 'IfDirective',
     ElseIfDirective = 'ElseIfDirective',
     ElseDirective = 'ElseDirective',
-    EndDirective = 'EndDirective',
     RemDirective = 'RemDirective',
     PrintDirective = 'PrintDirective',
     ErrorDirective = 'ErrorDirective',
