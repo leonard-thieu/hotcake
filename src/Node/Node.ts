@@ -2,6 +2,7 @@ import { ArrayTypeDeclaration } from './ArrayTypeDeclaration';
 import { CommaSeparator } from './CommaSeparator';
 import { ConfigurationTag } from './ConfigurationTag';
 import { Declarations } from './Declaration/Declaration';
+import { ExternDeclarations } from './Declaration/ExternDeclaration/ExternDeclaration';
 import { Directives } from './Directive/Directive';
 import { Expressions } from './Expression/Expression';
 import { ModulePath } from './ModulePath';
@@ -60,6 +61,7 @@ export abstract class Node {
 }
 
 export type Nodes =
+    ExternDeclarations |
     Declarations |
     Directives |
     Expressions |

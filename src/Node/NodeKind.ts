@@ -11,6 +11,12 @@ export enum NodeKind {
 
     ModuleDeclaration = 'ModuleDeclaration',
 
+    ExternDataDeclarationSequence = 'ExternDataDeclarationSequence',
+    ExternDataDeclaration = 'ExternDataDeclaration',
+    ExternFunctionDeclaration = 'ExternFunctionDeclaration',
+    ExternClassDeclaration = 'ExternClassDeclaration',
+    ExternClassMethodDeclaration = 'ExternClassMethodDeclaration',
+
     StrictDirective = 'StrictDirective',
     ImportStatement = 'ImportStatement',
     FriendDirective = 'FriendDirective',

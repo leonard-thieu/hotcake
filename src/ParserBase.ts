@@ -18,7 +18,7 @@ import { NullExpression } from './Node/Expression/NullExpression';
 import { ScopeMemberAccessExpression } from './Node/Expression/ScopeMemberAccessExpression';
 import { SelfExpression } from './Node/Expression/SelfExpression';
 import { SliceExpression } from './Node/Expression/SliceExpression';
-import { StringLiteral } from './Node/Expression/StringLiteral';
+import { MissableStringLiteral, StringLiteral } from './Node/Expression/StringLiteral';
 import { SuperExpression } from './Node/Expression/SuperExpression';
 import { UnaryOperatorToken, UnaryOpExpression } from './Node/Expression/UnaryOpExpression';
 import { ModulePath } from './Node/ModulePath';
@@ -370,6 +370,19 @@ export abstract class ParserBase {
         superExpression.superKeyword = superKeyword;
 
         return superExpression;
+    }
+
+    protected parseMissableStringLiteral(parent: Nodes): MissableStringLiteral {
+        const token = this.getToken();
+        switch (token.kind) {
+            case TokenKind.QuotationMark: {
+                this.advanceToken();
+
+                return this.parseStringLiteral(parent, token);
+            }
+        }
+
+        return new MissingToken(token.fullStart, NodeKind.StringLiteral);
     }
 
     protected parseStringLiteral(parent: Nodes, startQuotationMark: QuotationMarkToken): StringLiteral {

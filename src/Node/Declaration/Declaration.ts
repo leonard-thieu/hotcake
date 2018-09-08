@@ -4,6 +4,7 @@ import { AliasDirective, AliasDirectiveSequence } from './AliasDirectiveSequence
 import { ClassDeclaration } from './ClassDeclaration';
 import { ClassMethodDeclaration } from './ClassMethodDeclaration';
 import { DataDeclaration, DataDeclarationSequence } from './DataDeclarationSequence';
+import { ExternDataDeclarationSequence } from './ExternDeclaration/ExternDataDeclarationSequence';
 import { FriendDirective } from './FriendDirective';
 import { FunctionDeclaration } from './FunctionDeclaration';
 import { ImportStatement } from './ImportStatement';
@@ -20,6 +21,7 @@ export abstract class Declaration extends Node {
 }
 
 export type Declarations =
+    ExternDataDeclarationSequence |
     AccessibilityDirective |
     AliasDirectiveSequence | AliasDirective |
     ClassDeclaration |

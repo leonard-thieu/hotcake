@@ -28,9 +28,9 @@ Import brl.filesystem   ' Import directive (dotted module path)
 Friend monkey.list  ' Friend directive
 
 Private         ' Private directive
-Public          ' Public directive
 Extern          ' Extern directive
 Extern Private  ' Extern Private directive
+Public          ' Public directive
 
 Alias T=file2.T                'which 'T' to use
 
