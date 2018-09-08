@@ -142,4 +142,5 @@ export enum TokenKind {
     Missing = 'Missing',
     Skipped = 'Skipped',
     Expression = 'Expression',
+    ForLoopHeader = 'ForLoopHeader',
 }

@@ -14,6 +14,7 @@ export class MissingToken<TTokenKind extends MissableTokenKinds> extends Token<T
 export type MissableTokenKinds =
     TokenKinds |
     TokenKind.Expression |
+    TokenKind.ForLoopHeader |
     NodeKind.DataDeclaration |
     NodeKind.ModulePath |
     NodeKind.TypeReference

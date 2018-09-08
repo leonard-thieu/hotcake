@@ -12,8 +12,7 @@ import { ModuleDeclaration } from './Node/Declaration/ModuleDeclaration';
 import { StrictDirective } from './Node/Declaration/StrictDirective';
 import { LonghandTypeDeclaration, ShorthandTypeDeclaration, ShorthandTypeToken } from './Node/Declaration/TypeDeclaration';
 import { TypeParameter } from './Node/Declaration/TypeParameter';
-import { AssignmentExpression } from './Node/Expression/AssignmentExpression';
-import { Expressions } from './Node/Expression/Expression';
+import { Expressions, MissableExpression } from './Node/Expression/Expression';
 import { MissableModulePath } from './Node/ModulePath';
 import { Nodes } from './Node/Node';
 import { NodeKind } from './Node/NodeKind';
@@ -837,23 +836,40 @@ export class Parser extends ParserBase {
     }
 
     private parseForLoopHeader(parent: ForLoop) {
-        let loopVariableExpression: DataDeclarationSequenceStatement | AssignmentExpression;
-        const localKeyword = this.getToken();
-        if (localKeyword.kind === TokenKind.LocalKeyword) {
+        let loopVariableExpression: DataDeclarationSequenceStatement | MissableExpression;
+        const token = this.getToken();
+        if (token.kind === TokenKind.LocalKeyword) {
             this.advanceToken();
 
-            loopVariableExpression = this.parseDataDeclarationSequenceStatement(parent, localKeyword);
+            loopVariableExpression = this.parseDataDeclarationSequenceStatement(parent, token);
             const declaration = loopVariableExpression.dataDeclarationSequence.children[0];
             if (declaration &&
                 declaration.kind === NodeKind.DataDeclaration &&
-                declaration.eachInKeyword !== null) {
+                declaration.eachInKeyword) {
                 return loopVariableExpression;
             }
         } else {
-            // TODO: Is this a safe assertion?
-            loopVariableExpression = this.parseExpression(parent) as AssignmentExpression;
-            if (loopVariableExpression.eachInKeyword !== null) {
-                return loopVariableExpression;
+            const position = this.position;
+            loopVariableExpression = this.parseExpression(parent);
+            switch (loopVariableExpression.kind) {
+                case NodeKind.AssignmentExpression: {
+                    if (loopVariableExpression.eachInKeyword) {
+                        return loopVariableExpression;
+                    }
+                    break;
+                }
+                default: {
+                    // TODO: Implement better error handling for incomplete For loop header.
+                    //       Returning a MissingToken causes the expression to be parsed as part of the For loop body.
+                    //       Possible solutions:
+                    //       * Refactor expression parsing to force an (incomplete) AssignmentExpression to be returned.
+                    //       * Construct an (incomplete) AssignmentExpression from the expression returned.
+                    //       * Return a SkippedToken covering the range of the expression.
+                    //         * Requires being able to calculate the length of the expression.
+                    this.position = position;
+
+                    return new MissingToken(token.fullStart, TokenKind.ForLoopHeader);
+                }
             }
         }
 

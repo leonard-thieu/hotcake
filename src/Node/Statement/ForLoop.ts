@@ -1,6 +1,7 @@
 import { ParseContextElementArray } from '../../ParserBase';
-import { MissableToken } from '../../Token/MissingToken';
+import { MissableToken, MissingToken } from '../../Token/MissingToken';
 import { EndKeywordToken, ForKeywordToken, NextKeywordToken, StepKeywordToken, ToKeywordToken, UntilKeywordToken } from '../../Token/Token';
+import { TokenKind } from '../../Token/TokenKind';
 import { AssignmentExpression } from '../Expression/AssignmentExpression';
 import { MissableExpression } from '../Expression/Expression';
 import { Node } from '../Node';
@@ -21,7 +22,7 @@ export class ForLoop extends Statement {
     readonly kind = NodeKind.ForLoop;
 
     forKeyword: ForKeywordToken;
-    header: NumericForLoopHeader | DataDeclarationSequenceStatement | AssignmentExpression;
+    header: NumericForLoopHeader | DataDeclarationSequenceStatement | AssignmentExpression | MissingToken<TokenKind.ForLoopHeader>;
     statements: ParseContextElementArray<ForLoop['kind']>;
     endKeyword: MissableToken<NextKeywordToken | EndKeywordToken>;
     endForKeyword: ForKeywordToken | null = null;
