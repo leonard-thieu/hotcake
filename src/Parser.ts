@@ -602,8 +602,10 @@ export class Parser extends ParserBase {
         const classMethodDeclaration = new ClassMethodDeclaration();
         classMethodDeclaration.parent = parent;
         classMethodDeclaration.methodKeyword = methodKeyword;
-        classMethodDeclaration.name = this.eat(TokenKind.Identifier);
-        classMethodDeclaration.returnType = this.parseTypeDeclaration(classMethodDeclaration);
+        classMethodDeclaration.name = this.eat(TokenKind.Identifier, TokenKind.NewKeyword);
+        if (classMethodDeclaration.name.kind !== TokenKind.NewKeyword) {
+            classMethodDeclaration.returnType = this.parseTypeDeclaration(classMethodDeclaration);
+        }
         classMethodDeclaration.openingParenthesis = this.eat(TokenKind.OpeningParenthesis);
         classMethodDeclaration.parameters = this.parseList(classMethodDeclaration, ParseContextKind.DataDeclarationSequence);
         classMethodDeclaration.closingParenthesis = this.eat(TokenKind.ClosingParenthesis);
