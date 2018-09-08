@@ -853,7 +853,6 @@ export abstract class ParserBase {
 
     protected isExpressionStart(token: Tokens): boolean {
         switch (token.kind) {
-            // TODO: Might need to include Newline?
             case TokenKind.NewKeyword:
             case TokenKind.NullKeyword:
             case TokenKind.TrueKeyword:
