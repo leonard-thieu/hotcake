@@ -74,6 +74,7 @@
                                         "start": 34,
                                         "length": 2
                                     },
+                                    "newline": null,
                                     "expressions": [
                                         {
                                             "kind": "IntegerLiteral",
