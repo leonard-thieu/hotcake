@@ -68,7 +68,7 @@
                     "arrayTypeDeclarations": []
                 }
             ],
-            "attributes": [],
+            "attribute": null,
             "members": [
                 {
                     "kind": "Newline",

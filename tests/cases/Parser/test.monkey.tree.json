@@ -2499,7 +2499,7 @@
             "baseType": null,
             "implementsKeyword": null,
             "implementedTypes": null,
-            "attributes": [],
+            "attribute": null,
             "members": [
                 {
                     "kind": "Newline",
@@ -3005,14 +3005,12 @@
             "baseType": null,
             "implementsKeyword": null,
             "implementedTypes": null,
-            "attributes": [
-                {
-                    "kind": "AbstractKeyword",
-                    "fullStart": 3388,
-                    "start": 3389,
-                    "length": 9
-                }
-            ],
+            "attribute": {
+                "kind": "AbstractKeyword",
+                "fullStart": 3388,
+                "start": 3389,
+                "length": 9
+            },
             "members": [
                 {
                     "kind": "Newline",
@@ -3668,7 +3666,7 @@
             },
             "implementsKeyword": null,
             "implementedTypes": null,
-            "attributes": [],
+            "attribute": null,
             "members": [
                 {
                     "kind": "Newline",
@@ -3763,14 +3761,12 @@
             },
             "implementsKeyword": null,
             "implementedTypes": null,
-            "attributes": [
-                {
-                    "kind": "AbstractKeyword",
-                    "fullStart": 4070,
-                    "start": 4071,
-                    "length": 9
-                }
-            ],
+            "attribute": {
+                "kind": "AbstractKeyword",
+                "fullStart": 4070,
+                "start": 4071,
+                "length": 9
+            },
             "members": [
                 {
                     "kind": "Newline",
@@ -3867,7 +3863,7 @@
                     "arrayTypeDeclarations": []
                 }
             ],
-            "attributes": [],
+            "attribute": null,
             "members": [
                 {
                     "kind": "Newline",
@@ -3964,14 +3960,12 @@
                     "arrayTypeDeclarations": []
                 }
             ],
-            "attributes": [
-                {
-                    "kind": "AbstractKeyword",
-                    "fullStart": 4330,
-                    "start": 4331,
-                    "length": 9
-                }
-            ],
+            "attribute": {
+                "kind": "AbstractKeyword",
+                "fullStart": 4330,
+                "start": 4331,
+                "length": 9
+            },
             "members": [
                 {
                     "kind": "Newline",
@@ -4093,7 +4087,7 @@
                     "arrayTypeDeclarations": []
                 }
             ],
-            "attributes": [],
+            "attribute": null,
             "members": [
                 {
                     "kind": "Newline",
@@ -4234,7 +4228,7 @@
                     "arrayTypeDeclarations": []
                 }
             ],
-            "attributes": [],
+            "attribute": null,
             "members": [
                 {
                     "kind": "Newline",
@@ -4380,14 +4374,12 @@
                     "arrayTypeDeclarations": []
                 }
             ],
-            "attributes": [
-                {
-                    "kind": "FinalKeyword",
-                    "fullStart": 4766,
-                    "start": 4767,
-                    "length": 6
-                }
-            ],
+            "attribute": {
+                "kind": "FinalKeyword",
+                "fullStart": 4766,
+                "start": 4767,
+                "length": 6
+            },
             "members": [
                 {
                     "kind": "Newline",

@@ -61,7 +61,7 @@
             "baseType": null,
             "implementsKeyword": null,
             "implementedTypes": null,
-            "attributes": [],
+            "attribute": null,
             "members": [
                 {
                     "kind": "Newline",
