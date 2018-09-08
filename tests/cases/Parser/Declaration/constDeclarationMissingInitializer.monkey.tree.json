@@ -1,0 +1,42 @@
+{
+    "kind": "ModuleDeclaration",
+    "members": [
+        {
+            "kind": "DataDeclarationSequence",
+            "dataDeclarationKeyword": {
+                "kind": "ConstKeyword",
+                "fullStart": 0,
+                "start": 0,
+                "length": 5
+            },
+            "children": [
+                {
+                    "kind": "DataDeclaration",
+                    "name": {
+                        "kind": "Identifier",
+                        "fullStart": 5,
+                        "start": 6,
+                        "length": 2
+                    },
+                    "type": null,
+                    "equalsSign": {
+                        "kind": "Missing",
+                        "fullStart": 7,
+                        "start": 7,
+                        "length": 0,
+                        "originalKind": "EqualsSign"
+                    },
+                    "eachInKeyword": null,
+                    "expression": {
+                        "kind": "Missing",
+                        "fullStart": 7,
+                        "start": 7,
+                        "length": 0,
+                        "originalKind": "Expression",
+                        "newlines": []
+                    }
+                }
+            ]
+        }
+    ]
+}
