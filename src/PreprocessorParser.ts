@@ -184,7 +184,7 @@ export class PreprocessorParser extends ParserBase {
             }
         }
 
-        throw new Error(`Unexpected token: ${JSON.stringify(token.kind)}`);
+        return this.parseCore(parent, token);
     }
 
     // #endregion

@@ -136,7 +136,7 @@ export class Parser extends ParserBase {
             }
         }
 
-        return this.parseCore(parent);
+        return this.parseNewlineListMember(parent);
     }
 
     private parseStrictDirective(parent: Nodes, strictKeyword: StrictKeywordToken): StrictDirective {
@@ -271,7 +271,7 @@ export class Parser extends ParserBase {
             }
         }
 
-        throw new Error(`Unexpected token: ${JSON.stringify(token.kind)}`);
+        return this.parseCore(parent, token);
     }
 
     private parseAliasDirective(parent: Nodes, name: IdentifierToken) {
@@ -319,7 +319,7 @@ export class Parser extends ParserBase {
             }
         }
 
-        return this.parseCore(parent);
+        return this.parseNewlineListMember(parent);
     }
 
     private parseInterfaceMethodDeclaration(parent: Nodes, methodKeyword: MethodKeywordToken): InterfaceMethodDeclaration {
@@ -390,7 +390,7 @@ export class Parser extends ParserBase {
             }
         }
 
-        return this.parseCore(parent);
+        return this.parseNewlineListMember(parent);
     }
 
     private parseClassMethodDeclaration(parent: Nodes, methodKeyword: MethodKeywordToken): ClassMethodDeclaration {
@@ -1030,7 +1030,7 @@ export class Parser extends ParserBase {
             }
         }
 
-        throw new Error(`Unexpected token: ${JSON.stringify(token.kind)}`);
+        return this.parseCore(parent, token);
     }
 
     private parseMissableDataDeclaration(parent: Nodes): MissableDataDeclaration {
@@ -1138,7 +1138,7 @@ export class Parser extends ParserBase {
             }
         }
 
-        throw new Error(`Unexpected token: ${JSON.stringify(token.kind)}`);
+        return this.parseCore(parent, token);
     }
 
     private parseTypeParameter(parent: Nodes, name: IdentifierToken): TypeParameter {
@@ -1334,22 +1334,6 @@ export class Parser extends ParserBase {
         }
 
         return super.parseListElementCore(parseContext, parent);
-    }
-
-    private parseCore(parent: Nodes) {
-        const token = this.getToken();
-        switch (token.kind) {
-            case TokenKind.Newline: {
-                this.advanceToken();
-
-                return token;
-            }
-        }
-
-        const p = parent || {
-            kind: null,
-        };
-        throw new Error(`Unexpected token: ${JSON.stringify(token.kind)} in ${JSON.stringify(p.kind)}`);
     }
 
     private eatStatementTerminator(statement: Statement) {

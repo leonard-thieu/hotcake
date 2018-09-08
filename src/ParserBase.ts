@@ -596,7 +596,7 @@ export abstract class ParserBase {
         return false;
     }
 
-    private parseNewlineListMember() {
+    protected parseNewlineListMember(parent: Nodes) {
         const token = this.getToken();
         switch (token.kind) {
             case TokenKind.Newline: {
@@ -606,7 +606,7 @@ export abstract class ParserBase {
             }
         }
 
-        throw new Error(`Unexpected token: ${JSON.stringify(token.kind)}`);
+        return this.parseCore(parent, token);
     }
 
     // #endregion
@@ -638,7 +638,7 @@ export abstract class ParserBase {
             return this.parseTypeReference(parent, token);
         }
 
-        throw new Error(`Unexpected token: ${JSON.stringify(token.kind)}`);
+        return this.parseCore(parent, token);
     }
 
     // #endregion
@@ -769,7 +769,7 @@ export abstract class ParserBase {
         return false;
     }
 
-    protected parseModulePathChild() {
+    protected parseModulePathChild(parent: Nodes) {
         const token = this.getToken();
         switch (token.kind) {
             case TokenKind.Identifier:
@@ -780,7 +780,7 @@ export abstract class ParserBase {
             }
         }
 
-        throw new Error(`Unexpected token: ${JSON.stringify(token.kind)}`);
+        return this.parseCore(parent, token);
     }
 
     // #endregion
@@ -811,7 +811,7 @@ export abstract class ParserBase {
             }
         }
 
-        throw new Error(`Unexpected token: ${JSON.stringify(token.kind)}`);
+        return this.parseCore(parent, token);
     }
 
     protected parseArrayTypeDeclaration(parent: Nodes, openingSquareBracket: OpeningSquareBracketToken): ArrayTypeDeclaration {
@@ -915,7 +915,7 @@ export abstract class ParserBase {
             }
         }
 
-        throw new Error(`Unexpected token: ${JSON.stringify(token.kind)}`);
+        return this.parseCore(parent, token);
     }
 
     protected parseConfigurationTag(parent: Nodes, startToken: ConfigurationTagStartToken): ConfigurationTag {
@@ -1042,10 +1042,10 @@ export abstract class ParserBase {
                 return this.parseStringLiteralChild(parent);
             }
             case NodeKind.ModulePath: {
-                return this.parseModulePathChild();
+                return this.parseModulePathChild(parent);
             }
             case ParseContextKind.NewlineList: {
-                return this.parseNewlineListMember();
+                return this.parseNewlineListMember(parent);
             }
             case ParseContextKind.ArrayTypeDeclarationList: {
                 return this.parseArrayTypeDeclarationListMember(parent);
@@ -1074,6 +1074,14 @@ export abstract class ParserBase {
     }
 
     // #endregion
+
+    protected parseCore(parent: Nodes | null, token: Tokens): never {
+        const p = parent || {
+            kind: null,
+        };
+
+        throw new Error(`Unexpected token: ${JSON.stringify(token.kind)} in ${JSON.stringify(p.kind)}`);
+    }
 
     // #region Tokens
 
