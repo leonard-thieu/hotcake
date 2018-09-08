@@ -35,13 +35,18 @@
                 "start": 7,
                 "length": 3
             },
-            "endIfDirectiveKeyword": null
+            "endIfDirectiveKeyword": {
+                "kind": "IfDirectiveKeyword",
+                "fullStart": 10,
+                "start": 11,
+                "length": 3
+            }
         }
     ],
     "eofToken": {
         "kind": "EOF",
-        "fullStart": 10,
-        "start": 10,
+        "fullStart": 13,
+        "start": 13,
         "length": 0
     }
 }

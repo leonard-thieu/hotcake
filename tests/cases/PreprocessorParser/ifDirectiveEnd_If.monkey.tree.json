@@ -1,0 +1,109 @@
+{
+    "kind": "PreprocessorModuleDeclaration",
+    "members": [
+        {
+            "kind": "IfDirective",
+            "numberSign": {
+                "kind": "NumberSign",
+                "fullStart": 0,
+                "start": 0,
+                "length": 1
+            },
+            "ifDirectiveKeyword": {
+                "kind": "IfDirectiveKeyword",
+                "fullStart": 1,
+                "start": 1,
+                "length": 2
+            },
+            "expression": {
+                "kind": "BooleanLiteral",
+                "newlines": [],
+                "value": {
+                    "kind": "TrueKeyword",
+                    "fullStart": 3,
+                    "start": 4,
+                    "length": 5
+                }
+            },
+            "members": [
+                {
+                    "kind": "Newline",
+                    "fullStart": 8,
+                    "start": 9,
+                    "length": 2
+                },
+                {
+                    "kind": "PrintDirective",
+                    "numberSign": {
+                        "kind": "NumberSign",
+                        "fullStart": 10,
+                        "start": 14,
+                        "length": 5
+                    },
+                    "printDirectiveKeyword": {
+                        "kind": "PrintDirectiveKeyword",
+                        "fullStart": 15,
+                        "start": 15,
+                        "length": 5
+                    },
+                    "expression": {
+                        "kind": "StringLiteral",
+                        "newlines": [],
+                        "startQuotationMark": {
+                            "kind": "QuotationMark",
+                            "fullStart": 20,
+                            "start": 21,
+                            "length": 2
+                        },
+                        "children": [
+                            {
+                                "kind": "StringLiteralText",
+                                "fullStart": 22,
+                                "start": 22,
+                                "length": 31
+                            }
+                        ],
+                        "endQuotationMark": {
+                            "kind": "QuotationMark",
+                            "fullStart": 53,
+                            "start": 53,
+                            "length": 1
+                        }
+                    }
+                },
+                {
+                    "kind": "Newline",
+                    "fullStart": 54,
+                    "start": 55,
+                    "length": 2
+                }
+            ],
+            "elseIfDirectives": [],
+            "elseDirective": null,
+            "endDirectiveNumberSign": {
+                "kind": "NumberSign",
+                "fullStart": 56,
+                "start": 56,
+                "length": 1
+            },
+            "endDirectiveKeyword": {
+                "kind": "EndDirectiveKeyword",
+                "fullStart": 57,
+                "start": 57,
+                "length": 3
+            },
+            "endIfDirectiveKeyword": {
+                "kind": "IfDirectiveKeyword",
+                "fullStart": 60,
+                "start": 61,
+                "length": 3
+            }
+        }
+    ],
+    "eofToken": {
+        "kind": "EOF",
+        "fullStart": 63,
+        "start": 63,
+        "length": 0
+    }
+}

@@ -190,7 +190,8 @@
                 "fullStart": 116,
                 "start": 116,
                 "length": 3
-            }
+            },
+            "endIfDirectiveKeyword": null
         },
         {
             "kind": "Newline",

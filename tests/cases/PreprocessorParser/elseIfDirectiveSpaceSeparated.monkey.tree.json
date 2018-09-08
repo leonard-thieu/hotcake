@@ -1,0 +1,99 @@
+{
+    "kind": "PreprocessorModuleDeclaration",
+    "members": [
+        {
+            "kind": "IfDirective",
+            "numberSign": {
+                "kind": "NumberSign",
+                "fullStart": 0,
+                "start": 0,
+                "length": 1
+            },
+            "ifDirectiveKeyword": {
+                "kind": "IfDirectiveKeyword",
+                "fullStart": 1,
+                "start": 1,
+                "length": 2
+            },
+            "expression": {
+                "kind": "BooleanLiteral",
+                "newlines": [],
+                "value": {
+                    "kind": "FalseKeyword",
+                    "fullStart": 3,
+                    "start": 4,
+                    "length": 6
+                }
+            },
+            "members": [
+                {
+                    "kind": "Newline",
+                    "fullStart": 9,
+                    "start": 10,
+                    "length": 2
+                }
+            ],
+            "elseIfDirectives": [
+                {
+                    "kind": "ElseIfDirective",
+                    "numberSign": {
+                        "kind": "NumberSign",
+                        "fullStart": 11,
+                        "start": 11,
+                        "length": 1
+                    },
+                    "elseIfDirectiveKeyword": {
+                        "kind": "ElseDirectiveKeyword",
+                        "fullStart": 12,
+                        "start": 12,
+                        "length": 4
+                    },
+                    "ifDirectiveKeyword": {
+                        "kind": "IfDirectiveKeyword",
+                        "fullStart": 16,
+                        "start": 17,
+                        "length": 3
+                    },
+                    "expression": {
+                        "kind": "BooleanLiteral",
+                        "newlines": [],
+                        "value": {
+                            "kind": "TrueKeyword",
+                            "fullStart": 19,
+                            "start": 20,
+                            "length": 5
+                        }
+                    },
+                    "members": [
+                        {
+                            "kind": "Newline",
+                            "fullStart": 24,
+                            "start": 25,
+                            "length": 2
+                        }
+                    ]
+                }
+            ],
+            "elseDirective": null,
+            "endDirectiveNumberSign": {
+                "kind": "NumberSign",
+                "fullStart": 26,
+                "start": 26,
+                "length": 1
+            },
+            "endDirectiveKeyword": {
+                "kind": "EndDirectiveKeyword",
+                "fullStart": 27,
+                "start": 27,
+                "length": 3
+            },
+            "endIfDirectiveKeyword": null
+        }
+    ],
+    "eofToken": {
+        "kind": "EOF",
+        "fullStart": 30,
+        "start": 30,
+        "length": 0
+    }
+}

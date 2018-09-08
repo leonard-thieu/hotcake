@@ -46,7 +46,8 @@
                 "fullStart": 11,
                 "start": 11,
                 "length": 3
-            }
+            },
+            "endIfDirectiveKeyword": null
         }
     ],
     "eofToken": {

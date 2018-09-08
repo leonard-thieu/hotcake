@@ -1,0 +1,74 @@
+[
+    {
+        "kind": "NumberSign",
+        "fullStart": 0,
+        "start": 0,
+        "length": 1
+    },
+    {
+        "kind": "IfDirectiveKeyword",
+        "fullStart": 1,
+        "start": 1,
+        "length": 2
+    },
+    {
+        "kind": "FalseKeyword",
+        "fullStart": 3,
+        "start": 4,
+        "length": 6
+    },
+    {
+        "kind": "Newline",
+        "fullStart": 9,
+        "start": 10,
+        "length": 2
+    },
+    {
+        "kind": "NumberSign",
+        "fullStart": 11,
+        "start": 11,
+        "length": 1
+    },
+    {
+        "kind": "ElseDirectiveKeyword",
+        "fullStart": 12,
+        "start": 12,
+        "length": 4
+    },
+    {
+        "kind": "IfDirectiveKeyword",
+        "fullStart": 16,
+        "start": 17,
+        "length": 3
+    },
+    {
+        "kind": "TrueKeyword",
+        "fullStart": 19,
+        "start": 20,
+        "length": 5
+    },
+    {
+        "kind": "Newline",
+        "fullStart": 24,
+        "start": 25,
+        "length": 2
+    },
+    {
+        "kind": "NumberSign",
+        "fullStart": 26,
+        "start": 26,
+        "length": 1
+    },
+    {
+        "kind": "EndDirectiveKeyword",
+        "fullStart": 27,
+        "start": 27,
+        "length": 3
+    },
+    {
+        "kind": "EOF",
+        "fullStart": 30,
+        "start": 30,
+        "length": 0
+    }
+]

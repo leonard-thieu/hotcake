@@ -128,6 +128,7 @@
                         "start": 62,
                         "length": 6
                     },
+                    "ifDirectiveKeyword": null,
                     "expression": {
                         "kind": "BinaryExpression",
                         "newlines": null,
@@ -241,6 +242,7 @@
                         "start": 133,
                         "length": 6
                     },
+                    "ifDirectiveKeyword": null,
                     "expression": {
                         "kind": "BinaryExpression",
                         "newlines": null,
@@ -353,7 +355,8 @@
                 "fullStart": 204,
                 "start": 204,
                 "length": 3
-            }
+            },
+            "endIfDirectiveKeyword": null
         },
         {
             "kind": "Newline",

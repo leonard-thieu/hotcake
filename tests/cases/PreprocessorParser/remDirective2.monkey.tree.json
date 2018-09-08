@@ -67,7 +67,8 @@
                         "fullStart": 27,
                         "start": 27,
                         "length": 3
-                    }
+                    },
+                    "endIfDirectiveKeyword": null
                 },
                 {
                     "kind": "RemDirectiveBody",
@@ -87,7 +88,8 @@
                 "fullStart": 35,
                 "start": 35,
                 "length": 3
-            }
+            },
+            "endIfDirectiveKeyword": null
         }
     ],
     "eofToken": {
