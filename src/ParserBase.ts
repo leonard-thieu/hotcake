@@ -259,6 +259,12 @@ export abstract class ParserBase {
             case TokenKind.NewKeyword: {
                 this.advanceToken();
 
+                switch (parent.kind) {
+                    case NodeKind.ScopeMemberAccessExpression: {
+                        return this.parseIdentifierExpression(parent, token);
+                    }
+                }
+
                 return this.parseNewExpression(parent, token);
             }
             case TokenKind.NullKeyword: {

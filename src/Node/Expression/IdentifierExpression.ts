@@ -1,6 +1,6 @@
 import { ParseContextElementArray, ParseContextKind } from '../../ParserBase';
 import { MissableToken } from '../../Token/MissingToken';
-import { BoolKeywordToken, FloatKeywordToken, GreaterThanSignToken, IdentifierToken, IntKeywordToken, LessThanSignToken, ObjectKeywordToken, PeriodToken, StringKeywordToken, ThrowableKeywordToken } from '../../Token/Token';
+import { BoolKeywordToken, FloatKeywordToken, GreaterThanSignToken, IdentifierToken, IntKeywordToken, LessThanSignToken, NewKeywordToken, ObjectKeywordToken, PeriodToken, StringKeywordToken, ThrowableKeywordToken } from '../../Token/Token';
 import { NodeKind } from '../NodeKind';
 import { Expression } from './Expression';
 
@@ -32,5 +32,6 @@ export type IdentifierNameToken =
     StringKeywordToken |
     ObjectKeywordToken |
     ThrowableKeywordToken |
-    IdentifierToken
+    IdentifierToken |
+    NewKeywordToken
     ;
