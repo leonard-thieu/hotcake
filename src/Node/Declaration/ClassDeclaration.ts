@@ -16,7 +16,7 @@ export class ClassDeclaration extends Declaration {
         'baseType',
         'implementsKeyword',
         'implementedTypes',
-        'attributes',
+        'attribute',
         'members',
         'endKeyword',
         'endClassKeyword',
@@ -40,8 +40,7 @@ export class ClassDeclaration extends Declaration {
     implementsKeyword: ImplementsKeywordToken | null = null;
     implementedTypes: ParseContextElementArray<ParseContextKind.TypeReferenceSequence> | null = null;
 
-    // Abstract or Final
-    attributes: Array<AbstractKeywordToken | FinalKeywordToken> = [];
+    attribute: AbstractKeywordToken | FinalKeywordToken | null = null;
 
     members: ParseContextElementArray<ClassDeclaration['kind']>;
     endKeyword: MissableToken<EndKeywordToken>;

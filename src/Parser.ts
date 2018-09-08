@@ -227,11 +227,7 @@ export class Parser extends ParserBase {
             classDeclaration.implementedTypes = this.parseList(classDeclaration, ParseContextKind.TypeReferenceSequence);
         }
 
-        let token: typeof classDeclaration.attributes[0] | null;
-        while ((token = this.eatOptional(TokenKind.AbstractKeyword, TokenKind.FinalKeyword)) !== null) {
-            classDeclaration.attributes.push(token);
-        }
-
+        classDeclaration.attribute = this.eatOptional(TokenKind.AbstractKeyword, TokenKind.FinalKeyword);
         classDeclaration.members = this.parseList(classDeclaration, classDeclaration.kind);
         classDeclaration.endKeyword = this.eat(TokenKind.EndKeyword);
         if (classDeclaration.endKeyword.kind === TokenKind.EndKeyword) {
