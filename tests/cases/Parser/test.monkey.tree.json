@@ -266,7 +266,7 @@
         {
             "kind": "AccessibilityDirective",
             "accessibilityKeyword": {
-                "kind": "PublicKeyword",
+                "kind": "ExternKeyword",
                 "fullStart": 884,
                 "start": 884,
                 "length": 6
@@ -287,28 +287,28 @@
                 "start": 920,
                 "length": 6
             },
-            "externPrivateKeyword": null
+            "externPrivateKeyword": {
+                "kind": "PrivateKeyword",
+                "fullStart": 926,
+                "start": 927,
+                "length": 8
+            }
         },
         {
             "kind": "Newline",
-            "fullStart": 926,
-            "start": 955,
+            "fullStart": 934,
+            "start": 963,
             "length": 30
         },
         {
             "kind": "AccessibilityDirective",
             "accessibilityKeyword": {
-                "kind": "ExternKeyword",
-                "fullStart": 956,
-                "start": 956,
+                "kind": "PublicKeyword",
+                "fullStart": 964,
+                "start": 964,
                 "length": 6
             },
-            "externPrivateKeyword": {
-                "kind": "PrivateKeyword",
-                "fullStart": 962,
-                "start": 963,
-                "length": 8
-            }
+            "externPrivateKeyword": null
         },
         {
             "kind": "Newline",
