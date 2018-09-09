@@ -389,6 +389,9 @@ export class Parser extends ParserBase {
     private isExternClassDeclarationMemberStart(token: Tokens): boolean {
         switch (token.kind) {
             case TokenKind.Newline:
+            case TokenKind.PrivateKeyword:
+            case TokenKind.PublicKeyword:
+            case TokenKind.ProtectedKeyword:
             case TokenKind.GlobalKeyword:
             case TokenKind.FieldKeyword:
             case TokenKind.FunctionKeyword:
@@ -403,6 +406,13 @@ export class Parser extends ParserBase {
     private parseExternClassDeclarationMember(parent: Nodes) {
         const token = this.getToken();
         switch (token.kind) {
+            case TokenKind.PrivateKeyword:
+            case TokenKind.PublicKeyword:
+            case TokenKind.ProtectedKeyword: {
+                this.advanceToken();
+
+                return this.parseAccessibilityDirective(parent, token);
+            }
             case TokenKind.GlobalKeyword:
             case TokenKind.FieldKeyword: {
                 this.advanceToken();
