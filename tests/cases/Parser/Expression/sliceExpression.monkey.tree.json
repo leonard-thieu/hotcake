@@ -59,6 +59,7 @@
                             "greaterThanSign": null
                         },
                         "openingParenthesis": null,
+                        "leadingNewlines": null,
                         "arguments": [
                             {
                                 "kind": "SliceExpression",
@@ -165,6 +166,7 @@
                             "greaterThanSign": null
                         },
                         "openingParenthesis": null,
+                        "leadingNewlines": null,
                         "arguments": [
                             {
                                 "kind": "SliceExpression",
@@ -262,6 +264,7 @@
                             "greaterThanSign": null
                         },
                         "openingParenthesis": null,
+                        "leadingNewlines": null,
                         "arguments": [
                             {
                                 "kind": "SliceExpression",
@@ -359,6 +362,7 @@
                             "greaterThanSign": null
                         },
                         "openingParenthesis": null,
+                        "leadingNewlines": null,
                         "arguments": [
                             {
                                 "kind": "SliceExpression",

@@ -59,6 +59,7 @@
                             "greaterThanSign": null
                         },
                         "openingParenthesis": null,
+                        "leadingNewlines": null,
                         "arguments": [
                             {
                                 "kind": "BinaryExpression",

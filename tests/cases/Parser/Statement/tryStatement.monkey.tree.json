@@ -99,6 +99,7 @@
                                     "start": 53,
                                     "length": 1
                                 },
+                                "leadingNewlines": [],
                                 "arguments": [],
                                 "closingParenthesis": {
                                     "kind": "ClosingParenthesis",

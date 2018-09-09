@@ -75,6 +75,7 @@
                             "start": 31,
                             "length": 2
                         },
+                        "leadingNewlines": [],
                         "arguments": [
                             {
                                 "kind": "StringLiteral",

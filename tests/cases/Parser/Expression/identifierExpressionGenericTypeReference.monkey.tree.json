@@ -113,6 +113,7 @@
                                 "start": 45,
                                 "length": 1
                             },
+                            "leadingNewlines": [],
                             "arguments": [
                                 {
                                     "kind": "IdentifierExpression",

@@ -505,6 +505,7 @@
                                                     "greaterThanSign": null
                                                 },
                                                 "openingParenthesis": null,
+                                                "leadingNewlines": null,
                                                 "arguments": [
                                                     {
                                                         "kind": "StringLiteral",
@@ -616,6 +617,7 @@
                                                     "greaterThanSign": null
                                                 },
                                                 "openingParenthesis": null,
+                                                "leadingNewlines": null,
                                                 "arguments": [
                                                     {
                                                         "kind": "StringLiteral",
