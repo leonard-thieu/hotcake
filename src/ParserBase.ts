@@ -421,7 +421,7 @@ export abstract class ParserBase {
         const arrayLiteral = new ArrayLiteral();
         arrayLiteral.parent = parent;
         arrayLiteral.openingSquareBracket = openingSquareBracket;
-        arrayLiteral.newline = this.eatOptional(TokenKind.Newline);
+        arrayLiteral.leadingNewlines = this.parseList(arrayLiteral, ParseContextKind.NewlineList);
         arrayLiteral.expressions = this.parseList(arrayLiteral, ParseContextKind.ExpressionSequence);
         arrayLiteral.closingSquareBracket = this.eat(TokenKind.ClosingSquareBracket);
 
