@@ -17,7 +17,7 @@ export class ShorthandTypeDeclaration extends Declaration {
 
     readonly kind = NodeKind.ShorthandTypeDeclaration;
 
-    shorthandType: ShorthandTypeToken;
+    shorthandType: ShorthandTypeToken | null = null;
     arrayTypeDeclarations: ParseContextElementArray<ParseContextKind.ArrayTypeDeclarationList>;
 }
 

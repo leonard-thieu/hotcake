@@ -1347,6 +1347,9 @@ export class Parser extends ParserBase {
 
                 return this.parseShorthandTypeDeclaration(parent, token);
             }
+            case TokenKind.OpeningSquareBracket: {
+                return this.parseShorthandTypeDeclaration(parent, null);
+            }
             case TokenKind.Colon: {
                 this.advanceToken();
 
@@ -1357,7 +1360,7 @@ export class Parser extends ParserBase {
         return null;
     }
 
-    private parseShorthandTypeDeclaration(parent: Nodes, shorthandType: ShorthandTypeToken): ShorthandTypeDeclaration {
+    private parseShorthandTypeDeclaration(parent: Nodes, shorthandType: ShorthandTypeToken | null): ShorthandTypeDeclaration {
         const shorthandTypeDeclaration = new ShorthandTypeDeclaration();
         shorthandTypeDeclaration.parent = parent;
         shorthandTypeDeclaration.shorthandType = shorthandType;
