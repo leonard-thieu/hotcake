@@ -579,6 +579,9 @@ export abstract class ParserBase {
         expression.parent = invokeExpression;
         invokeExpression.invokableExpression = expression;
         invokeExpression.openingParenthesis = this.eatOptional(TokenKind.OpeningParenthesis);
+        if (invokeExpression.openingParenthesis) {
+            invokeExpression.leadingNewlines = this.parseList(invokeExpression, ParseContextKind.NewlineList);
+        }
         invokeExpression.arguments = this.parseList(invokeExpression, ParseContextKind.ExpressionSequence);
         if (invokeExpression.openingParenthesis !== null) {
             invokeExpression.closingParenthesis = this.eat(TokenKind.ClosingParenthesis);

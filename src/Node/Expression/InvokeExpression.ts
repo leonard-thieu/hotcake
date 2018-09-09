@@ -9,6 +9,7 @@ export class InvokeExpression extends Expression {
         'newlines',
         'invokableExpression',
         'openingParenthesis',
+        'leadingNewlines',
         'arguments',
         'closingParenthesis',
     ];
@@ -17,6 +18,7 @@ export class InvokeExpression extends Expression {
 
     invokableExpression: Expressions;
     openingParenthesis: OpeningParenthesisToken | null = null;
+    leadingNewlines: ParseContextElementArray<ParseContextKind.NewlineList> | null = null;
     arguments: ParseContextElementArray<ParseContextKind.ExpressionSequence>;
     closingParenthesis: MissableToken<ClosingParenthesisToken> | null = null;
 }
