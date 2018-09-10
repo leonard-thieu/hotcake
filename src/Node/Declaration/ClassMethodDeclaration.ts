@@ -1,6 +1,7 @@
 import { ParseContextElementArray, ParseContextKind } from '../../ParserBase';
 import { MissableToken } from '../../Token/MissingToken';
-import { ClosingParenthesisToken, EndKeywordToken, IdentifierToken, MethodKeywordToken, NewKeywordToken, OpeningParenthesisToken } from '../../Token/Token';
+import { ClosingParenthesisToken, EndKeywordToken, MethodKeywordToken, NewKeywordToken, OpeningParenthesisToken } from '../../Token/Token';
+import { MissableIdentifier } from '../Identifier';
 import { NodeKind } from '../NodeKind';
 import { Declaration } from './Declaration';
 import { TypeDeclaration } from './TypeDeclaration';
@@ -8,7 +9,7 @@ import { TypeDeclaration } from './TypeDeclaration';
 export class ClassMethodDeclaration extends Declaration {
     static CHILD_NAMES: (keyof ClassMethodDeclaration)[] = [
         'methodKeyword',
-        'name',
+        'identifier',
         'returnType',
         'openingParenthesis',
         'parameters',
@@ -22,7 +23,7 @@ export class ClassMethodDeclaration extends Declaration {
     readonly kind = NodeKind.ClassMethodDeclaration;
 
     methodKeyword: MethodKeywordToken;
-    name: MissableToken<IdentifierToken | NewKeywordToken>;
+    identifier: NewKeywordToken | MissableIdentifier;
     returnType: TypeDeclaration | null = null;
     openingParenthesis: MissableToken<OpeningParenthesisToken>;
     parameters: ParseContextElementArray<ParseContextKind.DataDeclarationSequence>;

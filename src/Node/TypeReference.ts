@@ -1,6 +1,7 @@
 import { ParseContextElementArray, ParseContextKind } from '../ParserBase';
 import { MissableToken, MissingToken } from '../Token/MissingToken';
-import { BoolKeywordToken, FloatKeywordToken, GreaterThanSignToken, IdentifierToken, IntKeywordToken, LessThanSignToken, ObjectKeywordToken, PeriodToken, StringKeywordToken, ThrowableKeywordToken, VoidKeywordToken } from '../Token/Token';
+import { BoolKeywordToken, FloatKeywordToken, GreaterThanSignToken, IdentifierToken, IntKeywordToken, LessThanSignToken, PeriodToken, StringKeywordToken, VoidKeywordToken } from '../Token/Token';
+import { Identifier, IdentifierStartToken } from './Identifier';
 import { ModulePath } from './ModulePath';
 import { Node } from './Node';
 import { NodeKind } from './NodeKind';
@@ -9,7 +10,7 @@ export class TypeReference extends Node {
     static CHILD_NAMES: (keyof TypeReference)[] = [
         'modulePath',
         'scopeMemberAccessOperator',
-        'name',
+        'identifier',
         'lessThanSign',
         'typeArguments',
         'greaterThanSign',
@@ -20,7 +21,7 @@ export class TypeReference extends Node {
 
     modulePath: ModulePath | null = null;
     scopeMemberAccessOperator: MissableToken<PeriodToken> | null = null;
-    name: TypeReferenceIdentifierToken | MissableToken<IdentifierToken>;
+    identifier: TypeReferenceIdentifier | MissableToken<IdentifierToken>;
 
     // Generic type arguments
     lessThanSign: LessThanSignToken | null = null;
@@ -30,15 +31,22 @@ export class TypeReference extends Node {
     arrayTypeDeclarations: ParseContextElementArray<ParseContextKind.ArrayTypeDeclarationList>;
 }
 
-export type TypeReferenceIdentifierToken =
+export type TypeReferenceIdentifier =
+    Identifier |
     BoolKeywordToken |
     IntKeywordToken |
     FloatKeywordToken |
     StringKeywordToken |
-    ObjectKeywordToken |
-    ThrowableKeywordToken |
-    VoidKeywordToken |
-    IdentifierToken
+    VoidKeywordToken
+    ;
+
+export type TypeReferenceIdentifierStartToken =
+    IdentifierStartToken |
+    BoolKeywordToken |
+    IntKeywordToken |
+    FloatKeywordToken |
+    StringKeywordToken |
+    VoidKeywordToken
     ;
 
 export type MissableTypeReference = TypeReference | MissingToken<TypeReference['kind']>;

@@ -1,7 +1,8 @@
 import { ParseContextElementArray, ParseContextKind } from '../../ParserBase';
 import { MissableToken, MissingToken } from '../../Token/MissingToken';
-import { ColonEqualsSignToken, ConstKeywordToken, EachInKeywordToken, EqualsSignToken, FieldKeywordToken, GlobalKeywordToken, IdentifierToken, LocalKeywordToken } from '../../Token/Token';
+import { ColonEqualsSignToken, ConstKeywordToken, EachInKeywordToken, EqualsSignToken, FieldKeywordToken, GlobalKeywordToken, LocalKeywordToken } from '../../Token/Token';
 import { MissableExpression } from '../Expression/Expression';
+import { Identifier } from '../Identifier';
 import { NodeKind } from '../NodeKind';
 import { Declaration } from './Declaration';
 import { TypeDeclaration } from './TypeDeclaration';
@@ -43,7 +44,7 @@ export type DataDeclarationKeywordToken =
  */
 export class DataDeclaration extends Declaration {
     static CHILD_NAMES: (keyof DataDeclaration)[] = [
-        'name',
+        'identifier',
         'type',
         'equalsSign',
         'eachInKeyword',
@@ -52,7 +53,7 @@ export class DataDeclaration extends Declaration {
 
     readonly kind = NodeKind.DataDeclaration;
 
-    name: IdentifierToken;
+    identifier: Identifier;
     type: TypeDeclaration | null = null;
     equalsSign: MissableToken<EqualsSignToken | ColonEqualsSignToken> | null = null;
     eachInKeyword: EachInKeywordToken | null = null;

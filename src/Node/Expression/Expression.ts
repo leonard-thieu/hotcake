@@ -7,6 +7,7 @@ import { AssignmentExpression } from './AssignmentExpression';
 import { BinaryExpression } from './BinaryExpression';
 import { BooleanLiteral } from './BooleanLiteral';
 import { FloatLiteral } from './FloatLiteral';
+import { GlobalScopeExpression } from './GlobalScopeExpression';
 import { GroupingExpression } from './GroupingExpression';
 import { IdentifierExpression } from './IdentifierExpression';
 import { IndexExpression } from './IndexExpression';
@@ -43,7 +44,8 @@ export type Expressions =
     GroupingExpression |
     UnaryOpExpression |
     BinaryExpression |
-    AssignmentExpression
+    AssignmentExpression |
+    GlobalScopeExpression
     ;
 
 export type MissableExpression = Expressions | MissingToken<TokenKind.Expression>;

@@ -1,6 +1,7 @@
 import { ParseContextElementArray } from '../../ParserBase';
 import { MissableToken } from '../../Token/MissingToken';
-import { AliasKeywordToken, EqualsSignToken, IdentifierToken } from '../../Token/Token';
+import { AliasKeywordToken, EqualsSignToken } from '../../Token/Token';
+import { Identifier } from '../Identifier';
 import { NodeKind } from '../NodeKind';
 import { MissableTypeReference } from '../TypeReference';
 import { Declaration } from './Declaration';
@@ -19,14 +20,14 @@ export class AliasDirectiveSequence extends Declaration {
 
 export class AliasDirective extends Declaration {
     static CHILD_NAMES: (keyof AliasDirective)[] = [
-        'name',
+        'identifier',
         'equalsSign',
         'target',
     ];
 
     readonly kind = NodeKind.AliasDirective;
 
-    name: IdentifierToken;
+    identifier: Identifier;
     equalsSign: MissableToken<EqualsSignToken>;
     target: MissableTypeReference;
 }

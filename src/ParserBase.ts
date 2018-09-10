@@ -8,8 +8,9 @@ import { BinaryExpression, BinaryExpressionOperatorToken } from './Node/Expressi
 import { BooleanLiteral, BooleanLiteralValueToken } from './Node/Expression/BooleanLiteral';
 import { Expressions, MissableExpression } from './Node/Expression/Expression';
 import { FloatLiteral } from './Node/Expression/FloatLiteral';
+import { GlobalScopeExpression } from './Node/Expression/GlobalScopeExpression';
 import { GroupingExpression } from './Node/Expression/GroupingExpression';
-import { IdentifierExpression, IdentifierNameToken } from './Node/Expression/IdentifierExpression';
+import { IdentifierExpression, IdentifierExpressionToken } from './Node/Expression/IdentifierExpression';
 import { IndexExpression } from './Node/Expression/IndexExpression';
 import { IntegerLiteral } from './Node/Expression/IntegerLiteral';
 import { InvokeExpression } from './Node/Expression/InvokeExpression';
@@ -21,17 +22,18 @@ import { SliceExpression } from './Node/Expression/SliceExpression';
 import { MissableStringLiteral, StringLiteral } from './Node/Expression/StringLiteral';
 import { SuperExpression } from './Node/Expression/SuperExpression';
 import { UnaryOperatorToken, UnaryOpExpression } from './Node/Expression/UnaryOpExpression';
-import { ModulePath } from './Node/ModulePath';
+import { EscapedIdentifier, Identifier, IdentifierStartToken, MissableIdentifier } from './Node/Identifier';
+import { MissableModulePath, ModulePath } from './Node/ModulePath';
 import { Nodes } from './Node/Node';
 import { NodeKind } from './Node/NodeKind';
-import { TypeReference, TypeReferenceIdentifierToken } from './Node/TypeReference';
+import { TypeReference, TypeReferenceIdentifier, TypeReferenceIdentifierStartToken } from './Node/TypeReference';
 import { GreaterThanSignEqualsSignToken } from './Token/GreaterThanSignEqualsSignToken';
 import { MissingToken } from './Token/MissingToken';
 import { ModKeywordEqualsSignToken } from './Token/ModKeywordEqualsSignToken';
 import { ShlKeywordEqualsSignToken } from './Token/ShlKeywordEqualsSignToken';
 import { ShrKeywordEqualsSignToken } from './Token/ShrKeywordEqualsSignToken';
 import { SkippedToken } from './Token/SkippedToken';
-import { CommaToken, ConfigurationTagEndToken, ConfigurationTagStartToken, FloatLiteralToken, IdentifierToken, IntegerLiteralToken, NewKeywordToken, NullKeywordToken, OpeningParenthesisToken, OpeningSquareBracketToken, PeriodPeriodToken, PeriodToken, QuotationMarkToken, SelfKeywordToken, SuperKeywordToken, TokenKinds, TokenKindTokenMap, Tokens } from './Token/Token';
+import { CommaToken, CommercialAtToken, ConfigurationTagEndToken, ConfigurationTagStartToken, FloatLiteralToken, IntegerLiteralToken, NewKeywordToken, NullKeywordToken, OpeningParenthesisToken, OpeningSquareBracketToken, PeriodPeriodToken, PeriodToken, QuotationMarkToken, SelfKeywordToken, SuperKeywordToken, TokenKinds, TokenKindTokenMap, Tokens } from './Token/Token';
 import { TokenKind } from './Token/TokenKind';
 
 export abstract class ParserBase {
@@ -308,17 +310,22 @@ export abstract class ParserBase {
 
                 return this.parseArrayLiteral(parent, token);
             }
-            case TokenKind.Period:
+            case TokenKind.Identifier:
+            case TokenKind.ObjectKeyword:
+            case TokenKind.ThrowableKeyword:
+            case TokenKind.CommercialAt:
             case TokenKind.BoolKeyword:
             case TokenKind.IntKeyword:
             case TokenKind.FloatKeyword:
-            case TokenKind.StringKeyword:
-            case TokenKind.ObjectKeyword:
-            case TokenKind.ThrowableKeyword:
-            case TokenKind.Identifier: {
+            case TokenKind.StringKeyword: {
                 this.advanceToken();
 
                 return this.parseIdentifierExpression(parent, token);
+            }
+            case TokenKind.Period: {
+                // Don't consume the token here. This creates a placeholder expression for ScopeMemberAccessExpression
+                // to attach on to.
+                return this.parseGlobalScopeExpression(parent);
             }
             case TokenKind.OpeningParenthesis: {
                 this.advanceToken();
@@ -326,13 +333,11 @@ export abstract class ParserBase {
                 return this.parseGroupingExpression(parent, token);
             }
             case TokenKind.EOF: {
-                break;
-            }
-            default: {
-                console.error(`${JSON.stringify(token.kind)} not implemented.`);
-                break;
+                return new MissingToken(token.fullStart, TokenKind.Expression);
             }
         }
+
+        console.error(`${JSON.stringify(token.kind)} not implemented.`);
 
         return new MissingToken(token.fullStart, TokenKind.Expression);
     }
@@ -428,23 +433,10 @@ export abstract class ParserBase {
         return arrayLiteral;
     }
 
-    protected parseIdentifierExpression(parent: Nodes, name: IdentifierNameToken | PeriodToken): IdentifierExpression {
+    protected parseIdentifierExpression(parent: Nodes, identifierStart: IdentifierExpressionToken | CommercialAtToken): IdentifierExpression {
         const identifierExpression = new IdentifierExpression();
         identifierExpression.parent = parent;
-        if (name.kind === TokenKind.Period) {
-            identifierExpression.globalScopeMemberAccessOperator = name;
-            identifierExpression.name = this.eat(
-                TokenKind.BoolKeyword,
-                TokenKind.IntKeyword,
-                TokenKind.FloatKeyword,
-                TokenKind.StringKeyword,
-                TokenKind.ObjectKeyword,
-                TokenKind.ThrowableKeyword,
-                TokenKind.Identifier,
-            );
-        } else {
-            identifierExpression.name = name;
-        }
+        identifierExpression.identifier = this.parseIdentifier(identifierExpression, identifierStart);
 
         // Generic type arguments
         const position = this.position;
@@ -464,6 +456,13 @@ export abstract class ParserBase {
         }
 
         return identifierExpression;
+    }
+
+    protected parseGlobalScopeExpression(parent: Nodes): GlobalScopeExpression {
+        const globalScopeExpression = new GlobalScopeExpression();
+        globalScopeExpression.parent = parent;
+
+        return globalScopeExpression;
     }
 
     protected parseGroupingExpression(parent: Nodes, openingParenthesis: OpeningParenthesisToken): GroupingExpression {
@@ -703,16 +702,17 @@ export abstract class ParserBase {
         return commaSeparator;
     }
 
-    protected isTypeReferenceStart(token: Tokens): token is TypeReferenceIdentifierToken | PeriodToken {
+    protected isTypeReferenceStart(token: Tokens): token is TypeReferenceIdentifierStartToken | PeriodToken {
         switch (token.kind) {
+            case TokenKind.Identifier:
+            case TokenKind.ObjectKeyword:
+            case TokenKind.ThrowableKeyword:
+            case TokenKind.CommercialAt:
             case TokenKind.BoolKeyword:
             case TokenKind.IntKeyword:
             case TokenKind.FloatKeyword:
             case TokenKind.StringKeyword:
-            case TokenKind.ObjectKeyword:
-            case TokenKind.ThrowableKeyword:
             case TokenKind.VoidKeyword:
-            case TokenKind.Identifier:
             case TokenKind.Period: {
                 return true;
             }
@@ -732,28 +732,43 @@ export abstract class ParserBase {
         return new MissingToken(token.fullStart, NodeKind.TypeReference);
     }
 
-    protected parseTypeReference(parent: Nodes, nameOrModulePathStart: TypeReferenceIdentifierToken | PeriodToken): TypeReference {
+    protected parseTypeReference(parent: Nodes, typeReferenceStart: TypeReferenceIdentifierStartToken | PeriodToken): TypeReference {
         const typeReference = new TypeReference();
         typeReference.parent = parent;
 
-        switch (nameOrModulePathStart.kind) {
+        switch (typeReferenceStart.kind) {
             case TokenKind.BoolKeyword:
             case TokenKind.IntKeyword:
             case TokenKind.FloatKeyword:
             case TokenKind.StringKeyword:
-            case TokenKind.ObjectKeyword:
-            case TokenKind.ThrowableKeyword:
             case TokenKind.VoidKeyword: {
-                typeReference.name = nameOrModulePathStart;
+                typeReference.identifier = typeReferenceStart;
                 break;
             }
             default: {
-                if (nameOrModulePathStart.kind === TokenKind.Identifier &&
-                    !this.isModulePathChildStart(this.getToken())) {
-                    typeReference.name = nameOrModulePathStart;
+                let name: TypeReferenceIdentifier | undefined;
+
+                switch (typeReferenceStart.kind) {
+                    case TokenKind.Period: { break; }
+                    case TokenKind.CommercialAt: {
+                        if (!this.isModulePathChildStart(this.getToken(1))) {
+                            name = this.parseIdentifier(typeReference, typeReferenceStart);
+                        }
+                        break;
+                    }
+                    default: {
+                        if (!this.isModulePathChildStart(this.getToken())) {
+                            name = this.parseIdentifier(typeReference, typeReferenceStart);
+                        }
+                        break;
+                    }
+                }
+
+                if (name) {
+                    typeReference.identifier = name;
                 } else {
-                    typeReference.modulePath = this.parseModulePath(typeReference, nameOrModulePathStart);
-                    typeReference.name = typeReference.modulePath.name!;
+                    typeReference.modulePath = this.parseModulePath(typeReference, typeReferenceStart);
+                    typeReference.identifier = typeReference.modulePath.identifier!;
                     typeReference.scopeMemberAccessOperator = typeReference.modulePath.scopeMemberAccessOperator;
                     this.setModulePathProperties(typeReference.modulePath);
                 }
@@ -773,11 +788,26 @@ export abstract class ParserBase {
         return typeReference;
     }
 
-    protected parseModulePath(parent: Nodes, firstChild: IdentifierToken | PeriodToken): ModulePath {
+    protected parseMissableModulePath(parent: Nodes): MissableModulePath {
+        const token = this.getToken();
+        if (this.isModulePathChildStart(token)) {
+            this.advanceToken();
+
+            return this.parseModulePath(parent, token);
+        }
+
+        return new MissingToken(token.fullStart, NodeKind.ModulePath);
+    }
+
+    protected parseModulePath(parent: Nodes, modulePathStart: IdentifierStartToken | PeriodToken): ModulePath {
         const modulePath = new ModulePath();
         modulePath.parent = parent;
         modulePath.children = this.parseList(modulePath, modulePath.kind);
-        modulePath.children.unshift(firstChild);
+        if (modulePathStart.kind === TokenKind.Period) {
+            modulePath.children.unshift(modulePathStart);
+        } else {
+            modulePath.children.unshift(this.parseIdentifier(modulePath, modulePathStart));
+        }
         this.setModulePathProperties(modulePath);
 
         return modulePath;
@@ -786,10 +816,18 @@ export abstract class ParserBase {
     private setModulePathProperties(modulePath: ModulePath) {
         let lastChild = modulePath.children[modulePath.children.length - 1];
         if (!lastChild) {
-            modulePath.name = null;
-        } else if (lastChild.kind === TokenKind.Identifier) {
-            modulePath.children.pop();
-            modulePath.name = lastChild;
+            modulePath.identifier = null;
+        } else {
+            switch (lastChild.kind) {
+                case TokenKind.Identifier:
+                case TokenKind.ObjectKeyword:
+                case TokenKind.ThrowableKeyword:
+                case NodeKind.EscapedIdentifier: {
+                    modulePath.children.pop();
+                    modulePath.identifier = lastChild;
+                    break;
+                }
+            }
         }
 
         lastChild = modulePath.children[modulePath.children.length - 1];
@@ -809,9 +847,12 @@ export abstract class ParserBase {
         return !this.isModulePathChildStart(token);
     }
 
-    protected isModulePathChildStart(token: Tokens): token is IdentifierToken | PeriodToken {
+    protected isModulePathChildStart(token: Tokens): token is IdentifierStartToken | PeriodToken {
         switch (token.kind) {
             case TokenKind.Identifier:
+            case TokenKind.ObjectKeyword:
+            case TokenKind.ThrowableKeyword:
+            case TokenKind.CommercialAt:
             case TokenKind.Period: {
                 return true;
             }
@@ -824,6 +865,13 @@ export abstract class ParserBase {
         const token = this.getToken();
         switch (token.kind) {
             case TokenKind.Identifier:
+            case TokenKind.ObjectKeyword:
+            case TokenKind.ThrowableKeyword:
+            case TokenKind.CommercialAt: {
+                this.advanceToken();
+
+                return this.parseIdentifier(parent, token);
+            }
             case TokenKind.Period: {
                 this.advanceToken();
 
@@ -890,7 +938,6 @@ export abstract class ParserBase {
             case TokenKind.QuotationMark:
             case TokenKind.FloatLiteral:
             case TokenKind.IntegerLiteral:
-            case TokenKind.Identifier:
             case TokenKind.Period:
             case TokenKind.OpeningParenthesis:
             case TokenKind.OpeningSquareBracket:
@@ -898,18 +945,129 @@ export abstract class ParserBase {
             case TokenKind.HyphenMinus:
             case TokenKind.Tilde:
             case TokenKind.NotKeyword:
-            case TokenKind.StringKeyword:
-            case TokenKind.BoolKeyword:
-            case TokenKind.FloatKeyword:
-            case TokenKind.IntKeyword:
+            case TokenKind.Identifier:
             case TokenKind.ObjectKeyword:
-            case TokenKind.ThrowableKeyword: {
+            case TokenKind.ThrowableKeyword:
+            case TokenKind.BoolKeyword:
+            case TokenKind.IntKeyword:
+            case TokenKind.FloatKeyword:
+            case TokenKind.StringKeyword: {
                 return true;
             }
         }
 
         return false;
     }
+
+    // #region Identifier
+
+    protected parseMissableIdentifier(parent: Nodes): MissableIdentifier {
+        const token = this.getToken();
+        switch (token.kind) {
+            case TokenKind.Identifier:
+            case TokenKind.ObjectKeyword:
+            case TokenKind.ThrowableKeyword:
+            case TokenKind.CommercialAt: {
+                this.advanceToken();
+
+                return this.parseIdentifier(parent, token);
+            }
+        }
+
+        return new MissingToken(token.fullStart, TokenKind.Identifier);
+    }
+
+    protected parseIdentifier(parent: Nodes, identifierStart: CommercialAtToken): EscapedIdentifier;
+    protected parseIdentifier<T extends IdentifierExpressionToken>(parent: Nodes, identifierStart: T | CommercialAtToken): Identifier | T;
+    protected parseIdentifier<T extends IdentifierExpressionToken>(parent: Nodes, identifierStart: T | CommercialAtToken): Identifier | T {
+        if (identifierStart.kind !== TokenKind.CommercialAt) {
+            return identifierStart;
+        }
+
+        return this.parseEscapedIdentifier(parent, identifierStart);
+    }
+
+    private parseEscapedIdentifier(parent: Nodes, commercialAt: CommercialAtToken) {
+        const escapedIdentifier = new EscapedIdentifier();
+        escapedIdentifier.parent = parent;
+        escapedIdentifier.commercialAt = commercialAt;
+        escapedIdentifier.name = this.eat(
+            TokenKind.Identifier,
+            TokenKind.ObjectKeyword,
+            TokenKind.ThrowableKeyword,
+            TokenKind.VoidKeyword,
+            TokenKind.StrictKeyword,
+            TokenKind.PublicKeyword,
+            TokenKind.PrivateKeyword,
+            TokenKind.ProtectedKeyword,
+            TokenKind.FriendKeyword,
+            TokenKind.PropertyKeyword,
+            TokenKind.BoolKeyword,
+            TokenKind.IntKeyword,
+            TokenKind.FloatKeyword,
+            TokenKind.StringKeyword,
+            TokenKind.ArrayKeyword,
+            TokenKind.ModKeyword,
+            TokenKind.ContinueKeyword,
+            TokenKind.ExitKeyword,
+            TokenKind.IncludeKeyword,
+            TokenKind.ImportKeyword,
+            TokenKind.ModuleKeyword,
+            TokenKind.ExternKeyword,
+            TokenKind.NewKeyword,
+            TokenKind.SelfKeyword,
+            TokenKind.SuperKeyword,
+            TokenKind.EachInKeyword,
+            TokenKind.TrueKeyword,
+            TokenKind.FalseKeyword,
+            TokenKind.NullKeyword,
+            TokenKind.NotKeyword,
+            TokenKind.ExtendsKeyword,
+            TokenKind.AbstractKeyword,
+            TokenKind.FinalKeyword,
+            TokenKind.SelectKeyword,
+            TokenKind.CaseKeyword,
+            TokenKind.DefaultKeyword,
+            TokenKind.ConstKeyword,
+            TokenKind.LocalKeyword,
+            TokenKind.GlobalKeyword,
+            TokenKind.FieldKeyword,
+            TokenKind.MethodKeyword,
+            TokenKind.FunctionKeyword,
+            TokenKind.ClassKeyword,
+            TokenKind.AndKeyword,
+            TokenKind.OrKeyword,
+            TokenKind.ShlKeyword,
+            TokenKind.ShrKeyword,
+            TokenKind.EndKeyword,
+            TokenKind.IfKeyword,
+            TokenKind.ThenKeyword,
+            TokenKind.ElseKeyword,
+            TokenKind.ElseIfKeyword,
+            TokenKind.EndIfKeyword,
+            TokenKind.WhileKeyword,
+            TokenKind.WendKeyword,
+            TokenKind.RepeatKeyword,
+            TokenKind.UntilKeyword,
+            TokenKind.ForeverKeyword,
+            TokenKind.ForKeyword,
+            TokenKind.ToKeyword,
+            TokenKind.StepKeyword,
+            TokenKind.NextKeyword,
+            TokenKind.ReturnKeyword,
+            TokenKind.InterfaceKeyword,
+            TokenKind.ImplementsKeyword,
+            TokenKind.InlineKeyword,
+            TokenKind.AliasKeyword,
+            TokenKind.TryKeyword,
+            TokenKind.CatchKeyword,
+            TokenKind.ThrowKeyword,
+        );
+
+        return escapedIdentifier;
+    }
+
+    // #endregion
 
     // #region String literal children
 

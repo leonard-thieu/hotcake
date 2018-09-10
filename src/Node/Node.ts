@@ -5,6 +5,7 @@ import { Declarations } from './Declaration/Declaration';
 import { ExternDeclarations } from './Declaration/ExternDeclaration/ExternDeclaration';
 import { Directives } from './Directive/Directive';
 import { Expressions } from './Expression/Expression';
+import { EscapedIdentifier } from './Identifier';
 import { ModulePath } from './ModulePath';
 import { NodeKind } from './NodeKind';
 import { NumericForLoopHeader } from './Statement/ForLoop';
@@ -70,6 +71,7 @@ export type Nodes =
     NumericForLoopHeader |
     ArrayTypeDeclaration |
     CommaSeparator |
+    EscapedIdentifier |
     ModulePath |
     TypeReference
     ;

@@ -273,7 +273,12 @@ export class Tokenizer {
                 return parseFloat(expression.value.getText(this.document));
             }
             case NodeKind.IdentifierExpression: {
-                const identifierName = expression.name.getText(this.document);
+                let identifierName: string
+                if (expression.identifier.kind === NodeKind.EscapedIdentifier) {
+                    identifierName = expression.identifier.name.getText(this.document);
+                } else {
+                    identifierName = expression.identifier.getText(this.document);
+                }
 
                 return this.configVars.get(identifierName);
             }
@@ -286,7 +291,8 @@ export class Tokenizer {
             case NodeKind.SliceExpression:
             case NodeKind.SelfExpression:
             case NodeKind.SuperExpression:
-            case NodeKind.AssignmentExpression: {
+            case NodeKind.AssignmentExpression:
+            case NodeKind.GlobalScopeExpression: {
                 throw new Error(`Unexpected expression: ${JSON.stringify(expression.kind)}`);
             }
         }

@@ -17,7 +17,7 @@ import { StrictDirective } from './Node/Declaration/StrictDirective';
 import { LonghandTypeDeclaration, ShorthandTypeDeclaration, ShorthandTypeToken } from './Node/Declaration/TypeDeclaration';
 import { TypeParameter } from './Node/Declaration/TypeParameter';
 import { Expressions, MissableExpression } from './Node/Expression/Expression';
-import { MissableModulePath } from './Node/ModulePath';
+import { IdentifierStartToken } from './Node/Identifier';
 import { Nodes } from './Node/Node';
 import { NodeKind } from './Node/NodeKind';
 import { ContinueStatement } from './Node/Statement/ContinueStatement';
@@ -36,7 +36,7 @@ import { CatchStatement, TryStatement } from './Node/Statement/TryStatement';
 import { WhileLoop } from './Node/Statement/WhileLoop';
 import { ParseContext, ParseContextElementMapBase, ParseContextKind, ParserBase } from './ParserBase';
 import { MissingToken } from './Token/MissingToken';
-import { AliasKeywordToken, CaseKeywordToken, CatchKeywordToken, ClassKeywordToken, ColonToken, ConstKeywordToken, ContinueKeywordToken, DefaultKeywordToken, ElseIfKeywordToken, ElseKeywordToken, ExitKeywordToken, ForKeywordToken, FriendKeywordToken, FunctionKeywordToken, IdentifierToken, IfKeywordToken, ImportKeywordToken, InterfaceKeywordToken, LocalKeywordToken, MethodKeywordToken, RepeatKeywordToken, ReturnKeywordToken, SelectKeywordToken, StrictKeywordToken, ThrowKeywordToken, Tokens, TryKeywordToken, WhileKeywordToken } from './Token/Token';
+import { AliasKeywordToken, CaseKeywordToken, CatchKeywordToken, ClassKeywordToken, ColonToken, ConstKeywordToken, ContinueKeywordToken, DefaultKeywordToken, ElseIfKeywordToken, ElseKeywordToken, ExitKeywordToken, ForKeywordToken, FriendKeywordToken, FunctionKeywordToken, IfKeywordToken, ImportKeywordToken, InterfaceKeywordToken, LocalKeywordToken, MethodKeywordToken, RepeatKeywordToken, ReturnKeywordToken, SelectKeywordToken, StrictKeywordToken, ThrowKeywordToken, Tokens, TryKeywordToken, WhileKeywordToken } from './Token/Token';
 import { TokenKind } from './Token/TokenKind';
 
 export class Parser extends ParserBase {
@@ -176,7 +176,7 @@ export class Parser extends ParserBase {
         const externFunctionDeclaration = new ExternFunctionDeclaration();
         externFunctionDeclaration.parent = parent;
         externFunctionDeclaration.functionKeyword = functionKeyword;
-        externFunctionDeclaration.name = this.eat(TokenKind.Identifier);
+        externFunctionDeclaration.identifier = this.parseMissableIdentifier(externFunctionDeclaration)
         externFunctionDeclaration.returnType = this.parseTypeDeclaration(externFunctionDeclaration);
         externFunctionDeclaration.openingParenthesis = this.eat(TokenKind.OpeningParenthesis);
         externFunctionDeclaration.parameters = this.parseList(externFunctionDeclaration, ParseContextKind.DataDeclarationSequence);
@@ -193,14 +193,7 @@ export class Parser extends ParserBase {
         const externClassDeclaration = new ExternClassDeclaration();
         externClassDeclaration.parent = parent;
         externClassDeclaration.classKeyword = classKeyword;
-        externClassDeclaration.commercialAt = this.eatOptional(TokenKind.CommercialAt);
-        externClassDeclaration.name = this.eat(
-            TokenKind.StringKeyword,
-            TokenKind.ArrayKeyword,
-            TokenKind.ObjectKeyword,
-            TokenKind.ThrowableKeyword,
-            TokenKind.Identifier,
-        );
+        externClassDeclaration.identifier = this.parseMissableIdentifier(externClassDeclaration);
 
         externClassDeclaration.extendsKeyword = this.eatOptional(TokenKind.ExtendsKeyword);
         if (externClassDeclaration.extendsKeyword !== null) {
@@ -276,7 +269,7 @@ export class Parser extends ParserBase {
         const interfaceDeclaration = new InterfaceDeclaration();
         interfaceDeclaration.parent = parent;
         interfaceDeclaration.interfaceKeyword = interfaceKeyword;
-        interfaceDeclaration.name = this.eat(TokenKind.Identifier);
+        interfaceDeclaration.identifier = this.parseMissableIdentifier(interfaceDeclaration);
         interfaceDeclaration.extendsKeyword = this.eatOptional(TokenKind.ExtendsKeyword);
         if (interfaceDeclaration.extendsKeyword !== null) {
             interfaceDeclaration.baseTypes = this.parseList(interfaceDeclaration, ParseContextKind.TypeReferenceSequence);
@@ -294,7 +287,7 @@ export class Parser extends ParserBase {
         const classDeclaration = new ClassDeclaration();
         classDeclaration.parent = parent;
         classDeclaration.classKeyword = classKeyword;
-        classDeclaration.name = this.eat(TokenKind.Identifier);
+        classDeclaration.identifier = this.parseMissableIdentifier(classDeclaration);
 
         classDeclaration.lessThanSign = this.eatOptional(TokenKind.LessThanSign);
         if (classDeclaration.lessThanSign !== null) {
@@ -333,6 +326,9 @@ export class Parser extends ParserBase {
     private isExternDataDeclarationSequenceMemberStart(token: Tokens): boolean {
         switch (token.kind) {
             case TokenKind.Identifier:
+            case TokenKind.ObjectKeyword:
+            case TokenKind.ThrowableKeyword:
+            case TokenKind.CommercialAt:
             case TokenKind.Comma: {
                 return true;
             }
@@ -344,7 +340,10 @@ export class Parser extends ParserBase {
     private parseExternDataDeclarationSequenceMember(parent: Nodes) {
         const token = this.getToken();
         switch (token.kind) {
-            case TokenKind.Identifier: {
+            case TokenKind.Identifier:
+            case TokenKind.ObjectKeyword:
+            case TokenKind.ThrowableKeyword:
+            case TokenKind.CommercialAt: {
                 this.advanceToken();
 
                 return this.parseExternDataDeclaration(parent, token);
@@ -352,17 +351,17 @@ export class Parser extends ParserBase {
             case TokenKind.Comma: {
                 this.advanceToken();
 
-                return this.parseCommaSeparator(parent, token);;
+                return this.parseCommaSeparator(parent, token);
             }
         }
 
         return this.parseCore(parent, token);
     }
 
-    private parseExternDataDeclaration(parent: Nodes, name: IdentifierToken): ExternDataDeclaration {
+    private parseExternDataDeclaration(parent: Nodes, identifierStart: IdentifierStartToken): ExternDataDeclaration {
         const externDataDeclaration = new ExternDataDeclaration();
         externDataDeclaration.parent = parent;
-        externDataDeclaration.name = name;
+        externDataDeclaration.identifier = this.parseIdentifier(parent, identifierStart);
         externDataDeclaration.type = this.parseTypeDeclaration(externDataDeclaration);
         externDataDeclaration.equalsSign = this.eatOptional(TokenKind.EqualsSign);
         if (externDataDeclaration.equalsSign) {
@@ -388,14 +387,14 @@ export class Parser extends ParserBase {
 
     private isExternClassDeclarationMemberStart(token: Tokens): boolean {
         switch (token.kind) {
-            case TokenKind.Newline:
             case TokenKind.PrivateKeyword:
             case TokenKind.PublicKeyword:
             case TokenKind.ProtectedKeyword:
             case TokenKind.GlobalKeyword:
             case TokenKind.FieldKeyword:
             case TokenKind.FunctionKeyword:
-            case TokenKind.MethodKeyword: {
+            case TokenKind.MethodKeyword:
+            case TokenKind.Newline: {
                 return true;
             }
         }
@@ -438,7 +437,7 @@ export class Parser extends ParserBase {
         const externClassMethodDeclaration = new ExternClassMethodDeclaration();
         externClassMethodDeclaration.parent = parent;
         externClassMethodDeclaration.methodKeyword = methodKeyword;
-        externClassMethodDeclaration.name = this.eat(TokenKind.Identifier);
+        externClassMethodDeclaration.identifier = this.parseMissableIdentifier(externClassMethodDeclaration);
         externClassMethodDeclaration.returnType = this.parseTypeDeclaration(externClassMethodDeclaration);
         externClassMethodDeclaration.openingParenthesis = this.eat(TokenKind.OpeningParenthesis);
         externClassMethodDeclaration.parameters = this.parseList(externClassMethodDeclaration, ParseContextKind.DataDeclarationSequence);
@@ -463,6 +462,9 @@ export class Parser extends ParserBase {
     private isAliasDirectiveSequenceMemberStart(token: Tokens): boolean {
         switch (token.kind) {
             case TokenKind.Identifier:
+            case TokenKind.ObjectKeyword:
+            case TokenKind.ThrowableKeyword:
+            case TokenKind.CommercialAt:
             case TokenKind.Comma: {
                 return true;
             }
@@ -474,7 +476,10 @@ export class Parser extends ParserBase {
     private parseAliasDirectiveSequenceMember(parent: Nodes) {
         const token = this.getToken();
         switch (token.kind) {
-            case TokenKind.Identifier: {
+            case TokenKind.Identifier:
+            case TokenKind.ObjectKeyword:
+            case TokenKind.ThrowableKeyword:
+            case TokenKind.CommercialAt: {
                 this.advanceToken();
 
                 return this.parseAliasDirective(parent, token);
@@ -489,10 +494,10 @@ export class Parser extends ParserBase {
         return this.parseCore(parent, token);
     }
 
-    private parseAliasDirective(parent: Nodes, name: IdentifierToken) {
+    private parseAliasDirective(parent: Nodes, identifierStart: IdentifierStartToken): AliasDirective {
         const aliasDirective = new AliasDirective();
         aliasDirective.parent = parent;
-        aliasDirective.name = name;
+        aliasDirective.identifier = this.parseIdentifier(aliasDirective, identifierStart);
         aliasDirective.equalsSign = this.eat(TokenKind.EqualsSign);
         aliasDirective.target = this.parseMissableTypeReference(aliasDirective);
 
@@ -541,7 +546,7 @@ export class Parser extends ParserBase {
         const interfaceMethodDeclaration = new InterfaceMethodDeclaration();
         interfaceMethodDeclaration.parent = parent;
         interfaceMethodDeclaration.methodKeyword = methodKeyword;
-        interfaceMethodDeclaration.name = this.eat(TokenKind.Identifier);
+        interfaceMethodDeclaration.identifier = this.parseMissableIdentifier(interfaceMethodDeclaration)
         interfaceMethodDeclaration.returnType = this.parseTypeDeclaration(interfaceMethodDeclaration);
         interfaceMethodDeclaration.openingParenthesis = this.eat(TokenKind.OpeningParenthesis);
         interfaceMethodDeclaration.parameters = this.parseList(interfaceMethodDeclaration, ParseContextKind.DataDeclarationSequence);
@@ -612,8 +617,11 @@ export class Parser extends ParserBase {
         const classMethodDeclaration = new ClassMethodDeclaration();
         classMethodDeclaration.parent = parent;
         classMethodDeclaration.methodKeyword = methodKeyword;
-        classMethodDeclaration.name = this.eat(TokenKind.Identifier, TokenKind.NewKeyword);
-        if (classMethodDeclaration.name.kind !== TokenKind.NewKeyword) {
+        const newKeyword = this.eatOptional(TokenKind.NewKeyword);
+        if (newKeyword) {
+            classMethodDeclaration.identifier = newKeyword;
+        } else {
+            classMethodDeclaration.identifier = this.parseMissableIdentifier(classMethodDeclaration);
             classMethodDeclaration.returnType = this.parseTypeDeclaration(classMethodDeclaration);
         }
         classMethodDeclaration.openingParenthesis = this.eat(TokenKind.OpeningParenthesis);
@@ -689,8 +697,8 @@ export class Parser extends ParserBase {
             case TokenKind.ExitKeyword:
             case TokenKind.ThrowKeyword:
             case TokenKind.TryKeyword:
-            case TokenKind.Newline:
-            case TokenKind.Semicolon: {
+            case TokenKind.Semicolon:
+            case TokenKind.Newline: {
                 return true;
             }
         }
@@ -767,8 +775,8 @@ export class Parser extends ParserBase {
 
                 return this.parseTryStatement(parent, token);
             }
-            case TokenKind.Newline:
-            case TokenKind.Semicolon: {
+            case TokenKind.Semicolon:
+            case TokenKind.Newline: {
                 return this.parseEmptyStatement(parent);
             }
         }
@@ -865,7 +873,11 @@ export class Parser extends ParserBase {
         return ifStatement;
     }
 
-    private parseElseIfStatement(parent: IfStatement, elseIfKeyword: ElseIfKeywordToken | ElseKeywordToken, ifKeyword: IfKeywordToken | null): ElseIfStatement {
+    private parseElseIfStatement(
+        parent: IfStatement,
+        elseIfKeyword: ElseIfKeywordToken | ElseKeywordToken,
+        ifKeyword: IfKeywordToken | null
+    ): ElseIfStatement {
         const elseIfStatement = new ElseIfStatement();
         elseIfStatement.parent = parent;
         elseIfStatement.elseIfKeyword = elseIfKeyword;
@@ -1225,17 +1237,6 @@ export class Parser extends ParserBase {
 
     // #region Common
 
-    private parseMissableModulePath(parent: Nodes): MissableModulePath {
-        const token = this.getToken();
-        if (this.isModulePathChildStart(token)) {
-            this.advanceToken();
-
-            return this.parseModulePath(parent, token);
-        }
-
-        return new MissingToken(token.fullStart, NodeKind.ModulePath);
-    }
-
     private parseAccessibilityDirective(parent: Nodes, accessibilityKeyword: AccessibilityKeywordToken): AccessibilityDirective {
         const accessibilityDirective = new AccessibilityDirective();
         accessibilityDirective.parent = parent;
@@ -1251,7 +1252,7 @@ export class Parser extends ParserBase {
         const functionDeclaration = new FunctionDeclaration();
         functionDeclaration.parent = parent;
         functionDeclaration.functionKeyword = functionKeyword;
-        functionDeclaration.name = this.eat(TokenKind.Identifier);
+        functionDeclaration.identifier = this.parseMissableIdentifier(functionDeclaration);
         functionDeclaration.returnType = this.parseTypeDeclaration(functionDeclaration);
         functionDeclaration.openingParenthesis = this.eat(TokenKind.OpeningParenthesis);
         functionDeclaration.parameters = this.parseList(functionDeclaration, ParseContextKind.DataDeclarationSequence);
@@ -1283,6 +1284,9 @@ export class Parser extends ParserBase {
     private isDataDeclarationSequenceMemberStart(token: Tokens): boolean {
         switch (token.kind) {
             case TokenKind.Identifier:
+            case TokenKind.ObjectKeyword:
+            case TokenKind.ThrowableKeyword:
+            case TokenKind.CommercialAt:
             case TokenKind.Comma: {
                 return true;
             }
@@ -1294,7 +1298,10 @@ export class Parser extends ParserBase {
     private parseDataDeclarationSequenceMember(parent: Nodes) {
         const token = this.getToken();
         switch (token.kind) {
-            case TokenKind.Identifier: {
+            case TokenKind.Identifier:
+            case TokenKind.ObjectKeyword:
+            case TokenKind.ThrowableKeyword:
+            case TokenKind.CommercialAt: {
                 this.advanceToken();
 
                 return this.parseDataDeclaration(parent, token);
@@ -1312,7 +1319,10 @@ export class Parser extends ParserBase {
     private parseMissableDataDeclaration(parent: Nodes): MissableDataDeclaration {
         const name = this.getToken();
         switch (name.kind) {
-            case TokenKind.Identifier: {
+            case TokenKind.Identifier:
+            case TokenKind.ObjectKeyword:
+            case TokenKind.ThrowableKeyword:
+            case TokenKind.CommercialAt: {
                 this.advanceToken();
 
                 return this.parseDataDeclaration(parent, name);
@@ -1322,10 +1332,10 @@ export class Parser extends ParserBase {
         return new MissingToken(name.fullStart, NodeKind.DataDeclaration);
     }
 
-    private parseDataDeclaration(parent: Nodes, name: IdentifierToken): DataDeclaration {
+    private parseDataDeclaration(parent: Nodes, identifierStart: IdentifierStartToken): DataDeclaration {
         const dataDeclaration = new DataDeclaration();
         dataDeclaration.parent = parent;
-        dataDeclaration.name = name;
+        dataDeclaration.identifier = this.parseIdentifier(dataDeclaration, identifierStart);
         dataDeclaration.type = this.parseTypeDeclaration(dataDeclaration);
         if (parent.kind === NodeKind.DataDeclarationSequence &&
             parent.dataDeclarationKeyword.kind === TokenKind.ConstKeyword) {
@@ -1399,6 +1409,9 @@ export class Parser extends ParserBase {
     private isTypeParameterSequenceMemberStart(token: Tokens): boolean {
         switch (token.kind) {
             case TokenKind.Identifier:
+            case TokenKind.ObjectKeyword:
+            case TokenKind.ThrowableKeyword:
+            case TokenKind.CommercialAt:
             case TokenKind.Comma: {
                 return true;
             }
@@ -1410,7 +1423,10 @@ export class Parser extends ParserBase {
     private parseTypeParameterSequenceMember(parent: Nodes) {
         const token = this.getToken();
         switch (token.kind) {
-            case TokenKind.Identifier: {
+            case TokenKind.Identifier:
+            case TokenKind.ObjectKeyword:
+            case TokenKind.ThrowableKeyword:
+            case TokenKind.CommercialAt: {
                 this.advanceToken();
 
                 return this.parseTypeParameter(parent, token);
@@ -1425,10 +1441,10 @@ export class Parser extends ParserBase {
         return this.parseCore(parent, token);
     }
 
-    private parseTypeParameter(parent: Nodes, name: IdentifierToken): TypeParameter {
+    private parseTypeParameter(parent: Nodes, identifierStart: IdentifierStartToken): TypeParameter {
         const typeParameter = new TypeParameter();
         typeParameter.parent = parent;
-        typeParameter.name = name;
+        typeParameter.identifier = this.parseIdentifier(typeParameter, identifierStart);
 
         return typeParameter;
     }
@@ -1442,13 +1458,9 @@ export class Parser extends ParserBase {
             }
         }
 
-        /**
-         * Parentheses-less invocations are only valid in expression statements. For this purpose, 
-         * the expression statements in single line If statements do not count as expression statements.
-         */
+        // Parentheses-less invocations are only valid in expression statements.
         const parent = expression.parent;
-        if (parent && parent.kind === NodeKind.ExpressionStatement &&
-            !this.isInlineStatement(parent)) {
+        if (parent && parent.kind === NodeKind.ExpressionStatement) {
             return this.isExpressionSequenceMemberStart(token);
         }
 
@@ -1464,7 +1476,7 @@ export class Parser extends ParserBase {
                 return parent.isSingleLine;
             }
             case NodeKind.ForLoop: {
-                // Check if this statement is the header.
+                // Checks if this statement is the header.
                 const currentParseContext = this.parseContexts[this.parseContexts.length - 1];
 
                 return currentParseContext !== NodeKind.ForLoop;

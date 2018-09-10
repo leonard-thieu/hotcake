@@ -1,14 +1,13 @@
 import { ParseContextElementArray, ParseContextKind } from '../../ParserBase';
-import { MissableToken } from '../../Token/MissingToken';
-import { BoolKeywordToken, FloatKeywordToken, GreaterThanSignToken, IdentifierToken, IntKeywordToken, LessThanSignToken, NewKeywordToken, ObjectKeywordToken, PeriodToken, StringKeywordToken, ThrowableKeywordToken } from '../../Token/Token';
+import { BoolKeywordToken, FloatKeywordToken, GreaterThanSignToken, IntKeywordToken, LessThanSignToken, NewKeywordToken, StringKeywordToken } from '../../Token/Token';
+import { EscapeOptionalIdentifierNameToken, Identifier } from '../Identifier';
 import { NodeKind } from '../NodeKind';
 import { Expression } from './Expression';
 
 export class IdentifierExpression extends Expression {
     static CHILD_NAMES: (keyof IdentifierExpression)[] = [
         'newlines',
-        'globalScopeMemberAccessOperator',
-        'name',
+        'identifier',
         'lessThanSign',
         'typeArguments',
         'greaterThanSign',
@@ -16,8 +15,7 @@ export class IdentifierExpression extends Expression {
 
     readonly kind = NodeKind.IdentifierExpression;
 
-    globalScopeMemberAccessOperator: PeriodToken | null = null;
-    name: MissableToken<IdentifierNameToken>;
+    identifier: IdentifierExpressionIdentifier;
 
     // Generic type arguments
     lessThanSign: LessThanSignToken | null = null;
@@ -25,13 +23,16 @@ export class IdentifierExpression extends Expression {
     greaterThanSign: GreaterThanSignToken | null = null;
 }
 
-export type IdentifierNameToken =
+export type IdentifierExpressionIdentifier =
+    Identifier |
+    IdentifierExpressionToken
+    ;
+
+export type IdentifierExpressionToken =
+    EscapeOptionalIdentifierNameToken |
+    NewKeywordToken |
     BoolKeywordToken |
     IntKeywordToken |
     FloatKeywordToken |
-    StringKeywordToken |
-    ObjectKeywordToken |
-    ThrowableKeywordToken |
-    IdentifierToken |
-    NewKeywordToken
+    StringKeywordToken
     ;

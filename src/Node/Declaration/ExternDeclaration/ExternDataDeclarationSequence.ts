@@ -1,5 +1,6 @@
 import { ParseContextElementArray } from '../../../ParserBase';
-import { FieldKeywordToken, GlobalKeywordToken, IdentifierToken } from '../../../Token/Token';
+import { FieldKeywordToken, GlobalKeywordToken } from '../../../Token/Token';
+import { Identifier } from '../../Identifier';
 import { NodeKind } from '../../NodeKind';
 import { Declaration } from '../Declaration';
 import { TypeDeclaration } from '../TypeDeclaration';
@@ -24,7 +25,7 @@ export type ExternDataDeclarationKeywordToken =
 
 export class ExternDataDeclaration extends ExternDeclaration {
     static CHILD_NAMES: (keyof ExternDataDeclaration)[] = [
-        'name',
+        'identifier',
         'type',
         'equalsSign',
         'nativeSymbol',
@@ -32,6 +33,6 @@ export class ExternDataDeclaration extends ExternDeclaration {
 
     readonly kind = NodeKind.ExternDataDeclaration;
 
-    name: IdentifierToken;
+    identifier: Identifier;
     type: TypeDeclaration | null = null;
 }

@@ -1,6 +1,7 @@
 import { ParseContextElementArray } from '../../../ParserBase';
 import { MissableToken } from '../../../Token/MissingToken';
-import { AbstractKeywordToken, ArrayKeywordToken, ClassKeywordToken, CommercialAtToken, EndKeywordToken, ExtendsKeywordToken, FinalKeywordToken, IdentifierToken, NullKeywordToken, ObjectKeywordToken, StringKeywordToken, ThrowableKeywordToken } from '../../../Token/Token';
+import { AbstractKeywordToken, ClassKeywordToken, EndKeywordToken, ExtendsKeywordToken, FinalKeywordToken, NullKeywordToken } from '../../../Token/Token';
+import { MissableIdentifier } from '../../Identifier';
 import { NodeKind } from '../../NodeKind';
 import { MissableTypeReference } from '../../TypeReference';
 import { ExternDeclaration } from './ExternDeclaration';
@@ -8,8 +9,7 @@ import { ExternDeclaration } from './ExternDeclaration';
 export class ExternClassDeclaration extends ExternDeclaration {
     static CHILD_NAMES: (keyof ExternClassDeclaration)[] = [
         'classKeyword',
-        'commercialAt',
-        'name',
+        'identifier',
         'extendsKeyword',
         'baseType',
         'attribute',
@@ -23,8 +23,7 @@ export class ExternClassDeclaration extends ExternDeclaration {
     readonly kind = NodeKind.ExternClassDeclaration;
 
     classKeyword: ClassKeywordToken;
-    commercialAt: CommercialAtToken | null;
-    name: MissableToken<ExternClassDeclarationNameToken>;
+    identifier: MissableIdentifier;
 
     // Extends
     extendsKeyword: ExtendsKeywordToken | null = null;
@@ -36,11 +35,3 @@ export class ExternClassDeclaration extends ExternDeclaration {
     endKeyword: MissableToken<EndKeywordToken>;
     endClassKeyword: ClassKeywordToken | null = null;
 }
-
-export type ExternClassDeclarationNameToken =
-    StringKeywordToken |
-    ArrayKeywordToken |
-    ObjectKeywordToken |
-    ThrowableKeywordToken |
-    IdentifierToken
-    ;

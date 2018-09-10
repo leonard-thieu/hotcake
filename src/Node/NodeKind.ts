@@ -23,12 +23,14 @@ export enum NodeKind {
     AccessibilityDirective = 'AccessibilityDirective',
     AliasDirectiveSequence = 'AliasDirectiveSequence',
     AliasDirective = 'AliasDirective',
+    DataDeclarationSequence = 'DataDeclarationSequence',
+    DataDeclaration = 'DataDeclaration',
     FunctionDeclaration = 'FunctionDeclaration',
     InterfaceDeclaration = 'InterfaceDeclaration',
-    ClassDeclaration = 'ClassDeclaration',
-
     InterfaceMethodDeclaration = 'InterfaceMethodDeclaration',
+    ClassDeclaration = 'ClassDeclaration',
     ClassMethodDeclaration = 'ClassMethodDeclaration',
+
     DataDeclarationSequenceStatement = 'DataDeclarationSequenceStatement',
     ReturnStatement = 'ReturnStatement',
     IfStatement = 'IfStatement',
@@ -49,16 +51,6 @@ export enum NodeKind {
     ExpressionStatement = 'ExpressionStatement',
     EmptyStatement = 'EmptyStatement',
 
-    ModulePath = 'ModulePath',
-    TypeReference = 'TypeReference',
-    ArrayTypeDeclaration = 'ArrayTypeDeclaration',
-    DataDeclaration = 'DataDeclaration',
-    DataDeclarationSequence = 'DataDeclarationSequence',
-    ShorthandTypeDeclaration = 'ShorthandTypeDeclaration',
-    LonghandTypeDeclaration = 'LonghandTypeDeclaration',
-    TypeParameter = 'TypeParameter',
-    CommaSeparator = 'CommaSeparator',
-
     NewExpression = 'NewExpression',
     NullExpression = 'NullExpression',
     BooleanLiteral = 'BooleanLiteral',
@@ -78,4 +70,14 @@ export enum NodeKind {
     UnaryOpExpression = 'UnaryOpExpression',
     BinaryExpression = 'BinaryExpression',
     AssignmentExpression = 'AssignmentExpression',
+    GlobalScopeExpression = 'GlobalScopeExpression',
+
+    ModulePath = 'ModulePath',
+    ArrayTypeDeclaration = 'ArrayTypeDeclaration',
+    ShorthandTypeDeclaration = 'ShorthandTypeDeclaration',
+    LonghandTypeDeclaration = 'LonghandTypeDeclaration',
+    TypeReference = 'TypeReference',
+    TypeParameter = 'TypeParameter',
+    EscapedIdentifier = 'EscapedIdentifier',
+    CommaSeparator = 'CommaSeparator',
 }
