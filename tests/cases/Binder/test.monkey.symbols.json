@@ -1,0 +1,2997 @@
+{
+    "kind": "ModuleDeclaration",
+    "locals": {
+        "T": {
+            "name": "T",
+            "declarations": [
+                "AliasDirective",
+                "DataDeclaration"
+            ]
+        },
+        "asd": {
+            "name": "asd",
+            "declarations": [
+                "DataDeclaration",
+                "DataDeclaration",
+                "DataDeclaration",
+                "DataDeclaration",
+                "DataDeclaration",
+                "DataDeclaration",
+                "DataDeclaration",
+                "DataDeclaration",
+                "DataDeclaration",
+                "DataDeclaration",
+                "DataDeclaration"
+            ]
+        },
+        "edf": {
+            "name": "edf",
+            "declarations": [
+                "DataDeclaration",
+                "DataDeclaration"
+            ]
+        },
+        "ActiveDriver": {
+            "name": "ActiveDriver",
+            "declarations": [
+                "DataDeclaration"
+            ]
+        },
+        "Eat": {
+            "name": "Eat",
+            "declarations": [
+                "FunctionDeclaration",
+                "FunctionDeclaration",
+                "FunctionDeclaration",
+                "FunctionDeclaration"
+            ]
+        },
+        "Paintable": {
+            "name": "Paintable",
+            "declarations": [
+                "InterfaceDeclaration"
+            ]
+        },
+        "Moveable": {
+            "name": "Moveable",
+            "declarations": [
+                "InterfaceDeclaration"
+            ]
+        },
+        "Drawable": {
+            "name": "Drawable",
+            "declarations": [
+                "InterfaceDeclaration",
+                "InterfaceDeclaration"
+            ]
+        },
+        "MyClass": {
+            "name": "MyClass",
+            "declarations": [
+                "ClassDeclaration"
+            ]
+        },
+        "Pointer": {
+            "name": "Pointer",
+            "declarations": [
+                "ClassDeclaration",
+                "ClassDeclaration",
+                "ClassDeclaration",
+                "ClassDeclaration",
+                "ClassDeclaration",
+                "ClassDeclaration",
+                "ClassDeclaration",
+                "ClassDeclaration"
+            ]
+        },
+        "IfStatement": {
+            "name": "IfStatement",
+            "declarations": [
+                "FunctionDeclaration"
+            ]
+        },
+        "SingleLineIfStatement": {
+            "name": "SingleLineIfStatement",
+            "declarations": [
+                "FunctionDeclaration"
+            ]
+        },
+        "ReturnStatement": {
+            "name": "ReturnStatement",
+            "declarations": [
+                "FunctionDeclaration"
+            ]
+        },
+        "SelectStatement": {
+            "name": "SelectStatement",
+            "declarations": [
+                "FunctionDeclaration"
+            ]
+        },
+        "FloatLiteral": {
+            "name": "FloatLiteral",
+            "declarations": [
+                "FunctionDeclaration"
+            ]
+        }
+    },
+    "members": [
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        {
+            "kind": "StrictDirective",
+            "locals": null
+        },
+        null,
+        null,
+        {
+            "kind": "ImportStatement",
+            "locals": null,
+            "path": {
+                "kind": "StringLiteral",
+                "locals": null,
+                "newlines": null,
+                "children": [
+                    null
+                ]
+            }
+        },
+        null,
+        {
+            "kind": "ImportStatement",
+            "locals": null,
+            "path": {
+                "kind": "ModulePath",
+                "locals": null,
+                "children": [],
+                "scopeMemberAccessOperator": null
+            }
+        },
+        null,
+        {
+            "kind": "ImportStatement",
+            "locals": null,
+            "path": {
+                "kind": "ModulePath",
+                "locals": null,
+                "children": [
+                    null
+                ]
+            }
+        },
+        null,
+        null,
+        {
+            "kind": "FriendDirective",
+            "locals": null,
+            "modulePath": {
+                "kind": "ModulePath",
+                "locals": null,
+                "children": [
+                    null
+                ]
+            }
+        },
+        null,
+        null,
+        {
+            "kind": "AccessibilityDirective",
+            "locals": null,
+            "externPrivateKeyword": null
+        },
+        null,
+        {
+            "kind": "AccessibilityDirective",
+            "locals": null,
+            "externPrivateKeyword": null
+        },
+        null,
+        {
+            "kind": "AccessibilityDirective",
+            "locals": null
+        },
+        null,
+        {
+            "kind": "AccessibilityDirective",
+            "locals": null,
+            "externPrivateKeyword": null
+        },
+        null,
+        null,
+        {
+            "kind": "AliasDirectiveSequence",
+            "locals": null,
+            "children": [
+                {
+                    "kind": "AliasDirective",
+                    "locals": null,
+                    "target": {
+                        "kind": "TypeReference",
+                        "locals": null,
+                        "modulePath": {
+                            "kind": "ModulePath",
+                            "locals": null,
+                            "children": [],
+                            "scopeMemberAccessOperator": null
+                        },
+                        "lessThanSign": null,
+                        "typeArguments": null,
+                        "greaterThanSign": null,
+                        "arrayTypeDeclarations": []
+                    }
+                }
+            ]
+        },
+        null,
+        null,
+        {
+            "kind": "DataDeclarationSequence",
+            "locals": null,
+            "children": [
+                {
+                    "kind": "DataDeclaration",
+                    "locals": null,
+                    "type": {
+                        "kind": "LonghandTypeDeclaration",
+                        "locals": null,
+                        "typeReference": {
+                            "kind": "TypeReference",
+                            "locals": null,
+                            "modulePath": null,
+                            "scopeMemberAccessOperator": null,
+                            "lessThanSign": null,
+                            "typeArguments": null,
+                            "greaterThanSign": null,
+                            "arrayTypeDeclarations": []
+                        }
+                    },
+                    "eachInKeyword": null,
+                    "expression": {
+                        "kind": "IntegerLiteral",
+                        "locals": null,
+                        "newlines": []
+                    }
+                }
+            ]
+        },
+        null,
+        {
+            "kind": "DataDeclarationSequence",
+            "locals": null,
+            "children": [
+                {
+                    "kind": "DataDeclaration",
+                    "locals": null,
+                    "type": {
+                        "kind": "ShorthandTypeDeclaration",
+                        "locals": null,
+                        "arrayTypeDeclarations": []
+                    },
+                    "eachInKeyword": null,
+                    "expression": {
+                        "kind": "StringLiteral",
+                        "locals": null,
+                        "newlines": [],
+                        "children": [
+                            null
+                        ]
+                    }
+                }
+            ]
+        },
+        null,
+        {
+            "kind": "DataDeclarationSequence",
+            "locals": null,
+            "children": [
+                {
+                    "kind": "DataDeclaration",
+                    "locals": null,
+                    "type": null,
+                    "eachInKeyword": null,
+                    "expression": {
+                        "kind": "IntegerLiteral",
+                        "locals": null,
+                        "newlines": []
+                    }
+                }
+            ]
+        },
+        null,
+        {
+            "kind": "DataDeclarationSequence",
+            "locals": null,
+            "children": [
+                {
+                    "kind": "DataDeclaration",
+                    "locals": null,
+                    "type": null,
+                    "eachInKeyword": null,
+                    "expression": {
+                        "kind": "IntegerLiteral",
+                        "locals": null,
+                        "newlines": []
+                    }
+                }
+            ]
+        },
+        null,
+        {
+            "kind": "DataDeclarationSequence",
+            "locals": null,
+            "children": [
+                {
+                    "kind": "DataDeclaration",
+                    "locals": null,
+                    "type": null,
+                    "eachInKeyword": null,
+                    "expression": {
+                        "kind": "IntegerLiteral",
+                        "locals": null,
+                        "newlines": []
+                    }
+                },
+                {
+                    "kind": "CommaSeparator",
+                    "locals": null,
+                    "newlines": []
+                },
+                {
+                    "kind": "DataDeclaration",
+                    "locals": null,
+                    "type": null,
+                    "eachInKeyword": null,
+                    "expression": {
+                        "kind": "IntegerLiteral",
+                        "locals": null,
+                        "newlines": []
+                    }
+                }
+            ]
+        },
+        null,
+        null,
+        {
+            "kind": "DataDeclarationSequence",
+            "locals": null,
+            "children": [
+                {
+                    "kind": "DataDeclaration",
+                    "locals": null,
+                    "type": {
+                        "kind": "LonghandTypeDeclaration",
+                        "locals": null,
+                        "typeReference": {
+                            "kind": "TypeReference",
+                            "locals": null,
+                            "modulePath": null,
+                            "scopeMemberAccessOperator": null,
+                            "lessThanSign": null,
+                            "typeArguments": null,
+                            "greaterThanSign": null,
+                            "arrayTypeDeclarations": []
+                        }
+                    },
+                    "eachInKeyword": null,
+                    "expression": {
+                        "kind": "IntegerLiteral",
+                        "locals": null,
+                        "newlines": []
+                    }
+                }
+            ]
+        },
+        null,
+        {
+            "kind": "DataDeclarationSequence",
+            "locals": null,
+            "children": [
+                {
+                    "kind": "DataDeclaration",
+                    "locals": null,
+                    "type": {
+                        "kind": "ShorthandTypeDeclaration",
+                        "locals": null,
+                        "arrayTypeDeclarations": []
+                    },
+                    "eachInKeyword": null,
+                    "expression": {
+                        "kind": "StringLiteral",
+                        "locals": null,
+                        "newlines": [],
+                        "children": [
+                            null
+                        ]
+                    }
+                }
+            ]
+        },
+        null,
+        {
+            "kind": "DataDeclarationSequence",
+            "locals": null,
+            "children": [
+                {
+                    "kind": "DataDeclaration",
+                    "locals": null,
+                    "type": null,
+                    "eachInKeyword": null,
+                    "expression": {
+                        "kind": "IntegerLiteral",
+                        "locals": null,
+                        "newlines": []
+                    }
+                }
+            ]
+        },
+        null,
+        {
+            "kind": "DataDeclarationSequence",
+            "locals": null,
+            "children": [
+                {
+                    "kind": "DataDeclaration",
+                    "locals": null,
+                    "type": null,
+                    "eachInKeyword": null,
+                    "expression": {
+                        "kind": "IntegerLiteral",
+                        "locals": null,
+                        "newlines": []
+                    }
+                }
+            ]
+        },
+        null,
+        {
+            "kind": "DataDeclarationSequence",
+            "locals": null,
+            "children": [
+                {
+                    "kind": "DataDeclaration",
+                    "locals": null,
+                    "type": null,
+                    "eachInKeyword": null,
+                    "expression": {
+                        "kind": "IntegerLiteral",
+                        "locals": null,
+                        "newlines": []
+                    }
+                },
+                {
+                    "kind": "CommaSeparator",
+                    "locals": null,
+                    "newlines": []
+                },
+                {
+                    "kind": "DataDeclaration",
+                    "locals": null,
+                    "type": null,
+                    "eachInKeyword": null,
+                    "expression": {
+                        "kind": "IntegerLiteral",
+                        "locals": null,
+                        "newlines": []
+                    }
+                }
+            ]
+        },
+        null,
+        {
+            "kind": "DataDeclarationSequence",
+            "locals": null,
+            "children": [
+                {
+                    "kind": "DataDeclaration",
+                    "locals": null,
+                    "type": {
+                        "kind": "LonghandTypeDeclaration",
+                        "locals": null,
+                        "typeReference": {
+                            "kind": "TypeReference",
+                            "locals": null,
+                            "modulePath": null,
+                            "scopeMemberAccessOperator": null,
+                            "lessThanSign": null,
+                            "typeArguments": null,
+                            "greaterThanSign": null,
+                            "arrayTypeDeclarations": []
+                        }
+                    },
+                    "equalsSign": null,
+                    "eachInKeyword": null,
+                    "expression": null
+                }
+            ]
+        },
+        null,
+        {
+            "kind": "DataDeclarationSequence",
+            "locals": null,
+            "children": [
+                {
+                    "kind": "DataDeclaration",
+                    "locals": null,
+                    "type": null,
+                    "equalsSign": null,
+                    "eachInKeyword": null,
+                    "expression": null
+                }
+            ]
+        },
+        null,
+        null,
+        {
+            "kind": "DataDeclarationSequence",
+            "locals": null,
+            "children": [
+                {
+                    "kind": "DataDeclaration",
+                    "locals": null,
+                    "type": {
+                        "kind": "LonghandTypeDeclaration",
+                        "locals": null,
+                        "typeReference": {
+                            "kind": "TypeReference",
+                            "locals": null,
+                            "modulePath": null,
+                            "scopeMemberAccessOperator": null,
+                            "lessThanSign": null,
+                            "typeArguments": null,
+                            "greaterThanSign": null,
+                            "arrayTypeDeclarations": []
+                        }
+                    },
+                    "eachInKeyword": null,
+                    "expression": {
+                        "kind": "StringLiteral",
+                        "locals": null,
+                        "newlines": [],
+                        "children": [
+                            null
+                        ]
+                    }
+                }
+            ]
+        },
+        null,
+        null,
+        {
+            "kind": "FunctionDeclaration",
+            "locals": {
+                "amount": {
+                    "name": "amount",
+                    "declarations": [
+                        "DataDeclaration"
+                    ]
+                }
+            },
+            "returnType": {
+                "kind": "LonghandTypeDeclaration",
+                "locals": null,
+                "typeReference": {
+                    "kind": "TypeReference",
+                    "locals": null,
+                    "modulePath": null,
+                    "scopeMemberAccessOperator": null,
+                    "lessThanSign": null,
+                    "typeArguments": null,
+                    "greaterThanSign": null,
+                    "arrayTypeDeclarations": []
+                }
+            },
+            "parameters": [
+                {
+                    "kind": "DataDeclaration",
+                    "locals": null,
+                    "type": {
+                        "kind": "LonghandTypeDeclaration",
+                        "locals": null,
+                        "typeReference": {
+                            "kind": "TypeReference",
+                            "locals": null,
+                            "modulePath": null,
+                            "scopeMemberAccessOperator": null,
+                            "lessThanSign": null,
+                            "typeArguments": null,
+                            "greaterThanSign": null,
+                            "arrayTypeDeclarations": []
+                        }
+                    },
+                    "equalsSign": null,
+                    "eachInKeyword": null,
+                    "expression": null
+                }
+            ],
+            "statements": [
+                {
+                    "kind": "EmptyStatement",
+                    "locals": null
+                },
+                {
+                    "kind": "EmptyStatement",
+                    "locals": null
+                }
+            ],
+            "endFunctionKeyword": null
+        },
+        null,
+        null,
+        {
+            "kind": "FunctionDeclaration",
+            "locals": {
+                "amount": {
+                    "name": "amount",
+                    "declarations": [
+                        "DataDeclaration"
+                    ]
+                },
+                "allow": {
+                    "name": "allow",
+                    "declarations": [
+                        "DataDeclaration"
+                    ]
+                }
+            },
+            "returnType": null,
+            "parameters": [
+                {
+                    "kind": "DataDeclaration",
+                    "locals": null,
+                    "type": {
+                        "kind": "LonghandTypeDeclaration",
+                        "locals": null,
+                        "typeReference": {
+                            "kind": "TypeReference",
+                            "locals": null,
+                            "modulePath": null,
+                            "scopeMemberAccessOperator": null,
+                            "lessThanSign": null,
+                            "typeArguments": null,
+                            "greaterThanSign": null,
+                            "arrayTypeDeclarations": []
+                        }
+                    },
+                    "equalsSign": null,
+                    "eachInKeyword": null,
+                    "expression": null
+                },
+                {
+                    "kind": "CommaSeparator",
+                    "locals": null,
+                    "newlines": []
+                },
+                {
+                    "kind": "DataDeclaration",
+                    "locals": null,
+                    "type": {
+                        "kind": "ShorthandTypeDeclaration",
+                        "locals": null,
+                        "arrayTypeDeclarations": []
+                    },
+                    "equalsSign": null,
+                    "eachInKeyword": null,
+                    "expression": null
+                }
+            ],
+            "statements": [
+                {
+                    "kind": "EmptyStatement",
+                    "locals": null
+                },
+                {
+                    "kind": "EmptyStatement",
+                    "locals": null
+                }
+            ],
+            "endFunctionKeyword": null
+        },
+        null,
+        null,
+        {
+            "kind": "FunctionDeclaration",
+            "locals": null,
+            "returnType": null,
+            "parameters": [],
+            "statements": [
+                {
+                    "kind": "EmptyStatement",
+                    "locals": null
+                },
+                {
+                    "kind": "EmptyStatement",
+                    "locals": null
+                }
+            ],
+            "endFunctionKeyword": null
+        },
+        null,
+        null,
+        {
+            "kind": "FunctionDeclaration",
+            "locals": null,
+            "returnType": null,
+            "parameters": [],
+            "statements": [
+                {
+                    "kind": "EmptyStatement",
+                    "locals": null
+                },
+                {
+                    "kind": "EmptyStatement",
+                    "locals": null
+                },
+                {
+                    "kind": "EmptyStatement",
+                    "locals": null
+                },
+                {
+                    "kind": "EmptyStatement",
+                    "locals": null
+                },
+                {
+                    "kind": "EmptyStatement",
+                    "locals": null
+                },
+                {
+                    "kind": "WhileLoop",
+                    "locals": null,
+                    "expression": {
+                        "kind": "BinaryExpression",
+                        "locals": null,
+                        "newlines": null,
+                        "leftOperand": {
+                            "kind": "IdentifierExpression",
+                            "locals": null,
+                            "newlines": [],
+                            "lessThanSign": null,
+                            "typeArguments": null,
+                            "greaterThanSign": null
+                        },
+                        "rightOperand": {
+                            "kind": "IntegerLiteral",
+                            "locals": null,
+                            "newlines": []
+                        }
+                    },
+                    "statements": [
+                        {
+                            "kind": "EmptyStatement",
+                            "locals": null
+                        },
+                        {
+                            "kind": "ExpressionStatement",
+                            "locals": null,
+                            "expression": {
+                                "kind": "InvokeExpression",
+                                "locals": null,
+                                "newlines": [],
+                                "invokableExpression": {
+                                    "kind": "IdentifierExpression",
+                                    "locals": null,
+                                    "newlines": null,
+                                    "lessThanSign": null,
+                                    "typeArguments": null,
+                                    "greaterThanSign": null
+                                },
+                                "leadingNewlines": [],
+                                "arguments": [
+                                    {
+                                        "kind": "IdentifierExpression",
+                                        "locals": null,
+                                        "newlines": [],
+                                        "lessThanSign": null,
+                                        "typeArguments": null,
+                                        "greaterThanSign": null
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                }
+            ]
+        },
+        null,
+        null,
+        {
+            "kind": "InterfaceDeclaration",
+            "locals": {
+                "Paint": {
+                    "name": "Paint",
+                    "declarations": [
+                        "InterfaceMethodDeclaration"
+                    ]
+                }
+            },
+            "extendsKeyword": null,
+            "baseTypes": null,
+            "members": [
+                null,
+                {
+                    "kind": "InterfaceMethodDeclaration",
+                    "locals": {
+                        "refresh": {
+                            "name": "refresh",
+                            "declarations": [
+                                "DataDeclaration"
+                            ]
+                        },
+                        "force": {
+                            "name": "force",
+                            "declarations": [
+                                "DataDeclaration"
+                            ]
+                        }
+                    },
+                    "returnType": {
+                        "kind": "LonghandTypeDeclaration",
+                        "locals": null,
+                        "typeReference": {
+                            "kind": "TypeReference",
+                            "locals": null,
+                            "modulePath": null,
+                            "scopeMemberAccessOperator": null,
+                            "lessThanSign": null,
+                            "typeArguments": null,
+                            "greaterThanSign": null,
+                            "arrayTypeDeclarations": []
+                        }
+                    },
+                    "parameters": [
+                        {
+                            "kind": "DataDeclaration",
+                            "locals": null,
+                            "type": {
+                                "kind": "ShorthandTypeDeclaration",
+                                "locals": null,
+                                "arrayTypeDeclarations": []
+                            },
+                            "equalsSign": null,
+                            "eachInKeyword": null,
+                            "expression": null
+                        },
+                        {
+                            "kind": "CommaSeparator",
+                            "locals": null,
+                            "newlines": []
+                        },
+                        {
+                            "kind": "DataDeclaration",
+                            "locals": null,
+                            "type": {
+                                "kind": "LonghandTypeDeclaration",
+                                "locals": null,
+                                "typeReference": {
+                                    "kind": "TypeReference",
+                                    "locals": null,
+                                    "modulePath": null,
+                                    "scopeMemberAccessOperator": null,
+                                    "lessThanSign": null,
+                                    "typeArguments": null,
+                                    "greaterThanSign": null,
+                                    "arrayTypeDeclarations": []
+                                }
+                            },
+                            "eachInKeyword": null,
+                            "expression": {
+                                "kind": "BooleanLiteral",
+                                "locals": null,
+                                "newlines": []
+                            }
+                        }
+                    ]
+                },
+                null
+            ],
+            "endInterfaceKeyword": null
+        },
+        null,
+        null,
+        {
+            "kind": "InterfaceDeclaration",
+            "locals": {
+                "Move": {
+                    "name": "Move",
+                    "declarations": [
+                        "InterfaceMethodDeclaration"
+                    ]
+                }
+            },
+            "extendsKeyword": null,
+            "baseTypes": null,
+            "members": [
+                null,
+                {
+                    "kind": "InterfaceMethodDeclaration",
+                    "locals": null,
+                    "returnType": null,
+                    "parameters": []
+                },
+                null
+            ],
+            "endInterfaceKeyword": null
+        },
+        null,
+        null,
+        {
+            "kind": "InterfaceDeclaration",
+            "locals": {
+                "asd": {
+                    "name": "asd",
+                    "declarations": [
+                        "DataDeclaration"
+                    ]
+                },
+                "Draw": {
+                    "name": "Draw",
+                    "declarations": [
+                        "InterfaceMethodDeclaration"
+                    ]
+                }
+            },
+            "baseTypes": [
+                {
+                    "kind": "TypeReference",
+                    "locals": null,
+                    "modulePath": null,
+                    "scopeMemberAccessOperator": null,
+                    "lessThanSign": null,
+                    "typeArguments": null,
+                    "greaterThanSign": null,
+                    "arrayTypeDeclarations": []
+                }
+            ],
+            "members": [
+                null,
+                {
+                    "kind": "DataDeclarationSequence",
+                    "locals": null,
+                    "children": [
+                        {
+                            "kind": "DataDeclaration",
+                            "locals": null,
+                            "type": null,
+                            "eachInKeyword": null,
+                            "expression": {
+                                "kind": "FloatLiteral",
+                                "locals": null,
+                                "newlines": []
+                            }
+                        }
+                    ]
+                },
+                null,
+                null,
+                {
+                    "kind": "InterfaceMethodDeclaration",
+                    "locals": null,
+                    "returnType": null,
+                    "parameters": []
+                },
+                null
+            ]
+        },
+        null,
+        null,
+        {
+            "kind": "InterfaceDeclaration",
+            "locals": {
+                "asd": {
+                    "name": "asd",
+                    "declarations": [
+                        "DataDeclaration"
+                    ]
+                },
+                "Paint": {
+                    "name": "Paint",
+                    "declarations": [
+                        "InterfaceMethodDeclaration"
+                    ]
+                },
+                "Draw": {
+                    "name": "Draw",
+                    "declarations": [
+                        "InterfaceMethodDeclaration"
+                    ]
+                }
+            },
+            "baseTypes": [
+                {
+                    "kind": "TypeReference",
+                    "locals": null,
+                    "modulePath": null,
+                    "scopeMemberAccessOperator": null,
+                    "lessThanSign": null,
+                    "typeArguments": null,
+                    "greaterThanSign": null,
+                    "arrayTypeDeclarations": []
+                },
+                {
+                    "kind": "CommaSeparator",
+                    "locals": null,
+                    "newlines": []
+                },
+                {
+                    "kind": "TypeReference",
+                    "locals": null,
+                    "modulePath": null,
+                    "scopeMemberAccessOperator": null,
+                    "lessThanSign": null,
+                    "typeArguments": null,
+                    "greaterThanSign": null,
+                    "arrayTypeDeclarations": []
+                }
+            ],
+            "members": [
+                null,
+                {
+                    "kind": "DataDeclarationSequence",
+                    "locals": null,
+                    "children": [
+                        {
+                            "kind": "DataDeclaration",
+                            "locals": null,
+                            "type": null,
+                            "eachInKeyword": null,
+                            "expression": {
+                                "kind": "FloatLiteral",
+                                "locals": null,
+                                "newlines": []
+                            }
+                        }
+                    ]
+                },
+                null,
+                null,
+                {
+                    "kind": "InterfaceMethodDeclaration",
+                    "locals": {
+                        "refresh": {
+                            "name": "refresh",
+                            "declarations": [
+                                "DataDeclaration"
+                            ]
+                        },
+                        "force": {
+                            "name": "force",
+                            "declarations": [
+                                "DataDeclaration"
+                            ]
+                        }
+                    },
+                    "returnType": {
+                        "kind": "LonghandTypeDeclaration",
+                        "locals": null,
+                        "typeReference": {
+                            "kind": "TypeReference",
+                            "locals": null,
+                            "modulePath": null,
+                            "scopeMemberAccessOperator": null,
+                            "lessThanSign": null,
+                            "typeArguments": null,
+                            "greaterThanSign": null,
+                            "arrayTypeDeclarations": []
+                        }
+                    },
+                    "parameters": [
+                        {
+                            "kind": "DataDeclaration",
+                            "locals": null,
+                            "type": {
+                                "kind": "ShorthandTypeDeclaration",
+                                "locals": null,
+                                "arrayTypeDeclarations": []
+                            },
+                            "equalsSign": null,
+                            "eachInKeyword": null,
+                            "expression": null
+                        },
+                        {
+                            "kind": "CommaSeparator",
+                            "locals": null,
+                            "newlines": []
+                        },
+                        {
+                            "kind": "DataDeclaration",
+                            "locals": null,
+                            "type": {
+                                "kind": "LonghandTypeDeclaration",
+                                "locals": null,
+                                "typeReference": {
+                                    "kind": "TypeReference",
+                                    "locals": null,
+                                    "modulePath": null,
+                                    "scopeMemberAccessOperator": null,
+                                    "lessThanSign": null,
+                                    "typeArguments": null,
+                                    "greaterThanSign": null,
+                                    "arrayTypeDeclarations": []
+                                }
+                            },
+                            "eachInKeyword": null,
+                            "expression": {
+                                "kind": "BooleanLiteral",
+                                "locals": null,
+                                "newlines": []
+                            }
+                        }
+                    ]
+                },
+                null,
+                {
+                    "kind": "InterfaceMethodDeclaration",
+                    "locals": null,
+                    "returnType": null,
+                    "parameters": []
+                },
+                null
+            ]
+        },
+        null,
+        null,
+        {
+            "kind": "ClassDeclaration",
+            "locals": {
+                "a": {
+                    "name": "a",
+                    "declarations": [
+                        "DataDeclaration"
+                    ]
+                },
+                "b": {
+                    "name": "b",
+                    "declarations": [
+                        "DataDeclaration"
+                    ]
+                },
+                "c": {
+                    "name": "c",
+                    "declarations": [
+                        "DataDeclaration"
+                    ]
+                },
+                "d": {
+                    "name": "d",
+                    "declarations": [
+                        "DataDeclaration"
+                    ]
+                },
+                "e": {
+                    "name": "e",
+                    "declarations": [
+                        "DataDeclaration"
+                    ]
+                },
+                "x": {
+                    "name": "x",
+                    "declarations": [
+                        "DataDeclaration"
+                    ]
+                },
+                "y": {
+                    "name": "y",
+                    "declarations": [
+                        "DataDeclaration"
+                    ]
+                },
+                "z": {
+                    "name": "z",
+                    "declarations": [
+                        "DataDeclaration"
+                    ]
+                },
+                "P": {
+                    "name": "P",
+                    "declarations": [
+                        "DataDeclaration"
+                    ]
+                },
+                "Q": {
+                    "name": "Q",
+                    "declarations": [
+                        "DataDeclaration"
+                    ]
+                },
+                "R": {
+                    "name": "R",
+                    "declarations": [
+                        "DataDeclaration"
+                    ]
+                }
+            },
+            "lessThanSign": null,
+            "typeParameters": null,
+            "greaterThanSign": null,
+            "extendsKeyword": null,
+            "baseType": null,
+            "implementsKeyword": null,
+            "implementedTypes": null,
+            "attribute": null,
+            "members": [
+                null,
+                {
+                    "kind": "DataDeclarationSequence",
+                    "locals": null,
+                    "children": [
+                        {
+                            "kind": "DataDeclaration",
+                            "locals": null,
+                            "type": null,
+                            "equalsSign": null,
+                            "eachInKeyword": null,
+                            "expression": null
+                        }
+                    ]
+                },
+                null,
+                {
+                    "kind": "DataDeclarationSequence",
+                    "locals": null,
+                    "children": [
+                        {
+                            "kind": "DataDeclaration",
+                            "locals": null,
+                            "type": null,
+                            "eachInKeyword": null,
+                            "expression": {
+                                "kind": "IntegerLiteral",
+                                "locals": null,
+                                "newlines": []
+                            }
+                        }
+                    ]
+                },
+                null,
+                {
+                    "kind": "DataDeclarationSequence",
+                    "locals": null,
+                    "children": [
+                        {
+                            "kind": "DataDeclaration",
+                            "locals": null,
+                            "type": {
+                                "kind": "LonghandTypeDeclaration",
+                                "locals": null,
+                                "typeReference": {
+                                    "kind": "TypeReference",
+                                    "locals": null,
+                                    "modulePath": null,
+                                    "scopeMemberAccessOperator": null,
+                                    "lessThanSign": null,
+                                    "typeArguments": null,
+                                    "greaterThanSign": null,
+                                    "arrayTypeDeclarations": []
+                                }
+                            },
+                            "equalsSign": null,
+                            "eachInKeyword": null,
+                            "expression": null
+                        }
+                    ]
+                },
+                null,
+                {
+                    "kind": "DataDeclarationSequence",
+                    "locals": null,
+                    "children": [
+                        {
+                            "kind": "DataDeclaration",
+                            "locals": null,
+                            "type": {
+                                "kind": "ShorthandTypeDeclaration",
+                                "locals": null,
+                                "arrayTypeDeclarations": []
+                            },
+                            "eachInKeyword": null,
+                            "expression": {
+                                "kind": "StringLiteral",
+                                "locals": null,
+                                "newlines": [],
+                                "children": [
+                                    null
+                                ]
+                            }
+                        }
+                    ]
+                },
+                null,
+                null,
+                {
+                    "kind": "AccessibilityDirective",
+                    "locals": null,
+                    "externPrivateKeyword": null
+                },
+                null,
+                {
+                    "kind": "DataDeclarationSequence",
+                    "locals": null,
+                    "children": [
+                        {
+                            "kind": "DataDeclaration",
+                            "locals": null,
+                            "type": null,
+                            "eachInKeyword": null,
+                            "expression": {
+                                "kind": "IntegerLiteral",
+                                "locals": null,
+                                "newlines": []
+                            }
+                        }
+                    ]
+                },
+                null,
+                null,
+                {
+                    "kind": "AccessibilityDirective",
+                    "locals": null,
+                    "externPrivateKeyword": null
+                },
+                null,
+                {
+                    "kind": "DataDeclarationSequence",
+                    "locals": null,
+                    "children": [
+                        {
+                            "kind": "DataDeclaration",
+                            "locals": null,
+                            "type": null,
+                            "equalsSign": null,
+                            "eachInKeyword": null,
+                            "expression": null
+                        },
+                        {
+                            "kind": "CommaSeparator",
+                            "locals": null,
+                            "newlines": []
+                        },
+                        {
+                            "kind": "DataDeclaration",
+                            "locals": null,
+                            "type": null,
+                            "equalsSign": null,
+                            "eachInKeyword": null,
+                            "expression": null
+                        },
+                        {
+                            "kind": "CommaSeparator",
+                            "locals": null,
+                            "newlines": []
+                        },
+                        {
+                            "kind": "DataDeclaration",
+                            "locals": null,
+                            "type": null,
+                            "equalsSign": null,
+                            "eachInKeyword": null,
+                            "expression": null
+                        }
+                    ]
+                },
+                null,
+                null,
+                {
+                    "kind": "AccessibilityDirective",
+                    "locals": null,
+                    "externPrivateKeyword": null
+                },
+                null,
+                {
+                    "kind": "DataDeclarationSequence",
+                    "locals": null,
+                    "children": [
+                        {
+                            "kind": "DataDeclaration",
+                            "locals": null,
+                            "type": null,
+                            "equalsSign": null,
+                            "eachInKeyword": null,
+                            "expression": null
+                        },
+                        {
+                            "kind": "CommaSeparator",
+                            "locals": null,
+                            "newlines": []
+                        },
+                        {
+                            "kind": "DataDeclaration",
+                            "locals": null,
+                            "type": null,
+                            "equalsSign": null,
+                            "eachInKeyword": null,
+                            "expression": null
+                        },
+                        {
+                            "kind": "CommaSeparator",
+                            "locals": null,
+                            "newlines": []
+                        },
+                        {
+                            "kind": "DataDeclaration",
+                            "locals": null,
+                            "type": null,
+                            "equalsSign": null,
+                            "eachInKeyword": null,
+                            "expression": null
+                        }
+                    ]
+                },
+                null
+            ],
+            "endClassKeyword": null
+        },
+        null,
+        null,
+        {
+            "kind": "ClassDeclaration",
+            "locals": {
+                "Reset": {
+                    "name": "Reset",
+                    "declarations": [
+                        "ClassMethodDeclaration"
+                    ]
+                },
+                "IsReset": {
+                    "name": "IsReset",
+                    "declarations": [
+                        "ClassMethodDeclaration"
+                    ]
+                },
+                "IsNotReset": {
+                    "name": "IsNotReset",
+                    "declarations": [
+                        "ClassMethodDeclaration"
+                    ]
+                },
+                "Set": {
+                    "name": "Set",
+                    "declarations": [
+                        "ClassMethodDeclaration"
+                    ]
+                },
+                "Get": {
+                    "name": "Get",
+                    "declarations": [
+                        "ClassMethodDeclaration"
+                    ]
+                },
+                "_data": {
+                    "name": "_data",
+                    "declarations": [
+                        "DataDeclaration"
+                    ]
+                },
+                "Move": {
+                    "name": "Move",
+                    "declarations": [
+                        "ClassMethodDeclaration"
+                    ]
+                },
+                "Draw": {
+                    "name": "Draw",
+                    "declarations": [
+                        "ClassMethodDeclaration"
+                    ]
+                }
+            },
+            "lessThanSign": null,
+            "typeParameters": null,
+            "greaterThanSign": null,
+            "extendsKeyword": null,
+            "baseType": null,
+            "implementsKeyword": null,
+            "implementedTypes": null,
+            "members": [
+                null,
+                null,
+                {
+                    "kind": "ClassMethodDeclaration",
+                    "locals": null,
+                    "returnType": null,
+                    "parameters": [],
+                    "attributes": [
+                        null
+                    ],
+                    "statements": null,
+                    "endKeyword": null,
+                    "endMethodKeyword": null
+                },
+                null,
+                null,
+                {
+                    "kind": "ClassMethodDeclaration",
+                    "locals": null,
+                    "returnType": null,
+                    "parameters": [],
+                    "attributes": [
+                        null,
+                        null
+                    ],
+                    "statements": null,
+                    "endKeyword": null,
+                    "endMethodKeyword": null
+                },
+                null,
+                null,
+                {
+                    "kind": "ClassMethodDeclaration",
+                    "locals": null,
+                    "returnType": null,
+                    "parameters": [],
+                    "attributes": [
+                        null,
+                        null
+                    ],
+                    "statements": null,
+                    "endKeyword": null,
+                    "endMethodKeyword": null
+                },
+                null,
+                null,
+                {
+                    "kind": "ClassMethodDeclaration",
+                    "locals": {
+                        "data": {
+                            "name": "data",
+                            "declarations": [
+                                "DataDeclaration"
+                            ]
+                        }
+                    },
+                    "returnType": null,
+                    "parameters": [
+                        {
+                            "kind": "DataDeclaration",
+                            "locals": null,
+                            "type": {
+                                "kind": "LonghandTypeDeclaration",
+                                "locals": null,
+                                "typeReference": {
+                                    "kind": "TypeReference",
+                                    "locals": null,
+                                    "modulePath": null,
+                                    "scopeMemberAccessOperator": null,
+                                    "lessThanSign": null,
+                                    "typeArguments": null,
+                                    "greaterThanSign": null,
+                                    "arrayTypeDeclarations": []
+                                }
+                            },
+                            "equalsSign": null,
+                            "eachInKeyword": null,
+                            "expression": null
+                        }
+                    ],
+                    "attributes": [],
+                    "statements": [
+                        {
+                            "kind": "EmptyStatement",
+                            "locals": null
+                        },
+                        {
+                            "kind": "EmptyStatement",
+                            "locals": null
+                        }
+                    ]
+                },
+                null,
+                null,
+                {
+                    "kind": "ClassMethodDeclaration",
+                    "locals": null,
+                    "returnType": {
+                        "kind": "LonghandTypeDeclaration",
+                        "locals": null,
+                        "typeReference": {
+                            "kind": "TypeReference",
+                            "locals": null,
+                            "modulePath": null,
+                            "scopeMemberAccessOperator": null,
+                            "lessThanSign": null,
+                            "typeArguments": null,
+                            "greaterThanSign": null,
+                            "arrayTypeDeclarations": []
+                        }
+                    },
+                    "parameters": [],
+                    "attributes": [],
+                    "statements": [
+                        {
+                            "kind": "EmptyStatement",
+                            "locals": null
+                        },
+                        {
+                            "kind": "EmptyStatement",
+                            "locals": null
+                        }
+                    ],
+                    "endMethodKeyword": null
+                },
+                null,
+                null,
+                {
+                    "kind": "DataDeclarationSequence",
+                    "locals": null,
+                    "children": [
+                        {
+                            "kind": "DataDeclaration",
+                            "locals": null,
+                            "type": {
+                                "kind": "LonghandTypeDeclaration",
+                                "locals": null,
+                                "typeReference": {
+                                    "kind": "TypeReference",
+                                    "locals": null,
+                                    "modulePath": null,
+                                    "scopeMemberAccessOperator": null,
+                                    "lessThanSign": null,
+                                    "typeArguments": null,
+                                    "greaterThanSign": null,
+                                    "arrayTypeDeclarations": []
+                                }
+                            },
+                            "equalsSign": null,
+                            "eachInKeyword": null,
+                            "expression": null
+                        }
+                    ]
+                },
+                null,
+                null,
+                {
+                    "kind": "ClassMethodDeclaration",
+                    "locals": null,
+                    "returnType": null,
+                    "parameters": [],
+                    "attributes": [],
+                    "statements": [
+                        {
+                            "kind": "EmptyStatement",
+                            "locals": null
+                        },
+                        {
+                            "kind": "EmptyStatement",
+                            "locals": null
+                        }
+                    ],
+                    "endMethodKeyword": null
+                },
+                null,
+                {
+                    "kind": "ClassMethodDeclaration",
+                    "locals": null,
+                    "returnType": null,
+                    "parameters": [],
+                    "attributes": [],
+                    "statements": [
+                        {
+                            "kind": "EmptyStatement",
+                            "locals": null
+                        },
+                        {
+                            "kind": "EmptyStatement",
+                            "locals": null
+                        }
+                    ],
+                    "endMethodKeyword": null
+                },
+                null
+            ]
+        },
+        null,
+        null,
+        {
+            "kind": "ClassDeclaration",
+            "locals": null,
+            "typeParameters": [
+                {
+                    "kind": "TypeParameter",
+                    "locals": null
+                }
+            ],
+            "baseType": {
+                "kind": "TypeReference",
+                "locals": null,
+                "modulePath": null,
+                "scopeMemberAccessOperator": null,
+                "lessThanSign": null,
+                "typeArguments": null,
+                "greaterThanSign": null,
+                "arrayTypeDeclarations": []
+            },
+            "implementsKeyword": null,
+            "implementedTypes": null,
+            "attribute": null,
+            "members": [
+                null,
+                null
+            ],
+            "endClassKeyword": null
+        },
+        null,
+        null,
+        {
+            "kind": "ClassDeclaration",
+            "locals": null,
+            "typeParameters": [
+                {
+                    "kind": "TypeParameter",
+                    "locals": null
+                }
+            ],
+            "baseType": {
+                "kind": "TypeReference",
+                "locals": null,
+                "modulePath": null,
+                "scopeMemberAccessOperator": null,
+                "lessThanSign": null,
+                "typeArguments": null,
+                "greaterThanSign": null,
+                "arrayTypeDeclarations": []
+            },
+            "implementsKeyword": null,
+            "implementedTypes": null,
+            "members": [
+                null,
+                null
+            ],
+            "endClassKeyword": null
+        },
+        null,
+        null,
+        {
+            "kind": "ClassDeclaration",
+            "locals": null,
+            "typeParameters": [
+                {
+                    "kind": "TypeParameter",
+                    "locals": null
+                }
+            ],
+            "extendsKeyword": null,
+            "baseType": null,
+            "implementedTypes": [
+                {
+                    "kind": "TypeReference",
+                    "locals": null,
+                    "modulePath": null,
+                    "scopeMemberAccessOperator": null,
+                    "lessThanSign": null,
+                    "typeArguments": null,
+                    "greaterThanSign": null,
+                    "arrayTypeDeclarations": []
+                }
+            ],
+            "attribute": null,
+            "members": [
+                null,
+                null
+            ],
+            "endClassKeyword": null
+        },
+        null,
+        null,
+        {
+            "kind": "ClassDeclaration",
+            "locals": null,
+            "typeParameters": [
+                {
+                    "kind": "TypeParameter",
+                    "locals": null
+                }
+            ],
+            "extendsKeyword": null,
+            "baseType": null,
+            "implementedTypes": [
+                {
+                    "kind": "TypeReference",
+                    "locals": null,
+                    "modulePath": null,
+                    "scopeMemberAccessOperator": null,
+                    "lessThanSign": null,
+                    "typeArguments": null,
+                    "greaterThanSign": null,
+                    "arrayTypeDeclarations": []
+                }
+            ],
+            "members": [
+                null,
+                null
+            ],
+            "endClassKeyword": null
+        },
+        null,
+        null,
+        {
+            "kind": "ClassDeclaration",
+            "locals": null,
+            "typeParameters": [
+                {
+                    "kind": "TypeParameter",
+                    "locals": null
+                }
+            ],
+            "extendsKeyword": null,
+            "baseType": null,
+            "implementedTypes": [
+                {
+                    "kind": "TypeReference",
+                    "locals": null,
+                    "modulePath": null,
+                    "scopeMemberAccessOperator": null,
+                    "lessThanSign": null,
+                    "typeArguments": null,
+                    "greaterThanSign": null,
+                    "arrayTypeDeclarations": []
+                },
+                {
+                    "kind": "CommaSeparator",
+                    "locals": null,
+                    "newlines": []
+                },
+                {
+                    "kind": "TypeReference",
+                    "locals": null,
+                    "modulePath": null,
+                    "scopeMemberAccessOperator": null,
+                    "lessThanSign": null,
+                    "typeArguments": null,
+                    "greaterThanSign": null,
+                    "arrayTypeDeclarations": []
+                }
+            ],
+            "attribute": null,
+            "members": [
+                null,
+                null
+            ],
+            "endClassKeyword": null
+        },
+        null,
+        null,
+        {
+            "kind": "ClassDeclaration",
+            "locals": null,
+            "typeParameters": [
+                {
+                    "kind": "TypeParameter",
+                    "locals": null
+                }
+            ],
+            "baseType": {
+                "kind": "TypeReference",
+                "locals": null,
+                "modulePath": null,
+                "scopeMemberAccessOperator": null,
+                "lessThanSign": null,
+                "typeArguments": null,
+                "greaterThanSign": null,
+                "arrayTypeDeclarations": []
+            },
+            "implementedTypes": [
+                {
+                    "kind": "TypeReference",
+                    "locals": null,
+                    "modulePath": null,
+                    "scopeMemberAccessOperator": null,
+                    "lessThanSign": null,
+                    "typeArguments": null,
+                    "greaterThanSign": null,
+                    "arrayTypeDeclarations": []
+                },
+                {
+                    "kind": "CommaSeparator",
+                    "locals": null,
+                    "newlines": []
+                },
+                {
+                    "kind": "TypeReference",
+                    "locals": null,
+                    "modulePath": null,
+                    "scopeMemberAccessOperator": null,
+                    "lessThanSign": null,
+                    "typeArguments": null,
+                    "greaterThanSign": null,
+                    "arrayTypeDeclarations": []
+                }
+            ],
+            "attribute": null,
+            "members": [
+                null,
+                null
+            ]
+        },
+        null,
+        null,
+        {
+            "kind": "ClassDeclaration",
+            "locals": null,
+            "typeParameters": [
+                {
+                    "kind": "TypeParameter",
+                    "locals": null
+                }
+            ],
+            "baseType": {
+                "kind": "TypeReference",
+                "locals": null,
+                "modulePath": null,
+                "scopeMemberAccessOperator": null,
+                "lessThanSign": null,
+                "typeArguments": null,
+                "greaterThanSign": null,
+                "arrayTypeDeclarations": []
+            },
+            "implementedTypes": [
+                {
+                    "kind": "TypeReference",
+                    "locals": null,
+                    "modulePath": null,
+                    "scopeMemberAccessOperator": null,
+                    "lessThanSign": null,
+                    "typeArguments": null,
+                    "greaterThanSign": null,
+                    "arrayTypeDeclarations": []
+                },
+                {
+                    "kind": "CommaSeparator",
+                    "locals": null,
+                    "newlines": []
+                },
+                {
+                    "kind": "TypeReference",
+                    "locals": null,
+                    "modulePath": null,
+                    "scopeMemberAccessOperator": null,
+                    "lessThanSign": null,
+                    "typeArguments": null,
+                    "greaterThanSign": null,
+                    "arrayTypeDeclarations": []
+                }
+            ],
+            "members": [
+                null,
+                null
+            ]
+        },
+        null,
+        null,
+        {
+            "kind": "FunctionDeclaration",
+            "locals": {
+                "val": {
+                    "name": "val",
+                    "declarations": [
+                        "DataDeclaration"
+                    ]
+                }
+            },
+            "returnType": null,
+            "parameters": [
+                {
+                    "kind": "DataDeclaration",
+                    "locals": null,
+                    "type": {
+                        "kind": "LonghandTypeDeclaration",
+                        "locals": null,
+                        "typeReference": {
+                            "kind": "TypeReference",
+                            "locals": null,
+                            "modulePath": null,
+                            "scopeMemberAccessOperator": null,
+                            "lessThanSign": null,
+                            "typeArguments": null,
+                            "greaterThanSign": null,
+                            "arrayTypeDeclarations": []
+                        }
+                    },
+                    "equalsSign": null,
+                    "eachInKeyword": null,
+                    "expression": null
+                }
+            ],
+            "statements": [
+                {
+                    "kind": "EmptyStatement",
+                    "locals": null
+                },
+                {
+                    "kind": "IfStatement",
+                    "locals": null,
+                    "expression": {
+                        "kind": "BinaryExpression",
+                        "locals": null,
+                        "newlines": null,
+                        "leftOperand": {
+                            "kind": "IdentifierExpression",
+                            "locals": null,
+                            "newlines": [],
+                            "lessThanSign": null,
+                            "typeArguments": null,
+                            "greaterThanSign": null
+                        },
+                        "rightOperand": {
+                            "kind": "StringLiteral",
+                            "locals": null,
+                            "newlines": [],
+                            "children": [
+                                null
+                            ]
+                        }
+                    },
+                    "thenKeyword": null,
+                    "isSingleLine": false,
+                    "statements": [
+                        {
+                            "kind": "EmptyStatement",
+                            "locals": null
+                        },
+                        {
+                            "kind": "EmptyStatement",
+                            "locals": null
+                        }
+                    ],
+                    "elseIfStatements": [],
+                    "elseStatement": null
+                },
+                {
+                    "kind": "EmptyStatement",
+                    "locals": null
+                },
+                {
+                    "kind": "IfStatement",
+                    "locals": null,
+                    "expression": {
+                        "kind": "BinaryExpression",
+                        "locals": null,
+                        "newlines": null,
+                        "leftOperand": {
+                            "kind": "IdentifierExpression",
+                            "locals": null,
+                            "newlines": [],
+                            "lessThanSign": null,
+                            "typeArguments": null,
+                            "greaterThanSign": null
+                        },
+                        "rightOperand": {
+                            "kind": "StringLiteral",
+                            "locals": null,
+                            "newlines": [],
+                            "children": [
+                                null
+                            ]
+                        }
+                    },
+                    "thenKeyword": null,
+                    "isSingleLine": false,
+                    "statements": [
+                        {
+                            "kind": "EmptyStatement",
+                            "locals": null
+                        },
+                        {
+                            "kind": "EmptyStatement",
+                            "locals": null
+                        }
+                    ],
+                    "elseIfStatements": [],
+                    "elseStatement": {
+                        "kind": "ElseStatement",
+                        "locals": null,
+                        "statements": [
+                            {
+                                "kind": "EmptyStatement",
+                                "locals": null
+                            },
+                            {
+                                "kind": "EmptyStatement",
+                                "locals": null
+                            }
+                        ]
+                    }
+                },
+                {
+                    "kind": "EmptyStatement",
+                    "locals": null
+                },
+                {
+                    "kind": "IfStatement",
+                    "locals": null,
+                    "expression": {
+                        "kind": "BinaryExpression",
+                        "locals": null,
+                        "newlines": null,
+                        "leftOperand": {
+                            "kind": "IdentifierExpression",
+                            "locals": null,
+                            "newlines": [],
+                            "lessThanSign": null,
+                            "typeArguments": null,
+                            "greaterThanSign": null
+                        },
+                        "rightOperand": {
+                            "kind": "StringLiteral",
+                            "locals": null,
+                            "newlines": [],
+                            "children": [
+                                null
+                            ]
+                        }
+                    },
+                    "thenKeyword": null,
+                    "isSingleLine": false,
+                    "statements": [
+                        {
+                            "kind": "EmptyStatement",
+                            "locals": null
+                        },
+                        {
+                            "kind": "EmptyStatement",
+                            "locals": null
+                        }
+                    ],
+                    "elseIfStatements": [
+                        {
+                            "kind": "ElseIfStatement",
+                            "locals": null,
+                            "expression": {
+                                "kind": "BinaryExpression",
+                                "locals": null,
+                                "newlines": null,
+                                "leftOperand": {
+                                    "kind": "IdentifierExpression",
+                                    "locals": null,
+                                    "newlines": [],
+                                    "lessThanSign": null,
+                                    "typeArguments": null,
+                                    "greaterThanSign": null
+                                },
+                                "rightOperand": {
+                                    "kind": "StringLiteral",
+                                    "locals": null,
+                                    "newlines": [],
+                                    "children": []
+                                }
+                            },
+                            "thenKeyword": null,
+                            "statements": [
+                                {
+                                    "kind": "EmptyStatement",
+                                    "locals": null
+                                },
+                                {
+                                    "kind": "EmptyStatement",
+                                    "locals": null
+                                }
+                            ]
+                        }
+                    ],
+                    "elseStatement": null
+                },
+                {
+                    "kind": "EmptyStatement",
+                    "locals": null
+                },
+                {
+                    "kind": "IfStatement",
+                    "locals": null,
+                    "expression": {
+                        "kind": "BinaryExpression",
+                        "locals": null,
+                        "newlines": null,
+                        "leftOperand": {
+                            "kind": "IdentifierExpression",
+                            "locals": null,
+                            "newlines": [],
+                            "lessThanSign": null,
+                            "typeArguments": null,
+                            "greaterThanSign": null
+                        },
+                        "rightOperand": {
+                            "kind": "StringLiteral",
+                            "locals": null,
+                            "newlines": [],
+                            "children": [
+                                null
+                            ]
+                        }
+                    },
+                    "thenKeyword": null,
+                    "isSingleLine": false,
+                    "statements": [
+                        {
+                            "kind": "EmptyStatement",
+                            "locals": null
+                        },
+                        {
+                            "kind": "EmptyStatement",
+                            "locals": null
+                        }
+                    ],
+                    "elseIfStatements": [
+                        {
+                            "kind": "ElseIfStatement",
+                            "locals": null,
+                            "expression": {
+                                "kind": "BinaryExpression",
+                                "locals": null,
+                                "newlines": null,
+                                "leftOperand": {
+                                    "kind": "IdentifierExpression",
+                                    "locals": null,
+                                    "newlines": [],
+                                    "lessThanSign": null,
+                                    "typeArguments": null,
+                                    "greaterThanSign": null
+                                },
+                                "rightOperand": {
+                                    "kind": "StringLiteral",
+                                    "locals": null,
+                                    "newlines": [],
+                                    "children": []
+                                }
+                            },
+                            "thenKeyword": null,
+                            "statements": [
+                                {
+                                    "kind": "EmptyStatement",
+                                    "locals": null
+                                },
+                                {
+                                    "kind": "EmptyStatement",
+                                    "locals": null
+                                }
+                            ]
+                        }
+                    ],
+                    "elseStatement": {
+                        "kind": "ElseStatement",
+                        "locals": null,
+                        "statements": [
+                            {
+                                "kind": "EmptyStatement",
+                                "locals": null
+                            },
+                            {
+                                "kind": "EmptyStatement",
+                                "locals": null
+                            }
+                        ]
+                    },
+                    "endIfKeyword": null
+                },
+                {
+                    "kind": "EmptyStatement",
+                    "locals": null
+                },
+                {
+                    "kind": "IfStatement",
+                    "locals": null,
+                    "expression": {
+                        "kind": "BinaryExpression",
+                        "locals": null,
+                        "newlines": null,
+                        "leftOperand": {
+                            "kind": "IdentifierExpression",
+                            "locals": null,
+                            "newlines": [],
+                            "lessThanSign": null,
+                            "typeArguments": null,
+                            "greaterThanSign": null
+                        },
+                        "rightOperand": {
+                            "kind": "StringLiteral",
+                            "locals": null,
+                            "newlines": [],
+                            "children": [
+                                null
+                            ]
+                        }
+                    },
+                    "isSingleLine": false,
+                    "statements": [
+                        {
+                            "kind": "EmptyStatement",
+                            "locals": null
+                        },
+                        {
+                            "kind": "EmptyStatement",
+                            "locals": null
+                        }
+                    ],
+                    "elseIfStatements": [
+                        {
+                            "kind": "ElseIfStatement",
+                            "locals": null,
+                            "expression": {
+                                "kind": "BinaryExpression",
+                                "locals": null,
+                                "newlines": null,
+                                "leftOperand": {
+                                    "kind": "IdentifierExpression",
+                                    "locals": null,
+                                    "newlines": [],
+                                    "lessThanSign": null,
+                                    "typeArguments": null,
+                                    "greaterThanSign": null
+                                },
+                                "rightOperand": {
+                                    "kind": "StringLiteral",
+                                    "locals": null,
+                                    "newlines": [],
+                                    "children": []
+                                }
+                            },
+                            "statements": [
+                                {
+                                    "kind": "EmptyStatement",
+                                    "locals": null
+                                },
+                                {
+                                    "kind": "EmptyStatement",
+                                    "locals": null
+                                }
+                            ]
+                        }
+                    ],
+                    "elseStatement": {
+                        "kind": "ElseStatement",
+                        "locals": null,
+                        "statements": [
+                            {
+                                "kind": "EmptyStatement",
+                                "locals": null
+                            },
+                            {
+                                "kind": "EmptyStatement",
+                                "locals": null
+                            }
+                        ]
+                    },
+                    "endIfKeyword": null
+                }
+            ]
+        },
+        null,
+        null,
+        {
+            "kind": "FunctionDeclaration",
+            "locals": {
+                "val": {
+                    "name": "val",
+                    "declarations": [
+                        "DataDeclaration"
+                    ]
+                }
+            },
+            "returnType": null,
+            "parameters": [
+                {
+                    "kind": "DataDeclaration",
+                    "locals": null,
+                    "type": {
+                        "kind": "LonghandTypeDeclaration",
+                        "locals": null,
+                        "typeReference": {
+                            "kind": "TypeReference",
+                            "locals": null,
+                            "modulePath": null,
+                            "scopeMemberAccessOperator": null,
+                            "lessThanSign": null,
+                            "typeArguments": null,
+                            "greaterThanSign": null,
+                            "arrayTypeDeclarations": []
+                        }
+                    },
+                    "equalsSign": null,
+                    "eachInKeyword": null,
+                    "expression": null
+                }
+            ],
+            "statements": [
+                {
+                    "kind": "EmptyStatement",
+                    "locals": null
+                },
+                {
+                    "kind": "IfStatement",
+                    "locals": null,
+                    "expression": {
+                        "kind": "BinaryExpression",
+                        "locals": null,
+                        "newlines": null,
+                        "leftOperand": {
+                            "kind": "IdentifierExpression",
+                            "locals": null,
+                            "newlines": [],
+                            "lessThanSign": null,
+                            "typeArguments": null,
+                            "greaterThanSign": null
+                        },
+                        "rightOperand": {
+                            "kind": "StringLiteral",
+                            "locals": null,
+                            "newlines": [],
+                            "children": [
+                                null
+                            ]
+                        }
+                    },
+                    "isSingleLine": true,
+                    "statements": [
+                        {
+                            "kind": "ReturnStatement",
+                            "locals": null,
+                            "expression": null,
+                            "terminator": null
+                        }
+                    ],
+                    "elseIfStatements": null,
+                    "elseStatement": null,
+                    "endKeyword": null,
+                    "endIfKeyword": null
+                },
+                {
+                    "kind": "IfStatement",
+                    "locals": null,
+                    "expression": {
+                        "kind": "BinaryExpression",
+                        "locals": null,
+                        "newlines": null,
+                        "leftOperand": {
+                            "kind": "IdentifierExpression",
+                            "locals": null,
+                            "newlines": [],
+                            "lessThanSign": null,
+                            "typeArguments": null,
+                            "greaterThanSign": null
+                        },
+                        "rightOperand": {
+                            "kind": "StringLiteral",
+                            "locals": null,
+                            "newlines": [],
+                            "children": []
+                        }
+                    },
+                    "thenKeyword": null,
+                    "isSingleLine": true,
+                    "statements": [
+                        {
+                            "kind": "ReturnStatement",
+                            "locals": null,
+                            "expression": null,
+                            "terminator": null
+                        }
+                    ],
+                    "elseIfStatements": null,
+                    "elseStatement": null,
+                    "endKeyword": null,
+                    "endIfKeyword": null
+                }
+            ]
+        },
+        null,
+        null,
+        {
+            "kind": "FunctionDeclaration",
+            "locals": null,
+            "returnType": null,
+            "parameters": [],
+            "statements": [
+                {
+                    "kind": "EmptyStatement",
+                    "locals": null
+                },
+                {
+                    "kind": "ReturnStatement",
+                    "locals": null,
+                    "expression": null
+                },
+                {
+                    "kind": "ReturnStatement",
+                    "locals": null,
+                    "expression": null
+                },
+                {
+                    "kind": "EmptyStatement",
+                    "locals": null
+                },
+                {
+                    "kind": "ReturnStatement",
+                    "locals": null,
+                    "expression": null
+                },
+                {
+                    "kind": "ReturnStatement",
+                    "locals": null,
+                    "expression": null
+                },
+                {
+                    "kind": "EmptyStatement",
+                    "locals": null
+                },
+                {
+                    "kind": "EmptyStatement",
+                    "locals": null
+                },
+                {
+                    "kind": "ReturnStatement",
+                    "locals": null,
+                    "expression": {
+                        "kind": "IntegerLiteral",
+                        "locals": null,
+                        "newlines": []
+                    }
+                },
+                {
+                    "kind": "ReturnStatement",
+                    "locals": null,
+                    "expression": {
+                        "kind": "IntegerLiteral",
+                        "locals": null,
+                        "newlines": []
+                    }
+                },
+                {
+                    "kind": "EmptyStatement",
+                    "locals": null
+                },
+                {
+                    "kind": "ReturnStatement",
+                    "locals": null,
+                    "expression": {
+                        "kind": "IntegerLiteral",
+                        "locals": null,
+                        "newlines": []
+                    }
+                },
+                {
+                    "kind": "ReturnStatement",
+                    "locals": null,
+                    "expression": {
+                        "kind": "IntegerLiteral",
+                        "locals": null,
+                        "newlines": []
+                    }
+                },
+                {
+                    "kind": "EmptyStatement",
+                    "locals": null
+                },
+                {
+                    "kind": "EmptyStatement",
+                    "locals": null
+                },
+                {
+                    "kind": "ReturnStatement",
+                    "locals": null,
+                    "expression": {
+                        "kind": "BinaryExpression",
+                        "locals": null,
+                        "newlines": null,
+                        "leftOperand": {
+                            "kind": "BooleanLiteral",
+                            "locals": null,
+                            "newlines": []
+                        },
+                        "rightOperand": {
+                            "kind": "BinaryExpression",
+                            "locals": null,
+                            "newlines": null,
+                            "leftOperand": {
+                                "kind": "IntegerLiteral",
+                                "locals": null,
+                                "newlines": [
+                                    null
+                                ]
+                            },
+                            "rightOperand": {
+                                "kind": "UnaryOpExpression",
+                                "locals": null,
+                                "newlines": [],
+                                "operand": {
+                                    "kind": "IntegerLiteral",
+                                    "locals": null,
+                                    "newlines": []
+                                }
+                            }
+                        }
+                    }
+                },
+                {
+                    "kind": "EmptyStatement",
+                    "locals": null
+                }
+            ]
+        },
+        null,
+        null,
+        {
+            "kind": "FunctionDeclaration",
+            "locals": null,
+            "returnType": null,
+            "parameters": [],
+            "statements": [
+                {
+                    "kind": "EmptyStatement",
+                    "locals": null
+                },
+                {
+                    "kind": "EmptyStatement",
+                    "locals": null
+                },
+                {
+                    "kind": "SelectStatement",
+                    "locals": null,
+                    "expression": {
+                        "kind": "IdentifierExpression",
+                        "locals": null,
+                        "newlines": [],
+                        "lessThanSign": null,
+                        "typeArguments": null,
+                        "greaterThanSign": null
+                    },
+                    "newlines": [
+                        null,
+                        null
+                    ],
+                    "caseStatements": [
+                        {
+                            "kind": "CaseStatement",
+                            "locals": null,
+                            "expressions": [
+                                {
+                                    "kind": "IntegerLiteral",
+                                    "locals": null,
+                                    "newlines": []
+                                }
+                            ],
+                            "statements": [
+                                {
+                                    "kind": "EmptyStatement",
+                                    "locals": null
+                                },
+                                {
+                                    "kind": "ExitStatement",
+                                    "locals": null
+                                }
+                            ]
+                        },
+                        {
+                            "kind": "CaseStatement",
+                            "locals": null,
+                            "expressions": [
+                                {
+                                    "kind": "IntegerLiteral",
+                                    "locals": null,
+                                    "newlines": []
+                                },
+                                {
+                                    "kind": "CommaSeparator",
+                                    "locals": null,
+                                    "newlines": []
+                                },
+                                {
+                                    "kind": "IntegerLiteral",
+                                    "locals": null,
+                                    "newlines": []
+                                },
+                                {
+                                    "kind": "CommaSeparator",
+                                    "locals": null,
+                                    "newlines": []
+                                },
+                                {
+                                    "kind": "IntegerLiteral",
+                                    "locals": null,
+                                    "newlines": []
+                                }
+                            ],
+                            "statements": [
+                                {
+                                    "kind": "EmptyStatement",
+                                    "locals": null
+                                },
+                                {
+                                    "kind": "ContinueStatement",
+                                    "locals": null
+                                }
+                            ]
+                        }
+                    ],
+                    "defaultStatement": {
+                        "kind": "DefaultStatement",
+                        "locals": null,
+                        "statements": [
+                            {
+                                "kind": "EmptyStatement",
+                                "locals": null
+                            },
+                            {
+                                "kind": "SelectStatement",
+                                "locals": null,
+                                "expression": {
+                                    "kind": "IdentifierExpression",
+                                    "locals": null,
+                                    "newlines": [],
+                                    "lessThanSign": null,
+                                    "typeArguments": null,
+                                    "greaterThanSign": null
+                                },
+                                "newlines": [
+                                    null
+                                ],
+                                "caseStatements": [
+                                    {
+                                        "kind": "CaseStatement",
+                                        "locals": null,
+                                        "expressions": [
+                                            {
+                                                "kind": "IntegerLiteral",
+                                                "locals": null,
+                                                "newlines": []
+                                            }
+                                        ],
+                                        "statements": [
+                                            {
+                                                "kind": "EmptyStatement",
+                                                "locals": null
+                                            },
+                                            {
+                                                "kind": "ExitStatement",
+                                                "locals": null
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "kind": "CaseStatement",
+                                        "locals": null,
+                                        "expressions": [
+                                            {
+                                                "kind": "IntegerLiteral",
+                                                "locals": null,
+                                                "newlines": []
+                                            },
+                                            {
+                                                "kind": "CommaSeparator",
+                                                "locals": null,
+                                                "newlines": [
+                                                    null
+                                                ]
+                                            },
+                                            {
+                                                "kind": "IntegerLiteral",
+                                                "locals": null,
+                                                "newlines": []
+                                            },
+                                            {
+                                                "kind": "CommaSeparator",
+                                                "locals": null,
+                                                "newlines": [
+                                                    null
+                                                ]
+                                            },
+                                            {
+                                                "kind": "IntegerLiteral",
+                                                "locals": null,
+                                                "newlines": []
+                                            }
+                                        ],
+                                        "statements": [
+                                            {
+                                                "kind": "EmptyStatement",
+                                                "locals": null
+                                            },
+                                            {
+                                                "kind": "ContinueStatement",
+                                                "locals": null
+                                            }
+                                        ]
+                                    }
+                                ],
+                                "defaultStatement": {
+                                    "kind": "DefaultStatement",
+                                    "locals": null,
+                                    "statements": [
+                                        {
+                                            "kind": "EmptyStatement",
+                                            "locals": null
+                                        },
+                                        {
+                                            "kind": "ReturnStatement",
+                                            "locals": null,
+                                            "expression": null
+                                        }
+                                    ]
+                                }
+                            }
+                        ]
+                    },
+                    "endSelectKeyword": null
+                },
+                {
+                    "kind": "EmptyStatement",
+                    "locals": null
+                }
+            ],
+            "endFunctionKeyword": null
+        },
+        null,
+        null,
+        {
+            "kind": "FunctionDeclaration",
+            "locals": {
+                "f": {
+                    "name": "f",
+                    "declarations": [
+                        "DataDeclaration"
+                    ]
+                }
+            },
+            "returnType": null,
+            "parameters": [],
+            "statements": [
+                {
+                    "kind": "EmptyStatement",
+                    "locals": null
+                },
+                {
+                    "kind": "DataDeclarationSequenceStatement",
+                    "locals": null,
+                    "dataDeclarationSequence": {
+                        "kind": "DataDeclarationSequence",
+                        "locals": null,
+                        "children": [
+                            {
+                                "kind": "DataDeclaration",
+                                "locals": null,
+                                "type": {
+                                    "kind": "LonghandTypeDeclaration",
+                                    "locals": null,
+                                    "typeReference": {
+                                        "kind": "TypeReference",
+                                        "locals": null,
+                                        "modulePath": null,
+                                        "scopeMemberAccessOperator": null,
+                                        "lessThanSign": null,
+                                        "typeArguments": null,
+                                        "greaterThanSign": null,
+                                        "arrayTypeDeclarations": []
+                                    }
+                                },
+                                "equalsSign": null,
+                                "eachInKeyword": null,
+                                "expression": null
+                            }
+                        ]
+                    }
+                },
+                {
+                    "kind": "ExpressionStatement",
+                    "locals": null,
+                    "expression": {
+                        "kind": "AssignmentExpression",
+                        "locals": null,
+                        "newlines": null,
+                        "leftOperand": {
+                            "kind": "IdentifierExpression",
+                            "locals": null,
+                            "newlines": [],
+                            "lessThanSign": null,
+                            "typeArguments": null,
+                            "greaterThanSign": null
+                        },
+                        "eachInKeyword": null,
+                        "rightOperand": {
+                            "kind": "FloatLiteral",
+                            "locals": null,
+                            "newlines": []
+                        }
+                    }
+                },
+                {
+                    "kind": "ExpressionStatement",
+                    "locals": null,
+                    "expression": {
+                        "kind": "AssignmentExpression",
+                        "locals": null,
+                        "newlines": null,
+                        "leftOperand": {
+                            "kind": "IdentifierExpression",
+                            "locals": null,
+                            "newlines": [],
+                            "lessThanSign": null,
+                            "typeArguments": null,
+                            "greaterThanSign": null
+                        },
+                        "eachInKeyword": null,
+                        "rightOperand": {
+                            "kind": "FloatLiteral",
+                            "locals": null,
+                            "newlines": []
+                        }
+                    }
+                },
+                {
+                    "kind": "ExpressionStatement",
+                    "locals": null,
+                    "expression": {
+                        "kind": "AssignmentExpression",
+                        "locals": null,
+                        "newlines": null,
+                        "leftOperand": {
+                            "kind": "IdentifierExpression",
+                            "locals": null,
+                            "newlines": [],
+                            "lessThanSign": null,
+                            "typeArguments": null,
+                            "greaterThanSign": null
+                        },
+                        "eachInKeyword": null,
+                        "rightOperand": {
+                            "kind": "FloatLiteral",
+                            "locals": null,
+                            "newlines": []
+                        }
+                    }
+                },
+                {
+                    "kind": "ExpressionStatement",
+                    "locals": null,
+                    "expression": {
+                        "kind": "AssignmentExpression",
+                        "locals": null,
+                        "newlines": null,
+                        "leftOperand": {
+                            "kind": "IdentifierExpression",
+                            "locals": null,
+                            "newlines": [],
+                            "lessThanSign": null,
+                            "typeArguments": null,
+                            "greaterThanSign": null
+                        },
+                        "eachInKeyword": null,
+                        "rightOperand": {
+                            "kind": "FloatLiteral",
+                            "locals": null,
+                            "newlines": []
+                        }
+                    }
+                },
+                {
+                    "kind": "ExpressionStatement",
+                    "locals": null,
+                    "expression": {
+                        "kind": "AssignmentExpression",
+                        "locals": null,
+                        "newlines": null,
+                        "leftOperand": {
+                            "kind": "IdentifierExpression",
+                            "locals": null,
+                            "newlines": [],
+                            "lessThanSign": null,
+                            "typeArguments": null,
+                            "greaterThanSign": null
+                        },
+                        "eachInKeyword": null,
+                        "rightOperand": {
+                            "kind": "FloatLiteral",
+                            "locals": null,
+                            "newlines": []
+                        }
+                    }
+                }
+            ]
+        },
+        null
+    ]
+}
