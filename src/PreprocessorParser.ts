@@ -209,7 +209,7 @@ export class PreprocessorParser extends ParserBase {
         return elseDirective;
     }
 
-    private isIfDirectiveMembersListTerminator(token: Tokens) {
+    private isIfOrElseIfOrElseDirectiveMembersListTerminator(token: Tokens) {
         switch (token.kind) {
             case TokenKind.NumberSign: {
                 const nextToken = this.getToken(1);
@@ -372,7 +372,7 @@ export class PreprocessorParser extends ParserBase {
             case NodeKind.IfDirective:
             case NodeKind.ElseIfDirective:
             case NodeKind.ElseDirective: {
-                return this.isIfDirectiveMembersListTerminator(token);
+                return this.isIfOrElseIfOrElseDirectiveMembersListTerminator(token);
             }
             case NodeKind.RemDirective: {
                 return this.isRemDirectiveMembersListTerminator(token);

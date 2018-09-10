@@ -932,7 +932,7 @@ export class Parser extends ParserBase {
         return elseStatement;
     }
 
-    private isIfStatementStatementsListTerminator(token: Tokens): boolean {
+    private isIfOrElseIfOrElseStatementStatementsListTerminator(token: Tokens): boolean {
         switch (token.kind) {
             case TokenKind.ElseIfKeyword:
             case TokenKind.ElseKeyword:
@@ -1589,7 +1589,7 @@ export class Parser extends ParserBase {
             case NodeKind.IfStatement:
             case NodeKind.ElseIfStatement:
             case NodeKind.ElseStatement: {
-                return this.isIfStatementStatementsListTerminator(token);
+                return this.isIfOrElseIfOrElseStatementStatementsListTerminator(token);
             }
             case NodeKind.CaseStatement:
             case NodeKind.DefaultStatement: {
