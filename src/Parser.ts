@@ -820,30 +820,7 @@ export class Parser extends ParserBase {
 
         if (this.getToken().kind === TokenKind.Newline) {
             ifStatement.statements = this.parseList(ifStatement, ifStatement.kind);
-
-            while (true) {
-                const elseIfKeyword = this.getToken();
-                let ifKeyword: Tokens | null = null;
-                if (elseIfKeyword.kind === TokenKind.ElseIfKeyword) {
-                    this.advanceToken();
-                } else if (elseIfKeyword.kind === TokenKind.ElseKeyword) {
-                    ifKeyword = this.getToken(1);
-                    if (ifKeyword.kind === TokenKind.IfKeyword) {
-                        this.advanceToken();
-                        this.advanceToken();
-                    } else {
-                        break;
-                    }
-                } else {
-                    break;
-                }
-
-                if (ifStatement.elseIfStatements === null) {
-                    ifStatement.elseIfStatements = [];
-                }
-
-                ifStatement.elseIfStatements.push(this.parseElseIfStatement(ifStatement, elseIfKeyword, ifKeyword));
-            }
+            ifStatement.elseIfStatements = this.parseList(ifStatement, ParseContextKind.ElseIfStatementList, /*delimiter*/ null);
 
             const elseKeyword = this.getToken();
             if (elseKeyword.kind === TokenKind.ElseKeyword) {
@@ -873,10 +850,60 @@ export class Parser extends ParserBase {
         return ifStatement;
     }
 
+    // #region ElseIf statement list members
+
+    private isElseIfStatementListTerminator(token: Tokens): boolean {
+        return !this.isElseIfStatementListMemberStart(token);
+    }
+
+    private isElseIfStatementListMemberStart(token: Tokens): boolean {
+        switch (token.kind) {
+            case TokenKind.ElseIfKeyword: {
+                return true;
+            }
+            case TokenKind.ElseKeyword: {
+                const nextToken = this.getToken(1);
+                switch (nextToken.kind) {
+                    case TokenKind.IfKeyword: {
+                        return true;
+                    }
+                }
+                break;
+            }
+        }
+
+        return false;
+    }
+
+    private parseElseIfStatementListMember(parent: Nodes) {
+        const token = this.getToken();
+        switch (token.kind) {
+            case TokenKind.ElseIfKeyword: {
+                this.advanceToken();
+
+                return this.parseElseIfStatement(parent, token);
+            }
+            case TokenKind.ElseKeyword: {
+                const nextToken = this.getToken(1);
+                switch (nextToken.kind) {
+                    case TokenKind.IfKeyword: {
+                        this.advanceToken();
+                        this.advanceToken();
+
+                        return this.parseElseIfStatement(parent, token, nextToken);
+                    }
+                }
+                break;
+            }
+        }
+
+        return this.parseCore(parent, token);
+    }
+
     private parseElseIfStatement(
-        parent: IfStatement,
+        parent: Nodes,
         elseIfKeyword: ElseIfKeywordToken | ElseKeywordToken,
-        ifKeyword: IfKeywordToken | null
+        ifKeyword: IfKeywordToken | null = null,
     ): ElseIfStatement {
         const elseIfStatement = new ElseIfStatement();
         elseIfStatement.parent = parent;
@@ -888,6 +915,8 @@ export class Parser extends ParserBase {
 
         return elseIfStatement;
     }
+
+    // #endregion
 
     private parseElseStatement(parent: IfStatement, elseKeyword: ElseKeywordToken): ElseStatement {
         const elseStatement = new ElseStatement();
@@ -926,17 +955,7 @@ export class Parser extends ParserBase {
         selectStatement.selectKeyword = selectKeyword;
         selectStatement.expression = this.parseExpression(selectStatement);
         selectStatement.newlines = this.parseList(selectStatement, ParseContextKind.NewlineList, /*delimiter*/ null);
-
-        while (true) {
-            const caseKeyword = this.getToken();
-            if (caseKeyword.kind !== TokenKind.CaseKeyword) {
-                break;
-            }
-
-            this.advanceToken();
-
-            selectStatement.caseStatements.push(this.parseCaseStatement(selectStatement, caseKeyword));
-        }
+        selectStatement.caseStatements = this.parseList(selectStatement, ParseContextKind.CaseStatementList, /*delimiter*/ null);
 
         const defaultKeyword = this.getToken();
         if (defaultKeyword.kind === TokenKind.DefaultKeyword) {
@@ -954,6 +973,35 @@ export class Parser extends ParserBase {
         return selectStatement;
     }
 
+    // #region Case statement list members
+
+    private isCaseStatementListTerminator(token: Tokens): boolean {
+        return !this.isCaseStatementListMemberStart(token);
+    }
+
+    private isCaseStatementListMemberStart(token: Tokens): boolean {
+        switch (token.kind) {
+            case TokenKind.CaseKeyword: {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    private parseCaseStatementListMember(parent: Nodes) {
+        const token = this.getToken();
+        switch (token.kind) {
+            case TokenKind.CaseKeyword: {
+                this.advanceToken();
+
+                return this.parseCaseStatement(parent, token);
+            }
+        }
+
+        return this.parseCore(parent, token);
+    }
+
     private parseCaseStatement(parent: Nodes, caseKeyword: CaseKeywordToken): CaseStatement {
         const caseStatement = new CaseStatement();
         caseStatement.parent = parent;
@@ -963,6 +1011,8 @@ export class Parser extends ParserBase {
 
         return caseStatement;
     }
+
+    // #endregion
 
     private parseDefaultStatement(parent: Nodes, defaultKeyword: DefaultKeywordToken): DefaultStatement {
         const defaultStatement = new DefaultStatement();
@@ -1168,22 +1218,7 @@ export class Parser extends ParserBase {
         tryStatement.parent = parent;
         tryStatement.tryKeyword = tryKeyword;
         tryStatement.statements = this.parseList(tryStatement, tryStatement.kind);
-
-        while (true) {
-            const catchKeyword = this.getToken();
-            if (catchKeyword.kind !== TokenKind.CatchKeyword) {
-                break;
-            }
-
-            if (tryStatement.catchStatements === null) {
-                tryStatement.catchStatements = [];
-            }
-
-            this.advanceToken();
-
-            tryStatement.catchStatements.push(this.parseCatchStatement(tryStatement, catchKeyword));
-        }
-
+        tryStatement.catchStatements = this.parseList(tryStatement, ParseContextKind.CatchStatementList, /*delimiter*/ null);
         tryStatement.endKeyword = this.eat(TokenKind.EndKeyword);
         if (tryStatement.endKeyword.kind === TokenKind.EndKeyword) {
             tryStatement.endTryKeyword = this.eatOptional(TokenKind.TryKeyword);
@@ -1191,6 +1226,35 @@ export class Parser extends ParserBase {
         tryStatement.terminator = this.eatStatementTerminator(tryStatement);
 
         return tryStatement;
+    }
+
+    // #region Catch statement list members
+
+    private isCatchStatementListTerminator(token: Tokens): boolean {
+        return !this.isCatchStatementListMemberStart(token);
+    }
+
+    private isCatchStatementListMemberStart(token: Tokens): boolean {
+        switch (token.kind) {
+            case TokenKind.CatchKeyword: {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    private parseCatchStatementListMember(parent: Nodes) {
+        const token = this.getToken();
+        switch (token.kind) {
+            case TokenKind.CatchKeyword: {
+                this.advanceToken();
+
+                return this.parseCatchStatement(parent, token);
+            }
+        }
+
+        return this.parseCore(parent, token);
     }
 
     private parseCatchStatement(parent: Nodes, catchKeyword: CatchKeywordToken): CatchStatement {
@@ -1202,6 +1266,8 @@ export class Parser extends ParserBase {
 
         return catchStatement;
     }
+
+    // #endregion
 
     private isTryStatementStatementsListTerminator(token: Tokens): boolean {
         switch (token.kind) {
@@ -1554,6 +1620,15 @@ export class Parser extends ParserBase {
             case ParseContextKind.ClassMethodAttributes: {
                 return this.isClassMethodAttributesTerminator(token);
             }
+            case ParseContextKind.ElseIfStatementList: {
+                return this.isElseIfStatementListTerminator(token);
+            }
+            case ParseContextKind.CaseStatementList: {
+                return this.isCaseStatementListTerminator(token);
+            }
+            case ParseContextKind.CatchStatementList: {
+                return this.isCatchStatementListTerminator(token);
+            }
         }
 
         return super.isListTerminatorCore(parseContext, token);
@@ -1603,6 +1678,15 @@ export class Parser extends ParserBase {
             }
             case ParseContextKind.ClassMethodAttributes: {
                 return this.isClassMethodAttributeStart(token);
+            }
+            case ParseContextKind.ElseIfStatementList: {
+                return this.isElseIfStatementListMemberStart(token);
+            }
+            case ParseContextKind.CaseStatementList: {
+                return this.isCaseStatementListMemberStart(token);
+            }
+            case ParseContextKind.CatchStatementList: {
+                return this.isCatchStatementListMemberStart(token);
             }
         }
 
@@ -1654,6 +1738,15 @@ export class Parser extends ParserBase {
             case ParseContextKind.ClassMethodAttributes: {
                 return this.parseClassMethodAttribute(parent);
             }
+            case ParseContextKind.ElseIfStatementList: {
+                return this.parseElseIfStatementListMember(parent);
+            }
+            case ParseContextKind.CaseStatementList: {
+                return this.parseCaseStatementListMember(parent);
+            }
+            case ParseContextKind.CatchStatementList: {
+                return this.parseCatchStatementListMember(parent);
+            }
         }
 
         return super.parseListElementCore(parseContext, parent);
@@ -1694,6 +1787,9 @@ interface ParserParseContextElementMap extends ParseContextElementMapBase {
     [ParseContextKind.DataDeclarationSequence]: ReturnType<Parser['parseDataDeclarationSequenceMember']>;
     [ParseContextKind.TypeParameterSequence]: ReturnType<Parser['parseTypeParameterSequenceMember']>;
     [ParseContextKind.ClassMethodAttributes]: ReturnType<Parser['parseClassMethodAttribute']>;
+    [ParseContextKind.ElseIfStatementList]: ReturnType<Parser['parseElseIfStatementListMember']>;
+    [ParseContextKind.CaseStatementList]: ReturnType<Parser['parseCaseStatementListMember']>;
+    [ParseContextKind.CatchStatementList]: ReturnType<Parser['parseCatchStatementListMember']>;
 }
 
 type ParserParseContext = keyof ParserParseContextElementMap;
@@ -1702,12 +1798,18 @@ const _ParseContextKind: { -readonly [P in keyof typeof ParseContextKind]: typeo
 _ParseContextKind.DataDeclarationSequence = 'DataDeclarationSequence' as ParseContextKind.DataDeclarationSequence;
 _ParseContextKind.TypeParameterSequence = 'TypeParameterSequence' as ParseContextKind.TypeParameterSequence;
 _ParseContextKind.ClassMethodAttributes = 'ClassMethodAttributes' as ParseContextKind.ClassMethodAttributes;
+_ParseContextKind.ElseIfStatementList = 'ElseIfStatementList' as ParseContextKind.ElseIfStatementList;
+_ParseContextKind.CaseStatementList = 'CaseStatementList' as ParseContextKind.CaseStatementList;
+_ParseContextKind.CatchStatementList = 'CatchStatementList' as ParseContextKind.CatchStatementList;
 
 declare module './ParserBase' {
     enum ParseContextKind {
         DataDeclarationSequence = 'DataDeclarationSequence',
         TypeParameterSequence = 'TypeParameterSequence',
         ClassMethodAttributes = 'ClassMethodAttributes',
+        ElseIfStatementList = 'ElseIfStatementList',
+        CaseStatementList = 'CaseStatementList',
+        CatchStatementList = 'CatchStatementList',
     }
 
     interface ParseContextElementMap extends ParserParseContextElementMap { }

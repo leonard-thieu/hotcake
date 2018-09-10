@@ -7,7 +7,7 @@ import { RemDirective } from './Node/Directive/RemDirective';
 import { Expressions } from './Node/Expression/Expression';
 import { Nodes } from './Node/Node';
 import { NodeKind } from './Node/NodeKind';
-import { ParseContext, ParseContextElementMapBase, ParserBase } from './ParserBase';
+import { ParseContext, ParseContextElementMapBase, ParseContextKind, ParserBase } from './ParserBase';
 import { ConfigurationVariableToken, ElseDirectiveKeywordToken, ElseIfDirectiveKeywordToken, EOFToken, ErrorDirectiveKeywordToken, IfDirectiveKeywordToken, NumberSignToken, PrintDirectiveKeywordToken, RemDirectiveKeywordToken, Tokens } from './Token/Token';
 import { TokenKind } from './Token/TokenKind';
 
@@ -95,33 +95,7 @@ export class PreprocessorParser extends ParserBase {
         ifDirective.ifDirectiveKeyword = ifDirectiveKeyword;
         ifDirective.expression = this.parseExpression(ifDirective);
         ifDirective.members = this.parseList(ifDirective, ifDirective.kind, /*delimiter*/ null);
-
-        while (true) {
-            const token = this.getToken();
-            if (token.kind !== TokenKind.NumberSign) {
-                break;
-            }
-
-            const nextToken = this.getToken(1);
-
-            let nextNextToken: Tokens | null = null;
-            if (nextToken.kind === TokenKind.ElseDirectiveKeyword) {
-                nextNextToken = this.getToken(2);
-                if (nextNextToken.kind !== TokenKind.IfDirectiveKeyword) {
-                    break;
-                }
-            } else if (nextToken.kind !== TokenKind.ElseIfDirectiveKeyword) {
-                break;
-            }
-
-            this.advanceToken();
-            this.advanceToken();
-            if (nextNextToken) {
-                this.advanceToken();
-            }
-
-            ifDirective.elseIfDirectives.push(this.parseElseIfDirective(ifDirective, token, nextToken, nextNextToken));
-        }
+        ifDirective.elseIfDirectives = this.parseList(ifDirective, ParseContextKind.ElseIfDirectiveList, /*delimiter*/ null);
 
         const elseDirectiveNumberSign = this.getToken();
         const elseDirectiveKeyword = this.getToken(1);
@@ -142,11 +116,75 @@ export class PreprocessorParser extends ParserBase {
         return ifDirective;
     }
 
+    // #region ElseIf directive list members
+
+    private isElseIfDirectiveListTerminator(token: Tokens): boolean {
+        return !this.isElseIfDirectiveListMemberStart(token);
+    }
+
+    private isElseIfDirectiveListMemberStart(token: Tokens): boolean {
+        switch (token.kind) {
+            case TokenKind.NumberSign: {
+                const nextToken = this.getToken(1);
+                switch (nextToken.kind) {
+                    case TokenKind.ElseIfDirectiveKeyword: {
+                        return true;
+                    }
+                    case TokenKind.ElseDirectiveKeyword: {
+                        const nextNextToken = this.getToken(2);
+                        switch (nextNextToken.kind) {
+                            case TokenKind.IfDirectiveKeyword: {
+                                return true;
+                            }
+                        }
+                        break;
+                    }
+                }
+                break;
+            }
+        }
+
+        return false;
+    }
+
+    private parseElseIfDirectiveListMember(parent: Nodes) {
+        const token = this.getToken();
+        switch (token.kind) {
+            case TokenKind.NumberSign: {
+                const nextToken = this.getToken(1);
+                switch (nextToken.kind) {
+                    case TokenKind.ElseIfDirectiveKeyword: {
+                        this.advanceToken();
+                        this.advanceToken();
+
+                        return this.parseElseIfDirective(parent, token, nextToken);
+                    }
+                    case TokenKind.ElseDirectiveKeyword: {
+                        const nextNextToken = this.getToken(2);
+                        switch (nextNextToken.kind) {
+                            case TokenKind.IfDirectiveKeyword: {
+                                this.advanceToken();
+                                this.advanceToken();
+                                this.advanceToken();
+
+                                return this.parseElseIfDirective(parent, token, nextToken, nextNextToken);
+                            }
+                        }
+                        break;
+                    }
+                }
+                break;
+            }
+        }
+
+        return this.parseCore(parent, token);
+    }
+
     private parseElseIfDirective(
-        parent: IfDirective,
+        parent: Nodes,
         numberSign: NumberSignToken,
         elseIfDirectiveKeyword: ElseIfDirectiveKeywordToken | ElseDirectiveKeywordToken,
-        ifDirectiveKeyword: IfDirectiveKeywordToken | null,
+        ifDirectiveKeyword: IfDirectiveKeywordToken | null = null,
     ): ElseIfDirective {
         const elseIfDirective = new ElseIfDirective();
         elseIfDirective.parent = parent;
@@ -158,6 +196,8 @@ export class PreprocessorParser extends ParserBase {
 
         return elseIfDirective;
     }
+
+    // #endregion
 
     private parseElseDirective(parent: IfDirective, numberSign: NumberSignToken, elseDirectiveKeyword: ElseDirectiveKeywordToken): ElseDirective {
         const elseDirective = new ElseDirective();
@@ -337,6 +377,9 @@ export class PreprocessorParser extends ParserBase {
             case NodeKind.RemDirective: {
                 return this.isRemDirectiveMembersListTerminator(token);
             }
+            case ParseContextKind.ElseIfDirectiveList: {
+                return this.isElseIfDirectiveListTerminator(token);
+            }
         }
 
         return super.isListTerminatorCore(parseContext, token);
@@ -354,6 +397,9 @@ export class PreprocessorParser extends ParserBase {
             }
             case NodeKind.RemDirective: {
                 return this.isRemDirectiveMemberStart(token);
+            }
+            case ParseContextKind.ElseIfDirectiveList: {
+                return this.isElseIfDirectiveListMemberStart(token);
             }
         }
 
@@ -373,6 +419,9 @@ export class PreprocessorParser extends ParserBase {
             case NodeKind.RemDirective: {
                 return this.parseRemDirectiveMember(parent);
             }
+            case ParseContextKind.ElseIfDirectiveList: {
+                return this.parseElseIfDirectiveListMember(parent);
+            }
         }
 
         return this.parseListElementCore(parseContext, parent);
@@ -389,11 +438,19 @@ interface PreprocessorParserParseContextElementMap extends ParseContextElementMa
     [NodeKind.ElseIfDirective]: ReturnType<PreprocessorParser['parseModuleMember']>;
     [NodeKind.ElseDirective]: ReturnType<PreprocessorParser['parseModuleMember']>;
     [NodeKind.RemDirective]: ReturnType<PreprocessorParser['parseRemDirectiveMember']>;
+    [ParseContextKind.ElseIfDirectiveList]: ReturnType<PreprocessorParser['parseElseIfDirectiveListMember']>;
 }
 
 type PreprocessorParserParseContext = keyof PreprocessorParserParseContextElementMap;
 
+const _ParseContextKind: { -readonly [P in keyof typeof ParseContextKind]: typeof ParseContextKind[P]; } = ParseContextKind;
+_ParseContextKind.ElseIfDirectiveList = 'ElseIfDirectiveList' as ParseContextKind.ElseIfDirectiveList;
+
 declare module './ParserBase' {
+    enum ParseContextKind {
+        ElseIfDirectiveList = 'ElseIfDirectiveList',
+    }
+
     interface ParseContextElementMap extends PreprocessorParserParseContextElementMap { }
 }
 

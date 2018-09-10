@@ -22,7 +22,7 @@ export class SelectStatement extends Statement {
     selectKeyword: SelectKeywordToken;
     expression: MissableExpression;
     newlines: ParseContextElementSequence<ParseContextKind.NewlineList>;
-    caseStatements: CaseStatement[] = [];
+    caseStatements: ParseContextElementSequence<ParseContextKind.CaseStatementList>;
     defaultStatement: DefaultStatement | null = null;
     endKeyword: MissableToken<EndKeywordToken>;
     endSelectKeyword: SelectKeywordToken | null = null;

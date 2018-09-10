@@ -1,4 +1,4 @@
-import { ParseContextElementSequence } from '../../ParserBase';
+import { ParseContextElementSequence, ParseContextKind } from '../../ParserBase';
 import { MissableToken } from '../../Token/MissingToken';
 import { ElseDirectiveKeywordToken, ElseIfDirectiveKeywordToken, EndDirectiveKeywordToken, IfDirectiveKeywordToken, NumberSignToken } from '../../Token/Token';
 import { MissableExpression } from '../Expression/Expression';
@@ -23,7 +23,7 @@ export class IfDirective extends Directive {
     ifDirectiveKeyword: IfDirectiveKeywordToken;
     expression: MissableExpression;
     members: ParseContextElementSequence<IfDirective['kind']>;
-    elseIfDirectives: ElseIfDirective[] = [];
+    elseIfDirectives: ParseContextElementSequence<ParseContextKind.ElseIfDirectiveList>;
     elseDirective: ElseDirective | null = null;
     endDirectiveNumberSign: MissableToken<NumberSignToken>;
     endDirectiveKeyword: MissableToken<EndDirectiveKeywordToken>;

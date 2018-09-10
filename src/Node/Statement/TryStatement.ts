@@ -1,4 +1,4 @@
-import { ParseContextElementArray } from '../../ParserBase';
+import { ParseContextElementArray, ParseContextElementSequence, ParseContextKind } from '../../ParserBase';
 import { MissableToken } from '../../Token/MissingToken';
 import { CatchKeywordToken, EndKeywordToken, TryKeywordToken } from '../../Token/Token';
 import { MissableDataDeclaration } from '../Declaration/DataDeclarationSequence';
@@ -19,7 +19,7 @@ export class TryStatement extends Statement {
 
     tryKeyword: TryKeywordToken;
     statements: ParseContextElementArray<TryStatement['kind']>;
-    catchStatements: CatchStatement[] | null = null;
+    catchStatements: ParseContextElementSequence<ParseContextKind.CatchStatementList>;
     endKeyword: MissableToken<EndKeywordToken>;
     endTryKeyword: TryKeywordToken | null = null;
 }

@@ -1,4 +1,4 @@
-import { ParseContextElementArray } from '../../ParserBase';
+import { ParseContextElementArray, ParseContextElementSequence, ParseContextKind } from '../../ParserBase';
 import { MissableToken } from '../../Token/MissingToken';
 import { ElseIfKeywordToken, ElseKeywordToken, EndIfKeywordToken, EndKeywordToken, IfKeywordToken, ThenKeywordToken } from '../../Token/Token';
 import { MissableExpression } from '../Expression/Expression';
@@ -26,7 +26,7 @@ export class IfStatement extends Statement {
     thenKeyword: ThenKeywordToken | null = null;
     isSingleLine: boolean = false;
     statements: ParseContextElementArray<IfStatement['kind']>;
-    elseIfStatements: ElseIfStatement[] | null = null;
+    elseIfStatements: ParseContextElementSequence<ParseContextKind.ElseIfStatementList> | null = null;
     elseStatement: ElseStatement | null = null;
     endKeyword: MissableToken<EndIfKeywordToken | EndKeywordToken> | null = null;
     endIfKeyword: IfKeywordToken | null = null;
