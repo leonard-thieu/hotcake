@@ -26,7 +26,7 @@ import { EscapedIdentifier, Identifier, IdentifierStartToken, MissableIdentifier
 import { MissableModulePath, ModulePath } from './Node/ModulePath';
 import { Nodes } from './Node/Node';
 import { NodeKind } from './Node/NodeKind';
-import { TypeReference, TypeReferenceIdentifier, TypeReferenceIdentifierStartToken } from './Node/TypeReference';
+import { TypeReference, TypeReferenceIdentifierStartToken } from './Node/TypeReference';
 import { GreaterThanSignEqualsSignToken } from './Token/GreaterThanSignEqualsSignToken';
 import { MissingToken } from './Token/MissingToken';
 import { ModKeywordEqualsSignToken } from './Token/ModKeywordEqualsSignToken';
@@ -746,31 +746,16 @@ export abstract class ParserBase {
                 break;
             }
             default: {
-                let name: TypeReferenceIdentifier | undefined;
+                // Uneat the token so it can be fed to the module path.
+                this.position--;
+                typeReference.modulePath = this.parseModulePath(typeReference);
+                typeReference.identifier = typeReference.modulePath.identifier!;
+                typeReference.scopeMemberAccessOperator = typeReference.modulePath.scopeMemberAccessOperator;
+                this.setModulePathProperties(typeReference.modulePath);
 
-                switch (typeReferenceStart.kind) {
-                    case TokenKind.Period: { break; }
-                    case TokenKind.CommercialAt: {
-                        if (!this.isModulePathChildStart(this.getToken(1))) {
-                            name = this.parseIdentifier(typeReference, typeReferenceStart);
-                        }
-                        break;
-                    }
-                    default: {
-                        if (!this.isModulePathChildStart(this.getToken())) {
-                            name = this.parseIdentifier(typeReference, typeReferenceStart);
-                        }
-                        break;
-                    }
-                }
-
-                if (name) {
-                    typeReference.identifier = name;
-                } else {
-                    typeReference.modulePath = this.parseModulePath(typeReference, typeReferenceStart);
-                    typeReference.identifier = typeReference.modulePath.identifier!;
-                    typeReference.scopeMemberAccessOperator = typeReference.modulePath.scopeMemberAccessOperator;
-                    this.setModulePathProperties(typeReference.modulePath);
+                if (!typeReference.modulePath.identifier &&
+                    !typeReference.modulePath.scopeMemberAccessOperator) {
+                    typeReference.modulePath = null;
                 }
 
                 // Generic type arguments
@@ -791,23 +776,16 @@ export abstract class ParserBase {
     protected parseMissableModulePath(parent: Nodes): MissableModulePath {
         const token = this.getToken();
         if (this.isModulePathChildStart(token)) {
-            this.advanceToken();
-
-            return this.parseModulePath(parent, token);
+            return this.parseModulePath(parent);
         }
 
         return new MissingToken(token.fullStart, NodeKind.ModulePath);
     }
 
-    protected parseModulePath(parent: Nodes, modulePathStart: IdentifierStartToken | PeriodToken): ModulePath {
+    protected parseModulePath(parent: Nodes): ModulePath {
         const modulePath = new ModulePath();
         modulePath.parent = parent;
-        modulePath.children = this.parseList(modulePath, modulePath.kind);
-        if (modulePathStart.kind === TokenKind.Period) {
-            modulePath.children.unshift(modulePathStart);
-        } else {
-            modulePath.children.unshift(this.parseIdentifier(modulePath, modulePathStart));
-        }
+        modulePath.children = this.parseList(modulePath, modulePath.kind, TokenKind.Period);
         this.setModulePathProperties(modulePath);
 
         return modulePath;
@@ -1147,7 +1125,8 @@ export abstract class ParserBase {
 
     protected parseList<TParseContext extends ParseContext>(
         parent: Nodes,
-        parseContext: TParseContext
+        parseContext: TParseContext,
+        delimiter?: TokenKinds,
     ) {
         if (typeof parseContext === 'undefined') {
             throw new Error('parseContext is undefined.');
@@ -1156,6 +1135,7 @@ export abstract class ParserBase {
         this.parseContexts.push(parseContext);
 
         const nodes: ParseContextElementArray<TParseContext> = [];
+        let isLastNodeDelimiter: boolean = false;
         while (true) {
             const token = this.getToken();
 
@@ -1164,8 +1144,19 @@ export abstract class ParserBase {
             }
 
             if (this.isValidListElement(parseContext, token)) {
-                const element = this.parseListElement(parseContext, parent);
-                nodes.push(element);
+                if (delimiter) {
+                    const isCurrentNodeDelimiter = token.kind === delimiter;
+                    if (nodes.length === 0 ||
+                        isCurrentNodeDelimiter && !isLastNodeDelimiter ||
+                        !isCurrentNodeDelimiter && isLastNodeDelimiter) {
+                        isLastNodeDelimiter = isCurrentNodeDelimiter;
+                    } else {
+                        break;
+                    }
+                }
+
+                const node = this.parseListElement(parseContext, parent);
+                nodes.push(node);
 
                 continue;
             }
