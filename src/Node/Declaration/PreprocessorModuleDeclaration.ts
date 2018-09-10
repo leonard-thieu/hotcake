@@ -1,9 +1,9 @@
 import { ParseContextElementSequence } from '../../ParserBase';
 import { EOFToken } from '../../Token/Token';
-import { Node } from '../Node';
 import { NodeKind } from '../NodeKind';
+import { Declaration } from './Declaration';
 
-export class PreprocessorModuleDeclaration extends Node {
+export class PreprocessorModuleDeclaration extends Declaration {
     static CHILD_NAMES: (keyof PreprocessorModuleDeclaration)[] = [
         'members',
         'eofToken',
