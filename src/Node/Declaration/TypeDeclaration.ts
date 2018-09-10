@@ -1,4 +1,4 @@
-import { ParseContextElementArray, ParseContextKind } from '../../ParserBase';
+import { ParseContextElementSequence, ParseContextKind } from '../../ParserBase';
 import { ColonToken, DollarSignToken, NumberSignToken, PercentSignToken, QuestionMarkToken } from '../../Token/Token';
 import { NodeKind } from '../NodeKind';
 import { MissableTypeReference } from '../TypeReference';
@@ -18,7 +18,7 @@ export class ShorthandTypeDeclaration extends Declaration {
     readonly kind = NodeKind.ShorthandTypeDeclaration;
 
     shorthandType: ShorthandTypeToken | null = null;
-    arrayTypeDeclarations: ParseContextElementArray<ParseContextKind.ArrayTypeDeclarationList>;
+    arrayTypeDeclarations: ParseContextElementSequence<ParseContextKind.ArrayTypeDeclarationList>;
 }
 
 export type ShorthandTypeToken =

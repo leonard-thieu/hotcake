@@ -1,4 +1,4 @@
-import { ParseContextElementArray, ParseContextKind } from '../ParserBase';
+import { ParseContextElementSequence, ParseContextKind } from '../ParserBase';
 import { CommaToken } from '../Token/Token';
 import { Node } from './Node';
 import { NodeKind } from './NodeKind';
@@ -12,5 +12,5 @@ export class CommaSeparator extends Node {
     readonly kind = NodeKind.CommaSeparator;
 
     separator: CommaToken;
-    newlines: ParseContextElementArray<ParseContextKind.NewlineList>;
+    newlines: ParseContextElementSequence<ParseContextKind.NewlineList>;
 }

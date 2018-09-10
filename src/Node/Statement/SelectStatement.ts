@@ -1,4 +1,4 @@
-import { ParseContextElementArray, ParseContextKind } from '../../ParserBase';
+import { ParseContextElementArray, ParseContextElementDelimitedSequence, ParseContextElementSequence, ParseContextKind } from '../../ParserBase';
 import { MissableToken } from '../../Token/MissingToken';
 import { CaseKeywordToken, DefaultKeywordToken, EndKeywordToken, SelectKeywordToken } from '../../Token/Token';
 import { MissableExpression } from '../Expression/Expression';
@@ -21,7 +21,7 @@ export class SelectStatement extends Statement {
 
     selectKeyword: SelectKeywordToken;
     expression: MissableExpression;
-    newlines: ParseContextElementArray<ParseContextKind.NewlineList>;
+    newlines: ParseContextElementSequence<ParseContextKind.NewlineList>;
     caseStatements: CaseStatement[] = [];
     defaultStatement: DefaultStatement | null = null;
     endKeyword: MissableToken<EndKeywordToken>;
@@ -38,7 +38,7 @@ export class CaseStatement extends Statement {
     readonly kind = NodeKind.CaseStatement;
 
     caseKeyword: CaseKeywordToken;
-    expressions: ParseContextElementArray<ParseContextKind.ExpressionSequence>;
+    expressions: ParseContextElementDelimitedSequence<ParseContextKind.ExpressionSequence>;
     statements: ParseContextElementArray<CaseStatement['kind']>;
 }
 

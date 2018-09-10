@@ -1,4 +1,4 @@
-import { ParseContextElementArray, ParseContextKind } from '../../ParserBase';
+import { ParseContextElementDelimitedSequence, ParseContextKind } from '../../ParserBase';
 import { MissableToken, MissingToken } from '../../Token/MissingToken';
 import { ColonEqualsSignToken, ConstKeywordToken, EachInKeywordToken, EqualsSignToken, FieldKeywordToken, GlobalKeywordToken, LocalKeywordToken } from '../../Token/Token';
 import { MissableExpression } from '../Expression/Expression';
@@ -16,7 +16,7 @@ export class DataDeclarationSequence extends Declaration {
     readonly kind = NodeKind.DataDeclarationSequence;
 
     dataDeclarationKeyword: DataDeclarationKeywordToken;
-    children: ParseContextElementArray<ParseContextKind.DataDeclarationSequence>;
+    children: ParseContextElementDelimitedSequence<ParseContextKind.DataDeclarationSequence>;
 }
 
 export type DataDeclarationKeywordToken =

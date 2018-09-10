@@ -1,4 +1,4 @@
-import { ParseContextElementArray } from '../ParserBase';
+import { ParseContextElementDelimitedSequence } from '../ParserBase';
 import { MissableToken, MissingToken } from '../Token/MissingToken';
 import { PeriodToken } from '../Token/Token';
 import { Identifier } from './Identifier';
@@ -14,7 +14,7 @@ export class ModulePath extends Node {
 
     readonly kind = NodeKind.ModulePath;
 
-    children: ParseContextElementArray<ModulePath['kind']>;
+    children: ParseContextElementDelimitedSequence<ModulePath['kind']>;
     scopeMemberAccessOperator: MissableToken<PeriodToken> | null = null;
     identifier: Identifier | null = null;
 }

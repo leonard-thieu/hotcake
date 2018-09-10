@@ -1,4 +1,4 @@
-import { ParseContextElementArray, ParseContextKind } from '../../ParserBase';
+import { ParseContextElementArray, ParseContextElementDelimitedSequence, ParseContextKind } from '../../ParserBase';
 import { MissableToken } from '../../Token/MissingToken';
 import { EndKeywordToken, ExtendsKeywordToken, InterfaceKeywordToken } from '../../Token/Token';
 import { MissableIdentifier } from '../Identifier';
@@ -21,7 +21,7 @@ export class InterfaceDeclaration extends Declaration {
     interfaceKeyword: InterfaceKeywordToken;
     identifier: MissableIdentifier;
     extendsKeyword: ExtendsKeywordToken | null = null;
-    baseTypes: ParseContextElementArray<ParseContextKind.TypeReferenceSequence> | null = null;
+    baseTypes: ParseContextElementDelimitedSequence<ParseContextKind.TypeReferenceSequence> | null = null;
     members: ParseContextElementArray<InterfaceDeclaration['kind']>;
     endKeyword: MissableToken<EndKeywordToken>;
     endInterfaceKeyword: InterfaceKeywordToken | null = null;

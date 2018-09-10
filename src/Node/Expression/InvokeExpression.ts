@@ -1,4 +1,4 @@
-import { ParseContextElementArray, ParseContextKind } from '../../ParserBase';
+import { ParseContextElementDelimitedSequence, ParseContextElementSequence, ParseContextKind } from '../../ParserBase';
 import { MissableToken } from '../../Token/MissingToken';
 import { ClosingParenthesisToken, OpeningParenthesisToken } from '../../Token/Token';
 import { NodeKind } from '../NodeKind';
@@ -18,7 +18,7 @@ export class InvokeExpression extends Expression {
 
     invokableExpression: Expressions;
     openingParenthesis: OpeningParenthesisToken | null = null;
-    leadingNewlines: ParseContextElementArray<ParseContextKind.NewlineList> | null = null;
-    arguments: ParseContextElementArray<ParseContextKind.ExpressionSequence>;
+    leadingNewlines: ParseContextElementSequence<ParseContextKind.NewlineList> | null = null;
+    arguments: ParseContextElementDelimitedSequence<ParseContextKind.ExpressionSequence>;
     closingParenthesis: MissableToken<ClosingParenthesisToken> | null = null;
 }

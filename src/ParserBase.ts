@@ -426,8 +426,8 @@ export abstract class ParserBase {
         const arrayLiteral = new ArrayLiteral();
         arrayLiteral.parent = parent;
         arrayLiteral.openingSquareBracket = openingSquareBracket;
-        arrayLiteral.leadingNewlines = this.parseList(arrayLiteral, ParseContextKind.NewlineList);
-        arrayLiteral.expressions = this.parseList(arrayLiteral, ParseContextKind.ExpressionSequence);
+        arrayLiteral.leadingNewlines = this.parseList(arrayLiteral, ParseContextKind.NewlineList, /*delimiter*/ null);
+        arrayLiteral.expressions = this.parseList(arrayLiteral, ParseContextKind.ExpressionSequence, TokenKind.Comma);
         arrayLiteral.closingSquareBracket = this.eat(TokenKind.ClosingSquareBracket);
 
         return arrayLiteral;
@@ -442,7 +442,7 @@ export abstract class ParserBase {
         const position = this.position;
         const lessThanSign = this.eatOptional(TokenKind.LessThanSign);
         if (lessThanSign !== null) {
-            const typeArguments = this.parseList(identifierExpression, ParseContextKind.TypeReferenceSequence);
+            const typeArguments = this.parseList(identifierExpression, ParseContextKind.TypeReferenceSequence, TokenKind.Comma);
             const greaterThanSign = this.eatOptional(TokenKind.GreaterThanSign);
 
             // Couldn't find terminating `>`. That means `<` is part of a binary expression and not the start of generic type arguments.
@@ -579,9 +579,9 @@ export abstract class ParserBase {
         invokeExpression.invokableExpression = expression;
         invokeExpression.openingParenthesis = this.eatOptional(TokenKind.OpeningParenthesis);
         if (invokeExpression.openingParenthesis) {
-            invokeExpression.leadingNewlines = this.parseList(invokeExpression, ParseContextKind.NewlineList);
+            invokeExpression.leadingNewlines = this.parseList(invokeExpression, ParseContextKind.NewlineList, /*delimiter*/ null);
         }
-        invokeExpression.arguments = this.parseList(invokeExpression, ParseContextKind.ExpressionSequence);
+        invokeExpression.arguments = this.parseList(invokeExpression, ParseContextKind.ExpressionSequence, TokenKind.Comma, /*allowEmpty*/ true);
         if (invokeExpression.openingParenthesis !== null) {
             invokeExpression.closingParenthesis = this.eat(TokenKind.ClosingParenthesis);
         }
@@ -697,7 +697,7 @@ export abstract class ParserBase {
         const commaSeparator = new CommaSeparator();
         commaSeparator.parent = parent;
         commaSeparator.separator = separator;
-        commaSeparator.newlines = this.parseList(commaSeparator, ParseContextKind.NewlineList);
+        commaSeparator.newlines = this.parseList(commaSeparator, ParseContextKind.NewlineList, /*delimiter*/ null);
 
         return commaSeparator;
     }
@@ -761,14 +761,14 @@ export abstract class ParserBase {
                 // Generic type arguments
                 typeReference.lessThanSign = this.eatOptional(TokenKind.LessThanSign);
                 if (typeReference.lessThanSign !== null) {
-                    typeReference.typeArguments = this.parseList(typeReference, ParseContextKind.TypeReferenceSequence);
+                    typeReference.typeArguments = this.parseList(typeReference, ParseContextKind.TypeReferenceSequence, TokenKind.Comma);
                     typeReference.greaterThanSign = this.eat(TokenKind.GreaterThanSign);
                 }
                 break;
             }
         }
 
-        typeReference.arrayTypeDeclarations = this.parseList(typeReference, ParseContextKind.ArrayTypeDeclarationList);
+        typeReference.arrayTypeDeclarations = this.parseList(typeReference, ParseContextKind.ArrayTypeDeclarationList, /*delimiter*/ null);
 
         return typeReference;
     }
@@ -1123,18 +1123,17 @@ export abstract class ParserBase {
 
     protected parseContexts: ParseContext[];
 
-    protected parseList<TParseContext extends ParseContext>(
-        parent: Nodes,
-        parseContext: TParseContext,
-        delimiter?: TokenKinds,
-    ) {
+    protected parseList<TParseContext extends ParseContext>(parent: Nodes, parseContext: TParseContext): ParseContextElementArray<TParseContext>;
+    protected parseList<TParseContext extends ParseContext>(parent: Nodes, parseContext: TParseContext, delimiter: null): ParseContextElementSequence<TParseContext>;
+    protected parseList<TParseContext extends ParseContext>(parent: Nodes, parseContext: TParseContext, delimiter: TokenKinds, allowEmpty?: boolean): ParseContextElementDelimitedSequence<TParseContext>;
+    protected parseList<TParseContext extends ParseContext>(parent: Nodes, parseContext: TParseContext, delimiter?: TokenKinds | null, allowEmpty?: boolean) {
         if (typeof parseContext === 'undefined') {
             throw new Error('parseContext is undefined.');
         }
 
         this.parseContexts.push(parseContext);
 
-        const nodes: ParseContextElementArray<TParseContext> = [];
+        const nodes: ParseContextElementArrayBase<TParseContext> = [];
         let isLastNodeDelimiter: boolean = false;
         while (true) {
             const token = this.getToken();
@@ -1147,8 +1146,9 @@ export abstract class ParserBase {
                 if (delimiter) {
                     const isCurrentNodeDelimiter = token.kind === delimiter;
                     if (nodes.length === 0 ||
-                        isCurrentNodeDelimiter && !isLastNodeDelimiter ||
-                        !isCurrentNodeDelimiter && isLastNodeDelimiter) {
+                        !isCurrentNodeDelimiter && isLastNodeDelimiter ||
+                        allowEmpty ||
+                        isCurrentNodeDelimiter && !isLastNodeDelimiter) {
                         isLastNodeDelimiter = isCurrentNodeDelimiter;
                     } else {
                         break;
@@ -1434,6 +1434,9 @@ export interface ParseContextElementMap extends ParseContextElementMapBase { }
 
 export type ParseContext = keyof ParseContextElementMap;
 
-export type ParseContextElementArray<TParseContext extends ParseContext> = Array<ParseContextElementMap[TParseContext] | SkippedToken<TokenKinds>>;
+type ParseContextElementArrayBase<TParseContext extends ParseContext> = Array<ParseContextElementMap[TParseContext] | SkippedToken<TokenKinds>>;
+export type ParseContextElementArray<TParseContext extends ParseContext> = Array<ParseContextElementMap[TParseContext] | SkippedToken<TokenKinds>> & { _arrayBrand: never; };
+export type ParseContextElementSequence<TParseContext extends ParseContext> = Array<ParseContextElementMap[TParseContext]> & { _sequenceBrand: never; };
+export type ParseContextElementDelimitedSequence<TParseContext extends ParseContext> = Array<ParseContextElementMap[TParseContext]> & { _delimitedSequenceBrand: never; };
 
 // #endregion

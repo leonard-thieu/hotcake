@@ -1,4 +1,4 @@
-import { ParseContextElementArray } from '../../../ParserBase';
+import { ParseContextElementDelimitedSequence } from '../../../ParserBase';
 import { FieldKeywordToken, GlobalKeywordToken } from '../../../Token/Token';
 import { Identifier } from '../../Identifier';
 import { NodeKind } from '../../NodeKind';
@@ -15,7 +15,7 @@ export class ExternDataDeclarationSequence extends Declaration {
     readonly kind = NodeKind.ExternDataDeclarationSequence;
 
     dataDeclarationKeyword: ExternDataDeclarationKeywordToken;
-    children: ParseContextElementArray<ExternDataDeclarationSequence['kind']>;
+    children: ParseContextElementDelimitedSequence<ExternDataDeclarationSequence['kind']>;
 }
 
 export type ExternDataDeclarationKeywordToken =

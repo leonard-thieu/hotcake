@@ -1,4 +1,4 @@
-import { ParseContextElementArray, ParseContextKind } from '../../ParserBase';
+import { ParseContextElementDelimitedSequence, ParseContextKind } from '../../ParserBase';
 import { BoolKeywordToken, FloatKeywordToken, GreaterThanSignToken, IntKeywordToken, LessThanSignToken, NewKeywordToken, StringKeywordToken } from '../../Token/Token';
 import { EscapeOptionalIdentifierNameToken, Identifier } from '../Identifier';
 import { NodeKind } from '../NodeKind';
@@ -19,7 +19,7 @@ export class IdentifierExpression extends Expression {
 
     // Generic type arguments
     lessThanSign: LessThanSignToken | null = null;
-    typeArguments: ParseContextElementArray<ParseContextKind.TypeReferenceSequence> | null = null;
+    typeArguments: ParseContextElementDelimitedSequence<ParseContextKind.TypeReferenceSequence> | null = null;
     greaterThanSign: GreaterThanSignToken | null = null;
 }
 

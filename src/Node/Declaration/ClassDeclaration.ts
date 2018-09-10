@@ -1,4 +1,4 @@
-import { ParseContextElementArray, ParseContextKind } from '../../ParserBase';
+import { ParseContextElementArray, ParseContextElementDelimitedSequence, ParseContextKind } from '../../ParserBase';
 import { MissableToken } from '../../Token/MissingToken';
 import { AbstractKeywordToken, ClassKeywordToken, EndKeywordToken, ExtendsKeywordToken, FinalKeywordToken, GreaterThanSignToken, ImplementsKeywordToken, LessThanSignToken } from '../../Token/Token';
 import { MissableIdentifier } from '../Identifier';
@@ -30,7 +30,7 @@ export class ClassDeclaration extends Declaration {
 
     // Generic
     lessThanSign: LessThanSignToken | null = null;
-    typeParameters: ParseContextElementArray<ParseContextKind.TypeParameterSequence> | null = null;
+    typeParameters: ParseContextElementDelimitedSequence<ParseContextKind.TypeParameterSequence> | null = null;
     greaterThanSign: MissableToken<GreaterThanSignToken> | null = null;
 
     // Extends
@@ -39,7 +39,7 @@ export class ClassDeclaration extends Declaration {
 
     // Implements
     implementsKeyword: ImplementsKeywordToken | null = null;
-    implementedTypes: ParseContextElementArray<ParseContextKind.TypeReferenceSequence> | null = null;
+    implementedTypes: ParseContextElementDelimitedSequence<ParseContextKind.TypeReferenceSequence> | null = null;
 
     attribute: AbstractKeywordToken | FinalKeywordToken | null = null;
 

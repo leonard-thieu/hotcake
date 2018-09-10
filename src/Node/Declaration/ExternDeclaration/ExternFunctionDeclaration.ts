@@ -1,4 +1,4 @@
-import { ParseContextElementArray, ParseContextKind } from '../../../ParserBase';
+import { ParseContextElementDelimitedSequence, ParseContextKind } from '../../../ParserBase';
 import { MissableToken } from '../../../Token/MissingToken';
 import { ClosingParenthesisToken, FunctionKeywordToken, OpeningParenthesisToken } from '../../../Token/Token';
 import { MissableIdentifier } from '../../Identifier';
@@ -24,6 +24,6 @@ export class ExternFunctionDeclaration extends ExternDeclaration {
     identifier: MissableIdentifier;
     returnType: TypeDeclaration | null = null;
     openingParenthesis: MissableToken<OpeningParenthesisToken>;
-    parameters: ParseContextElementArray<ParseContextKind.DataDeclarationSequence>;
+    parameters: ParseContextElementDelimitedSequence<ParseContextKind.DataDeclarationSequence>;
     closingParenthesis: MissableToken<ClosingParenthesisToken>;
 }

@@ -1,4 +1,4 @@
-import { ParseContextElementArray, ParseContextKind } from '../../ParserBase';
+import { ParseContextElementDelimitedSequence, ParseContextElementSequence, ParseContextKind } from '../../ParserBase';
 import { MissableToken } from '../../Token/MissingToken';
 import { ClosingSquareBracketToken, OpeningSquareBracketToken } from '../../Token/Token';
 import { NodeKind } from '../NodeKind';
@@ -16,7 +16,7 @@ export class ArrayLiteral extends Expression {
     readonly kind = NodeKind.ArrayLiteral;
 
     openingSquareBracket: OpeningSquareBracketToken;
-    leadingNewlines: ParseContextElementArray<ParseContextKind.NewlineList>;
-    expressions: ParseContextElementArray<ParseContextKind.ExpressionSequence>;
+    leadingNewlines: ParseContextElementSequence<ParseContextKind.NewlineList>;
+    expressions: ParseContextElementDelimitedSequence<ParseContextKind.ExpressionSequence>;
     closingSquareBracket: MissableToken<ClosingSquareBracketToken>;
 }

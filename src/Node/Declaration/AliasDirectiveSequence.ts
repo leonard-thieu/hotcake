@@ -1,4 +1,4 @@
-import { ParseContextElementArray } from '../../ParserBase';
+import { ParseContextElementDelimitedSequence } from '../../ParserBase';
 import { MissableToken } from '../../Token/MissingToken';
 import { AliasKeywordToken, EqualsSignToken } from '../../Token/Token';
 import { Identifier } from '../Identifier';
@@ -15,7 +15,7 @@ export class AliasDirectiveSequence extends Declaration {
     readonly kind = NodeKind.AliasDirectiveSequence;
 
     aliasKeyword: AliasKeywordToken;
-    children: ParseContextElementArray<AliasDirectiveSequence['kind']>;
+    children: ParseContextElementDelimitedSequence<AliasDirectiveSequence['kind']>;
 }
 
 export class AliasDirective extends Declaration {

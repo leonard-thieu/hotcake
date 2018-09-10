@@ -25,7 +25,7 @@ export class PreprocessorParser extends ParserBase {
         preprocessorModuleDeclaration.filePath = filePath;
         preprocessorModuleDeclaration.document = document;
 
-        preprocessorModuleDeclaration.members = this.parseList(preprocessorModuleDeclaration, preprocessorModuleDeclaration.kind);
+        preprocessorModuleDeclaration.members = this.parseList(preprocessorModuleDeclaration, preprocessorModuleDeclaration.kind, /*delimiter*/ null);
         // Guaranteed by tokenizer and parser.
         preprocessorModuleDeclaration.eofToken = this.eat(TokenKind.EOF) as EOFToken;
 
@@ -94,7 +94,7 @@ export class PreprocessorParser extends ParserBase {
         ifDirective.numberSign = numberSign;
         ifDirective.ifDirectiveKeyword = ifDirectiveKeyword;
         ifDirective.expression = this.parseExpression(ifDirective);
-        ifDirective.members = this.parseList(ifDirective, ifDirective.kind);
+        ifDirective.members = this.parseList(ifDirective, ifDirective.kind, /*delimiter*/ null);
 
         while (true) {
             const token = this.getToken();
@@ -154,7 +154,7 @@ export class PreprocessorParser extends ParserBase {
         elseIfDirective.elseIfDirectiveKeyword = elseIfDirectiveKeyword;
         elseIfDirective.ifDirectiveKeyword = ifDirectiveKeyword;
         elseIfDirective.expression = this.parseExpression(elseIfDirective);
-        elseIfDirective.members = this.parseList(elseIfDirective, elseIfDirective.kind);
+        elseIfDirective.members = this.parseList(elseIfDirective, elseIfDirective.kind, /*delimiter*/ null);
 
         return elseIfDirective;
     }
@@ -164,7 +164,7 @@ export class PreprocessorParser extends ParserBase {
         elseDirective.parent = parent;
         elseDirective.numberSign = numberSign;
         elseDirective.elseDirectiveKeyword = elseDirectiveKeyword;
-        elseDirective.members = this.parseList(elseDirective, elseDirective.kind);
+        elseDirective.members = this.parseList(elseDirective, elseDirective.kind, /*delimiter*/ null);
 
         return elseDirective;
     }

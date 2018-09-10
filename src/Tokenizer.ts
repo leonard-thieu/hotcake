@@ -3,7 +3,7 @@ import { PreprocessorModuleDeclaration } from './Node/Declaration/PreprocessorMo
 import { IfDirective } from './Node/Directive/IfDirective';
 import { MissableExpression } from './Node/Expression/Expression';
 import { NodeKind } from './Node/NodeKind';
-import { ParseContextElementArray } from './ParserBase';
+import { ParseContextElementSequence } from './ParserBase';
 import { SkippedToken } from './Token/SkippedToken';
 import { InvalidEscapeSequenceToken, TokenKinds, Tokens } from './Token/Token';
 import { TokenKind } from './Token/TokenKind';
@@ -28,11 +28,11 @@ export class Tokenizer {
     }
 
     // TODO: Ensure operator semantics and implicit type conversions match Monkey X behavior.
-    private * readMember(members: ParseContextElementArray<PreprocessorModuleDeclaration['kind']>): IterableIterator<Tokens> {
+    private * readMember(members: ParseContextElementSequence<PreprocessorModuleDeclaration['kind']>): IterableIterator<Tokens> {
         for (const member of members) {
             switch (member.kind) {
                 case NodeKind.IfDirective: {
-                    let branchMembers: ParseContextElementArray<IfDirective['kind']> | undefined;
+                    let branchMembers: ParseContextElementSequence<IfDirective['kind']> | undefined;
 
                     if (this.eval(member.expression)) {
                         branchMembers = member.members;
@@ -106,10 +106,8 @@ export class Tokenizer {
                     break;
                 }
                 default: {
-                    // TODO: SkippedTokens shouldn't be possible at this point. Determine if there's a 
-                    //       decent way to make this known to the type system.
-                    assertType<Tokens | SkippedToken<TokenKinds>>(member);
-                    yield member as Tokens;
+                    assertType<Tokens>(member);
+                    yield member;
 
                     break;
                 }

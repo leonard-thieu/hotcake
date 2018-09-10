@@ -1,4 +1,4 @@
-import { ParseContextElementArray, ParseContextKind } from '../../ParserBase';
+import { ParseContextElementArray, ParseContextElementDelimitedSequence, ParseContextElementSequence, ParseContextKind } from '../../ParserBase';
 import { MissableToken } from '../../Token/MissingToken';
 import { ClosingParenthesisToken, EndKeywordToken, MethodKeywordToken, NewKeywordToken, OpeningParenthesisToken } from '../../Token/Token';
 import { MissableIdentifier } from '../Identifier';
@@ -26,9 +26,9 @@ export class ClassMethodDeclaration extends Declaration {
     identifier: NewKeywordToken | MissableIdentifier;
     returnType: TypeDeclaration | null = null;
     openingParenthesis: MissableToken<OpeningParenthesisToken>;
-    parameters: ParseContextElementArray<ParseContextKind.DataDeclarationSequence>;
+    parameters: ParseContextElementDelimitedSequence<ParseContextKind.DataDeclarationSequence>;
     closingParenthesis: MissableToken<ClosingParenthesisToken>;
-    attributes: ParseContextElementArray<ParseContextKind.ClassMethodAttributes>;
+    attributes: ParseContextElementSequence<ParseContextKind.ClassMethodAttributes>;
     statements: ParseContextElementArray<ClassMethodDeclaration['kind']> | null = null;
     endKeyword: MissableToken<EndKeywordToken> | null = null;
     endMethodKeyword: MethodKeywordToken | null = null;
