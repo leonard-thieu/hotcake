@@ -9,7 +9,7 @@
                 "start": 0,
                 "length": 5
             },
-            "name": {
+            "identifier": {
                 "kind": "Identifier",
                 "fullStart": 5,
                 "start": 6,
@@ -38,7 +38,7 @@
                         "start": 13,
                         "length": 10
                     },
-                    "name": {
+                    "identifier": {
                         "kind": "Identifier",
                         "fullStart": 19,
                         "start": 20,
@@ -96,7 +96,7 @@
                         "start": 31,
                         "length": 10
                     },
-                    "name": {
+                    "identifier": {
                         "kind": "Identifier",
                         "fullStart": 37,
                         "start": 38,

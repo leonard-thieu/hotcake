@@ -21,8 +21,7 @@
                 "leftOperand": {
                     "kind": "IdentifierExpression",
                     "newlines": [],
-                    "globalScopeMemberAccessOperator": null,
-                    "name": {
+                    "identifier": {
                         "kind": "Identifier",
                         "fullStart": 3,
                         "start": 4,
@@ -135,8 +134,7 @@
                         "leftOperand": {
                             "kind": "IdentifierExpression",
                             "newlines": [],
-                            "globalScopeMemberAccessOperator": null,
-                            "name": {
+                            "identifier": {
                                 "kind": "Identifier",
                                 "fullStart": 68,
                                 "start": 69,
@@ -249,8 +247,7 @@
                         "leftOperand": {
                             "kind": "IdentifierExpression",
                             "newlines": [],
-                            "globalScopeMemberAccessOperator": null,
-                            "name": {
+                            "identifier": {
                                 "kind": "Identifier",
                                 "fullStart": 139,
                                 "start": 140,

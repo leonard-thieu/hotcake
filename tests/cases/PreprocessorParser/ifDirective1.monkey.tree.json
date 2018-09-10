@@ -21,8 +21,7 @@
                 "leftOperand": {
                     "kind": "IdentifierExpression",
                     "newlines": [],
-                    "globalScopeMemberAccessOperator": null,
-                    "name": {
+                    "identifier": {
                         "kind": "Identifier",
                         "fullStart": 3,
                         "start": 4,

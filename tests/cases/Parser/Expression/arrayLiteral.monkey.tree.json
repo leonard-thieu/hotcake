@@ -9,7 +9,7 @@
                 "start": 0,
                 "length": 8
             },
-            "name": {
+            "identifier": {
                 "kind": "Identifier",
                 "fullStart": 8,
                 "start": 9,
@@ -52,7 +52,7 @@
                         "children": [
                             {
                                 "kind": "DataDeclaration",
-                                "name": {
+                                "identifier": {
                                     "kind": "Identifier",
                                     "fullStart": 26,
                                     "start": 27,

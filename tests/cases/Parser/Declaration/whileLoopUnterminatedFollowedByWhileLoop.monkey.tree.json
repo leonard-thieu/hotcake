@@ -9,7 +9,7 @@
                 "start": 0,
                 "length": 8
             },
-            "name": {
+            "identifier": {
                 "kind": "Identifier",
                 "fullStart": 8,
                 "start": 9,
@@ -50,8 +50,7 @@
                     "expression": {
                         "kind": "IdentifierExpression",
                         "newlines": [],
-                        "globalScopeMemberAccessOperator": null,
-                        "name": {
+                        "identifier": {
                             "kind": "Identifier",
                             "fullStart": 23,
                             "start": 24,
@@ -91,8 +90,7 @@
                             "expression": {
                                 "kind": "IdentifierExpression",
                                 "newlines": [],
-                                "globalScopeMemberAccessOperator": null,
-                                "name": {
+                                "identifier": {
                                     "kind": "Identifier",
                                     "fullStart": 38,
                                     "start": 39,

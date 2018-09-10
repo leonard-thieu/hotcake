@@ -9,7 +9,7 @@
                 "start": 0,
                 "length": 8
             },
-            "name": {
+            "identifier": {
                 "kind": "Identifier",
                 "fullStart": 8,
                 "start": 9,
@@ -53,8 +53,7 @@
                         "leftOperand": {
                             "kind": "IdentifierExpression",
                             "newlines": [],
-                            "globalScopeMemberAccessOperator": null,
-                            "name": {
+                            "identifier": {
                                 "kind": "Identifier",
                                 "fullStart": 23,
                                 "start": 24,
@@ -104,8 +103,7 @@
                                 "leftOperand": {
                                     "kind": "IdentifierExpression",
                                     "newlines": [],
-                                    "globalScopeMemberAccessOperator": null,
-                                    "name": {
+                                    "identifier": {
                                         "kind": "Identifier",
                                         "fullStart": 29,
                                         "start": 30,
@@ -131,8 +129,7 @@
                                         "leftOperand": {
                                             "kind": "IdentifierExpression",
                                             "newlines": [],
-                                            "globalScopeMemberAccessOperator": null,
-                                            "name": {
+                                            "identifier": {
                                                 "kind": "Identifier",
                                                 "fullStart": 33,
                                                 "start": 33,
@@ -151,8 +148,7 @@
                                         "rightOperand": {
                                             "kind": "IdentifierExpression",
                                             "newlines": [],
-                                            "globalScopeMemberAccessOperator": null,
-                                            "name": {
+                                            "identifier": {
                                                 "kind": "Identifier",
                                                 "fullStart": 39,
                                                 "start": 40,
@@ -172,8 +168,7 @@
                                     "rightOperand": {
                                         "kind": "IdentifierExpression",
                                         "newlines": [],
-                                        "globalScopeMemberAccessOperator": null,
-                                        "name": {
+                                        "identifier": {
                                             "kind": "Identifier",
                                             "fullStart": 43,
                                             "start": 44,
@@ -206,8 +201,7 @@
                                     "leftOperand": {
                                         "kind": "IdentifierExpression",
                                         "newlines": [],
-                                        "globalScopeMemberAccessOperator": null,
-                                        "name": {
+                                        "identifier": {
                                             "kind": "Identifier",
                                             "fullStart": 51,
                                             "start": 52,
@@ -233,8 +227,7 @@
                                             "leftOperand": {
                                                 "kind": "IdentifierExpression",
                                                 "newlines": [],
-                                                "globalScopeMemberAccessOperator": null,
-                                                "name": {
+                                                "identifier": {
                                                     "kind": "Identifier",
                                                     "fullStart": 56,
                                                     "start": 57,
@@ -265,8 +258,7 @@
                                                     "operand": {
                                                         "kind": "IdentifierExpression",
                                                         "newlines": [],
-                                                        "globalScopeMemberAccessOperator": null,
-                                                        "name": {
+                                                        "identifier": {
                                                             "kind": "Identifier",
                                                             "fullStart": 62,
                                                             "start": 62,
@@ -286,8 +278,7 @@
                                                 "rightOperand": {
                                                     "kind": "IdentifierExpression",
                                                     "newlines": [],
-                                                    "globalScopeMemberAccessOperator": null,
-                                                    "name": {
+                                                    "identifier": {
                                                         "kind": "Identifier",
                                                         "fullStart": 68,
                                                         "start": 69,
@@ -308,8 +299,7 @@
                                         "rightOperand": {
                                             "kind": "IdentifierExpression",
                                             "newlines": [],
-                                            "globalScopeMemberAccessOperator": null,
-                                            "name": {
+                                            "identifier": {
                                                 "kind": "Identifier",
                                                 "fullStart": 72,
                                                 "start": 73,

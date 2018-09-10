@@ -9,7 +9,7 @@
                 "start": 0,
                 "length": 5
             },
-            "name": {
+            "identifier": {
                 "kind": "Identifier",
                 "fullStart": 5,
                 "start": 6,
@@ -41,7 +41,7 @@
                     "children": [
                         {
                             "kind": "DataDeclaration",
-                            "name": {
+                            "identifier": {
                                 "kind": "Identifier",
                                 "fullStart": 22,
                                 "start": 23,
@@ -59,7 +59,7 @@
                                     "kind": "TypeReference",
                                     "modulePath": null,
                                     "scopeMemberAccessOperator": null,
-                                    "name": {
+                                    "identifier": {
                                         "kind": "StringKeyword",
                                         "fullStart": 28,
                                         "start": 29,

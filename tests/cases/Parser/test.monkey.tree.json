@@ -145,7 +145,7 @@
                 "kind": "ModulePath",
                 "children": [],
                 "scopeMemberAccessOperator": null,
-                "name": {
+                "identifier": {
                     "kind": "Identifier",
                     "fullStart": 686,
                     "start": 687,
@@ -183,7 +183,7 @@
                     "start": 748,
                     "length": 1
                 },
-                "name": {
+                "identifier": {
                     "kind": "Identifier",
                     "fullStart": 749,
                     "start": 749,
@@ -227,7 +227,7 @@
                     "start": 818,
                     "length": 1
                 },
-                "name": {
+                "identifier": {
                     "kind": "Identifier",
                     "fullStart": 819,
                     "start": 819,
@@ -333,7 +333,7 @@
             "children": [
                 {
                     "kind": "AliasDirective",
-                    "name": {
+                    "identifier": {
                         "kind": "Identifier",
                         "fullStart": 1007,
                         "start": 1008,
@@ -351,7 +351,7 @@
                             "kind": "ModulePath",
                             "children": [],
                             "scopeMemberAccessOperator": null,
-                            "name": {
+                            "identifier": {
                                 "kind": "Identifier",
                                 "fullStart": 1010,
                                 "start": 1010,
@@ -364,7 +364,7 @@
                             "start": 1015,
                             "length": 1
                         },
-                        "name": {
+                        "identifier": {
                             "kind": "Identifier",
                             "fullStart": 1016,
                             "start": 1016,
@@ -401,7 +401,7 @@
             "children": [
                 {
                     "kind": "DataDeclaration",
-                    "name": {
+                    "identifier": {
                         "kind": "Identifier",
                         "fullStart": 1059,
                         "start": 1060,
@@ -419,7 +419,7 @@
                             "kind": "TypeReference",
                             "modulePath": null,
                             "scopeMemberAccessOperator": null,
-                            "name": {
+                            "identifier": {
                                 "kind": "IntKeyword",
                                 "fullStart": 1064,
                                 "start": 1065,
@@ -468,7 +468,7 @@
             "children": [
                 {
                     "kind": "DataDeclaration",
-                    "name": {
+                    "identifier": {
                         "kind": "Identifier",
                         "fullStart": 1115,
                         "start": 1116,
@@ -535,7 +535,7 @@
             "children": [
                 {
                     "kind": "DataDeclaration",
-                    "name": {
+                    "identifier": {
                         "kind": "Identifier",
                         "fullStart": 1172,
                         "start": 1173,
@@ -579,7 +579,7 @@
             "children": [
                 {
                     "kind": "DataDeclaration",
-                    "name": {
+                    "identifier": {
                         "kind": "Identifier",
                         "fullStart": 1214,
                         "start": 1215,
@@ -623,7 +623,7 @@
             "children": [
                 {
                     "kind": "DataDeclaration",
-                    "name": {
+                    "identifier": {
                         "kind": "Identifier",
                         "fullStart": 1258,
                         "start": 1259,
@@ -660,7 +660,7 @@
                 },
                 {
                     "kind": "DataDeclaration",
-                    "name": {
+                    "identifier": {
                         "kind": "Identifier",
                         "fullStart": 1265,
                         "start": 1265,
@@ -710,7 +710,7 @@
             "children": [
                 {
                     "kind": "DataDeclaration",
-                    "name": {
+                    "identifier": {
                         "kind": "Identifier",
                         "fullStart": 1314,
                         "start": 1315,
@@ -728,7 +728,7 @@
                             "kind": "TypeReference",
                             "modulePath": null,
                             "scopeMemberAccessOperator": null,
-                            "name": {
+                            "identifier": {
                                 "kind": "IntKeyword",
                                 "fullStart": 1319,
                                 "start": 1320,
@@ -777,7 +777,7 @@
             "children": [
                 {
                     "kind": "DataDeclaration",
-                    "name": {
+                    "identifier": {
                         "kind": "Identifier",
                         "fullStart": 1370,
                         "start": 1371,
@@ -844,7 +844,7 @@
             "children": [
                 {
                     "kind": "DataDeclaration",
-                    "name": {
+                    "identifier": {
                         "kind": "Identifier",
                         "fullStart": 1427,
                         "start": 1428,
@@ -888,7 +888,7 @@
             "children": [
                 {
                     "kind": "DataDeclaration",
-                    "name": {
+                    "identifier": {
                         "kind": "Identifier",
                         "fullStart": 1469,
                         "start": 1470,
@@ -932,7 +932,7 @@
             "children": [
                 {
                     "kind": "DataDeclaration",
-                    "name": {
+                    "identifier": {
                         "kind": "Identifier",
                         "fullStart": 1513,
                         "start": 1514,
@@ -969,7 +969,7 @@
                 },
                 {
                     "kind": "DataDeclaration",
-                    "name": {
+                    "identifier": {
                         "kind": "Identifier",
                         "fullStart": 1520,
                         "start": 1520,
@@ -1013,7 +1013,7 @@
             "children": [
                 {
                     "kind": "DataDeclaration",
-                    "name": {
+                    "identifier": {
                         "kind": "Identifier",
                         "fullStart": 1566,
                         "start": 1567,
@@ -1031,7 +1031,7 @@
                             "kind": "TypeReference",
                             "modulePath": null,
                             "scopeMemberAccessOperator": null,
-                            "name": {
+                            "identifier": {
                                 "kind": "FloatKeyword",
                                 "fullStart": 1571,
                                 "start": 1572,
@@ -1066,7 +1066,7 @@
             "children": [
                 {
                     "kind": "DataDeclaration",
-                    "name": {
+                    "identifier": {
                         "kind": "Identifier",
                         "fullStart": 1637,
                         "start": 1638,
@@ -1102,7 +1102,7 @@
             "children": [
                 {
                     "kind": "DataDeclaration",
-                    "name": {
+                    "identifier": {
                         "kind": "Identifier",
                         "fullStart": 1698,
                         "start": 1699,
@@ -1120,7 +1120,7 @@
                             "kind": "TypeReference",
                             "modulePath": null,
                             "scopeMemberAccessOperator": null,
-                            "name": {
+                            "identifier": {
                                 "kind": "Identifier",
                                 "fullStart": 1712,
                                 "start": 1712,
@@ -1186,7 +1186,7 @@
                 "start": 1750,
                 "length": 8
             },
-            "name": {
+            "identifier": {
                 "kind": "Identifier",
                 "fullStart": 1758,
                 "start": 1759,
@@ -1204,7 +1204,7 @@
                     "kind": "TypeReference",
                     "modulePath": null,
                     "scopeMemberAccessOperator": null,
-                    "name": {
+                    "identifier": {
                         "kind": "VoidKeyword",
                         "fullStart": 1763,
                         "start": 1763,
@@ -1225,7 +1225,7 @@
             "parameters": [
                 {
                     "kind": "DataDeclaration",
-                    "name": {
+                    "identifier": {
                         "kind": "Identifier",
                         "fullStart": 1768,
                         "start": 1769,
@@ -1243,7 +1243,7 @@
                             "kind": "TypeReference",
                             "modulePath": null,
                             "scopeMemberAccessOperator": null,
-                            "name": {
+                            "identifier": {
                                 "kind": "IntKeyword",
                                 "fullStart": 1776,
                                 "start": 1776,
@@ -1314,7 +1314,7 @@
                 "start": 1838,
                 "length": 8
             },
-            "name": {
+            "identifier": {
                 "kind": "Identifier",
                 "fullStart": 1846,
                 "start": 1847,
@@ -1330,7 +1330,7 @@
             "parameters": [
                 {
                     "kind": "DataDeclaration",
-                    "name": {
+                    "identifier": {
                         "kind": "Identifier",
                         "fullStart": 1851,
                         "start": 1852,
@@ -1348,7 +1348,7 @@
                             "kind": "TypeReference",
                             "modulePath": null,
                             "scopeMemberAccessOperator": null,
-                            "name": {
+                            "identifier": {
                                 "kind": "IntKeyword",
                                 "fullStart": 1859,
                                 "start": 1859,
@@ -1376,7 +1376,7 @@
                 },
                 {
                     "kind": "DataDeclaration",
-                    "name": {
+                    "identifier": {
                         "kind": "Identifier",
                         "fullStart": 1863,
                         "start": 1864,
@@ -1451,7 +1451,7 @@
                 "start": 1926,
                 "length": 8
             },
-            "name": {
+            "identifier": {
                 "kind": "Identifier",
                 "fullStart": 1934,
                 "start": 1935,
@@ -1519,7 +1519,7 @@
                 "start": 2017,
                 "length": 8
             },
-            "name": {
+            "identifier": {
                 "kind": "Identifier",
                 "fullStart": 2025,
                 "start": 2026,
@@ -1599,8 +1599,7 @@
                         "leftOperand": {
                             "kind": "IdentifierExpression",
                             "newlines": [],
-                            "globalScopeMemberAccessOperator": null,
-                            "name": {
+                            "identifier": {
                                 "kind": "Identifier",
                                 "fullStart": 2141,
                                 "start": 2142,
@@ -1645,8 +1644,7 @@
                                 "invokableExpression": {
                                     "kind": "IdentifierExpression",
                                     "newlines": null,
-                                    "globalScopeMemberAccessOperator": null,
-                                    "name": {
+                                    "identifier": {
                                         "kind": "Identifier",
                                         "fullStart": 2149,
                                         "start": 2157,
@@ -1667,8 +1665,7 @@
                                     {
                                         "kind": "IdentifierExpression",
                                         "newlines": [],
-                                        "globalScopeMemberAccessOperator": null,
-                                        "name": {
+                                        "identifier": {
                                             "kind": "Identifier",
                                             "fullStart": 2163,
                                             "start": 2163,
@@ -1747,7 +1744,7 @@
                 "start": 2236,
                 "length": 9
             },
-            "name": {
+            "identifier": {
                 "kind": "Identifier",
                 "fullStart": 2245,
                 "start": 2246,
@@ -1770,7 +1767,7 @@
                         "start": 2261,
                         "length": 10
                     },
-                    "name": {
+                    "identifier": {
                         "kind": "Identifier",
                         "fullStart": 2267,
                         "start": 2268,
@@ -1788,7 +1785,7 @@
                             "kind": "TypeReference",
                             "modulePath": null,
                             "scopeMemberAccessOperator": null,
-                            "name": {
+                            "identifier": {
                                 "kind": "VoidKeyword",
                                 "fullStart": 2274,
                                 "start": 2275,
@@ -1809,7 +1806,7 @@
                     "parameters": [
                         {
                             "kind": "DataDeclaration",
-                            "name": {
+                            "identifier": {
                                 "kind": "Identifier",
                                 "fullStart": 2280,
                                 "start": 2281,
@@ -1841,7 +1838,7 @@
                         },
                         {
                             "kind": "DataDeclaration",
-                            "name": {
+                            "identifier": {
                                 "kind": "Identifier",
                                 "fullStart": 2290,
                                 "start": 2290,
@@ -1859,7 +1856,7 @@
                                     "kind": "TypeReference",
                                     "modulePath": null,
                                     "scopeMemberAccessOperator": null,
-                                    "name": {
+                                    "identifier": {
                                         "kind": "BoolKeyword",
                                         "fullStart": 2296,
                                         "start": 2296,
@@ -1932,7 +1929,7 @@
                 "start": 2316,
                 "length": 9
             },
-            "name": {
+            "identifier": {
                 "kind": "Identifier",
                 "fullStart": 2325,
                 "start": 2326,
@@ -1955,7 +1952,7 @@
                         "start": 2365,
                         "length": 10
                     },
-                    "name": {
+                    "identifier": {
                         "kind": "Identifier",
                         "fullStart": 2371,
                         "start": 2372,
@@ -2011,7 +2008,7 @@
                 "start": 2387,
                 "length": 9
             },
-            "name": {
+            "identifier": {
                 "kind": "Identifier",
                 "fullStart": 2396,
                 "start": 2397,
@@ -2028,7 +2025,7 @@
                     "kind": "TypeReference",
                     "modulePath": null,
                     "scopeMemberAccessOperator": null,
-                    "name": {
+                    "identifier": {
                         "kind": "Identifier",
                         "fullStart": 2413,
                         "start": 2414,
@@ -2058,7 +2055,7 @@
                     "children": [
                         {
                             "kind": "DataDeclaration",
-                            "name": {
+                            "identifier": {
                                 "kind": "Identifier",
                                 "fullStart": 2478,
                                 "start": 2479,
@@ -2105,7 +2102,7 @@
                         "start": 2498,
                         "length": 10
                     },
-                    "name": {
+                    "identifier": {
                         "kind": "Identifier",
                         "fullStart": 2504,
                         "start": 2505,
@@ -2166,7 +2163,7 @@
                 "start": 2548,
                 "length": 9
             },
-            "name": {
+            "identifier": {
                 "kind": "Identifier",
                 "fullStart": 2557,
                 "start": 2558,
@@ -2183,7 +2180,7 @@
                     "kind": "TypeReference",
                     "modulePath": null,
                     "scopeMemberAccessOperator": null,
-                    "name": {
+                    "identifier": {
                         "kind": "Identifier",
                         "fullStart": 2574,
                         "start": 2575,
@@ -2208,7 +2205,7 @@
                     "kind": "TypeReference",
                     "modulePath": null,
                     "scopeMemberAccessOperator": null,
-                    "name": {
+                    "identifier": {
                         "kind": "Identifier",
                         "fullStart": 2585,
                         "start": 2586,
@@ -2238,7 +2235,7 @@
                     "children": [
                         {
                             "kind": "DataDeclaration",
-                            "name": {
+                            "identifier": {
                                 "kind": "Identifier",
                                 "fullStart": 2651,
                                 "start": 2652,
@@ -2285,7 +2282,7 @@
                         "start": 2721,
                         "length": 10
                     },
-                    "name": {
+                    "identifier": {
                         "kind": "Identifier",
                         "fullStart": 2727,
                         "start": 2728,
@@ -2303,7 +2300,7 @@
                             "kind": "TypeReference",
                             "modulePath": null,
                             "scopeMemberAccessOperator": null,
-                            "name": {
+                            "identifier": {
                                 "kind": "VoidKeyword",
                                 "fullStart": 2734,
                                 "start": 2735,
@@ -2324,7 +2321,7 @@
                     "parameters": [
                         {
                             "kind": "DataDeclaration",
-                            "name": {
+                            "identifier": {
                                 "kind": "Identifier",
                                 "fullStart": 2740,
                                 "start": 2741,
@@ -2356,7 +2353,7 @@
                         },
                         {
                             "kind": "DataDeclaration",
-                            "name": {
+                            "identifier": {
                                 "kind": "Identifier",
                                 "fullStart": 2750,
                                 "start": 2750,
@@ -2374,7 +2371,7 @@
                                     "kind": "TypeReference",
                                     "modulePath": null,
                                     "scopeMemberAccessOperator": null,
-                                    "name": {
+                                    "identifier": {
                                         "kind": "BoolKeyword",
                                         "fullStart": 2756,
                                         "start": 2756,
@@ -2426,7 +2423,7 @@
                         "start": 2795,
                         "length": 10
                     },
-                    "name": {
+                    "identifier": {
                         "kind": "Identifier",
                         "fullStart": 2801,
                         "start": 2802,
@@ -2487,7 +2484,7 @@
                 "start": 2827,
                 "length": 5
             },
-            "name": {
+            "identifier": {
                 "kind": "Identifier",
                 "fullStart": 2832,
                 "start": 2833,
@@ -2519,7 +2516,7 @@
                     "children": [
                         {
                             "kind": "DataDeclaration",
-                            "name": {
+                            "identifier": {
                                 "kind": "Identifier",
                                 "fullStart": 2873,
                                 "start": 2874,
@@ -2549,7 +2546,7 @@
                     "children": [
                         {
                             "kind": "DataDeclaration",
-                            "name": {
+                            "identifier": {
                                 "kind": "Identifier",
                                 "fullStart": 2915,
                                 "start": 2916,
@@ -2593,7 +2590,7 @@
                     "children": [
                         {
                             "kind": "DataDeclaration",
-                            "name": {
+                            "identifier": {
                                 "kind": "Identifier",
                                 "fullStart": 2971,
                                 "start": 2972,
@@ -2611,7 +2608,7 @@
                                     "kind": "TypeReference",
                                     "modulePath": null,
                                     "scopeMemberAccessOperator": null,
-                                    "name": {
+                                    "identifier": {
                                         "kind": "FloatKeyword",
                                         "fullStart": 2974,
                                         "start": 2975,
@@ -2646,7 +2643,7 @@
                     "children": [
                         {
                             "kind": "DataDeclaration",
-                            "name": {
+                            "identifier": {
                                 "kind": "Identifier",
                                 "fullStart": 3019,
                                 "start": 3020,
@@ -2735,7 +2732,7 @@
                     "children": [
                         {
                             "kind": "DataDeclaration",
-                            "name": {
+                            "identifier": {
                                 "kind": "Identifier",
                                 "fullStart": 3121,
                                 "start": 3122,
@@ -2801,7 +2798,7 @@
                     "children": [
                         {
                             "kind": "DataDeclaration",
-                            "name": {
+                            "identifier": {
                                 "kind": "Identifier",
                                 "fullStart": 3215,
                                 "start": 3216,
@@ -2824,7 +2821,7 @@
                         },
                         {
                             "kind": "DataDeclaration",
-                            "name": {
+                            "identifier": {
                                 "kind": "Identifier",
                                 "fullStart": 3218,
                                 "start": 3218,
@@ -2847,7 +2844,7 @@
                         },
                         {
                             "kind": "DataDeclaration",
-                            "name": {
+                            "identifier": {
                                 "kind": "Identifier",
                                 "fullStart": 3220,
                                 "start": 3220,
@@ -2899,7 +2896,7 @@
                     "children": [
                         {
                             "kind": "DataDeclaration",
-                            "name": {
+                            "identifier": {
                                 "kind": "Identifier",
                                 "fullStart": 3317,
                                 "start": 3318,
@@ -2922,7 +2919,7 @@
                         },
                         {
                             "kind": "DataDeclaration",
-                            "name": {
+                            "identifier": {
                                 "kind": "Identifier",
                                 "fullStart": 3320,
                                 "start": 3320,
@@ -2945,7 +2942,7 @@
                         },
                         {
                             "kind": "DataDeclaration",
-                            "name": {
+                            "identifier": {
                                 "kind": "Identifier",
                                 "fullStart": 3322,
                                 "start": 3322,
@@ -2993,7 +2990,7 @@
                 "start": 3375,
                 "length": 5
             },
-            "name": {
+            "identifier": {
                 "kind": "Identifier",
                 "fullStart": 3380,
                 "start": 3381,
@@ -3033,7 +3030,7 @@
                         "start": 3437,
                         "length": 10
                     },
-                    "name": {
+                    "identifier": {
                         "kind": "Identifier",
                         "fullStart": 3443,
                         "start": 3444,
@@ -3085,7 +3082,7 @@
                         "start": 3506,
                         "length": 10
                     },
-                    "name": {
+                    "identifier": {
                         "kind": "Identifier",
                         "fullStart": 3512,
                         "start": 3513,
@@ -3143,7 +3140,7 @@
                         "start": 3573,
                         "length": 10
                     },
-                    "name": {
+                    "identifier": {
                         "kind": "Identifier",
                         "fullStart": 3579,
                         "start": 3580,
@@ -3201,7 +3198,7 @@
                         "start": 3640,
                         "length": 10
                     },
-                    "name": {
+                    "identifier": {
                         "kind": "Identifier",
                         "fullStart": 3646,
                         "start": 3647,
@@ -3217,7 +3214,7 @@
                     "parameters": [
                         {
                             "kind": "DataDeclaration",
-                            "name": {
+                            "identifier": {
                                 "kind": "Identifier",
                                 "fullStart": 3651,
                                 "start": 3652,
@@ -3235,7 +3232,7 @@
                                     "kind": "TypeReference",
                                     "modulePath": null,
                                     "scopeMemberAccessOperator": null,
-                                    "name": {
+                                    "identifier": {
                                         "kind": "Identifier",
                                         "fullStart": 3657,
                                         "start": 3657,
@@ -3312,7 +3309,7 @@
                         "start": 3706,
                         "length": 10
                     },
-                    "name": {
+                    "identifier": {
                         "kind": "Identifier",
                         "fullStart": 3712,
                         "start": 3713,
@@ -3330,7 +3327,7 @@
                             "kind": "TypeReference",
                             "modulePath": null,
                             "scopeMemberAccessOperator": null,
-                            "name": {
+                            "identifier": {
                                 "kind": "Identifier",
                                 "fullStart": 3717,
                                 "start": 3717,
@@ -3407,7 +3404,7 @@
                     "children": [
                         {
                             "kind": "DataDeclaration",
-                            "name": {
+                            "identifier": {
                                 "kind": "Identifier",
                                 "fullStart": 3766,
                                 "start": 3767,
@@ -3425,7 +3422,7 @@
                                     "kind": "TypeReference",
                                     "modulePath": null,
                                     "scopeMemberAccessOperator": null,
-                                    "name": {
+                                    "identifier": {
                                         "kind": "Identifier",
                                         "fullStart": 3773,
                                         "start": 3773,
@@ -3463,7 +3460,7 @@
                         "start": 3782,
                         "length": 10
                     },
-                    "name": {
+                    "identifier": {
                         "kind": "Identifier",
                         "fullStart": 3788,
                         "start": 3789,
@@ -3526,7 +3523,7 @@
                         "start": 3842,
                         "length": 10
                     },
-                    "name": {
+                    "identifier": {
                         "kind": "Identifier",
                         "fullStart": 3848,
                         "start": 3849,
@@ -3615,7 +3612,7 @@
                 "start": 3911,
                 "length": 5
             },
-            "name": {
+            "identifier": {
                 "kind": "Identifier",
                 "fullStart": 3916,
                 "start": 3917,
@@ -3630,7 +3627,7 @@
             "typeParameters": [
                 {
                     "kind": "TypeParameter",
-                    "name": {
+                    "identifier": {
                         "kind": "Identifier",
                         "fullStart": 3925,
                         "start": 3925,
@@ -3654,7 +3651,7 @@
                 "kind": "TypeReference",
                 "modulePath": null,
                 "scopeMemberAccessOperator": null,
-                "name": {
+                "identifier": {
                     "kind": "Identifier",
                     "fullStart": 3935,
                     "start": 3936,
@@ -3710,7 +3707,7 @@
                 "start": 4038,
                 "length": 5
             },
-            "name": {
+            "identifier": {
                 "kind": "Identifier",
                 "fullStart": 4043,
                 "start": 4044,
@@ -3725,7 +3722,7 @@
             "typeParameters": [
                 {
                     "kind": "TypeParameter",
-                    "name": {
+                    "identifier": {
                         "kind": "Identifier",
                         "fullStart": 4052,
                         "start": 4052,
@@ -3749,7 +3746,7 @@
                 "kind": "TypeReference",
                 "modulePath": null,
                 "scopeMemberAccessOperator": null,
-                "name": {
+                "identifier": {
                     "kind": "Identifier",
                     "fullStart": 4062,
                     "start": 4063,
@@ -3810,7 +3807,7 @@
                 "start": 4173,
                 "length": 5
             },
-            "name": {
+            "identifier": {
                 "kind": "Identifier",
                 "fullStart": 4178,
                 "start": 4179,
@@ -3825,7 +3822,7 @@
             "typeParameters": [
                 {
                     "kind": "TypeParameter",
-                    "name": {
+                    "identifier": {
                         "kind": "Identifier",
                         "fullStart": 4187,
                         "start": 4187,
@@ -3852,7 +3849,7 @@
                     "kind": "TypeReference",
                     "modulePath": null,
                     "scopeMemberAccessOperator": null,
-                    "name": {
+                    "identifier": {
                         "kind": "Identifier",
                         "fullStart": 4200,
                         "start": 4201,
@@ -3907,7 +3904,7 @@
                 "start": 4294,
                 "length": 5
             },
-            "name": {
+            "identifier": {
                 "kind": "Identifier",
                 "fullStart": 4299,
                 "start": 4300,
@@ -3922,7 +3919,7 @@
             "typeParameters": [
                 {
                     "kind": "TypeParameter",
-                    "name": {
+                    "identifier": {
                         "kind": "Identifier",
                         "fullStart": 4308,
                         "start": 4308,
@@ -3949,7 +3946,7 @@
                     "kind": "TypeReference",
                     "modulePath": null,
                     "scopeMemberAccessOperator": null,
-                    "name": {
+                    "identifier": {
                         "kind": "Identifier",
                         "fullStart": 4321,
                         "start": 4322,
@@ -4009,7 +4006,7 @@
                 "start": 4431,
                 "length": 5
             },
-            "name": {
+            "identifier": {
                 "kind": "Identifier",
                 "fullStart": 4436,
                 "start": 4437,
@@ -4024,7 +4021,7 @@
             "typeParameters": [
                 {
                     "kind": "TypeParameter",
-                    "name": {
+                    "identifier": {
                         "kind": "Identifier",
                         "fullStart": 4445,
                         "start": 4445,
@@ -4051,7 +4048,7 @@
                     "kind": "TypeReference",
                     "modulePath": null,
                     "scopeMemberAccessOperator": null,
-                    "name": {
+                    "identifier": {
                         "kind": "Identifier",
                         "fullStart": 4458,
                         "start": 4459,
@@ -4076,7 +4073,7 @@
                     "kind": "TypeReference",
                     "modulePath": null,
                     "scopeMemberAccessOperator": null,
-                    "name": {
+                    "identifier": {
                         "kind": "Identifier",
                         "fullStart": 4468,
                         "start": 4468,
@@ -4131,7 +4128,7 @@
                 "start": 4553,
                 "length": 5
             },
-            "name": {
+            "identifier": {
                 "kind": "Identifier",
                 "fullStart": 4558,
                 "start": 4559,
@@ -4146,7 +4143,7 @@
             "typeParameters": [
                 {
                     "kind": "TypeParameter",
-                    "name": {
+                    "identifier": {
                         "kind": "Identifier",
                         "fullStart": 4567,
                         "start": 4567,
@@ -4170,7 +4167,7 @@
                 "kind": "TypeReference",
                 "modulePath": null,
                 "scopeMemberAccessOperator": null,
-                "name": {
+                "identifier": {
                     "kind": "Identifier",
                     "fullStart": 4577,
                     "start": 4578,
@@ -4192,7 +4189,7 @@
                     "kind": "TypeReference",
                     "modulePath": null,
                     "scopeMemberAccessOperator": null,
-                    "name": {
+                    "identifier": {
                         "kind": "Identifier",
                         "fullStart": 4596,
                         "start": 4597,
@@ -4217,7 +4214,7 @@
                     "kind": "TypeReference",
                     "modulePath": null,
                     "scopeMemberAccessOperator": null,
-                    "name": {
+                    "identifier": {
                         "kind": "Identifier",
                         "fullStart": 4606,
                         "start": 4606,
@@ -4277,7 +4274,7 @@
                 "start": 4705,
                 "length": 5
             },
-            "name": {
+            "identifier": {
                 "kind": "Identifier",
                 "fullStart": 4710,
                 "start": 4711,
@@ -4292,7 +4289,7 @@
             "typeParameters": [
                 {
                     "kind": "TypeParameter",
-                    "name": {
+                    "identifier": {
                         "kind": "Identifier",
                         "fullStart": 4719,
                         "start": 4719,
@@ -4316,7 +4313,7 @@
                 "kind": "TypeReference",
                 "modulePath": null,
                 "scopeMemberAccessOperator": null,
-                "name": {
+                "identifier": {
                     "kind": "Identifier",
                     "fullStart": 4729,
                     "start": 4730,
@@ -4338,7 +4335,7 @@
                     "kind": "TypeReference",
                     "modulePath": null,
                     "scopeMemberAccessOperator": null,
-                    "name": {
+                    "identifier": {
                         "kind": "Identifier",
                         "fullStart": 4748,
                         "start": 4749,
@@ -4363,7 +4360,7 @@
                     "kind": "TypeReference",
                     "modulePath": null,
                     "scopeMemberAccessOperator": null,
-                    "name": {
+                    "identifier": {
                         "kind": "Identifier",
                         "fullStart": 4758,
                         "start": 4758,
@@ -4428,7 +4425,7 @@
                 "start": 4867,
                 "length": 8
             },
-            "name": {
+            "identifier": {
                 "kind": "Identifier",
                 "fullStart": 4875,
                 "start": 4876,
@@ -4444,7 +4441,7 @@
             "parameters": [
                 {
                     "kind": "DataDeclaration",
-                    "name": {
+                    "identifier": {
                         "kind": "Identifier",
                         "fullStart": 4888,
                         "start": 4888,
@@ -4462,7 +4459,7 @@
                             "kind": "TypeReference",
                             "modulePath": null,
                             "scopeMemberAccessOperator": null,
-                            "name": {
+                            "identifier": {
                                 "kind": "StringKeyword",
                                 "fullStart": 4892,
                                 "start": 4893,
@@ -4509,8 +4506,7 @@
                         "leftOperand": {
                             "kind": "IdentifierExpression",
                             "newlines": [],
-                            "globalScopeMemberAccessOperator": null,
-                            "name": {
+                            "identifier": {
                                 "kind": "Identifier",
                                 "fullStart": 4908,
                                 "start": 4909,
@@ -4617,8 +4613,7 @@
                         "leftOperand": {
                             "kind": "IdentifierExpression",
                             "newlines": [],
-                            "globalScopeMemberAccessOperator": null,
-                            "name": {
+                            "identifier": {
                                 "kind": "Identifier",
                                 "fullStart": 4984,
                                 "start": 4985,
@@ -4753,8 +4748,7 @@
                         "leftOperand": {
                             "kind": "IdentifierExpression",
                             "newlines": [],
-                            "globalScopeMemberAccessOperator": null,
-                            "name": {
+                            "identifier": {
                                 "kind": "Identifier",
                                 "fullStart": 5103,
                                 "start": 5104,
@@ -4838,8 +4832,7 @@
                                 "leftOperand": {
                                     "kind": "IdentifierExpression",
                                     "newlines": [],
-                                    "globalScopeMemberAccessOperator": null,
-                                    "name": {
+                                    "identifier": {
                                         "kind": "Identifier",
                                         "fullStart": 5170,
                                         "start": 5171,
@@ -4939,8 +4932,7 @@
                         "leftOperand": {
                             "kind": "IdentifierExpression",
                             "newlines": [],
-                            "globalScopeMemberAccessOperator": null,
-                            "name": {
+                            "identifier": {
                                 "kind": "Identifier",
                                 "fullStart": 5240,
                                 "start": 5241,
@@ -5024,8 +5016,7 @@
                                 "leftOperand": {
                                     "kind": "IdentifierExpression",
                                     "newlines": [],
-                                    "globalScopeMemberAccessOperator": null,
-                                    "name": {
+                                    "identifier": {
                                         "kind": "Identifier",
                                         "fullStart": 5307,
                                         "start": 5308,
@@ -5148,8 +5139,7 @@
                         "leftOperand": {
                             "kind": "IdentifierExpression",
                             "newlines": [],
-                            "globalScopeMemberAccessOperator": null,
-                            "name": {
+                            "identifier": {
                                 "kind": "Identifier",
                                 "fullStart": 5415,
                                 "start": 5416,
@@ -5238,8 +5228,7 @@
                                 "leftOperand": {
                                     "kind": "IdentifierExpression",
                                     "newlines": [],
-                                    "globalScopeMemberAccessOperator": null,
-                                    "name": {
+                                    "identifier": {
                                         "kind": "Identifier",
                                         "fullStart": 5487,
                                         "start": 5488,
@@ -5378,7 +5367,7 @@
                 "start": 5606,
                 "length": 8
             },
-            "name": {
+            "identifier": {
                 "kind": "Identifier",
                 "fullStart": 5614,
                 "start": 5615,
@@ -5394,7 +5383,7 @@
             "parameters": [
                 {
                     "kind": "DataDeclaration",
-                    "name": {
+                    "identifier": {
                         "kind": "Identifier",
                         "fullStart": 5637,
                         "start": 5637,
@@ -5412,7 +5401,7 @@
                             "kind": "TypeReference",
                             "modulePath": null,
                             "scopeMemberAccessOperator": null,
-                            "name": {
+                            "identifier": {
                                 "kind": "StringKeyword",
                                 "fullStart": 5641,
                                 "start": 5642,
@@ -5459,8 +5448,7 @@
                         "leftOperand": {
                             "kind": "IdentifierExpression",
                             "newlines": [],
-                            "globalScopeMemberAccessOperator": null,
-                            "name": {
+                            "identifier": {
                                 "kind": "Identifier",
                                 "fullStart": 5657,
                                 "start": 5658,
@@ -5546,8 +5534,7 @@
                         "leftOperand": {
                             "kind": "IdentifierExpression",
                             "newlines": [],
-                            "globalScopeMemberAccessOperator": null,
-                            "name": {
+                            "identifier": {
                                 "kind": "Identifier",
                                 "fullStart": 5692,
                                 "start": 5693,
@@ -5641,7 +5628,7 @@
                 "start": 5727,
                 "length": 8
             },
-            "name": {
+            "identifier": {
                 "kind": "Identifier",
                 "fullStart": 5735,
                 "start": 5736,
@@ -6014,7 +6001,7 @@
                 "start": 6127,
                 "length": 8
             },
-            "name": {
+            "identifier": {
                 "kind": "Identifier",
                 "fullStart": 6135,
                 "start": 6136,
@@ -6064,8 +6051,7 @@
                     "expression": {
                         "kind": "IdentifierExpression",
                         "newlines": [],
-                        "globalScopeMemberAccessOperator": null,
-                        "name": {
+                        "identifier": {
                             "kind": "Identifier",
                             "fullStart": 6167,
                             "start": 6168,
@@ -6254,8 +6240,7 @@
                                 "expression": {
                                     "kind": "IdentifierExpression",
                                     "newlines": [],
-                                    "globalScopeMemberAccessOperator": null,
-                                    "name": {
+                                    "identifier": {
                                         "kind": "Identifier",
                                         "fullStart": 6441,
                                         "start": 6442,
@@ -6532,7 +6517,7 @@
                 "start": 6766,
                 "length": 8
             },
-            "name": {
+            "identifier": {
                 "kind": "Identifier",
                 "fullStart": 6774,
                 "start": 6775,
@@ -6575,7 +6560,7 @@
                         "children": [
                             {
                                 "kind": "DataDeclaration",
-                                "name": {
+                                "identifier": {
                                     "kind": "Identifier",
                                     "fullStart": 6800,
                                     "start": 6801,
@@ -6593,7 +6578,7 @@
                                         "kind": "TypeReference",
                                         "modulePath": null,
                                         "scopeMemberAccessOperator": null,
-                                        "name": {
+                                        "identifier": {
                                             "kind": "FloatKeyword",
                                             "fullStart": 6803,
                                             "start": 6804,
@@ -6626,8 +6611,7 @@
                         "leftOperand": {
                             "kind": "IdentifierExpression",
                             "newlines": [],
-                            "globalScopeMemberAccessOperator": null,
-                            "name": {
+                            "identifier": {
                                 "kind": "Identifier",
                                 "fullStart": 6811,
                                 "start": 6815,
@@ -6670,8 +6654,7 @@
                         "leftOperand": {
                             "kind": "IdentifierExpression",
                             "newlines": [],
-                            "globalScopeMemberAccessOperator": null,
-                            "name": {
+                            "identifier": {
                                 "kind": "Identifier",
                                 "fullStart": 6828,
                                 "start": 6832,
@@ -6714,8 +6697,7 @@
                         "leftOperand": {
                             "kind": "IdentifierExpression",
                             "newlines": [],
-                            "globalScopeMemberAccessOperator": null,
-                            "name": {
+                            "identifier": {
                                 "kind": "Identifier",
                                 "fullStart": 6843,
                                 "start": 6847,
@@ -6758,8 +6740,7 @@
                         "leftOperand": {
                             "kind": "IdentifierExpression",
                             "newlines": [],
-                            "globalScopeMemberAccessOperator": null,
-                            "name": {
+                            "identifier": {
                                 "kind": "Identifier",
                                 "fullStart": 6857,
                                 "start": 6861,
@@ -6802,8 +6783,7 @@
                         "leftOperand": {
                             "kind": "IdentifierExpression",
                             "newlines": [],
-                            "globalScopeMemberAccessOperator": null,
-                            "name": {
+                            "identifier": {
                                 "kind": "Identifier",
                                 "fullStart": 6872,
                                 "start": 6876,

@@ -9,7 +9,7 @@
                 "start": 0,
                 "length": 8
             },
-            "name": {
+            "identifier": {
                 "kind": "Identifier",
                 "fullStart": 8,
                 "start": 9,
@@ -53,8 +53,7 @@
                         "leftOperand": {
                             "kind": "IdentifierExpression",
                             "newlines": [],
-                            "globalScopeMemberAccessOperator": null,
-                            "name": {
+                            "identifier": {
                                 "kind": "Identifier",
                                 "fullStart": 24,
                                 "start": 25,
@@ -82,8 +81,7 @@
                             "scopableExpression": {
                                 "kind": "IdentifierExpression",
                                 "newlines": null,
-                                "globalScopeMemberAccessOperator": null,
-                                "name": {
+                                "identifier": {
                                     "kind": "Identifier",
                                     "fullStart": 46,
                                     "start": 47,
@@ -102,8 +100,7 @@
                             "member": {
                                 "kind": "IdentifierExpression",
                                 "newlines": [],
-                                "globalScopeMemberAccessOperator": null,
-                                "name": {
+                                "identifier": {
                                     "kind": "Identifier",
                                     "fullStart": 53,
                                     "start": 53,

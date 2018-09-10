@@ -9,7 +9,7 @@
                 "start": 0,
                 "length": 8
             },
-            "name": {
+            "identifier": {
                 "kind": "Identifier",
                 "fullStart": 8,
                 "start": 9,
@@ -47,8 +47,7 @@
                         "invokableExpression": {
                             "kind": "IdentifierExpression",
                             "newlines": null,
-                            "globalScopeMemberAccessOperator": null,
-                            "name": {
+                            "identifier": {
                                 "kind": "Identifier",
                                 "fullStart": 17,
                                 "start": 21,
@@ -154,8 +153,7 @@
                         "invokableExpression": {
                             "kind": "IdentifierExpression",
                             "newlines": null,
-                            "globalScopeMemberAccessOperator": null,
-                            "name": {
+                            "identifier": {
                                 "kind": "Identifier",
                                 "fullStart": 66,
                                 "start": 70,
@@ -252,8 +250,7 @@
                         "invokableExpression": {
                             "kind": "IdentifierExpression",
                             "newlines": null,
-                            "globalScopeMemberAccessOperator": null,
-                            "name": {
+                            "identifier": {
                                 "kind": "Identifier",
                                 "fullStart": 117,
                                 "start": 121,
@@ -350,8 +347,7 @@
                         "invokableExpression": {
                             "kind": "IdentifierExpression",
                             "newlines": null,
-                            "globalScopeMemberAccessOperator": null,
-                            "name": {
+                            "identifier": {
                                 "kind": "Identifier",
                                 "fullStart": 168,
                                 "start": 172,

@@ -12,7 +12,7 @@
             "children": [
                 {
                     "kind": "DataDeclaration",
-                    "name": {
+                    "identifier": {
                         "kind": "Identifier",
                         "fullStart": 5,
                         "start": 6,

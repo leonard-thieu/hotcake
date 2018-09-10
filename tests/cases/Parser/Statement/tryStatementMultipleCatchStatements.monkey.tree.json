@@ -9,7 +9,7 @@
                 "start": 0,
                 "length": 5
             },
-            "name": {
+            "identifier": {
                 "kind": "Identifier",
                 "fullStart": 5,
                 "start": 6,
@@ -28,7 +28,7 @@
                 "kind": "TypeReference",
                 "modulePath": null,
                 "scopeMemberAccessOperator": null,
-                "name": {
+                "identifier": {
                     "kind": "ThrowableKeyword",
                     "fullStart": 17,
                     "start": 18,
@@ -78,7 +78,7 @@
                 "start": 36,
                 "length": 5
             },
-            "name": {
+            "identifier": {
                 "kind": "Identifier",
                 "fullStart": 41,
                 "start": 42,
@@ -97,7 +97,7 @@
                 "kind": "TypeReference",
                 "modulePath": null,
                 "scopeMemberAccessOperator": null,
-                "name": {
+                "identifier": {
                     "kind": "ThrowableKeyword",
                     "fullStart": 53,
                     "start": 54,
@@ -147,7 +147,7 @@
                 "start": 72,
                 "length": 8
             },
-            "name": {
+            "identifier": {
                 "kind": "Identifier",
                 "fullStart": 80,
                 "start": 81,
@@ -200,7 +200,7 @@
                                 "children": [
                                     {
                                         "kind": "DataDeclaration",
-                                        "name": {
+                                        "identifier": {
                                             "kind": "Identifier",
                                             "fullStart": 102,
                                             "start": 103,
@@ -299,8 +299,7 @@
                                             "leftOperand": {
                                                 "kind": "IdentifierExpression",
                                                 "newlines": [],
-                                                "globalScopeMemberAccessOperator": null,
-                                                "name": {
+                                                "identifier": {
                                                     "kind": "Identifier",
                                                     "fullStart": 144,
                                                     "start": 144,
@@ -358,7 +357,7 @@
                                                     "kind": "TypeReference",
                                                     "modulePath": null,
                                                     "scopeMemberAccessOperator": null,
-                                                    "name": {
+                                                    "identifier": {
                                                         "kind": "Identifier",
                                                         "fullStart": 160,
                                                         "start": 161,
@@ -404,7 +403,7 @@
                                                         "kind": "TypeReference",
                                                         "modulePath": null,
                                                         "scopeMemberAccessOperator": null,
-                                                        "name": {
+                                                        "identifier": {
                                                             "kind": "Identifier",
                                                             "fullStart": 179,
                                                             "start": 180,
@@ -441,7 +440,7 @@
                                     },
                                     "parameter": {
                                         "kind": "DataDeclaration",
-                                        "name": {
+                                        "identifier": {
                                             "kind": "Identifier",
                                             "fullStart": 198,
                                             "start": 199,
@@ -459,7 +458,7 @@
                                                 "kind": "TypeReference",
                                                 "modulePath": null,
                                                 "scopeMemberAccessOperator": null,
-                                                "name": {
+                                                "identifier": {
                                                     "kind": "Identifier",
                                                     "fullStart": 202,
                                                     "start": 202,
@@ -493,8 +492,7 @@
                                                 "invokableExpression": {
                                                     "kind": "IdentifierExpression",
                                                     "newlines": null,
-                                                    "globalScopeMemberAccessOperator": null,
-                                                    "name": {
+                                                    "identifier": {
                                                         "kind": "Identifier",
                                                         "fullStart": 207,
                                                         "start": 219,
@@ -553,7 +551,7 @@
                                     },
                                     "parameter": {
                                         "kind": "DataDeclaration",
-                                        "name": {
+                                        "identifier": {
                                             "kind": "Identifier",
                                             "fullStart": 256,
                                             "start": 257,
@@ -571,7 +569,7 @@
                                                 "kind": "TypeReference",
                                                 "modulePath": null,
                                                 "scopeMemberAccessOperator": null,
-                                                "name": {
+                                                "identifier": {
                                                     "kind": "Identifier",
                                                     "fullStart": 260,
                                                     "start": 260,
@@ -605,8 +603,7 @@
                                                 "invokableExpression": {
                                                     "kind": "IdentifierExpression",
                                                     "newlines": null,
-                                                    "globalScopeMemberAccessOperator": null,
-                                                    "name": {
+                                                    "identifier": {
                                                         "kind": "Identifier",
                                                         "fullStart": 265,
                                                         "start": 277,

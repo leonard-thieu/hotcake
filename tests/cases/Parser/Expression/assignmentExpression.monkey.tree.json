@@ -9,7 +9,7 @@
                 "start": 0,
                 "length": 8
             },
-            "name": {
+            "identifier": {
                 "kind": "Identifier",
                 "fullStart": 8,
                 "start": 9,
@@ -52,7 +52,7 @@
                         "children": [
                             {
                                 "kind": "DataDeclaration",
-                                "name": {
+                                "identifier": {
                                     "kind": "Identifier",
                                     "fullStart": 26,
                                     "start": 27,
@@ -70,7 +70,7 @@
                                         "kind": "TypeReference",
                                         "modulePath": null,
                                         "scopeMemberAccessOperator": null,
-                                        "name": {
+                                        "identifier": {
                                             "kind": "IntKeyword",
                                             "fullStart": 29,
                                             "start": 30,
@@ -103,8 +103,7 @@
                         "leftOperand": {
                             "kind": "IdentifierExpression",
                             "newlines": [],
-                            "globalScopeMemberAccessOperator": null,
-                            "name": {
+                            "identifier": {
                                 "kind": "Identifier",
                                 "fullStart": 35,
                                 "start": 39,

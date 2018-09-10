@@ -9,7 +9,7 @@
                 "start": 0,
                 "length": 8
             },
-            "name": {
+            "identifier": {
                 "kind": "Identifier",
                 "fullStart": 8,
                 "start": 9,
@@ -52,7 +52,7 @@
                         "children": [
                             {
                                 "kind": "DataDeclaration",
-                                "name": {
+                                "identifier": {
                                     "kind": "Identifier",
                                     "fullStart": 26,
                                     "start": 27,
@@ -70,7 +70,7 @@
                                         "kind": "TypeReference",
                                         "modulePath": null,
                                         "scopeMemberAccessOperator": null,
-                                        "name": {
+                                        "identifier": {
                                             "kind": "IntKeyword",
                                             "fullStart": 29,
                                             "start": 30,
@@ -108,7 +108,7 @@
                         "children": [
                             {
                                 "kind": "DataDeclaration",
-                                "name": {
+                                "identifier": {
                                     "kind": "Identifier",
                                     "fullStart": 44,
                                     "start": 45,
@@ -150,8 +150,7 @@
                         "leftOperand": {
                             "kind": "IdentifierExpression",
                             "newlines": [],
-                            "globalScopeMemberAccessOperator": null,
-                            "name": {
+                            "identifier": {
                                 "kind": "Identifier",
                                 "fullStart": 53,
                                 "start": 57,
@@ -190,8 +189,7 @@
                             "rightOperand": {
                                 "kind": "IdentifierExpression",
                                 "newlines": [],
-                                "globalScopeMemberAccessOperator": null,
-                                "name": {
+                                "identifier": {
                                     "kind": "Identifier",
                                     "fullStart": 64,
                                     "start": 65,

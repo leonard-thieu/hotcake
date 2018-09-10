@@ -13,7 +13,7 @@
                 "kind": "ModulePath",
                 "children": [],
                 "scopeMemberAccessOperator": null,
-                "name": {
+                "identifier": {
                     "kind": "Identifier",
                     "fullStart": 6,
                     "start": 7,
