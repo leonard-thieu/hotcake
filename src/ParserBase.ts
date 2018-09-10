@@ -33,7 +33,7 @@ import { ModKeywordEqualsSignToken } from './Token/ModKeywordEqualsSignToken';
 import { ShlKeywordEqualsSignToken } from './Token/ShlKeywordEqualsSignToken';
 import { ShrKeywordEqualsSignToken } from './Token/ShrKeywordEqualsSignToken';
 import { SkippedToken } from './Token/SkippedToken';
-import { CommaToken, CommercialAtToken, ConfigurationTagEndToken, ConfigurationTagStartToken, FloatLiteralToken, IntegerLiteralToken, NewKeywordToken, NullKeywordToken, OpeningParenthesisToken, OpeningSquareBracketToken, PeriodPeriodToken, PeriodToken, QuotationMarkToken, SelfKeywordToken, SuperKeywordToken, TokenKinds, TokenKindTokenMap, Tokens } from './Token/Token';
+import { CommaToken, CommercialAtToken, ConfigurationTagStartToken, FloatLiteralToken, IntegerLiteralToken, NewKeywordToken, NullKeywordToken, OpeningParenthesisToken, OpeningSquareBracketToken, PeriodPeriodToken, PeriodToken, QuotationMarkToken, SelfKeywordToken, SuperKeywordToken, TokenKinds, TokenKindTokenMap, Tokens } from './Token/Token';
 import { TokenKind } from './Token/TokenKind';
 
 export abstract class ParserBase {
@@ -401,7 +401,7 @@ export abstract class ParserBase {
         stringLiteral.parent = parent;
         stringLiteral.startQuotationMark = startQuotationMark;
         stringLiteral.children = this.parseList(stringLiteral, stringLiteral.kind);
-        stringLiteral.endQuotationMark = this.eat(TokenKind.QuotationMark);
+        stringLiteral.endQuotationMark = this.eatMissable(TokenKind.QuotationMark);
 
         return stringLiteral;
     }
@@ -428,7 +428,7 @@ export abstract class ParserBase {
         arrayLiteral.openingSquareBracket = openingSquareBracket;
         arrayLiteral.leadingNewlines = this.parseList(arrayLiteral, ParseContextKind.NewlineList, /*delimiter*/ null);
         arrayLiteral.expressions = this.parseList(arrayLiteral, ParseContextKind.ExpressionSequence, TokenKind.Comma);
-        arrayLiteral.closingSquareBracket = this.eat(TokenKind.ClosingSquareBracket);
+        arrayLiteral.closingSquareBracket = this.eatMissable(TokenKind.ClosingSquareBracket);
 
         return arrayLiteral;
     }
@@ -470,7 +470,7 @@ export abstract class ParserBase {
         groupingExpression.parent = parent;
         groupingExpression.openingParenthesis = openingParenthesis;
         groupingExpression.expression = this.parseExpression(groupingExpression);
-        groupingExpression.closingParenthesis = this.eat(TokenKind.ClosingParenthesis);
+        groupingExpression.closingParenthesis = this.eatMissable(TokenKind.ClosingParenthesis);
 
         return groupingExpression;
     }
@@ -544,7 +544,7 @@ export abstract class ParserBase {
         indexExpression.indexableExpression = expression;
         indexExpression.openingSquareBracket = openingSquareBracket;
         indexExpression.indexExpressionExpression = indexExpressionExpression;
-        indexExpression.closingSquareBracket = this.eat(TokenKind.ClosingSquareBracket);
+        indexExpression.closingSquareBracket = this.eatMissable(TokenKind.ClosingSquareBracket);
 
         return indexExpression;
     }
@@ -565,7 +565,7 @@ export abstract class ParserBase {
         if (this.isExpressionStart(this.getToken())) {
             sliceExpression.endExpression = this.parseExpression(sliceExpression) as Expressions;
         }
-        sliceExpression.closingSquareBracket = this.eat(TokenKind.ClosingSquareBracket);
+        sliceExpression.closingSquareBracket = this.eatMissable(TokenKind.ClosingSquareBracket);
 
         return sliceExpression;
     }
@@ -583,7 +583,7 @@ export abstract class ParserBase {
         }
         invokeExpression.arguments = this.parseList(invokeExpression, ParseContextKind.ExpressionSequence, TokenKind.Comma, /*allowEmpty*/ true);
         if (invokeExpression.openingParenthesis !== null) {
-            invokeExpression.closingParenthesis = this.eat(TokenKind.ClosingParenthesis);
+            invokeExpression.closingParenthesis = this.eatMissable(TokenKind.ClosingParenthesis);
         }
 
         return invokeExpression;
@@ -762,7 +762,7 @@ export abstract class ParserBase {
                 typeReference.lessThanSign = this.eatOptional(TokenKind.LessThanSign);
                 if (typeReference.lessThanSign !== null) {
                     typeReference.typeArguments = this.parseList(typeReference, ParseContextKind.TypeReferenceSequence, TokenKind.Comma);
-                    typeReference.greaterThanSign = this.eat(TokenKind.GreaterThanSign);
+                    typeReference.greaterThanSign = this.eatMissable(TokenKind.GreaterThanSign);
                 }
                 break;
             }
@@ -898,7 +898,7 @@ export abstract class ParserBase {
         if (this.isExpressionStart(this.getToken())) {
             arrayTypeDeclaration.expression = this.parseExpression(arrayTypeDeclaration);
         }
-        arrayTypeDeclaration.closingSquareBracket = this.eat(TokenKind.ClosingSquareBracket);
+        arrayTypeDeclaration.closingSquareBracket = this.eatMissable(TokenKind.ClosingSquareBracket);
 
         return arrayTypeDeclaration;
     }
@@ -969,7 +969,7 @@ export abstract class ParserBase {
         const escapedIdentifier = new EscapedIdentifier();
         escapedIdentifier.parent = parent;
         escapedIdentifier.commercialAt = commercialAt;
-        escapedIdentifier.name = this.eat(
+        escapedIdentifier.name = this.eatMissable(
             TokenKind.Identifier,
             TokenKind.ObjectKeyword,
             TokenKind.ThrowableKeyword,
@@ -1110,7 +1110,7 @@ export abstract class ParserBase {
         configurationTag.startToken = startToken;
         configurationTag.name = this.eatOptional(TokenKind.Identifier);
         // Guaranteed by tokenizer.
-        configurationTag.endToken = this.eat(TokenKind.ConfigurationTagEnd) as ConfigurationTagEndToken;
+        configurationTag.endToken = this.eat(TokenKind.ConfigurationTagEnd);
 
         return configurationTag;
     }
@@ -1284,7 +1284,7 @@ export abstract class ParserBase {
 
     // #region Tokens
 
-    protected eat<TTokenKind extends TokenKinds>(...kinds: TTokenKind[]): TokenKindTokenMap[TTokenKind] | MissingToken<TTokenKind> {
+    protected eatMissable<TTokenKind extends TokenKinds>(...kinds: TTokenKind[]): TokenKindTokenMap[TTokenKind] | MissingToken<TTokenKind> {
         const token = this.getToken();
         if (kinds.includes(token.kind as TTokenKind)) {
             this.advanceToken();
@@ -1293,6 +1293,17 @@ export abstract class ParserBase {
         }
 
         return new MissingToken(token.fullStart, kinds[0]);
+    }
+
+    protected eat<TTokenKind extends TokenKinds>(...kinds: TTokenKind[]): TokenKindTokenMap[TTokenKind] {
+        const token = this.getToken();
+        if (kinds.includes(token.kind as TTokenKind)) {
+            this.advanceToken();
+
+            return token;
+        }
+
+        throw new Error(`Unexpected token: ${JSON.stringify(token.kind)} not in ${JSON.stringify(kinds)}`);
     }
 
     protected eatOptional<TTokenKind extends TokenKinds>(...kinds: TTokenKind[]): TokenKindTokenMap[TTokenKind] | null {

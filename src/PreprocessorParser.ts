@@ -8,7 +8,7 @@ import { Expressions } from './Node/Expression/Expression';
 import { Nodes } from './Node/Node';
 import { NodeKind } from './Node/NodeKind';
 import { ParseContext, ParseContextElementMapBase, ParseContextKind, ParserBase } from './ParserBase';
-import { ConfigurationVariableToken, ElseDirectiveKeywordToken, ElseIfDirectiveKeywordToken, EOFToken, ErrorDirectiveKeywordToken, IfDirectiveKeywordToken, NumberSignToken, PrintDirectiveKeywordToken, RemDirectiveKeywordToken, Tokens } from './Token/Token';
+import { ConfigurationVariableToken, ElseDirectiveKeywordToken, ElseIfDirectiveKeywordToken, ErrorDirectiveKeywordToken, IfDirectiveKeywordToken, NumberSignToken, PrintDirectiveKeywordToken, RemDirectiveKeywordToken, Tokens } from './Token/Token';
 import { TokenKind } from './Token/TokenKind';
 
 export class PreprocessorParser extends ParserBase {
@@ -27,7 +27,7 @@ export class PreprocessorParser extends ParserBase {
 
         preprocessorModuleDeclaration.members = this.parseList(preprocessorModuleDeclaration, preprocessorModuleDeclaration.kind, /*delimiter*/ null);
         // Guaranteed by tokenizer and parser.
-        preprocessorModuleDeclaration.eofToken = this.eat(TokenKind.EOF) as EOFToken;
+        preprocessorModuleDeclaration.eofToken = this.eat(TokenKind.EOF);
 
         return preprocessorModuleDeclaration;
     }
@@ -107,8 +107,8 @@ export class PreprocessorParser extends ParserBase {
             ifDirective.elseDirective = this.parseElseDirective(ifDirective, elseDirectiveNumberSign, elseDirectiveKeyword);
         }
 
-        ifDirective.endDirectiveNumberSign = this.eat(TokenKind.NumberSign);
-        ifDirective.endDirectiveKeyword = this.eat(TokenKind.EndDirectiveKeyword);
+        ifDirective.endDirectiveNumberSign = this.eatMissable(TokenKind.NumberSign);
+        ifDirective.endDirectiveKeyword = this.eatMissable(TokenKind.EndDirectiveKeyword);
         if (ifDirective.endDirectiveKeyword.kind === TokenKind.EndDirectiveKeyword) {
             ifDirective.endIfDirectiveKeyword = this.eatOptional(TokenKind.IfDirectiveKeyword);
         }
@@ -233,8 +233,8 @@ export class PreprocessorParser extends ParserBase {
         remDirective.numberSign = numberSign;
         remDirective.remDirectiveKeyword = remDirectiveKeyword;
         remDirective.children = this.parseList(remDirective, remDirective.kind);
-        remDirective.endDirectiveNumberSign = this.eat(TokenKind.NumberSign);
-        remDirective.endDirectiveKeyword = this.eat(TokenKind.EndDirectiveKeyword);
+        remDirective.endDirectiveNumberSign = this.eatMissable(TokenKind.NumberSign);
+        remDirective.endDirectiveKeyword = this.eatMissable(TokenKind.EndDirectiveKeyword);
         if (remDirective.endDirectiveKeyword.kind === TokenKind.EndDirectiveKeyword) {
             remDirective.endIfDirectiveKeyword = this.eatOptional(TokenKind.IfDirectiveKeyword);
         }
@@ -338,7 +338,7 @@ export class PreprocessorParser extends ParserBase {
         assignmentDirective.parent = parent;
         assignmentDirective.numberSign = numberSign;
         assignmentDirective.name = name;
-        assignmentDirective.operator = this.eat(TokenKind.EqualsSign, TokenKind.PlusSignEqualsSign);
+        assignmentDirective.operator = this.eatMissable(TokenKind.EqualsSign, TokenKind.PlusSignEqualsSign);
         assignmentDirective.expression = this.parseExpression(assignmentDirective);
 
         return assignmentDirective;
