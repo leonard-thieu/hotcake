@@ -93,7 +93,7 @@
                             }
                         }
                     ],
-                    "elseIfStatements": null,
+                    "elseIfStatements": [],
                     "elseStatement": null,
                     "endKeyword": {
                         "kind": "EndKeyword",

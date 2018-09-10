@@ -3298,7 +3298,7 @@
                             }
                         }
                     ],
-                    "elseIfStatements": null,
+                    "elseIfStatements": [],
                     "elseStatement": null,
                     "endKeyword": {
                         "kind": "EndKeyword",
@@ -3403,7 +3403,7 @@
                             }
                         }
                     ],
-                    "elseIfStatements": null,
+                    "elseIfStatements": [],
                     "elseStatement": null,
                     "endKeyword": {
                         "kind": "EndKeyword",
@@ -3499,7 +3499,7 @@
                             }
                         }
                     ],
-                    "elseIfStatements": null,
+                    "elseIfStatements": [],
                     "elseStatement": null,
                     "endKeyword": {
                         "kind": "EndKeyword",
@@ -3604,7 +3604,7 @@
                             }
                         }
                     ],
-                    "elseIfStatements": null,
+                    "elseIfStatements": [],
                     "elseStatement": null,
                     "endKeyword": {
                         "kind": "EndKeyword",

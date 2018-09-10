@@ -85,7 +85,7 @@
                                     }
                                 }
                             ],
-                            "catchStatements": null,
+                            "catchStatements": [],
                             "endKeyword": {
                                 "kind": "EndKeyword",
                                 "fullStart": 34,
@@ -101,7 +101,7 @@
                             }
                         }
                     ],
-                    "catchStatements": null,
+                    "catchStatements": [],
                     "endKeyword": {
                         "kind": "EndKeyword",
                         "fullStart": 43,
