@@ -10,5 +10,5 @@ export class SelfExpression extends Expression {
 
     readonly kind = NodeKind.SelfExpression;
 
-    selfKeyword: SelfKeywordToken;
+    selfKeyword: SelfKeywordToken = undefined!;
 }

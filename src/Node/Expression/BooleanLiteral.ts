@@ -10,7 +10,7 @@ export class BooleanLiteral extends Expression {
 
     readonly kind = NodeKind.BooleanLiteral;
 
-    value: BooleanLiteralValueToken;
+    value: BooleanLiteralValueToken = undefined!;
 }
 
 export type BooleanLiteralValueToken =

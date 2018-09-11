@@ -15,8 +15,8 @@ export class DataDeclarationSequence extends Declaration {
 
     readonly kind = NodeKind.DataDeclarationSequence;
 
-    dataDeclarationKeyword: DataDeclarationKeywordToken;
-    children: ParseContextElementDelimitedSequence<ParseContextKind.DataDeclarationSequence>;
+    dataDeclarationKeyword: DataDeclarationKeywordToken = undefined!;
+    children: ParseContextElementDelimitedSequence<ParseContextKind.DataDeclarationSequence> = undefined!;
 }
 
 export type DataDeclarationKeywordToken =
@@ -53,11 +53,11 @@ export class DataDeclaration extends Declaration {
 
     readonly kind = NodeKind.DataDeclaration;
 
-    identifier: Identifier;
-    type: TypeDeclaration | null = null;
-    equalsSign: MissableToken<EqualsSignToken | ColonEqualsSignToken> | null = null;
-    eachInKeyword: EachInKeywordToken | null = null;
-    expression: MissableExpression | null = null;
+    identifier: Identifier = undefined!;
+    type?: TypeDeclaration = undefined;
+    equalsSign?: MissableToken<EqualsSignToken | ColonEqualsSignToken> = undefined;
+    eachInKeyword?: EachInKeywordToken = undefined;
+    expression?: MissableExpression = undefined;
 }
 
 export type MissableDataDeclaration = DataDeclaration | MissingToken<DataDeclaration['kind']>;

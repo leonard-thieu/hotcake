@@ -14,8 +14,8 @@ export class AliasDirectiveSequence extends Declaration {
 
     readonly kind = NodeKind.AliasDirectiveSequence;
 
-    aliasKeyword: AliasKeywordToken;
-    children: ParseContextElementDelimitedSequence<AliasDirectiveSequence['kind']>;
+    aliasKeyword: AliasKeywordToken = undefined!;
+    children: ParseContextElementDelimitedSequence<AliasDirectiveSequence['kind']> = undefined!;
 }
 
 export class AliasDirective extends Declaration {
@@ -27,7 +27,7 @@ export class AliasDirective extends Declaration {
 
     readonly kind = NodeKind.AliasDirective;
 
-    identifier: Identifier;
-    equalsSign: MissableToken<EqualsSignToken>;
-    target: MissableTypeReference;
+    identifier: Identifier = undefined!;
+    equalsSign: MissableToken<EqualsSignToken> = undefined!;
+    target: MissableTypeReference = undefined!;
 }

@@ -10,5 +10,5 @@ export class ExpressionStatement extends Statement {
 
     readonly kind = NodeKind.ExpressionStatement;
 
-    expression: MissableExpression;
+    expression: MissableExpression = undefined!;
 }

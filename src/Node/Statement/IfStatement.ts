@@ -21,15 +21,15 @@ export class IfStatement extends Statement {
 
     readonly kind = NodeKind.IfStatement;
 
-    ifKeyword: IfKeywordToken;
-    expression: MissableExpression;
-    thenKeyword: ThenKeywordToken | null = null;
+    ifKeyword: IfKeywordToken = undefined!;
+    expression: MissableExpression = undefined!;
+    thenKeyword?: ThenKeywordToken = undefined;
     isSingleLine: boolean = false;
-    statements: ParseContextElementArray<IfStatement['kind']>;
-    elseIfStatements: ParseContextElementSequence<ParseContextKind.ElseIfStatementList> | null = null;
-    elseStatement: ElseStatement | null = null;
-    endKeyword: MissableToken<EndIfKeywordToken | EndKeywordToken> | null = null;
-    endIfKeyword: IfKeywordToken | null = null;
+    statements: ParseContextElementArray<IfStatement['kind']> = undefined!;
+    elseIfStatements?: ParseContextElementSequence<ParseContextKind.ElseIfStatementList> = undefined;
+    elseStatement?: ElseStatement = undefined;
+    endKeyword?: MissableToken<EndIfKeywordToken | EndKeywordToken> = undefined;
+    endIfKeyword?: IfKeywordToken = undefined;
 }
 
 export class ElseIfStatement extends Statement {
@@ -43,11 +43,11 @@ export class ElseIfStatement extends Statement {
 
     readonly kind = NodeKind.ElseIfStatement;
 
-    elseIfKeyword: ElseIfKeywordToken | ElseKeywordToken;
-    ifKeyword: IfKeywordToken | null = null;
-    expression: MissableExpression;
-    thenKeyword: ThenKeywordToken | null = null;
-    statements: ParseContextElementArray<ElseIfStatement['kind']>;
+    elseIfKeyword: ElseIfKeywordToken | ElseKeywordToken = undefined!;
+    ifKeyword?: IfKeywordToken = undefined;
+    expression: MissableExpression = undefined!;
+    thenKeyword?: ThenKeywordToken = undefined;
+    statements: ParseContextElementArray<ElseIfStatement['kind']> = undefined!;
 }
 
 export class ElseStatement extends Statement {
@@ -58,8 +58,8 @@ export class ElseStatement extends Statement {
 
     readonly kind = NodeKind.ElseStatement;
 
-    elseKeyword: ElseKeywordToken;
-    statements: ParseContextElementArray<ElseStatement['kind']>;
+    elseKeyword: ElseKeywordToken = undefined!;
+    statements: ParseContextElementArray<ElseStatement['kind']> = undefined!;
 
     get isSingleLine() {
         if (this.parent && this.parent.kind === NodeKind.IfStatement) {

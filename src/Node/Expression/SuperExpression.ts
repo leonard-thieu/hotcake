@@ -10,5 +10,5 @@ export class SuperExpression extends Expression {
 
     readonly kind = NodeKind.SuperExpression;
 
-    superKeyword: SuperKeywordToken;
+    superKeyword: SuperKeywordToken = undefined!;
 }

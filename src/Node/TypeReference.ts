@@ -19,16 +19,16 @@ export class TypeReference extends Node {
 
     readonly kind = NodeKind.TypeReference;
 
-    modulePath: ModulePath | null = null;
-    scopeMemberAccessOperator: MissableToken<PeriodToken> | null = null;
-    identifier: TypeReferenceIdentifier | MissableToken<IdentifierToken>;
+    modulePath?: ModulePath = undefined;
+    scopeMemberAccessOperator?: MissableToken<PeriodToken> = undefined;
+    identifier: TypeReferenceIdentifier | MissableToken<IdentifierToken> = undefined!;
 
     // Generic type arguments
-    lessThanSign: LessThanSignToken | null = null;
-    typeArguments: ParseContextElementDelimitedSequence<ParseContextKind.TypeReferenceSequence> | null = null;
-    greaterThanSign: MissableToken<GreaterThanSignToken> | null = null;
+    lessThanSign?: LessThanSignToken = undefined;
+    typeArguments?: ParseContextElementDelimitedSequence<ParseContextKind.TypeReferenceSequence> = undefined;
+    greaterThanSign?: MissableToken<GreaterThanSignToken> = undefined;
 
-    arrayTypeDeclarations: ParseContextElementSequence<ParseContextKind.ArrayTypeDeclarationList>;
+    arrayTypeDeclarations: ParseContextElementSequence<ParseContextKind.ArrayTypeDeclarationList> = undefined!;
 }
 
 export type TypeReferenceIdentifier =

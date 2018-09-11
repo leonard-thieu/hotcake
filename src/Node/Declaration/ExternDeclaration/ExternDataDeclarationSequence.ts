@@ -14,8 +14,8 @@ export class ExternDataDeclarationSequence extends Declaration {
 
     readonly kind = NodeKind.ExternDataDeclarationSequence;
 
-    dataDeclarationKeyword: ExternDataDeclarationKeywordToken;
-    children: ParseContextElementDelimitedSequence<ExternDataDeclarationSequence['kind']>;
+    dataDeclarationKeyword: ExternDataDeclarationKeywordToken = undefined!;
+    children: ParseContextElementDelimitedSequence<ExternDataDeclarationSequence['kind']> = undefined!;
 }
 
 export type ExternDataDeclarationKeywordToken =
@@ -33,6 +33,6 @@ export class ExternDataDeclaration extends ExternDeclaration {
 
     readonly kind = NodeKind.ExternDataDeclaration;
 
-    identifier: Identifier;
-    type: TypeDeclaration | null = null;
+    identifier: Identifier = undefined!;
+    type?: TypeDeclaration = undefined;
 }

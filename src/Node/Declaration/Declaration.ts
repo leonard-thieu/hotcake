@@ -21,7 +21,7 @@ import { TypeDeclaration } from './TypeDeclaration';
 import { TypeParameter } from './TypeParameter';
 
 export abstract class Declaration extends Node {
-    symbol: BoundSymbol | null = null;
+    symbol?: BoundSymbol = undefined;
 }
 
 export type Declarations =

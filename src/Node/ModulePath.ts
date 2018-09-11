@@ -14,9 +14,9 @@ export class ModulePath extends Node {
 
     readonly kind = NodeKind.ModulePath;
 
-    children: ParseContextElementDelimitedSequence<ModulePath['kind']>;
-    scopeMemberAccessOperator: MissableToken<PeriodToken> | null = null;
-    identifier: Identifier | null = null;
+    children: ParseContextElementDelimitedSequence<ModulePath['kind']> = undefined!;
+    scopeMemberAccessOperator?: MissableToken<PeriodToken> = undefined;
+    identifier?: Identifier = undefined;
 }
 
 export type MissableModulePath = ModulePath | MissingToken<NodeKind.ModulePath>;

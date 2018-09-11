@@ -10,5 +10,5 @@ export class IntegerLiteral extends Expression {
 
     readonly kind = NodeKind.IntegerLiteral;
 
-    value: IntegerLiteralToken;
+    value: IntegerLiteralToken = undefined!;
 }

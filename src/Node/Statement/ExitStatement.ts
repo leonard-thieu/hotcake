@@ -10,5 +10,5 @@ export class ExitStatement extends Statement {
 
     readonly kind = NodeKind.ExitStatement;
 
-    exitKeyword: ExitKeywordToken;
+    exitKeyword: ExitKeywordToken = undefined!;
 }

@@ -10,5 +10,5 @@ export class DataDeclarationSequenceStatement extends Statement {
 
     readonly kind = NodeKind.DataDeclarationSequenceStatement;
 
-    dataDeclarationSequence: DataDeclarationSequence;
+    dataDeclarationSequence: DataDeclarationSequence = undefined!;
 }

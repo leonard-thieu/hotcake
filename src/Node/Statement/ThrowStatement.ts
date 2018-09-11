@@ -12,6 +12,6 @@ export class ThrowStatement extends Statement {
 
     readonly kind = NodeKind.ThrowStatement;
 
-    throwKeyword: ThrowKeywordToken;
-    expression: MissableExpression;
+    throwKeyword: ThrowKeywordToken = undefined!;
+    expression: MissableExpression = undefined!;
 }

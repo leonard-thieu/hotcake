@@ -17,8 +17,8 @@ export class ShorthandTypeDeclaration extends Declaration {
 
     readonly kind = NodeKind.ShorthandTypeDeclaration;
 
-    shorthandType: ShorthandTypeToken | null = null;
-    arrayTypeDeclarations: ParseContextElementSequence<ParseContextKind.ArrayTypeDeclarationList>;
+    shorthandType?: ShorthandTypeToken = undefined;
+    arrayTypeDeclarations: ParseContextElementSequence<ParseContextKind.ArrayTypeDeclarationList> = undefined!;
 }
 
 export type ShorthandTypeToken =
@@ -36,6 +36,6 @@ export class LonghandTypeDeclaration extends Declaration {
 
     readonly kind = NodeKind.LonghandTypeDeclaration;
 
-    colon: ColonToken;
-    typeReference: MissableTypeReference;
+    colon: ColonToken = undefined!;
+    typeReference: MissableTypeReference = undefined!;
 }

@@ -7,7 +7,7 @@ import { PrintDirective } from './PrintDirective';
 import { RemDirective } from './RemDirective';
 
 export abstract class Directive extends Node {
-    numberSign: NumberSignToken;
+    numberSign: NumberSignToken = undefined!;
 }
 
 export type Directives =

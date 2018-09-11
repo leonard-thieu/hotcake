@@ -16,8 +16,8 @@ export class RepeatLoop extends Statement {
 
     readonly kind = NodeKind.RepeatLoop;
 
-    repeatKeyword: RepeatKeywordToken;
-    statements: ParseContextElementArray<RepeatLoop['kind']>;
-    foreverOrUntilKeyword: MissableToken<ForeverKeywordToken | UntilKeywordToken>;
-    untilExpression: MissableExpression | null = null;
+    repeatKeyword: RepeatKeywordToken = undefined!;
+    statements: ParseContextElementArray<RepeatLoop['kind']> = undefined!;
+    foreverOrUntilKeyword: MissableToken<ForeverKeywordToken | UntilKeywordToken> = undefined!;
+    untilExpression?: MissableExpression = undefined;
 }

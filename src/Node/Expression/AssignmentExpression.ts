@@ -13,10 +13,10 @@ export class AssignmentExpression extends Expression {
 
     readonly kind = NodeKind.AssignmentExpression;
 
-    leftOperand: MissableExpression;
-    operator: AssignmentOperatorToken;
-    eachInKeyword: EachInKeywordToken | null = null;
-    rightOperand: MissableExpression;
+    leftOperand: MissableExpression = undefined!;
+    operator: AssignmentOperatorToken = undefined!;
+    eachInKeyword?: EachInKeywordToken = undefined;
+    rightOperand: MissableExpression = undefined!;
 }
 
 export type AssignmentOperatorToken =

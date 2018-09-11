@@ -9,11 +9,11 @@ export class PreprocessorModuleDeclaration extends Declaration {
         'eofToken',
     ];
 
-    filePath: string;
-    document: string;
+    filePath: string = undefined!;
+    document: string = undefined!;
 
     readonly kind = NodeKind.PreprocessorModuleDeclaration;
 
-    members: ParseContextElementSequence<PreprocessorModuleDeclaration['kind']>;
-    eofToken: EOFToken;
+    members: ParseContextElementSequence<PreprocessorModuleDeclaration['kind']> = undefined!;
+    eofToken: EOFToken = undefined!;
 }

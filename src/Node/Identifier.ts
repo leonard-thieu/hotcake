@@ -24,8 +24,8 @@ export class EscapedIdentifier extends Node {
 
     readonly kind = NodeKind.EscapedIdentifier;
 
-    commercialAt: CommercialAtToken;
-    name: MissableToken<EscapedIdentifierNameToken>;
+    commercialAt: CommercialAtToken = undefined!;
+    name: MissableToken<EscapedIdentifierNameToken> = undefined!;
 
     get fullStart() {
         return this.commercialAt.fullStart;

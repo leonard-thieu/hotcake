@@ -10,5 +10,5 @@ export class NullExpression extends Expression {
 
     readonly kind = NodeKind.NullExpression;
 
-    nullKeyword: NullKeywordToken;
+    nullKeyword: NullKeywordToken = undefined!;
 }

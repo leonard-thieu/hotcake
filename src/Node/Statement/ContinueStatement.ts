@@ -10,5 +10,5 @@ export class ContinueStatement extends Statement {
 
     readonly kind = NodeKind.ContinueStatement;
 
-    continueKeyword: ContinueKeywordToken;
+    continueKeyword: ContinueKeywordToken = undefined!;
 }

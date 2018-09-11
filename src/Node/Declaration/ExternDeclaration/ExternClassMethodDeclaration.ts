@@ -21,11 +21,11 @@ export class ExternClassMethodDeclaration extends ExternDeclaration {
 
     readonly kind = NodeKind.ExternClassMethodDeclaration;
 
-    methodKeyword: MethodKeywordToken;
-    identifier: MissableIdentifier;
-    returnType: TypeDeclaration | null = null;
-    openingParenthesis: MissableToken<OpeningParenthesisToken>;
-    parameters: ParseContextElementDelimitedSequence<ParseContextKind.DataDeclarationSequence>;
-    closingParenthesis: MissableToken<ClosingParenthesisToken>;
-    attributes: ParseContextElementSequence<ParseContextKind.ClassMethodAttributes>;
+    methodKeyword: MethodKeywordToken = undefined!;
+    identifier: MissableIdentifier = undefined!;
+    returnType?: TypeDeclaration = undefined;
+    openingParenthesis: MissableToken<OpeningParenthesisToken> = undefined!;
+    parameters: ParseContextElementDelimitedSequence<ParseContextKind.DataDeclarationSequence> = undefined!;
+    closingParenthesis: MissableToken<ClosingParenthesisToken> = undefined!;
+    attributes: ParseContextElementSequence<ParseContextKind.ClassMethodAttributes> = undefined!;
 }

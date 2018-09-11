@@ -11,6 +11,6 @@ export class CommaSeparator extends Node {
 
     readonly kind = NodeKind.CommaSeparator;
 
-    separator: CommaToken;
-    newlines: ParseContextElementSequence<ParseContextKind.NewlineList>;
+    separator: CommaToken = undefined!;
+    newlines: ParseContextElementSequence<ParseContextKind.NewlineList> = undefined!;
 }

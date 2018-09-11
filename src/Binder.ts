@@ -39,7 +39,7 @@ import { NewlineToken, TokenKinds } from './Token/Token';
 import { TokenKind } from './Token/TokenKind';
 
 export class Binder {
-    private document: string;
+    private document: string = undefined!;
 
     bind(moduleDeclaration: ModuleDeclaration): void {
         this.document = moduleDeclaration.document;
@@ -48,7 +48,7 @@ export class Binder {
     }
 
     private bindModuleDeclaration(moduleDeclaration: ModuleDeclaration): void {
-        this.declareSymbol(null, moduleDeclaration);
+        this.declareSymbol(moduleDeclaration);
 
         for (const member of moduleDeclaration.members) {
             switch (member.kind) {
@@ -62,25 +62,25 @@ export class Binder {
                 }
                 case NodeKind.ExternDataDeclarationSequence:
                 case NodeKind.DataDeclarationSequence: {
-                    this.bindDataDeclarationSequence(moduleDeclaration, member);
+                    this.bindDataDeclarationSequence(member, moduleDeclaration);
                     break;
                 }
                 case NodeKind.AliasDirectiveSequence: {
-                    this.bindAliasDirectiveSequence(moduleDeclaration, member);
+                    this.bindAliasDirectiveSequence(member, moduleDeclaration);
                     break;
                 }
                 case NodeKind.ExternFunctionDeclaration:
                 case NodeKind.FunctionDeclaration: {
-                    this.bindFunctionLikeDeclaration(moduleDeclaration, member);
+                    this.bindFunctionLikeDeclaration(member, moduleDeclaration);
                     break;
                 }
                 case NodeKind.InterfaceDeclaration: {
-                    this.bindInterfaceDeclaration(moduleDeclaration, member);
+                    this.bindInterfaceDeclaration(member, moduleDeclaration);
                     break;
                 }
                 case NodeKind.ExternClassDeclaration:
                 case NodeKind.ClassDeclaration: {
-                    this.bindClassDeclaration(moduleDeclaration, member);
+                    this.bindClassDeclaration(member, moduleDeclaration);
                     break;
                 }
                 default: {
@@ -97,11 +97,11 @@ export class Binder {
         }
     }
 
-    private bindAliasDirectiveSequence(parent: Nodes, aliasDirectiveSequence: AliasDirectiveSequence): void {
+    private bindAliasDirectiveSequence(aliasDirectiveSequence: AliasDirectiveSequence, parent: Nodes): void {
         for (const child of aliasDirectiveSequence.children) {
             switch (child.kind) {
                 case NodeKind.AliasDirective: {
-                    this.declareSymbol(parent, child);
+                    this.declareSymbol(child, parent);
                     break;
                 }
                 default: {
@@ -112,17 +112,17 @@ export class Binder {
         }
     }
 
-    private bindInterfaceDeclaration(parent: Nodes, interfaceDeclaration: InterfaceDeclaration): void {
-        this.declareSymbol(parent, interfaceDeclaration);
+    private bindInterfaceDeclaration(interfaceDeclaration: InterfaceDeclaration, parent: Nodes): void {
+        this.declareSymbol(interfaceDeclaration, parent);
 
         for (const member of interfaceDeclaration.members) {
             switch (member.kind) {
                 case NodeKind.DataDeclarationSequence: {
-                    this.bindDataDeclarationSequence(interfaceDeclaration, member);
+                    this.bindDataDeclarationSequence(member, interfaceDeclaration);
                     break;
                 }
                 case NodeKind.InterfaceMethodDeclaration: {
-                    this.bindFunctionLikeDeclaration(interfaceDeclaration, member);
+                    this.bindFunctionLikeDeclaration(member, interfaceDeclaration);
                     break;
                 }
                 default: {
@@ -137,21 +137,21 @@ export class Binder {
         }
     }
 
-    private bindClassDeclaration(parent: Nodes, classDeclaration: ExternClassDeclaration | ClassDeclaration): void {
-        this.declareSymbol(parent, classDeclaration);
+    private bindClassDeclaration(classDeclaration: ExternClassDeclaration | ClassDeclaration, parent: Nodes): void {
+        this.declareSymbol(classDeclaration, parent);
 
         for (const member of classDeclaration.members) {
             switch (member.kind) {
                 case NodeKind.ExternDataDeclarationSequence:
                 case NodeKind.DataDeclarationSequence: {
-                    this.bindDataDeclarationSequence(classDeclaration, member);
+                    this.bindDataDeclarationSequence(member, classDeclaration);
                     break;
                 }
                 case NodeKind.ExternFunctionDeclaration:
                 case NodeKind.ExternClassMethodDeclaration:
                 case NodeKind.FunctionDeclaration:
                 case NodeKind.ClassMethodDeclaration: {
-                    this.bindFunctionLikeDeclaration(classDeclaration, member);
+                    this.bindFunctionLikeDeclaration(member, classDeclaration);
                     break;
                 }
                 case NodeKind.AccessibilityDirective:
@@ -168,8 +168,8 @@ export class Binder {
         }
     }
 
-    private bindFunctionLikeDeclaration(parent: Nodes, functionLikeDeclaration: FunctionLikeDeclaration): void {
-        this.declareSymbol(parent, functionLikeDeclaration);
+    private bindFunctionLikeDeclaration(functionLikeDeclaration: FunctionLikeDeclaration, parent: Nodes): void {
+        this.declareSymbol(functionLikeDeclaration, parent);
 
         for (const parameter of functionLikeDeclaration.parameters) {
             switch (parameter.kind) {
@@ -221,7 +221,7 @@ export class Binder {
     private bindStatement(parent: Nodes, statement: Statements): void {
         switch (statement.kind) {
             case NodeKind.DataDeclarationSequenceStatement: {
-                this.bindDataDeclarationSequence(parent, statement.dataDeclarationSequence);
+                this.bindDataDeclarationSequence(statement.dataDeclarationSequence, parent);
                 break;
             }
             case NodeKind.IfStatement: {
@@ -289,12 +289,12 @@ export class Binder {
     private bindForLoop(statement: ForLoop): void {
         switch (statement.header.kind) {
             case NodeKind.DataDeclarationSequenceStatement: {
-                this.bindDataDeclarationSequence(statement, statement.header.dataDeclarationSequence);
+                this.bindDataDeclarationSequence(statement.header.dataDeclarationSequence, statement);
                 break;
             }
             case NodeKind.NumericForLoopHeader: {
                 if (statement.header.loopVariableExpression.kind === NodeKind.DataDeclarationSequenceStatement) {
-                    this.bindDataDeclarationSequence(statement, statement.header.loopVariableExpression.dataDeclarationSequence);
+                    this.bindDataDeclarationSequence(statement.header.loopVariableExpression.dataDeclarationSequence, statement);
                 }
                 break;
             }
@@ -321,18 +321,18 @@ export class Binder {
 
     private bindCatchStatement(catchStatement: CatchStatement) {
         if (catchStatement.parameter.kind === NodeKind.DataDeclaration) {
-            this.declareSymbol(catchStatement, catchStatement.parameter);
+            this.declareSymbol(catchStatement.parameter, catchStatement);
         }
 
         this.bindStatements(catchStatement);
     }
 
-    private bindDataDeclarationSequence(parent: Nodes, dataDeclarationSequence: ExternDataDeclarationSequence | DataDeclarationSequence): void {
+    private bindDataDeclarationSequence(dataDeclarationSequence: ExternDataDeclarationSequence | DataDeclarationSequence, parent: Nodes): void {
         for (const child of dataDeclarationSequence.children) {
             switch (child.kind) {
                 case NodeKind.ExternDataDeclaration:
                 case NodeKind.DataDeclaration: {
-                    this.declareSymbol(parent, child);
+                    this.declareSymbol(child, parent);
                     break;
                 }
                 default: {
@@ -345,7 +345,7 @@ export class Binder {
 
     // #region Core
 
-    private declareSymbol(parent: Nodes | null, declaration: Declarations): void {
+    private declareSymbol(declaration: Declarations, parent?: Nodes): void {
         const name = this.getDeclarationName(declaration);
 
         let symbol: BoundSymbol | undefined;

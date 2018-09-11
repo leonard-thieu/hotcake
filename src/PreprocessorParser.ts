@@ -25,7 +25,7 @@ export class PreprocessorParser extends ParserBase {
         preprocessorModuleDeclaration.filePath = filePath;
         preprocessorModuleDeclaration.document = document;
 
-        preprocessorModuleDeclaration.members = this.parseList(preprocessorModuleDeclaration, preprocessorModuleDeclaration.kind, /*delimiter*/ null);
+        preprocessorModuleDeclaration.members = this.parseList(preprocessorModuleDeclaration.kind, preprocessorModuleDeclaration, /*delimiter*/ null);
         // Guaranteed by tokenizer and parser.
         preprocessorModuleDeclaration.eofToken = this.eat(TokenKind.EOF);
 
@@ -94,8 +94,8 @@ export class PreprocessorParser extends ParserBase {
         ifDirective.numberSign = numberSign;
         ifDirective.ifDirectiveKeyword = ifDirectiveKeyword;
         ifDirective.expression = this.parseExpression(ifDirective);
-        ifDirective.members = this.parseList(ifDirective, ifDirective.kind, /*delimiter*/ null);
-        ifDirective.elseIfDirectives = this.parseList(ifDirective, ParseContextKind.ElseIfDirectiveList, /*delimiter*/ null);
+        ifDirective.members = this.parseList(ifDirective.kind, ifDirective, /*delimiter*/ null);
+        ifDirective.elseIfDirectives = this.parseList(ParseContextKind.ElseIfDirectiveList, ifDirective, /*delimiter*/ null);
 
         const elseDirectiveNumberSign = this.getToken();
         const elseDirectiveKeyword = this.getToken(1);
@@ -184,7 +184,7 @@ export class PreprocessorParser extends ParserBase {
         parent: Nodes,
         numberSign: NumberSignToken,
         elseIfDirectiveKeyword: ElseIfDirectiveKeywordToken | ElseDirectiveKeywordToken,
-        ifDirectiveKeyword: IfDirectiveKeywordToken | null = null,
+        ifDirectiveKeyword?: IfDirectiveKeywordToken,
     ): ElseIfDirective {
         const elseIfDirective = new ElseIfDirective();
         elseIfDirective.parent = parent;
@@ -192,7 +192,7 @@ export class PreprocessorParser extends ParserBase {
         elseIfDirective.elseIfDirectiveKeyword = elseIfDirectiveKeyword;
         elseIfDirective.ifDirectiveKeyword = ifDirectiveKeyword;
         elseIfDirective.expression = this.parseExpression(elseIfDirective);
-        elseIfDirective.members = this.parseList(elseIfDirective, elseIfDirective.kind, /*delimiter*/ null);
+        elseIfDirective.members = this.parseList(elseIfDirective.kind, elseIfDirective, /*delimiter*/ null);
 
         return elseIfDirective;
     }
@@ -204,7 +204,7 @@ export class PreprocessorParser extends ParserBase {
         elseDirective.parent = parent;
         elseDirective.numberSign = numberSign;
         elseDirective.elseDirectiveKeyword = elseDirectiveKeyword;
-        elseDirective.members = this.parseList(elseDirective, elseDirective.kind, /*delimiter*/ null);
+        elseDirective.members = this.parseList(elseDirective.kind, elseDirective, /*delimiter*/ null);
 
         return elseDirective;
     }
@@ -232,7 +232,7 @@ export class PreprocessorParser extends ParserBase {
         remDirective.parent = parent;
         remDirective.numberSign = numberSign;
         remDirective.remDirectiveKeyword = remDirectiveKeyword;
-        remDirective.children = this.parseList(remDirective, remDirective.kind);
+        remDirective.children = this.parseList(remDirective.kind, remDirective);
         remDirective.endDirectiveNumberSign = this.eatMissable(TokenKind.NumberSign);
         remDirective.endDirectiveKeyword = this.eatMissable(TokenKind.EndDirectiveKeyword);
         if (remDirective.endDirectiveKeyword.kind === TokenKind.EndDirectiveKeyword) {

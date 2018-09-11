@@ -15,14 +15,14 @@ import { TypeReference } from './TypeReference';
 
 export abstract class Node {
     abstract readonly kind: NodeKind;
-    parent: Nodes | null = null;
+    parent?: Nodes = undefined;
 
-    locals: BoundSymbolTable | null = null;
+    locals?: BoundSymbolTable = undefined;
 
     get root() {
         let root: Node = this;
 
-        while (root.parent !== null) {
+        while (root.parent) {
             root = root.parent;
         }
 
@@ -32,8 +32,8 @@ export abstract class Node {
     getFirstAncestor(...kinds: NodeKind[]) {
         let ancestor: Node = this;
         while (true) {
-            if (ancestor.parent === null) {
-                return null;
+            if (!ancestor.parent) {
+                break;
             }
 
             ancestor = ancestor.parent;

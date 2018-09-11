@@ -17,9 +17,9 @@ export class WhileLoop extends Statement {
 
     readonly kind = NodeKind.WhileLoop;
 
-    whileKeyword: WhileKeywordToken;
-    expression: MissableExpression;
-    statements: ParseContextElementArray<WhileLoop['kind']>;
-    endKeyword: MissableToken<WendKeywordToken | EndKeywordToken>;
-    endWhileKeyword: WhileKeywordToken | null = null;
+    whileKeyword: WhileKeywordToken = undefined!;
+    expression: MissableExpression = undefined!;
+    statements: ParseContextElementArray<WhileLoop['kind']> = undefined!;
+    endKeyword: MissableToken<WendKeywordToken | EndKeywordToken> = undefined!;
+    endWhileKeyword?: WhileKeywordToken = undefined;
 }

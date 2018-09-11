@@ -18,11 +18,11 @@ export class InterfaceDeclaration extends Declaration {
 
     readonly kind = NodeKind.InterfaceDeclaration;
 
-    interfaceKeyword: InterfaceKeywordToken;
-    identifier: MissableIdentifier;
-    extendsKeyword: ExtendsKeywordToken | null = null;
-    baseTypes: ParseContextElementDelimitedSequence<ParseContextKind.TypeReferenceSequence> | null = null;
-    members: ParseContextElementArray<InterfaceDeclaration['kind']>;
-    endKeyword: MissableToken<EndKeywordToken>;
-    endInterfaceKeyword: InterfaceKeywordToken | null = null;
+    interfaceKeyword: InterfaceKeywordToken = undefined!;
+    identifier: MissableIdentifier = undefined!;
+    extendsKeyword?: ExtendsKeywordToken = undefined;
+    baseTypes?: ParseContextElementDelimitedSequence<ParseContextKind.TypeReferenceSequence> = undefined;
+    members: ParseContextElementArray<InterfaceDeclaration['kind']> = undefined!;
+    endKeyword: MissableToken<EndKeywordToken> = undefined!;
+    endInterfaceKeyword?: InterfaceKeywordToken = undefined;
 }

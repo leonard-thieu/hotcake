@@ -11,8 +11,8 @@ export class UnaryOpExpression extends Expression {
 
     readonly kind = NodeKind.UnaryOpExpression;
 
-    operator: UnaryOperatorToken;
-    operand: MissableExpression;
+    operator: UnaryOperatorToken = undefined!;
+    operand: MissableExpression = undefined!;
 }
 
 export type UnaryOperatorToken =

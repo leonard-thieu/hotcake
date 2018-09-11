@@ -25,25 +25,25 @@ export class ClassDeclaration extends Declaration {
 
     readonly kind = NodeKind.ClassDeclaration;
 
-    classKeyword: ClassKeywordToken;
-    identifier: MissableIdentifier;
+    classKeyword: ClassKeywordToken = undefined!;
+    identifier: MissableIdentifier = undefined!;
 
     // Generic
-    lessThanSign: LessThanSignToken | null = null;
-    typeParameters: ParseContextElementDelimitedSequence<ParseContextKind.TypeParameterSequence> | null = null;
-    greaterThanSign: MissableToken<GreaterThanSignToken> | null = null;
+    lessThanSign?: LessThanSignToken = undefined;
+    typeParameters?: ParseContextElementDelimitedSequence<ParseContextKind.TypeParameterSequence> = undefined;
+    greaterThanSign?: MissableToken<GreaterThanSignToken> = undefined;
 
     // Extends
-    extendsKeyword: ExtendsKeywordToken | null = null;
-    baseType: MissableTypeReference | null = null;
+    extendsKeyword?: ExtendsKeywordToken = undefined;
+    baseType?: MissableTypeReference = undefined;
 
     // Implements
-    implementsKeyword: ImplementsKeywordToken | null = null;
-    implementedTypes: ParseContextElementDelimitedSequence<ParseContextKind.TypeReferenceSequence> | null = null;
+    implementsKeyword?: ImplementsKeywordToken = undefined;
+    implementedTypes?: ParseContextElementDelimitedSequence<ParseContextKind.TypeReferenceSequence> = undefined;
 
-    attribute: AbstractKeywordToken | FinalKeywordToken | null = null;
+    attribute?: AbstractKeywordToken | FinalKeywordToken = undefined;
 
-    members: ParseContextElementArray<ClassDeclaration['kind']>;
-    endKeyword: MissableToken<EndKeywordToken>;
-    endClassKeyword: ClassKeywordToken | null = null;
+    members: ParseContextElementArray<ClassDeclaration['kind']> = undefined!;
+    endKeyword: MissableToken<EndKeywordToken> = undefined!;
+    endClassKeyword?: ClassKeywordToken = undefined;
 }

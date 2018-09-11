@@ -12,9 +12,9 @@ export class BinaryExpression extends Expression {
 
     readonly kind = NodeKind.BinaryExpression;
 
-    leftOperand: MissableExpression;
-    operator: BinaryExpressionOperatorToken;
-    rightOperand: MissableExpression;
+    leftOperand: MissableExpression = undefined!;
+    operator: BinaryExpressionOperatorToken = undefined!;
+    rightOperand: MissableExpression = undefined!;
 }
 
 export type BinaryExpressionOperatorToken =

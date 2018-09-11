@@ -9,8 +9,8 @@ import { InvalidEscapeSequenceToken, TokenKinds, Tokens } from './Token/Token';
 import { TokenKind } from './Token/TokenKind';
 
 export class Tokenizer {
-    private document: string;
-    private configVars: Map<string, any>;
+    private document: string = undefined!;
+    private configVars: Map<string, any> = undefined!;
 
     * getTokens(
         document: string,

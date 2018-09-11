@@ -14,8 +14,8 @@ export class IndexExpression extends Expression {
 
     readonly kind = NodeKind.IndexExpression;
 
-    indexableExpression: Expressions;
-    openingSquareBracket: OpeningSquareBracketToken;
-    indexExpressionExpression: MissableExpression;
-    closingSquareBracket: MissableToken<ClosingSquareBracketToken>;
+    indexableExpression: Expressions = undefined!;
+    openingSquareBracket: OpeningSquareBracketToken = undefined!;
+    indexExpressionExpression: MissableExpression = undefined!;
+    closingSquareBracket: MissableToken<ClosingSquareBracketToken> = undefined!;
 }

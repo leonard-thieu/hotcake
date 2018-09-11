@@ -11,6 +11,6 @@ export class FriendDirective extends Declaration {
 
     readonly kind = NodeKind.FriendDirective;
 
-    friendKeyword: FriendKeywordToken;
-    modulePath: MissableModulePath;
+    friendKeyword: FriendKeywordToken = undefined!;
+    modulePath: MissableModulePath = undefined!;
 }

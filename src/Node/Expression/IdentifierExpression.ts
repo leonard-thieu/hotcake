@@ -15,12 +15,12 @@ export class IdentifierExpression extends Expression {
 
     readonly kind = NodeKind.IdentifierExpression;
 
-    identifier: IdentifierExpressionIdentifier;
+    identifier: IdentifierExpressionIdentifier = undefined!;
 
     // Generic type arguments
-    lessThanSign: LessThanSignToken | null = null;
-    typeArguments: ParseContextElementDelimitedSequence<ParseContextKind.TypeReferenceSequence> | null = null;
-    greaterThanSign: GreaterThanSignToken | null = null;
+    lessThanSign?: LessThanSignToken = undefined;
+    typeArguments?: ParseContextElementDelimitedSequence<ParseContextKind.TypeReferenceSequence> = undefined;
+    greaterThanSign?: GreaterThanSignToken = undefined;
 }
 
 export type IdentifierExpressionIdentifier =

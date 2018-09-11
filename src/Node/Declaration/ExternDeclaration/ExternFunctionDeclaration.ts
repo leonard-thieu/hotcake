@@ -20,10 +20,10 @@ export class ExternFunctionDeclaration extends ExternDeclaration {
 
     readonly kind = NodeKind.ExternFunctionDeclaration;
 
-    functionKeyword: FunctionKeywordToken;
-    identifier: MissableIdentifier;
-    returnType: TypeDeclaration | null = null;
-    openingParenthesis: MissableToken<OpeningParenthesisToken>;
-    parameters: ParseContextElementDelimitedSequence<ParseContextKind.DataDeclarationSequence>;
-    closingParenthesis: MissableToken<ClosingParenthesisToken>;
+    functionKeyword: FunctionKeywordToken = undefined!;
+    identifier: MissableIdentifier = undefined!;
+    returnType?: TypeDeclaration = undefined;
+    openingParenthesis: MissableToken<OpeningParenthesisToken> = undefined!;
+    parameters: ParseContextElementDelimitedSequence<ParseContextKind.DataDeclarationSequence> = undefined!;
+    closingParenthesis: MissableToken<ClosingParenthesisToken> = undefined!;
 }

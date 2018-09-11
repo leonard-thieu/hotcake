@@ -13,7 +13,7 @@ export class ArrayTypeDeclaration extends Node {
 
     readonly kind = NodeKind.ArrayTypeDeclaration;
 
-    openingSquareBracket: OpeningSquareBracketToken;
-    expression: MissableExpression | null = null;
-    closingSquareBracket: MissableToken<ClosingSquareBracketToken>;
+    openingSquareBracket: OpeningSquareBracketToken = undefined!;
+    expression?: MissableExpression = undefined;
+    closingSquareBracket: MissableToken<ClosingSquareBracketToken> = undefined!;
 }

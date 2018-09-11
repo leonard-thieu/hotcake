@@ -12,6 +12,6 @@ export class ErrorDirective extends Directive {
 
     readonly kind = NodeKind.ErrorDirective;
 
-    errorDirectiveKeyword: ErrorDirectiveKeywordToken;
-    expression: MissableExpression;
+    errorDirectiveKeyword: ErrorDirectiveKeywordToken = undefined!;
+    expression: MissableExpression = undefined!;
 }

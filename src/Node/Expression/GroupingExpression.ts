@@ -13,7 +13,7 @@ export class GroupingExpression extends Expression {
 
     readonly kind = NodeKind.GroupingExpression;
 
-    openingParenthesis: OpeningParenthesisToken;
-    expression: MissableExpression;
-    closingParenthesis: MissableToken<ClosingParenthesisToken>;
+    openingParenthesis: OpeningParenthesisToken = undefined!;
+    expression: MissableExpression = undefined!;
+    closingParenthesis: MissableToken<ClosingParenthesisToken> = undefined!;
 }

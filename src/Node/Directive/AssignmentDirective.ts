@@ -14,7 +14,7 @@ export class AssignmentDirective extends Directive {
 
     readonly kind = NodeKind.AssignmentDirective;
 
-    name: ConfigurationVariableToken;
-    operator: MissableToken<EqualsSignToken | PlusSignEqualsSignToken>;
-    expression: MissableExpression;
+    name: ConfigurationVariableToken = undefined!;
+    operator: MissableToken<EqualsSignToken | PlusSignEqualsSignToken> = undefined!;
+    expression: MissableExpression = undefined!;
 }

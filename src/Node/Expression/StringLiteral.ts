@@ -14,9 +14,9 @@ export class StringLiteral extends Expression {
 
     readonly kind = NodeKind.StringLiteral;
 
-    startQuotationMark: QuotationMarkToken;
-    children: ParseContextElementArray<StringLiteral['kind']>;
-    endQuotationMark: MissableToken<QuotationMarkToken>;
+    startQuotationMark: QuotationMarkToken = undefined!;
+    children: ParseContextElementArray<StringLiteral['kind']> = undefined!;
+    endQuotationMark: MissableToken<QuotationMarkToken> = undefined!;
 }
 
 export type MissableStringLiteral = StringLiteral | MissingToken<StringLiteral['kind']>;

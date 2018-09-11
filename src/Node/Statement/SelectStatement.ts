@@ -19,13 +19,13 @@ export class SelectStatement extends Statement {
 
     readonly kind = NodeKind.SelectStatement;
 
-    selectKeyword: SelectKeywordToken;
-    expression: MissableExpression;
-    newlines: ParseContextElementSequence<ParseContextKind.NewlineList>;
-    caseStatements: ParseContextElementSequence<ParseContextKind.CaseStatementList>;
-    defaultStatement: DefaultStatement | null = null;
-    endKeyword: MissableToken<EndKeywordToken>;
-    endSelectKeyword: SelectKeywordToken | null = null;
+    selectKeyword: SelectKeywordToken = undefined!;
+    expression: MissableExpression = undefined!;
+    newlines: ParseContextElementSequence<ParseContextKind.NewlineList> = undefined!;
+    caseStatements: ParseContextElementSequence<ParseContextKind.CaseStatementList> = undefined!;
+    defaultStatement?: DefaultStatement = undefined;
+    endKeyword: MissableToken<EndKeywordToken> = undefined!;
+    endSelectKeyword?: SelectKeywordToken = undefined;
 }
 
 export class CaseStatement extends Statement {
@@ -37,9 +37,9 @@ export class CaseStatement extends Statement {
 
     readonly kind = NodeKind.CaseStatement;
 
-    caseKeyword: CaseKeywordToken;
-    expressions: ParseContextElementDelimitedSequence<ParseContextKind.ExpressionSequence>;
-    statements: ParseContextElementArray<CaseStatement['kind']>;
+    caseKeyword: CaseKeywordToken = undefined!;
+    expressions: ParseContextElementDelimitedSequence<ParseContextKind.ExpressionSequence> = undefined!;
+    statements: ParseContextElementArray<CaseStatement['kind']> = undefined!;
 }
 
 export class DefaultStatement extends Statement {
@@ -50,6 +50,6 @@ export class DefaultStatement extends Statement {
 
     readonly kind = NodeKind.DefaultStatement;
 
-    defaultKeyword: DefaultKeywordToken;
-    statements: ParseContextElementArray<DefaultStatement['kind']>;
+    defaultKeyword: DefaultKeywordToken = undefined!;
+    statements: ParseContextElementArray<DefaultStatement['kind']> = undefined!;
 }

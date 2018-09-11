@@ -22,14 +22,14 @@ export class ClassMethodDeclaration extends Declaration {
 
     readonly kind = NodeKind.ClassMethodDeclaration;
 
-    methodKeyword: MethodKeywordToken;
-    identifier: NewKeywordToken | MissableIdentifier;
-    returnType: TypeDeclaration | null = null;
-    openingParenthesis: MissableToken<OpeningParenthesisToken>;
-    parameters: ParseContextElementDelimitedSequence<ParseContextKind.DataDeclarationSequence>;
-    closingParenthesis: MissableToken<ClosingParenthesisToken>;
-    attributes: ParseContextElementSequence<ParseContextKind.ClassMethodAttributes>;
-    statements: ParseContextElementArray<ClassMethodDeclaration['kind']> | null = null;
-    endKeyword: MissableToken<EndKeywordToken> | null = null;
-    endMethodKeyword: MethodKeywordToken | null = null;
+    methodKeyword: MethodKeywordToken = undefined!;
+    identifier: NewKeywordToken | MissableIdentifier = undefined!;
+    returnType?: TypeDeclaration = undefined;
+    openingParenthesis: MissableToken<OpeningParenthesisToken> = undefined!;
+    parameters: ParseContextElementDelimitedSequence<ParseContextKind.DataDeclarationSequence> = undefined!;
+    closingParenthesis: MissableToken<ClosingParenthesisToken> = undefined!;
+    attributes: ParseContextElementSequence<ParseContextKind.ClassMethodAttributes> = undefined!;
+    statements?: ParseContextElementArray<ClassMethodDeclaration['kind']> = undefined;
+    endKeyword?: MissableToken<EndKeywordToken> = undefined;
+    endMethodKeyword?: MethodKeywordToken = undefined;
 }

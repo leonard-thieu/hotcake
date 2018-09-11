@@ -21,13 +21,13 @@ export class FunctionDeclaration extends Declaration {
 
     readonly kind = NodeKind.FunctionDeclaration;
 
-    functionKeyword: FunctionKeywordToken;
-    identifier: MissableIdentifier;
-    returnType: TypeDeclaration | null = null;
-    openingParenthesis: MissableToken<OpeningParenthesisToken>;
-    parameters: ParseContextElementDelimitedSequence<ParseContextKind.DataDeclarationSequence>;
-    closingParenthesis: MissableToken<ClosingParenthesisToken>;
-    statements: ParseContextElementArray<FunctionDeclaration['kind']>;
-    endKeyword: MissableToken<EndKeywordToken>;
-    endFunctionKeyword: FunctionKeywordToken | null = null;
+    functionKeyword: FunctionKeywordToken = undefined!;
+    identifier: MissableIdentifier = undefined!;
+    returnType?: TypeDeclaration = undefined;
+    openingParenthesis: MissableToken<OpeningParenthesisToken> = undefined!;
+    parameters: ParseContextElementDelimitedSequence<ParseContextKind.DataDeclarationSequence> = undefined!;
+    closingParenthesis: MissableToken<ClosingParenthesisToken> = undefined!;
+    statements: ParseContextElementArray<FunctionDeclaration['kind']> = undefined!;
+    endKeyword: MissableToken<EndKeywordToken> = undefined!;
+    endFunctionKeyword?: FunctionKeywordToken = undefined;
 }

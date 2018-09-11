@@ -7,10 +7,10 @@ export class ModuleDeclaration extends Declaration {
         'members',
     ];
 
-    filePath: string;
-    document: string;
+    filePath: string = undefined!;
+    document: string = undefined!;
 
     readonly kind = NodeKind.ModuleDeclaration;
 
-    members: ParseContextElementArray<ModuleDeclaration['kind']>;
+    members: ParseContextElementArray<ModuleDeclaration['kind']> = undefined!;
 }

@@ -18,9 +18,11 @@ export class Token<TTokenKind extends FullTokenKinds> {
     }
 
     toJSON(): any {
-        if (!SerializationOptions.serializeSymbols) {
-            return this;
+        if (SerializationOptions.serializeSymbols) {
+            return this.kind;
         }
+
+        return this;
     }
 }
 

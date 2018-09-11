@@ -12,6 +12,6 @@ export class NewExpression extends Expression {
 
     readonly kind = NodeKind.NewExpression;
 
-    newKeyword: NewKeywordToken;
-    type: MissableTypeReference;
+    newKeyword: NewKeywordToken = undefined!;
+    type: MissableTypeReference = undefined!;
 }

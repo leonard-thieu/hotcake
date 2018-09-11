@@ -12,6 +12,6 @@ export class PrintDirective extends Directive {
 
     readonly kind = NodeKind.PrintDirective;
 
-    printDirectiveKeyword: PrintDirectiveKeywordToken;
-    expression: MissableExpression;
+    printDirectiveKeyword: PrintDirectiveKeywordToken = undefined!;
+    expression: MissableExpression = undefined!;
 }

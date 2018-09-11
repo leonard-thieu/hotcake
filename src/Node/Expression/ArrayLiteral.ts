@@ -15,8 +15,8 @@ export class ArrayLiteral extends Expression {
 
     readonly kind = NodeKind.ArrayLiteral;
 
-    openingSquareBracket: OpeningSquareBracketToken;
-    leadingNewlines: ParseContextElementSequence<ParseContextKind.NewlineList>;
-    expressions: ParseContextElementDelimitedSequence<ParseContextKind.ExpressionSequence>;
-    closingSquareBracket: MissableToken<ClosingSquareBracketToken>;
+    openingSquareBracket: OpeningSquareBracketToken = undefined!;
+    leadingNewlines: ParseContextElementSequence<ParseContextKind.NewlineList> = undefined!;
+    expressions: ParseContextElementDelimitedSequence<ParseContextKind.ExpressionSequence> = undefined!;
+    closingSquareBracket: MissableToken<ClosingSquareBracketToken> = undefined!;
 }

@@ -2,17 +2,17 @@ import { Token, Tokens } from './Token/Token';
 import { TokenKind } from './Token/TokenKind';
 
 export class PreprocessorTokenizer {
-    private document: string;
-    private position: number;
-    private line: number;
-    private lineStart: number;
+    private document: string = undefined!;
+    private position: number = 0;
+    private line: number = 1;
+    private lineStart: number = 0;
     /**
      * Track directive nesting.
      */
-    private nesting: Array<TokenKind.RemDirectiveKeyword | TokenKind.IfDirectiveKeyword>;
-    private stringLiteralTerminatorIndex: number;
-    private configurationTagTerminatorIndex: number;
-    private tokens: Tokens[];
+    private nesting: Array<TokenKind.RemDirectiveKeyword | TokenKind.IfDirectiveKeyword> = undefined!;
+    private stringLiteralTerminatorIndex: number = -1;
+    private configurationTagTerminatorIndex: number = -1;
+    private tokens: Tokens[] = undefined!;
 
     getTokens(document: string): Tokens[] {
         this.document = document;

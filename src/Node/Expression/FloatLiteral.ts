@@ -10,5 +10,5 @@ export class FloatLiteral extends Expression {
 
     readonly kind = NodeKind.FloatLiteral;
 
-    value: FloatLiteralToken;
+    value: FloatLiteralToken = undefined!;
 }

@@ -20,14 +20,14 @@ export class IfDirective extends Directive {
 
     readonly kind = NodeKind.IfDirective;
 
-    ifDirectiveKeyword: IfDirectiveKeywordToken;
-    expression: MissableExpression;
-    members: ParseContextElementSequence<IfDirective['kind']>;
-    elseIfDirectives: ParseContextElementSequence<ParseContextKind.ElseIfDirectiveList>;
-    elseDirective: ElseDirective | null = null;
-    endDirectiveNumberSign: MissableToken<NumberSignToken>;
-    endDirectiveKeyword: MissableToken<EndDirectiveKeywordToken>;
-    endIfDirectiveKeyword: IfDirectiveKeywordToken | null = null;
+    ifDirectiveKeyword: IfDirectiveKeywordToken = undefined!;
+    expression: MissableExpression = undefined!;
+    members: ParseContextElementSequence<IfDirective['kind']> = undefined!;
+    elseIfDirectives: ParseContextElementSequence<ParseContextKind.ElseIfDirectiveList> = undefined!;
+    elseDirective?: ElseDirective = undefined;
+    endDirectiveNumberSign: MissableToken<NumberSignToken> = undefined!;
+    endDirectiveKeyword: MissableToken<EndDirectiveKeywordToken> = undefined!;
+    endIfDirectiveKeyword?: IfDirectiveKeywordToken = undefined;
 }
 
 export class ElseIfDirective extends Directive {
@@ -41,10 +41,10 @@ export class ElseIfDirective extends Directive {
 
     readonly kind = NodeKind.ElseIfDirective;
 
-    elseIfDirectiveKeyword: ElseIfDirectiveKeywordToken | ElseDirectiveKeywordToken;
-    ifDirectiveKeyword: IfDirectiveKeywordToken | null = null;
-    expression: MissableExpression;
-    members: ParseContextElementSequence<ElseIfDirective['kind']>;
+    elseIfDirectiveKeyword: ElseIfDirectiveKeywordToken | ElseDirectiveKeywordToken = undefined!;
+    ifDirectiveKeyword?: IfDirectiveKeywordToken = undefined;
+    expression: MissableExpression = undefined!;
+    members: ParseContextElementSequence<ElseIfDirective['kind']> = undefined!;
 }
 
 export class ElseDirective extends Directive {
@@ -56,6 +56,6 @@ export class ElseDirective extends Directive {
 
     readonly kind = NodeKind.ElseDirective;
 
-    elseDirectiveKeyword: ElseDirectiveKeywordToken;
-    members: ParseContextElementSequence<ElseDirective['kind']>;
+    elseDirectiveKeyword: ElseDirectiveKeywordToken = undefined!;
+    members: ParseContextElementSequence<ElseDirective['kind']> = undefined!;
 }

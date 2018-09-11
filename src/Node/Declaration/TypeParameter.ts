@@ -9,5 +9,5 @@ export class TypeParameter extends Declaration {
 
     readonly kind = NodeKind.TypeParameter;
 
-    identifier: Identifier;
+    identifier: Identifier = undefined!;
 }

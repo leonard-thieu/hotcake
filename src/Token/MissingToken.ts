@@ -8,7 +8,7 @@ export class MissingToken<TTokenKind extends MissableTokenKinds> extends Token<T
         super(TokenKind.Missing, fullStart, fullStart, 0);
     }
 
-    newlines: ParseContextElementArray<ParseContextKind.NewlineList>;
+    newlines: ParseContextElementArray<ParseContextKind.NewlineList> = undefined!;
 }
 
 export type MissableTokenKinds =

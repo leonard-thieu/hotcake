@@ -16,10 +16,10 @@ export class SliceExpression extends Expression {
 
     readonly kind = NodeKind.SliceExpression;
 
-    sliceableExpression: Expressions;
-    openingSquareBracket: OpeningSquareBracketToken;
-    startExpression: Expressions | null = null;
-    sliceOperator: PeriodPeriodToken;
-    endExpression: Expressions | null = null;
-    closingSquareBracket: MissableToken<ClosingSquareBracketToken>;
+    sliceableExpression: Expressions = undefined!;
+    openingSquareBracket: OpeningSquareBracketToken = undefined!;
+    startExpression?: Expressions = undefined;
+    sliceOperator: PeriodPeriodToken = undefined!;
+    endExpression?: Expressions = undefined;
+    closingSquareBracket: MissableToken<ClosingSquareBracketToken> = undefined!;
 }

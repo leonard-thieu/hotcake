@@ -40,7 +40,7 @@ import { AliasKeywordToken, CaseKeywordToken, CatchKeywordToken, ClassKeywordTok
 import { TokenKind } from './Token/TokenKind';
 
 export class Parser extends ParserBase {
-    private accessibility: AccessibilityKeywordToken['kind'];
+    private accessibility: AccessibilityKeywordToken['kind'] = undefined!;
 
     parse(filePath: string, document: string, tokens: Tokens[]): ModuleDeclaration {
         this.tokens = [...tokens];
@@ -56,7 +56,7 @@ export class Parser extends ParserBase {
         moduleDeclaration.filePath = filePath;
         moduleDeclaration.document = document;
 
-        moduleDeclaration.members = this.parseList(moduleDeclaration, moduleDeclaration.kind);
+        moduleDeclaration.members = this.parseList(moduleDeclaration.kind, moduleDeclaration);
 
         return moduleDeclaration;
     }
@@ -167,7 +167,7 @@ export class Parser extends ParserBase {
         const externDataDeclarationSequence = new ExternDataDeclarationSequence();
         externDataDeclarationSequence.parent = parent;
         externDataDeclarationSequence.dataDeclarationKeyword = dataDeclarationKeyword;
-        externDataDeclarationSequence.children = this.parseList(externDataDeclarationSequence, externDataDeclarationSequence.kind, TokenKind.Comma);
+        externDataDeclarationSequence.children = this.parseList(externDataDeclarationSequence.kind, externDataDeclarationSequence, TokenKind.Comma);
 
         return externDataDeclarationSequence;
     }
@@ -179,7 +179,7 @@ export class Parser extends ParserBase {
         externFunctionDeclaration.identifier = this.parseMissableIdentifier(externFunctionDeclaration)
         externFunctionDeclaration.returnType = this.parseTypeDeclaration(externFunctionDeclaration);
         externFunctionDeclaration.openingParenthesis = this.eatMissable(TokenKind.OpeningParenthesis);
-        externFunctionDeclaration.parameters = this.parseList(externFunctionDeclaration, ParseContextKind.DataDeclarationSequence, TokenKind.Comma);
+        externFunctionDeclaration.parameters = this.parseList(ParseContextKind.DataDeclarationSequence, externFunctionDeclaration, TokenKind.Comma);
         externFunctionDeclaration.closingParenthesis = this.eatMissable(TokenKind.ClosingParenthesis);
         externFunctionDeclaration.equalsSign = this.eatOptional(TokenKind.EqualsSign);
         if (externFunctionDeclaration.equalsSign) {
@@ -196,7 +196,7 @@ export class Parser extends ParserBase {
         externClassDeclaration.identifier = this.parseMissableIdentifier(externClassDeclaration);
 
         externClassDeclaration.extendsKeyword = this.eatOptional(TokenKind.ExtendsKeyword);
-        if (externClassDeclaration.extendsKeyword !== null) {
+        if (externClassDeclaration.extendsKeyword) {
             externClassDeclaration.baseType = this.eatOptional(TokenKind.NullKeyword);
             if (!externClassDeclaration.baseType) {
                 externClassDeclaration.baseType = this.parseMissableTypeReference(externClassDeclaration);
@@ -208,7 +208,7 @@ export class Parser extends ParserBase {
         if (externClassDeclaration.equalsSign) {
             externClassDeclaration.nativeSymbol = this.parseMissableStringLiteral(externClassDeclaration);
         }
-        externClassDeclaration.members = this.parseList(externClassDeclaration, externClassDeclaration.kind);
+        externClassDeclaration.members = this.parseList(externClassDeclaration.kind, externClassDeclaration);
         externClassDeclaration.endKeyword = this.eatMissable(TokenKind.EndKeyword);
         if (externClassDeclaration.endKeyword.kind === TokenKind.EndKeyword) {
             externClassDeclaration.endClassKeyword = this.eatOptional(TokenKind.ClassKeyword);
@@ -260,7 +260,7 @@ export class Parser extends ParserBase {
         const aliasDirectiveSequence = new AliasDirectiveSequence();
         aliasDirectiveSequence.parent = parent;
         aliasDirectiveSequence.aliasKeyword = aliasKeyword;
-        aliasDirectiveSequence.children = this.parseList(aliasDirectiveSequence, aliasDirectiveSequence.kind, TokenKind.Comma);
+        aliasDirectiveSequence.children = this.parseList(aliasDirectiveSequence.kind, aliasDirectiveSequence, TokenKind.Comma);
 
         return aliasDirectiveSequence;
     }
@@ -271,10 +271,10 @@ export class Parser extends ParserBase {
         interfaceDeclaration.interfaceKeyword = interfaceKeyword;
         interfaceDeclaration.identifier = this.parseMissableIdentifier(interfaceDeclaration);
         interfaceDeclaration.extendsKeyword = this.eatOptional(TokenKind.ExtendsKeyword);
-        if (interfaceDeclaration.extendsKeyword !== null) {
-            interfaceDeclaration.baseTypes = this.parseList(interfaceDeclaration, ParseContextKind.TypeReferenceSequence, TokenKind.Comma);
+        if (interfaceDeclaration.extendsKeyword) {
+            interfaceDeclaration.baseTypes = this.parseList(ParseContextKind.TypeReferenceSequence, interfaceDeclaration, TokenKind.Comma);
         }
-        interfaceDeclaration.members = this.parseList(interfaceDeclaration, interfaceDeclaration.kind);
+        interfaceDeclaration.members = this.parseList(interfaceDeclaration.kind, interfaceDeclaration);
         interfaceDeclaration.endKeyword = this.eatMissable(TokenKind.EndKeyword);
         if (interfaceDeclaration.endKeyword.kind === TokenKind.EndKeyword) {
             interfaceDeclaration.endInterfaceKeyword = this.eatOptional(TokenKind.InterfaceKeyword);
@@ -290,23 +290,23 @@ export class Parser extends ParserBase {
         classDeclaration.identifier = this.parseMissableIdentifier(classDeclaration);
 
         classDeclaration.lessThanSign = this.eatOptional(TokenKind.LessThanSign);
-        if (classDeclaration.lessThanSign !== null) {
-            classDeclaration.typeParameters = this.parseList(classDeclaration, ParseContextKind.TypeParameterSequence, TokenKind.Comma);
+        if (classDeclaration.lessThanSign) {
+            classDeclaration.typeParameters = this.parseList(ParseContextKind.TypeParameterSequence, classDeclaration, TokenKind.Comma);
             classDeclaration.greaterThanSign = this.eatMissable(TokenKind.GreaterThanSign);
         }
 
         classDeclaration.extendsKeyword = this.eatOptional(TokenKind.ExtendsKeyword);
-        if (classDeclaration.extendsKeyword !== null) {
+        if (classDeclaration.extendsKeyword) {
             classDeclaration.baseType = this.parseMissableTypeReference(classDeclaration);
         }
 
         classDeclaration.implementsKeyword = this.eatOptional(TokenKind.ImplementsKeyword);
-        if (classDeclaration.implementsKeyword !== null) {
-            classDeclaration.implementedTypes = this.parseList(classDeclaration, ParseContextKind.TypeReferenceSequence, TokenKind.Comma);
+        if (classDeclaration.implementsKeyword) {
+            classDeclaration.implementedTypes = this.parseList(ParseContextKind.TypeReferenceSequence, classDeclaration, TokenKind.Comma);
         }
 
         classDeclaration.attribute = this.eatOptional(TokenKind.AbstractKeyword, TokenKind.FinalKeyword);
-        classDeclaration.members = this.parseList(classDeclaration, classDeclaration.kind);
+        classDeclaration.members = this.parseList(classDeclaration.kind, classDeclaration);
         classDeclaration.endKeyword = this.eatMissable(TokenKind.EndKeyword);
         if (classDeclaration.endKeyword.kind === TokenKind.EndKeyword) {
             classDeclaration.endClassKeyword = this.eatOptional(TokenKind.ClassKeyword);
@@ -440,9 +440,9 @@ export class Parser extends ParserBase {
         externClassMethodDeclaration.identifier = this.parseMissableIdentifier(externClassMethodDeclaration);
         externClassMethodDeclaration.returnType = this.parseTypeDeclaration(externClassMethodDeclaration);
         externClassMethodDeclaration.openingParenthesis = this.eatMissable(TokenKind.OpeningParenthesis);
-        externClassMethodDeclaration.parameters = this.parseList(externClassMethodDeclaration, ParseContextKind.DataDeclarationSequence, TokenKind.Comma);
+        externClassMethodDeclaration.parameters = this.parseList(ParseContextKind.DataDeclarationSequence, externClassMethodDeclaration, TokenKind.Comma);
         externClassMethodDeclaration.closingParenthesis = this.eatMissable(TokenKind.ClosingParenthesis);
-        externClassMethodDeclaration.attributes = this.parseList(externClassMethodDeclaration, ParseContextKind.ClassMethodAttributes, /*delimiter*/ null);
+        externClassMethodDeclaration.attributes = this.parseList(ParseContextKind.ClassMethodAttributes, externClassMethodDeclaration, /*delimiter*/ null);
         externClassMethodDeclaration.equalsSign = this.eatOptional(TokenKind.EqualsSign);
         if (externClassMethodDeclaration.equalsSign) {
             externClassMethodDeclaration.nativeSymbol = this.parseMissableStringLiteral(externClassMethodDeclaration);
@@ -549,7 +549,7 @@ export class Parser extends ParserBase {
         interfaceMethodDeclaration.identifier = this.parseMissableIdentifier(interfaceMethodDeclaration)
         interfaceMethodDeclaration.returnType = this.parseTypeDeclaration(interfaceMethodDeclaration);
         interfaceMethodDeclaration.openingParenthesis = this.eatMissable(TokenKind.OpeningParenthesis);
-        interfaceMethodDeclaration.parameters = this.parseList(interfaceMethodDeclaration, ParseContextKind.DataDeclarationSequence, TokenKind.Comma);
+        interfaceMethodDeclaration.parameters = this.parseList(ParseContextKind.DataDeclarationSequence, interfaceMethodDeclaration, TokenKind.Comma);
         interfaceMethodDeclaration.closingParenthesis = this.eatMissable(TokenKind.ClosingParenthesis);
 
         return interfaceMethodDeclaration;
@@ -625,12 +625,12 @@ export class Parser extends ParserBase {
             classMethodDeclaration.returnType = this.parseTypeDeclaration(classMethodDeclaration);
         }
         classMethodDeclaration.openingParenthesis = this.eatMissable(TokenKind.OpeningParenthesis);
-        classMethodDeclaration.parameters = this.parseList(classMethodDeclaration, ParseContextKind.DataDeclarationSequence, TokenKind.Comma);
+        classMethodDeclaration.parameters = this.parseList(ParseContextKind.DataDeclarationSequence, classMethodDeclaration, TokenKind.Comma);
         classMethodDeclaration.closingParenthesis = this.eatMissable(TokenKind.ClosingParenthesis);
 
-        classMethodDeclaration.attributes = this.parseList(classMethodDeclaration, ParseContextKind.ClassMethodAttributes, /*delimiter*/ null);
+        classMethodDeclaration.attributes = this.parseList(ParseContextKind.ClassMethodAttributes, classMethodDeclaration, /*delimiter*/ null);
         if (classMethodDeclaration.attributes.findIndex(attribute => attribute.kind === TokenKind.AbstractKeyword) === -1) {
-            classMethodDeclaration.statements = this.parseList(classMethodDeclaration, classMethodDeclaration.kind);
+            classMethodDeclaration.statements = this.parseList(classMethodDeclaration.kind, classMethodDeclaration);
             classMethodDeclaration.endKeyword = this.eatMissable(TokenKind.EndKeyword);
             if (classMethodDeclaration.endKeyword.kind === TokenKind.EndKeyword) {
                 classMethodDeclaration.endMethodKeyword = this.eatOptional(TokenKind.MethodKeyword);
@@ -819,8 +819,8 @@ export class Parser extends ParserBase {
         ifStatement.thenKeyword = this.eatOptional(TokenKind.ThenKeyword);
 
         if (this.getToken().kind === TokenKind.Newline) {
-            ifStatement.statements = this.parseList(ifStatement, ifStatement.kind);
-            ifStatement.elseIfStatements = this.parseList(ifStatement, ParseContextKind.ElseIfStatementList, /*delimiter*/ null);
+            ifStatement.statements = this.parseList(ifStatement.kind, ifStatement);
+            ifStatement.elseIfStatements = this.parseList(ParseContextKind.ElseIfStatementList, ifStatement, /*delimiter*/ null);
 
             const elseKeyword = this.getToken();
             if (elseKeyword.kind === TokenKind.ElseKeyword) {
@@ -903,7 +903,7 @@ export class Parser extends ParserBase {
     private parseElseIfStatement(
         parent: Nodes,
         elseIfKeyword: ElseIfKeywordToken | ElseKeywordToken,
-        ifKeyword: IfKeywordToken | null = null,
+        ifKeyword?: IfKeywordToken,
     ): ElseIfStatement {
         const elseIfStatement = new ElseIfStatement();
         elseIfStatement.parent = parent;
@@ -911,7 +911,7 @@ export class Parser extends ParserBase {
         elseIfStatement.ifKeyword = ifKeyword;
         elseIfStatement.expression = this.parseExpression(elseIfStatement);
         elseIfStatement.thenKeyword = this.eatOptional(TokenKind.ThenKeyword);
-        elseIfStatement.statements = this.parseList(elseIfStatement, elseIfStatement.kind);
+        elseIfStatement.statements = this.parseList(elseIfStatement.kind, elseIfStatement);
 
         return elseIfStatement;
     }
@@ -924,7 +924,7 @@ export class Parser extends ParserBase {
         elseStatement.elseKeyword = elseKeyword;
 
         if (!elseStatement.isSingleLine) {
-            elseStatement.statements = this.parseList(elseStatement, elseStatement.kind);
+            elseStatement.statements = this.parseList(elseStatement.kind, elseStatement);
         } else {
             elseStatement.statements = [this.parseStatement(elseStatement)] as typeof elseStatement.statements;
         }
@@ -954,8 +954,8 @@ export class Parser extends ParserBase {
         selectStatement.parent = parent;
         selectStatement.selectKeyword = selectKeyword;
         selectStatement.expression = this.parseExpression(selectStatement);
-        selectStatement.newlines = this.parseList(selectStatement, ParseContextKind.NewlineList, /*delimiter*/ null);
-        selectStatement.caseStatements = this.parseList(selectStatement, ParseContextKind.CaseStatementList, /*delimiter*/ null);
+        selectStatement.newlines = this.parseList(ParseContextKind.NewlineList, selectStatement, /*delimiter*/ null);
+        selectStatement.caseStatements = this.parseList(ParseContextKind.CaseStatementList, selectStatement, /*delimiter*/ null);
 
         const defaultKeyword = this.getToken();
         if (defaultKeyword.kind === TokenKind.DefaultKeyword) {
@@ -1006,8 +1006,8 @@ export class Parser extends ParserBase {
         const caseStatement = new CaseStatement();
         caseStatement.parent = parent;
         caseStatement.caseKeyword = caseKeyword;
-        caseStatement.expressions = this.parseList(caseStatement, ParseContextKind.ExpressionSequence, TokenKind.Comma);
-        caseStatement.statements = this.parseList(caseStatement, caseStatement.kind);
+        caseStatement.expressions = this.parseList(ParseContextKind.ExpressionSequence, caseStatement, TokenKind.Comma);
+        caseStatement.statements = this.parseList(caseStatement.kind, caseStatement);
 
         return caseStatement;
     }
@@ -1018,7 +1018,7 @@ export class Parser extends ParserBase {
         const defaultStatement = new DefaultStatement();
         defaultStatement.parent = parent;
         defaultStatement.defaultKeyword = defaultKeyword;
-        defaultStatement.statements = this.parseList(defaultStatement, defaultStatement.kind);
+        defaultStatement.statements = this.parseList(defaultStatement.kind, defaultStatement);
 
         return defaultStatement;
     }
@@ -1046,7 +1046,7 @@ export class Parser extends ParserBase {
         whileLoop.parent = parent;
         whileLoop.whileKeyword = whileKeyword;
         whileLoop.expression = this.parseExpression(whileLoop);
-        whileLoop.statements = this.parseList(whileLoop, whileLoop.kind);
+        whileLoop.statements = this.parseList(whileLoop.kind, whileLoop);
         whileLoop.endKeyword = this.eatMissable(TokenKind.WendKeyword, TokenKind.EndKeyword);
         if (whileLoop.endKeyword.kind === TokenKind.EndKeyword) {
             whileLoop.endWhileKeyword = this.eatOptional(TokenKind.WhileKeyword);
@@ -1075,7 +1075,7 @@ export class Parser extends ParserBase {
         const repeatLoop = new RepeatLoop();
         repeatLoop.parent = parent;
         repeatLoop.repeatKeyword = repeatKeyword;
-        repeatLoop.statements = this.parseList(repeatLoop, repeatLoop.kind);
+        repeatLoop.statements = this.parseList(repeatLoop.kind, repeatLoop);
         repeatLoop.foreverOrUntilKeyword = this.eatMissable(TokenKind.ForeverKeyword, TokenKind.UntilKeyword);
         if (repeatLoop.foreverOrUntilKeyword.kind === TokenKind.UntilKeyword) {
             repeatLoop.untilExpression = this.parseExpression(repeatLoop);
@@ -1105,7 +1105,7 @@ export class Parser extends ParserBase {
         forLoop.parent = parent;
         forLoop.forKeyword = forKeyword;
         forLoop.header = this.parseForLoopHeader(forLoop);
-        forLoop.statements = this.parseList(forLoop, forLoop.kind);
+        forLoop.statements = this.parseList(forLoop.kind, forLoop);
         forLoop.endKeyword = this.eatMissable(TokenKind.NextKeyword, TokenKind.EndKeyword);
         if (forLoop.endKeyword.kind === TokenKind.EndKeyword) {
             forLoop.endForKeyword = this.eatOptional(TokenKind.ForKeyword);
@@ -1161,7 +1161,7 @@ export class Parser extends ParserBase {
         numericForLoopHeader.lastValueExpression = this.parseExpression(numericForLoopHeader);
 
         numericForLoopHeader.stepKeyword = this.eatOptional(TokenKind.StepKeyword);
-        if (numericForLoopHeader.stepKeyword !== null) {
+        if (numericForLoopHeader.stepKeyword) {
             numericForLoopHeader.stepValueExpression = this.parseExpression(numericForLoopHeader);
         }
 
@@ -1217,8 +1217,8 @@ export class Parser extends ParserBase {
         const tryStatement = new TryStatement();
         tryStatement.parent = parent;
         tryStatement.tryKeyword = tryKeyword;
-        tryStatement.statements = this.parseList(tryStatement, tryStatement.kind);
-        tryStatement.catchStatements = this.parseList(tryStatement, ParseContextKind.CatchStatementList, /*delimiter*/ null);
+        tryStatement.statements = this.parseList(tryStatement.kind, tryStatement);
+        tryStatement.catchStatements = this.parseList(ParseContextKind.CatchStatementList, tryStatement, /*delimiter*/ null);
         tryStatement.endKeyword = this.eatMissable(TokenKind.EndKeyword);
         if (tryStatement.endKeyword.kind === TokenKind.EndKeyword) {
             tryStatement.endTryKeyword = this.eatOptional(TokenKind.TryKeyword);
@@ -1262,7 +1262,7 @@ export class Parser extends ParserBase {
         catchStatement.parent = parent;
         catchStatement.catchKeyword = catchKeyword;
         catchStatement.parameter = this.parseMissableDataDeclaration(catchStatement);
-        catchStatement.statements = this.parseList(catchStatement, catchStatement.kind);
+        catchStatement.statements = this.parseList(catchStatement.kind, catchStatement);
 
         return catchStatement;
     }
@@ -1321,9 +1321,9 @@ export class Parser extends ParserBase {
         functionDeclaration.identifier = this.parseMissableIdentifier(functionDeclaration);
         functionDeclaration.returnType = this.parseTypeDeclaration(functionDeclaration);
         functionDeclaration.openingParenthesis = this.eatMissable(TokenKind.OpeningParenthesis);
-        functionDeclaration.parameters = this.parseList(functionDeclaration, ParseContextKind.DataDeclarationSequence, TokenKind.Comma);
+        functionDeclaration.parameters = this.parseList(ParseContextKind.DataDeclarationSequence, functionDeclaration, TokenKind.Comma);
         functionDeclaration.closingParenthesis = this.eatMissable(TokenKind.ClosingParenthesis);
-        functionDeclaration.statements = this.parseList(functionDeclaration, functionDeclaration.kind);
+        functionDeclaration.statements = this.parseList(functionDeclaration.kind, functionDeclaration);
         functionDeclaration.endKeyword = this.eatMissable(TokenKind.EndKeyword);
         if (functionDeclaration.endKeyword.kind === TokenKind.EndKeyword) {
             functionDeclaration.endFunctionKeyword = this.eatOptional(TokenKind.FunctionKeyword);
@@ -1336,7 +1336,7 @@ export class Parser extends ParserBase {
         const dataDeclarationSequence = new DataDeclarationSequence();
         dataDeclarationSequence.parent = parent;
         dataDeclarationSequence.dataDeclarationKeyword = dataDeclarationKeyword;
-        dataDeclarationSequence.children = this.parseList(dataDeclarationSequence, ParseContextKind.DataDeclarationSequence, TokenKind.Comma);
+        dataDeclarationSequence.children = this.parseList(ParseContextKind.DataDeclarationSequence, dataDeclarationSequence, TokenKind.Comma);
 
         return dataDeclarationSequence;
     }
@@ -1409,7 +1409,7 @@ export class Parser extends ParserBase {
             dataDeclaration.expression = this.parseExpression(dataDeclaration);
         } else {
             dataDeclaration.equalsSign = this.eatOptional(TokenKind.EqualsSign, TokenKind.ColonEqualsSign);
-            if (dataDeclaration.equalsSign !== null) {
+            if (dataDeclaration.equalsSign) {
                 dataDeclaration.eachInKeyword = this.eatOptional(TokenKind.EachInKeyword);
                 dataDeclaration.expression = this.parseExpression(dataDeclaration);
             }
@@ -1434,7 +1434,7 @@ export class Parser extends ParserBase {
                 return this.parseShorthandTypeDeclaration(parent, token);
             }
             case TokenKind.OpeningSquareBracket: {
-                return this.parseShorthandTypeDeclaration(parent, /*shorthandType*/ null);
+                return this.parseShorthandTypeDeclaration(parent);
             }
             case TokenKind.Colon: {
                 this.advanceToken();
@@ -1443,14 +1443,14 @@ export class Parser extends ParserBase {
             }
         }
 
-        return null;
+        return undefined;
     }
 
-    private parseShorthandTypeDeclaration(parent: Nodes, shorthandType: ShorthandTypeToken | null): ShorthandTypeDeclaration {
+    private parseShorthandTypeDeclaration(parent: Nodes, shorthandType?: ShorthandTypeToken): ShorthandTypeDeclaration {
         const shorthandTypeDeclaration = new ShorthandTypeDeclaration();
         shorthandTypeDeclaration.parent = parent;
         shorthandTypeDeclaration.shorthandType = shorthandType;
-        shorthandTypeDeclaration.arrayTypeDeclarations = this.parseList(shorthandTypeDeclaration, ParseContextKind.ArrayTypeDeclarationList, /*delimiter*/ null);
+        shorthandTypeDeclaration.arrayTypeDeclarations = this.parseList(ParseContextKind.ArrayTypeDeclarationList, shorthandTypeDeclaration, /*delimiter*/ null);
 
         return shorthandTypeDeclaration;
     }
@@ -1757,7 +1757,7 @@ export class Parser extends ParserBase {
             return this.eatOptional(TokenKind.Newline, TokenKind.Semicolon);
         }
 
-        return null;
+        return undefined;
     }
 
     // #endregion

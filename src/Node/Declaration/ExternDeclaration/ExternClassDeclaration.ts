@@ -22,16 +22,16 @@ export class ExternClassDeclaration extends ExternDeclaration {
 
     readonly kind = NodeKind.ExternClassDeclaration;
 
-    classKeyword: ClassKeywordToken;
-    identifier: MissableIdentifier;
+    classKeyword: ClassKeywordToken = undefined!;
+    identifier: MissableIdentifier = undefined!;
 
     // Extends
-    extendsKeyword: ExtendsKeywordToken | null = null;
-    baseType: MissableTypeReference | NullKeywordToken | null = null;
+    extendsKeyword?: ExtendsKeywordToken = undefined;
+    baseType?: MissableTypeReference | NullKeywordToken = undefined;
 
-    attribute: AbstractKeywordToken | FinalKeywordToken | null = null;
+    attribute?: AbstractKeywordToken | FinalKeywordToken = undefined;
 
-    members: ParseContextElementArray<ExternClassDeclaration['kind']>;
-    endKeyword: MissableToken<EndKeywordToken>;
-    endClassKeyword: ClassKeywordToken | null = null;
+    members: ParseContextElementArray<ExternClassDeclaration['kind']> = undefined!;
+    endKeyword: MissableToken<EndKeywordToken> = undefined!;
+    endClassKeyword?: ClassKeywordToken = undefined;
 }

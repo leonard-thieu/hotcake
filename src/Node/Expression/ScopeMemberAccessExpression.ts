@@ -12,7 +12,7 @@ export class ScopeMemberAccessExpression extends Expression {
 
     readonly kind = NodeKind.ScopeMemberAccessExpression;
 
-    scopableExpression: MissableExpression;
-    scopeMemberAccessOperator: PeriodToken;
-    member: MissableExpression;
+    scopableExpression: MissableExpression = undefined!;
+    scopeMemberAccessOperator: PeriodToken = undefined!;
+    member: MissableExpression = undefined!;
 }

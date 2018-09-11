@@ -16,9 +16,9 @@ export class RemDirective extends Directive {
 
     readonly kind = NodeKind.RemDirective;
 
-    remDirectiveKeyword: RemDirectiveKeywordToken;
-    children: ParseContextElementArray<RemDirective['kind']>;
-    endDirectiveNumberSign: MissableToken<NumberSignToken>;
-    endDirectiveKeyword: MissableToken<EndDirectiveKeywordToken>;
-    endIfDirectiveKeyword: IfDirectiveKeywordToken | null = null;
+    remDirectiveKeyword: RemDirectiveKeywordToken = undefined!;
+    children: ParseContextElementArray<RemDirective['kind']> = undefined!;
+    endDirectiveNumberSign: MissableToken<NumberSignToken> = undefined!;
+    endDirectiveKeyword: MissableToken<EndDirectiveKeywordToken> = undefined!;
+    endIfDirectiveKeyword?: IfDirectiveKeywordToken = undefined;
 }

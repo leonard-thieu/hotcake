@@ -12,6 +12,6 @@ export class ImportStatement extends Declaration {
 
     readonly kind = NodeKind.ImportStatement;
 
-    importKeyword: ImportKeywordToken;
-    path: StringLiteral | MissableModulePath;
+    importKeyword: ImportKeywordToken = undefined!;
+    path: StringLiteral | MissableModulePath = undefined!;
 }

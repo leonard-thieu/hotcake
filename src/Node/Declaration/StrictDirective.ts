@@ -9,5 +9,5 @@ export class StrictDirective extends Declaration {
 
     readonly kind = NodeKind.StrictDirective;
 
-    strictKeyword: StrictKeywordToken;
+    strictKeyword: StrictKeywordToken = undefined!;
 }

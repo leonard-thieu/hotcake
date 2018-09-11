@@ -21,11 +21,11 @@ export class ForLoop extends Statement {
 
     readonly kind = NodeKind.ForLoop;
 
-    forKeyword: ForKeywordToken;
-    header: NumericForLoopHeader | DataDeclarationSequenceStatement | AssignmentExpression | MissingToken<TokenKind.ForLoopHeader>;
-    statements: ParseContextElementArray<ForLoop['kind']>;
-    endKeyword: MissableToken<NextKeywordToken | EndKeywordToken>;
-    endForKeyword: ForKeywordToken | null = null;
+    forKeyword: ForKeywordToken = undefined!;
+    header: NumericForLoopHeader | DataDeclarationSequenceStatement | AssignmentExpression | MissingToken<TokenKind.ForLoopHeader> = undefined!;
+    statements: ParseContextElementArray<ForLoop['kind']> = undefined!;
+    endKeyword: MissableToken<NextKeywordToken | EndKeywordToken> = undefined!;
+    endForKeyword?: ForKeywordToken = undefined;
 }
 
 export class NumericForLoopHeader extends Node {
@@ -39,9 +39,9 @@ export class NumericForLoopHeader extends Node {
 
     readonly kind = NodeKind.NumericForLoopHeader;
 
-    loopVariableExpression: DataDeclarationSequenceStatement | AssignmentExpression;
-    toOrUntilKeyword: MissableToken<ToKeywordToken | UntilKeywordToken>;
-    lastValueExpression: MissableExpression;
-    stepKeyword: StepKeywordToken | null = null;
-    stepValueExpression: MissableExpression | null = null;
+    loopVariableExpression: DataDeclarationSequenceStatement | AssignmentExpression = undefined!;
+    toOrUntilKeyword: MissableToken<ToKeywordToken | UntilKeywordToken> = undefined!;
+    lastValueExpression: MissableExpression = undefined!;
+    stepKeyword?: StepKeywordToken = undefined;
+    stepValueExpression?: MissableExpression = undefined;
 }

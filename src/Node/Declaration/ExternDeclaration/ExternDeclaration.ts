@@ -7,8 +7,8 @@ import { ExternDataDeclaration } from './ExternDataDeclarationSequence';
 import { ExternFunctionDeclaration } from './ExternFunctionDeclaration';
 
 export abstract class ExternDeclaration extends Declaration {
-    equalsSign: EqualsSignToken | null = null;
-    nativeSymbol: MissableStringLiteral | null = null;
+    equalsSign?: EqualsSignToken = undefined;
+    nativeSymbol?: MissableStringLiteral = undefined;
 }
 
 export type ExternDeclarations =

@@ -37,8 +37,8 @@ import { CommaToken, CommercialAtToken, ConfigurationTagStartToken, FloatLiteral
 import { TokenKind } from './Token/TokenKind';
 
 export abstract class ParserBase {
-    protected tokens: Tokens[];
-    protected position: number;
+    protected tokens: Tokens[] = undefined!;
+    protected position: number = 0;
 
     // #region Expressions
 
@@ -208,7 +208,7 @@ export abstract class ParserBase {
     // #region Unary expressions
 
     protected parseUnaryExpressionOrHigher(parent: Nodes): MissableExpression {
-        let newlines = this.parseList(null as any, ParseContextKind.NewlineList);
+        let newlines = this.parseList(ParseContextKind.NewlineList);
 
         let expression: MissableExpression;
 
@@ -227,7 +227,7 @@ export abstract class ParserBase {
                 expression = this.parsePrimaryExpression(parent);
 
                 // TODO: Is this the best way to go about this?
-                let expression2: typeof expression;
+                let expression2: MissableExpression;
                 while (true) {
                     expression2 = this.parsePostfixExpression(expression);
                     if (expression2 === expression) {
@@ -400,7 +400,7 @@ export abstract class ParserBase {
         const stringLiteral = new StringLiteral();
         stringLiteral.parent = parent;
         stringLiteral.startQuotationMark = startQuotationMark;
-        stringLiteral.children = this.parseList(stringLiteral, stringLiteral.kind);
+        stringLiteral.children = this.parseList(stringLiteral.kind, stringLiteral);
         stringLiteral.endQuotationMark = this.eatMissable(TokenKind.QuotationMark);
 
         return stringLiteral;
@@ -426,8 +426,8 @@ export abstract class ParserBase {
         const arrayLiteral = new ArrayLiteral();
         arrayLiteral.parent = parent;
         arrayLiteral.openingSquareBracket = openingSquareBracket;
-        arrayLiteral.leadingNewlines = this.parseList(arrayLiteral, ParseContextKind.NewlineList, /*delimiter*/ null);
-        arrayLiteral.expressions = this.parseList(arrayLiteral, ParseContextKind.ExpressionSequence, TokenKind.Comma);
+        arrayLiteral.leadingNewlines = this.parseList(ParseContextKind.NewlineList, arrayLiteral, /*delimiter*/ null);
+        arrayLiteral.expressions = this.parseList(ParseContextKind.ExpressionSequence, arrayLiteral, TokenKind.Comma);
         arrayLiteral.closingSquareBracket = this.eatMissable(TokenKind.ClosingSquareBracket);
 
         return arrayLiteral;
@@ -441,12 +441,12 @@ export abstract class ParserBase {
         // Generic type arguments
         const position = this.position;
         const lessThanSign = this.eatOptional(TokenKind.LessThanSign);
-        if (lessThanSign !== null) {
-            const typeArguments = this.parseList(identifierExpression, ParseContextKind.TypeReferenceSequence, TokenKind.Comma);
+        if (lessThanSign) {
+            const typeArguments = this.parseList(ParseContextKind.TypeReferenceSequence, identifierExpression, TokenKind.Comma);
             const greaterThanSign = this.eatOptional(TokenKind.GreaterThanSign);
 
             // Couldn't find terminating `>`. That means `<` is part of a binary expression and not the start of generic type arguments.
-            if (greaterThanSign === null) {
+            if (!greaterThanSign) {
                 this.position = position;
             } else {
                 identifierExpression.lessThanSign = lessThanSign;
@@ -515,10 +515,10 @@ export abstract class ParserBase {
     }
 
     protected parseIndexOrSliceExpression(expression: Expressions, openingSquareBracket: OpeningSquareBracketToken) {
-        let indexExpressionExpressionOrstartExpression: MissableExpression | null = null;
+        let indexExpressionExpressionOrstartExpression: MissableExpression | undefined = undefined;
         const token = this.getToken();
         if (this.isExpressionStart(token)) {
-            indexExpressionExpressionOrstartExpression = this.parseExpression(null as any) as Expressions;
+            indexExpressionExpressionOrstartExpression = this.parseExpression(undefined!) as Expressions;
         }
 
         const sliceOperator = this.eatOptional(TokenKind.PeriodPeriod);
@@ -552,7 +552,7 @@ export abstract class ParserBase {
     protected parseSliceExpression(
         expression: Expressions,
         openingSquareBracket: OpeningSquareBracketToken,
-        startExpression: Expressions | null,
+        startExpression: Expressions | undefined,
         sliceOperator: PeriodPeriodToken
     ): SliceExpression {
         const sliceExpression = new SliceExpression();
@@ -579,10 +579,10 @@ export abstract class ParserBase {
         invokeExpression.invokableExpression = expression;
         invokeExpression.openingParenthesis = this.eatOptional(TokenKind.OpeningParenthesis);
         if (invokeExpression.openingParenthesis) {
-            invokeExpression.leadingNewlines = this.parseList(invokeExpression, ParseContextKind.NewlineList, /*delimiter*/ null);
+            invokeExpression.leadingNewlines = this.parseList(ParseContextKind.NewlineList, invokeExpression, /*delimiter*/ null);
         }
-        invokeExpression.arguments = this.parseList(invokeExpression, ParseContextKind.ExpressionSequence, TokenKind.Comma, /*allowEmpty*/ true);
-        if (invokeExpression.openingParenthesis !== null) {
+        invokeExpression.arguments = this.parseList(ParseContextKind.ExpressionSequence, invokeExpression, TokenKind.Comma, /*allowEmpty*/ true);
+        if (invokeExpression.openingParenthesis) {
             invokeExpression.closingParenthesis = this.eatMissable(TokenKind.ClosingParenthesis);
         }
 
@@ -697,7 +697,7 @@ export abstract class ParserBase {
         const commaSeparator = new CommaSeparator();
         commaSeparator.parent = parent;
         commaSeparator.separator = separator;
-        commaSeparator.newlines = this.parseList(commaSeparator, ParseContextKind.NewlineList, /*delimiter*/ null);
+        commaSeparator.newlines = this.parseList(ParseContextKind.NewlineList, commaSeparator, /*delimiter*/ null);
 
         return commaSeparator;
     }
@@ -755,20 +755,20 @@ export abstract class ParserBase {
 
                 if (!typeReference.modulePath.identifier &&
                     !typeReference.modulePath.scopeMemberAccessOperator) {
-                    typeReference.modulePath = null;
+                    typeReference.modulePath = undefined;
                 }
 
                 // Generic type arguments
                 typeReference.lessThanSign = this.eatOptional(TokenKind.LessThanSign);
-                if (typeReference.lessThanSign !== null) {
-                    typeReference.typeArguments = this.parseList(typeReference, ParseContextKind.TypeReferenceSequence, TokenKind.Comma);
+                if (typeReference.lessThanSign) {
+                    typeReference.typeArguments = this.parseList(ParseContextKind.TypeReferenceSequence, typeReference, TokenKind.Comma);
                     typeReference.greaterThanSign = this.eatMissable(TokenKind.GreaterThanSign);
                 }
                 break;
             }
         }
 
-        typeReference.arrayTypeDeclarations = this.parseList(typeReference, ParseContextKind.ArrayTypeDeclarationList, /*delimiter*/ null);
+        typeReference.arrayTypeDeclarations = this.parseList(ParseContextKind.ArrayTypeDeclarationList, typeReference, /*delimiter*/ null);
 
         return typeReference;
     }
@@ -785,7 +785,7 @@ export abstract class ParserBase {
     protected parseModulePath(parent: Nodes): ModulePath {
         const modulePath = new ModulePath();
         modulePath.parent = parent;
-        modulePath.children = this.parseList(modulePath, modulePath.kind, TokenKind.Period);
+        modulePath.children = this.parseList(modulePath.kind, modulePath, TokenKind.Period);
         this.setModulePathProperties(modulePath);
 
         return modulePath;
@@ -794,7 +794,7 @@ export abstract class ParserBase {
     private setModulePathProperties(modulePath: ModulePath) {
         let lastChild = modulePath.children[modulePath.children.length - 1];
         if (!lastChild) {
-            modulePath.identifier = null;
+            modulePath.identifier = undefined;
         } else {
             switch (lastChild.kind) {
                 case TokenKind.Identifier:
@@ -810,7 +810,7 @@ export abstract class ParserBase {
 
         lastChild = modulePath.children[modulePath.children.length - 1];
         if (!lastChild) {
-            modulePath.scopeMemberAccessOperator = null;
+            modulePath.scopeMemberAccessOperator = undefined;
         } else if (lastChild.kind === TokenKind.Period) {
             modulePath.children.pop();
             modulePath.scopeMemberAccessOperator = lastChild;
@@ -1121,12 +1121,12 @@ export abstract class ParserBase {
 
     // #region Parse lists
 
-    protected parseContexts: ParseContext[];
+    protected parseContexts: ParseContext[] = undefined!;
 
-    protected parseList<TParseContext extends ParseContext>(parent: Nodes, parseContext: TParseContext): ParseContextElementArray<TParseContext>;
-    protected parseList<TParseContext extends ParseContext>(parent: Nodes, parseContext: TParseContext, delimiter: null): ParseContextElementSequence<TParseContext>;
-    protected parseList<TParseContext extends ParseContext>(parent: Nodes, parseContext: TParseContext, delimiter: TokenKinds, allowEmpty?: boolean): ParseContextElementDelimitedSequence<TParseContext>;
-    protected parseList<TParseContext extends ParseContext>(parent: Nodes, parseContext: TParseContext, delimiter?: TokenKinds | null, allowEmpty?: boolean) {
+    protected parseList<TParseContext extends ParseContext>(parseContext: TParseContext, parent?: Nodes): ParseContextElementArray<TParseContext>;
+    protected parseList<TParseContext extends ParseContext>(parseContext: TParseContext, parent: Nodes, delimiter: null): ParseContextElementSequence<TParseContext>;
+    protected parseList<TParseContext extends ParseContext>(parseContext: TParseContext, parent: Nodes, delimiter: TokenKinds, allowEmpty?: boolean): ParseContextElementDelimitedSequence<TParseContext>;
+    protected parseList<TParseContext extends ParseContext>(parseContext: TParseContext, parent: Nodes, delimiter?: TokenKinds | null, allowEmpty?: boolean) {
         if (typeof parseContext === 'undefined') {
             throw new Error('parseContext is undefined.');
         }
@@ -1274,9 +1274,9 @@ export abstract class ParserBase {
 
     // #endregion
 
-    protected parseCore(parent: Nodes | null, token: Tokens): never {
+    protected parseCore(parent: Nodes | undefined, token: Tokens): never {
         const p = parent || {
-            kind: null,
+            kind: undefined,
         };
 
         throw new Error(`Unexpected token: ${JSON.stringify(token.kind)} in ${JSON.stringify(p.kind)}`);
@@ -1306,7 +1306,7 @@ export abstract class ParserBase {
         throw new Error(`Unexpected token: ${JSON.stringify(token.kind)} not in ${JSON.stringify(kinds)}`);
     }
 
-    protected eatOptional<TTokenKind extends TokenKinds>(...kinds: TTokenKind[]): TokenKindTokenMap[TTokenKind] | null {
+    protected eatOptional<TTokenKind extends TokenKinds>(...kinds: TTokenKind[]): TokenKindTokenMap[TTokenKind] | undefined {
         const token = this.getToken();
         if (kinds.includes(token.kind as TTokenKind)) {
             this.advanceToken();
@@ -1314,7 +1314,7 @@ export abstract class ParserBase {
             return token;
         }
 
-        return null;
+        return undefined;
     }
 
     protected getToken(offset: number = 0) {
@@ -1408,7 +1408,7 @@ const OperatorPrecedenceAndAssociativityMap: PrecedenceAndAssociativityMap = {
     [TokenKind.Asterisk]: ShiftMultiplicativePrecedenceAndAssociativity,
 };
 
-function getBinaryOperatorPrecedenceAndAssociativity(token: Tokens, parent: Nodes | null): PrecedenceAndAssociativity {
+function getBinaryOperatorPrecedenceAndAssociativity(token: Tokens, parent: Nodes | undefined): PrecedenceAndAssociativity {
     if (token.kind === TokenKind.EqualsSign) {
         return parent && parent.kind === NodeKind.ExpressionStatement ?
             AssignmentPrecedenceAndAssociativity :
