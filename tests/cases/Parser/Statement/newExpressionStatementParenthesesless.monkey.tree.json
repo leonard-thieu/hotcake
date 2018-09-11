@@ -15,7 +15,6 @@
                 "start": 9,
                 "length": 5
             },
-            "returnType": null,
             "openingParenthesis": {
                 "kind": "OpeningParenthesis",
                 "fullStart": 13,
@@ -46,7 +45,6 @@
                         "newlines": [],
                         "invokableExpression": {
                             "kind": "NewExpression",
-                            "newlines": null,
                             "newKeyword": {
                                 "kind": "NewKeyword",
                                 "fullStart": 17,
@@ -55,38 +53,27 @@
                             },
                             "type": {
                                 "kind": "TypeReference",
-                                "modulePath": null,
-                                "scopeMemberAccessOperator": null,
                                 "identifier": {
                                     "kind": "Identifier",
                                     "fullStart": 24,
                                     "start": 25,
                                     "length": 12
                                 },
-                                "lessThanSign": null,
-                                "typeArguments": null,
-                                "greaterThanSign": null,
                                 "arrayTypeDeclarations": []
                             }
                         },
-                        "openingParenthesis": null,
-                        "leadingNewlines": null,
                         "arguments": [
                             {
                                 "kind": "ScopeMemberAccessExpression",
                                 "newlines": [],
                                 "scopableExpression": {
                                     "kind": "IdentifierExpression",
-                                    "newlines": null,
                                     "identifier": {
                                         "kind": "Identifier",
                                         "fullStart": 36,
                                         "start": 37,
                                         "length": 2
-                                    },
-                                    "lessThanSign": null,
-                                    "typeArguments": null,
-                                    "greaterThanSign": null
+                                    }
                                 },
                                 "scopeMemberAccessOperator": {
                                     "kind": "Period",
@@ -102,10 +89,7 @@
                                         "fullStart": 39,
                                         "start": 39,
                                         "length": 1
-                                    },
-                                    "lessThanSign": null,
-                                    "typeArguments": null,
-                                    "greaterThanSign": null
+                                    }
                                 }
                             },
                             {
@@ -123,16 +107,12 @@
                                 "newlines": [],
                                 "scopableExpression": {
                                     "kind": "IdentifierExpression",
-                                    "newlines": null,
                                     "identifier": {
                                         "kind": "Identifier",
                                         "fullStart": 41,
                                         "start": 42,
                                         "length": 2
-                                    },
-                                    "lessThanSign": null,
-                                    "typeArguments": null,
-                                    "greaterThanSign": null
+                                    }
                                 },
                                 "scopeMemberAccessOperator": {
                                     "kind": "Period",
@@ -148,10 +128,7 @@
                                         "fullStart": 44,
                                         "start": 44,
                                         "length": 1
-                                    },
-                                    "lessThanSign": null,
-                                    "typeArguments": null,
-                                    "greaterThanSign": null
+                                    }
                                 }
                             },
                             {
@@ -172,13 +149,9 @@
                                     "fullStart": 46,
                                     "start": 47,
                                     "length": 6
-                                },
-                                "lessThanSign": null,
-                                "typeArguments": null,
-                                "greaterThanSign": null
+                                }
                             }
-                        ],
-                        "closingParenthesis": null
+                        ]
                     },
                     "terminator": {
                         "kind": "Newline",
@@ -193,8 +166,7 @@
                 "fullStart": 54,
                 "start": 54,
                 "length": 3
-            },
-            "endFunctionKeyword": null
+            }
         }
     ]
 }

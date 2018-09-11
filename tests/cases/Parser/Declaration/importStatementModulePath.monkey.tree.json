@@ -12,7 +12,6 @@
             "path": {
                 "kind": "ModulePath",
                 "children": [],
-                "scopeMemberAccessOperator": null,
                 "identifier": {
                     "kind": "Identifier",
                     "fullStart": 6,

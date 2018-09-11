@@ -15,7 +15,6 @@
                 "start": 9,
                 "length": 5
             },
-            "returnType": null,
             "openingParenthesis": {
                 "kind": "OpeningParenthesis",
                 "fullStart": 13,
@@ -46,7 +45,6 @@
                         "newlines": [],
                         "scopableExpression": {
                             "kind": "IdentifierExpression",
-                            "newlines": null,
                             "identifier": {
                                 "kind": "Identifier",
                                 "fullStart": 17,
@@ -62,17 +60,12 @@
                             "typeArguments": [
                                 {
                                     "kind": "TypeReference",
-                                    "modulePath": null,
-                                    "scopeMemberAccessOperator": null,
                                     "identifier": {
                                         "kind": "IntKeyword",
                                         "fullStart": 33,
                                         "start": 33,
                                         "length": 3
                                     },
-                                    "lessThanSign": null,
-                                    "typeArguments": null,
-                                    "greaterThanSign": null,
                                     "arrayTypeDeclarations": []
                                 }
                             ],
@@ -94,16 +87,12 @@
                             "newlines": [],
                             "invokableExpression": {
                                 "kind": "IdentifierExpression",
-                                "newlines": null,
                                 "identifier": {
                                     "kind": "Identifier",
                                     "fullStart": 38,
                                     "start": 38,
                                     "length": 7
-                                },
-                                "lessThanSign": null,
-                                "typeArguments": null,
-                                "greaterThanSign": null
+                                }
                             },
                             "openingParenthesis": {
                                 "kind": "OpeningParenthesis",
@@ -121,10 +110,7 @@
                                         "fullStart": 46,
                                         "start": 46,
                                         "length": 9
-                                    },
-                                    "lessThanSign": null,
-                                    "typeArguments": null,
-                                    "greaterThanSign": null
+                                    }
                                 },
                                 {
                                     "kind": "CommaSeparator",
@@ -138,7 +124,6 @@
                                 },
                                 {
                                     "kind": "BinaryExpression",
-                                    "newlines": null,
                                     "leftOperand": {
                                         "kind": "IdentifierExpression",
                                         "newlines": [],
@@ -147,10 +132,7 @@
                                             "fullStart": 56,
                                             "start": 57,
                                             "length": 9
-                                        },
-                                        "lessThanSign": null,
-                                        "typeArguments": null,
-                                        "greaterThanSign": null
+                                        }
                                     },
                                     "operator": {
                                         "kind": "Asterisk",
@@ -191,8 +173,7 @@
                 "fullStart": 72,
                 "start": 72,
                 "length": 3
-            },
-            "endFunctionKeyword": null
+            }
         }
     ]
 }

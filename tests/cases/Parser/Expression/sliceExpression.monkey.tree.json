@@ -15,7 +15,6 @@
                 "start": 9,
                 "length": 5
             },
-            "returnType": null,
             "openingParenthesis": {
                 "kind": "OpeningParenthesis",
                 "fullStart": 13,
@@ -46,26 +45,19 @@
                         "newlines": [],
                         "invokableExpression": {
                             "kind": "IdentifierExpression",
-                            "newlines": null,
                             "identifier": {
                                 "kind": "Identifier",
                                 "fullStart": 17,
                                 "start": 21,
                                 "length": 9
-                            },
-                            "lessThanSign": null,
-                            "typeArguments": null,
-                            "greaterThanSign": null
+                            }
                         },
-                        "openingParenthesis": null,
-                        "leadingNewlines": null,
                         "arguments": [
                             {
                                 "kind": "SliceExpression",
                                 "newlines": [],
                                 "sliceableExpression": {
                                     "kind": "StringLiteral",
-                                    "newlines": null,
                                     "startQuotationMark": {
                                         "kind": "QuotationMark",
                                         "fullStart": 26,
@@ -126,8 +118,7 @@
                                     "length": 1
                                 }
                             }
-                        ],
-                        "closingParenthesis": null
+                        ]
                     },
                     "terminator": {
                         "kind": "Newline",
@@ -152,26 +143,19 @@
                         "newlines": [],
                         "invokableExpression": {
                             "kind": "IdentifierExpression",
-                            "newlines": null,
                             "identifier": {
                                 "kind": "Identifier",
                                 "fullStart": 66,
                                 "start": 70,
                                 "length": 9
-                            },
-                            "lessThanSign": null,
-                            "typeArguments": null,
-                            "greaterThanSign": null
+                            }
                         },
-                        "openingParenthesis": null,
-                        "leadingNewlines": null,
                         "arguments": [
                             {
                                 "kind": "SliceExpression",
                                 "newlines": [],
                                 "sliceableExpression": {
                                     "kind": "StringLiteral",
-                                    "newlines": null,
                                     "startQuotationMark": {
                                         "kind": "QuotationMark",
                                         "fullStart": 75,
@@ -199,7 +183,6 @@
                                     "start": 89,
                                     "length": 1
                                 },
-                                "startExpression": null,
                                 "sliceOperator": {
                                     "kind": "PeriodPeriod",
                                     "fullStart": 90,
@@ -223,8 +206,7 @@
                                     "length": 1
                                 }
                             }
-                        ],
-                        "closingParenthesis": null
+                        ]
                     },
                     "terminator": {
                         "kind": "Newline",
@@ -249,26 +231,19 @@
                         "newlines": [],
                         "invokableExpression": {
                             "kind": "IdentifierExpression",
-                            "newlines": null,
                             "identifier": {
                                 "kind": "Identifier",
                                 "fullStart": 117,
                                 "start": 121,
                                 "length": 9
-                            },
-                            "lessThanSign": null,
-                            "typeArguments": null,
-                            "greaterThanSign": null
+                            }
                         },
-                        "openingParenthesis": null,
-                        "leadingNewlines": null,
                         "arguments": [
                             {
                                 "kind": "SliceExpression",
                                 "newlines": [],
                                 "sliceableExpression": {
                                     "kind": "StringLiteral",
-                                    "newlines": null,
                                     "startQuotationMark": {
                                         "kind": "QuotationMark",
                                         "fullStart": 126,
@@ -312,7 +287,6 @@
                                     "start": 142,
                                     "length": 2
                                 },
-                                "endExpression": null,
                                 "closingSquareBracket": {
                                     "kind": "ClosingSquareBracket",
                                     "fullStart": 144,
@@ -320,8 +294,7 @@
                                     "length": 1
                                 }
                             }
-                        ],
-                        "closingParenthesis": null
+                        ]
                     },
                     "terminator": {
                         "kind": "Newline",
@@ -346,26 +319,19 @@
                         "newlines": [],
                         "invokableExpression": {
                             "kind": "IdentifierExpression",
-                            "newlines": null,
                             "identifier": {
                                 "kind": "Identifier",
                                 "fullStart": 168,
                                 "start": 172,
                                 "length": 9
-                            },
-                            "lessThanSign": null,
-                            "typeArguments": null,
-                            "greaterThanSign": null
+                            }
                         },
-                        "openingParenthesis": null,
-                        "leadingNewlines": null,
                         "arguments": [
                             {
                                 "kind": "SliceExpression",
                                 "newlines": [],
                                 "sliceableExpression": {
                                     "kind": "StringLiteral",
-                                    "newlines": null,
                                     "startQuotationMark": {
                                         "kind": "QuotationMark",
                                         "fullStart": 177,
@@ -393,14 +359,12 @@
                                     "start": 191,
                                     "length": 1
                                 },
-                                "startExpression": null,
                                 "sliceOperator": {
                                     "kind": "PeriodPeriod",
                                     "fullStart": 192,
                                     "start": 192,
                                     "length": 2
                                 },
-                                "endExpression": null,
                                 "closingSquareBracket": {
                                     "kind": "ClosingSquareBracket",
                                     "fullStart": 194,
@@ -408,8 +372,7 @@
                                     "length": 1
                                 }
                             }
-                        ],
-                        "closingParenthesis": null
+                        ]
                     },
                     "terminator": {
                         "kind": "Newline",
@@ -424,8 +387,7 @@
                 "fullStart": 223,
                 "start": 223,
                 "length": 3
-            },
-            "endFunctionKeyword": null
+            }
         }
     ]
 }

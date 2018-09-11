@@ -44,7 +44,6 @@
                 }
             ],
             "elseIfDirectives": [],
-            "elseDirective": null,
             "endDirectiveNumberSign": {
                 "kind": "NumberSign",
                 "fullStart": 11,
@@ -56,8 +55,7 @@
                 "fullStart": 12,
                 "start": 12,
                 "length": 3
-            },
-            "endIfDirectiveKeyword": null
+            }
         }
     ],
     "eofToken": {

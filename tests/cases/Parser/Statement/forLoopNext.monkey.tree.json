@@ -15,7 +15,6 @@
                 "start": 9,
                 "length": 5
             },
-            "returnType": null,
             "openingParenthesis": {
                 "kind": "OpeningParenthesis",
                 "fullStart": 13,
@@ -68,14 +67,12 @@
                                             "start": 31,
                                             "length": 2
                                         },
-                                        "type": null,
                                         "equalsSign": {
                                             "kind": "ColonEqualsSign",
                                             "fullStart": 32,
                                             "start": 33,
                                             "length": 3
                                         },
-                                        "eachInKeyword": null,
                                         "expression": {
                                             "kind": "IntegerLiteral",
                                             "newlines": [],
@@ -88,8 +85,7 @@
                                         }
                                     }
                                 ]
-                            },
-                            "terminator": null
+                            }
                         },
                         "toOrUntilKeyword": {
                             "kind": "UntilKeyword",
@@ -106,9 +102,7 @@
                                 "start": 44,
                                 "length": 2
                             }
-                        },
-                        "stepKeyword": null,
-                        "stepValueExpression": null
+                        }
                     },
                     "statements": [
                         {
@@ -127,7 +121,6 @@
                         "start": 51,
                         "length": 8
                     },
-                    "endForKeyword": null,
                     "terminator": {
                         "kind": "Newline",
                         "fullStart": 55,
@@ -141,8 +134,7 @@
                 "fullStart": 57,
                 "start": 57,
                 "length": 3
-            },
-            "endFunctionKeyword": null
+            }
         }
     ]
 }

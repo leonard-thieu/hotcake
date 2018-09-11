@@ -15,14 +15,6 @@
                 "start": 6,
                 "length": 2
             },
-            "lessThanSign": null,
-            "typeParameters": null,
-            "greaterThanSign": null,
-            "extendsKeyword": null,
-            "baseType": null,
-            "implementsKeyword": null,
-            "implementedTypes": null,
-            "attribute": null,
             "members": [
                 {
                     "kind": "Newline",
@@ -43,8 +35,7 @@
                 "start": 11,
                 "length": 0,
                 "originalKind": "EndKeyword"
-            },
-            "endClassKeyword": null
+            }
         },
         {
             "kind": "ClassDeclaration",
@@ -60,14 +51,6 @@
                 "start": 17,
                 "length": 2
             },
-            "lessThanSign": null,
-            "typeParameters": null,
-            "greaterThanSign": null,
-            "extendsKeyword": null,
-            "baseType": null,
-            "implementsKeyword": null,
-            "implementedTypes": null,
-            "attribute": null,
             "members": [
                 {
                     "kind": "Newline",
@@ -81,8 +64,7 @@
                 "fullStart": 20,
                 "start": 20,
                 "length": 3
-            },
-            "endClassKeyword": null
+            }
         }
     ]
 }

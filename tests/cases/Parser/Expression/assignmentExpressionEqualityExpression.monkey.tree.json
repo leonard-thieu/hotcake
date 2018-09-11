@@ -15,7 +15,6 @@
                 "start": 9,
                 "length": 5
             },
-            "returnType": null,
             "openingParenthesis": {
                 "kind": "OpeningParenthesis",
                 "fullStart": 13,
@@ -68,23 +67,15 @@
                                     },
                                     "typeReference": {
                                         "kind": "TypeReference",
-                                        "modulePath": null,
-                                        "scopeMemberAccessOperator": null,
                                         "identifier": {
                                             "kind": "IntKeyword",
                                             "fullStart": 29,
                                             "start": 30,
                                             "length": 4
                                         },
-                                        "lessThanSign": null,
-                                        "typeArguments": null,
-                                        "greaterThanSign": null,
                                         "arrayTypeDeclarations": []
                                     }
-                                },
-                                "equalsSign": null,
-                                "eachInKeyword": null,
-                                "expression": null
+                                }
                             }
                         ]
                     },
@@ -114,14 +105,12 @@
                                     "start": 45,
                                     "length": 2
                                 },
-                                "type": null,
                                 "equalsSign": {
                                     "kind": "ColonEqualsSign",
                                     "fullStart": 46,
                                     "start": 47,
                                     "length": 3
                                 },
-                                "eachInKeyword": null,
                                 "expression": {
                                     "kind": "IntegerLiteral",
                                     "newlines": [],
@@ -146,7 +135,6 @@
                     "kind": "ExpressionStatement",
                     "expression": {
                         "kind": "AssignmentExpression",
-                        "newlines": null,
                         "leftOperand": {
                             "kind": "IdentifierExpression",
                             "newlines": [],
@@ -155,10 +143,7 @@
                                 "fullStart": 53,
                                 "start": 57,
                                 "length": 5
-                            },
-                            "lessThanSign": null,
-                            "typeArguments": null,
-                            "greaterThanSign": null
+                            }
                         },
                         "operator": {
                             "kind": "EqualsSign",
@@ -166,10 +151,8 @@
                             "start": 59,
                             "length": 2
                         },
-                        "eachInKeyword": null,
                         "rightOperand": {
                             "kind": "BinaryExpression",
-                            "newlines": null,
                             "leftOperand": {
                                 "kind": "IntegerLiteral",
                                 "newlines": [],
@@ -194,10 +177,7 @@
                                     "fullStart": 64,
                                     "start": 65,
                                     "length": 2
-                                },
-                                "lessThanSign": null,
-                                "typeArguments": null,
-                                "greaterThanSign": null
+                                }
                             }
                         }
                     },
@@ -214,8 +194,7 @@
                 "fullStart": 68,
                 "start": 68,
                 "length": 3
-            },
-            "endFunctionKeyword": null
+            }
         }
     ]
 }

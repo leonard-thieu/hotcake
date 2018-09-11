@@ -15,7 +15,6 @@
                 "start": 9,
                 "length": 5
             },
-            "returnType": null,
             "openingParenthesis": {
                 "kind": "OpeningParenthesis",
                 "fullStart": 13,
@@ -46,26 +45,19 @@
                         "newlines": [],
                         "invokableExpression": {
                             "kind": "IdentifierExpression",
-                            "newlines": null,
                             "identifier": {
                                 "kind": "Identifier",
                                 "fullStart": 17,
                                 "start": 21,
                                 "length": 9
-                            },
-                            "lessThanSign": null,
-                            "typeArguments": null,
-                            "greaterThanSign": null
+                            }
                         },
-                        "openingParenthesis": null,
-                        "leadingNewlines": null,
                         "arguments": [
                             {
                                 "kind": "SliceExpression",
                                 "newlines": [],
                                 "sliceableExpression": {
                                     "kind": "StringLiteral",
-                                    "newlines": null,
                                     "startQuotationMark": {
                                         "kind": "QuotationMark",
                                         "fullStart": 26,
@@ -93,14 +85,12 @@
                                     "start": 40,
                                     "length": 1
                                 },
-                                "startExpression": null,
                                 "sliceOperator": {
                                     "kind": "PeriodPeriod",
                                     "fullStart": 41,
                                     "start": 41,
                                     "length": 2
                                 },
-                                "endExpression": null,
                                 "closingSquareBracket": {
                                     "kind": "Missing",
                                     "fullStart": 43,
@@ -109,8 +99,7 @@
                                     "originalKind": "ClosingSquareBracket"
                                 }
                             }
-                        ],
-                        "closingParenthesis": null
+                        ]
                     },
                     "terminator": {
                         "kind": "Newline",
@@ -125,8 +114,7 @@
                 "fullStart": 45,
                 "start": 45,
                 "length": 3
-            },
-            "endFunctionKeyword": null
+            }
         }
     ]
 }

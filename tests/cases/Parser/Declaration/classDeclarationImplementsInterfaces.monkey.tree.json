@@ -15,11 +15,6 @@
                 "start": 6,
                 "length": 6
             },
-            "lessThanSign": null,
-            "typeParameters": null,
-            "greaterThanSign": null,
-            "extendsKeyword": null,
-            "baseType": null,
             "implementsKeyword": {
                 "kind": "ImplementsKeyword",
                 "fullStart": 11,
@@ -29,17 +24,12 @@
             "implementedTypes": [
                 {
                     "kind": "TypeReference",
-                    "modulePath": null,
-                    "scopeMemberAccessOperator": null,
                     "identifier": {
                         "kind": "Identifier",
                         "fullStart": 22,
                         "start": 23,
                         "length": 9
                     },
-                    "lessThanSign": null,
-                    "typeArguments": null,
-                    "greaterThanSign": null,
                     "arrayTypeDeclarations": []
                 },
                 {
@@ -54,21 +44,15 @@
                 },
                 {
                     "kind": "TypeReference",
-                    "modulePath": null,
-                    "scopeMemberAccessOperator": null,
                     "identifier": {
                         "kind": "Identifier",
                         "fullStart": 32,
                         "start": 32,
                         "length": 8
                     },
-                    "lessThanSign": null,
-                    "typeArguments": null,
-                    "greaterThanSign": null,
                     "arrayTypeDeclarations": []
                 }
             ],
-            "attribute": null,
             "members": [
                 {
                     "kind": "Newline",
@@ -82,8 +66,7 @@
                 "fullStart": 42,
                 "start": 42,
                 "length": 3
-            },
-            "endClassKeyword": null
+            }
         }
     ]
 }

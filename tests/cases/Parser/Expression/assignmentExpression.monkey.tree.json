@@ -15,7 +15,6 @@
                 "start": 9,
                 "length": 5
             },
-            "returnType": null,
             "openingParenthesis": {
                 "kind": "OpeningParenthesis",
                 "fullStart": 13,
@@ -68,23 +67,15 @@
                                     },
                                     "typeReference": {
                                         "kind": "TypeReference",
-                                        "modulePath": null,
-                                        "scopeMemberAccessOperator": null,
                                         "identifier": {
                                             "kind": "IntKeyword",
                                             "fullStart": 29,
                                             "start": 30,
                                             "length": 4
                                         },
-                                        "lessThanSign": null,
-                                        "typeArguments": null,
-                                        "greaterThanSign": null,
                                         "arrayTypeDeclarations": []
                                     }
-                                },
-                                "equalsSign": null,
-                                "eachInKeyword": null,
-                                "expression": null
+                                }
                             }
                         ]
                     },
@@ -99,7 +90,6 @@
                     "kind": "ExpressionStatement",
                     "expression": {
                         "kind": "AssignmentExpression",
-                        "newlines": null,
                         "leftOperand": {
                             "kind": "IdentifierExpression",
                             "newlines": [],
@@ -108,10 +98,7 @@
                                 "fullStart": 35,
                                 "start": 39,
                                 "length": 5
-                            },
-                            "lessThanSign": null,
-                            "typeArguments": null,
-                            "greaterThanSign": null
+                            }
                         },
                         "operator": {
                             "kind": "EqualsSign",
@@ -119,7 +106,6 @@
                             "start": 41,
                             "length": 2
                         },
-                        "eachInKeyword": null,
                         "rightOperand": {
                             "kind": "IntegerLiteral",
                             "newlines": [],
@@ -144,8 +130,7 @@
                 "fullStart": 46,
                 "start": 46,
                 "length": 3
-            },
-            "endFunctionKeyword": null
+            }
         }
     ]
 }

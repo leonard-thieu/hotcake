@@ -15,7 +15,6 @@
                 "start": 9,
                 "length": 5
             },
-            "returnType": null,
             "openingParenthesis": {
                 "kind": "OpeningParenthesis",
                 "fullStart": 13,
@@ -46,7 +45,6 @@
                         "newlines": [],
                         "invokableExpression": {
                             "kind": "NewExpression",
-                            "newlines": null,
                             "newKeyword": {
                                 "kind": "NewKeyword",
                                 "fullStart": 17,
@@ -55,17 +53,12 @@
                             },
                             "type": {
                                 "kind": "TypeReference",
-                                "modulePath": null,
-                                "scopeMemberAccessOperator": null,
                                 "identifier": {
                                     "kind": "Identifier",
                                     "fullStart": 24,
                                     "start": 25,
                                     "length": 6
                                 },
-                                "lessThanSign": null,
-                                "typeArguments": null,
-                                "greaterThanSign": null,
                                 "arrayTypeDeclarations": []
                             }
                         },
@@ -152,8 +145,7 @@
                 "fullStart": 44,
                 "start": 44,
                 "length": 3
-            },
-            "endFunctionKeyword": null
+            }
         }
     ]
 }

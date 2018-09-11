@@ -11,7 +11,6 @@
             },
             "path": {
                 "kind": "StringLiteral",
-                "newlines": null,
                 "startQuotationMark": {
                     "kind": "QuotationMark",
                     "fullStart": 6,

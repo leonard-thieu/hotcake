@@ -15,7 +15,6 @@
                 "start": 9,
                 "length": 5
             },
-            "returnType": null,
             "openingParenthesis": {
                 "kind": "OpeningParenthesis",
                 "fullStart": 13,
@@ -70,7 +69,6 @@
                                 "newlines": [],
                                 "invokableExpression": {
                                     "kind": "NewExpression",
-                                    "newlines": null,
                                     "newKeyword": {
                                         "kind": "NewKeyword",
                                         "fullStart": 39,
@@ -79,17 +77,12 @@
                                     },
                                     "type": {
                                         "kind": "TypeReference",
-                                        "modulePath": null,
-                                        "scopeMemberAccessOperator": null,
                                         "identifier": {
                                             "kind": "ThrowableKeyword",
                                             "fullStart": 43,
                                             "start": 44,
                                             "length": 10
                                         },
-                                        "lessThanSign": null,
-                                        "typeArguments": null,
-                                        "greaterThanSign": null,
                                         "arrayTypeDeclarations": []
                                     }
                                 },
@@ -143,23 +136,15 @@
                                     },
                                     "typeReference": {
                                         "kind": "TypeReference",
-                                        "modulePath": null,
-                                        "scopeMemberAccessOperator": null,
                                         "identifier": {
                                             "kind": "ThrowableKeyword",
                                             "fullStart": 70,
                                             "start": 71,
                                             "length": 10
                                         },
-                                        "lessThanSign": null,
-                                        "typeArguments": null,
-                                        "greaterThanSign": null,
                                         "arrayTypeDeclarations": []
                                     }
-                                },
-                                "equalsSign": null,
-                                "eachInKeyword": null,
-                                "expression": null
+                                }
                             },
                             "statements": [
                                 {
@@ -199,8 +184,7 @@
                 "fullStart": 95,
                 "start": 95,
                 "length": 3
-            },
-            "endFunctionKeyword": null
+            }
         }
     ]
 }

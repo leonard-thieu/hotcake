@@ -15,14 +15,6 @@
                 "start": 6,
                 "length": 6
             },
-            "lessThanSign": null,
-            "typeParameters": null,
-            "greaterThanSign": null,
-            "extendsKeyword": null,
-            "baseType": null,
-            "implementsKeyword": null,
-            "implementedTypes": null,
-            "attribute": null,
             "members": [
                 {
                     "kind": "Newline",
@@ -57,23 +49,15 @@
                                 },
                                 "typeReference": {
                                     "kind": "TypeReference",
-                                    "modulePath": null,
-                                    "scopeMemberAccessOperator": null,
                                     "identifier": {
                                         "kind": "StringKeyword",
                                         "fullStart": 28,
                                         "start": 29,
                                         "length": 7
                                     },
-                                    "lessThanSign": null,
-                                    "typeArguments": null,
-                                    "greaterThanSign": null,
                                     "arrayTypeDeclarations": []
                                 }
-                            },
-                            "equalsSign": null,
-                            "eachInKeyword": null,
-                            "expression": null
+                            }
                         }
                     ]
                 },
@@ -89,8 +73,7 @@
                 "fullStart": 37,
                 "start": 37,
                 "length": 3
-            },
-            "endClassKeyword": null
+            }
         }
     ]
 }

@@ -15,7 +15,6 @@
                 "start": 9,
                 "length": 5
             },
-            "returnType": null,
             "openingParenthesis": {
                 "kind": "OpeningParenthesis",
                 "fullStart": 13,
@@ -45,8 +44,7 @@
                 "fullStart": 17,
                 "start": 17,
                 "length": 3
-            },
-            "endFunctionKeyword": null
+            }
         }
     ]
 }

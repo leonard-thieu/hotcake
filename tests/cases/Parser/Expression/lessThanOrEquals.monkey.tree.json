@@ -15,7 +15,6 @@
                 "start": 9,
                 "length": 5
             },
-            "returnType": null,
             "openingParenthesis": {
                 "kind": "OpeningParenthesis",
                 "fullStart": 13,
@@ -49,7 +48,6 @@
                     },
                     "expression": {
                         "kind": "BinaryExpression",
-                        "newlines": null,
                         "leftOperand": {
                             "kind": "IdentifierExpression",
                             "newlines": [],
@@ -58,10 +56,7 @@
                                 "fullStart": 23,
                                 "start": 24,
                                 "length": 2
-                            },
-                            "lessThanSign": null,
-                            "typeArguments": null,
-                            "greaterThanSign": null
+                            }
                         },
                         "operator": {
                             "kind": "LessThanSignEqualsSign",
@@ -80,7 +75,6 @@
                             }
                         }
                     },
-                    "thenKeyword": null,
                     "isSingleLine": false,
                     "statements": [
                         {
@@ -94,14 +88,12 @@
                         }
                     ],
                     "elseIfStatements": [],
-                    "elseStatement": null,
                     "endKeyword": {
                         "kind": "EndKeyword",
                         "fullStart": 32,
                         "start": 36,
                         "length": 7
                     },
-                    "endIfKeyword": null,
                     "terminator": {
                         "kind": "Newline",
                         "fullStart": 39,
@@ -115,8 +107,7 @@
                 "fullStart": 41,
                 "start": 41,
                 "length": 3
-            },
-            "endFunctionKeyword": null
+            }
         }
     ]
 }

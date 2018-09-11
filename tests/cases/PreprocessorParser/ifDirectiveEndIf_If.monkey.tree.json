@@ -79,7 +79,6 @@
                 }
             ],
             "elseIfDirectives": [],
-            "elseDirective": null,
             "endDirectiveNumberSign": {
                 "kind": "NumberSign",
                 "fullStart": 61,

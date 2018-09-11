@@ -15,7 +15,6 @@
                 "start": 9,
                 "length": 5
             },
-            "returnType": null,
             "openingParenthesis": {
                 "kind": "OpeningParenthesis",
                 "fullStart": 13,
@@ -49,7 +48,6 @@
                     },
                     "header": {
                         "kind": "AssignmentExpression",
-                        "newlines": null,
                         "leftOperand": {
                             "kind": "IdentifierExpression",
                             "newlines": [],
@@ -58,10 +56,7 @@
                                 "fullStart": 24,
                                 "start": 25,
                                 "length": 13
-                            },
-                            "lessThanSign": null,
-                            "typeArguments": null,
-                            "greaterThanSign": null
+                            }
                         },
                         "operator": {
                             "kind": "EqualsSign",
@@ -80,16 +75,12 @@
                             "newlines": [],
                             "scopableExpression": {
                                 "kind": "IdentifierExpression",
-                                "newlines": null,
                                 "identifier": {
                                     "kind": "Identifier",
                                     "fullStart": 46,
                                     "start": 47,
                                     "length": 6
-                                },
-                                "lessThanSign": null,
-                                "typeArguments": null,
-                                "greaterThanSign": null
+                                }
                             },
                             "scopeMemberAccessOperator": {
                                 "kind": "Period",
@@ -105,10 +96,7 @@
                                     "fullStart": 53,
                                     "start": 53,
                                     "length": 5
-                                },
-                                "lessThanSign": null,
-                                "typeArguments": null,
-                                "greaterThanSign": null
+                                }
                             }
                         }
                     },
@@ -148,8 +136,7 @@
                 "fullStart": 73,
                 "start": 73,
                 "length": 3
-            },
-            "endFunctionKeyword": null
+            }
         }
     ]
 }

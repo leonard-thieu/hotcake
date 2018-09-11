@@ -15,7 +15,6 @@
                 "start": 9,
                 "length": 5
             },
-            "returnType": null,
             "openingParenthesis": {
                 "kind": "OpeningParenthesis",
                 "fullStart": 13,
@@ -60,7 +59,6 @@
                                 },
                                 "type": {
                                     "kind": "ShorthandTypeDeclaration",
-                                    "shorthandType": null,
                                     "arrayTypeDeclarations": [
                                         {
                                             "kind": "ArrayTypeDeclaration",
@@ -70,7 +68,6 @@
                                                 "start": 30,
                                                 "length": 1
                                             },
-                                            "expression": null,
                                             "closingSquareBracket": {
                                                 "kind": "ClosingSquareBracket",
                                                 "fullStart": 31,
@@ -79,10 +76,7 @@
                                             }
                                         }
                                     ]
-                                },
-                                "equalsSign": null,
-                                "eachInKeyword": null,
-                                "expression": null
+                                }
                             }
                         ]
                     },
@@ -99,8 +93,7 @@
                 "fullStart": 34,
                 "start": 34,
                 "length": 3
-            },
-            "endFunctionKeyword": null
+            }
         }
     ]
 }

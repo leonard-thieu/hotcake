@@ -15,7 +15,6 @@
                 "start": 9,
                 "length": 5
             },
-            "returnType": null,
             "openingParenthesis": {
                 "kind": "OpeningParenthesis",
                 "fullStart": 13,
@@ -52,16 +51,12 @@
                         "newlines": [],
                         "scopableExpression": {
                             "kind": "IdentifierExpression",
-                            "newlines": null,
                             "identifier": {
                                 "kind": "Identifier",
                                 "fullStart": 27,
                                 "start": 28,
                                 "length": 6
-                            },
-                            "lessThanSign": null,
-                            "typeArguments": null,
-                            "greaterThanSign": null
+                            }
                         },
                         "scopeMemberAccessOperator": {
                             "kind": "Period",
@@ -77,10 +72,7 @@
                                 "fullStart": 34,
                                 "start": 34,
                                 "length": 4
-                            },
-                            "lessThanSign": null,
-                            "typeArguments": null,
-                            "greaterThanSign": null
+                            }
                         }
                     },
                     "terminator": {
@@ -96,8 +88,7 @@
                 "fullStart": 40,
                 "start": 40,
                 "length": 3
-            },
-            "endFunctionKeyword": null
+            }
         }
     ]
 }

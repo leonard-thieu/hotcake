@@ -26,17 +26,12 @@
                     },
                     "target": {
                         "kind": "TypeReference",
-                        "modulePath": null,
-                        "scopeMemberAccessOperator": null,
                         "identifier": {
                             "kind": "IntKeyword",
                             "fullStart": 9,
                             "start": 10,
                             "length": 4
                         },
-                        "lessThanSign": null,
-                        "typeArguments": null,
-                        "greaterThanSign": null,
                         "arrayTypeDeclarations": []
                     }
                 }
@@ -73,17 +68,12 @@
                     },
                     "target": {
                         "kind": "TypeReference",
-                        "modulePath": null,
-                        "scopeMemberAccessOperator": null,
                         "identifier": {
                             "kind": "FloatKeyword",
                             "fullStart": 24,
                             "start": 25,
                             "length": 6
                         },
-                        "lessThanSign": null,
-                        "typeArguments": null,
-                        "greaterThanSign": null,
                         "arrayTypeDeclarations": []
                     }
                 }
@@ -120,17 +110,12 @@
                     },
                     "target": {
                         "kind": "TypeReference",
-                        "modulePath": null,
-                        "scopeMemberAccessOperator": null,
                         "identifier": {
                             "kind": "StringKeyword",
                             "fullStart": 41,
                             "start": 42,
                             "length": 7
                         },
-                        "lessThanSign": null,
-                        "typeArguments": null,
-                        "greaterThanSign": null,
                         "arrayTypeDeclarations": []
                     }
                 }
@@ -167,17 +152,12 @@
                     },
                     "target": {
                         "kind": "TypeReference",
-                        "modulePath": null,
-                        "scopeMemberAccessOperator": null,
                         "identifier": {
                             "kind": "ObjectKeyword",
                             "fullStart": 59,
                             "start": 60,
                             "length": 7
                         },
-                        "lessThanSign": null,
-                        "typeArguments": null,
-                        "greaterThanSign": null,
                         "arrayTypeDeclarations": []
                     }
                 }
@@ -214,17 +194,12 @@
                     },
                     "target": {
                         "kind": "TypeReference",
-                        "modulePath": null,
-                        "scopeMemberAccessOperator": null,
                         "identifier": {
                             "kind": "Identifier",
                             "fullStart": 77,
                             "start": 78,
                             "length": 2
                         },
-                        "lessThanSign": null,
-                        "typeArguments": null,
-                        "greaterThanSign": null,
                         "arrayTypeDeclarations": []
                     }
                 }
@@ -261,17 +236,12 @@
                     },
                     "target": {
                         "kind": "TypeReference",
-                        "modulePath": null,
-                        "scopeMemberAccessOperator": null,
                         "identifier": {
                             "kind": "Identifier",
                             "fullStart": 90,
                             "start": 91,
                             "length": 2
                         },
-                        "lessThanSign": null,
-                        "typeArguments": null,
-                        "greaterThanSign": null,
                         "arrayTypeDeclarations": []
                     }
                 },
@@ -308,17 +278,12 @@
                     },
                     "target": {
                         "kind": "TypeReference",
-                        "modulePath": null,
-                        "scopeMemberAccessOperator": null,
                         "identifier": {
                             "kind": "Identifier",
                             "fullStart": 104,
                             "start": 105,
                             "length": 2
                         },
-                        "lessThanSign": null,
-                        "typeArguments": null,
-                        "greaterThanSign": null,
                         "arrayTypeDeclarations": []
                     }
                 }

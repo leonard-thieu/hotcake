@@ -15,7 +15,6 @@
                 "start": 9,
                 "length": 2
             },
-            "returnType": null,
             "openingParenthesis": {
                 "kind": "OpeningParenthesis",
                 "fullStart": 10,
@@ -55,10 +54,7 @@
                             "fullStart": 23,
                             "start": 24,
                             "length": 2
-                        },
-                        "lessThanSign": null,
-                        "typeArguments": null,
-                        "greaterThanSign": null
+                        }
                     },
                     "statements": [
                         {
@@ -95,10 +91,7 @@
                                     "fullStart": 38,
                                     "start": 39,
                                     "length": 2
-                                },
-                                "lessThanSign": null,
-                                "typeArguments": null,
-                                "greaterThanSign": null
+                                }
                             },
                             "statements": [
                                 {
@@ -117,7 +110,6 @@
                                 "start": 46,
                                 "length": 7
                             },
-                            "endWhileKeyword": null,
                             "terminator": {
                                 "kind": "Newline",
                                 "fullStart": 49,
@@ -131,9 +123,7 @@
                         "fullStart": 51,
                         "start": 51,
                         "length": 3
-                    },
-                    "endWhileKeyword": null,
-                    "terminator": null
+                    }
                 }
             ],
             "endKeyword": {
@@ -142,8 +132,7 @@
                 "start": 54,
                 "length": 0,
                 "originalKind": "EndKeyword"
-            },
-            "endFunctionKeyword": null
+            }
         }
     ]
 }

@@ -15,14 +15,6 @@
                 "start": 6,
                 "length": 6
             },
-            "lessThanSign": null,
-            "typeParameters": null,
-            "greaterThanSign": null,
-            "extendsKeyword": null,
-            "baseType": null,
-            "implementsKeyword": null,
-            "implementedTypes": null,
-            "attribute": null,
             "members": [
                 {
                     "kind": "Newline",
@@ -36,8 +28,7 @@
                 "fullStart": 13,
                 "start": 13,
                 "length": 3
-            },
-            "endClassKeyword": null
+            }
         }
     ]
 }

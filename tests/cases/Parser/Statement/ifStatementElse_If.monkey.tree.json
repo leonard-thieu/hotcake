@@ -15,7 +15,6 @@
                 "start": 9,
                 "length": 5
             },
-            "returnType": null,
             "openingParenthesis": {
                 "kind": "OpeningParenthesis",
                 "fullStart": 13,
@@ -57,7 +56,6 @@
                             "length": 5
                         }
                     },
-                    "thenKeyword": null,
                     "isSingleLine": false,
                     "statements": [
                         {
@@ -95,7 +93,6 @@
                                     "length": 6
                                 }
                             },
-                            "thenKeyword": null,
                             "statements": [
                                 {
                                     "kind": "EmptyStatement",
@@ -109,14 +106,12 @@
                             ]
                         }
                     ],
-                    "elseStatement": null,
                     "endKeyword": {
                         "kind": "EndKeyword",
                         "fullStart": 49,
                         "start": 53,
                         "length": 7
                     },
-                    "endIfKeyword": null,
                     "terminator": {
                         "kind": "Newline",
                         "fullStart": 56,
@@ -130,8 +125,7 @@
                 "fullStart": 58,
                 "start": 58,
                 "length": 3
-            },
-            "endFunctionKeyword": null
+            }
         }
     ]
 }

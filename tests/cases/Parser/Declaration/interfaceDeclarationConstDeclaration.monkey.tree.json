@@ -15,8 +15,6 @@
                 "start": 10,
                 "length": 9
             },
-            "extendsKeyword": null,
-            "baseTypes": null,
             "members": [
                 {
                     "kind": "Newline",
@@ -41,14 +39,12 @@
                                 "start": 30,
                                 "length": 6
                             },
-                            "type": null,
                             "equalsSign": {
                                 "kind": "EqualsSign",
                                 "fullStart": 35,
                                 "start": 35,
                                 "length": 1
                             },
-                            "eachInKeyword": null,
                             "expression": {
                                 "kind": "FloatLiteral",
                                 "newlines": [],
@@ -74,8 +70,7 @@
                 "fullStart": 41,
                 "start": 41,
                 "length": 3
-            },
-            "endInterfaceKeyword": null
+            }
         }
     ]
 }

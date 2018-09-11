@@ -104,7 +104,6 @@
             },
             "path": {
                 "kind": "StringLiteral",
-                "newlines": null,
                 "startQuotationMark": {
                     "kind": "QuotationMark",
                     "fullStart": 633,
@@ -144,7 +143,6 @@
             "path": {
                 "kind": "ModulePath",
                 "children": [],
-                "scopeMemberAccessOperator": null,
                 "identifier": {
                     "kind": "Identifier",
                     "fullStart": 686,
@@ -254,8 +252,7 @@
                 "fullStart": 847,
                 "start": 847,
                 "length": 7
-            },
-            "externPrivateKeyword": null
+            }
         },
         {
             "kind": "Newline",
@@ -270,8 +267,7 @@
                 "fullStart": 884,
                 "start": 884,
                 "length": 6
-            },
-            "externPrivateKeyword": null
+            }
         },
         {
             "kind": "Newline",
@@ -307,8 +303,7 @@
                 "fullStart": 964,
                 "start": 964,
                 "length": 6
-            },
-            "externPrivateKeyword": null
+            }
         },
         {
             "kind": "Newline",
@@ -350,7 +345,6 @@
                         "modulePath": {
                             "kind": "ModulePath",
                             "children": [],
-                            "scopeMemberAccessOperator": null,
                             "identifier": {
                                 "kind": "Identifier",
                                 "fullStart": 1010,
@@ -370,9 +364,6 @@
                             "start": 1016,
                             "length": 1
                         },
-                        "lessThanSign": null,
-                        "typeArguments": null,
-                        "greaterThanSign": null,
                         "arrayTypeDeclarations": []
                     }
                 }
@@ -417,17 +408,12 @@
                         },
                         "typeReference": {
                             "kind": "TypeReference",
-                            "modulePath": null,
-                            "scopeMemberAccessOperator": null,
                             "identifier": {
                                 "kind": "IntKeyword",
                                 "fullStart": 1064,
                                 "start": 1065,
                                 "length": 4
                             },
-                            "lessThanSign": null,
-                            "typeArguments": null,
-                            "greaterThanSign": null,
                             "arrayTypeDeclarations": []
                         }
                     },
@@ -437,7 +423,6 @@
                         "start": 1069,
                         "length": 2
                     },
-                    "eachInKeyword": null,
                     "expression": {
                         "kind": "IntegerLiteral",
                         "newlines": [],
@@ -490,7 +475,6 @@
                         "start": 1121,
                         "length": 2
                     },
-                    "eachInKeyword": null,
                     "expression": {
                         "kind": "StringLiteral",
                         "newlines": [],
@@ -541,14 +525,12 @@
                         "start": 1173,
                         "length": 4
                     },
-                    "type": null,
                     "equalsSign": {
                         "kind": "ColonEqualsSign",
                         "fullStart": 1176,
                         "start": 1177,
                         "length": 3
                     },
-                    "eachInKeyword": null,
                     "expression": {
                         "kind": "IntegerLiteral",
                         "newlines": [],
@@ -585,14 +567,12 @@
                         "start": 1215,
                         "length": 4
                     },
-                    "type": null,
                     "equalsSign": {
                         "kind": "EqualsSign",
                         "fullStart": 1218,
                         "start": 1219,
                         "length": 2
                     },
-                    "eachInKeyword": null,
                     "expression": {
                         "kind": "IntegerLiteral",
                         "newlines": [],
@@ -629,14 +609,12 @@
                         "start": 1259,
                         "length": 4
                     },
-                    "type": null,
                     "equalsSign": {
                         "kind": "EqualsSign",
                         "fullStart": 1262,
                         "start": 1262,
                         "length": 1
                     },
-                    "eachInKeyword": null,
                     "expression": {
                         "kind": "IntegerLiteral",
                         "newlines": [],
@@ -666,14 +644,12 @@
                         "start": 1265,
                         "length": 3
                     },
-                    "type": null,
                     "equalsSign": {
                         "kind": "ColonEqualsSign",
                         "fullStart": 1268,
                         "start": 1268,
                         "length": 2
                     },
-                    "eachInKeyword": null,
                     "expression": {
                         "kind": "IntegerLiteral",
                         "newlines": [],
@@ -726,17 +702,12 @@
                         },
                         "typeReference": {
                             "kind": "TypeReference",
-                            "modulePath": null,
-                            "scopeMemberAccessOperator": null,
                             "identifier": {
                                 "kind": "IntKeyword",
                                 "fullStart": 1319,
                                 "start": 1320,
                                 "length": 4
                             },
-                            "lessThanSign": null,
-                            "typeArguments": null,
-                            "greaterThanSign": null,
                             "arrayTypeDeclarations": []
                         }
                     },
@@ -746,7 +717,6 @@
                         "start": 1324,
                         "length": 2
                     },
-                    "eachInKeyword": null,
                     "expression": {
                         "kind": "IntegerLiteral",
                         "newlines": [],
@@ -799,7 +769,6 @@
                         "start": 1376,
                         "length": 2
                     },
-                    "eachInKeyword": null,
                     "expression": {
                         "kind": "StringLiteral",
                         "newlines": [],
@@ -850,14 +819,12 @@
                         "start": 1428,
                         "length": 4
                     },
-                    "type": null,
                     "equalsSign": {
                         "kind": "ColonEqualsSign",
                         "fullStart": 1431,
                         "start": 1432,
                         "length": 3
                     },
-                    "eachInKeyword": null,
                     "expression": {
                         "kind": "IntegerLiteral",
                         "newlines": [],
@@ -894,14 +861,12 @@
                         "start": 1470,
                         "length": 4
                     },
-                    "type": null,
                     "equalsSign": {
                         "kind": "EqualsSign",
                         "fullStart": 1473,
                         "start": 1474,
                         "length": 2
                     },
-                    "eachInKeyword": null,
                     "expression": {
                         "kind": "IntegerLiteral",
                         "newlines": [],
@@ -938,14 +903,12 @@
                         "start": 1514,
                         "length": 4
                     },
-                    "type": null,
                     "equalsSign": {
                         "kind": "EqualsSign",
                         "fullStart": 1517,
                         "start": 1517,
                         "length": 1
                     },
-                    "eachInKeyword": null,
                     "expression": {
                         "kind": "IntegerLiteral",
                         "newlines": [],
@@ -975,14 +938,12 @@
                         "start": 1520,
                         "length": 3
                     },
-                    "type": null,
                     "equalsSign": {
                         "kind": "ColonEqualsSign",
                         "fullStart": 1523,
                         "start": 1523,
                         "length": 2
                     },
-                    "eachInKeyword": null,
                     "expression": {
                         "kind": "IntegerLiteral",
                         "newlines": [],
@@ -1029,23 +990,15 @@
                         },
                         "typeReference": {
                             "kind": "TypeReference",
-                            "modulePath": null,
-                            "scopeMemberAccessOperator": null,
                             "identifier": {
                                 "kind": "FloatKeyword",
                                 "fullStart": 1571,
                                 "start": 1572,
                                 "length": 6
                             },
-                            "lessThanSign": null,
-                            "typeArguments": null,
-                            "greaterThanSign": null,
                             "arrayTypeDeclarations": []
                         }
-                    },
-                    "equalsSign": null,
-                    "eachInKeyword": null,
-                    "expression": null
+                    }
                 }
             ]
         },
@@ -1071,11 +1024,7 @@
                         "fullStart": 1637,
                         "start": 1638,
                         "length": 2
-                    },
-                    "type": null,
-                    "equalsSign": null,
-                    "eachInKeyword": null,
-                    "expression": null
+                    }
                 }
             ]
         },
@@ -1118,17 +1067,12 @@
                         },
                         "typeReference": {
                             "kind": "TypeReference",
-                            "modulePath": null,
-                            "scopeMemberAccessOperator": null,
                             "identifier": {
                                 "kind": "Identifier",
                                 "fullStart": 1712,
                                 "start": 1712,
                                 "length": 6
                             },
-                            "lessThanSign": null,
-                            "typeArguments": null,
-                            "greaterThanSign": null,
                             "arrayTypeDeclarations": []
                         }
                     },
@@ -1138,7 +1082,6 @@
                         "start": 1718,
                         "length": 1
                     },
-                    "eachInKeyword": null,
                     "expression": {
                         "kind": "StringLiteral",
                         "newlines": [],
@@ -1202,17 +1145,12 @@
                 },
                 "typeReference": {
                     "kind": "TypeReference",
-                    "modulePath": null,
-                    "scopeMemberAccessOperator": null,
                     "identifier": {
                         "kind": "VoidKeyword",
                         "fullStart": 1763,
                         "start": 1763,
                         "length": 4
                     },
-                    "lessThanSign": null,
-                    "typeArguments": null,
-                    "greaterThanSign": null,
                     "arrayTypeDeclarations": []
                 }
             },
@@ -1241,23 +1179,15 @@
                         },
                         "typeReference": {
                             "kind": "TypeReference",
-                            "modulePath": null,
-                            "scopeMemberAccessOperator": null,
                             "identifier": {
                                 "kind": "IntKeyword",
                                 "fullStart": 1776,
                                 "start": 1776,
                                 "length": 3
                             },
-                            "lessThanSign": null,
-                            "typeArguments": null,
-                            "greaterThanSign": null,
                             "arrayTypeDeclarations": []
                         }
-                    },
-                    "equalsSign": null,
-                    "eachInKeyword": null,
-                    "expression": null
+                    }
                 }
             ],
             "closingParenthesis": {
@@ -1291,8 +1221,7 @@
                 "fullStart": 1831,
                 "start": 1831,
                 "length": 3
-            },
-            "endFunctionKeyword": null
+            }
         },
         {
             "kind": "Newline",
@@ -1320,7 +1249,6 @@
                 "start": 1847,
                 "length": 4
             },
-            "returnType": null,
             "openingParenthesis": {
                 "kind": "OpeningParenthesis",
                 "fullStart": 1850,
@@ -1346,23 +1274,15 @@
                         },
                         "typeReference": {
                             "kind": "TypeReference",
-                            "modulePath": null,
-                            "scopeMemberAccessOperator": null,
                             "identifier": {
                                 "kind": "IntKeyword",
                                 "fullStart": 1859,
                                 "start": 1859,
                                 "length": 3
                             },
-                            "lessThanSign": null,
-                            "typeArguments": null,
-                            "greaterThanSign": null,
                             "arrayTypeDeclarations": []
                         }
-                    },
-                    "equalsSign": null,
-                    "eachInKeyword": null,
-                    "expression": null
+                    }
                 },
                 {
                     "kind": "CommaSeparator",
@@ -1391,10 +1311,7 @@
                             "length": 1
                         },
                         "arrayTypeDeclarations": []
-                    },
-                    "equalsSign": null,
-                    "eachInKeyword": null,
-                    "expression": null
+                    }
                 }
             ],
             "closingParenthesis": {
@@ -1428,8 +1345,7 @@
                 "fullStart": 1919,
                 "start": 1919,
                 "length": 3
-            },
-            "endFunctionKeyword": null
+            }
         },
         {
             "kind": "Newline",
@@ -1457,7 +1373,6 @@
                 "start": 1935,
                 "length": 4
             },
-            "returnType": null,
             "openingParenthesis": {
                 "kind": "OpeningParenthesis",
                 "fullStart": 1938,
@@ -1496,8 +1411,7 @@
                 "fullStart": 2010,
                 "start": 2010,
                 "length": 3
-            },
-            "endFunctionKeyword": null
+            }
         },
         {
             "kind": "Newline",
@@ -1525,7 +1439,6 @@
                 "start": 2026,
                 "length": 4
             },
-            "returnType": null,
             "openingParenthesis": {
                 "kind": "OpeningParenthesis",
                 "fullStart": 2029,
@@ -1595,7 +1508,6 @@
                     },
                     "expression": {
                         "kind": "BinaryExpression",
-                        "newlines": null,
                         "leftOperand": {
                             "kind": "IdentifierExpression",
                             "newlines": [],
@@ -1604,10 +1516,7 @@
                                 "fullStart": 2141,
                                 "start": 2142,
                                 "length": 2
-                            },
-                            "lessThanSign": null,
-                            "typeArguments": null,
-                            "greaterThanSign": null
+                            }
                         },
                         "operator": {
                             "kind": "GreaterThanSign",
@@ -1643,16 +1552,12 @@
                                 "newlines": [],
                                 "invokableExpression": {
                                     "kind": "IdentifierExpression",
-                                    "newlines": null,
                                     "identifier": {
                                         "kind": "Identifier",
                                         "fullStart": 2149,
                                         "start": 2157,
                                         "length": 13
-                                    },
-                                    "lessThanSign": null,
-                                    "typeArguments": null,
-                                    "greaterThanSign": null
+                                    }
                                 },
                                 "openingParenthesis": {
                                     "kind": "OpeningParenthesis",
@@ -1670,10 +1575,7 @@
                                             "fullStart": 2163,
                                             "start": 2163,
                                             "length": 1
-                                        },
-                                        "lessThanSign": null,
-                                        "typeArguments": null,
-                                        "greaterThanSign": null
+                                        }
                                     }
                                 ],
                                 "closingParenthesis": {
@@ -1750,8 +1652,6 @@
                 "start": 2246,
                 "length": 10
             },
-            "extendsKeyword": null,
-            "baseTypes": null,
             "members": [
                 {
                     "kind": "Newline",
@@ -1783,17 +1683,12 @@
                         },
                         "typeReference": {
                             "kind": "TypeReference",
-                            "modulePath": null,
-                            "scopeMemberAccessOperator": null,
                             "identifier": {
                                 "kind": "VoidKeyword",
                                 "fullStart": 2274,
                                 "start": 2275,
                                 "length": 5
                             },
-                            "lessThanSign": null,
-                            "typeArguments": null,
-                            "greaterThanSign": null,
                             "arrayTypeDeclarations": []
                         }
                     },
@@ -1821,10 +1716,7 @@
                                     "length": 1
                                 },
                                 "arrayTypeDeclarations": []
-                            },
-                            "equalsSign": null,
-                            "eachInKeyword": null,
-                            "expression": null
+                            }
                         },
                         {
                             "kind": "CommaSeparator",
@@ -1854,17 +1746,12 @@
                                 },
                                 "typeReference": {
                                     "kind": "TypeReference",
-                                    "modulePath": null,
-                                    "scopeMemberAccessOperator": null,
                                     "identifier": {
                                         "kind": "BoolKeyword",
                                         "fullStart": 2296,
                                         "start": 2296,
                                         "length": 4
                                     },
-                                    "lessThanSign": null,
-                                    "typeArguments": null,
-                                    "greaterThanSign": null,
                                     "arrayTypeDeclarations": []
                                 }
                             },
@@ -1874,7 +1761,6 @@
                                 "start": 2300,
                                 "length": 1
                             },
-                            "eachInKeyword": null,
                             "expression": {
                                 "kind": "BooleanLiteral",
                                 "newlines": [],
@@ -1906,8 +1792,7 @@
                 "fullStart": 2309,
                 "start": 2309,
                 "length": 3
-            },
-            "endInterfaceKeyword": null
+            }
         },
         {
             "kind": "Newline",
@@ -1935,8 +1820,6 @@
                 "start": 2326,
                 "length": 9
             },
-            "extendsKeyword": null,
-            "baseTypes": null,
             "members": [
                 {
                     "kind": "Newline",
@@ -1958,7 +1841,6 @@
                         "start": 2372,
                         "length": 5
                     },
-                    "returnType": null,
                     "openingParenthesis": {
                         "kind": "OpeningParenthesis",
                         "fullStart": 2376,
@@ -1985,8 +1867,7 @@
                 "fullStart": 2380,
                 "start": 2380,
                 "length": 3
-            },
-            "endInterfaceKeyword": null
+            }
         },
         {
             "kind": "Newline",
@@ -2023,17 +1904,12 @@
             "baseTypes": [
                 {
                     "kind": "TypeReference",
-                    "modulePath": null,
-                    "scopeMemberAccessOperator": null,
                     "identifier": {
                         "kind": "Identifier",
                         "fullStart": 2413,
                         "start": 2414,
                         "length": 9
                     },
-                    "lessThanSign": null,
-                    "typeArguments": null,
-                    "greaterThanSign": null,
                     "arrayTypeDeclarations": []
                 }
             ],
@@ -2061,14 +1937,12 @@
                                 "start": 2479,
                                 "length": 4
                             },
-                            "type": null,
                             "equalsSign": {
                                 "kind": "ColonEqualsSign",
                                 "fullStart": 2482,
                                 "start": 2483,
                                 "length": 3
                             },
-                            "eachInKeyword": null,
                             "expression": {
                                 "kind": "FloatLiteral",
                                 "newlines": [],
@@ -2108,7 +1982,6 @@
                         "start": 2505,
                         "length": 5
                     },
-                    "returnType": null,
                     "openingParenthesis": {
                         "kind": "OpeningParenthesis",
                         "fullStart": 2509,
@@ -2178,17 +2051,12 @@
             "baseTypes": [
                 {
                     "kind": "TypeReference",
-                    "modulePath": null,
-                    "scopeMemberAccessOperator": null,
                     "identifier": {
                         "kind": "Identifier",
                         "fullStart": 2574,
                         "start": 2575,
                         "length": 10
                     },
-                    "lessThanSign": null,
-                    "typeArguments": null,
-                    "greaterThanSign": null,
                     "arrayTypeDeclarations": []
                 },
                 {
@@ -2203,17 +2071,12 @@
                 },
                 {
                     "kind": "TypeReference",
-                    "modulePath": null,
-                    "scopeMemberAccessOperator": null,
                     "identifier": {
                         "kind": "Identifier",
                         "fullStart": 2585,
                         "start": 2586,
                         "length": 9
                     },
-                    "lessThanSign": null,
-                    "typeArguments": null,
-                    "greaterThanSign": null,
                     "arrayTypeDeclarations": []
                 }
             ],
@@ -2241,14 +2104,12 @@
                                 "start": 2652,
                                 "length": 4
                             },
-                            "type": null,
                             "equalsSign": {
                                 "kind": "ColonEqualsSign",
                                 "fullStart": 2655,
                                 "start": 2656,
                                 "length": 3
                             },
-                            "eachInKeyword": null,
                             "expression": {
                                 "kind": "FloatLiteral",
                                 "newlines": [],
@@ -2298,17 +2159,12 @@
                         },
                         "typeReference": {
                             "kind": "TypeReference",
-                            "modulePath": null,
-                            "scopeMemberAccessOperator": null,
                             "identifier": {
                                 "kind": "VoidKeyword",
                                 "fullStart": 2734,
                                 "start": 2735,
                                 "length": 5
                             },
-                            "lessThanSign": null,
-                            "typeArguments": null,
-                            "greaterThanSign": null,
                             "arrayTypeDeclarations": []
                         }
                     },
@@ -2336,10 +2192,7 @@
                                     "length": 1
                                 },
                                 "arrayTypeDeclarations": []
-                            },
-                            "equalsSign": null,
-                            "eachInKeyword": null,
-                            "expression": null
+                            }
                         },
                         {
                             "kind": "CommaSeparator",
@@ -2369,17 +2222,12 @@
                                 },
                                 "typeReference": {
                                     "kind": "TypeReference",
-                                    "modulePath": null,
-                                    "scopeMemberAccessOperator": null,
                                     "identifier": {
                                         "kind": "BoolKeyword",
                                         "fullStart": 2756,
                                         "start": 2756,
                                         "length": 4
                                     },
-                                    "lessThanSign": null,
-                                    "typeArguments": null,
-                                    "greaterThanSign": null,
                                     "arrayTypeDeclarations": []
                                 }
                             },
@@ -2389,7 +2237,6 @@
                                 "start": 2760,
                                 "length": 1
                             },
-                            "eachInKeyword": null,
                             "expression": {
                                 "kind": "BooleanLiteral",
                                 "newlines": [],
@@ -2429,7 +2276,6 @@
                         "start": 2802,
                         "length": 5
                     },
-                    "returnType": null,
                     "openingParenthesis": {
                         "kind": "OpeningParenthesis",
                         "fullStart": 2806,
@@ -2490,14 +2336,6 @@
                 "start": 2833,
                 "length": 8
             },
-            "lessThanSign": null,
-            "typeParameters": null,
-            "greaterThanSign": null,
-            "extendsKeyword": null,
-            "baseType": null,
-            "implementsKeyword": null,
-            "implementedTypes": null,
-            "attribute": null,
             "members": [
                 {
                     "kind": "Newline",
@@ -2521,11 +2359,7 @@
                                 "fullStart": 2873,
                                 "start": 2874,
                                 "length": 2
-                            },
-                            "type": null,
-                            "equalsSign": null,
-                            "eachInKeyword": null,
-                            "expression": null
+                            }
                         }
                     ]
                 },
@@ -2552,14 +2386,12 @@
                                 "start": 2916,
                                 "length": 2
                             },
-                            "type": null,
                             "equalsSign": {
                                 "kind": "ColonEqualsSign",
                                 "fullStart": 2917,
                                 "start": 2918,
                                 "length": 3
                             },
-                            "eachInKeyword": null,
                             "expression": {
                                 "kind": "IntegerLiteral",
                                 "newlines": [],
@@ -2606,23 +2438,15 @@
                                 },
                                 "typeReference": {
                                     "kind": "TypeReference",
-                                    "modulePath": null,
-                                    "scopeMemberAccessOperator": null,
                                     "identifier": {
                                         "kind": "FloatKeyword",
                                         "fullStart": 2974,
                                         "start": 2975,
                                         "length": 6
                                     },
-                                    "lessThanSign": null,
-                                    "typeArguments": null,
-                                    "greaterThanSign": null,
                                     "arrayTypeDeclarations": []
                                 }
-                            },
-                            "equalsSign": null,
-                            "eachInKeyword": null,
-                            "expression": null
+                            }
                         }
                     ]
                 },
@@ -2665,7 +2489,6 @@
                                 "start": 3023,
                                 "length": 2
                             },
-                            "eachInKeyword": null,
                             "expression": {
                                 "kind": "StringLiteral",
                                 "newlines": [],
@@ -2712,8 +2535,7 @@
                         "fullStart": 3073,
                         "start": 3077,
                         "length": 13
-                    },
-                    "externPrivateKeyword": null
+                    }
                 },
                 {
                     "kind": "Newline",
@@ -2738,14 +2560,12 @@
                                 "start": 3122,
                                 "length": 2
                             },
-                            "type": null,
                             "equalsSign": {
                                 "kind": "EqualsSign",
                                 "fullStart": 3123,
                                 "start": 3124,
                                 "length": 2
                             },
-                            "eachInKeyword": null,
                             "expression": {
                                 "kind": "IntegerLiteral",
                                 "newlines": [],
@@ -2778,8 +2598,7 @@
                         "fullStart": 3169,
                         "start": 3173,
                         "length": 11
-                    },
-                    "externPrivateKeyword": null
+                    }
                 },
                 {
                     "kind": "Newline",
@@ -2803,11 +2622,7 @@
                                 "fullStart": 3215,
                                 "start": 3216,
                                 "length": 2
-                            },
-                            "type": null,
-                            "equalsSign": null,
-                            "eachInKeyword": null,
-                            "expression": null
+                            }
                         },
                         {
                             "kind": "CommaSeparator",
@@ -2826,11 +2641,7 @@
                                 "fullStart": 3218,
                                 "start": 3218,
                                 "length": 1
-                            },
-                            "type": null,
-                            "equalsSign": null,
-                            "eachInKeyword": null,
-                            "expression": null
+                            }
                         },
                         {
                             "kind": "CommaSeparator",
@@ -2849,11 +2660,7 @@
                                 "fullStart": 3220,
                                 "start": 3220,
                                 "length": 1
-                            },
-                            "type": null,
-                            "equalsSign": null,
-                            "eachInKeyword": null,
-                            "expression": null
+                            }
                         }
                     ]
                 },
@@ -2876,8 +2683,7 @@
                         "fullStart": 3272,
                         "start": 3276,
                         "length": 10
-                    },
-                    "externPrivateKeyword": null
+                    }
                 },
                 {
                     "kind": "Newline",
@@ -2901,11 +2707,7 @@
                                 "fullStart": 3317,
                                 "start": 3318,
                                 "length": 2
-                            },
-                            "type": null,
-                            "equalsSign": null,
-                            "eachInKeyword": null,
-                            "expression": null
+                            }
                         },
                         {
                             "kind": "CommaSeparator",
@@ -2924,11 +2726,7 @@
                                 "fullStart": 3320,
                                 "start": 3320,
                                 "length": 1
-                            },
-                            "type": null,
-                            "equalsSign": null,
-                            "eachInKeyword": null,
-                            "expression": null
+                            }
                         },
                         {
                             "kind": "CommaSeparator",
@@ -2947,11 +2745,7 @@
                                 "fullStart": 3322,
                                 "start": 3322,
                                 "length": 1
-                            },
-                            "type": null,
-                            "equalsSign": null,
-                            "eachInKeyword": null,
-                            "expression": null
+                            }
                         }
                     ]
                 },
@@ -2967,8 +2761,7 @@
                 "fullStart": 3368,
                 "start": 3368,
                 "length": 3
-            },
-            "endClassKeyword": null
+            }
         },
         {
             "kind": "Newline",
@@ -2996,13 +2789,6 @@
                 "start": 3381,
                 "length": 8
             },
-            "lessThanSign": null,
-            "typeParameters": null,
-            "greaterThanSign": null,
-            "extendsKeyword": null,
-            "baseType": null,
-            "implementsKeyword": null,
-            "implementedTypes": null,
             "attribute": {
                 "kind": "AbstractKeyword",
                 "fullStart": 3388,
@@ -3036,7 +2822,6 @@
                         "start": 3444,
                         "length": 6
                     },
-                    "returnType": null,
                     "openingParenthesis": {
                         "kind": "OpeningParenthesis",
                         "fullStart": 3449,
@@ -3057,10 +2842,7 @@
                             "start": 3452,
                             "length": 9
                         }
-                    ],
-                    "statements": null,
-                    "endKeyword": null,
-                    "endMethodKeyword": null
+                    ]
                 },
                 {
                     "kind": "Newline",
@@ -3088,7 +2870,6 @@
                         "start": 3513,
                         "length": 8
                     },
-                    "returnType": null,
                     "openingParenthesis": {
                         "kind": "OpeningParenthesis",
                         "fullStart": 3520,
@@ -3115,10 +2896,7 @@
                             "start": 3532,
                             "length": 9
                         }
-                    ],
-                    "statements": null,
-                    "endKeyword": null,
-                    "endMethodKeyword": null
+                    ]
                 },
                 {
                     "kind": "Newline",
@@ -3146,7 +2924,6 @@
                         "start": 3580,
                         "length": 11
                     },
-                    "returnType": null,
                     "openingParenthesis": {
                         "kind": "OpeningParenthesis",
                         "fullStart": 3590,
@@ -3173,10 +2950,7 @@
                             "start": 3602,
                             "length": 9
                         }
-                    ],
-                    "statements": null,
-                    "endKeyword": null,
-                    "endMethodKeyword": null
+                    ]
                 },
                 {
                     "kind": "Newline",
@@ -3204,7 +2978,6 @@
                         "start": 3647,
                         "length": 4
                     },
-                    "returnType": null,
                     "openingParenthesis": {
                         "kind": "OpeningParenthesis",
                         "fullStart": 3650,
@@ -3230,23 +3003,15 @@
                                 },
                                 "typeReference": {
                                     "kind": "TypeReference",
-                                    "modulePath": null,
-                                    "scopeMemberAccessOperator": null,
                                     "identifier": {
                                         "kind": "Identifier",
                                         "fullStart": 3657,
                                         "start": 3657,
                                         "length": 1
                                     },
-                                    "lessThanSign": null,
-                                    "typeArguments": null,
-                                    "greaterThanSign": null,
                                     "arrayTypeDeclarations": []
                                 }
-                            },
-                            "equalsSign": null,
-                            "eachInKeyword": null,
-                            "expression": null
+                            }
                         }
                     ],
                     "closingParenthesis": {
@@ -3325,17 +3090,12 @@
                         },
                         "typeReference": {
                             "kind": "TypeReference",
-                            "modulePath": null,
-                            "scopeMemberAccessOperator": null,
                             "identifier": {
                                 "kind": "Identifier",
                                 "fullStart": 3717,
                                 "start": 3717,
                                 "length": 1
                             },
-                            "lessThanSign": null,
-                            "typeArguments": null,
-                            "greaterThanSign": null,
                             "arrayTypeDeclarations": []
                         }
                     },
@@ -3378,8 +3138,7 @@
                         "fullStart": 3746,
                         "start": 3750,
                         "length": 7
-                    },
-                    "endMethodKeyword": null
+                    }
                 },
                 {
                     "kind": "Newline",
@@ -3420,23 +3179,15 @@
                                 },
                                 "typeReference": {
                                     "kind": "TypeReference",
-                                    "modulePath": null,
-                                    "scopeMemberAccessOperator": null,
                                     "identifier": {
                                         "kind": "Identifier",
                                         "fullStart": 3773,
                                         "start": 3773,
                                         "length": 1
                                     },
-                                    "lessThanSign": null,
-                                    "typeArguments": null,
-                                    "greaterThanSign": null,
                                     "arrayTypeDeclarations": []
                                 }
-                            },
-                            "equalsSign": null,
-                            "eachInKeyword": null,
-                            "expression": null
+                            }
                         }
                     ]
                 },
@@ -3466,7 +3217,6 @@
                         "start": 3789,
                         "length": 5
                     },
-                    "returnType": null,
                     "openingParenthesis": {
                         "kind": "OpeningParenthesis",
                         "fullStart": 3793,
@@ -3506,8 +3256,7 @@
                         "fullStart": 3829,
                         "start": 3833,
                         "length": 7
-                    },
-                    "endMethodKeyword": null
+                    }
                 },
                 {
                     "kind": "Newline",
@@ -3529,7 +3278,6 @@
                         "start": 3849,
                         "length": 5
                     },
-                    "returnType": null,
                     "openingParenthesis": {
                         "kind": "OpeningParenthesis",
                         "fullStart": 3853,
@@ -3569,8 +3317,7 @@
                         "fullStart": 3889,
                         "start": 3893,
                         "length": 7
-                    },
-                    "endMethodKeyword": null
+                    }
                 },
                 {
                     "kind": "Newline",
@@ -3649,22 +3396,14 @@
             },
             "baseType": {
                 "kind": "TypeReference",
-                "modulePath": null,
-                "scopeMemberAccessOperator": null,
                 "identifier": {
                     "kind": "Identifier",
                     "fullStart": 3935,
                     "start": 3936,
                     "length": 8
                 },
-                "lessThanSign": null,
-                "typeArguments": null,
-                "greaterThanSign": null,
                 "arrayTypeDeclarations": []
             },
-            "implementsKeyword": null,
-            "implementedTypes": null,
-            "attribute": null,
             "members": [
                 {
                     "kind": "Newline",
@@ -3684,8 +3423,7 @@
                 "fullStart": 4031,
                 "start": 4031,
                 "length": 3
-            },
-            "endClassKeyword": null
+            }
         },
         {
             "kind": "Newline",
@@ -3744,21 +3482,14 @@
             },
             "baseType": {
                 "kind": "TypeReference",
-                "modulePath": null,
-                "scopeMemberAccessOperator": null,
                 "identifier": {
                     "kind": "Identifier",
                     "fullStart": 4062,
                     "start": 4063,
                     "length": 8
                 },
-                "lessThanSign": null,
-                "typeArguments": null,
-                "greaterThanSign": null,
                 "arrayTypeDeclarations": []
             },
-            "implementsKeyword": null,
-            "implementedTypes": null,
             "attribute": {
                 "kind": "AbstractKeyword",
                 "fullStart": 4070,
@@ -3784,8 +3515,7 @@
                 "fullStart": 4166,
                 "start": 4166,
                 "length": 3
-            },
-            "endClassKeyword": null
+            }
         },
         {
             "kind": "Newline",
@@ -3836,8 +3566,6 @@
                 "start": 4188,
                 "length": 1
             },
-            "extendsKeyword": null,
-            "baseType": null,
             "implementsKeyword": {
                 "kind": "ImplementsKeyword",
                 "fullStart": 4189,
@@ -3847,21 +3575,15 @@
             "implementedTypes": [
                 {
                     "kind": "TypeReference",
-                    "modulePath": null,
-                    "scopeMemberAccessOperator": null,
                     "identifier": {
                         "kind": "Identifier",
                         "fullStart": 4200,
                         "start": 4201,
                         "length": 9
                     },
-                    "lessThanSign": null,
-                    "typeArguments": null,
-                    "greaterThanSign": null,
                     "arrayTypeDeclarations": []
                 }
             ],
-            "attribute": null,
             "members": [
                 {
                     "kind": "Newline",
@@ -3881,8 +3603,7 @@
                 "fullStart": 4287,
                 "start": 4287,
                 "length": 3
-            },
-            "endClassKeyword": null
+            }
         },
         {
             "kind": "Newline",
@@ -3933,8 +3654,6 @@
                 "start": 4309,
                 "length": 1
             },
-            "extendsKeyword": null,
-            "baseType": null,
             "implementsKeyword": {
                 "kind": "ImplementsKeyword",
                 "fullStart": 4310,
@@ -3944,17 +3663,12 @@
             "implementedTypes": [
                 {
                     "kind": "TypeReference",
-                    "modulePath": null,
-                    "scopeMemberAccessOperator": null,
                     "identifier": {
                         "kind": "Identifier",
                         "fullStart": 4321,
                         "start": 4322,
                         "length": 9
                     },
-                    "lessThanSign": null,
-                    "typeArguments": null,
-                    "greaterThanSign": null,
                     "arrayTypeDeclarations": []
                 }
             ],
@@ -3983,8 +3697,7 @@
                 "fullStart": 4424,
                 "start": 4424,
                 "length": 3
-            },
-            "endClassKeyword": null
+            }
         },
         {
             "kind": "Newline",
@@ -4035,8 +3748,6 @@
                 "start": 4446,
                 "length": 1
             },
-            "extendsKeyword": null,
-            "baseType": null,
             "implementsKeyword": {
                 "kind": "ImplementsKeyword",
                 "fullStart": 4447,
@@ -4046,17 +3757,12 @@
             "implementedTypes": [
                 {
                     "kind": "TypeReference",
-                    "modulePath": null,
-                    "scopeMemberAccessOperator": null,
                     "identifier": {
                         "kind": "Identifier",
                         "fullStart": 4458,
                         "start": 4459,
                         "length": 9
                     },
-                    "lessThanSign": null,
-                    "typeArguments": null,
-                    "greaterThanSign": null,
                     "arrayTypeDeclarations": []
                 },
                 {
@@ -4071,21 +3777,15 @@
                 },
                 {
                     "kind": "TypeReference",
-                    "modulePath": null,
-                    "scopeMemberAccessOperator": null,
                     "identifier": {
                         "kind": "Identifier",
                         "fullStart": 4468,
                         "start": 4468,
                         "length": 8
                     },
-                    "lessThanSign": null,
-                    "typeArguments": null,
-                    "greaterThanSign": null,
                     "arrayTypeDeclarations": []
                 }
             ],
-            "attribute": null,
             "members": [
                 {
                     "kind": "Newline",
@@ -4105,8 +3805,7 @@
                 "fullStart": 4546,
                 "start": 4546,
                 "length": 3
-            },
-            "endClassKeyword": null
+            }
         },
         {
             "kind": "Newline",
@@ -4165,17 +3864,12 @@
             },
             "baseType": {
                 "kind": "TypeReference",
-                "modulePath": null,
-                "scopeMemberAccessOperator": null,
                 "identifier": {
                     "kind": "Identifier",
                     "fullStart": 4577,
                     "start": 4578,
                     "length": 8
                 },
-                "lessThanSign": null,
-                "typeArguments": null,
-                "greaterThanSign": null,
                 "arrayTypeDeclarations": []
             },
             "implementsKeyword": {
@@ -4187,17 +3881,12 @@
             "implementedTypes": [
                 {
                     "kind": "TypeReference",
-                    "modulePath": null,
-                    "scopeMemberAccessOperator": null,
                     "identifier": {
                         "kind": "Identifier",
                         "fullStart": 4596,
                         "start": 4597,
                         "length": 9
                     },
-                    "lessThanSign": null,
-                    "typeArguments": null,
-                    "greaterThanSign": null,
                     "arrayTypeDeclarations": []
                 },
                 {
@@ -4212,21 +3901,15 @@
                 },
                 {
                     "kind": "TypeReference",
-                    "modulePath": null,
-                    "scopeMemberAccessOperator": null,
                     "identifier": {
                         "kind": "Identifier",
                         "fullStart": 4606,
                         "start": 4606,
                         "length": 8
                     },
-                    "lessThanSign": null,
-                    "typeArguments": null,
-                    "greaterThanSign": null,
                     "arrayTypeDeclarations": []
                 }
             ],
-            "attribute": null,
             "members": [
                 {
                     "kind": "Newline",
@@ -4311,17 +3994,12 @@
             },
             "baseType": {
                 "kind": "TypeReference",
-                "modulePath": null,
-                "scopeMemberAccessOperator": null,
                 "identifier": {
                     "kind": "Identifier",
                     "fullStart": 4729,
                     "start": 4730,
                     "length": 8
                 },
-                "lessThanSign": null,
-                "typeArguments": null,
-                "greaterThanSign": null,
                 "arrayTypeDeclarations": []
             },
             "implementsKeyword": {
@@ -4333,17 +4011,12 @@
             "implementedTypes": [
                 {
                     "kind": "TypeReference",
-                    "modulePath": null,
-                    "scopeMemberAccessOperator": null,
                     "identifier": {
                         "kind": "Identifier",
                         "fullStart": 4748,
                         "start": 4749,
                         "length": 9
                     },
-                    "lessThanSign": null,
-                    "typeArguments": null,
-                    "greaterThanSign": null,
                     "arrayTypeDeclarations": []
                 },
                 {
@@ -4358,17 +4031,12 @@
                 },
                 {
                     "kind": "TypeReference",
-                    "modulePath": null,
-                    "scopeMemberAccessOperator": null,
                     "identifier": {
                         "kind": "Identifier",
                         "fullStart": 4758,
                         "start": 4758,
                         "length": 8
                     },
-                    "lessThanSign": null,
-                    "typeArguments": null,
-                    "greaterThanSign": null,
                     "arrayTypeDeclarations": []
                 }
             ],
@@ -4431,7 +4099,6 @@
                 "start": 4876,
                 "length": 12
             },
-            "returnType": null,
             "openingParenthesis": {
                 "kind": "OpeningParenthesis",
                 "fullStart": 4887,
@@ -4457,23 +4124,15 @@
                         },
                         "typeReference": {
                             "kind": "TypeReference",
-                            "modulePath": null,
-                            "scopeMemberAccessOperator": null,
                             "identifier": {
                                 "kind": "StringKeyword",
                                 "fullStart": 4892,
                                 "start": 4893,
                                 "length": 7
                             },
-                            "lessThanSign": null,
-                            "typeArguments": null,
-                            "greaterThanSign": null,
                             "arrayTypeDeclarations": []
                         }
-                    },
-                    "equalsSign": null,
-                    "eachInKeyword": null,
-                    "expression": null
+                    }
                 }
             ],
             "closingParenthesis": {
@@ -4502,7 +4161,6 @@
                     },
                     "expression": {
                         "kind": "BinaryExpression",
-                        "newlines": null,
                         "leftOperand": {
                             "kind": "IdentifierExpression",
                             "newlines": [],
@@ -4511,10 +4169,7 @@
                                 "fullStart": 4908,
                                 "start": 4909,
                                 "length": 4
-                            },
-                            "lessThanSign": null,
-                            "typeArguments": null,
-                            "greaterThanSign": null
+                            }
                         },
                         "operator": {
                             "kind": "EqualsSign",
@@ -4547,7 +4202,6 @@
                             }
                         }
                     },
-                    "thenKeyword": null,
                     "isSingleLine": false,
                     "statements": [
                         {
@@ -4570,7 +4224,6 @@
                         }
                     ],
                     "elseIfStatements": [],
-                    "elseStatement": null,
                     "endKeyword": {
                         "kind": "EndKeyword",
                         "fullStart": 4964,
@@ -4609,7 +4262,6 @@
                     },
                     "expression": {
                         "kind": "BinaryExpression",
-                        "newlines": null,
                         "leftOperand": {
                             "kind": "IdentifierExpression",
                             "newlines": [],
@@ -4618,10 +4270,7 @@
                                 "fullStart": 4984,
                                 "start": 4985,
                                 "length": 4
-                            },
-                            "lessThanSign": null,
-                            "typeArguments": null,
-                            "greaterThanSign": null
+                            }
                         },
                         "operator": {
                             "kind": "EqualsSign",
@@ -4654,7 +4303,6 @@
                             }
                         }
                     },
-                    "thenKeyword": null,
                     "isSingleLine": false,
                     "statements": [
                         {
@@ -4744,7 +4392,6 @@
                     },
                     "expression": {
                         "kind": "BinaryExpression",
-                        "newlines": null,
                         "leftOperand": {
                             "kind": "IdentifierExpression",
                             "newlines": [],
@@ -4753,10 +4400,7 @@
                                 "fullStart": 5103,
                                 "start": 5104,
                                 "length": 4
-                            },
-                            "lessThanSign": null,
-                            "typeArguments": null,
-                            "greaterThanSign": null
+                            }
                         },
                         "operator": {
                             "kind": "EqualsSign",
@@ -4789,7 +4433,6 @@
                             }
                         }
                     },
-                    "thenKeyword": null,
                     "isSingleLine": false,
                     "statements": [
                         {
@@ -4828,7 +4471,6 @@
                             },
                             "expression": {
                                 "kind": "BinaryExpression",
-                                "newlines": null,
                                 "leftOperand": {
                                     "kind": "IdentifierExpression",
                                     "newlines": [],
@@ -4837,10 +4479,7 @@
                                         "fullStart": 5170,
                                         "start": 5171,
                                         "length": 4
-                                    },
-                                    "lessThanSign": null,
-                                    "typeArguments": null,
-                                    "greaterThanSign": null
+                                    }
                                 },
                                 "operator": {
                                     "kind": "LessThanSignGreaterThanSign",
@@ -4866,7 +4505,6 @@
                                     }
                                 }
                             },
-                            "thenKeyword": null,
                             "statements": [
                                 {
                                     "kind": "EmptyStatement",
@@ -4889,7 +4527,6 @@
                             ]
                         }
                     ],
-                    "elseStatement": null,
                     "endKeyword": {
                         "kind": "EndKeyword",
                         "fullStart": 5216,
@@ -4928,7 +4565,6 @@
                     },
                     "expression": {
                         "kind": "BinaryExpression",
-                        "newlines": null,
                         "leftOperand": {
                             "kind": "IdentifierExpression",
                             "newlines": [],
@@ -4937,10 +4573,7 @@
                                 "fullStart": 5240,
                                 "start": 5241,
                                 "length": 4
-                            },
-                            "lessThanSign": null,
-                            "typeArguments": null,
-                            "greaterThanSign": null
+                            }
                         },
                         "operator": {
                             "kind": "EqualsSign",
@@ -4973,7 +4606,6 @@
                             }
                         }
                     },
-                    "thenKeyword": null,
                     "isSingleLine": false,
                     "statements": [
                         {
@@ -5012,7 +4644,6 @@
                             },
                             "expression": {
                                 "kind": "BinaryExpression",
-                                "newlines": null,
                                 "leftOperand": {
                                     "kind": "IdentifierExpression",
                                     "newlines": [],
@@ -5021,10 +4652,7 @@
                                         "fullStart": 5307,
                                         "start": 5308,
                                         "length": 4
-                                    },
-                                    "lessThanSign": null,
-                                    "typeArguments": null,
-                                    "greaterThanSign": null
+                                    }
                                 },
                                 "operator": {
                                     "kind": "LessThanSignGreaterThanSign",
@@ -5050,7 +4678,6 @@
                                     }
                                 }
                             },
-                            "thenKeyword": null,
                             "statements": [
                                 {
                                     "kind": "EmptyStatement",
@@ -5108,7 +4735,6 @@
                         "start": 5400,
                         "length": 9
                     },
-                    "endIfKeyword": null,
                     "terminator": {
                         "kind": "Newline",
                         "fullStart": 5405,
@@ -5135,7 +4761,6 @@
                     },
                     "expression": {
                         "kind": "BinaryExpression",
-                        "newlines": null,
                         "leftOperand": {
                             "kind": "IdentifierExpression",
                             "newlines": [],
@@ -5144,10 +4769,7 @@
                                 "fullStart": 5415,
                                 "start": 5416,
                                 "length": 4
-                            },
-                            "lessThanSign": null,
-                            "typeArguments": null,
-                            "greaterThanSign": null
+                            }
                         },
                         "operator": {
                             "kind": "EqualsSign",
@@ -5224,7 +4846,6 @@
                             },
                             "expression": {
                                 "kind": "BinaryExpression",
-                                "newlines": null,
                                 "leftOperand": {
                                     "kind": "IdentifierExpression",
                                     "newlines": [],
@@ -5233,10 +4854,7 @@
                                         "fullStart": 5487,
                                         "start": 5488,
                                         "length": 4
-                                    },
-                                    "lessThanSign": null,
-                                    "typeArguments": null,
-                                    "greaterThanSign": null
+                                    }
                                 },
                                 "operator": {
                                     "kind": "LessThanSignGreaterThanSign",
@@ -5325,7 +4943,6 @@
                         "start": 5585,
                         "length": 7
                     },
-                    "endIfKeyword": null,
                     "terminator": {
                         "kind": "Newline",
                         "fullStart": 5588,
@@ -5373,7 +4990,6 @@
                 "start": 5615,
                 "length": 22
             },
-            "returnType": null,
             "openingParenthesis": {
                 "kind": "OpeningParenthesis",
                 "fullStart": 5636,
@@ -5399,23 +5015,15 @@
                         },
                         "typeReference": {
                             "kind": "TypeReference",
-                            "modulePath": null,
-                            "scopeMemberAccessOperator": null,
                             "identifier": {
                                 "kind": "StringKeyword",
                                 "fullStart": 5641,
                                 "start": 5642,
                                 "length": 7
                             },
-                            "lessThanSign": null,
-                            "typeArguments": null,
-                            "greaterThanSign": null,
                             "arrayTypeDeclarations": []
                         }
-                    },
-                    "equalsSign": null,
-                    "eachInKeyword": null,
-                    "expression": null
+                    }
                 }
             ],
             "closingParenthesis": {
@@ -5444,7 +5052,6 @@
                     },
                     "expression": {
                         "kind": "BinaryExpression",
-                        "newlines": null,
                         "leftOperand": {
                             "kind": "IdentifierExpression",
                             "newlines": [],
@@ -5453,10 +5060,7 @@
                                 "fullStart": 5657,
                                 "start": 5658,
                                 "length": 4
-                            },
-                            "lessThanSign": null,
-                            "typeArguments": null,
-                            "greaterThanSign": null
+                            }
                         },
                         "operator": {
                             "kind": "EqualsSign",
@@ -5504,15 +5108,9 @@
                                 "fullStart": 5677,
                                 "start": 5678,
                                 "length": 7
-                            },
-                            "expression": null,
-                            "terminator": null
+                            }
                         }
                     ],
-                    "elseIfStatements": null,
-                    "elseStatement": null,
-                    "endKeyword": null,
-                    "endIfKeyword": null,
                     "terminator": {
                         "kind": "Newline",
                         "fullStart": 5684,
@@ -5530,7 +5128,6 @@
                     },
                     "expression": {
                         "kind": "BinaryExpression",
-                        "newlines": null,
                         "leftOperand": {
                             "kind": "IdentifierExpression",
                             "newlines": [],
@@ -5539,10 +5136,7 @@
                                 "fullStart": 5692,
                                 "start": 5693,
                                 "length": 4
-                            },
-                            "lessThanSign": null,
-                            "typeArguments": null,
-                            "greaterThanSign": null
+                            }
                         },
                         "operator": {
                             "kind": "LessThanSignGreaterThanSign",
@@ -5568,7 +5162,6 @@
                             }
                         }
                     },
-                    "thenKeyword": null,
                     "isSingleLine": true,
                     "statements": [
                         {
@@ -5578,15 +5171,9 @@
                                 "fullStart": 5702,
                                 "start": 5703,
                                 "length": 7
-                            },
-                            "expression": null,
-                            "terminator": null
+                            }
                         }
                     ],
-                    "elseIfStatements": null,
-                    "elseStatement": null,
-                    "endKeyword": null,
-                    "endIfKeyword": null,
                     "terminator": {
                         "kind": "Newline",
                         "fullStart": 5709,
@@ -5634,7 +5221,6 @@
                 "start": 5736,
                 "length": 16
             },
-            "returnType": null,
             "openingParenthesis": {
                 "kind": "OpeningParenthesis",
                 "fullStart": 5751,
@@ -5666,7 +5252,6 @@
                         "start": 5755,
                         "length": 6
                     },
-                    "expression": null,
                     "terminator": {
                         "kind": "Newline",
                         "fullStart": 5761,
@@ -5682,7 +5267,6 @@
                         "start": 5792,
                         "length": 10
                     },
-                    "expression": null,
                     "terminator": {
                         "kind": "Newline",
                         "fullStart": 5798,
@@ -5707,7 +5291,6 @@
                         "start": 5820,
                         "length": 6
                     },
-                    "expression": null,
                     "terminator": {
                         "kind": "Newline",
                         "fullStart": 5826,
@@ -5723,7 +5306,6 @@
                         "start": 5850,
                         "length": 10
                     },
-                    "expression": null,
                     "terminator": {
                         "kind": "Semicolon",
                         "fullStart": 5856,
@@ -5886,7 +5468,6 @@
                     },
                     "expression": {
                         "kind": "BinaryExpression",
-                        "newlines": null,
                         "leftOperand": {
                             "kind": "BooleanLiteral",
                             "newlines": [],
@@ -5905,7 +5486,6 @@
                         },
                         "rightOperand": {
                             "kind": "BinaryExpression",
-                            "newlines": null,
                             "leftOperand": {
                                 "kind": "IntegerLiteral",
                                 "newlines": [
@@ -6007,7 +5587,6 @@
                 "start": 6136,
                 "length": 16
             },
-            "returnType": null,
             "openingParenthesis": {
                 "kind": "OpeningParenthesis",
                 "fullStart": 6151,
@@ -6056,10 +5635,7 @@
                             "fullStart": 6167,
                             "start": 6168,
                             "length": 6
-                        },
-                        "lessThanSign": null,
-                        "typeArguments": null,
-                        "greaterThanSign": null
+                        }
                     },
                     "newlines": [
                         {
@@ -6245,10 +5821,7 @@
                                         "fullStart": 6441,
                                         "start": 6442,
                                         "length": 6
-                                    },
-                                    "lessThanSign": null,
-                                    "typeArguments": null,
-                                    "greaterThanSign": null
+                                    }
                                 },
                                 "newlines": [
                                     {
@@ -6434,7 +6007,6 @@
                                                 "start": 6680,
                                                 "length": 26
                                             },
-                                            "expression": null,
                                             "terminator": {
                                                 "kind": "Newline",
                                                 "fullStart": 6686,
@@ -6471,7 +6043,6 @@
                         "start": 6730,
                         "length": 7
                     },
-                    "endSelectKeyword": null,
                     "terminator": {
                         "kind": "Newline",
                         "fullStart": 6733,
@@ -6494,8 +6065,7 @@
                 "fullStart": 6759,
                 "start": 6759,
                 "length": 3
-            },
-            "endFunctionKeyword": null
+            }
         },
         {
             "kind": "Newline",
@@ -6523,7 +6093,6 @@
                 "start": 6775,
                 "length": 13
             },
-            "returnType": null,
             "openingParenthesis": {
                 "kind": "OpeningParenthesis",
                 "fullStart": 6787,
@@ -6576,23 +6145,15 @@
                                     },
                                     "typeReference": {
                                         "kind": "TypeReference",
-                                        "modulePath": null,
-                                        "scopeMemberAccessOperator": null,
                                         "identifier": {
                                             "kind": "FloatKeyword",
                                             "fullStart": 6803,
                                             "start": 6804,
                                             "length": 6
                                         },
-                                        "lessThanSign": null,
-                                        "typeArguments": null,
-                                        "greaterThanSign": null,
                                         "arrayTypeDeclarations": []
                                     }
-                                },
-                                "equalsSign": null,
-                                "eachInKeyword": null,
-                                "expression": null
+                                }
                             }
                         ]
                     },
@@ -6607,7 +6168,6 @@
                     "kind": "ExpressionStatement",
                     "expression": {
                         "kind": "AssignmentExpression",
-                        "newlines": null,
                         "leftOperand": {
                             "kind": "IdentifierExpression",
                             "newlines": [],
@@ -6616,10 +6176,7 @@
                                 "fullStart": 6811,
                                 "start": 6815,
                                 "length": 5
-                            },
-                            "lessThanSign": null,
-                            "typeArguments": null,
-                            "greaterThanSign": null
+                            }
                         },
                         "operator": {
                             "kind": "EqualsSign",
@@ -6627,7 +6184,6 @@
                             "start": 6817,
                             "length": 2
                         },
-                        "eachInKeyword": null,
                         "rightOperand": {
                             "kind": "FloatLiteral",
                             "newlines": [],
@@ -6650,7 +6206,6 @@
                     "kind": "ExpressionStatement",
                     "expression": {
                         "kind": "AssignmentExpression",
-                        "newlines": null,
                         "leftOperand": {
                             "kind": "IdentifierExpression",
                             "newlines": [],
@@ -6659,10 +6214,7 @@
                                 "fullStart": 6828,
                                 "start": 6832,
                                 "length": 5
-                            },
-                            "lessThanSign": null,
-                            "typeArguments": null,
-                            "greaterThanSign": null
+                            }
                         },
                         "operator": {
                             "kind": "EqualsSign",
@@ -6670,7 +6222,6 @@
                             "start": 6834,
                             "length": 2
                         },
-                        "eachInKeyword": null,
                         "rightOperand": {
                             "kind": "FloatLiteral",
                             "newlines": [],
@@ -6693,7 +6244,6 @@
                     "kind": "ExpressionStatement",
                     "expression": {
                         "kind": "AssignmentExpression",
-                        "newlines": null,
                         "leftOperand": {
                             "kind": "IdentifierExpression",
                             "newlines": [],
@@ -6702,10 +6252,7 @@
                                 "fullStart": 6843,
                                 "start": 6847,
                                 "length": 5
-                            },
-                            "lessThanSign": null,
-                            "typeArguments": null,
-                            "greaterThanSign": null
+                            }
                         },
                         "operator": {
                             "kind": "EqualsSign",
@@ -6713,7 +6260,6 @@
                             "start": 6849,
                             "length": 2
                         },
-                        "eachInKeyword": null,
                         "rightOperand": {
                             "kind": "FloatLiteral",
                             "newlines": [],
@@ -6736,7 +6282,6 @@
                     "kind": "ExpressionStatement",
                     "expression": {
                         "kind": "AssignmentExpression",
-                        "newlines": null,
                         "leftOperand": {
                             "kind": "IdentifierExpression",
                             "newlines": [],
@@ -6745,10 +6290,7 @@
                                 "fullStart": 6857,
                                 "start": 6861,
                                 "length": 5
-                            },
-                            "lessThanSign": null,
-                            "typeArguments": null,
-                            "greaterThanSign": null
+                            }
                         },
                         "operator": {
                             "kind": "EqualsSign",
@@ -6756,7 +6298,6 @@
                             "start": 6863,
                             "length": 2
                         },
-                        "eachInKeyword": null,
                         "rightOperand": {
                             "kind": "FloatLiteral",
                             "newlines": [],
@@ -6779,7 +6320,6 @@
                     "kind": "ExpressionStatement",
                     "expression": {
                         "kind": "AssignmentExpression",
-                        "newlines": null,
                         "leftOperand": {
                             "kind": "IdentifierExpression",
                             "newlines": [],
@@ -6788,10 +6328,7 @@
                                 "fullStart": 6872,
                                 "start": 6876,
                                 "length": 5
-                            },
-                            "lessThanSign": null,
-                            "typeArguments": null,
-                            "greaterThanSign": null
+                            }
                         },
                         "operator": {
                             "kind": "EqualsSign",
@@ -6799,7 +6336,6 @@
                             "start": 6878,
                             "length": 2
                         },
-                        "eachInKeyword": null,
                         "rightOperand": {
                             "kind": "FloatLiteral",
                             "newlines": [],

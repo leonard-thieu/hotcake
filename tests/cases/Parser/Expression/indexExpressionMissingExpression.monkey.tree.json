@@ -15,7 +15,6 @@
                 "start": 9,
                 "length": 5
             },
-            "returnType": null,
             "openingParenthesis": {
                 "kind": "OpeningParenthesis",
                 "fullStart": 13,
@@ -46,16 +45,12 @@
                         "newlines": [],
                         "indexableExpression": {
                             "kind": "IdentifierExpression",
-                            "newlines": null,
                             "identifier": {
                                 "kind": "Identifier",
                                 "fullStart": 17,
                                 "start": 21,
                                 "length": 5
-                            },
-                            "lessThanSign": null,
-                            "typeArguments": null,
-                            "greaterThanSign": null
+                            }
                         },
                         "openingSquareBracket": {
                             "kind": "OpeningSquareBracket",
@@ -90,8 +85,7 @@
                 "fullStart": 26,
                 "start": 26,
                 "length": 3
-            },
-            "endFunctionKeyword": null
+            }
         }
     ]
 }

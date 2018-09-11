@@ -15,8 +15,6 @@
                 "start": 10,
                 "length": 9
             },
-            "extendsKeyword": null,
-            "baseTypes": null,
             "members": [
                 {
                     "kind": "Newline",
@@ -38,7 +36,6 @@
                         "start": 31,
                         "length": 5
                     },
-                    "returnType": null,
                     "openingParenthesis": {
                         "kind": "OpeningParenthesis",
                         "fullStart": 35,
@@ -65,8 +62,7 @@
                 "fullStart": 39,
                 "start": 39,
                 "length": 3
-            },
-            "endInterfaceKeyword": null
+            }
         }
     ]
 }

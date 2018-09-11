@@ -15,8 +15,6 @@
                 "start": 10,
                 "length": 2
             },
-            "extendsKeyword": null,
-            "baseTypes": null,
             "members": [
                 {
                     "kind": "Newline",
@@ -37,8 +35,7 @@
                 "start": 15,
                 "length": 0,
                 "originalKind": "EndKeyword"
-            },
-            "endInterfaceKeyword": null
+            }
         },
         {
             "kind": "InterfaceDeclaration",
@@ -54,8 +51,6 @@
                 "start": 25,
                 "length": 2
             },
-            "extendsKeyword": null,
-            "baseTypes": null,
             "members": [
                 {
                     "kind": "Newline",
@@ -69,8 +64,7 @@
                 "fullStart": 28,
                 "start": 28,
                 "length": 3
-            },
-            "endInterfaceKeyword": null
+            }
         }
     ]
 }

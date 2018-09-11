@@ -15,14 +15,6 @@
                 "start": 6,
                 "length": 6
             },
-            "lessThanSign": null,
-            "typeParameters": null,
-            "greaterThanSign": null,
-            "extendsKeyword": null,
-            "baseType": null,
-            "implementsKeyword": null,
-            "implementedTypes": null,
-            "attribute": null,
             "members": [
                 {
                     "kind": "Newline",
@@ -44,7 +36,6 @@
                         "start": 26,
                         "length": 7
                     },
-                    "returnType": null,
                     "openingParenthesis": {
                         "kind": "OpeningParenthesis",
                         "fullStart": 32,
@@ -74,8 +65,7 @@
                         "fullStart": 36,
                         "start": 40,
                         "length": 7
-                    },
-                    "endFunctionKeyword": null
+                    }
                 },
                 {
                     "kind": "Newline",
@@ -89,8 +79,7 @@
                 "fullStart": 45,
                 "start": 45,
                 "length": 3
-            },
-            "endClassKeyword": null
+            }
         }
     ]
 }

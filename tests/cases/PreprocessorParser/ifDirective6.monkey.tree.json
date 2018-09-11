@@ -17,7 +17,6 @@
             },
             "expression": {
                 "kind": "BinaryExpression",
-                "newlines": null,
                 "leftOperand": {
                     "kind": "IdentifierExpression",
                     "newlines": [],
@@ -26,10 +25,7 @@
                         "fullStart": 3,
                         "start": 4,
                         "length": 7
-                    },
-                    "lessThanSign": null,
-                    "typeArguments": null,
-                    "greaterThanSign": null
+                    }
                 },
                 "operator": {
                     "kind": "EqualsSign",
@@ -127,10 +123,8 @@
                         "start": 62,
                         "length": 6
                     },
-                    "ifDirectiveKeyword": null,
                     "expression": {
                         "kind": "BinaryExpression",
-                        "newlines": null,
                         "leftOperand": {
                             "kind": "IdentifierExpression",
                             "newlines": [],
@@ -139,10 +133,7 @@
                                 "fullStart": 68,
                                 "start": 69,
                                 "length": 5
-                            },
-                            "lessThanSign": null,
-                            "typeArguments": null,
-                            "greaterThanSign": null
+                            }
                         },
                         "operator": {
                             "kind": "EqualsSign",
@@ -240,10 +231,8 @@
                         "start": 133,
                         "length": 6
                     },
-                    "ifDirectiveKeyword": null,
                     "expression": {
                         "kind": "BinaryExpression",
-                        "newlines": null,
                         "leftOperand": {
                             "kind": "IdentifierExpression",
                             "newlines": [],
@@ -252,10 +241,7 @@
                                 "fullStart": 139,
                                 "start": 140,
                                 "length": 5
-                            },
-                            "lessThanSign": null,
-                            "typeArguments": null,
-                            "greaterThanSign": null
+                            }
                         },
                         "operator": {
                             "kind": "EqualsSign",
@@ -416,8 +402,7 @@
                 "fullStart": 258,
                 "start": 258,
                 "length": 3
-            },
-            "endIfDirectiveKeyword": null
+            }
         },
         {
             "kind": "Newline",

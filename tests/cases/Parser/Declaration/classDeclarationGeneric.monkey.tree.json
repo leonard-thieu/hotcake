@@ -57,11 +57,6 @@
                 "start": 16,
                 "length": 1
             },
-            "extendsKeyword": null,
-            "baseType": null,
-            "implementsKeyword": null,
-            "implementedTypes": null,
-            "attribute": null,
             "members": [
                 {
                     "kind": "Newline",
@@ -75,8 +70,7 @@
                 "fullStart": 19,
                 "start": 19,
                 "length": 3
-            },
-            "endClassKeyword": null
+            }
         }
     ]
 }

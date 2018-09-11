@@ -15,7 +15,6 @@
                 "start": 9,
                 "length": 5
             },
-            "returnType": null,
             "openingParenthesis": {
                 "kind": "OpeningParenthesis",
                 "fullStart": 13,
@@ -46,23 +45,16 @@
                         "newlines": [],
                         "invokableExpression": {
                             "kind": "IdentifierExpression",
-                            "newlines": null,
                             "identifier": {
                                 "kind": "Identifier",
                                 "fullStart": 17,
                                 "start": 21,
                                 "length": 9
-                            },
-                            "lessThanSign": null,
-                            "typeArguments": null,
-                            "greaterThanSign": null
+                            }
                         },
-                        "openingParenthesis": null,
-                        "leadingNewlines": null,
                         "arguments": [
                             {
                                 "kind": "BinaryExpression",
-                                "newlines": null,
                                 "leftOperand": {
                                     "kind": "IntegerLiteral",
                                     "newlines": [],
@@ -90,8 +82,7 @@
                                     }
                                 }
                             }
-                        ],
-                        "closingParenthesis": null
+                        ]
                     },
                     "terminator": {
                         "kind": "Newline",
@@ -106,8 +97,7 @@
                 "fullStart": 34,
                 "start": 34,
                 "length": 3
-            },
-            "endFunctionKeyword": null
+            }
         }
     ]
 }

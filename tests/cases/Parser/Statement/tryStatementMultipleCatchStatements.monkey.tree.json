@@ -15,9 +15,6 @@
                 "start": 6,
                 "length": 4
             },
-            "lessThanSign": null,
-            "typeParameters": null,
-            "greaterThanSign": null,
             "extendsKeyword": {
                 "kind": "ExtendsKeyword",
                 "fullStart": 9,
@@ -26,22 +23,14 @@
             },
             "baseType": {
                 "kind": "TypeReference",
-                "modulePath": null,
-                "scopeMemberAccessOperator": null,
                 "identifier": {
                     "kind": "ThrowableKeyword",
                     "fullStart": 17,
                     "start": 18,
                     "length": 10
                 },
-                "lessThanSign": null,
-                "typeArguments": null,
-                "greaterThanSign": null,
                 "arrayTypeDeclarations": []
             },
-            "implementsKeyword": null,
-            "implementedTypes": null,
-            "attribute": null,
             "members": [
                 {
                     "kind": "Newline",
@@ -55,8 +44,7 @@
                 "fullStart": 29,
                 "start": 29,
                 "length": 3
-            },
-            "endClassKeyword": null
+            }
         },
         {
             "kind": "Newline",
@@ -84,9 +72,6 @@
                 "start": 42,
                 "length": 4
             },
-            "lessThanSign": null,
-            "typeParameters": null,
-            "greaterThanSign": null,
             "extendsKeyword": {
                 "kind": "ExtendsKeyword",
                 "fullStart": 45,
@@ -95,22 +80,14 @@
             },
             "baseType": {
                 "kind": "TypeReference",
-                "modulePath": null,
-                "scopeMemberAccessOperator": null,
                 "identifier": {
                     "kind": "ThrowableKeyword",
                     "fullStart": 53,
                     "start": 54,
                     "length": 10
                 },
-                "lessThanSign": null,
-                "typeArguments": null,
-                "greaterThanSign": null,
                 "arrayTypeDeclarations": []
             },
-            "implementsKeyword": null,
-            "implementedTypes": null,
-            "attribute": null,
             "members": [
                 {
                     "kind": "Newline",
@@ -124,8 +101,7 @@
                 "fullStart": 65,
                 "start": 65,
                 "length": 3
-            },
-            "endClassKeyword": null
+            }
         },
         {
             "kind": "Newline",
@@ -153,7 +129,6 @@
                 "start": 81,
                 "length": 5
             },
-            "returnType": null,
             "openingParenthesis": {
                 "kind": "OpeningParenthesis",
                 "fullStart": 85,
@@ -206,14 +181,12 @@
                                             "start": 103,
                                             "length": 2
                                         },
-                                        "type": null,
                                         "equalsSign": {
                                             "kind": "ColonEqualsSign",
                                             "fullStart": 104,
                                             "start": 104,
                                             "length": 2
                                         },
-                                        "eachInKeyword": null,
                                         "expression": {
                                             "kind": "IntegerLiteral",
                                             "newlines": [],
@@ -226,8 +199,7 @@
                                         }
                                     }
                                 ]
-                            },
-                            "terminator": null
+                            }
                         },
                         "toOrUntilKeyword": {
                             "kind": "ToKeyword",
@@ -244,9 +216,7 @@
                                 "start": 111,
                                 "length": 3
                             }
-                        },
-                        "stepKeyword": null,
-                        "stepValueExpression": null
+                        }
                     },
                     "statements": [
                         {
@@ -295,7 +265,6 @@
                                         },
                                         "expression": {
                                             "kind": "BinaryExpression",
-                                            "newlines": null,
                                             "leftOperand": {
                                                 "kind": "IdentifierExpression",
                                                 "newlines": [],
@@ -304,10 +273,7 @@
                                                     "fullStart": 144,
                                                     "start": 144,
                                                     "length": 1
-                                                },
-                                                "lessThanSign": null,
-                                                "typeArguments": null,
-                                                "greaterThanSign": null
+                                                }
                                             },
                                             "operator": {
                                                 "kind": "Ampersand",
@@ -333,7 +299,6 @@
                                             "length": 1
                                         }
                                     },
-                                    "thenKeyword": null,
                                     "isSingleLine": true,
                                     "statements": [
                                         {
@@ -355,24 +320,17 @@
                                                 },
                                                 "type": {
                                                     "kind": "TypeReference",
-                                                    "modulePath": null,
-                                                    "scopeMemberAccessOperator": null,
                                                     "identifier": {
                                                         "kind": "Identifier",
                                                         "fullStart": 160,
                                                         "start": 161,
                                                         "length": 4
                                                     },
-                                                    "lessThanSign": null,
-                                                    "typeArguments": null,
-                                                    "greaterThanSign": null,
                                                     "arrayTypeDeclarations": []
                                                 }
-                                            },
-                                            "terminator": null
+                                            }
                                         }
                                     ],
-                                    "elseIfStatements": null,
                                     "elseStatement": {
                                         "kind": "ElseStatement",
                                         "elseKeyword": {
@@ -401,26 +359,18 @@
                                                     },
                                                     "type": {
                                                         "kind": "TypeReference",
-                                                        "modulePath": null,
-                                                        "scopeMemberAccessOperator": null,
                                                         "identifier": {
                                                             "kind": "Identifier",
                                                             "fullStart": 179,
                                                             "start": 180,
                                                             "length": 4
                                                         },
-                                                        "lessThanSign": null,
-                                                        "typeArguments": null,
-                                                        "greaterThanSign": null,
                                                         "arrayTypeDeclarations": []
                                                     }
-                                                },
-                                                "terminator": null
+                                                }
                                             }
                                         ]
                                     },
-                                    "endKeyword": null,
-                                    "endIfKeyword": null,
                                     "terminator": {
                                         "kind": "Newline",
                                         "fullStart": 183,
@@ -456,23 +406,15 @@
                                             },
                                             "typeReference": {
                                                 "kind": "TypeReference",
-                                                "modulePath": null,
-                                                "scopeMemberAccessOperator": null,
                                                 "identifier": {
                                                     "kind": "Identifier",
                                                     "fullStart": 202,
                                                     "start": 202,
                                                     "length": 3
                                                 },
-                                                "lessThanSign": null,
-                                                "typeArguments": null,
-                                                "greaterThanSign": null,
                                                 "arrayTypeDeclarations": []
                                             }
-                                        },
-                                        "equalsSign": null,
-                                        "eachInKeyword": null,
-                                        "expression": null
+                                        }
                                     },
                                     "statements": [
                                         {
@@ -491,19 +433,13 @@
                                                 "newlines": [],
                                                 "invokableExpression": {
                                                     "kind": "IdentifierExpression",
-                                                    "newlines": null,
                                                     "identifier": {
                                                         "kind": "Identifier",
                                                         "fullStart": 207,
                                                         "start": 219,
                                                         "length": 17
-                                                    },
-                                                    "lessThanSign": null,
-                                                    "typeArguments": null,
-                                                    "greaterThanSign": null
+                                                    }
                                                 },
-                                                "openingParenthesis": null,
-                                                "leadingNewlines": null,
                                                 "arguments": [
                                                     {
                                                         "kind": "StringLiteral",
@@ -529,8 +465,7 @@
                                                             "length": 1
                                                         }
                                                     }
-                                                ],
-                                                "closingParenthesis": null
+                                                ]
                                             },
                                             "terminator": {
                                                 "kind": "Newline",
@@ -567,23 +502,15 @@
                                             },
                                             "typeReference": {
                                                 "kind": "TypeReference",
-                                                "modulePath": null,
-                                                "scopeMemberAccessOperator": null,
                                                 "identifier": {
                                                     "kind": "Identifier",
                                                     "fullStart": 260,
                                                     "start": 260,
                                                     "length": 3
                                                 },
-                                                "lessThanSign": null,
-                                                "typeArguments": null,
-                                                "greaterThanSign": null,
                                                 "arrayTypeDeclarations": []
                                             }
-                                        },
-                                        "equalsSign": null,
-                                        "eachInKeyword": null,
-                                        "expression": null
+                                        }
                                     },
                                     "statements": [
                                         {
@@ -602,19 +529,13 @@
                                                 "newlines": [],
                                                 "invokableExpression": {
                                                     "kind": "IdentifierExpression",
-                                                    "newlines": null,
                                                     "identifier": {
                                                         "kind": "Identifier",
                                                         "fullStart": 265,
                                                         "start": 277,
                                                         "length": 17
-                                                    },
-                                                    "lessThanSign": null,
-                                                    "typeArguments": null,
-                                                    "greaterThanSign": null
+                                                    }
                                                 },
-                                                "openingParenthesis": null,
-                                                "leadingNewlines": null,
                                                 "arguments": [
                                                     {
                                                         "kind": "StringLiteral",
@@ -640,8 +561,7 @@
                                                             "length": 1
                                                         }
                                                     }
-                                                ],
-                                                "closingParenthesis": null
+                                                ]
                                             },
                                             "terminator": {
                                                 "kind": "Newline",
@@ -659,7 +579,6 @@
                                 "start": 309,
                                 "length": 11
                             },
-                            "endTryKeyword": null,
                             "terminator": {
                                 "kind": "Newline",
                                 "fullStart": 312,
@@ -674,7 +593,6 @@
                         "start": 318,
                         "length": 8
                     },
-                    "endForKeyword": null,
                     "terminator": {
                         "kind": "Newline",
                         "fullStart": 322,
@@ -688,8 +606,7 @@
                 "fullStart": 324,
                 "start": 324,
                 "length": 3
-            },
-            "endFunctionKeyword": null
+            }
         }
     ]
 }

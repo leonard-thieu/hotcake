@@ -15,7 +15,6 @@
                 "start": 9,
                 "length": 5
             },
-            "returnType": null,
             "openingParenthesis": {
                 "kind": "OpeningParenthesis",
                 "fullStart": 13,
@@ -52,16 +51,12 @@
                         "newlines": [],
                         "indexableExpression": {
                             "kind": "IdentifierExpression",
-                            "newlines": null,
                             "identifier": {
                                 "kind": "Identifier",
                                 "fullStart": 23,
                                 "start": 24,
                                 "length": 4
-                            },
-                            "lessThanSign": null,
-                            "typeArguments": null,
-                            "greaterThanSign": null
+                            }
                         },
                         "openingSquareBracket": {
                             "kind": "OpeningSquareBracket",
@@ -86,7 +81,6 @@
                             "length": 1
                         }
                     },
-                    "thenKeyword": null,
                     "isSingleLine": false,
                     "statements": [
                         {
@@ -100,14 +94,12 @@
                         }
                     ],
                     "elseIfStatements": [],
-                    "elseStatement": null,
                     "endKeyword": {
                         "kind": "EndKeyword",
                         "fullStart": 32,
                         "start": 36,
                         "length": 7
                     },
-                    "endIfKeyword": null,
                     "terminator": {
                         "kind": "Newline",
                         "fullStart": 39,
@@ -121,8 +113,7 @@
                 "fullStart": 41,
                 "start": 41,
                 "length": 3
-            },
-            "endFunctionKeyword": null
+            }
         }
     ]
 }
