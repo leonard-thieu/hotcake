@@ -143,4 +143,5 @@ export enum TokenKind {
     Skipped = 'Skipped',
     Expression = 'Expression',
     ForLoopHeader = 'ForLoopHeader',
+    ImportStatementPath = 'ImportStatementPath',
 }

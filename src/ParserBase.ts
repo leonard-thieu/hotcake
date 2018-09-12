@@ -22,8 +22,7 @@ import { SliceExpression } from './Node/Expression/SliceExpression';
 import { MissableStringLiteral, StringLiteral } from './Node/Expression/StringLiteral';
 import { SuperExpression } from './Node/Expression/SuperExpression';
 import { UnaryOperatorToken, UnaryOpExpression } from './Node/Expression/UnaryOpExpression';
-import { EscapedIdentifier, Identifier, IdentifierStartToken, MissableIdentifier } from './Node/Identifier';
-import { MissableModulePath, ModulePath } from './Node/ModulePath';
+import { EscapedIdentifier, Identifier, MissableIdentifier } from './Node/Identifier';
 import { Nodes } from './Node/Node';
 import { NodeKind } from './Node/NodeKind';
 import { TypeReference, TypeReferenceIdentifierStartToken } from './Node/TypeReference';
@@ -737,6 +736,8 @@ export abstract class ParserBase {
         typeReference.parent = parent;
 
         switch (typeReferenceStart.kind) {
+            case TokenKind.ObjectKeyword:
+            case TokenKind.ThrowableKeyword:
             case TokenKind.BoolKeyword:
             case TokenKind.IntKeyword:
             case TokenKind.FloatKeyword:
@@ -746,17 +747,31 @@ export abstract class ParserBase {
                 break;
             }
             default: {
-                // Uneat the token so it can be fed to the module path.
-                this.position--;
-                typeReference.modulePath = this.parseModulePath(typeReference);
-                typeReference.identifier = typeReference.modulePath.identifier!;
-                typeReference.scopeMemberAccessOperator = typeReference.modulePath.scopeMemberAccessOperator;
-                this.setModulePathProperties(typeReference.modulePath);
+                switch (typeReferenceStart.kind) {
+                    case TokenKind.Identifier: {
+                        const nextToken = this.getToken();
+                        if (nextToken.kind === TokenKind.Period) {
+                            typeReference.moduleIdentifier = typeReferenceStart;
 
-                if (!typeReference.modulePath.identifier &&
-                    !typeReference.modulePath.scopeMemberAccessOperator) {
-                    typeReference.modulePath = undefined;
+                            this.advanceToken();
+                            typeReference.scopeMemberAccessOperator = nextToken;
+                        } else {
+                            // Uneat token so it can be fed to identifier.
+                            this.position--;
+                        }
+                        break;
+                    }
+                    case TokenKind.Period: {
+                        typeReference.scopeMemberAccessOperator = typeReferenceStart;
+                        break;
+                    }
+                    default: {
+                        // Uneat token so it can be fed to identifier.
+                        this.position--;
+                        break;
+                    }
                 }
+                typeReference.identifier = this.parseMissableIdentifier(typeReference);
 
                 // Generic type arguments
                 typeReference.lessThanSign = this.eatOptional(TokenKind.LessThanSign);
@@ -772,95 +787,6 @@ export abstract class ParserBase {
 
         return typeReference;
     }
-
-    protected parseMissableModulePath(parent: Nodes): MissableModulePath {
-        const token = this.getToken();
-        if (this.isModulePathChildStart(token)) {
-            return this.parseModulePath(parent);
-        }
-
-        return new MissingToken(token.fullStart, NodeKind.ModulePath);
-    }
-
-    protected parseModulePath(parent: Nodes): ModulePath {
-        const modulePath = new ModulePath();
-        modulePath.parent = parent;
-        modulePath.children = this.parseList(modulePath.kind, modulePath, TokenKind.Period);
-        this.setModulePathProperties(modulePath);
-
-        return modulePath;
-    }
-
-    private setModulePathProperties(modulePath: ModulePath) {
-        let lastChild = modulePath.children[modulePath.children.length - 1];
-        if (!lastChild) {
-            modulePath.identifier = undefined;
-        } else {
-            switch (lastChild.kind) {
-                case TokenKind.Identifier:
-                case TokenKind.ObjectKeyword:
-                case TokenKind.ThrowableKeyword:
-                case NodeKind.EscapedIdentifier: {
-                    modulePath.children.pop();
-                    modulePath.identifier = lastChild;
-                    break;
-                }
-            }
-        }
-
-        lastChild = modulePath.children[modulePath.children.length - 1];
-        if (!lastChild) {
-            modulePath.scopeMemberAccessOperator = undefined;
-        } else if (lastChild.kind === TokenKind.Period) {
-            modulePath.children.pop();
-            modulePath.scopeMemberAccessOperator = lastChild;
-        } else {
-            modulePath.scopeMemberAccessOperator = new MissingToken(lastChild.fullStart, TokenKind.Period);
-        }
-    }
-
-    // #region Module path
-
-    private isModulePathTerminator(token: Tokens): boolean {
-        return !this.isModulePathChildStart(token);
-    }
-
-    protected isModulePathChildStart(token: Tokens): token is IdentifierStartToken | PeriodToken {
-        switch (token.kind) {
-            case TokenKind.Identifier:
-            case TokenKind.ObjectKeyword:
-            case TokenKind.ThrowableKeyword:
-            case TokenKind.CommercialAt:
-            case TokenKind.Period: {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    protected parseModulePathChild(parent: Nodes) {
-        const token = this.getToken();
-        switch (token.kind) {
-            case TokenKind.Identifier:
-            case TokenKind.ObjectKeyword:
-            case TokenKind.ThrowableKeyword:
-            case TokenKind.CommercialAt: {
-                this.advanceToken();
-
-                return this.parseIdentifier(parent, token);
-            }
-            case TokenKind.Period: {
-                this.advanceToken();
-
-                return token;
-            }
-        }
-
-        return this.parseCore(parent, token);
-    }
-
-    // #endregion
 
     // #region Array type declaration list
 
@@ -956,8 +882,8 @@ export abstract class ParserBase {
     }
 
     protected parseIdentifier(parent: Nodes, identifierStart: CommercialAtToken): EscapedIdentifier;
-    protected parseIdentifier<T extends IdentifierExpressionToken>(parent: Nodes, identifierStart: T | CommercialAtToken): Identifier | T;
-    protected parseIdentifier<T extends IdentifierExpressionToken>(parent: Nodes, identifierStart: T | CommercialAtToken): Identifier | T {
+    protected parseIdentifier<T extends IdentifierExpressionToken>(parent: Nodes, identifierStart: T | CommercialAtToken): EscapedIdentifier | T;
+    protected parseIdentifier<T extends IdentifierExpressionToken>(parent: Nodes, identifierStart: T | CommercialAtToken): EscapedIdentifier | T {
         if (identifierStart.kind !== TokenKind.CommercialAt) {
             return identifierStart;
         }
@@ -1186,9 +1112,6 @@ export abstract class ParserBase {
             case NodeKind.StringLiteral: {
                 return this.isStringLiteralChildListTerminator(token);
             }
-            case NodeKind.ModulePath: {
-                return this.isModulePathTerminator(token);
-            }
             case ParseContextKind.NewlineList: {
                 return this.isNewlineListTerminator(token);
             }
@@ -1213,9 +1136,6 @@ export abstract class ParserBase {
             case NodeKind.StringLiteral: {
                 return this.isStringLiteralChildStart(token);
             }
-            case NodeKind.ModulePath: {
-                return this.isModulePathChildStart(token);
-            }
             case ParseContextKind.NewlineList: {
                 return this.isNewlineListMemberStart(token);
             }
@@ -1239,9 +1159,6 @@ export abstract class ParserBase {
         switch (parseContext) {
             case NodeKind.StringLiteral: {
                 return this.parseStringLiteralChild(parent);
-            }
-            case NodeKind.ModulePath: {
-                return this.parseModulePathChild(parent);
             }
             case ParseContextKind.NewlineList: {
                 return this.parseNewlineListMember(parent);
@@ -1432,7 +1349,6 @@ export enum ParseContextKind {
 
 export interface ParseContextElementMapBase {
     [NodeKind.StringLiteral]: ReturnType<ParserBase['parseStringLiteralChild']>;
-    [NodeKind.ModulePath]: ReturnType<ParserBase['parseModulePathChild']>;
     [ParseContextKind.NewlineList]: ReturnType<ParserBase['parseNewlineListMember']>;
     [ParseContextKind.ArrayTypeDeclarationList]: ReturnType<ParserBase['parseArrayTypeDeclarationListMember']>;
     [ParseContextKind.TypeReferenceSequence]: ReturnType<ParserBase['parseTypeReferenceSequenceMember']>;

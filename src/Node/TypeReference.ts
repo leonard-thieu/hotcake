@@ -2,13 +2,12 @@ import { ParseContextElementDelimitedSequence, ParseContextElementSequence, Pars
 import { MissableToken, MissingToken } from '../Token/MissingToken';
 import { BoolKeywordToken, FloatKeywordToken, GreaterThanSignToken, IdentifierToken, IntKeywordToken, LessThanSignToken, PeriodToken, StringKeywordToken, VoidKeywordToken } from '../Token/Token';
 import { Identifier, IdentifierStartToken } from './Identifier';
-import { ModulePath } from './ModulePath';
 import { Node } from './Node';
 import { NodeKind } from './NodeKind';
 
 export class TypeReference extends Node {
     static CHILD_NAMES: (keyof TypeReference)[] = [
-        'modulePath',
+        'moduleIdentifier',
         'scopeMemberAccessOperator',
         'identifier',
         'lessThanSign',
@@ -19,7 +18,7 @@ export class TypeReference extends Node {
 
     readonly kind = NodeKind.TypeReference;
 
-    modulePath?: ModulePath = undefined;
+    moduleIdentifier?: IdentifierToken = undefined;
     scopeMemberAccessOperator?: MissableToken<PeriodToken> = undefined;
     identifier: TypeReferenceIdentifier | MissableToken<IdentifierToken> = undefined!;
 

@@ -7,7 +7,6 @@ import { Declarations } from './Declaration/Declaration';
 import { Directives } from './Directive/Directive';
 import { Expressions } from './Expression/Expression';
 import { EscapedIdentifier } from './Identifier';
-import { ModulePath } from './ModulePath';
 import { NodeKind } from './NodeKind';
 import { NumericForLoopHeader } from './Statement/ForLoop';
 import { Statements } from './Statement/Statement';
@@ -78,6 +77,5 @@ export type Nodes =
     ArrayTypeDeclaration |
     CommaSeparator |
     EscapedIdentifier |
-    ModulePath |
     TypeReference
     ;

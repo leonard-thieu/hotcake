@@ -1,5 +1,5 @@
+import { ParseContextElementDelimitedSequence, ParseContextKind } from '../../ParserBase';
 import { FriendKeywordToken } from '../../Token/Token';
-import { MissableModulePath } from '../ModulePath';
 import { NodeKind } from '../NodeKind';
 import { Declaration } from './Declaration';
 
@@ -12,5 +12,5 @@ export class FriendDirective extends Declaration {
     readonly kind = NodeKind.FriendDirective;
 
     friendKeyword: FriendKeywordToken = undefined!;
-    modulePath: MissableModulePath = undefined!;
+    modulePath: ParseContextElementDelimitedSequence<ParseContextKind.ModulePathSequence> = undefined!;
 }

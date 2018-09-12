@@ -22,7 +22,7 @@ Print "The sound of silence!"       'inside a block comment
 Strict  ' Strict directive
 
 Import "my/module"      ' Import directive (native)
-Import mojo             ' Import directive (module path)
+Import file2            ' Import directive (module path)
 Import brl.filesystem   ' Import directive (dotted module path)
 
 Friend monkey.list  ' Friend directive
