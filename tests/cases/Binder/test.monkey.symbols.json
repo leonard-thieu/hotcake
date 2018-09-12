@@ -150,38 +150,30 @@
         {
             "kind": "ImportStatement",
             "importKeyword": "ImportKeyword",
-            "path": {
-                "kind": "ModulePath",
-                "children": [],
-                "identifier": "Identifier"
-            }
+            "path": [
+                "Identifier"
+            ]
         },
         "Newline",
         {
             "kind": "ImportStatement",
             "importKeyword": "ImportKeyword",
-            "path": {
-                "kind": "ModulePath",
-                "children": [
-                    "Identifier"
-                ],
-                "scopeMemberAccessOperator": "Period",
-                "identifier": "Identifier"
-            }
+            "path": [
+                "Identifier",
+                "Period",
+                "Identifier"
+            ]
         },
         "Newline",
         "Newline",
         {
             "kind": "FriendDirective",
             "friendKeyword": "FriendKeyword",
-            "modulePath": {
-                "kind": "ModulePath",
-                "children": [
-                    "Identifier"
-                ],
-                "scopeMemberAccessOperator": "Period",
-                "identifier": "Identifier"
-            }
+            "modulePath": [
+                "Identifier",
+                "Period",
+                "Identifier"
+            ]
         },
         "Newline",
         "Newline",
@@ -215,17 +207,9 @@
                     "kind": "AliasDirective",
                     "identifier": "Identifier",
                     "equalsSign": "EqualsSign",
-                    "target": {
-                        "kind": "TypeReference",
-                        "modulePath": {
-                            "kind": "ModulePath",
-                            "children": [],
-                            "identifier": "Identifier"
-                        },
-                        "scopeMemberAccessOperator": "Period",
-                        "identifier": "Identifier",
-                        "arrayTypeDeclarations": []
-                    }
+                    "moduleIdentifier": "Identifier",
+                    "moduleScopeMemberAccessOperator": "Period",
+                    "target": "Identifier"
                 }
             ]
         },

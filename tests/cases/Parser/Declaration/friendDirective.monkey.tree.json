@@ -9,29 +9,26 @@
                 "start": 0,
                 "length": 6
             },
-            "modulePath": {
-                "kind": "ModulePath",
-                "children": [
-                    {
-                        "kind": "Identifier",
-                        "fullStart": 6,
-                        "start": 7,
-                        "length": 6
-                    }
-                ],
-                "scopeMemberAccessOperator": {
+            "modulePath": [
+                {
+                    "kind": "Identifier",
+                    "fullStart": 6,
+                    "start": 7,
+                    "length": 6
+                },
+                {
                     "kind": "Period",
                     "fullStart": 12,
                     "start": 12,
                     "length": 1
                 },
-                "identifier": {
+                {
                     "kind": "Identifier",
                     "fullStart": 13,
                     "start": 13,
                     "length": 12
                 }
-            }
+            ]
         }
     ]
 }

@@ -9,16 +9,14 @@
                 "start": 0,
                 "length": 6
             },
-            "path": {
-                "kind": "ModulePath",
-                "children": [],
-                "identifier": {
+            "path": [
+                {
                     "kind": "Identifier",
                     "fullStart": 6,
                     "start": 7,
                     "length": 6
                 }
-            }
+            ]
         }
     ]
 }

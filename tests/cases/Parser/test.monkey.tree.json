@@ -140,22 +140,20 @@
                 "start": 680,
                 "length": 6
             },
-            "path": {
-                "kind": "ModulePath",
-                "children": [],
-                "identifier": {
+            "path": [
+                {
                     "kind": "Identifier",
                     "fullStart": 686,
                     "start": 687,
-                    "length": 5
+                    "length": 6
                 }
-            }
+            ]
         },
         {
             "kind": "Newline",
-            "fullStart": 691,
+            "fullStart": 692,
             "start": 737,
-            "length": 47
+            "length": 46
         },
         {
             "kind": "ImportStatement",
@@ -165,29 +163,26 @@
                 "start": 738,
                 "length": 6
             },
-            "path": {
-                "kind": "ModulePath",
-                "children": [
-                    {
-                        "kind": "Identifier",
-                        "fullStart": 744,
-                        "start": 745,
-                        "length": 4
-                    }
-                ],
-                "scopeMemberAccessOperator": {
+            "path": [
+                {
+                    "kind": "Identifier",
+                    "fullStart": 744,
+                    "start": 745,
+                    "length": 4
+                },
+                {
                     "kind": "Period",
                     "fullStart": 748,
                     "start": 748,
                     "length": 1
                 },
-                "identifier": {
+                {
                     "kind": "Identifier",
                     "fullStart": 749,
                     "start": 749,
                     "length": 10
                 }
-            }
+            ]
         },
         {
             "kind": "Newline",
@@ -209,29 +204,26 @@
                 "start": 805,
                 "length": 6
             },
-            "modulePath": {
-                "kind": "ModulePath",
-                "children": [
-                    {
-                        "kind": "Identifier",
-                        "fullStart": 811,
-                        "start": 812,
-                        "length": 7
-                    }
-                ],
-                "scopeMemberAccessOperator": {
+            "modulePath": [
+                {
+                    "kind": "Identifier",
+                    "fullStart": 811,
+                    "start": 812,
+                    "length": 7
+                },
+                {
                     "kind": "Period",
                     "fullStart": 818,
                     "start": 818,
                     "length": 1
                 },
-                "identifier": {
+                {
                     "kind": "Identifier",
                     "fullStart": 819,
                     "start": 819,
                     "length": 4
                 }
-            }
+            ]
         },
         {
             "kind": "Newline",
@@ -340,31 +332,23 @@
                         "start": 1009,
                         "length": 1
                     },
+                    "moduleIdentifier": {
+                        "kind": "Identifier",
+                        "fullStart": 1010,
+                        "start": 1010,
+                        "length": 5
+                    },
+                    "moduleScopeMemberAccessOperator": {
+                        "kind": "Period",
+                        "fullStart": 1015,
+                        "start": 1015,
+                        "length": 1
+                    },
                     "target": {
-                        "kind": "TypeReference",
-                        "modulePath": {
-                            "kind": "ModulePath",
-                            "children": [],
-                            "identifier": {
-                                "kind": "Identifier",
-                                "fullStart": 1010,
-                                "start": 1010,
-                                "length": 5
-                            }
-                        },
-                        "scopeMemberAccessOperator": {
-                            "kind": "Period",
-                            "fullStart": 1015,
-                            "start": 1015,
-                            "length": 1
-                        },
-                        "identifier": {
-                            "kind": "Identifier",
-                            "fullStart": 1016,
-                            "start": 1016,
-                            "length": 1
-                        },
-                        "arrayTypeDeclarations": []
+                        "kind": "Identifier",
+                        "fullStart": 1016,
+                        "start": 1016,
+                        "length": 1
                     }
                 }
             ]
