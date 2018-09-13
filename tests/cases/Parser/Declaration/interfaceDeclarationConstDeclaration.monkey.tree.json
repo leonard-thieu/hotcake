@@ -1,5 +1,7 @@
 {
     "kind": "ModuleDeclaration",
+    "strictNewlines": [],
+    "headerMembers": [],
     "members": [
         {
             "kind": "InterfaceDeclaration",

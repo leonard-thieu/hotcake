@@ -1,6 +1,7 @@
 {
     "kind": "ModuleDeclaration",
-    "members": [
+    "strictNewlines": [],
+    "headerMembers": [
         {
             "kind": "ImportStatement",
             "importKeyword": {
@@ -85,7 +86,9 @@
             "fullStart": 58,
             "start": 59,
             "length": 2
-        },
+        }
+    ],
+    "members": [
         {
             "kind": "FunctionDeclaration",
             "functionKeyword": {

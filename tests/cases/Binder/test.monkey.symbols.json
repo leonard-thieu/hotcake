@@ -115,7 +115,7 @@
             ]
         }
     },
-    "members": [
+    "strictNewlines": [
         "Newline",
         "Newline",
         "Newline",
@@ -127,11 +127,13 @@
         "Newline",
         "Newline",
         "Newline",
-        "Newline",
-        {
-            "kind": "StrictDirective",
-            "strictKeyword": "StrictKeyword"
-        },
+        "Newline"
+    ],
+    "strictDirective": {
+        "kind": "StrictDirective",
+        "strictKeyword": "StrictKeyword"
+    },
+    "headerMembers": [
         "Newline",
         "Newline",
         {
@@ -187,10 +189,28 @@
         "Newline",
         "Newline",
         {
+            "kind": "AliasDirectiveSequence",
+            "aliasKeyword": "AliasKeyword",
+            "children": [
+                {
+                    "kind": "AliasDirective",
+                    "identifier": "Identifier",
+                    "equalsSign": "EqualsSign",
+                    "moduleIdentifier": "Identifier",
+                    "moduleScopeMemberAccessOperator": "Period",
+                    "target": "Identifier"
+                }
+            ]
+        },
+        "Newline",
+        "Newline",
+        {
             "kind": "AccessibilityDirective",
             "accessibilityKeyword": "PrivateKeyword"
         },
-        "Newline",
+        "Newline"
+    ],
+    "members": [
         {
             "kind": "AccessibilityDirective",
             "accessibilityKeyword": "ExternKeyword"
@@ -205,22 +225,6 @@
         {
             "kind": "AccessibilityDirective",
             "accessibilityKeyword": "PublicKeyword"
-        },
-        "Newline",
-        "Newline",
-        {
-            "kind": "AliasDirectiveSequence",
-            "aliasKeyword": "AliasKeyword",
-            "children": [
-                {
-                    "kind": "AliasDirective",
-                    "identifier": "Identifier",
-                    "equalsSign": "EqualsSign",
-                    "moduleIdentifier": "Identifier",
-                    "moduleScopeMemberAccessOperator": "Period",
-                    "target": "Identifier"
-                }
-            ]
         },
         "Newline",
         "Newline",

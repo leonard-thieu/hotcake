@@ -1,6 +1,7 @@
 {
     "kind": "ModuleDeclaration",
-    "members": [
+    "strictNewlines": [],
+    "headerMembers": [
         {
             "kind": "AccessibilityDirective",
             "accessibilityKeyword": {
@@ -10,5 +11,6 @@
                 "length": 6
             }
         }
-    ]
+    ],
+    "members": []
 }

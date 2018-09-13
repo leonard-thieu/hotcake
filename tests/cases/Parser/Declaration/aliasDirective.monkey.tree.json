@@ -1,6 +1,7 @@
 {
     "kind": "ModuleDeclaration",
-    "members": [
+    "strictNewlines": [],
+    "headerMembers": [
         {
             "kind": "AliasDirectiveSequence",
             "aliasKeyword": {
@@ -261,5 +262,6 @@
                 }
             ]
         }
-    ]
+    ],
+    "members": []
 }

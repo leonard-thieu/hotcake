@@ -1,14 +1,15 @@
 {
     "kind": "ModuleDeclaration",
-    "members": [
-        {
-            "kind": "StrictDirective",
-            "strictKeyword": {
-                "kind": "StrictKeyword",
-                "fullStart": 0,
-                "start": 0,
-                "length": 6
-            }
+    "strictNewlines": [],
+    "strictDirective": {
+        "kind": "StrictDirective",
+        "strictKeyword": {
+            "kind": "StrictKeyword",
+            "fullStart": 0,
+            "start": 0,
+            "length": 6
         }
-    ]
+    },
+    "headerMembers": [],
+    "members": []
 }

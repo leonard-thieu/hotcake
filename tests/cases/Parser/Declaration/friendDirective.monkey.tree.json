@@ -1,6 +1,7 @@
 {
     "kind": "ModuleDeclaration",
-    "members": [
+    "strictNewlines": [],
+    "headerMembers": [
         {
             "kind": "FriendDirective",
             "friendKeyword": {
@@ -33,5 +34,6 @@
                 ]
             }
         }
-    ]
+    ],
+    "members": []
 }

@@ -1,6 +1,6 @@
 {
     "kind": "ModuleDeclaration",
-    "members": [
+    "strictNewlines": [
         {
             "kind": "Newline",
             "fullStart": 0,
@@ -72,16 +72,18 @@
             "fullStart": 595,
             "start": 596,
             "length": 2
-        },
-        {
-            "kind": "StrictDirective",
-            "strictKeyword": {
-                "kind": "StrictKeyword",
-                "fullStart": 597,
-                "start": 597,
-                "length": 6
-            }
-        },
+        }
+    ],
+    "strictDirective": {
+        "kind": "StrictDirective",
+        "strictKeyword": {
+            "kind": "StrictKeyword",
+            "fullStart": 597,
+            "start": 597,
+            "length": 6
+        }
+    },
+    "headerMembers": [
         {
             "kind": "Newline",
             "fullStart": 603,
@@ -247,83 +249,11 @@
             "length": 2
         },
         {
-            "kind": "AccessibilityDirective",
-            "accessibilityKeyword": {
-                "kind": "PrivateKeyword",
-                "fullStart": 847,
-                "start": 847,
-                "length": 7
-            }
-        },
-        {
-            "kind": "Newline",
-            "fullStart": 854,
-            "start": 883,
-            "length": 30
-        },
-        {
-            "kind": "AccessibilityDirective",
-            "accessibilityKeyword": {
-                "kind": "ExternKeyword",
-                "fullStart": 884,
-                "start": 884,
-                "length": 6
-            }
-        },
-        {
-            "kind": "Newline",
-            "fullStart": 890,
-            "start": 919,
-            "length": 30
-        },
-        {
-            "kind": "AccessibilityDirective",
-            "accessibilityKeyword": {
-                "kind": "ExternKeyword",
-                "fullStart": 920,
-                "start": 920,
-                "length": 6
-            },
-            "externPrivateKeyword": {
-                "kind": "PrivateKeyword",
-                "fullStart": 926,
-                "start": 927,
-                "length": 8
-            }
-        },
-        {
-            "kind": "Newline",
-            "fullStart": 934,
-            "start": 963,
-            "length": 30
-        },
-        {
-            "kind": "AccessibilityDirective",
-            "accessibilityKeyword": {
-                "kind": "PublicKeyword",
-                "fullStart": 964,
-                "start": 964,
-                "length": 6
-            }
-        },
-        {
-            "kind": "Newline",
-            "fullStart": 970,
-            "start": 999,
-            "length": 30
-        },
-        {
-            "kind": "Newline",
-            "fullStart": 1000,
-            "start": 1001,
-            "length": 2
-        },
-        {
             "kind": "AliasDirectiveSequence",
             "aliasKeyword": {
                 "kind": "AliasKeyword",
-                "fullStart": 1002,
-                "start": 1002,
+                "fullStart": 847,
+                "start": 847,
                 "length": 5
             },
             "children": [
@@ -331,32 +261,32 @@
                     "kind": "AliasDirective",
                     "identifier": {
                         "kind": "Identifier",
-                        "fullStart": 1007,
-                        "start": 1008,
+                        "fullStart": 852,
+                        "start": 853,
                         "length": 2
                     },
                     "equalsSign": {
                         "kind": "EqualsSign",
-                        "fullStart": 1009,
-                        "start": 1009,
+                        "fullStart": 854,
+                        "start": 854,
                         "length": 1
                     },
                     "moduleIdentifier": {
                         "kind": "Identifier",
-                        "fullStart": 1010,
-                        "start": 1010,
+                        "fullStart": 855,
+                        "start": 855,
                         "length": 5
                     },
                     "moduleScopeMemberAccessOperator": {
                         "kind": "Period",
-                        "fullStart": 1015,
-                        "start": 1015,
+                        "fullStart": 860,
+                        "start": 860,
                         "length": 1
                     },
                     "target": {
                         "kind": "Identifier",
-                        "fullStart": 1016,
-                        "start": 1016,
+                        "fullStart": 861,
+                        "start": 861,
                         "length": 1
                     }
                 }
@@ -364,9 +294,83 @@
         },
         {
             "kind": "Newline",
-            "fullStart": 1017,
-            "start": 1051,
+            "fullStart": 862,
+            "start": 896,
             "length": 35
+        },
+        {
+            "kind": "Newline",
+            "fullStart": 897,
+            "start": 898,
+            "length": 2
+        },
+        {
+            "kind": "AccessibilityDirective",
+            "accessibilityKeyword": {
+                "kind": "PrivateKeyword",
+                "fullStart": 899,
+                "start": 899,
+                "length": 7
+            }
+        },
+        {
+            "kind": "Newline",
+            "fullStart": 906,
+            "start": 935,
+            "length": 30
+        }
+    ],
+    "members": [
+        {
+            "kind": "AccessibilityDirective",
+            "accessibilityKeyword": {
+                "kind": "ExternKeyword",
+                "fullStart": 936,
+                "start": 936,
+                "length": 6
+            }
+        },
+        {
+            "kind": "Newline",
+            "fullStart": 942,
+            "start": 971,
+            "length": 30
+        },
+        {
+            "kind": "AccessibilityDirective",
+            "accessibilityKeyword": {
+                "kind": "ExternKeyword",
+                "fullStart": 972,
+                "start": 972,
+                "length": 6
+            },
+            "externPrivateKeyword": {
+                "kind": "PrivateKeyword",
+                "fullStart": 978,
+                "start": 979,
+                "length": 8
+            }
+        },
+        {
+            "kind": "Newline",
+            "fullStart": 986,
+            "start": 1015,
+            "length": 30
+        },
+        {
+            "kind": "AccessibilityDirective",
+            "accessibilityKeyword": {
+                "kind": "PublicKeyword",
+                "fullStart": 1016,
+                "start": 1016,
+                "length": 6
+            }
+        },
+        {
+            "kind": "Newline",
+            "fullStart": 1022,
+            "start": 1051,
+            "length": 30
         },
         {
             "kind": "Newline",
