@@ -66,13 +66,13 @@ export class Parser extends ParserBase {
         return moduleDeclaration;
     }
 
-    // #region Module members
+    // #region Module declaration members
 
-    private isModuleMembersListTerminator(): boolean {
+    private isModuleDeclarationMembersListTerminator(): boolean {
         return false;
     }
 
-    private isModuleMemberStart(token: Tokens): boolean {
+    private isModuleDeclarationMemberStart(token: Tokens): boolean {
         switch (token.kind) {
             case TokenKind.StrictKeyword:
             case TokenKind.ImportKeyword:
@@ -94,7 +94,7 @@ export class Parser extends ParserBase {
         return false;
     }
 
-    private parseModuleMember(parent: Nodes) {
+    private parseModuleDeclarationMember(parent: Nodes) {
         const token = this.getToken();
         switch (token.kind) {
             case TokenKind.StrictKeyword: {
@@ -589,13 +589,19 @@ export class Parser extends ParserBase {
 
     // #endregion
 
-    // #region Interface members
+    // #region Interface declaration members
 
-    private isInterfaceMembersListTerminator(token: Tokens): boolean {
-        return token.kind === TokenKind.EndKeyword;
+    private isInterfaceDeclarationMembersListTerminator(token: Tokens): boolean {
+        switch (token.kind) {
+            case TokenKind.EndKeyword: {
+                return true;
+            }
+        }
+
+        return false;
     }
 
-    private isInterfaceMemberStart(token: Tokens): boolean {
+    private isInterfaceDeclarationMemberStart(token: Tokens): boolean {
         switch (token.kind) {
             case TokenKind.ConstKeyword:
             case TokenKind.MethodKeyword:
@@ -607,7 +613,7 @@ export class Parser extends ParserBase {
         return false;
     }
 
-    private parseInterfaceMember(parent: Nodes) {
+    private parseInterfaceDeclarationMember(parent: Nodes) {
         const token = this.getToken();
         switch (token.kind) {
             case TokenKind.ConstKeyword: {
@@ -640,13 +646,19 @@ export class Parser extends ParserBase {
 
     // #endregion
 
-    // #region Class members
+    // #region Class declaration members
 
-    private isClassMembersListTerminator(token: Tokens): boolean {
-        return token.kind === TokenKind.EndKeyword;
+    private isClassDeclarationMembersListTerminator(token: Tokens): boolean {
+        switch (token.kind) {
+            case TokenKind.EndKeyword: {
+                return true;
+            }
+        }
+
+        return false;
     }
 
-    private isClassMemberStart(token: Tokens): boolean {
+    private isClassDeclarationMemberStart(token: Tokens): boolean {
         switch (token.kind) {
             case TokenKind.ConstKeyword:
             case TokenKind.GlobalKeyword:
@@ -664,7 +676,7 @@ export class Parser extends ParserBase {
         return false;
     }
 
-    private parseClassMember(parent: Nodes) {
+    private parseClassDeclarationMember(parent: Nodes) {
         const token = this.getToken();
         switch (token.kind) {
             case TokenKind.ConstKeyword:
@@ -762,8 +774,14 @@ export class Parser extends ParserBase {
 
     // #region Statements
 
-    private isBlockStatementsListTerminator(token: Tokens): boolean {
-        return token.kind === TokenKind.EndKeyword;
+    private isFunctionLikeStatementsListTerminator(token: Tokens): boolean {
+        switch (token.kind) {
+            case TokenKind.EndKeyword: {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     private isStatementStart(token: Tokens): boolean {
@@ -1651,7 +1669,7 @@ export class Parser extends ParserBase {
 
         switch (parseContext) {
             case NodeKind.ModuleDeclaration: {
-                return this.isModuleMembersListTerminator();
+                return this.isModuleDeclarationMembersListTerminator();
             }
             case NodeKind.ExternDataDeclarationSequence: {
                 return this.isExternDataDeclarationSequenceTerminator(token);
@@ -1660,14 +1678,14 @@ export class Parser extends ParserBase {
                 return this.isExternClassDeclarationMembersListTerminator(token);
             }
             case NodeKind.InterfaceDeclaration: {
-                return this.isInterfaceMembersListTerminator(token);
+                return this.isInterfaceDeclarationMembersListTerminator(token);
             }
             case NodeKind.ClassDeclaration: {
-                return this.isClassMembersListTerminator(token);
+                return this.isClassDeclarationMembersListTerminator(token);
             }
             case NodeKind.FunctionDeclaration:
             case NodeKind.ClassMethodDeclaration: {
-                return this.isBlockStatementsListTerminator(token);
+                return this.isFunctionLikeStatementsListTerminator(token);
             }
             case NodeKind.IfStatement:
             case NodeKind.ElseIfStatement:
@@ -1725,7 +1743,7 @@ export class Parser extends ParserBase {
 
         switch (parseContext) {
             case NodeKind.ModuleDeclaration: {
-                return this.isModuleMemberStart(token);
+                return this.isModuleDeclarationMemberStart(token);
             }
             case NodeKind.ExternDataDeclarationSequence: {
                 return this.isExternDataDeclarationSequenceMemberStart(token);
@@ -1734,10 +1752,10 @@ export class Parser extends ParserBase {
                 return this.isExternClassDeclarationMemberStart(token);
             }
             case NodeKind.InterfaceDeclaration: {
-                return this.isInterfaceMemberStart(token);
+                return this.isInterfaceDeclarationMemberStart(token);
             }
             case NodeKind.ClassDeclaration: {
-                return this.isClassMemberStart(token);
+                return this.isClassDeclarationMemberStart(token);
             }
             case NodeKind.FunctionDeclaration:
             case NodeKind.ClassMethodDeclaration:
@@ -1787,7 +1805,7 @@ export class Parser extends ParserBase {
 
         switch (parseContext) {
             case NodeKind.ModuleDeclaration: {
-                return this.parseModuleMember(parent);
+                return this.parseModuleDeclarationMember(parent);
             }
             case NodeKind.ExternDataDeclarationSequence: {
                 return this.parseExternDataDeclarationSequenceMember(parent);
@@ -1796,10 +1814,10 @@ export class Parser extends ParserBase {
                 return this.parseExternClassDeclarationMember(parent);
             }
             case NodeKind.InterfaceDeclaration: {
-                return this.parseInterfaceMember(parent);
+                return this.parseInterfaceDeclarationMember(parent);
             }
             case NodeKind.ClassDeclaration: {
-                return this.parseClassMember(parent);
+                return this.parseClassDeclarationMember(parent);
             }
             case NodeKind.FunctionDeclaration:
             case NodeKind.ClassMethodDeclaration:
@@ -1858,11 +1876,11 @@ export class Parser extends ParserBase {
 // #region Parse contexts
 
 interface ParserParseContextElementMap extends ParseContextElementMapBase {
-    [NodeKind.ModuleDeclaration]: ReturnType<Parser['parseModuleMember']>;
+    [NodeKind.ModuleDeclaration]: ReturnType<Parser['parseModuleDeclarationMember']>;
     [NodeKind.ExternDataDeclarationSequence]: ReturnType<Parser['parseExternDataDeclarationSequenceMember']>;
     [NodeKind.ExternClassDeclaration]: ReturnType<Parser['parseExternClassDeclarationMember']>;
-    [NodeKind.InterfaceDeclaration]: ReturnType<Parser['parseInterfaceMember']>;
-    [NodeKind.ClassDeclaration]: ReturnType<Parser['parseClassMember']>;
+    [NodeKind.InterfaceDeclaration]: ReturnType<Parser['parseInterfaceDeclarationMember']>;
+    [NodeKind.ClassDeclaration]: ReturnType<Parser['parseClassDeclarationMember']>;
     [NodeKind.ClassMethodDeclaration]: ReturnType<Parser['parseStatement']>;
     [NodeKind.IfStatement]: ReturnType<Parser['parseStatement']>;
     [NodeKind.ElseIfStatement]: ReturnType<Parser['parseStatement']>;
