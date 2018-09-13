@@ -27,12 +27,12 @@ Import brl.filesystem   ' Import directive (dotted module path)
 
 Friend monkey.list  ' Friend directive
 
+Alias T=file2.T                'which 'T' to use
+
 Private         ' Private directive
 Extern          ' Extern directive
 Extern Private  ' Extern Private directive
 Public          ' Public directive
-
-Alias T=file2.T                'which 'T' to use
 
 Const asd: Int = 1          ' Explicit type (longhand)
 Const asd$ = "my constant"  ' Explicit type (shorthand)

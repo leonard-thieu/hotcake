@@ -61,9 +61,67 @@ export class Parser extends ParserBase {
         moduleDeclaration.filePath = filePath;
         moduleDeclaration.document = document;
 
+        moduleDeclaration.strictNewlines = this.parseList(ParseContextKind.NewlineList, moduleDeclaration, /*delimiter*/ null);
+        const strictKeyword = this.getToken();
+        if (strictKeyword.kind === TokenKind.StrictKeyword) {
+            this.advanceToken();
+            
+            moduleDeclaration.strictDirective = this.parseStrictDirective(moduleDeclaration, strictKeyword);
+        }
+        moduleDeclaration.headerMembers = this.parseList(ParseContextKind.ModuleDeclarationHeader, moduleDeclaration);
         moduleDeclaration.members = this.parseList(moduleDeclaration.kind, moduleDeclaration);
 
         return moduleDeclaration;
+    }
+
+    private isModuleDeclarationHeaderTerminator(token: Tokens): boolean {
+        return !this.isModuleDeclarationHeaderMemberStart(token);
+    }
+
+    private isModuleDeclarationHeaderMemberStart(token: Tokens): boolean {
+        switch (token.kind) {
+            case TokenKind.ImportKeyword:
+            case TokenKind.FriendKeyword:
+            case TokenKind.AliasKeyword:
+            case TokenKind.PrivateKeyword:
+            case TokenKind.PublicKeyword:
+            case TokenKind.Newline: {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    private parseModuleDeclarationHeaderMember(parent: Nodes) {
+        const token = this.getToken();
+        switch (token.kind) {
+            case TokenKind.ImportKeyword: {
+                this.advanceToken();
+
+                return this.parseImportStatement(parent, token);
+            }
+            case TokenKind.FriendKeyword: {
+                this.advanceToken();
+
+                return this.parseFriendDirective(parent, token);
+            }
+            case TokenKind.AliasKeyword: {
+                this.advanceToken();
+
+                return this.parseAliasDirectiveSequence(parent, token);
+            }
+            case TokenKind.PrivateKeyword:
+            case TokenKind.PublicKeyword: {
+                this.advanceToken();
+
+                this.accessibility = token.kind;
+
+                return this.parseAccessibilityDirective(parent, token);
+            }
+        }
+
+        return this.parseNewlineListMember(parent);
     }
 
     // #region Module declaration members
@@ -74,13 +132,9 @@ export class Parser extends ParserBase {
 
     private isModuleDeclarationMemberStart(token: Tokens): boolean {
         switch (token.kind) {
-            case TokenKind.StrictKeyword:
-            case TokenKind.ImportKeyword:
-            case TokenKind.FriendKeyword:
             case TokenKind.PrivateKeyword:
             case TokenKind.PublicKeyword:
             case TokenKind.ExternKeyword:
-            case TokenKind.AliasKeyword:
             case TokenKind.ConstKeyword:
             case TokenKind.GlobalKeyword:
             case TokenKind.FunctionKeyword:
@@ -97,21 +151,6 @@ export class Parser extends ParserBase {
     private parseModuleDeclarationMember(parent: Nodes) {
         const token = this.getToken();
         switch (token.kind) {
-            case TokenKind.StrictKeyword: {
-                this.advanceToken();
-
-                return this.parseStrictDirective(parent, token);
-            }
-            case TokenKind.ImportKeyword: {
-                this.advanceToken();
-
-                return this.parseImportStatement(parent, token);
-            }
-            case TokenKind.FriendKeyword: {
-                this.advanceToken();
-
-                return this.parseFriendDirective(parent, token);
-            }
             case TokenKind.PrivateKeyword:
             case TokenKind.PublicKeyword:
             case TokenKind.ExternKeyword: {
@@ -120,11 +159,6 @@ export class Parser extends ParserBase {
                 this.accessibility = token.kind;
 
                 return this.parseAccessibilityDirective(parent, token);
-            }
-            case TokenKind.AliasKeyword: {
-                this.advanceToken();
-
-                return this.parseAliasDirectiveSequence(parent, token);
             }
             case TokenKind.ConstKeyword: {
                 this.advanceToken();
@@ -1712,6 +1746,9 @@ export class Parser extends ParserBase {
             case NodeKind.AliasDirectiveSequence: {
                 return this.isAliasDirectiveSequenceTerminator(token);
             }
+            case ParseContextKind.ModuleDeclarationHeader: {
+                return this.isModuleDeclarationHeaderTerminator(token);
+            }
             case ParseContextKind.ModulePathSequence: {
                 return this.isModulePathSequenceTerminator(token);
             }
@@ -1770,6 +1807,9 @@ export class Parser extends ParserBase {
             case NodeKind.TryStatement:
             case NodeKind.CatchStatement: {
                 return this.isStatementStart(token);
+            }
+            case ParseContextKind.ModuleDeclarationHeader: {
+                return this.isModuleDeclarationHeaderMemberStart(token);
             }
             case NodeKind.AliasDirectiveSequence: {
                 return this.isAliasDirectiveSequenceMemberStart(token);
@@ -1836,6 +1876,9 @@ export class Parser extends ParserBase {
             case NodeKind.AliasDirectiveSequence: {
                 return this.parseAliasDirectiveSequenceMember(parent);
             }
+            case ParseContextKind.ModuleDeclarationHeader: {
+                return this.parseModuleDeclarationHeaderMember(parent);
+            }
             case ParseContextKind.ModulePathSequence: {
                 return this.parseModulePathSequenceMember(parent);
             }
@@ -1894,6 +1937,7 @@ interface ParserParseContextElementMap extends ParseContextElementMapBase {
     [NodeKind.CatchStatement]: ReturnType<Parser['parseStatement']>;
     [NodeKind.FunctionDeclaration]: ReturnType<Parser['parseStatement']>;
     [NodeKind.AliasDirectiveSequence]: ReturnType<Parser['parseAliasDirectiveSequenceMember']>;
+    [ParseContextKind.ModuleDeclarationHeader]: ReturnType<Parser['parseModuleDeclarationHeaderMember']>;
     [ParseContextKind.ModulePathSequence]: ReturnType<Parser['parseModulePathSequenceMember']>;
     [ParseContextKind.DataDeclarationSequence]: ReturnType<Parser['parseDataDeclarationSequenceMember']>;
     [ParseContextKind.TypeParameterSequence]: ReturnType<Parser['parseTypeParameterSequenceMember']>;
@@ -1906,6 +1950,7 @@ interface ParserParseContextElementMap extends ParseContextElementMapBase {
 type ParserParseContext = keyof ParserParseContextElementMap;
 
 const _ParseContextKind: { -readonly [P in keyof typeof ParseContextKind]: typeof ParseContextKind[P]; } = ParseContextKind;
+_ParseContextKind.ModuleDeclarationHeader = 'ModuleDeclarationHeader' as ParseContextKind.ModuleDeclarationHeader;
 _ParseContextKind.ModulePathSequence = 'ModulePathSequence' as ParseContextKind.ModulePathSequence;
 _ParseContextKind.DataDeclarationSequence = 'DataDeclarationSequence' as ParseContextKind.DataDeclarationSequence;
 _ParseContextKind.TypeParameterSequence = 'TypeParameterSequence' as ParseContextKind.TypeParameterSequence;
@@ -1916,6 +1961,7 @@ _ParseContextKind.CatchStatementList = 'CatchStatementList' as ParseContextKind.
 
 declare module './ParserBase' {
     enum ParseContextKind {
+        ModuleDeclarationHeader = 'ModuleDeclarationHeader',
         ModulePathSequence = 'ModulePathSequence',
         DataDeclarationSequence = 'DataDeclarationSequence',
         TypeParameterSequence = 'TypeParameterSequence',

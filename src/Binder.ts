@@ -50,12 +50,31 @@ export class Binder {
     private bindModuleDeclaration(moduleDeclaration: ModuleDeclaration): void {
         this.declareSymbol(moduleDeclaration);
 
-        for (const member of moduleDeclaration.members) {
+        for (const member of moduleDeclaration.headerMembers) {
             switch (member.kind) {
                 case NodeKind.FriendDirective: {
                     // Selectively exports symbols.
                     break;
                 }
+                case NodeKind.AliasDirectiveSequence: {
+                    this.bindAliasDirectiveSequence(member, moduleDeclaration);
+                    break;
+                }
+                default: {
+                    type ExpectedType =
+                        ImportStatement |
+                        AccessibilityDirective |
+                        NewlineToken |
+                        SkippedToken<TokenKinds>
+                        ;
+                    assertType<ExpectedType>(member);
+                    break;
+                }
+            }
+        }
+
+        for (const member of moduleDeclaration.members) {
+            switch (member.kind) {
                 case NodeKind.AccessibilityDirective: {
                     // Selectively exports symbols.
                     break;
@@ -63,10 +82,6 @@ export class Binder {
                 case NodeKind.ExternDataDeclarationSequence:
                 case NodeKind.DataDeclarationSequence: {
                     this.bindDataDeclarationSequence(member, moduleDeclaration);
-                    break;
-                }
-                case NodeKind.AliasDirectiveSequence: {
-                    this.bindAliasDirectiveSequence(member, moduleDeclaration);
                     break;
                 }
                 case NodeKind.ExternFunctionDeclaration:
@@ -84,12 +99,7 @@ export class Binder {
                     break;
                 }
                 default: {
-                    type ExpectedType =
-                        StrictDirective |
-                        ImportStatement |
-                        NewlineToken |
-                        SkippedToken<TokenKinds>
-                        ;
+                    type ExpectedType = NewlineToken | SkippedToken<TokenKinds>;
                     assertType<ExpectedType>(member);
                     break;
                 }
@@ -126,10 +136,7 @@ export class Binder {
                     break;
                 }
                 default: {
-                    type ExpectedType =
-                        NewlineToken |
-                        SkippedToken<TokenKinds>
-                        ;
+                    type ExpectedType = NewlineToken | SkippedToken<TokenKinds>;
                     assertType<ExpectedType>(member);
                     break;
                 }
@@ -299,10 +306,7 @@ export class Binder {
                 break;
             }
             default: {
-                type ExpectedType =
-                    AssignmentExpression |
-                    MissingToken<TokenKind.ForLoopHeader>
-                    ;
+                type ExpectedType = AssignmentExpression | MissingToken<TokenKind.ForLoopHeader>;
                 assertType<ExpectedType>(statement.header);
                 break;
             }
