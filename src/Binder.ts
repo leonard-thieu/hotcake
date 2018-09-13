@@ -16,7 +16,6 @@ import { ImportStatement } from './Node/Declaration/ImportStatement';
 import { InterfaceDeclaration } from './Node/Declaration/InterfaceDeclaration';
 import { InterfaceMethodDeclaration } from './Node/Declaration/InterfaceMethodDeclaration';
 import { ModuleDeclaration } from './Node/Declaration/ModuleDeclaration';
-import { StrictDirective } from './Node/Declaration/StrictDirective';
 import { AssignmentExpression } from './Node/Expression/AssignmentExpression';
 import { Nodes } from './Node/Node';
 import { NodeKind } from './Node/NodeKind';
@@ -79,13 +78,13 @@ export class Binder {
                     // Selectively exports symbols.
                     break;
                 }
-                case NodeKind.ExternDataDeclarationSequence:
-                case NodeKind.DataDeclarationSequence: {
+                case NodeKind.DataDeclarationSequence:
+                case NodeKind.ExternDataDeclarationSequence: {
                     this.bindDataDeclarationSequence(member, moduleDeclaration);
                     break;
                 }
-                case NodeKind.ExternFunctionDeclaration:
-                case NodeKind.FunctionDeclaration: {
+                case NodeKind.FunctionDeclaration:
+                case NodeKind.ExternFunctionDeclaration: {
                     this.bindFunctionLikeDeclaration(member, moduleDeclaration);
                     break;
                 }
@@ -93,8 +92,8 @@ export class Binder {
                     this.bindInterfaceDeclaration(member, moduleDeclaration);
                     break;
                 }
-                case NodeKind.ExternClassDeclaration:
-                case NodeKind.ClassDeclaration: {
+                case NodeKind.ClassDeclaration:
+                case NodeKind.ExternClassDeclaration: {
                     this.bindClassDeclaration(member, moduleDeclaration);
                     break;
                 }
@@ -144,20 +143,20 @@ export class Binder {
         }
     }
 
-    private bindClassDeclaration(classDeclaration: ExternClassDeclaration | ClassDeclaration, parent: Nodes): void {
+    private bindClassDeclaration(classDeclaration: ClassDeclaration | ExternClassDeclaration, parent: Nodes): void {
         this.declareSymbol(classDeclaration, parent);
 
         for (const member of classDeclaration.members) {
             switch (member.kind) {
-                case NodeKind.ExternDataDeclarationSequence:
-                case NodeKind.DataDeclarationSequence: {
+                case NodeKind.DataDeclarationSequence:
+                case NodeKind.ExternDataDeclarationSequence: {
                     this.bindDataDeclarationSequence(member, classDeclaration);
                     break;
                 }
-                case NodeKind.ExternFunctionDeclaration:
-                case NodeKind.ExternClassMethodDeclaration:
                 case NodeKind.FunctionDeclaration:
-                case NodeKind.ClassMethodDeclaration: {
+                case NodeKind.ExternFunctionDeclaration:
+                case NodeKind.ClassMethodDeclaration:
+                case NodeKind.ExternClassMethodDeclaration: {
                     this.bindFunctionLikeDeclaration(member, classDeclaration);
                     break;
                 }
@@ -202,8 +201,8 @@ export class Binder {
             default: {
                 type ExpectedType =
                     ExternFunctionDeclaration |
-                    ExternClassMethodDeclaration |
-                    InterfaceMethodDeclaration
+                    InterfaceMethodDeclaration |
+                    ExternClassMethodDeclaration
                     ;
                 assertType<ExpectedType>(functionLikeDeclaration);
                 break;
@@ -331,11 +330,11 @@ export class Binder {
         this.bindStatements(catchStatement);
     }
 
-    private bindDataDeclarationSequence(dataDeclarationSequence: ExternDataDeclarationSequence | DataDeclarationSequence, parent: Nodes): void {
+    private bindDataDeclarationSequence(dataDeclarationSequence: DataDeclarationSequence | ExternDataDeclarationSequence, parent: Nodes): void {
         for (const child of dataDeclarationSequence.children) {
             switch (child.kind) {
-                case NodeKind.ExternDataDeclaration:
-                case NodeKind.DataDeclaration: {
+                case NodeKind.DataDeclaration:
+                case NodeKind.ExternDataDeclaration: {
                     this.declareSymbol(child, parent);
                     break;
                 }
@@ -377,17 +376,17 @@ export class Binder {
             case NodeKind.ModuleDeclaration: {
                 return path.basename(declaration.filePath, path.extname(declaration.filePath));
             }
-            case NodeKind.ExternDataDeclaration:
-            case NodeKind.ExternFunctionDeclaration:
-            case NodeKind.ExternClassDeclaration:
-            case NodeKind.ExternClassMethodDeclaration:
-            case NodeKind.DataDeclaration:
             case NodeKind.AliasDirective:
+            case NodeKind.DataDeclaration:
+            case NodeKind.ExternDataDeclaration:
             case NodeKind.FunctionDeclaration:
+            case NodeKind.ExternFunctionDeclaration:
             case NodeKind.InterfaceDeclaration:
             case NodeKind.InterfaceMethodDeclaration:
             case NodeKind.ClassDeclaration:
-            case NodeKind.ClassMethodDeclaration: {
+            case NodeKind.ClassMethodDeclaration:
+            case NodeKind.ExternClassDeclaration:
+            case NodeKind.ExternClassMethodDeclaration: {
                 switch (declaration.identifier.kind) {
                     case TokenKind.Missing: { break; }
                     case NodeKind.EscapedIdentifier: {
