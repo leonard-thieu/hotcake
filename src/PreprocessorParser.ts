@@ -20,6 +20,8 @@ export class PreprocessorParser extends ParserBase {
         return this.parsePreprocessorModuleDeclaration(filePath, document);
     }
 
+    // #region Preprocessor module declaration
+
     private parsePreprocessorModuleDeclaration(filePath: string, document: string): PreprocessorModuleDeclaration {
         const preprocessorModuleDeclaration = new PreprocessorModuleDeclaration();
         preprocessorModuleDeclaration.filePath = filePath;
@@ -32,17 +34,17 @@ export class PreprocessorParser extends ParserBase {
         return preprocessorModuleDeclaration;
     }
 
-    // #region Directives
+    // #region Preprocessor module declaration members
 
-    private isPreprocessorModuleMemberListTerminator(): boolean {
+    private isPreprocessorModuleDeclarationMembersListTerminator(): boolean {
         return false;
     }
 
-    private isPreprocessorModuleMemberStart(): boolean {
+    private isPreprocessorModuleDeclarationMemberStart(): boolean {
         return true;
     }
 
-    private parseModuleMember(parent: Nodes) {
+    private parsePreprocessorModuleDeclarationMember(parent: Nodes) {
         const token = this.getToken();
         switch (token.kind) {
             case TokenKind.NumberSign: {
@@ -87,6 +89,12 @@ export class PreprocessorParser extends ParserBase {
 
         return token;
     }
+
+    // #endregion
+
+    // #endregion
+
+    // #region If directive
 
     private parseIfDirective(parent: Nodes, numberSign: NumberSignToken, ifDirectiveKeyword: IfDirectiveKeywordToken): IfDirective {
         const ifDirective = new IfDirective();
@@ -227,6 +235,10 @@ export class PreprocessorParser extends ParserBase {
         return false;
     }
 
+    // #endregion
+
+    // #region Rem directive
+
     private parseRemDirective(parent: Nodes, numberSign: NumberSignToken, remDirectiveKeyword: RemDirectiveKeywordToken): RemDirective {
         const remDirective = new RemDirective();
         remDirective.parent = parent;
@@ -313,6 +325,10 @@ export class PreprocessorParser extends ParserBase {
 
     // #endregion
 
+    // #endregion
+
+    // #region Print directive
+
     private parsePrintDirective(parent: Nodes, numberSign: NumberSignToken, printDirectiveKeyword: PrintDirectiveKeywordToken): PrintDirective {
         const printDirective = new PrintDirective();
         printDirective.parent = parent;
@@ -323,6 +339,10 @@ export class PreprocessorParser extends ParserBase {
         return printDirective;
     }
 
+    // #endregion
+
+    // #region Error directive
+
     private parseErrorDirective(parent: Nodes, numberSign: NumberSignToken, errorDirectiveKeyword: ErrorDirectiveKeywordToken): ErrorDirective {
         const errorDirective = new ErrorDirective();
         errorDirective.parent = parent;
@@ -332,6 +352,10 @@ export class PreprocessorParser extends ParserBase {
 
         return errorDirective;
     }
+
+    // #endregion
+
+    // #region Assignment directive
 
     private parseAssignmentDirective(parent: Nodes, numberSign: NumberSignToken, name: ConfigurationVariableToken): AssignmentDirective {
         const assignmentDirective = new AssignmentDirective();
@@ -346,17 +370,9 @@ export class PreprocessorParser extends ParserBase {
 
     // #endregion
 
-    protected isInvokeExpressionStart(token: Tokens, expression: Expressions): boolean {
-        switch (token.kind) {
-            case TokenKind.OpeningParenthesis: {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
     // #region Core
+
+    // #region Parse lists
 
     protected isListTerminator(parseContext: ParseContext, token: Tokens): boolean {
         parseContext = parseContext as PreprocessorParserParseContext;
@@ -367,7 +383,7 @@ export class PreprocessorParser extends ParserBase {
 
         switch (parseContext) {
             case NodeKind.PreprocessorModuleDeclaration: {
-                return this.isPreprocessorModuleMemberListTerminator();
+                return this.isPreprocessorModuleDeclarationMembersListTerminator();
             }
             case NodeKind.IfDirective:
             case NodeKind.ElseIfDirective:
@@ -393,7 +409,7 @@ export class PreprocessorParser extends ParserBase {
             case NodeKind.IfDirective:
             case NodeKind.ElseIfDirective:
             case NodeKind.ElseDirective: {
-                return this.isPreprocessorModuleMemberStart();
+                return this.isPreprocessorModuleDeclarationMemberStart();
             }
             case NodeKind.RemDirective: {
                 return this.isRemDirectiveMemberStart(token);
@@ -414,7 +430,7 @@ export class PreprocessorParser extends ParserBase {
             case NodeKind.IfDirective:
             case NodeKind.ElseIfDirective:
             case NodeKind.ElseDirective: {
-                return this.parseModuleMember(parent);
+                return this.parsePreprocessorModuleDeclarationMember(parent);
             }
             case NodeKind.RemDirective: {
                 return this.parseRemDirectiveMember(parent);
@@ -428,17 +444,29 @@ export class PreprocessorParser extends ParserBase {
     }
 
     // #endregion
+
+    protected isInvokeExpressionStart(token: Tokens, expression: Expressions): boolean {
+        switch (token.kind) {
+            case TokenKind.OpeningParenthesis: {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    // #endregion
 }
 
 // #region Parse contexts
 
 interface PreprocessorParserParseContextElementMap extends ParseContextElementMapBase {
-    [NodeKind.PreprocessorModuleDeclaration]: ReturnType<PreprocessorParser['parseModuleMember']>;
-    [NodeKind.IfDirective]: ReturnType<PreprocessorParser['parseModuleMember']>;
-    [NodeKind.ElseIfDirective]: ReturnType<PreprocessorParser['parseModuleMember']>;
-    [NodeKind.ElseDirective]: ReturnType<PreprocessorParser['parseModuleMember']>;
-    [NodeKind.RemDirective]: ReturnType<PreprocessorParser['parseRemDirectiveMember']>;
+    [NodeKind.PreprocessorModuleDeclaration]: ReturnType<PreprocessorParser['parsePreprocessorModuleDeclarationMember']>;
+    [NodeKind.IfDirective]: ReturnType<PreprocessorParser['parsePreprocessorModuleDeclarationMember']>;
     [ParseContextKind.ElseIfDirectiveList]: ReturnType<PreprocessorParser['parseElseIfDirectiveListMember']>;
+    [NodeKind.ElseIfDirective]: ReturnType<PreprocessorParser['parsePreprocessorModuleDeclarationMember']>;
+    [NodeKind.ElseDirective]: ReturnType<PreprocessorParser['parsePreprocessorModuleDeclarationMember']>;
+    [NodeKind.RemDirective]: ReturnType<PreprocessorParser['parseRemDirectiveMember']>;
 }
 
 type PreprocessorParserParseContext = keyof PreprocessorParserParseContextElementMap;

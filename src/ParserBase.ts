@@ -22,7 +22,7 @@ import { SliceExpression } from './Node/Expression/SliceExpression';
 import { MissableStringLiteral, StringLiteral } from './Node/Expression/StringLiteral';
 import { SuperExpression } from './Node/Expression/SuperExpression';
 import { UnaryOperatorToken, UnaryOpExpression } from './Node/Expression/UnaryOpExpression';
-import { EscapedIdentifier, Identifier, MissableIdentifier } from './Node/Identifier';
+import { EscapedIdentifier, MissableIdentifier } from './Node/Identifier';
 import { Nodes } from './Node/Node';
 import { NodeKind } from './Node/NodeKind';
 import { TypeReference, TypeReferenceIdentifierStartToken } from './Node/TypeReference';
@@ -39,7 +39,70 @@ export abstract class ParserBase {
     protected tokens: Tokens[] = undefined!;
     protected position: number = 0;
 
+    // #region Expression sequence
+
+    private isExpressionSequenceTerminator(token: Tokens): boolean {
+        return !this.isExpressionSequenceMemberStart(token);
+    }
+
+    protected isExpressionSequenceMemberStart(token: Tokens): boolean {
+        switch (token.kind) {
+            case TokenKind.Comma: {
+                return true;
+            }
+        }
+
+        return this.isExpressionStart(token);
+    }
+
+    private parseExpressionSequenceMember(parent: Nodes) {
+        const token = this.getToken();
+        switch (token.kind) {
+            case TokenKind.Comma: {
+                this.advanceToken();
+
+                return this.parseCommaSeparator(parent, token);
+            }
+        }
+
+        return this.parseExpression(parent);
+    }
+
+    // #endregion
+
     // #region Expressions
+
+    protected isExpressionStart(token: Tokens): boolean {
+        switch (token.kind) {
+            case TokenKind.NewKeyword:
+            case TokenKind.NullKeyword:
+            case TokenKind.TrueKeyword:
+            case TokenKind.FalseKeyword:
+            case TokenKind.SelfKeyword:
+            case TokenKind.SuperKeyword:
+            case TokenKind.QuotationMark:
+            case TokenKind.FloatLiteral:
+            case TokenKind.IntegerLiteral:
+            case TokenKind.Period:
+            case TokenKind.OpeningParenthesis:
+            case TokenKind.OpeningSquareBracket:
+            case TokenKind.PlusSign:
+            case TokenKind.HyphenMinus:
+            case TokenKind.Tilde:
+            case TokenKind.NotKeyword:
+            case TokenKind.Identifier:
+            case TokenKind.ObjectKeyword:
+            case TokenKind.ThrowableKeyword:
+            case TokenKind.BoolKeyword:
+            case TokenKind.IntKeyword:
+            case TokenKind.FloatKeyword:
+            case TokenKind.StringKeyword: {
+                return true;
+            }
+        }
+
+        return false;
+    }
 
     protected parseExpression(parent: Nodes) {
         return this.parseBinaryExpressionOrHigher(Precedence.Initial, parent);
@@ -395,6 +458,8 @@ export abstract class ParserBase {
         return new MissingToken(token.fullStart, NodeKind.StringLiteral);
     }
 
+    // #region String literal
+
     protected parseStringLiteral(parent: Nodes, startQuotationMark: QuotationMarkToken): StringLiteral {
         const stringLiteral = new StringLiteral();
         stringLiteral.parent = parent;
@@ -404,6 +469,78 @@ export abstract class ParserBase {
 
         return stringLiteral;
     }
+
+    // #region String literal children
+
+    protected isStringLiteralChildListTerminator(token: Tokens): boolean {
+        switch (token.kind) {
+            case TokenKind.QuotationMark: {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    protected isStringLiteralChildStart(token: Tokens): boolean {
+        switch (token.kind) {
+            case TokenKind.StringLiteralText:
+            case TokenKind.EscapeNull:
+            case TokenKind.EscapeCharacterTabulation:
+            case TokenKind.EscapeLineFeedLf:
+            case TokenKind.EscapeCarriageReturnCr:
+            case TokenKind.EscapeQuotationMark:
+            case TokenKind.EscapeTilde:
+            case TokenKind.EscapeUnicodeHexValue:
+            case TokenKind.InvalidEscapeSequence:
+            case TokenKind.ConfigurationTagStart: {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    protected parseStringLiteralChild(parent: Nodes) {
+        const token = this.getToken();
+        switch (token.kind) {
+            case TokenKind.StringLiteralText:
+            case TokenKind.EscapeNull:
+            case TokenKind.EscapeCharacterTabulation:
+            case TokenKind.EscapeLineFeedLf:
+            case TokenKind.EscapeCarriageReturnCr:
+            case TokenKind.EscapeQuotationMark:
+            case TokenKind.EscapeTilde:
+            case TokenKind.EscapeUnicodeHexValue:
+            case TokenKind.InvalidEscapeSequence: {
+                this.advanceToken();
+
+                return token;
+            }
+            case TokenKind.ConfigurationTagStart: {
+                this.advanceToken();
+
+                return this.parseConfigurationTag(parent, token);
+            }
+        }
+
+        return this.parseCore(parent, token);
+    }
+
+    protected parseConfigurationTag(parent: Nodes, startToken: ConfigurationTagStartToken): ConfigurationTag {
+        const configurationTag = new ConfigurationTag();
+        configurationTag.parent = parent;
+        configurationTag.startToken = startToken;
+        configurationTag.name = this.eatOptional(TokenKind.Identifier);
+        // Guaranteed by tokenizer.
+        configurationTag.endToken = this.eat(TokenKind.ConfigurationTagEnd);
+
+        return configurationTag;
+    }
+
+    // #endregion
+
+    // #endregion
 
     protected parseFloatLiteral(parent: Nodes, value: FloatLiteralToken): FloatLiteral {
         const floatLiteral = new FloatLiteral();
@@ -596,37 +733,6 @@ export abstract class ParserBase {
 
     // #endregion
 
-    // #region Expression sequence
-
-    private isExpressionSequenceListTerminator(token: Tokens): boolean {
-        return !this.isExpressionSequenceMemberStart(token);
-    }
-
-    protected isExpressionSequenceMemberStart(token: Tokens): boolean {
-        switch (token.kind) {
-            case TokenKind.Comma: {
-                return true;
-            }
-        }
-
-        return this.isExpressionStart(token);
-    }
-
-    private parseExpressionSequenceMember(parent: Nodes) {
-        const token = this.getToken();
-        switch (token.kind) {
-            case TokenKind.Comma: {
-                this.advanceToken();
-
-                return this.parseCommaSeparator(parent, token);
-            }
-        }
-
-        return this.parseExpression(parent);
-    }
-
-    // #endregion
-
     // #endregion
 
     // #region Newline list
@@ -692,14 +798,7 @@ export abstract class ParserBase {
 
     // #endregion
 
-    protected parseCommaSeparator(parent: Nodes, separator: CommaToken): CommaSeparator {
-        const commaSeparator = new CommaSeparator();
-        commaSeparator.parent = parent;
-        commaSeparator.separator = separator;
-        commaSeparator.newlines = this.parseList(ParseContextKind.NewlineList, commaSeparator, /*delimiter*/ null);
-
-        return commaSeparator;
-    }
+    // #region Type reference
 
     protected isTypeReferenceStart(token: Tokens): token is TypeReferenceIdentifierStartToken | PeriodToken {
         switch (token.kind) {
@@ -788,6 +887,8 @@ export abstract class ParserBase {
         return typeReference;
     }
 
+    // #endregion
+
     // #region Array type declaration list
 
     private isArrayTypeDeclarationListTerminator(token: Tokens): boolean {
@@ -817,6 +918,8 @@ export abstract class ParserBase {
         return this.parseCore(parent, token);
     }
 
+    // #region Array type declaration
+
     protected parseArrayTypeDeclaration(parent: Nodes, openingSquareBracket: OpeningSquareBracketToken): ArrayTypeDeclaration {
         const arrayTypeDeclaration = new ArrayTypeDeclaration();
         arrayTypeDeclaration.parent = parent;
@@ -831,37 +934,20 @@ export abstract class ParserBase {
 
     // #endregion
 
-    protected isExpressionStart(token: Tokens): boolean {
-        switch (token.kind) {
-            case TokenKind.NewKeyword:
-            case TokenKind.NullKeyword:
-            case TokenKind.TrueKeyword:
-            case TokenKind.FalseKeyword:
-            case TokenKind.SelfKeyword:
-            case TokenKind.SuperKeyword:
-            case TokenKind.QuotationMark:
-            case TokenKind.FloatLiteral:
-            case TokenKind.IntegerLiteral:
-            case TokenKind.Period:
-            case TokenKind.OpeningParenthesis:
-            case TokenKind.OpeningSquareBracket:
-            case TokenKind.PlusSign:
-            case TokenKind.HyphenMinus:
-            case TokenKind.Tilde:
-            case TokenKind.NotKeyword:
-            case TokenKind.Identifier:
-            case TokenKind.ObjectKeyword:
-            case TokenKind.ThrowableKeyword:
-            case TokenKind.BoolKeyword:
-            case TokenKind.IntKeyword:
-            case TokenKind.FloatKeyword:
-            case TokenKind.StringKeyword: {
-                return true;
-            }
-        }
+    // #endregion
 
-        return false;
+    // #region Comma separator
+
+    protected parseCommaSeparator(parent: Nodes, separator: CommaToken): CommaSeparator {
+        const commaSeparator = new CommaSeparator();
+        commaSeparator.parent = parent;
+        commaSeparator.separator = separator;
+        commaSeparator.newlines = this.parseList(ParseContextKind.NewlineList, commaSeparator, /*delimiter*/ null);
+
+        return commaSeparator;
     }
+
+    // #endregion
 
     // #region Identifier
 
@@ -973,76 +1059,6 @@ export abstract class ParserBase {
 
     // #endregion
 
-    // #region String literal children
-
-    protected isStringLiteralChildListTerminator(token: Tokens): boolean {
-        switch (token.kind) {
-            case TokenKind.QuotationMark: {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    protected isStringLiteralChildStart(token: Tokens): boolean {
-        switch (token.kind) {
-            case TokenKind.StringLiteralText:
-            case TokenKind.EscapeNull:
-            case TokenKind.EscapeCharacterTabulation:
-            case TokenKind.EscapeLineFeedLf:
-            case TokenKind.EscapeCarriageReturnCr:
-            case TokenKind.EscapeQuotationMark:
-            case TokenKind.EscapeTilde:
-            case TokenKind.EscapeUnicodeHexValue:
-            case TokenKind.InvalidEscapeSequence:
-            case TokenKind.ConfigurationTagStart: {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    protected parseStringLiteralChild(parent: Nodes) {
-        const token = this.getToken();
-        switch (token.kind) {
-            case TokenKind.StringLiteralText:
-            case TokenKind.EscapeNull:
-            case TokenKind.EscapeCharacterTabulation:
-            case TokenKind.EscapeLineFeedLf:
-            case TokenKind.EscapeCarriageReturnCr:
-            case TokenKind.EscapeQuotationMark:
-            case TokenKind.EscapeTilde:
-            case TokenKind.EscapeUnicodeHexValue:
-            case TokenKind.InvalidEscapeSequence: {
-                this.advanceToken();
-
-                return token;
-            }
-            case TokenKind.ConfigurationTagStart: {
-                this.advanceToken();
-
-                return this.parseConfigurationTag(parent, token);
-            }
-        }
-
-        return this.parseCore(parent, token);
-    }
-
-    protected parseConfigurationTag(parent: Nodes, startToken: ConfigurationTagStartToken): ConfigurationTag {
-        const configurationTag = new ConfigurationTag();
-        configurationTag.parent = parent;
-        configurationTag.startToken = startToken;
-        configurationTag.name = this.eatOptional(TokenKind.Identifier);
-        // Guaranteed by tokenizer.
-        configurationTag.endToken = this.eat(TokenKind.ConfigurationTagEnd);
-
-        return configurationTag;
-    }
-
-    // #endregion
-
     // #region Core
 
     // #region Parse lists
@@ -1091,9 +1107,9 @@ export abstract class ParserBase {
                 break;
             }
 
+            this.advanceToken();
             const skippedToken = new SkippedToken(token);
             nodes.push(skippedToken);
-            this.advanceToken();
         }
 
         this.parseContexts.pop();
@@ -1122,7 +1138,7 @@ export abstract class ParserBase {
                 return this.isTypeReferenceSequenceTerminator(token);
             }
             case ParseContextKind.ExpressionSequence: {
-                return this.isExpressionSequenceListTerminator(token);
+                return this.isExpressionSequenceTerminator(token);
             }
         }
 
@@ -1247,7 +1263,6 @@ export abstract class ParserBase {
     // #endregion
 
     // #endregion
-
 }
 
 // #region Precedence and associativity
