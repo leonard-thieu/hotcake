@@ -140,14 +140,17 @@
                 "start": 680,
                 "length": 6
             },
-            "path": [
-                {
-                    "kind": "Identifier",
-                    "fullStart": 686,
-                    "start": 687,
-                    "length": 6
-                }
-            ]
+            "path": {
+                "kind": "ModulePath",
+                "children": [
+                    {
+                        "kind": "Identifier",
+                        "fullStart": 686,
+                        "start": 687,
+                        "length": 6
+                    }
+                ]
+            }
         },
         {
             "kind": "Newline",
@@ -163,26 +166,29 @@
                 "start": 738,
                 "length": 6
             },
-            "path": [
-                {
-                    "kind": "Identifier",
-                    "fullStart": 744,
-                    "start": 745,
-                    "length": 4
-                },
-                {
-                    "kind": "Period",
-                    "fullStart": 748,
-                    "start": 748,
-                    "length": 1
-                },
-                {
-                    "kind": "Identifier",
-                    "fullStart": 749,
-                    "start": 749,
-                    "length": 10
-                }
-            ]
+            "path": {
+                "kind": "ModulePath",
+                "children": [
+                    {
+                        "kind": "Identifier",
+                        "fullStart": 744,
+                        "start": 745,
+                        "length": 4
+                    },
+                    {
+                        "kind": "Period",
+                        "fullStart": 748,
+                        "start": 748,
+                        "length": 1
+                    },
+                    {
+                        "kind": "Identifier",
+                        "fullStart": 749,
+                        "start": 749,
+                        "length": 10
+                    }
+                ]
+            }
         },
         {
             "kind": "Newline",
@@ -204,26 +210,29 @@
                 "start": 805,
                 "length": 6
             },
-            "modulePath": [
-                {
-                    "kind": "Identifier",
-                    "fullStart": 811,
-                    "start": 812,
-                    "length": 7
-                },
-                {
-                    "kind": "Period",
-                    "fullStart": 818,
-                    "start": 818,
-                    "length": 1
-                },
-                {
-                    "kind": "Identifier",
-                    "fullStart": 819,
-                    "start": 819,
-                    "length": 4
-                }
-            ]
+            "modulePath": {
+                "kind": "ModulePath",
+                "children": [
+                    {
+                        "kind": "Identifier",
+                        "fullStart": 811,
+                        "start": 812,
+                        "length": 7
+                    },
+                    {
+                        "kind": "Period",
+                        "fullStart": 818,
+                        "start": 818,
+                        "length": 1
+                    },
+                    {
+                        "kind": "Identifier",
+                        "fullStart": 819,
+                        "start": 819,
+                        "length": 4
+                    }
+                ]
+            }
         },
         {
             "kind": "Newline",

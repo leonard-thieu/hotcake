@@ -150,30 +150,39 @@
         {
             "kind": "ImportStatement",
             "importKeyword": "ImportKeyword",
-            "path": [
-                "Identifier"
-            ]
+            "path": {
+                "kind": "ModulePath",
+                "children": [
+                    "Identifier"
+                ]
+            }
         },
         "Newline",
         {
             "kind": "ImportStatement",
             "importKeyword": "ImportKeyword",
-            "path": [
-                "Identifier",
-                "Period",
-                "Identifier"
-            ]
+            "path": {
+                "kind": "ModulePath",
+                "children": [
+                    "Identifier",
+                    "Period",
+                    "Identifier"
+                ]
+            }
         },
         "Newline",
         "Newline",
         {
             "kind": "FriendDirective",
             "friendKeyword": "FriendKeyword",
-            "modulePath": [
-                "Identifier",
-                "Period",
-                "Identifier"
-            ]
+            "modulePath": {
+                "kind": "ModulePath",
+                "children": [
+                    "Identifier",
+                    "Period",
+                    "Identifier"
+                ]
+            }
         },
         "Newline",
         "Newline",

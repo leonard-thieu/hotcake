@@ -21,14 +21,17 @@
                 "start": 70,
                 "length": 6
             },
-            "path": [
-                {
-                    "kind": "Identifier",
-                    "fullStart": 76,
-                    "start": 77,
-                    "length": 20
-                }
-            ]
+            "path": {
+                "kind": "ModulePath",
+                "children": [
+                    {
+                        "kind": "Identifier",
+                        "fullStart": 76,
+                        "start": 77,
+                        "length": 20
+                    }
+                ]
+            }
         },
         {
             "kind": "Newline",
@@ -44,38 +47,41 @@
                 "start": 98,
                 "length": 6
             },
-            "path": [
-                {
-                    "kind": "Identifier",
-                    "fullStart": 104,
-                    "start": 105,
-                    "length": 9
-                },
-                {
-                    "kind": "Period",
-                    "fullStart": 113,
-                    "start": 113,
-                    "length": 1
-                },
-                {
-                    "kind": "Identifier",
-                    "fullStart": 114,
-                    "start": 114,
-                    "length": 6
-                },
-                {
-                    "kind": "Period",
-                    "fullStart": 120,
-                    "start": 120,
-                    "length": 1
-                },
-                {
-                    "kind": "Identifier",
-                    "fullStart": 121,
-                    "start": 121,
-                    "length": 5
-                }
-            ]
+            "path": {
+                "kind": "ModulePath",
+                "children": [
+                    {
+                        "kind": "Identifier",
+                        "fullStart": 104,
+                        "start": 105,
+                        "length": 9
+                    },
+                    {
+                        "kind": "Period",
+                        "fullStart": 113,
+                        "start": 113,
+                        "length": 1
+                    },
+                    {
+                        "kind": "Identifier",
+                        "fullStart": 114,
+                        "start": 114,
+                        "length": 6
+                    },
+                    {
+                        "kind": "Period",
+                        "fullStart": 120,
+                        "start": 120,
+                        "length": 1
+                    },
+                    {
+                        "kind": "Identifier",
+                        "fullStart": 121,
+                        "start": 121,
+                        "length": 5
+                    }
+                ]
+            }
         },
         {
             "kind": "Newline",
