@@ -17,7 +17,8 @@ import { StrictDirective } from './Node/Declaration/StrictDirective';
 import { LonghandTypeDeclaration, ShorthandTypeDeclaration, ShorthandTypeToken } from './Node/Declaration/TypeDeclaration';
 import { TypeParameter } from './Node/Declaration/TypeParameter';
 import { Expressions, MissableExpression } from './Node/Expression/Expression';
-import { EscapedIdentifier, IdentifierStartToken } from './Node/Identifier';
+import { IdentifierStartToken } from './Node/Identifier';
+import { ModulePath } from './Node/ModulePath';
 import { Nodes } from './Node/Node';
 import { NodeKind } from './Node/NodeKind';
 import { ContinueStatement } from './Node/Statement/ContinueStatement';
@@ -36,7 +37,7 @@ import { CatchStatement, TryStatement } from './Node/Statement/TryStatement';
 import { WhileLoop } from './Node/Statement/WhileLoop';
 import { ParseContext, ParseContextElementMapBase, ParseContextKind, ParserBase } from './ParserBase';
 import { MissingToken } from './Token/MissingToken';
-import { AliasKeywordToken, CaseKeywordToken, CatchKeywordToken, ClassKeywordToken, ColonToken, ConstKeywordToken, ContinueKeywordToken, DefaultKeywordToken, ElseIfKeywordToken, ElseKeywordToken, ExitKeywordToken, ForKeywordToken, FriendKeywordToken, FunctionKeywordToken, IdentifierToken, IfKeywordToken, ImportKeywordToken, InterfaceKeywordToken, LocalKeywordToken, MethodKeywordToken, RepeatKeywordToken, ReturnKeywordToken, SelectKeywordToken, StrictKeywordToken, ThrowKeywordToken, Tokens, TryKeywordToken, WhileKeywordToken } from './Token/Token';
+import { AliasKeywordToken, CaseKeywordToken, CatchKeywordToken, ClassKeywordToken, ColonToken, ConstKeywordToken, ContinueKeywordToken, DefaultKeywordToken, ElseIfKeywordToken, ElseKeywordToken, ExitKeywordToken, ForKeywordToken, FriendKeywordToken, FunctionKeywordToken, IfKeywordToken, ImportKeywordToken, InterfaceKeywordToken, LocalKeywordToken, MethodKeywordToken, RepeatKeywordToken, ReturnKeywordToken, SelectKeywordToken, StrictKeywordToken, ThrowKeywordToken, Tokens, TryKeywordToken, WhileKeywordToken } from './Token/Token';
 import { TokenKind } from './Token/TokenKind';
 
 export class Parser extends ParserBase {
@@ -245,8 +246,11 @@ export class Parser extends ParserBase {
             }
             // Module path
             case TokenKind.Identifier: {
-                importStatement.path = this.parseList(ParseContextKind.ModulePathSequence, importStatement, TokenKind.Period);
-                const moduleIdentifier = importStatement.path[importStatement.path.length - 1];
+                importStatement.path = this.parseModulePath(importStatement);
+
+                // Needed when parsing Alias directives.
+                // Allows disambiguation between a module identifier and a type identifier.
+                const moduleIdentifier = importStatement.path.children[importStatement.path.children.length - 1];
                 if (moduleIdentifier.kind === TokenKind.Identifier) {
                     this.moduleIdentifiers.push(moduleIdentifier.getText(this.document));
                 }
@@ -265,12 +269,20 @@ export class Parser extends ParserBase {
         const friendDirective = new FriendDirective();
         friendDirective.parent = parent;
         friendDirective.friendKeyword = friendKeyword;
-        friendDirective.modulePath = this.parseList(ParseContextKind.ModulePathSequence, friendDirective, TokenKind.Period);
+        friendDirective.modulePath = this.parseModulePath(friendDirective);
 
         return friendDirective;
     }
 
     // #region Module path
+
+    private parseModulePath(parent: Nodes): ModulePath {
+        const modulePath = new ModulePath();
+        modulePath.parent = parent;
+        modulePath.children = this.parseList(ParseContextKind.ModulePathSequence, modulePath, TokenKind.Period);
+
+        return modulePath;
+    }
 
     private isModulePathSequenceTerminator(token: Tokens): boolean {
         return !this.isModulePathSequenceMemberStart(token);

@@ -72,6 +72,7 @@ export enum NodeKind {
     AssignmentExpression = 'AssignmentExpression',
     GlobalScopeExpression = 'GlobalScopeExpression',
 
+    ModulePath = 'ModulePath',
     ArrayTypeDeclaration = 'ArrayTypeDeclaration',
     ShorthandTypeDeclaration = 'ShorthandTypeDeclaration',
     LonghandTypeDeclaration = 'LonghandTypeDeclaration',
