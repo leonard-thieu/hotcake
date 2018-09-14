@@ -1,3 +1,5 @@
+import { Diagnostic } from './Diagnostic';
+import { DiagnosticKind, DiagnosticKinds } from './DiagnosticKind';
 import { AccessibilityDirective, AccessibilityKeywordToken } from './Node/Declaration/AccessibilityDirective';
 import { AliasDirective, AliasDirectiveSequence, MissableDeclarationReferenceIdentifier } from './Node/Declaration/AliasDirectiveSequence';
 import { ClassDeclaration } from './Node/Declaration/ClassDeclaration';
@@ -36,14 +38,16 @@ import { ThrowStatement } from './Node/Statement/ThrowStatement';
 import { CatchStatement, TryStatement } from './Node/Statement/TryStatement';
 import { WhileLoop } from './Node/Statement/WhileLoop';
 import { ParseContext, ParseContextElementMapBase, ParseContextKind, ParserBase } from './ParserBase';
-import { MissingToken } from './Token/MissingToken';
-import { AliasKeywordToken, CaseKeywordToken, CatchKeywordToken, ClassKeywordToken, ColonToken, ConstKeywordToken, ContinueKeywordToken, DefaultKeywordToken, ElseIfKeywordToken, ElseKeywordToken, ExitKeywordToken, ForKeywordToken, FriendKeywordToken, FunctionKeywordToken, IfKeywordToken, ImportKeywordToken, InterfaceKeywordToken, LocalKeywordToken, MethodKeywordToken, RepeatKeywordToken, ReturnKeywordToken, SelectKeywordToken, StrictKeywordToken, ThrowKeywordToken, Tokens, TryKeywordToken, WhileKeywordToken } from './Token/Token';
+import { MissableTokenKinds, MissingToken } from './Token/MissingToken';
+import { SkippedToken } from './Token/SkippedToken';
+import { AliasKeywordToken, CaseKeywordToken, CatchKeywordToken, ClassKeywordToken, ColonToken, ConstKeywordToken, ContinueKeywordToken, DefaultKeywordToken, ElseIfKeywordToken, ElseKeywordToken, ExitKeywordToken, ForKeywordToken, FriendKeywordToken, FunctionKeywordToken, IfKeywordToken, ImportKeywordToken, InterfaceKeywordToken, LocalKeywordToken, MethodKeywordToken, RepeatKeywordToken, ReturnKeywordToken, SelectKeywordToken, StrictKeywordToken, ThrowKeywordToken, Token, TokenKinds, Tokens, TryKeywordToken, WhileKeywordToken } from './Token/Token';
 import { TokenKind } from './Token/TokenKind';
 
 export class Parser extends ParserBase {
     private document: string = undefined!;
     private accessibility: AccessibilityKeywordToken['kind'] = undefined!;
     private moduleIdentifiers: string[] = undefined!;
+    private moduleDeclaration: ModuleDeclaration = undefined!;
 
     parse(filePath: string, document: string, tokens: Tokens[]): ModuleDeclaration {
         this.tokens = [...tokens];
@@ -60,6 +64,7 @@ export class Parser extends ParserBase {
 
     private parseModuleDeclaration(filePath: string, document: string): ModuleDeclaration {
         const moduleDeclaration = new ModuleDeclaration();
+        this.moduleDeclaration = moduleDeclaration;
         moduleDeclaration.filePath = filePath;
         moduleDeclaration.document = document;
 
@@ -253,7 +258,7 @@ export class Parser extends ParserBase {
                 break;
             }
             default: {
-                importStatement.path = new MissingToken(token.fullStart, TokenKind.ImportStatementPath);
+                importStatement.path = this.createMissingToken(token.fullStart, TokenKind.ImportStatementPath);
                 break;
             }
         }
@@ -495,7 +500,7 @@ export class Parser extends ParserBase {
             }
         }
 
-        return new MissingToken(name.fullStart, NodeKind.DataDeclaration);
+        return this.createMissingToken(name.fullStart, NodeKind.DataDeclaration);
     }
 
     private parseDataDeclaration(parent: Nodes, identifierStart: IdentifierStartToken): DataDeclaration {
@@ -1597,7 +1602,7 @@ export class Parser extends ParserBase {
                     //         * Requires being able to calculate the length of the expression.
                     this.position = position;
 
-                    return new MissingToken(token.fullStart, TokenKind.ForLoopHeader);
+                    return this.createMissingToken(token.fullStart, TokenKind.ForLoopHeader);
                 }
             }
         }
@@ -2024,6 +2029,41 @@ export class Parser extends ParserBase {
 
         return false;
     }
+
+    // #region Tokens
+
+    protected createMissingToken<TTokenKind extends MissableTokenKinds>(fullStart: number, originalKind: TTokenKind): MissingToken<TTokenKind> {
+        this.addDiagnostic(
+            DiagnosticKind.Error,
+            `Missing token: ${JSON.stringify(originalKind)}.`,
+            fullStart,
+            0,
+        );
+
+        return super.createMissingToken(fullStart, originalKind);
+    }
+
+    protected createSkippedToken<TTokenKind extends TokenKinds>(token: Token<TTokenKind>): SkippedToken<TTokenKind> {
+        this.addDiagnostic(
+            DiagnosticKind.Error,
+            `Skipped token: ${JSON.stringify(token.kind)}.`,
+            token.fullStart,
+            token.length,
+        );
+
+        return super.createSkippedToken(token);
+    }
+
+    private addDiagnostic(kind: DiagnosticKinds, message: string, start: number, length: number) {
+        if (!this.moduleDeclaration.parseDiagnostics) {
+            this.moduleDeclaration.parseDiagnostics = [];
+        }
+
+        const diagnostic = new Diagnostic(kind, message, start, length);
+        this.moduleDeclaration.parseDiagnostics.push(diagnostic);
+    }
+
+    // #endregion
 
     // #endregion
 }

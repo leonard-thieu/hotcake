@@ -27,12 +27,12 @@ import { Nodes } from './Node/Node';
 import { NodeKind } from './Node/NodeKind';
 import { TypeReference, TypeReferenceIdentifierStartToken } from './Node/TypeReference';
 import { GreaterThanSignEqualsSignToken } from './Token/GreaterThanSignEqualsSignToken';
-import { MissingToken } from './Token/MissingToken';
+import { MissableTokenKinds, MissingToken } from './Token/MissingToken';
 import { ModKeywordEqualsSignToken } from './Token/ModKeywordEqualsSignToken';
 import { ShlKeywordEqualsSignToken } from './Token/ShlKeywordEqualsSignToken';
 import { ShrKeywordEqualsSignToken } from './Token/ShrKeywordEqualsSignToken';
 import { SkippedToken } from './Token/SkippedToken';
-import { CommaToken, CommercialAtToken, ConfigurationTagStartToken, FloatLiteralToken, IntegerLiteralToken, NewKeywordToken, NullKeywordToken, OpeningParenthesisToken, OpeningSquareBracketToken, PeriodPeriodToken, PeriodToken, QuotationMarkToken, SelfKeywordToken, SuperKeywordToken, TokenKinds, TokenKindTokenMap, Tokens } from './Token/Token';
+import { CommaToken, CommercialAtToken, ConfigurationTagStartToken, FloatLiteralToken, IntegerLiteralToken, NewKeywordToken, NullKeywordToken, OpeningParenthesisToken, OpeningSquareBracketToken, PeriodPeriodToken, PeriodToken, QuotationMarkToken, SelfKeywordToken, SuperKeywordToken, Token, TokenKinds, TokenKindTokenMap, Tokens } from './Token/Token';
 import { TokenKind } from './Token/TokenKind';
 
 export abstract class ParserBase {
@@ -395,13 +395,13 @@ export abstract class ParserBase {
                 return this.parseGroupingExpression(parent, token);
             }
             case TokenKind.EOF: {
-                return new MissingToken(token.fullStart, TokenKind.Expression);
+                return this.createMissingToken(token.fullStart, TokenKind.Expression);
             }
         }
 
         console.error(`${JSON.stringify(token.kind)} not implemented.`);
 
-        return new MissingToken(token.fullStart, TokenKind.Expression);
+        return this.createMissingToken(token.fullStart, TokenKind.Expression);
     }
 
     protected parseNewExpression(parent: Nodes, newKeyword: NewKeywordToken): NewExpression {
@@ -455,7 +455,7 @@ export abstract class ParserBase {
             }
         }
 
-        return new MissingToken(token.fullStart, NodeKind.StringLiteral);
+        return this.createMissingToken(token.fullStart, NodeKind.StringLiteral);
     }
 
     // #region String literal
@@ -660,7 +660,7 @@ export abstract class ParserBase {
         const sliceOperator = this.eatOptional(TokenKind.PeriodPeriod);
         if (!sliceOperator) {
             if (!indexExpressionExpressionOrstartExpression) {
-                indexExpressionExpressionOrstartExpression = new MissingToken(token.fullStart, TokenKind.Expression);
+                indexExpressionExpressionOrstartExpression = this.createMissingToken(token.fullStart, TokenKind.Expression);
             }
 
             return this.parseIndexExpression(expression, openingSquareBracket, indexExpressionExpressionOrstartExpression);
@@ -827,7 +827,7 @@ export abstract class ParserBase {
             return this.parseTypeReference(parent, token);
         }
 
-        return new MissingToken(token.fullStart, NodeKind.TypeReference);
+        return this.createMissingToken(token.fullStart, NodeKind.TypeReference);
     }
 
     protected parseTypeReference(parent: Nodes, typeReferenceStart: TypeReferenceIdentifierStartToken | PeriodToken): TypeReference {
@@ -964,7 +964,7 @@ export abstract class ParserBase {
             }
         }
 
-        return new MissingToken(token.fullStart, TokenKind.Identifier);
+        return this.createMissingToken(token.fullStart, TokenKind.Identifier);
     }
 
     protected parseIdentifier(parent: Nodes, identifierStart: CommercialAtToken): EscapedIdentifier;
@@ -1108,7 +1108,7 @@ export abstract class ParserBase {
             }
 
             this.advanceToken();
-            const skippedToken = new SkippedToken(token);
+            const skippedToken = this.createSkippedToken(token);
             nodes.push(skippedToken);
         }
 
@@ -1217,6 +1217,14 @@ export abstract class ParserBase {
 
     // #region Tokens
 
+    protected createMissingToken<TTokenKind extends MissableTokenKinds>(fullStart: number, originalKind: TTokenKind): MissingToken<TTokenKind> {
+        return new MissingToken(fullStart, originalKind);
+    }
+
+    protected createSkippedToken<TTokenKind extends TokenKinds>(token: Token<TTokenKind>): SkippedToken<TTokenKind> {
+        return new SkippedToken(token);
+    }
+
     protected eatMissable<TTokenKind extends TokenKinds>(...kinds: TTokenKind[]): TokenKindTokenMap[TTokenKind] | MissingToken<TTokenKind> {
         const token = this.getToken();
         if (kinds.includes(token.kind as TTokenKind)) {
@@ -1225,7 +1233,7 @@ export abstract class ParserBase {
             return token;
         }
 
-        return new MissingToken(token.fullStart, kinds[0]);
+        return this.createMissingToken(token.fullStart, kinds[0]);
     }
 
     protected eat<TTokenKind extends TokenKinds>(...kinds: TTokenKind[]): TokenKindTokenMap[TTokenKind] {

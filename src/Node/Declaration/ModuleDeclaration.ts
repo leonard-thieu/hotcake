@@ -1,3 +1,4 @@
+import { Diagnostic } from '../../Diagnostic';
 import { ParseContextElementArray, ParseContextElementSequence, ParseContextKind } from '../../ParserBase';
 import { NodeKind } from '../NodeKind';
 import { Declaration } from './Declaration';
@@ -20,4 +21,6 @@ export class ModuleDeclaration extends Declaration {
     strictDirective?: StrictDirective = undefined;
     headerMembers: ParseContextElementArray<ParseContextKind.ModuleDeclarationHeader> = undefined!;
     members: ParseContextElementArray<ModuleDeclaration['kind']> = undefined!;
+
+    parseDiagnostics?: Diagnostic[];
 }
