@@ -1,8 +1,8 @@
 import { ParseContextElementDelimitedSequence, ParseContextKind } from '../ParserBase';
-import { Declaration } from './Declaration/Declaration';
+import { Node } from './Node';
 import { NodeKind } from './NodeKind';
 
-export class ModulePath extends Declaration {
+export class ModulePath extends Node {
     static CHILD_NAMES: (keyof ModulePath)[] = [
         'children',
     ];
