@@ -11,24 +11,25 @@ import { TokenKind } from './Token/TokenKind';
 export class Tokenizer {
     private document: string = undefined!;
     private configVars: Map<string, any> = undefined!;
+    private tokens: Tokens[] = undefined!;
 
-    * getTokens(
+    getTokens(
         document: string,
         preprocessorModuleDeclaration: PreprocessorModuleDeclaration,
         configVars: ConfigurationVariables
     ) {
         this.document = document;
         this.configVars = createConfigurationVariableMap(configVars);
+        this.tokens = [];
 
-        for (const member of this.readMember(preprocessorModuleDeclaration.members)) {
-            yield member;
-        }
+        this.readMembers(preprocessorModuleDeclaration.members);
+        this.tokens.push(preprocessorModuleDeclaration.eofToken);
 
-        yield preprocessorModuleDeclaration.eofToken;
+        return this.tokens;
     }
 
     // TODO: Ensure operator semantics and implicit type conversions match Monkey X behavior.
-    private * readMember(members: ParseContextElementSequence<PreprocessorModuleDeclaration['kind']>): IterableIterator<Tokens> {
+    private readMembers(members: ParseContextElementSequence<PreprocessorModuleDeclaration['kind']>) {
         for (const member of members) {
             switch (member.kind) {
                 case NodeKind.IfDirective: {
@@ -52,9 +53,7 @@ export class Tokenizer {
                     }
 
                     if (branchMembers) {
-                        for (const branchMember of this.readMember(branchMembers)) {
-                            yield branchMember;
-                        }
+                        this.readMembers(branchMembers);
                     }
                     break;
                 }
@@ -106,9 +105,7 @@ export class Tokenizer {
                     break;
                 }
                 default: {
-                    assertType<Tokens>(member);
-                    yield member;
-
+                    this.tokens.push(member);
                     break;
                 }
             }

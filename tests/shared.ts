@@ -212,7 +212,7 @@ export function getTokens(filePath: string, document: string): Tokens[] {
         MODPATH: __filename,
     };
 
-    return Array.from(tokenizer.getTokens(document, tree, configVars));
+    return tokenizer.getTokens(document, tree, configVars);
 }
 
 export function getParseTree(filePath: string, document: string): ModuleDeclaration {
