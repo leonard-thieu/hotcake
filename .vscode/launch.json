@@ -99,6 +99,32 @@
             ],
             "console": "integratedTerminal",
             "internalConsoleOptions": "neverOpen"
-        }
-    ]
+        },
+		{
+			"type": "extensionHost",
+			"request": "launch",
+			"name": "Launch Client",
+			"runtimeExecutable": "${execPath}",
+			"args": ["--extensionDevelopmentPath=${workspaceRoot}/vscode"],
+			"stopOnEntry": false,
+			"sourceMaps": true,
+			"outFiles": ["${workspaceRoot}/vscode/client/src/**/*.js"]
+		},
+		{
+			"type": "node",
+			"request": "attach",
+			"name": "Attach to Server",
+			"address": "localhost",
+			"protocol": "inspector",
+			"port": 6009,
+			"sourceMaps": true,
+			"outFiles": ["${workspaceRoot}/vscode/server/src/**/*.js"]
+		}
+    ],
+	"compounds": [
+		{
+			"name": "Client + Server",
+			"configurations": ["Launch Client", "Attach to Server"]
+		}
+	]
 }

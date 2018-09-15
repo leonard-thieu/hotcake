@@ -1,26 +1,41 @@
 {
-    "name": "hotcake",
-    "displayName": "hotcake",
-    "description": "",
+    "name": "hotcake-vscode",
     "version": "0.0.1",
+    "author": "Leonard Thieu",
     "publisher": "leonard-thieu",
+    "main": "./client/src/extension",
     "engines": {
         "vscode": "^1.25.0"
+    },
+    "scripts": {
+        "postinstall": "cd client && npm install && cd ../server && npm install && cd .."
     },
     "categories": [
         "Programming Languages"
     ],
+    "activationEvents": [
+        "onLanguage:monkeyx"
+    ],
     "contributes": {
-        "languages": [{
-            "id": "monkeyx",
-            "aliases": ["Monkey X", "monkeyx"],
-            "extensions": [".monkey"],
-            "configuration": "./language-configuration.json"
-        }],
-        "grammars": [{
-            "language": "monkeyx",
-            "scopeName": "source.monkeyx",
-            "path": "./syntaxes/monkeyx.tmLanguage.json"
-        }]
+        "languages": [
+            {
+                "id": "monkeyx",
+                "aliases": [
+                    "Monkey X",
+                    "monkeyx"
+                ],
+                "extensions": [
+                    ".monkey"
+                ],
+                "configuration": "./language-configuration.json"
+            }
+        ],
+        "grammars": [
+            {
+                "language": "monkeyx",
+                "scopeName": "source.monkeyx",
+                "path": "./syntaxes/monkeyx.tmLanguage.json"
+            }
+        ]
     }
 }
