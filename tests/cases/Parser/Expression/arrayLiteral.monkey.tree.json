@@ -66,7 +66,7 @@
                                     "length": 3
                                 },
                                 "expression": {
-                                    "kind": "ArrayLiteral",
+                                    "kind": "ArrayLiteralExpression",
                                     "newlines": [],
                                     "openingSquareBracket": {
                                         "kind": "OpeningSquareBracket",
@@ -77,7 +77,7 @@
                                     "leadingNewlines": [],
                                     "expressions": [
                                         {
-                                            "kind": "IntegerLiteral",
+                                            "kind": "IntegerLiteralExpression",
                                             "newlines": [],
                                             "value": {
                                                 "kind": "IntegerLiteral",
@@ -97,7 +97,7 @@
                                             "newlines": []
                                         },
                                         {
-                                            "kind": "IntegerLiteral",
+                                            "kind": "IntegerLiteralExpression",
                                             "newlines": [],
                                             "value": {
                                                 "kind": "IntegerLiteral",
@@ -117,7 +117,7 @@
                                             "newlines": []
                                         },
                                         {
-                                            "kind": "IntegerLiteral",
+                                            "kind": "IntegerLiteralExpression",
                                             "newlines": [],
                                             "value": {
                                                 "kind": "IntegerLiteral",
@@ -137,7 +137,7 @@
                                             "newlines": []
                                         },
                                         {
-                                            "kind": "IntegerLiteral",
+                                            "kind": "IntegerLiteralExpression",
                                             "newlines": [],
                                             "value": {
                                                 "kind": "IntegerLiteral",
@@ -172,5 +172,11 @@
                 "length": 3
             }
         }
-    ]
+    ],
+    "eofToken": {
+        "kind": "EOF",
+        "fullStart": 51,
+        "start": 51,
+        "length": 0
+    }
 }

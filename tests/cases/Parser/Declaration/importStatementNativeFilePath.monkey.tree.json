@@ -11,7 +11,7 @@
                 "length": 6
             },
             "path": {
-                "kind": "StringLiteral",
+                "kind": "StringLiteralExpression",
                 "startQuotationMark": {
                     "kind": "QuotationMark",
                     "fullStart": 6,
@@ -35,5 +35,11 @@
             }
         }
     ],
-    "members": []
+    "members": [],
+    "eofToken": {
+        "kind": "EOF",
+        "fullStart": 25,
+        "start": 25,
+        "length": 0
+    }
 }

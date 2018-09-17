@@ -16,7 +16,7 @@
                 "length": 2
             },
             "expression": {
-                "kind": "BooleanLiteral",
+                "kind": "BooleanLiteralExpression",
                 "newlines": [],
                 "value": {
                     "kind": "FalseKeyword",

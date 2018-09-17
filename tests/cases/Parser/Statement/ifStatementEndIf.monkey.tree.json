@@ -49,7 +49,7 @@
                         "length": 6
                     },
                     "expression": {
-                        "kind": "BooleanLiteral",
+                        "kind": "BooleanLiteralExpression",
                         "newlines": [],
                         "value": {
                             "kind": "TrueKeyword",
@@ -92,5 +92,11 @@
                 "length": 3
             }
         }
-    ]
+    ],
+    "eofToken": {
+        "kind": "EOF",
+        "fullStart": 44,
+        "start": 44,
+        "length": 0
+    }
 }

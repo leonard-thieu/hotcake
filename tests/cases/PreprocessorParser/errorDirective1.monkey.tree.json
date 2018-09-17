@@ -16,7 +16,7 @@
                 "length": 5
             },
             "expression": {
-                "kind": "StringLiteral",
+                "kind": "StringLiteralExpression",
                 "newlines": [],
                 "startQuotationMark": {
                     "kind": "QuotationMark",

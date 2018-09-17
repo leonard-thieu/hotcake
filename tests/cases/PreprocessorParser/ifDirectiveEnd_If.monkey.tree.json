@@ -16,7 +16,7 @@
                 "length": 2
             },
             "expression": {
-                "kind": "BooleanLiteral",
+                "kind": "BooleanLiteralExpression",
                 "newlines": [],
                 "value": {
                     "kind": "TrueKeyword",
@@ -47,7 +47,7 @@
                         "length": 5
                     },
                     "expression": {
-                        "kind": "StringLiteral",
+                        "kind": "StringLiteralExpression",
                         "newlines": [],
                         "startQuotationMark": {
                             "kind": "QuotationMark",

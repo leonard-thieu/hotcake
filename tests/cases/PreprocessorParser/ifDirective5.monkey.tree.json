@@ -34,7 +34,7 @@
                     "length": 2
                 },
                 "rightOperand": {
-                    "kind": "StringLiteral",
+                    "kind": "StringLiteralExpression",
                     "newlines": [],
                     "startQuotationMark": {
                         "kind": "QuotationMark",
@@ -142,7 +142,7 @@
                             "length": 2
                         },
                         "rightOperand": {
-                            "kind": "StringLiteral",
+                            "kind": "StringLiteralExpression",
                             "newlines": [],
                             "startQuotationMark": {
                                 "kind": "QuotationMark",
@@ -250,7 +250,7 @@
                             "length": 2
                         },
                         "rightOperand": {
-                            "kind": "StringLiteral",
+                            "kind": "StringLiteralExpression",
                             "newlines": [],
                             "startQuotationMark": {
                                 "kind": "QuotationMark",

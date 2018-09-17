@@ -59,7 +59,7 @@
                                 "kind": "SliceExpression",
                                 "newlines": [],
                                 "sliceableExpression": {
-                                    "kind": "StringLiteral",
+                                    "kind": "StringLiteralExpression",
                                     "startQuotationMark": {
                                         "kind": "QuotationMark",
                                         "fullStart": 26,
@@ -88,7 +88,7 @@
                                     "length": 1
                                 },
                                 "startExpression": {
-                                    "kind": "IntegerLiteral",
+                                    "kind": "IntegerLiteralExpression",
                                     "newlines": [],
                                     "value": {
                                         "kind": "IntegerLiteral",
@@ -104,7 +104,7 @@
                                     "length": 2
                                 },
                                 "endExpression": {
-                                    "kind": "IntegerLiteral",
+                                    "kind": "IntegerLiteralExpression",
                                     "newlines": [],
                                     "value": {
                                         "kind": "IntegerLiteral",
@@ -157,7 +157,7 @@
                                 "kind": "SliceExpression",
                                 "newlines": [],
                                 "sliceableExpression": {
-                                    "kind": "StringLiteral",
+                                    "kind": "StringLiteralExpression",
                                     "startQuotationMark": {
                                         "kind": "QuotationMark",
                                         "fullStart": 75,
@@ -192,7 +192,7 @@
                                     "length": 2
                                 },
                                 "endExpression": {
-                                    "kind": "IntegerLiteral",
+                                    "kind": "IntegerLiteralExpression",
                                     "newlines": [],
                                     "value": {
                                         "kind": "IntegerLiteral",
@@ -245,7 +245,7 @@
                                 "kind": "SliceExpression",
                                 "newlines": [],
                                 "sliceableExpression": {
-                                    "kind": "StringLiteral",
+                                    "kind": "StringLiteralExpression",
                                     "startQuotationMark": {
                                         "kind": "QuotationMark",
                                         "fullStart": 126,
@@ -274,7 +274,7 @@
                                     "length": 1
                                 },
                                 "startExpression": {
-                                    "kind": "IntegerLiteral",
+                                    "kind": "IntegerLiteralExpression",
                                     "newlines": [],
                                     "value": {
                                         "kind": "IntegerLiteral",
@@ -333,7 +333,7 @@
                                 "kind": "SliceExpression",
                                 "newlines": [],
                                 "sliceableExpression": {
-                                    "kind": "StringLiteral",
+                                    "kind": "StringLiteralExpression",
                                     "startQuotationMark": {
                                         "kind": "QuotationMark",
                                         "fullStart": 177,
@@ -391,5 +391,11 @@
                 "length": 3
             }
         }
-    ]
+    ],
+    "eofToken": {
+        "kind": "EOF",
+        "fullStart": 226,
+        "start": 226,
+        "length": 0
+    }
 }

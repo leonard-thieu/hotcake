@@ -35,5 +35,11 @@
             }
         }
     ],
-    "members": []
+    "members": [],
+    "eofToken": {
+        "kind": "EOF",
+        "fullStart": 25,
+        "start": 25,
+        "length": 0
+    }
 }

@@ -3412,7 +3412,7 @@
                         },
                         "arguments": [
                             {
-                                "kind": "IntegerLiteral",
+                                "kind": "IntegerLiteralExpression",
                                 "newlines": [],
                                 "value": {
                                     "kind": "IntegerLiteral",
@@ -3432,7 +3432,7 @@
                                 "newlines": []
                             },
                             {
-                                "kind": "IntegerLiteral",
+                                "kind": "IntegerLiteralExpression",
                                 "newlines": [],
                                 "value": {
                                     "kind": "IntegerLiteral",
@@ -3558,7 +3558,7 @@
                         },
                         "arguments": [
                             {
-                                "kind": "IntegerLiteral",
+                                "kind": "IntegerLiteralExpression",
                                 "newlines": [],
                                 "value": {
                                     "kind": "IntegerLiteral",
@@ -3639,7 +3639,7 @@
                                     "length": 2
                                 },
                                 "expression": {
-                                    "kind": "FloatLiteral",
+                                    "kind": "FloatLiteralExpression",
                                     "newlines": [],
                                     "value": {
                                         "kind": "FloatLiteral",
@@ -4551,5 +4551,11 @@
                 "length": 3
             }
         }
-    ]
+    ],
+    "eofToken": {
+        "kind": "EOF",
+        "fullStart": 2426,
+        "start": 2426,
+        "length": 0
+    }
 }

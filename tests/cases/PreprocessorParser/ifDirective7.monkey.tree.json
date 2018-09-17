@@ -34,7 +34,7 @@
                     "length": 2
                 },
                 "rightOperand": {
-                    "kind": "StringLiteral",
+                    "kind": "StringLiteralExpression",
                     "newlines": [],
                     "startQuotationMark": {
                         "kind": "QuotationMark",
@@ -142,7 +142,7 @@
                             "length": 2
                         },
                         "rightOperand": {
-                            "kind": "StringLiteral",
+                            "kind": "StringLiteralExpression",
                             "newlines": [],
                             "startQuotationMark": {
                                 "kind": "QuotationMark",
@@ -232,7 +232,7 @@
                             "expression": {
                                 "kind": "BinaryExpression",
                                 "leftOperand": {
-                                    "kind": "IntegerLiteral",
+                                    "kind": "IntegerLiteralExpression",
                                     "newlines": [],
                                     "value": {
                                         "kind": "IntegerLiteral",
@@ -286,7 +286,7 @@
                                         "length": 5
                                     },
                                     "expression": {
-                                        "kind": "StringLiteral",
+                                        "kind": "StringLiteralExpression",
                                         "newlines": [],
                                         "startQuotationMark": {
                                             "kind": "QuotationMark",
@@ -384,7 +384,7 @@
                             "length": 2
                         },
                         "rightOperand": {
-                            "kind": "StringLiteral",
+                            "kind": "StringLiteralExpression",
                             "newlines": [],
                             "startQuotationMark": {
                                 "kind": "QuotationMark",

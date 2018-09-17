@@ -190,7 +190,7 @@
                                             "length": 2
                                         },
                                         "expression": {
-                                            "kind": "IntegerLiteral",
+                                            "kind": "IntegerLiteralExpression",
                                             "newlines": [],
                                             "value": {
                                                 "kind": "IntegerLiteral",
@@ -210,7 +210,7 @@
                             "length": 3
                         },
                         "lastValueExpression": {
-                            "kind": "IntegerLiteral",
+                            "kind": "IntegerLiteralExpression",
                             "newlines": [],
                             "value": {
                                 "kind": "IntegerLiteral",
@@ -284,7 +284,7 @@
                                                 "length": 2
                                             },
                                             "rightOperand": {
-                                                "kind": "IntegerLiteral",
+                                                "kind": "IntegerLiteralExpression",
                                                 "newlines": [],
                                                 "value": {
                                                     "kind": "IntegerLiteral",
@@ -444,7 +444,7 @@
                                                 },
                                                 "arguments": [
                                                     {
-                                                        "kind": "StringLiteral",
+                                                        "kind": "StringLiteralExpression",
                                                         "newlines": [],
                                                         "startQuotationMark": {
                                                             "kind": "QuotationMark",
@@ -540,7 +540,7 @@
                                                 },
                                                 "arguments": [
                                                     {
-                                                        "kind": "StringLiteral",
+                                                        "kind": "StringLiteralExpression",
                                                         "newlines": [],
                                                         "startQuotationMark": {
                                                             "kind": "QuotationMark",
@@ -610,5 +610,11 @@
                 "length": 3
             }
         }
-    ]
+    ],
+    "eofToken": {
+        "kind": "EOF",
+        "fullStart": 327,
+        "start": 327,
+        "length": 0
+    }
 }

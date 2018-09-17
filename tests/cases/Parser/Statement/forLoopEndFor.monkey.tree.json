@@ -76,7 +76,7 @@
                                             "length": 3
                                         },
                                         "expression": {
-                                            "kind": "IntegerLiteral",
+                                            "kind": "IntegerLiteralExpression",
                                             "newlines": [],
                                             "value": {
                                                 "kind": "IntegerLiteral",
@@ -96,7 +96,7 @@
                             "length": 6
                         },
                         "lastValueExpression": {
-                            "kind": "IntegerLiteral",
+                            "kind": "IntegerLiteralExpression",
                             "newlines": [],
                             "value": {
                                 "kind": "IntegerLiteral",
@@ -144,5 +144,11 @@
                 "length": 3
             }
         }
-    ]
+    ],
+    "eofToken": {
+        "kind": "EOF",
+        "fullStart": 63,
+        "start": 63,
+        "length": 0
+    }
 }

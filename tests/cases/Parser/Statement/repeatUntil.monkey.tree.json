@@ -66,7 +66,7 @@
                         "length": 9
                     },
                     "untilExpression": {
-                        "kind": "BooleanLiteral",
+                        "kind": "BooleanLiteralExpression",
                         "newlines": [],
                         "value": {
                             "kind": "FalseKeyword",
@@ -90,5 +90,11 @@
                 "length": 3
             }
         }
-    ]
+    ],
+    "eofToken": {
+        "kind": "EOF",
+        "fullStart": 49,
+        "start": 49,
+        "length": 0
+    }
 }

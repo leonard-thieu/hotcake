@@ -92,5 +92,11 @@
                 "originalKind": "EndKeyword"
             }
         }
-    ]
+    ],
+    "eofToken": {
+        "kind": "EOF",
+        "fullStart": 31,
+        "start": 31,
+        "length": 0
+    }
 }

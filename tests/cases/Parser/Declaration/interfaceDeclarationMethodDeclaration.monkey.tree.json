@@ -66,5 +66,11 @@
                 "length": 3
             }
         }
-    ]
+    ],
+    "eofToken": {
+        "kind": "EOF",
+        "fullStart": 42,
+        "start": 43,
+        "length": 1
+    }
 }

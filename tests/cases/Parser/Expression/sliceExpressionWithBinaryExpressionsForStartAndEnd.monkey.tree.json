@@ -79,7 +79,7 @@
                                 "length": 1
                             },
                             "rightOperand": {
-                                "kind": "IntegerLiteral",
+                                "kind": "IntegerLiteralExpression",
                                 "newlines": [],
                                 "value": {
                                     "kind": "IntegerLiteral",
@@ -114,7 +114,7 @@
                                 "length": 1
                             },
                             "rightOperand": {
-                                "kind": "IntegerLiteral",
+                                "kind": "IntegerLiteralExpression",
                                 "newlines": [],
                                 "value": {
                                     "kind": "IntegerLiteral",
@@ -146,5 +146,11 @@
                 "length": 3
             }
         }
-    ]
+    ],
+    "eofToken": {
+        "kind": "EOF",
+        "fullStart": 40,
+        "start": 40,
+        "length": 0
+    }
 }

@@ -16,7 +16,7 @@
                 "length": 2
             },
             "expression": {
-                "kind": "IntegerLiteral",
+                "kind": "IntegerLiteralExpression",
                 "newlines": [],
                 "value": {
                     "kind": "IntegerLiteral",

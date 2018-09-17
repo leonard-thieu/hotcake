@@ -67,7 +67,7 @@
                             "length": 3
                         },
                         "rightOperand": {
-                            "kind": "StringLiteral",
+                            "kind": "StringLiteralExpression",
                             "newlines": [],
                             "startQuotationMark": {
                                 "kind": "QuotationMark",
@@ -125,5 +125,11 @@
                 "length": 3
             }
         }
-    ]
+    ],
+    "eofToken": {
+        "kind": "EOF",
+        "fullStart": 50,
+        "start": 50,
+        "length": 0
+    }
 }

@@ -59,7 +59,7 @@
                                 "kind": "SliceExpression",
                                 "newlines": [],
                                 "sliceableExpression": {
-                                    "kind": "StringLiteral",
+                                    "kind": "StringLiteralExpression",
                                     "startQuotationMark": {
                                         "kind": "QuotationMark",
                                         "fullStart": 26,
@@ -118,5 +118,11 @@
                 "length": 3
             }
         }
-    ]
+    ],
+    "eofToken": {
+        "kind": "EOF",
+        "fullStart": 48,
+        "start": 48,
+        "length": 0
+    }
 }

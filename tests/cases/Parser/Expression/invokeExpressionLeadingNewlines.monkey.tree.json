@@ -86,7 +86,7 @@
                         ],
                         "arguments": [
                             {
-                                "kind": "ArrayLiteral",
+                                "kind": "ArrayLiteralExpression",
                                 "newlines": [],
                                 "openingSquareBracket": {
                                     "kind": "OpeningSquareBracket",
@@ -97,7 +97,7 @@
                                 "leadingNewlines": [],
                                 "expressions": [
                                     {
-                                        "kind": "IntegerLiteral",
+                                        "kind": "IntegerLiteralExpression",
                                         "newlines": [],
                                         "value": {
                                             "kind": "IntegerLiteral",
@@ -117,7 +117,7 @@
                                         "newlines": []
                                     },
                                     {
-                                        "kind": "IntegerLiteral",
+                                        "kind": "IntegerLiteralExpression",
                                         "newlines": [],
                                         "value": {
                                             "kind": "IntegerLiteral",
@@ -137,7 +137,7 @@
                                         "newlines": []
                                     },
                                     {
-                                        "kind": "IntegerLiteral",
+                                        "kind": "IntegerLiteralExpression",
                                         "newlines": [],
                                         "value": {
                                             "kind": "IntegerLiteral",
@@ -157,7 +157,7 @@
                                         "newlines": []
                                     },
                                     {
-                                        "kind": "IntegerLiteral",
+                                        "kind": "IntegerLiteralExpression",
                                         "newlines": [],
                                         "value": {
                                             "kind": "IntegerLiteral",
@@ -197,5 +197,11 @@
                 "length": 3
             }
         }
-    ]
+    ],
+    "eofToken": {
+        "kind": "EOF",
+        "fullStart": 69,
+        "start": 69,
+        "length": 0
+    }
 }

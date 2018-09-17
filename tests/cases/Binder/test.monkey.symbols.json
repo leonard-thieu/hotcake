@@ -140,7 +140,7 @@
             "kind": "ImportStatement",
             "importKeyword": "ImportKeyword",
             "path": {
-                "kind": "StringLiteral",
+                "kind": "StringLiteralExpression",
                 "startQuotationMark": "QuotationMark",
                 "children": [
                     "StringLiteralText"
@@ -246,7 +246,7 @@
                     },
                     "equalsSign": "EqualsSign",
                     "expression": {
-                        "kind": "IntegerLiteral",
+                        "kind": "IntegerLiteralExpression",
                         "newlines": [],
                         "value": "IntegerLiteral"
                     }
@@ -268,7 +268,7 @@
                     },
                     "equalsSign": "EqualsSign",
                     "expression": {
-                        "kind": "StringLiteral",
+                        "kind": "StringLiteralExpression",
                         "newlines": [],
                         "startQuotationMark": "QuotationMark",
                         "children": [
@@ -289,7 +289,7 @@
                     "identifier": "Identifier",
                     "equalsSign": "ColonEqualsSign",
                     "expression": {
-                        "kind": "IntegerLiteral",
+                        "kind": "IntegerLiteralExpression",
                         "newlines": [],
                         "value": "IntegerLiteral"
                     }
@@ -306,7 +306,7 @@
                     "identifier": "Identifier",
                     "equalsSign": "EqualsSign",
                     "expression": {
-                        "kind": "IntegerLiteral",
+                        "kind": "IntegerLiteralExpression",
                         "newlines": [],
                         "value": "IntegerLiteral"
                     }
@@ -323,7 +323,7 @@
                     "identifier": "Identifier",
                     "equalsSign": "EqualsSign",
                     "expression": {
-                        "kind": "IntegerLiteral",
+                        "kind": "IntegerLiteralExpression",
                         "newlines": [],
                         "value": "IntegerLiteral"
                     }
@@ -338,7 +338,7 @@
                     "identifier": "Identifier",
                     "equalsSign": "ColonEqualsSign",
                     "expression": {
-                        "kind": "IntegerLiteral",
+                        "kind": "IntegerLiteralExpression",
                         "newlines": [],
                         "value": "IntegerLiteral"
                     }
@@ -365,7 +365,7 @@
                     },
                     "equalsSign": "EqualsSign",
                     "expression": {
-                        "kind": "IntegerLiteral",
+                        "kind": "IntegerLiteralExpression",
                         "newlines": [],
                         "value": "IntegerLiteral"
                     }
@@ -387,7 +387,7 @@
                     },
                     "equalsSign": "EqualsSign",
                     "expression": {
-                        "kind": "StringLiteral",
+                        "kind": "StringLiteralExpression",
                         "newlines": [],
                         "startQuotationMark": "QuotationMark",
                         "children": [
@@ -408,7 +408,7 @@
                     "identifier": "Identifier",
                     "equalsSign": "ColonEqualsSign",
                     "expression": {
-                        "kind": "IntegerLiteral",
+                        "kind": "IntegerLiteralExpression",
                         "newlines": [],
                         "value": "IntegerLiteral"
                     }
@@ -425,7 +425,7 @@
                     "identifier": "Identifier",
                     "equalsSign": "EqualsSign",
                     "expression": {
-                        "kind": "IntegerLiteral",
+                        "kind": "IntegerLiteralExpression",
                         "newlines": [],
                         "value": "IntegerLiteral"
                     }
@@ -442,7 +442,7 @@
                     "identifier": "Identifier",
                     "equalsSign": "EqualsSign",
                     "expression": {
-                        "kind": "IntegerLiteral",
+                        "kind": "IntegerLiteralExpression",
                         "newlines": [],
                         "value": "IntegerLiteral"
                     }
@@ -457,7 +457,7 @@
                     "identifier": "Identifier",
                     "equalsSign": "ColonEqualsSign",
                     "expression": {
-                        "kind": "IntegerLiteral",
+                        "kind": "IntegerLiteralExpression",
                         "newlines": [],
                         "value": "IntegerLiteral"
                     }
@@ -515,7 +515,7 @@
                     },
                     "equalsSign": "EqualsSign",
                     "expression": {
-                        "kind": "StringLiteral",
+                        "kind": "StringLiteralExpression",
                         "newlines": [],
                         "startQuotationMark": "QuotationMark",
                         "children": [
@@ -706,7 +706,7 @@
                         },
                         "operator": "GreaterThanSign",
                         "rightOperand": {
-                            "kind": "IntegerLiteral",
+                            "kind": "IntegerLiteralExpression",
                             "newlines": [],
                             "value": "IntegerLiteral"
                         }
@@ -822,7 +822,7 @@
                             },
                             "equalsSign": "EqualsSign",
                             "expression": {
-                                "kind": "BooleanLiteral",
+                                "kind": "BooleanLiteralExpression",
                                 "newlines": [],
                                 "value": "FalseKeyword"
                             }
@@ -901,7 +901,7 @@
                             "identifier": "Identifier",
                             "equalsSign": "ColonEqualsSign",
                             "expression": {
-                                "kind": "FloatLiteral",
+                                "kind": "FloatLiteralExpression",
                                 "newlines": [],
                                 "value": "FloatLiteral"
                             }
@@ -978,7 +978,7 @@
                             "identifier": "Identifier",
                             "equalsSign": "ColonEqualsSign",
                             "expression": {
-                                "kind": "FloatLiteral",
+                                "kind": "FloatLiteralExpression",
                                 "newlines": [],
                                 "value": "FloatLiteral"
                             }
@@ -1046,7 +1046,7 @@
                             },
                             "equalsSign": "EqualsSign",
                             "expression": {
-                                "kind": "BooleanLiteral",
+                                "kind": "BooleanLiteralExpression",
                                 "newlines": [],
                                 "value": "FalseKeyword"
                             }
@@ -1164,7 +1164,7 @@
                             "identifier": "Identifier",
                             "equalsSign": "ColonEqualsSign",
                             "expression": {
-                                "kind": "IntegerLiteral",
+                                "kind": "IntegerLiteralExpression",
                                 "newlines": [],
                                 "value": "IntegerLiteral"
                             }
@@ -1206,7 +1206,7 @@
                             },
                             "equalsSign": "EqualsSign",
                             "expression": {
-                                "kind": "StringLiteral",
+                                "kind": "StringLiteralExpression",
                                 "newlines": [],
                                 "startQuotationMark": "QuotationMark",
                                 "children": [
@@ -1233,7 +1233,7 @@
                             "identifier": "Identifier",
                             "equalsSign": "EqualsSign",
                             "expression": {
-                                "kind": "IntegerLiteral",
+                                "kind": "IntegerLiteralExpression",
                                 "newlines": [],
                                 "value": "IntegerLiteral"
                             }
@@ -1845,7 +1845,7 @@
                         },
                         "operator": "EqualsSign",
                         "rightOperand": {
-                            "kind": "StringLiteral",
+                            "kind": "StringLiteralExpression",
                             "newlines": [],
                             "startQuotationMark": "QuotationMark",
                             "children": [
@@ -1886,7 +1886,7 @@
                         },
                         "operator": "EqualsSign",
                         "rightOperand": {
-                            "kind": "StringLiteral",
+                            "kind": "StringLiteralExpression",
                             "newlines": [],
                             "startQuotationMark": "QuotationMark",
                             "children": [
@@ -1941,7 +1941,7 @@
                         },
                         "operator": "EqualsSign",
                         "rightOperand": {
-                            "kind": "StringLiteral",
+                            "kind": "StringLiteralExpression",
                             "newlines": [],
                             "startQuotationMark": "QuotationMark",
                             "children": [
@@ -1975,7 +1975,7 @@
                                 },
                                 "operator": "LessThanSignGreaterThanSign",
                                 "rightOperand": {
-                                    "kind": "StringLiteral",
+                                    "kind": "StringLiteralExpression",
                                     "newlines": [],
                                     "startQuotationMark": "QuotationMark",
                                     "children": [],
@@ -2014,7 +2014,7 @@
                         },
                         "operator": "EqualsSign",
                         "rightOperand": {
-                            "kind": "StringLiteral",
+                            "kind": "StringLiteralExpression",
                             "newlines": [],
                             "startQuotationMark": "QuotationMark",
                             "children": [
@@ -2048,7 +2048,7 @@
                                 },
                                 "operator": "LessThanSignGreaterThanSign",
                                 "rightOperand": {
-                                    "kind": "StringLiteral",
+                                    "kind": "StringLiteralExpression",
                                     "newlines": [],
                                     "startQuotationMark": "QuotationMark",
                                     "children": [],
@@ -2100,7 +2100,7 @@
                         },
                         "operator": "EqualsSign",
                         "rightOperand": {
-                            "kind": "StringLiteral",
+                            "kind": "StringLiteralExpression",
                             "newlines": [],
                             "startQuotationMark": "QuotationMark",
                             "children": [
@@ -2135,7 +2135,7 @@
                                 },
                                 "operator": "LessThanSignGreaterThanSign",
                                 "rightOperand": {
-                                    "kind": "StringLiteral",
+                                    "kind": "StringLiteralExpression",
                                     "newlines": [],
                                     "startQuotationMark": "QuotationMark",
                                     "children": [],
@@ -2224,7 +2224,7 @@
                         },
                         "operator": "EqualsSign",
                         "rightOperand": {
-                            "kind": "StringLiteral",
+                            "kind": "StringLiteralExpression",
                             "newlines": [],
                             "startQuotationMark": "QuotationMark",
                             "children": [
@@ -2255,7 +2255,7 @@
                         },
                         "operator": "LessThanSignGreaterThanSign",
                         "rightOperand": {
-                            "kind": "StringLiteral",
+                            "kind": "StringLiteralExpression",
                             "newlines": [],
                             "startQuotationMark": "QuotationMark",
                             "children": [],
@@ -2325,7 +2325,7 @@
                     "kind": "ReturnStatement",
                     "returnKeyword": "ReturnKeyword",
                     "expression": {
-                        "kind": "IntegerLiteral",
+                        "kind": "IntegerLiteralExpression",
                         "newlines": [],
                         "value": "IntegerLiteral"
                     },
@@ -2335,7 +2335,7 @@
                     "kind": "ReturnStatement",
                     "returnKeyword": "ReturnKeyword",
                     "expression": {
-                        "kind": "IntegerLiteral",
+                        "kind": "IntegerLiteralExpression",
                         "newlines": [],
                         "value": "IntegerLiteral"
                     },
@@ -2349,7 +2349,7 @@
                     "kind": "ReturnStatement",
                     "returnKeyword": "ReturnKeyword",
                     "expression": {
-                        "kind": "IntegerLiteral",
+                        "kind": "IntegerLiteralExpression",
                         "newlines": [],
                         "value": "IntegerLiteral"
                     },
@@ -2359,7 +2359,7 @@
                     "kind": "ReturnStatement",
                     "returnKeyword": "ReturnKeyword",
                     "expression": {
-                        "kind": "IntegerLiteral",
+                        "kind": "IntegerLiteralExpression",
                         "newlines": [],
                         "value": "IntegerLiteral"
                     },
@@ -2379,7 +2379,7 @@
                     "expression": {
                         "kind": "BinaryExpression",
                         "leftOperand": {
-                            "kind": "BooleanLiteral",
+                            "kind": "BooleanLiteralExpression",
                             "newlines": [],
                             "value": "TrueKeyword"
                         },
@@ -2387,7 +2387,7 @@
                         "rightOperand": {
                             "kind": "BinaryExpression",
                             "leftOperand": {
-                                "kind": "IntegerLiteral",
+                                "kind": "IntegerLiteralExpression",
                                 "newlines": [
                                     "Newline"
                                 ],
@@ -2399,7 +2399,7 @@
                                 "newlines": [],
                                 "operator": "HyphenMinus",
                                 "operand": {
-                                    "kind": "IntegerLiteral",
+                                    "kind": "IntegerLiteralExpression",
                                     "newlines": [],
                                     "value": "IntegerLiteral"
                                 }
@@ -2452,7 +2452,7 @@
                             "caseKeyword": "CaseKeyword",
                             "expressions": [
                                 {
-                                    "kind": "IntegerLiteral",
+                                    "kind": "IntegerLiteralExpression",
                                     "newlines": [],
                                     "value": "IntegerLiteral"
                                 }
@@ -2474,7 +2474,7 @@
                             "caseKeyword": "CaseKeyword",
                             "expressions": [
                                 {
-                                    "kind": "IntegerLiteral",
+                                    "kind": "IntegerLiteralExpression",
                                     "newlines": [],
                                     "value": "IntegerLiteral"
                                 },
@@ -2484,7 +2484,7 @@
                                     "newlines": []
                                 },
                                 {
-                                    "kind": "IntegerLiteral",
+                                    "kind": "IntegerLiteralExpression",
                                     "newlines": [],
                                     "value": "IntegerLiteral"
                                 },
@@ -2494,7 +2494,7 @@
                                     "newlines": []
                                 },
                                 {
-                                    "kind": "IntegerLiteral",
+                                    "kind": "IntegerLiteralExpression",
                                     "newlines": [],
                                     "value": "IntegerLiteral"
                                 }
@@ -2537,7 +2537,7 @@
                                         "caseKeyword": "CaseKeyword",
                                         "expressions": [
                                             {
-                                                "kind": "IntegerLiteral",
+                                                "kind": "IntegerLiteralExpression",
                                                 "newlines": [],
                                                 "value": "IntegerLiteral"
                                             }
@@ -2559,7 +2559,7 @@
                                         "caseKeyword": "CaseKeyword",
                                         "expressions": [
                                             {
-                                                "kind": "IntegerLiteral",
+                                                "kind": "IntegerLiteralExpression",
                                                 "newlines": [],
                                                 "value": "IntegerLiteral"
                                             },
@@ -2571,7 +2571,7 @@
                                                 ]
                                             },
                                             {
-                                                "kind": "IntegerLiteral",
+                                                "kind": "IntegerLiteralExpression",
                                                 "newlines": [],
                                                 "value": "IntegerLiteral"
                                             },
@@ -2583,7 +2583,7 @@
                                                 ]
                                             },
                                             {
-                                                "kind": "IntegerLiteral",
+                                                "kind": "IntegerLiteralExpression",
                                                 "newlines": [],
                                                 "value": "IntegerLiteral"
                                             }
@@ -2688,7 +2688,7 @@
                         },
                         "operator": "EqualsSign",
                         "rightOperand": {
-                            "kind": "FloatLiteral",
+                            "kind": "FloatLiteralExpression",
                             "newlines": [],
                             "value": "FloatLiteral"
                         }
@@ -2706,7 +2706,7 @@
                         },
                         "operator": "EqualsSign",
                         "rightOperand": {
-                            "kind": "FloatLiteral",
+                            "kind": "FloatLiteralExpression",
                             "newlines": [],
                             "value": "FloatLiteral"
                         }
@@ -2724,7 +2724,7 @@
                         },
                         "operator": "EqualsSign",
                         "rightOperand": {
-                            "kind": "FloatLiteral",
+                            "kind": "FloatLiteralExpression",
                             "newlines": [],
                             "value": "FloatLiteral"
                         }
@@ -2742,7 +2742,7 @@
                         },
                         "operator": "EqualsSign",
                         "rightOperand": {
-                            "kind": "FloatLiteral",
+                            "kind": "FloatLiteralExpression",
                             "newlines": [],
                             "value": "FloatLiteral"
                         }
@@ -2760,7 +2760,7 @@
                         },
                         "operator": "EqualsSign",
                         "rightOperand": {
-                            "kind": "FloatLiteral",
+                            "kind": "FloatLiteralExpression",
                             "newlines": [],
                             "value": "FloatLiteral"
                         }
@@ -2772,5 +2772,6 @@
             "endFunctionKeyword": "FunctionKeyword"
         },
         "Newline"
-    ]
+    ],
+    "eofToken": "EOF"
 }
