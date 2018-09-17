@@ -11,4 +11,16 @@ export class ContinueStatement extends Statement {
     readonly kind = NodeKind.ContinueStatement;
 
     continueKeyword: ContinueKeywordToken = undefined!;
+
+    get firstToken() {
+        return this.continueKeyword;
+    }
+
+    get lastToken() {
+        if (this.terminator) {
+            return this.terminator;
+        }
+        
+        return this.continueKeyword;
+    }
 }

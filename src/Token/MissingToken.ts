@@ -17,7 +17,7 @@ export type MissableTokenKinds =
     TokenKind.ForLoopHeader |
     TokenKind.ImportStatementPath |
     NodeKind.DataDeclaration |
-    NodeKind.StringLiteral |
+    NodeKind.StringLiteralExpression |
     NodeKind.TypeReference
     ;
 

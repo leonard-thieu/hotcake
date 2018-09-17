@@ -22,4 +22,20 @@ export class WhileLoop extends Statement {
     statements: ParseContextElementArray<WhileLoop['kind']> = undefined!;
     endKeyword: MissableToken<WendKeywordToken | EndKeywordToken> = undefined!;
     endWhileKeyword?: WhileKeywordToken = undefined;
+
+    get firstToken() {
+        return this.whileKeyword;
+    }
+
+    get lastToken() {
+        if (this.terminator) {
+            return this.terminator;
+        }
+        
+        if (this.endWhileKeyword) {
+            return this.endWhileKeyword;
+        }
+
+        return this.endKeyword;
+    }
 }

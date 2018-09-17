@@ -2,24 +2,24 @@ import { assertNever } from './assertNever';
 import { ArrayTypeDeclaration } from "./Node/ArrayTypeDeclaration";
 import { CommaSeparator } from './Node/CommaSeparator';
 import { ConfigurationTag } from './Node/ConfigurationTag';
-import { ArrayLiteral } from './Node/Expression/ArrayLiteral';
+import { ArrayLiteralExpression } from './Node/Expression/ArrayLiteralExpression';
 import { AssignmentExpression, AssignmentOperatorToken } from './Node/Expression/AssignmentExpression';
 import { BinaryExpression, BinaryExpressionOperatorToken } from './Node/Expression/BinaryExpression';
-import { BooleanLiteral, BooleanLiteralValueToken } from './Node/Expression/BooleanLiteral';
+import { BooleanLiteralExpression, BooleanLiteralExpressionValueToken } from './Node/Expression/BooleanLiteralExpression';
 import { Expressions, MissableExpression } from './Node/Expression/Expression';
-import { FloatLiteral } from './Node/Expression/FloatLiteral';
+import { FloatLiteralExpression } from './Node/Expression/FloatLiteralExpression';
 import { GlobalScopeExpression } from './Node/Expression/GlobalScopeExpression';
 import { GroupingExpression } from './Node/Expression/GroupingExpression';
 import { IdentifierExpression, IdentifierExpressionToken } from './Node/Expression/IdentifierExpression';
 import { IndexExpression } from './Node/Expression/IndexExpression';
-import { IntegerLiteral } from './Node/Expression/IntegerLiteral';
+import { IntegerLiteralExpression } from './Node/Expression/IntegerLiteralExpression';
 import { InvokeExpression } from './Node/Expression/InvokeExpression';
 import { NewExpression } from './Node/Expression/NewExpression';
 import { NullExpression } from './Node/Expression/NullExpression';
 import { ScopeMemberAccessExpression } from './Node/Expression/ScopeMemberAccessExpression';
 import { SelfExpression } from './Node/Expression/SelfExpression';
 import { SliceExpression } from './Node/Expression/SliceExpression';
-import { MissableStringLiteral, StringLiteral } from './Node/Expression/StringLiteral';
+import { MissableStringLiteralExpression, StringLiteralExpression } from './Node/Expression/StringLiteralExpression';
 import { SuperExpression } from './Node/Expression/SuperExpression';
 import { UnaryOperatorToken, UnaryOpExpression } from './Node/Expression/UnaryOpExpression';
 import { EscapedIdentifier, MissableIdentifier } from './Node/Identifier';
@@ -340,7 +340,7 @@ export abstract class ParserBase {
             case TokenKind.FalseKeyword: {
                 this.advanceToken();
 
-                return this.parseBooleanLiteral(parent, token);
+                return this.parseBooleanLiteralExpression(parent, token);
             }
             case TokenKind.SelfKeyword: {
                 this.advanceToken();
@@ -355,22 +355,22 @@ export abstract class ParserBase {
             case TokenKind.QuotationMark: {
                 this.advanceToken();
 
-                return this.parseStringLiteral(parent, token);
+                return this.parseStringLiteralExpression(parent, token);
             }
             case TokenKind.FloatLiteral: {
                 this.advanceToken();
 
-                return this.parseFloatLiteral(parent, token);
+                return this.parseFloatLiteralExpression(parent, token);
             }
             case TokenKind.IntegerLiteral: {
                 this.advanceToken();
 
-                return this.parseIntegerLiteral(parent, token);
+                return this.parseIntegerLiteralExpression(parent, token);
             }
             case TokenKind.OpeningSquareBracket: {
                 this.advanceToken();
 
-                return this.parseArrayLiteral(parent, token);
+                return this.parseArrayLiteralExpression(parent, token);
             }
             case TokenKind.Identifier:
             case TokenKind.ObjectKeyword:
@@ -421,12 +421,12 @@ export abstract class ParserBase {
         return nullExpression;
     }
 
-    protected parseBooleanLiteral(parent: Nodes, value: BooleanLiteralValueToken): BooleanLiteral {
-        const booleanLiteral = new BooleanLiteral();
-        booleanLiteral.parent = parent;
-        booleanLiteral.value = value;
+    protected parseBooleanLiteralExpression(parent: Nodes, value: BooleanLiteralExpressionValueToken): BooleanLiteralExpression {
+        const booleanLiteralExpression = new BooleanLiteralExpression();
+        booleanLiteralExpression.parent = parent;
+        booleanLiteralExpression.value = value;
 
-        return booleanLiteral;
+        return booleanLiteralExpression;
     }
 
     protected parseSelfExpression(parent: Nodes, selfKeyword: SelfKeywordToken): SelfExpression {
@@ -445,34 +445,50 @@ export abstract class ParserBase {
         return superExpression;
     }
 
-    protected parseMissableStringLiteral(parent: Nodes): MissableStringLiteral {
+    protected parseIntegerLiteralExpression(parent: Nodes, value: IntegerLiteralToken): IntegerLiteralExpression {
+        const integerLiteralExpression = new IntegerLiteralExpression();
+        integerLiteralExpression.parent = parent;
+        integerLiteralExpression.value = value;
+
+        return integerLiteralExpression;
+    }
+
+    protected parseFloatLiteralExpression(parent: Nodes, value: FloatLiteralToken): FloatLiteralExpression {
+        const floatLiteralExpression = new FloatLiteralExpression();
+        floatLiteralExpression.parent = parent;
+        floatLiteralExpression.value = value;
+
+        return floatLiteralExpression;
+    }
+
+    // #region String literal expression
+
+    protected parseMissableStringLiteralExpression(parent: Nodes): MissableStringLiteralExpression {
         const token = this.getToken();
         switch (token.kind) {
             case TokenKind.QuotationMark: {
                 this.advanceToken();
 
-                return this.parseStringLiteral(parent, token);
+                return this.parseStringLiteralExpression(parent, token);
             }
         }
 
-        return this.createMissingToken(token.fullStart, NodeKind.StringLiteral);
+        return this.createMissingToken(token.fullStart, NodeKind.StringLiteralExpression);
     }
 
-    // #region String literal
+    protected parseStringLiteralExpression(parent: Nodes, startQuotationMark: QuotationMarkToken): StringLiteralExpression {
+        const stringLiteralExpression = new StringLiteralExpression();
+        stringLiteralExpression.parent = parent;
+        stringLiteralExpression.startQuotationMark = startQuotationMark;
+        stringLiteralExpression.children = this.parseList(stringLiteralExpression.kind, stringLiteralExpression);
+        stringLiteralExpression.endQuotationMark = this.eatMissable(TokenKind.QuotationMark);
 
-    protected parseStringLiteral(parent: Nodes, startQuotationMark: QuotationMarkToken): StringLiteral {
-        const stringLiteral = new StringLiteral();
-        stringLiteral.parent = parent;
-        stringLiteral.startQuotationMark = startQuotationMark;
-        stringLiteral.children = this.parseList(stringLiteral.kind, stringLiteral);
-        stringLiteral.endQuotationMark = this.eatMissable(TokenKind.QuotationMark);
-
-        return stringLiteral;
+        return stringLiteralExpression;
     }
 
-    // #region String literal children
+    // #region String literal expression children
 
-    protected isStringLiteralChildListTerminator(token: Tokens): boolean {
+    protected isStringLiteralExpressionChildListTerminator(token: Tokens): boolean {
         switch (token.kind) {
             case TokenKind.QuotationMark: {
                 return true;
@@ -482,7 +498,7 @@ export abstract class ParserBase {
         return false;
     }
 
-    protected isStringLiteralChildStart(token: Tokens): boolean {
+    protected isStringLiteralExpressionChildStart(token: Tokens): boolean {
         switch (token.kind) {
             case TokenKind.StringLiteralText:
             case TokenKind.EscapeNull:
@@ -501,7 +517,7 @@ export abstract class ParserBase {
         return false;
     }
 
-    protected parseStringLiteralChild(parent: Nodes) {
+    protected parseStringLiteralExpressionChild(parent: Nodes) {
         const token = this.getToken();
         switch (token.kind) {
             case TokenKind.StringLiteralText:
@@ -542,31 +558,15 @@ export abstract class ParserBase {
 
     // #endregion
 
-    protected parseFloatLiteral(parent: Nodes, value: FloatLiteralToken): FloatLiteral {
-        const floatLiteral = new FloatLiteral();
-        floatLiteral.parent = parent;
-        floatLiteral.value = value;
+    protected parseArrayLiteralExpression(parent: Nodes, openingSquareBracket: OpeningSquareBracketToken): ArrayLiteralExpression {
+        const arrayLiteralExpression = new ArrayLiteralExpression();
+        arrayLiteralExpression.parent = parent;
+        arrayLiteralExpression.openingSquareBracket = openingSquareBracket;
+        arrayLiteralExpression.leadingNewlines = this.parseList(ParseContextKind.NewlineList, arrayLiteralExpression, /*delimiter*/ null);
+        arrayLiteralExpression.expressions = this.parseList(ParseContextKind.ExpressionSequence, arrayLiteralExpression, TokenKind.Comma);
+        arrayLiteralExpression.closingSquareBracket = this.eatMissable(TokenKind.ClosingSquareBracket);
 
-        return floatLiteral;
-    }
-
-    protected parseIntegerLiteral(parent: Nodes, value: IntegerLiteralToken): IntegerLiteral {
-        const integerLiteral = new IntegerLiteral();
-        integerLiteral.parent = parent;
-        integerLiteral.value = value;
-
-        return integerLiteral;
-    }
-
-    protected parseArrayLiteral(parent: Nodes, openingSquareBracket: OpeningSquareBracketToken): ArrayLiteral {
-        const arrayLiteral = new ArrayLiteral();
-        arrayLiteral.parent = parent;
-        arrayLiteral.openingSquareBracket = openingSquareBracket;
-        arrayLiteral.leadingNewlines = this.parseList(ParseContextKind.NewlineList, arrayLiteral, /*delimiter*/ null);
-        arrayLiteral.expressions = this.parseList(ParseContextKind.ExpressionSequence, arrayLiteral, TokenKind.Comma);
-        arrayLiteral.closingSquareBracket = this.eatMissable(TokenKind.ClosingSquareBracket);
-
-        return arrayLiteral;
+        return arrayLiteralExpression;
     }
 
     protected parseIdentifierExpression(parent: Nodes, identifierStart: IdentifierExpressionToken | CommercialAtToken): IdentifierExpression {
@@ -1125,8 +1125,8 @@ export abstract class ParserBase {
         }
 
         switch (parseContext) {
-            case NodeKind.StringLiteral: {
-                return this.isStringLiteralChildListTerminator(token);
+            case NodeKind.StringLiteralExpression: {
+                return this.isStringLiteralExpressionChildListTerminator(token);
             }
             case ParseContextKind.NewlineList: {
                 return this.isNewlineListTerminator(token);
@@ -1149,8 +1149,8 @@ export abstract class ParserBase {
 
     protected isValidListElementCore(parseContext: ParseContextBase, token: Tokens): boolean {
         switch (parseContext) {
-            case NodeKind.StringLiteral: {
-                return this.isStringLiteralChildStart(token);
+            case NodeKind.StringLiteralExpression: {
+                return this.isStringLiteralExpressionChildStart(token);
             }
             case ParseContextKind.NewlineList: {
                 return this.isNewlineListMemberStart(token);
@@ -1173,8 +1173,8 @@ export abstract class ParserBase {
 
     protected parseListElementCore(parseContext: ParseContextBase, parent: Nodes) {
         switch (parseContext) {
-            case NodeKind.StringLiteral: {
-                return this.parseStringLiteralChild(parent);
+            case NodeKind.StringLiteralExpression: {
+                return this.parseStringLiteralExpressionChild(parent);
             }
             case ParseContextKind.NewlineList: {
                 return this.parseNewlineListMember(parent);
@@ -1225,15 +1225,24 @@ export abstract class ParserBase {
         return new SkippedToken(token);
     }
 
-    protected eatMissable<TTokenKind extends TokenKinds>(...kinds: TTokenKind[]): TokenKindTokenMap[TTokenKind] | MissingToken<TTokenKind> {
+    protected eatMissable<TMissableKind extends TokenKinds>(kind: TMissableKind): TokenKindTokenMap[TMissableKind] | MissingToken<TMissableKind>;
+    protected eatMissable<TMissableKind extends TokenKinds, TTokenKind extends TokenKinds>(
+        kind: TMissableKind,
+        ...kinds: TTokenKind[]
+    ): TokenKindTokenMap[TMissableKind | TTokenKind] | MissingToken<TMissableKind>;
+    protected eatMissable<TMissableKind extends TokenKinds, TTokenKind extends TokenKinds>(
+        kind: TMissableKind,
+        ...kinds: TTokenKind[]
+    ): TokenKindTokenMap[TMissableKind | TTokenKind] | MissingToken<TMissableKind> {
         const token = this.getToken();
-        if (kinds.includes(token.kind as TTokenKind)) {
+        if (kind === token.kind ||
+            kinds.includes(token.kind as TTokenKind)) {
             this.advanceToken();
 
             return token;
         }
 
-        return this.createMissingToken(token.fullStart, kinds[0]);
+        return this.createMissingToken(token.fullStart, kind);
     }
 
     protected eat<TTokenKind extends TokenKinds>(...kinds: TTokenKind[]): TokenKindTokenMap[TTokenKind] {
@@ -1371,7 +1380,7 @@ export enum ParseContextKind {
 }
 
 export interface ParseContextElementMapBase {
-    [NodeKind.StringLiteral]: ReturnType<ParserBase['parseStringLiteralChild']>;
+    [NodeKind.StringLiteralExpression]: ReturnType<ParserBase['parseStringLiteralExpressionChild']>;
     [ParseContextKind.NewlineList]: ReturnType<ParserBase['parseNewlineListMember']>;
     [ParseContextKind.ArrayTypeDeclarationList]: ReturnType<ParserBase['parseArrayTypeDeclarationListMember']>;
     [ParseContextKind.TypeReferenceSequence]: ReturnType<ParserBase['parseTypeReferenceSequenceMember']>;

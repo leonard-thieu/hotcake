@@ -11,4 +11,16 @@ export class SuperExpression extends Expression {
     readonly kind = NodeKind.SuperExpression;
 
     superKeyword: SuperKeywordToken = undefined!;
+
+    get firstToken() {
+        if (this.newlines && this.newlines.length !== 0) {
+            return this.newlines[0];
+        }
+
+        return this.superKeyword;
+    }
+
+    get lastToken() {
+        return this.superKeyword;
+    }
 }

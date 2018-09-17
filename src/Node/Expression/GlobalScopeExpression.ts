@@ -7,4 +7,12 @@ export class GlobalScopeExpression extends Expression {
     ];
 
     readonly kind = NodeKind.GlobalScopeExpression;
+
+    get firstToken() {
+        return this.newlines![0];
+    }
+
+    get lastToken() {
+        return this.newlines![this.newlines!.length - 1];
+    }
 }

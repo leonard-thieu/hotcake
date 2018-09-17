@@ -24,4 +24,12 @@ export class InterfaceMethodDeclaration extends Declaration {
     openingParenthesis: MissableToken<OpeningParenthesisToken> = undefined!;
     parameters: ParseContextElementDelimitedSequence<ParseContextKind.DataDeclarationSequence> = undefined!;
     closingParenthesis: MissableToken<ClosingParenthesisToken> = undefined!;
+
+    get firstToken() {
+        return this.methodKeyword;
+    }
+
+    get lastToken() {
+        return this.closingParenthesis;
+    }
 }

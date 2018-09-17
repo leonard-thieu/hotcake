@@ -7,4 +7,12 @@ export class EmptyStatement extends Statement {
     ];
 
     readonly kind = NodeKind.EmptyStatement;
+
+    get firstToken() {
+        return this.terminator!;
+    }
+
+    get lastToken() {
+        return this.terminator!;
+    }
 }

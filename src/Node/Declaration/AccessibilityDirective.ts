@@ -12,6 +12,18 @@ export class AccessibilityDirective extends Declaration {
 
     accessibilityKeyword: AccessibilityKeywordToken = undefined!;
     externPrivateKeyword?: PrivateKeywordToken = undefined;
+
+    get firstToken() {
+        return this.accessibilityKeyword;
+    }
+
+    get lastToken() {
+        if (this.externPrivateKeyword) {
+            return this.externPrivateKeyword;
+        }
+
+        return this.accessibilityKeyword;
+    }
 }
 
 export type AccessibilityKeywordToken =

@@ -16,4 +16,16 @@ export class GroupingExpression extends Expression {
     openingParenthesis: OpeningParenthesisToken = undefined!;
     expression: MissableExpression = undefined!;
     closingParenthesis: MissableToken<ClosingParenthesisToken> = undefined!;
+
+    get firstToken() {
+        if (this.newlines && this.newlines.length !== 0) {
+            return this.newlines[0];
+        }
+
+        return this.openingParenthesis;
+    }
+
+    get lastToken() {
+        return this.closingParenthesis;
+    }
 }

@@ -1,13 +1,18 @@
 import { SerializationOptions } from '../SerializationOptions';
-import { MissableTokenKinds } from './MissingToken';
+import { MissableTokenKinds, MissingToken } from './MissingToken';
+import { SkippedToken } from './SkippedToken';
 import { TokenKind } from './TokenKind';
 
-export class Token<TTokenKind extends FullTokenKinds> {
+export class Token<TTokenKind extends ErrorableTokenKinds> {
     constructor(
         public kind: TTokenKind,
         public fullStart: number,
         public start: number,
         public length: number) { }
+
+    get end() {
+        return this.fullStart + this.length;
+    }
 
     getFullText(document: string): string {
         return document.slice(this.fullStart, this.fullStart + this.length);
@@ -28,140 +33,140 @@ export class Token<TTokenKind extends FullTokenKinds> {
 
 // #region Tokens
 
-export interface UnknownToken extends Token<TokenKind.Unknown> { }
-export interface EOFToken extends Token<TokenKind.EOF> { }
-export interface NewlineToken extends Token<TokenKind.Newline> { }
-export interface IntegerLiteralToken extends Token<TokenKind.IntegerLiteral> { }
-export interface FloatLiteralToken extends Token<TokenKind.FloatLiteral> { }
-export interface StringLiteralTextToken extends Token<TokenKind.StringLiteralText> { }
-export interface EscapeNullToken extends Token<TokenKind.EscapeNull> { }
-export interface EscapeCharacterTabulationToken extends Token<TokenKind.EscapeCharacterTabulation> { }
-export interface EscapeLineFeedLfToken extends Token<TokenKind.EscapeLineFeedLf> { }
-export interface EscapeCarriageReturnCrToken extends Token<TokenKind.EscapeCarriageReturnCr> { }
-export interface EscapeQuotationMarkToken extends Token<TokenKind.EscapeQuotationMark> { }
-export interface EscapeTildeToken extends Token<TokenKind.EscapeTilde> { }
-export interface EscapeUnicodeHexValueToken extends Token<TokenKind.EscapeUnicodeHexValue> { }
-export interface InvalidEscapeSequenceToken extends Token<TokenKind.InvalidEscapeSequence> { }
-export interface ConfigurationTagStartToken extends Token<TokenKind.ConfigurationTagStart> { }
-export interface ConfigurationTagEndToken extends Token<TokenKind.ConfigurationTagEnd> { }
-export interface IfDirectiveKeywordToken extends Token<TokenKind.IfDirectiveKeyword> { }
-export interface ElseIfDirectiveKeywordToken extends Token<TokenKind.ElseIfDirectiveKeyword> { }
-export interface ElseDirectiveKeywordToken extends Token<TokenKind.ElseDirectiveKeyword> { }
-export interface EndDirectiveKeywordToken extends Token<TokenKind.EndDirectiveKeyword> { }
-export interface RemDirectiveKeywordToken extends Token<TokenKind.RemDirectiveKeyword> { }
-export interface RemDirectiveBodyToken extends Token<TokenKind.RemDirectiveBody> { }
-export interface PrintDirectiveKeywordToken extends Token<TokenKind.PrintDirectiveKeyword> { }
-export interface ErrorDirectiveKeywordToken extends Token<TokenKind.ErrorDirectiveKeyword> { }
-export interface ConfigurationVariableToken extends Token<TokenKind.ConfigurationVariable> { }
-export interface QuotationMarkToken extends Token<TokenKind.QuotationMark> { }
-export interface NumberSignToken extends Token<TokenKind.NumberSign> { }
-export interface DollarSignToken extends Token<TokenKind.DollarSign> { }
-export interface PercentSignToken extends Token<TokenKind.PercentSign> { }
-export interface AmpersandToken extends Token<TokenKind.Ampersand> { }
-export interface OpeningParenthesisToken extends Token<TokenKind.OpeningParenthesis> { }
-export interface ClosingParenthesisToken extends Token<TokenKind.ClosingParenthesis> { }
-export interface AsteriskToken extends Token<TokenKind.Asterisk> { }
-export interface PlusSignToken extends Token<TokenKind.PlusSign> { }
-export interface CommaToken extends Token<TokenKind.Comma> { }
-export interface HyphenMinusToken extends Token<TokenKind.HyphenMinus> { }
-export interface PeriodToken extends Token<TokenKind.Period> { }
-export interface SlashToken extends Token<TokenKind.Slash> { }
-export interface ColonToken extends Token<TokenKind.Colon> { }
-export interface SemicolonToken extends Token<TokenKind.Semicolon> { }
-export interface LessThanSignToken extends Token<TokenKind.LessThanSign> { }
-export interface EqualsSignToken extends Token<TokenKind.EqualsSign> { }
-export interface GreaterThanSignToken extends Token<TokenKind.GreaterThanSign> { }
-export interface QuestionMarkToken extends Token<TokenKind.QuestionMark> { }
-export interface CommercialAtToken extends Token<TokenKind.CommercialAt> { }
-export interface OpeningSquareBracketToken extends Token<TokenKind.OpeningSquareBracket> { }
-export interface ClosingSquareBracketToken extends Token<TokenKind.ClosingSquareBracket> { }
-export interface VerticalBarToken extends Token<TokenKind.VerticalBar> { }
-export interface TildeToken extends Token<TokenKind.Tilde> { }
-export interface PeriodPeriodToken extends Token<TokenKind.PeriodPeriod> { }
-export interface AmpersandEqualsSignToken extends Token<TokenKind.AmpersandEqualsSign> { }
-export interface AsteriskEqualsSignToken extends Token<TokenKind.AsteriskEqualsSign> { }
-export interface PlusSignEqualsSignToken extends Token<TokenKind.PlusSignEqualsSign> { }
-export interface HyphenMinusEqualsSignToken extends Token<TokenKind.HyphenMinusEqualsSign> { }
-export interface SlashEqualsSignToken extends Token<TokenKind.SlashEqualsSign> { }
-export interface ColonEqualsSignToken extends Token<TokenKind.ColonEqualsSign> { }
-export interface LessThanSignEqualsSignToken extends Token<TokenKind.LessThanSignEqualsSign> { }
-export interface GreaterThanSignEqualsSignToken extends Token<TokenKind.GreaterThanSignEqualsSign> { }
-export interface VerticalBarEqualsSignToken extends Token<TokenKind.VerticalBarEqualsSign> { }
-export interface TildeEqualsSignToken extends Token<TokenKind.TildeEqualsSign> { }
-export interface ShlKeywordEqualsSignToken extends Token<TokenKind.ShlKeywordEqualsSign> { }
-export interface ShrKeywordEqualsSignToken extends Token<TokenKind.ShrKeywordEqualsSign> { }
-export interface ModKeywordEqualsSignToken extends Token<TokenKind.ModKeywordEqualsSign> { }
-export interface LessThanSignGreaterThanSignToken extends Token<TokenKind.LessThanSignGreaterThanSign> { }
-export interface IdentifierToken extends Token<TokenKind.Identifier> { }
-export interface VoidKeywordToken extends Token<TokenKind.VoidKeyword> { }
-export interface StrictKeywordToken extends Token<TokenKind.StrictKeyword> { }
-export interface PublicKeywordToken extends Token<TokenKind.PublicKeyword> { }
-export interface PrivateKeywordToken extends Token<TokenKind.PrivateKeyword> { }
-export interface ProtectedKeywordToken extends Token<TokenKind.ProtectedKeyword> { }
-export interface FriendKeywordToken extends Token<TokenKind.FriendKeyword> { }
-export interface PropertyKeywordToken extends Token<TokenKind.PropertyKeyword> { }
-export interface BoolKeywordToken extends Token<TokenKind.BoolKeyword> { }
-export interface IntKeywordToken extends Token<TokenKind.IntKeyword> { }
-export interface FloatKeywordToken extends Token<TokenKind.FloatKeyword> { }
-export interface StringKeywordToken extends Token<TokenKind.StringKeyword> { }
-export interface ArrayKeywordToken extends Token<TokenKind.ArrayKeyword> { }
-export interface ObjectKeywordToken extends Token<TokenKind.ObjectKeyword> { }
-export interface ModKeywordToken extends Token<TokenKind.ModKeyword> { }
-export interface ContinueKeywordToken extends Token<TokenKind.ContinueKeyword> { }
-export interface ExitKeywordToken extends Token<TokenKind.ExitKeyword> { }
-export interface IncludeKeywordToken extends Token<TokenKind.IncludeKeyword> { }
-export interface ImportKeywordToken extends Token<TokenKind.ImportKeyword> { }
-export interface ModuleKeywordToken extends Token<TokenKind.ModuleKeyword> { }
-export interface ExternKeywordToken extends Token<TokenKind.ExternKeyword> { }
-export interface NewKeywordToken extends Token<TokenKind.NewKeyword> { }
-export interface SelfKeywordToken extends Token<TokenKind.SelfKeyword> { }
-export interface SuperKeywordToken extends Token<TokenKind.SuperKeyword> { }
-export interface EachInKeywordToken extends Token<TokenKind.EachInKeyword> { }
-export interface TrueKeywordToken extends Token<TokenKind.TrueKeyword> { }
-export interface FalseKeywordToken extends Token<TokenKind.FalseKeyword> { }
-export interface NullKeywordToken extends Token<TokenKind.NullKeyword> { }
-export interface NotKeywordToken extends Token<TokenKind.NotKeyword> { }
-export interface ExtendsKeywordToken extends Token<TokenKind.ExtendsKeyword> { }
-export interface AbstractKeywordToken extends Token<TokenKind.AbstractKeyword> { }
-export interface FinalKeywordToken extends Token<TokenKind.FinalKeyword> { }
-export interface SelectKeywordToken extends Token<TokenKind.SelectKeyword> { }
-export interface CaseKeywordToken extends Token<TokenKind.CaseKeyword> { }
-export interface DefaultKeywordToken extends Token<TokenKind.DefaultKeyword> { }
-export interface ConstKeywordToken extends Token<TokenKind.ConstKeyword> { }
-export interface LocalKeywordToken extends Token<TokenKind.LocalKeyword> { }
-export interface GlobalKeywordToken extends Token<TokenKind.GlobalKeyword> { }
-export interface FieldKeywordToken extends Token<TokenKind.FieldKeyword> { }
-export interface MethodKeywordToken extends Token<TokenKind.MethodKeyword> { }
-export interface FunctionKeywordToken extends Token<TokenKind.FunctionKeyword> { }
-export interface ClassKeywordToken extends Token<TokenKind.ClassKeyword> { }
-export interface AndKeywordToken extends Token<TokenKind.AndKeyword> { }
-export interface OrKeywordToken extends Token<TokenKind.OrKeyword> { }
-export interface ShlKeywordToken extends Token<TokenKind.ShlKeyword> { }
-export interface ShrKeywordToken extends Token<TokenKind.ShrKeyword> { }
-export interface EndKeywordToken extends Token<TokenKind.EndKeyword> { }
-export interface IfKeywordToken extends Token<TokenKind.IfKeyword> { }
-export interface ThenKeywordToken extends Token<TokenKind.ThenKeyword> { }
-export interface ElseKeywordToken extends Token<TokenKind.ElseKeyword> { }
-export interface ElseIfKeywordToken extends Token<TokenKind.ElseIfKeyword> { }
-export interface EndIfKeywordToken extends Token<TokenKind.EndIfKeyword> { }
-export interface WhileKeywordToken extends Token<TokenKind.WhileKeyword> { }
-export interface WendKeywordToken extends Token<TokenKind.WendKeyword> { }
-export interface RepeatKeywordToken extends Token<TokenKind.RepeatKeyword> { }
-export interface UntilKeywordToken extends Token<TokenKind.UntilKeyword> { }
-export interface ForeverKeywordToken extends Token<TokenKind.ForeverKeyword> { }
-export interface ForKeywordToken extends Token<TokenKind.ForKeyword> { }
-export interface ToKeywordToken extends Token<TokenKind.ToKeyword> { }
-export interface StepKeywordToken extends Token<TokenKind.StepKeyword> { }
-export interface NextKeywordToken extends Token<TokenKind.NextKeyword> { }
-export interface ReturnKeywordToken extends Token<TokenKind.ReturnKeyword> { }
-export interface InterfaceKeywordToken extends Token<TokenKind.InterfaceKeyword> { }
-export interface ImplementsKeywordToken extends Token<TokenKind.ImplementsKeyword> { }
-export interface InlineKeywordToken extends Token<TokenKind.InlineKeyword> { }
-export interface AliasKeywordToken extends Token<TokenKind.AliasKeyword> { }
-export interface TryKeywordToken extends Token<TokenKind.TryKeyword> { }
-export interface CatchKeywordToken extends Token<TokenKind.CatchKeyword> { }
-export interface ThrowKeywordToken extends Token<TokenKind.ThrowKeyword> { }
-export interface ThrowableKeywordToken extends Token<TokenKind.ThrowableKeyword> { }
+export type UnknownToken = Token<TokenKind.Unknown>;
+export type EOFToken = Token<TokenKind.EOF>;
+export type NewlineToken = Token<TokenKind.Newline>;
+export type IntegerLiteralToken = Token<TokenKind.IntegerLiteral>;
+export type FloatLiteralToken = Token<TokenKind.FloatLiteral>;
+export type StringLiteralTextToken = Token<TokenKind.StringLiteralText>;
+export type EscapeNullToken = Token<TokenKind.EscapeNull>;
+export type EscapeCharacterTabulationToken = Token<TokenKind.EscapeCharacterTabulation>;
+export type EscapeLineFeedLfToken = Token<TokenKind.EscapeLineFeedLf>;
+export type EscapeCarriageReturnCrToken = Token<TokenKind.EscapeCarriageReturnCr>;
+export type EscapeQuotationMarkToken = Token<TokenKind.EscapeQuotationMark>;
+export type EscapeTildeToken = Token<TokenKind.EscapeTilde>;
+export type EscapeUnicodeHexValueToken = Token<TokenKind.EscapeUnicodeHexValue>;
+export type InvalidEscapeSequenceToken = Token<TokenKind.InvalidEscapeSequence>;
+export type ConfigurationTagStartToken = Token<TokenKind.ConfigurationTagStart>;
+export type ConfigurationTagEndToken = Token<TokenKind.ConfigurationTagEnd>;
+export type IfDirectiveKeywordToken = Token<TokenKind.IfDirectiveKeyword>;
+export type ElseIfDirectiveKeywordToken = Token<TokenKind.ElseIfDirectiveKeyword>;
+export type ElseDirectiveKeywordToken = Token<TokenKind.ElseDirectiveKeyword>;
+export type EndDirectiveKeywordToken = Token<TokenKind.EndDirectiveKeyword>;
+export type RemDirectiveKeywordToken = Token<TokenKind.RemDirectiveKeyword>;
+export type RemDirectiveBodyToken = Token<TokenKind.RemDirectiveBody>;
+export type PrintDirectiveKeywordToken = Token<TokenKind.PrintDirectiveKeyword>;
+export type ErrorDirectiveKeywordToken = Token<TokenKind.ErrorDirectiveKeyword>;
+export type ConfigurationVariableToken = Token<TokenKind.ConfigurationVariable>;
+export type QuotationMarkToken = Token<TokenKind.QuotationMark>;
+export type NumberSignToken = Token<TokenKind.NumberSign>;
+export type DollarSignToken = Token<TokenKind.DollarSign>;
+export type PercentSignToken = Token<TokenKind.PercentSign>;
+export type AmpersandToken = Token<TokenKind.Ampersand>;
+export type OpeningParenthesisToken = Token<TokenKind.OpeningParenthesis>;
+export type ClosingParenthesisToken = Token<TokenKind.ClosingParenthesis>;
+export type AsteriskToken = Token<TokenKind.Asterisk>;
+export type PlusSignToken = Token<TokenKind.PlusSign>;
+export type CommaToken = Token<TokenKind.Comma>;
+export type HyphenMinusToken = Token<TokenKind.HyphenMinus>;
+export type PeriodToken = Token<TokenKind.Period>;
+export type SlashToken = Token<TokenKind.Slash>;
+export type ColonToken = Token<TokenKind.Colon>;
+export type SemicolonToken = Token<TokenKind.Semicolon>;
+export type LessThanSignToken = Token<TokenKind.LessThanSign>;
+export type EqualsSignToken = Token<TokenKind.EqualsSign>;
+export type GreaterThanSignToken = Token<TokenKind.GreaterThanSign>;
+export type QuestionMarkToken = Token<TokenKind.QuestionMark>;
+export type CommercialAtToken = Token<TokenKind.CommercialAt>;
+export type OpeningSquareBracketToken = Token<TokenKind.OpeningSquareBracket>;
+export type ClosingSquareBracketToken = Token<TokenKind.ClosingSquareBracket>;
+export type VerticalBarToken = Token<TokenKind.VerticalBar>;
+export type TildeToken = Token<TokenKind.Tilde>;
+export type PeriodPeriodToken = Token<TokenKind.PeriodPeriod>;
+export type AmpersandEqualsSignToken = Token<TokenKind.AmpersandEqualsSign>;
+export type AsteriskEqualsSignToken = Token<TokenKind.AsteriskEqualsSign>;
+export type PlusSignEqualsSignToken = Token<TokenKind.PlusSignEqualsSign>;
+export type HyphenMinusEqualsSignToken = Token<TokenKind.HyphenMinusEqualsSign>;
+export type SlashEqualsSignToken = Token<TokenKind.SlashEqualsSign>;
+export type ColonEqualsSignToken = Token<TokenKind.ColonEqualsSign>;
+export type LessThanSignEqualsSignToken = Token<TokenKind.LessThanSignEqualsSign>;
+export type GreaterThanSignEqualsSignToken = Token<TokenKind.GreaterThanSignEqualsSign>;
+export type VerticalBarEqualsSignToken = Token<TokenKind.VerticalBarEqualsSign>;
+export type TildeEqualsSignToken = Token<TokenKind.TildeEqualsSign>;
+export type ShlKeywordEqualsSignToken = Token<TokenKind.ShlKeywordEqualsSign>;
+export type ShrKeywordEqualsSignToken = Token<TokenKind.ShrKeywordEqualsSign>;
+export type ModKeywordEqualsSignToken = Token<TokenKind.ModKeywordEqualsSign>;
+export type LessThanSignGreaterThanSignToken = Token<TokenKind.LessThanSignGreaterThanSign>;
+export type IdentifierToken = Token<TokenKind.Identifier>;
+export type VoidKeywordToken = Token<TokenKind.VoidKeyword>;
+export type StrictKeywordToken = Token<TokenKind.StrictKeyword>;
+export type PublicKeywordToken = Token<TokenKind.PublicKeyword>;
+export type PrivateKeywordToken = Token<TokenKind.PrivateKeyword>;
+export type ProtectedKeywordToken = Token<TokenKind.ProtectedKeyword>;
+export type FriendKeywordToken = Token<TokenKind.FriendKeyword>;
+export type PropertyKeywordToken = Token<TokenKind.PropertyKeyword>;
+export type BoolKeywordToken = Token<TokenKind.BoolKeyword>;
+export type IntKeywordToken = Token<TokenKind.IntKeyword>;
+export type FloatKeywordToken = Token<TokenKind.FloatKeyword>;
+export type StringKeywordToken = Token<TokenKind.StringKeyword>;
+export type ArrayKeywordToken = Token<TokenKind.ArrayKeyword>;
+export type ObjectKeywordToken = Token<TokenKind.ObjectKeyword>;
+export type ModKeywordToken = Token<TokenKind.ModKeyword>;
+export type ContinueKeywordToken = Token<TokenKind.ContinueKeyword>;
+export type ExitKeywordToken = Token<TokenKind.ExitKeyword>;
+export type IncludeKeywordToken = Token<TokenKind.IncludeKeyword>;
+export type ImportKeywordToken = Token<TokenKind.ImportKeyword>;
+export type ModuleKeywordToken = Token<TokenKind.ModuleKeyword>;
+export type ExternKeywordToken = Token<TokenKind.ExternKeyword>;
+export type NewKeywordToken = Token<TokenKind.NewKeyword>;
+export type SelfKeywordToken = Token<TokenKind.SelfKeyword>;
+export type SuperKeywordToken = Token<TokenKind.SuperKeyword>;
+export type EachInKeywordToken = Token<TokenKind.EachInKeyword>;
+export type TrueKeywordToken = Token<TokenKind.TrueKeyword>;
+export type FalseKeywordToken = Token<TokenKind.FalseKeyword>;
+export type NullKeywordToken = Token<TokenKind.NullKeyword>;
+export type NotKeywordToken = Token<TokenKind.NotKeyword>;
+export type ExtendsKeywordToken = Token<TokenKind.ExtendsKeyword>;
+export type AbstractKeywordToken = Token<TokenKind.AbstractKeyword>;
+export type FinalKeywordToken = Token<TokenKind.FinalKeyword>;
+export type SelectKeywordToken = Token<TokenKind.SelectKeyword>;
+export type CaseKeywordToken = Token<TokenKind.CaseKeyword>;
+export type DefaultKeywordToken = Token<TokenKind.DefaultKeyword>;
+export type ConstKeywordToken = Token<TokenKind.ConstKeyword>;
+export type LocalKeywordToken = Token<TokenKind.LocalKeyword>;
+export type GlobalKeywordToken = Token<TokenKind.GlobalKeyword>;
+export type FieldKeywordToken = Token<TokenKind.FieldKeyword>;
+export type MethodKeywordToken = Token<TokenKind.MethodKeyword>;
+export type FunctionKeywordToken = Token<TokenKind.FunctionKeyword>;
+export type ClassKeywordToken = Token<TokenKind.ClassKeyword>;
+export type AndKeywordToken = Token<TokenKind.AndKeyword>;
+export type OrKeywordToken = Token<TokenKind.OrKeyword>;
+export type ShlKeywordToken = Token<TokenKind.ShlKeyword>;
+export type ShrKeywordToken = Token<TokenKind.ShrKeyword>;
+export type EndKeywordToken = Token<TokenKind.EndKeyword>;
+export type IfKeywordToken = Token<TokenKind.IfKeyword>;
+export type ThenKeywordToken = Token<TokenKind.ThenKeyword>;
+export type ElseKeywordToken = Token<TokenKind.ElseKeyword>;
+export type ElseIfKeywordToken = Token<TokenKind.ElseIfKeyword>;
+export type EndIfKeywordToken = Token<TokenKind.EndIfKeyword>;
+export type WhileKeywordToken = Token<TokenKind.WhileKeyword>;
+export type WendKeywordToken = Token<TokenKind.WendKeyword>;
+export type RepeatKeywordToken = Token<TokenKind.RepeatKeyword>;
+export type UntilKeywordToken = Token<TokenKind.UntilKeyword>;
+export type ForeverKeywordToken = Token<TokenKind.ForeverKeyword>;
+export type ForKeywordToken = Token<TokenKind.ForKeyword>;
+export type ToKeywordToken = Token<TokenKind.ToKeyword>;
+export type StepKeywordToken = Token<TokenKind.StepKeyword>;
+export type NextKeywordToken = Token<TokenKind.NextKeyword>;
+export type ReturnKeywordToken = Token<TokenKind.ReturnKeyword>;
+export type InterfaceKeywordToken = Token<TokenKind.InterfaceKeyword>;
+export type ImplementsKeywordToken = Token<TokenKind.ImplementsKeyword>;
+export type InlineKeywordToken = Token<TokenKind.InlineKeyword>;
+export type AliasKeywordToken = Token<TokenKind.AliasKeyword>;
+export type TryKeywordToken = Token<TokenKind.TryKeyword>;
+export type CatchKeywordToken = Token<TokenKind.CatchKeyword>;
+export type ThrowKeywordToken = Token<TokenKind.ThrowKeyword>;
+export type ThrowableKeywordToken = Token<TokenKind.ThrowableKeyword>;
 
 // #endregion
 
@@ -303,9 +308,16 @@ export interface TokenKindTokenMap {
 }
 
 export type TokenKinds = keyof TokenKindTokenMap;
-export type FullTokenKinds =
+export type Tokens = TokenKindTokenMap[TokenKinds];
+
+export type ErrorableTokenKinds =
+    TokenKinds |
     TokenKind.Missing |
     MissableTokenKinds |
     TokenKind.Skipped
     ;
-export type Tokens = TokenKindTokenMap[TokenKinds];
+export type ErrorableToken =
+    Tokens |
+    MissingToken<MissableTokenKinds> |
+    SkippedToken<TokenKinds>
+    ;

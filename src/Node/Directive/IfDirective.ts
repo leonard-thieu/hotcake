@@ -2,6 +2,7 @@ import { ParseContextElementSequence, ParseContextKind } from '../../ParserBase'
 import { MissableToken } from '../../Token/MissingToken';
 import { ElseDirectiveKeywordToken, ElseIfDirectiveKeywordToken, EndDirectiveKeywordToken, IfDirectiveKeywordToken, NumberSignToken } from '../../Token/Token';
 import { MissableExpression } from '../Expression/Expression';
+import { isNode } from '../Node';
 import { NodeKind } from '../NodeKind';
 import { Directive } from './Directive';
 
@@ -28,6 +29,14 @@ export class IfDirective extends Directive {
     endDirectiveNumberSign: MissableToken<NumberSignToken> = undefined!;
     endDirectiveKeyword: MissableToken<EndDirectiveKeywordToken> = undefined!;
     endIfDirectiveKeyword?: IfDirectiveKeywordToken = undefined;
+
+    get lastToken() {
+        if (this.endIfDirectiveKeyword) {
+            return this.endIfDirectiveKeyword;
+        }
+
+        return this.endDirectiveKeyword;
+    }
 }
 
 export class ElseIfDirective extends Directive {
@@ -45,6 +54,23 @@ export class ElseIfDirective extends Directive {
     ifDirectiveKeyword?: IfDirectiveKeywordToken = undefined;
     expression: MissableExpression = undefined!;
     members: ParseContextElementSequence<ElseIfDirective['kind']> = undefined!;
+
+    get lastToken() {
+        if (this.members.length !== 0) {
+            const lastMember = this.members[this.members.length - 1];
+            if (isNode(lastMember)) {
+                return lastMember.lastToken;
+            }
+
+            return lastMember;
+        }
+
+        if (isNode(this.expression)) {
+            return this.expression.lastToken;
+        }
+
+        return this.expression;
+    }
 }
 
 export class ElseDirective extends Directive {
@@ -58,4 +84,17 @@ export class ElseDirective extends Directive {
 
     elseDirectiveKeyword: ElseDirectiveKeywordToken = undefined!;
     members: ParseContextElementSequence<ElseDirective['kind']> = undefined!;
+
+    get lastToken() {
+        if (this.members.length !== 0) {
+            const lastMember = this.members[this.members.length - 1];
+            if (isNode(lastMember)) {
+                return lastMember.lastToken;
+            }
+
+            return lastMember;
+        }
+
+        return this.elseDirectiveKeyword;
+    }
 }

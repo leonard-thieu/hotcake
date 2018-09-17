@@ -1,5 +1,5 @@
 import { MissableToken } from '../../Token/MissingToken';
-import { ClosingSquareBracketToken, OpeningSquareBracketToken } from '../../Token/Token';
+import { ClosingSquareBracketToken, ErrorableToken, OpeningSquareBracketToken } from '../../Token/Token';
 import { NodeKind } from '../NodeKind';
 import { Expression, Expressions, MissableExpression } from './Expression';
 
@@ -18,4 +18,16 @@ export class IndexExpression extends Expression {
     openingSquareBracket: OpeningSquareBracketToken = undefined!;
     indexExpressionExpression: MissableExpression = undefined!;
     closingSquareBracket: MissableToken<ClosingSquareBracketToken> = undefined!;
+
+    get firstToken(): ErrorableToken {
+        if (this.newlines && this.newlines.length !== 0) {
+            return this.newlines[0];
+        }
+
+        return this.indexableExpression.firstToken;
+    }
+
+    get lastToken() {
+        return this.closingSquareBracket;
+    }
 }

@@ -1,5 +1,6 @@
 import { ParseContextElementSequence, ParseContextKind } from '../../ParserBase';
 import { ColonToken, DollarSignToken, NumberSignToken, PercentSignToken, QuestionMarkToken } from '../../Token/Token';
+import { isNode } from '../Node';
 import { NodeKind } from '../NodeKind';
 import { MissableTypeReference } from '../TypeReference';
 import { Declaration } from './Declaration';
@@ -19,6 +20,22 @@ export class ShorthandTypeDeclaration extends Declaration {
 
     shorthandType?: ShorthandTypeToken = undefined;
     arrayTypeDeclarations: ParseContextElementSequence<ParseContextKind.ArrayTypeDeclarationList> = undefined!;
+
+    get firstToken() {
+        if (this.shorthandType) {
+            return this.shorthandType;
+        }
+
+        return this.arrayTypeDeclarations[0].firstToken;
+    }
+
+    get lastToken() {
+        if (this.arrayTypeDeclarations.length !== 0) {
+            return this.arrayTypeDeclarations[this.arrayTypeDeclarations.length - 1].lastToken;
+        }
+
+        return this.shorthandType!;
+    }
 }
 
 export type ShorthandTypeToken =
@@ -38,4 +55,16 @@ export class LonghandTypeDeclaration extends Declaration {
 
     colon: ColonToken = undefined!;
     typeReference: MissableTypeReference = undefined!;
+
+    get firstToken() {
+        return this.colon;
+    }
+
+    get lastToken() {
+        if (isNode(this.typeReference)) {
+            return this.typeReference.lastToken;
+        }
+
+        return this.typeReference;
+    }
 }

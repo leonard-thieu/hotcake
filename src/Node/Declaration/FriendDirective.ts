@@ -13,4 +13,12 @@ export class FriendDirective extends Declaration {
 
     friendKeyword: FriendKeywordToken = undefined!;
     modulePath: ModulePath = undefined!;
+
+    get firstToken() {
+        return this.friendKeyword;
+    }
+
+    get lastToken() {
+        return this.modulePath.lastToken;
+    }
 }

@@ -46,4 +46,16 @@ export class ClassDeclaration extends Declaration {
     members: ParseContextElementArray<ClassDeclaration['kind']> = undefined!;
     endKeyword: MissableToken<EndKeywordToken> = undefined!;
     endClassKeyword?: ClassKeywordToken = undefined;
+
+    get firstToken() {
+        return this.classKeyword;
+    }
+
+    get lastToken() {
+        if (this.endClassKeyword) {
+            return this.endClassKeyword;
+        }
+
+        return this.endKeyword;
+    }
 }

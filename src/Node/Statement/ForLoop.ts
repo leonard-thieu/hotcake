@@ -4,7 +4,7 @@ import { EndKeywordToken, ForKeywordToken, NextKeywordToken, StepKeywordToken, T
 import { TokenKind } from '../../Token/TokenKind';
 import { AssignmentExpression } from '../Expression/AssignmentExpression';
 import { MissableExpression } from '../Expression/Expression';
-import { Node } from '../Node';
+import { isNode, Node } from '../Node';
 import { NodeKind } from '../NodeKind';
 import { DataDeclarationSequenceStatement } from './DataDeclarationSequenceStatement';
 import { Statement } from './Statement';
@@ -26,6 +26,22 @@ export class ForLoop extends Statement {
     statements: ParseContextElementArray<ForLoop['kind']> = undefined!;
     endKeyword: MissableToken<NextKeywordToken | EndKeywordToken> = undefined!;
     endForKeyword?: ForKeywordToken = undefined;
+
+    get firstToken() {
+        return this.forKeyword;
+    }
+
+    get lastToken() {
+        if (this.terminator) {
+            return this.terminator;
+        }
+        
+        if (this.endForKeyword) {
+            return this.endForKeyword;
+        }
+
+        return this.endKeyword;
+    }
 }
 
 export class NumericForLoopHeader extends Node {
@@ -44,4 +60,24 @@ export class NumericForLoopHeader extends Node {
     lastValueExpression: MissableExpression = undefined!;
     stepKeyword?: StepKeywordToken = undefined;
     stepValueExpression?: MissableExpression = undefined;
+
+    get firstToken() {
+        return this.loopVariableExpression.firstToken;
+    }
+
+    get lastToken() {
+        if (this.stepValueExpression) {
+            if (isNode(this.stepValueExpression)) {
+                return this.stepValueExpression.lastToken;
+            }
+
+            return this.stepValueExpression;
+        }
+
+        if (isNode(this.lastValueExpression)) {
+            return this.lastValueExpression.lastToken;
+        }
+
+        return this.lastValueExpression;
+    }
 }

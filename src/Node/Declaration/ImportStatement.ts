@@ -1,8 +1,9 @@
 import { MissingToken } from '../../Token/MissingToken';
 import { ImportKeywordToken } from '../../Token/Token';
 import { TokenKind } from '../../Token/TokenKind';
-import { StringLiteral } from '../Expression/StringLiteral';
+import { StringLiteralExpression } from '../Expression/StringLiteralExpression';
 import { ModulePath } from '../ModulePath';
+import { isNode } from '../Node';
 import { NodeKind } from '../NodeKind';
 import { Declaration } from './Declaration';
 
@@ -15,5 +16,17 @@ export class ImportStatement extends Declaration {
     readonly kind = NodeKind.ImportStatement;
 
     importKeyword: ImportKeywordToken = undefined!;
-    path: StringLiteral | ModulePath | MissingToken<TokenKind.ImportStatementPath> = undefined!;
+    path: StringLiteralExpression | ModulePath | MissingToken<TokenKind.ImportStatementPath> = undefined!;
+
+    get firstToken() {
+        return this.importKeyword;
+    }
+
+    get lastToken() {
+        if (isNode(this.path)) {
+            return this.path.lastToken;
+        }
+
+        return this.path;
+    }
 }

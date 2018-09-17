@@ -14,11 +14,10 @@ export class Tokenizer {
     private tokens: Tokens[] = undefined!;
 
     getTokens(
-        document: string,
         preprocessorModuleDeclaration: PreprocessorModuleDeclaration,
         configVars: ConfigurationVariables
     ) {
-        this.document = document;
+        this.document = preprocessorModuleDeclaration.document;
         this.configVars = createConfigurationVariableMap(configVars);
         this.tokens = [];
 
@@ -208,7 +207,7 @@ export class Tokenizer {
                     }
                 }
             }
-            case NodeKind.StringLiteral: {
+            case NodeKind.StringLiteralExpression: {
                 let value = '';
 
                 for (const child of expression.children) {
@@ -247,7 +246,7 @@ export class Tokenizer {
 
                 return value;
             }
-            case NodeKind.BooleanLiteral: {
+            case NodeKind.BooleanLiteralExpression: {
                 const { kind } = expression.value;
                 switch (kind) {
                     case TokenKind.TrueKeyword: {
@@ -261,10 +260,10 @@ export class Tokenizer {
                     }
                 }
             }
-            case NodeKind.IntegerLiteral: {
+            case NodeKind.IntegerLiteralExpression: {
                 return parseInt(expression.value.getText(this.document));
             }
-            case NodeKind.FloatLiteral: {
+            case NodeKind.FloatLiteralExpression: {
                 return parseFloat(expression.value.getText(this.document));
             }
             case NodeKind.IdentifierExpression: {
@@ -279,7 +278,7 @@ export class Tokenizer {
             }
             case NodeKind.NewExpression:
             case NodeKind.NullExpression:
-            case NodeKind.ArrayLiteral:
+            case NodeKind.ArrayLiteralExpression:
             case NodeKind.ScopeMemberAccessExpression:
             case NodeKind.InvokeExpression:
             case NodeKind.IndexExpression:

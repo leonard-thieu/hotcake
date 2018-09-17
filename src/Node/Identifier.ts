@@ -1,4 +1,4 @@
-import { MissableToken, MissingToken } from '../Token/MissingToken';
+import { MissingToken } from '../Token/MissingToken';
 import { AbstractKeywordToken, AliasKeywordToken, AndKeywordToken, ArrayKeywordToken, BoolKeywordToken, CaseKeywordToken, CatchKeywordToken, ClassKeywordToken, CommercialAtToken, ConstKeywordToken, ContinueKeywordToken, DefaultKeywordToken, EachInKeywordToken, ElseIfKeywordToken, ElseKeywordToken, EndIfKeywordToken, EndKeywordToken, ExitKeywordToken, ExtendsKeywordToken, ExternKeywordToken, FalseKeywordToken, FieldKeywordToken, FinalKeywordToken, FloatKeywordToken, ForeverKeywordToken, ForKeywordToken, FriendKeywordToken, FunctionKeywordToken, GlobalKeywordToken, IdentifierToken, IfKeywordToken, ImplementsKeywordToken, ImportKeywordToken, IncludeKeywordToken, InlineKeywordToken, InterfaceKeywordToken, IntKeywordToken, LocalKeywordToken, MethodKeywordToken, ModKeywordToken, ModuleKeywordToken, NewKeywordToken, NextKeywordToken, NotKeywordToken, NullKeywordToken, ObjectKeywordToken, OrKeywordToken, PrivateKeywordToken, PropertyKeywordToken, ProtectedKeywordToken, PublicKeywordToken, RepeatKeywordToken, ReturnKeywordToken, SelectKeywordToken, SelfKeywordToken, ShlKeywordToken, ShrKeywordToken, StepKeywordToken, StrictKeywordToken, StringKeywordToken, SuperKeywordToken, ThenKeywordToken, ThrowableKeywordToken, ThrowKeywordToken, ToKeywordToken, TrueKeywordToken, TryKeywordToken, UntilKeywordToken, VoidKeywordToken, WendKeywordToken, WhileKeywordToken } from '../Token/Token';
 import { TokenKind } from '../Token/TokenKind';
 import { Node } from './Node';
@@ -25,10 +25,14 @@ export class EscapedIdentifier extends Node {
     readonly kind = NodeKind.EscapedIdentifier;
 
     commercialAt: CommercialAtToken = undefined!;
-    name: MissableToken<EscapedIdentifierNameToken> = undefined!;
+    name: EscapedIdentifierNameToken | MissingToken<TokenKind.Identifier> = undefined!;
 
-    get fullStart() {
-        return this.commercialAt.fullStart;
+    get firstToken() {
+        return this.commercialAt;
+    }
+
+    get lastToken() {
+        return this.name;
     }
 }
 

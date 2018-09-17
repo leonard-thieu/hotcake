@@ -15,6 +15,7 @@ import { ImportStatement } from './Node/Declaration/ImportStatement';
 import { InterfaceDeclaration } from './Node/Declaration/InterfaceDeclaration';
 import { InterfaceMethodDeclaration } from './Node/Declaration/InterfaceMethodDeclaration';
 import { ModuleDeclaration } from './Node/Declaration/ModuleDeclaration';
+import { PreprocessorModuleDeclaration } from './Node/Declaration/PreprocessorModuleDeclaration';
 import { StrictDirective } from './Node/Declaration/StrictDirective';
 import { LonghandTypeDeclaration, ShorthandTypeDeclaration, ShorthandTypeToken } from './Node/Declaration/TypeDeclaration';
 import { TypeParameter } from './Node/Declaration/TypeParameter';
@@ -49,24 +50,23 @@ export class Parser extends ParserBase {
     private moduleIdentifiers: string[] = undefined!;
     private moduleDeclaration: ModuleDeclaration = undefined!;
 
-    parse(filePath: string, document: string, tokens: Tokens[]): ModuleDeclaration {
+    parse(preprocessorModuleDeclaration: PreprocessorModuleDeclaration, tokens: Tokens[]): ModuleDeclaration {
         this.tokens = [...tokens];
         this.position = 0;
         this.parseContexts = [];
-        this.document = document;
+        this.document = preprocessorModuleDeclaration.document;
         this.accessibility = TokenKind.PublicKeyword;
         this.moduleIdentifiers = [];
 
-        return this.parseModuleDeclaration(filePath, document);
+        return this.parseModuleDeclaration(preprocessorModuleDeclaration);
     }
 
     // #region Module declaration
 
-    private parseModuleDeclaration(filePath: string, document: string): ModuleDeclaration {
+    private parseModuleDeclaration(preprocessorModuleDeclaration: PreprocessorModuleDeclaration): ModuleDeclaration {
         const moduleDeclaration = new ModuleDeclaration();
         this.moduleDeclaration = moduleDeclaration;
-        moduleDeclaration.filePath = filePath;
-        moduleDeclaration.document = document;
+        moduleDeclaration.preprocessorModuleDeclaration = preprocessorModuleDeclaration;
 
         moduleDeclaration.strictNewlines = this.parseList(ParseContextKind.NewlineList, moduleDeclaration, /*delimiter*/ null);
         const strictKeyword = this.getToken();
@@ -77,6 +77,7 @@ export class Parser extends ParserBase {
         }
         moduleDeclaration.headerMembers = this.parseList(ParseContextKind.ModuleDeclarationHeader, moduleDeclaration);
         moduleDeclaration.members = this.parseList(moduleDeclaration.kind, moduleDeclaration);
+        moduleDeclaration.eofToken = this.eat(TokenKind.EOF);
 
         return moduleDeclaration;
     }
@@ -242,7 +243,7 @@ export class Parser extends ParserBase {
             case TokenKind.QuotationMark: {
                 this.advanceToken();
 
-                importStatement.path = this.parseStringLiteral(importStatement, token);
+                importStatement.path = this.parseStringLiteralExpression(importStatement, token);
                 break;
             }
             // Module path
@@ -590,7 +591,7 @@ export class Parser extends ParserBase {
         externDataDeclaration.type = this.parseTypeDeclaration(externDataDeclaration);
         externDataDeclaration.equalsSign = this.eatOptional(TokenKind.EqualsSign);
         if (externDataDeclaration.equalsSign) {
-            externDataDeclaration.nativeSymbol = this.parseMissableStringLiteral(externDataDeclaration);
+            externDataDeclaration.nativeSymbol = this.parseMissableStringLiteralExpression(externDataDeclaration);
         }
 
         return externDataDeclaration;
@@ -635,7 +636,7 @@ export class Parser extends ParserBase {
         externFunctionDeclaration.closingParenthesis = this.eatMissable(TokenKind.ClosingParenthesis);
         externFunctionDeclaration.equalsSign = this.eatOptional(TokenKind.EqualsSign);
         if (externFunctionDeclaration.equalsSign) {
-            externFunctionDeclaration.nativeSymbol = this.parseMissableStringLiteral(externFunctionDeclaration);
+            externFunctionDeclaration.nativeSymbol = this.parseMissableStringLiteralExpression(externFunctionDeclaration);
         }
 
         return externFunctionDeclaration;
@@ -935,7 +936,7 @@ export class Parser extends ParserBase {
         externClassDeclaration.attribute = this.eatOptional(TokenKind.AbstractKeyword, TokenKind.FinalKeyword);
         externClassDeclaration.equalsSign = this.eatOptional(TokenKind.EqualsSign);
         if (externClassDeclaration.equalsSign) {
-            externClassDeclaration.nativeSymbol = this.parseMissableStringLiteral(externClassDeclaration);
+            externClassDeclaration.nativeSymbol = this.parseMissableStringLiteralExpression(externClassDeclaration);
         }
         externClassDeclaration.members = this.parseList(externClassDeclaration.kind, externClassDeclaration);
         externClassDeclaration.endKeyword = this.eatMissable(TokenKind.EndKeyword);
@@ -1022,7 +1023,7 @@ export class Parser extends ParserBase {
         externClassMethodDeclaration.attributes = this.parseList(ParseContextKind.ClassMethodAttributes, externClassMethodDeclaration, /*delimiter*/ null);
         externClassMethodDeclaration.equalsSign = this.eatOptional(TokenKind.EqualsSign);
         if (externClassMethodDeclaration.equalsSign) {
-            externClassMethodDeclaration.nativeSymbol = this.parseMissableStringLiteral(externClassMethodDeclaration);
+            externClassMethodDeclaration.nativeSymbol = this.parseMissableStringLiteralExpression(externClassMethodDeclaration);
         }
 
         return externClassMethodDeclaration;

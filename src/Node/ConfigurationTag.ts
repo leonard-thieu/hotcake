@@ -14,4 +14,12 @@ export class ConfigurationTag extends Node {
     startToken: ConfigurationTagStartToken = undefined!;
     name?: IdentifierToken = undefined;
     endToken: ConfigurationTagEndToken = undefined!;
+
+    get firstToken() {
+        return this.startToken;
+    }
+
+    get lastToken() {
+        return this.endToken;
+    }
 }

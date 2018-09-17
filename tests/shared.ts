@@ -201,7 +201,7 @@ export function getPreprocessorParseTree(filePath: string, document: string): Pr
 }
 
 export function getTokens(filePath: string, document: string): Tokens[] {
-    const tree = getPreprocessorParseTree(filePath, document);
+    const preprocessorModuleDeclaration = getPreprocessorParseTree(filePath, document);
     const tokenizer = new Tokenizer();
     const configVars: ConfigurationVariables = {
         HOST: 'winnt',
@@ -212,20 +212,30 @@ export function getTokens(filePath: string, document: string): Tokens[] {
         MODPATH: __filename,
     };
 
-    return tokenizer.getTokens(document, tree, configVars);
+    return tokenizer.getTokens(preprocessorModuleDeclaration, configVars);
 }
 
 export function getParseTree(filePath: string, document: string): ModuleDeclaration {
-    const tokens = getTokens(filePath, document);
+    const preprocessorModuleDeclaration = getPreprocessorParseTree(filePath, document);
+    const tokenizer = new Tokenizer();
+    const configVars: ConfigurationVariables = {
+        HOST: 'winnt',
+        LANG: 'cpp',
+        TARGET: 'glfw',
+        CONFIG: 'release',
+        CD: __dirname,
+        MODPATH: __filename,
+    };
+    const tokens = tokenizer.getTokens(preprocessorModuleDeclaration, configVars);
     const parser = new Parser();
 
-    return parser.parse(filePath, document, tokens);
+    return parser.parse(preprocessorModuleDeclaration, tokens);
 }
 
 export function getBoundParseTree(filePath: string, document: string): ModuleDeclaration {
-    const tree = getParseTree(filePath, document);
+    const moduleDeclaration = getParseTree(filePath, document);
     const binder = new Binder();
-    binder.bind(tree);
+    binder.bind(moduleDeclaration);
 
-    return tree;
+    return moduleDeclaration;
 }

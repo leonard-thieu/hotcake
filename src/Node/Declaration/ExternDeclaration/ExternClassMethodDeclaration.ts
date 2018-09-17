@@ -2,6 +2,7 @@ import { ParseContextElementDelimitedSequence, ParseContextElementSequence, Pars
 import { MissableToken } from '../../../Token/MissingToken';
 import { ClosingParenthesisToken, MethodKeywordToken, OpeningParenthesisToken } from '../../../Token/Token';
 import { MissableIdentifier } from '../../Identifier';
+import { isNode } from '../../Node';
 import { NodeKind } from '../../NodeKind';
 import { TypeDeclaration } from '../TypeDeclaration';
 import { ExternDeclaration } from './ExternDeclaration';
@@ -28,4 +29,24 @@ export class ExternClassMethodDeclaration extends ExternDeclaration {
     parameters: ParseContextElementDelimitedSequence<ParseContextKind.DataDeclarationSequence> = undefined!;
     closingParenthesis: MissableToken<ClosingParenthesisToken> = undefined!;
     attributes: ParseContextElementSequence<ParseContextKind.ClassMethodAttributes> = undefined!;
+
+    get firstToken() {
+        return this.methodKeyword;
+    }
+
+    get lastToken() {
+        if (this.nativeSymbol) {
+            if (isNode(this.nativeSymbol)) {
+                return this.nativeSymbol.lastToken;
+            }
+
+            return this.nativeSymbol;
+        }
+
+        if (this.attributes.length !== 0) {
+            return this.attributes[this.attributes.length - 1];
+        }
+
+        return this.closingParenthesis;
+    }
 }

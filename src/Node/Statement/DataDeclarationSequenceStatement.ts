@@ -11,4 +11,16 @@ export class DataDeclarationSequenceStatement extends Statement {
     readonly kind = NodeKind.DataDeclarationSequenceStatement;
 
     dataDeclarationSequence: DataDeclarationSequence = undefined!;
+
+    get firstToken() {
+        return this.dataDeclarationSequence.firstToken;
+    }
+
+    get lastToken() {
+        if (this.terminator) {
+            return this.terminator;
+        }
+        
+        return this.dataDeclarationSequence.lastToken;
+    }
 }

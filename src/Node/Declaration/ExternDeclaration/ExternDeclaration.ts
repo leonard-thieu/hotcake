@@ -1,5 +1,5 @@
 import { EqualsSignToken } from '../../../Token/Token';
-import { MissableStringLiteral } from '../../Expression/StringLiteral';
+import { MissableStringLiteralExpression } from '../../Expression/StringLiteralExpression';
 import { Declaration } from '../Declaration';
 import { ExternClassDeclaration } from './ExternClassDeclaration';
 import { ExternClassMethodDeclaration } from './ExternClassMethodDeclaration';
@@ -8,7 +8,7 @@ import { ExternFunctionDeclaration } from './ExternFunctionDeclaration';
 
 export abstract class ExternDeclaration extends Declaration {
     equalsSign?: EqualsSignToken = undefined;
-    nativeSymbol?: MissableStringLiteral = undefined;
+    nativeSymbol?: MissableStringLiteralExpression = undefined;
 }
 
 export type ExternDeclarations =

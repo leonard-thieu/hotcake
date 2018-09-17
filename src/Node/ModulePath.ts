@@ -10,4 +10,12 @@ export class ModulePath extends Node {
     readonly kind = NodeKind.ModulePath;
 
     children: ParseContextElementDelimitedSequence<ParseContextKind.ModulePathSequence> = undefined!;
+
+    get firstToken() {
+        return this.children[0];
+    }
+
+    get lastToken() {
+        return this.children[this.children.length - 1];
+    }
 }

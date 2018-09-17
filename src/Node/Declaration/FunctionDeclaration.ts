@@ -30,4 +30,16 @@ export class FunctionDeclaration extends Declaration {
     statements: ParseContextElementArray<FunctionDeclaration['kind']> = undefined!;
     endKeyword: MissableToken<EndKeywordToken> = undefined!;
     endFunctionKeyword?: FunctionKeywordToken = undefined;
+
+    get firstToken() {
+        return this.functionKeyword;
+    }
+
+    get lastToken() {
+        if (this.endFunctionKeyword) {
+            return this.endFunctionKeyword;
+        }
+
+        return this.endKeyword;
+    }
 }

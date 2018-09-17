@@ -21,4 +21,12 @@ export class RemDirective extends Directive {
     endDirectiveNumberSign: MissableToken<NumberSignToken> = undefined!;
     endDirectiveKeyword: MissableToken<EndDirectiveKeywordToken> = undefined!;
     endIfDirectiveKeyword?: IfDirectiveKeywordToken = undefined;
+
+    get lastToken() {
+        if (this.endIfDirectiveKeyword) {
+            return this.endIfDirectiveKeyword;
+        }
+
+        return this.endDirectiveKeyword;
+    }
 }

@@ -25,4 +25,16 @@ export class InterfaceDeclaration extends Declaration {
     members: ParseContextElementArray<InterfaceDeclaration['kind']> = undefined!;
     endKeyword: MissableToken<EndKeywordToken> = undefined!;
     endInterfaceKeyword?: InterfaceKeywordToken = undefined;
+
+    get firstToken() {
+        return this.interfaceKeyword;
+    }
+
+    get lastToken() {
+        if (this.endInterfaceKeyword) {
+            return this.endInterfaceKeyword;
+        }
+
+        return this.endKeyword;
+    }
 }

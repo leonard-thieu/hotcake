@@ -10,4 +10,12 @@ export class StrictDirective extends Declaration {
     readonly kind = NodeKind.StrictDirective;
 
     strictKeyword: StrictKeywordToken = undefined!;
+
+    get firstToken() {
+        return this.strictKeyword;
+    }
+
+    get lastToken() {
+        return this.strictKeyword;
+    }
 }

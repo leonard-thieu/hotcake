@@ -11,4 +11,16 @@ export class SelfExpression extends Expression {
     readonly kind = NodeKind.SelfExpression;
 
     selfKeyword: SelfKeywordToken = undefined!;
+
+    get firstToken() {
+        if (this.newlines && this.newlines.length !== 0) {
+            return this.newlines[0];
+        }
+
+        return this.selfKeyword;
+    }
+
+    get lastToken() {
+        return this.selfKeyword;
+    }
 }

@@ -16,4 +16,12 @@ export class ArrayTypeDeclaration extends Node {
     openingSquareBracket: OpeningSquareBracketToken = undefined!;
     expression?: MissableExpression = undefined;
     closingSquareBracket: MissableToken<ClosingSquareBracketToken> = undefined!;
+
+    get firstToken() {
+        return this.openingSquareBracket;
+    }
+
+    get lastToken() {
+        return this.closingSquareBracket;
+    }
 }

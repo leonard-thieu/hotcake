@@ -11,4 +11,16 @@ export class NullExpression extends Expression {
     readonly kind = NodeKind.NullExpression;
 
     nullKeyword: NullKeywordToken = undefined!;
+
+    get firstToken() {
+        if (this.newlines && this.newlines.length !== 0) {
+            return this.newlines[0];
+        }
+
+        return this.nullKeyword;
+    }
+
+    get lastToken() {
+        return this.nullKeyword;
+    }
 }
