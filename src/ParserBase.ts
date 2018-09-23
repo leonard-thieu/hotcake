@@ -23,7 +23,7 @@ import { MissableStringLiteralExpression, StringLiteralExpression } from './Node
 import { SuperExpression } from './Node/Expression/SuperExpression';
 import { UnaryOperatorToken, UnaryOpExpression } from './Node/Expression/UnaryOpExpression';
 import { EscapedIdentifier, MissableIdentifier } from './Node/Identifier';
-import { Nodes } from './Node/Node';
+import { isNode, Nodes } from './Node/Node';
 import { NodeKind } from './Node/NodeKind';
 import { TypeReference, TypeReferenceIdentifierStartToken } from './Node/TypeReference';
 import { GreaterThanSignEqualsSignToken } from './Token/GreaterThanSignEqualsSignToken';
@@ -680,6 +680,9 @@ export abstract class ParserBase {
         indexExpression.indexableExpression = expression;
         indexExpression.openingSquareBracket = openingSquareBracket;
         indexExpression.indexExpressionExpression = indexExpressionExpression;
+        if (isNode(indexExpression.indexExpressionExpression)) {
+            indexExpression.indexExpressionExpression.parent = indexExpression;
+        }
         indexExpression.closingSquareBracket = this.eatMissable(TokenKind.ClosingSquareBracket);
 
         return indexExpression;
@@ -697,6 +700,9 @@ export abstract class ParserBase {
         sliceExpression.sliceableExpression = expression;
         sliceExpression.openingSquareBracket = openingSquareBracket;
         sliceExpression.startExpression = startExpression;
+        if (sliceExpression.startExpression) {
+            sliceExpression.startExpression.parent = sliceExpression;
+        }
         sliceExpression.sliceOperator = sliceOperator;
         if (this.isExpressionStart(this.getToken())) {
             sliceExpression.endExpression = this.parseExpression(sliceExpression) as Expressions;
