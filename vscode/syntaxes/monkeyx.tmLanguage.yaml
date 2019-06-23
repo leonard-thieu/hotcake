@@ -1,0 +1,1382 @@
+name: "Monkey X"
+scopeName: "source.monkeyx"
+
+patterns:
+- include: "#comment"
+- include: "#preprocessor-directive"
+- include: "#strict-directive"
+- include: "#import-statement"
+- include: "#friend-directive"
+- include: "#private-directive"
+- include: "#public-directive"
+- include: "#extern-directive"
+- include: "#alias-directive"
+- include: "#const-declaration"
+- include: "#global-declaration"
+- include: "#function-declaration"
+- include: "#interface-declaration"
+- include: "#class-declaration"
+repository:
+  comment:
+    patterns:
+    - match: "[\\x00-\\x20]*('.*)"
+      captures:
+        1:
+          name: "comment.line.single-quote.monkeyx"
+
+  preprocessor-directive:
+    patterns:
+    - include: "#if-directive"
+    - include: "#elseif-directive"
+    - include: "#else-directive"
+    - include: "#end-directive"
+    - include: "#rem-directive"
+    - include: "#print-directive"
+    - include: "#error-directive"
+    - include: "#assignment-directive"
+    repository:
+      if-directive:
+        patterns:
+        - match: "^[\\x00-\\x20]*(#(?i)(?:If))[\\x00-\\x20]+([^']+)"
+          captures:
+            1:
+              name: "meta.preprocessor.if.monkeyx"
+            2:
+              patterns:
+              - include: "#expression"
+      elseif-directive:
+        patterns:
+        - match: "^[\\x00-\\x20]*(#(?i)(?:Else[\\x00-\\x20]*If))[\\x00-\\x20]+([^']+)"
+          captures:
+            1:
+              name: "meta.preprocessor.elseif.monkeyx"
+            2:
+              patterns:
+              - include: "#expression"
+      else-directive:
+        patterns:
+        - match: "^[\\x00-\\x20]*(#(?i)(?:Else))[\\x00-\\x20]*"
+          captures:
+            1:
+              name: "meta.preprocessor.else.monkeyx"
+      end-directive:
+        patterns:
+        - match: "^[\\x00-\\x20]*(#(?i:End(?:If)?))[\\x00-\\x20]*"
+          captures:
+            1:
+              name: "meta.preprocessor.end.monkeyx"
+      rem-directive:
+        patterns:
+        - name: "meta.preprocessor.rem.monkeyx"
+          begin: "^[\\x00-\\x20]*(?i:#Rem)"
+          end: "^[\\x00-\\x20]*(?i:#End)"
+          contentName: "comment.block.monkeyx"
+          patterns:
+          - include: "#rem-directive"
+      print-directive:
+        patterns:
+        - name: "meta.preprocessor.print.monkeyx"
+          match: "^[\\x00-\\x20]*(?i:#Print)[\\x00-\\x20]+(.+)"
+          captures:
+            1:
+              patterns:
+              - include: "#comment"
+              - include: "#expression"
+      error-directive:
+        patterns:
+        - name: "meta.preprocessor.error.monkeyx"
+          match: "^[\\x00-\\x20]*(?i:#Error)[\\x00-\\x20]+(.+)"
+          captures:
+            1:
+              patterns:
+              - include: "#comment"
+              - include: "#expression"
+      assignment-directive:
+        patterns:
+        - name: "meta.preprocessor.assignment.monkeyx"
+          match: "^[\\x00-\\x20]*(?:#(?:[A-Za-z]|_[A-Za-z])[_A-Za-z0-9]*)[\\x00-\\x20]*(=|\\*=|/=|(?i:Shl=)|(?i:Shr=)|(?i:Mod=)|\\+=|-=|&=|~=|\\|=)[\\x00-\\x20]*(.+)"
+          captures:
+            1:
+              patterns:
+              - include: "#assignment-operator"
+            2:
+              patterns:
+              - include: "#comment"
+              - include: "#expression"
+
+  strict-directive:
+    patterns:
+    - match: "[\\x00-\\x20]*\\b(?i)(Strict)\\b[\\x00-\\x20]*"
+      captures:
+        1:
+          name: "keyword.other.strict.monkeyx"
+  import-statement:
+    patterns:
+    - match: "[\\x00-\\x20]*\\b(?i)(Import)\\b[\\x00-\\x20]*(.+)"
+      captures:
+        1:
+          name: "keyword.other.import.monkeyx"
+        2:
+          patterns:
+          - include: "#comment"
+          - include: "#string-literal"
+          - include: "#module-path"
+  friend-directive:
+    patterns:
+    - match: "[\\x00-\\x20]*\\b(?i)(Friend)\\b[\\x00-\\x20]*(.+)"
+      captures:
+        1:
+          name: "storage.modifier.friend.monkeyx"
+        2:
+          patterns:
+          - include: "#comment"
+          - include: "#module-path"
+  private-directive:
+    patterns:
+    - match: "[\\x00-\\x20]*\\b(?i)(Private)\\b[\\x00-\\x20]*"
+      captures:
+        1:
+          name: "storage.modifier.private.monkeyx"
+  public-directive:
+    patterns:
+    - match: "[\\x00-\\x20]*\\b(?i)(Public)\\b[\\x00-\\x20]*"
+      captures:
+        1:
+          name: "storage.modifier.public.monkeyx"
+  extern-directive:
+    patterns:
+    - name: "storage.modifier.extern.monkeyx"
+      begin: "[\\x00-\\x20]*\\b(?i)(Extern(?:[\\x00-\\x20]+Private)?)\\b[\\x00-\\x20]*"
+      end: "(?=[\\x00-\\x20]*\\b(?i)(Public|Private)\\b[\\x00-\\x20]*)"
+      patterns:
+      - include: "#comment"
+      - include: "#preprocessor-directive"
+      - include: "#extern-function-declaration"
+      - include: "#extern-class-declaration"
+    repository:
+      extern-function-declaration:
+        patterns:
+        - match: "[\\x00-\\x20]*\\b(?i)(Function)\\b[\\x00-\\x20]*((?:[A-Za-z]|_[A-Za-z])[_A-Za-z0-9]*)([^\\(]*)([^\\)]+\\))[\\x00-\\x20]*(?:(=)[\\x00-\\x20]*(.+))?"
+          captures:
+            1:
+              name: "keyword.other.function.monkeyx"
+            2:
+              patterns:
+              - include: "#identifier"
+            3:
+              patterns:
+              - include: "#type-declaration"
+            4:
+              patterns:
+              - include: "#bracketed-parameter-list"
+            5:
+              patterns:
+              - include: "#assignment-operator"
+            6:
+              patterns:
+              - include: "#string-literal"
+      extern-class-declaration:
+        patterns:
+        - begin: "[\\x00-\\x20]*\\b(?i)(Class)\\b[\\x00-\\x20]*(@?(?:[A-Za-z]|_[A-Za-z])[_A-Za-z0-9]*)[\\x00-\\x20]*(<[^>]+>)?[\\x00-\\x20]*(.+)?"
+          beginCaptures:
+            1:
+              name: "keyword.other.class.monkeyx"
+            2:
+              patterns:
+              - include: "#identifier"
+            3:
+              patterns:
+              - include: "#generic-type-parameters"
+            4:
+              patterns:
+              - match: "\\b(?i)(Extends)\\b[\\x00-\\x20]*(.+?(?=(?i:Implements)|=|$))"
+                captures:
+                  1:
+                    name: "keyword.other.extends.monkeyx"
+                  2:
+                    patterns:
+                    - include: "#type-reference"
+              - match: "\\b(?i)(Implements)\\b[\\x00-\\x20]*(.+?(?==|$))"
+                captures:
+                  1:
+                    name: "keyword.other.implements.monkeyx"
+                  2:
+                    patterns:
+                    - include: "#type-references"
+              - match: "[\\x00-\\x20]*(=)[\\x00-\\x20]*(.+)"
+                captures:
+                  1:
+                    patterns:
+                    - include: "#assignment-operator"
+                  2:
+                    patterns:
+                    - include: "#string-literal"
+          end: "[\\x00-\\x20]*\\b(?i)(End[\\x00-\\x20]+Class|End)\\b[\\x00-\\x20]*"
+          endCaptures:
+            1:
+              name: "keyword.other.class.monkeyx"
+          patterns:
+          - include: "#comment"
+          - include: "#preprocessor-directive"
+          - include: "#private-directive"
+          - include: "#public-directive"
+          - include: "#extern-function-declaration"
+          - include: "#extern-field-declaration"
+          - include: "#extern-class-method-declaration"
+        repository:
+          extern-field-declaration:
+            patterns:
+            - match: "[\\x00-\\x20]*\\b(?i)(Field)\\b[\\x00-\\x20]*((?:[A-Za-z]|_[A-Za-z])[_A-Za-z0-9]*)([^=']+)(?:(=)[\\x00-\\x20]*(.+))?"
+              captures:
+                1:
+                  name: "keyword.declaration.field.monkeyx"
+                2:
+                  patterns:
+                  - include: "#identifier"
+                3:
+                  patterns:
+                  - include: "#type-declaration"
+                4:
+                  patterns:
+                  - include: "#assignment-operator"
+                5:
+                  patterns:
+                  - include: "#string-literal"
+          extern-class-method-declaration:
+            patterns:
+            - match: "[\\x00-\\x20]*\\b(?i)(Method)\\b[\\x00-\\x20]*((?:[A-Za-z]|_[A-Za-z])[_A-Za-z0-9]*)([^\\(]*)([^\\)]+\\))(?:[\\x00-\\x20]*\\b(?i)(Property)\\b[\\x00-\\x20]*)?(?:[\\x00-\\x20]*(=)[\\x00-\\x20]*(.+))?"
+              captures:
+                1:
+                  name: "keyword.other.method.monkeyx"
+                2:
+                  patterns:
+                  - include: "#identifier"
+                3:
+                  patterns:
+                  - include: "#type-declaration"
+                4:
+                  patterns:
+                  - include: "#bracketed-parameter-list"
+                5:
+                  name: "storage.modifier.property.monkeyx"
+                6:
+                  patterns:
+                  - include: "#assignment-operator"
+                7:
+                  patterns:
+                  - include: "#string-literal"
+  alias-directive:
+    patterns:
+    - comment: "TODO: Does Alias have to be on its own line? Is a space required to separate Alias from the variable?"
+      name: "meta.alias.monkeyx"
+      match: "[\\x00-\\x20]*(?i)(Alias)[\\x00-\\x20]+((?:[A-Za-z]|_[A-Za-z])[_A-Za-z0-9]*)[\\x00-\\x20]*(=)(.+)"
+      captures:
+        1:
+          name: "storage.type.alias.monkeyx"
+        2:
+          name: "entity.name.alias.monkeyx"
+        3:
+          name: "keyword.operator.assignment.monkeyx"
+        4:
+          patterns:
+          - include: "#comment"
+          - include: "#type-reference"
+  const-declaration:
+    patterns:
+    - comment: "TODO: Does Const have to be on its own line? Is a space required to separate Const from the variable? Handle newline separated declarations."
+      match: "[\\x00-\\x20]*(?i)(Const)[\\x00-\\x20]+(.+)"
+      captures:
+        1:
+          name: "storage.type.constant.monkeyx"
+        2:
+          patterns:
+          - include: "#const-data-declaration"
+          - include: "#punctuation-comma"
+    repository:
+      const-data-declaration:
+        patterns:
+        - comment: "Identifier := Expression"
+          begin: "((?:[A-Za-z]|_[A-Za-z])[_A-Za-z0-9]*)[\\x00-\\x20]*(:=)[\\x00-\\x20]*"
+          beginCaptures:
+            1:
+              name: "entity.name.constant.monkeyx"
+            2:
+              name: "keyword.operator.assignment.infer.monkeyx"
+          end: "(?=,|$)"
+          patterns:
+          - include: "#comment"
+          - include: "#expression"
+        - comment: "Identifier: Type = Expression | Identifier = Expression"
+          begin: "((?:[A-Za-z]|_[A-Za-z])[_A-Za-z0-9]*)[\\x00-\\x20]*([^=]*)[\\x00-\\x20]*(=)[\\x00-\\x20]*"
+          beginCaptures:
+            1:
+              name: "entity.name.constant.monkeyx"
+            2:
+              patterns:
+              - include: "#type-declaration"
+            3:
+              name: "keyword.operator.assignment.monkeyx"
+          end: "(?=,|$)"
+          patterns:
+          - include: "#comment"
+          - include: "#expression"
+  global-declaration:
+    patterns:
+    - match: "[\\x00-\\x20]*\\b(?i)(Global)\\b[\\x00-\\x20]*(.+)"
+      captures:
+        1:
+          name: "storage.type.global.monkeyx"
+        2:
+          patterns:
+          - include: "#global-data-declaration"
+          - include: "#punctuation-comma"
+    repository:
+      global-data-declaration:
+        patterns:
+        - comment: "Identifier := Expression"
+          begin: "((?:[A-Za-z]|_[A-Za-z])[_A-Za-z0-9]*)[\\x00-\\x20]*(:=)[\\x00-\\x20]*"
+          beginCaptures:
+            1:
+              name: "entity.name.global.monkeyx"
+            2:
+              name: "keyword.operator.assignment.infer.monkeyx"
+          end: "(?=,|$)"
+          patterns:
+          - include: "#comment"
+          - include: "#expression"
+        - comment: "Identifier: Type = Expression | Identifier = Expression"
+          begin: "((?:[A-Za-z]|_[A-Za-z])[_A-Za-z0-9]*)[\\x00-\\x20]*([^=]*)[\\x00-\\x20]*(=)[\\x00-\\x20]*"
+          beginCaptures:
+            1:
+              name: "entity.name.global.monkeyx"
+            2:
+              patterns:
+              - include: "#type-declaration"
+            3:
+              name: "keyword.operator.assignment.monkeyx"
+          end: "(?=,|$)"
+          patterns:
+          - include: "#comment"
+          - include: "#expression"
+        - comment: "Identifier: Type | Identifier"
+          begin: "((?:[A-Za-z]|_[A-Za-z])[_A-Za-z0-9]*)[\\x00-\\x20]*((?::)[\\x00-\\x20]*(?:(?:((?:[A-Za-z]|_[A-Za-z])[_A-Za-z0-9]*)\\.)*((?:[A-Za-z]|_[A-Za-z])[_A-Za-z0-9]*)(<[^>]+>)?(\\[[^\\]]*\\])*))?"
+          beginCaptures:
+            1:
+              name: "entity.name.global.monkeyx"
+            2:
+              patterns:
+              - include: "#type-declaration"
+          end: "(?=,|$)"
+          patterns:
+          - include: "#comment"
+  function-declaration:
+    patterns:
+    - name: "meta.function.monkeyx"
+      begin: "[\\x00-\\x20]*\\b(?i)(Function)[\\x00-\\x20]+((?:[A-Za-z]|_[A-Za-z])[_A-Za-z0-9]*)([^\\(]*)([^\\)]+\\))[\\x00-\\x20]*"
+      beginCaptures:
+        1:
+          name: "storage.type.function.monkeyx"
+        2:
+          name: "entity.name.function.monkeyx"
+        3:
+          name: "meta.function.return-type.monkeyx"
+          patterns:
+          - include: "#type-declaration"
+        4:
+          patterns:
+          - include: "#bracketed-parameter-list"
+      end: "[\\x00-\\x20]*\\b(?i)(End[\\x00-\\x20]+Function|End)\\b[\\x00-\\x20]*"
+      endCaptures:
+        1:
+          name: "storage.type.function.monkeyx"
+      patterns:
+      - include: "#comment"
+      - include: "#preprocessor-directive"
+      - include: "#statement"
+  interface-declaration:
+    patterns:
+    - comment: "There is a `entity.name.interface.monkeyx` scope but VS Code does not apply the same highlighting as for class names."
+      name: "meta.interface.monkeyx"
+      begin: "[\\x00-\\x20]*\\b(?i)(Interface)\\b[\\x00-\\x20]*((?:[A-Za-z]|_[A-Za-z])[_A-Za-z0-9]*)[\\x00-\\x20]*(.+)?"
+      beginCaptures:
+        1:
+          name: "storage.type.interface.monkeyx"
+        2:
+          name: "entity.name.class.monkeyx"
+        3:
+          patterns:
+          - include: "#comment"
+          - match: "[\\x00-\\x20]*\\b(?i)(Extends)\\b[\\x00-\\x20]*(.+)"
+            captures:
+              1:
+                name: "storage.modifier.extends.monkeyx"
+              2:
+                name: "entity.other.inherited-class.monkeyx"
+                patterns:
+                - include: "#comment"
+                - include: "#type-reference"
+      end: "[\\x00-\\x20]*\\b(?i)(End[\\x00-\\x20]+Interface|End)\\b[\\x00-\\x20]*"
+      endCaptures:
+        1:
+          name: "storage.type.interface.monkeyx"
+      patterns:
+      - include: "#comment"
+      - include: "#preprocessor-directive"
+      - include: "#const-declaration"
+      - include: "#interface-method-declaration"
+    repository:
+      interface-method-declaration:
+        patterns:
+        - match: "[\\x00-\\x20]*\\b(?i)(Method)\\b[\\x00-\\x20]*((?:[A-Za-z]|_[A-Za-z])[_A-Za-z0-9]*)([^\\(]+)?([^\\)]+\\))"
+          captures:
+            1:
+              name: "storage.type.function.monkeyx"
+            2:
+              name: "entity.name.function.monkeyx"
+            3:
+              name: "meta.function.return-type.monkeyx"
+              patterns:
+              - include: "#type-declaration"
+            4:
+              patterns:
+              - include: "#bracketed-parameter-list"
+  class-declaration:
+    patterns:
+    - name: "meta.class.monkeyx"
+      begin: "[\\x00-\\x20]*\\b(?i)(Class)\\b[\\x00-\\x20]*((?:[A-Za-z]|_[A-Za-z])[_A-Za-z0-9]*)[\\x00-\\x20]*(<[^>]+>)?[\\x00-\\x20]*(.+)?"
+      beginCaptures:
+        1:
+          name: "storage.type.class.monkeyx"
+        2:
+          name: "entity.name.class.monkeyx"
+        3:
+          patterns:
+          - include: "#generic-type-parameters"
+        4:
+          patterns:
+          - include: "#comment"
+          - match: "[\\x00-\\x20]*\\b(?i)(Abstract)\\b[\\x00-\\x20]*"
+            captures:
+              1:
+                name: "storage.modifier.abstract.monkeyx"
+          - match: "[\\x00-\\x20]*\\b(?i)(Final)\\b[\\x00-\\x20]*"
+            captures:
+              1:
+                name: "storage.modifier.final.monkeyx"
+          - match: "[\\x00-\\x20]*\\b(?i)(Extends)\\b[\\x00-\\x20]*(.+?(?=\\b(?i:Abstract|Final|Implements)\\b|$))"
+            captures:
+              1:
+                name: "storage.modifier.extends.monkeyx"
+              2:
+                name: "entity.other.inherited-class.monkeyx"
+                patterns:
+                - include: "#comment"
+                - include: "#type-reference"
+          - match: "[\\x00-\\x20]*\\b(?i)(Implements)\\b[\\x00-\\x20]*(.+?(?=\\b(?i:Abstract|Final)\\b|$))"
+            captures:
+              1:
+                name: "storage.modifier.implements.monkeyx"
+              2:
+                name: "entity.other.inherited-class.monkeyx"
+                patterns:
+                - include: "#comment"
+                - include: "#type-references"
+      end: "[\\x00-\\x20]*\\b(?i)(End[\\x00-\\x20]+Class|End)\\b[\\x00-\\x20]*"
+      endCaptures:
+        1:
+          name: "storage.type.class.monkeyx"
+      patterns:
+      - include: "#comment"
+      - include: "#preprocessor-directive"
+      - include: "#protected-directive"
+      - include: "#private-directive"
+      - include: "#public-directive"
+      - include: "#const-declaration"
+      - include: "#global-declaration"
+      - include: "#function-declaration"
+      - include: "#field-declaration"
+      - include: "#class-method-declaration"
+    repository:
+      generic-type-parameters:
+        patterns:
+        - name: "meta.generic.monkeyx"
+          begin: "<"
+          end: ">"
+          patterns:
+          - include: "#identifier"
+          - include: "#punctuation-comma"
+      protected-directive:
+        patterns:
+        - name: "storage.modifier.protected.monkeyx"
+          match: "[\\x00-\\x20]*\\b(?i)(Protected)\\b[\\x00-\\x20]*"
+      field-declaration:
+        patterns:
+        - match: "[\\x00-\\x20]*\\b(?i)(Field)\\b[\\x00-\\x20]*(.+)"
+          captures:
+            1:
+              name: "storage.type.field.monkeyx"
+            2:
+              patterns:
+              - include: "#field-data-declaration"
+              - include: "#punctuation-comma"
+        repository:
+          field-data-declaration:
+            patterns:
+            - comment: "Identifier := Expression"
+              begin: "((?:[A-Za-z]|_[A-Za-z])[_A-Za-z0-9]*)[\\x00-\\x20]*(:=)[\\x00-\\x20]*"
+              beginCaptures:
+                1:
+                  name: "entity.name.field.monkeyx"
+                2:
+                  name: "keyword.operator.assignment.infer.monkeyx"
+              end: "(?=,|$)"
+              patterns:
+              - include: "#comment"
+              - include: "#expression"
+            - comment: "Identifier: Type = Expression | Identifier = Expression"
+              begin: "((?:[A-Za-z]|_[A-Za-z])[_A-Za-z0-9]*)[\\x00-\\x20]*([^=]*)[\\x00-\\x20]*(=)[\\x00-\\x20]*"
+              beginCaptures:
+                1:
+                  name: "entity.name.field.monkeyx"
+                2:
+                  patterns:
+                  - include: "#type-declaration"
+                3:
+                  name: "keyword.operator.assignment.monkeyx"
+              end: "(?=,|$)"
+              patterns:
+              - include: "#comment"
+              - include: "#expression"
+            - comment: "Identifier: Type | Identifier"
+              begin: "((?:[A-Za-z]|_[A-Za-z])[_A-Za-z0-9]*)[\\x00-\\x20]*((?::)[\\x00-\\x20]*(?:(?:((?:[A-Za-z]|_[A-Za-z])[_A-Za-z0-9]*)\\.)*((?:[A-Za-z]|_[A-Za-z])[_A-Za-z0-9]*)(<[^>]+>)?(\\[[^\\]]*\\])*))?"
+              beginCaptures:
+                1:
+                  name: "entity.name.field.monkeyx"
+                2:
+                  patterns:
+                  - include: "#type-declaration"
+              end: "(?=,|$)"
+              patterns:
+              - include: "#comment"
+      class-method-declaration:
+        patterns:
+        - comment: "Abstract method"
+          match: "[\\x00-\\x20]*\\b(?i)(Method)\\b[\\x00-\\x20]*((?:[A-Za-z]|_[A-Za-z])[_A-Za-z0-9]*)([^\\(]+)?([^\\)]+\\))(?:[\\x00-\\x20]*\\b(?i)(Property)\\b[\\x00-\\x20]*)?[\\x00-\\x20]*\\b(?i)(Abstract)\\b[\\x00-\\x20]*(?:[\\x00-\\x20]*\\b(?i)(Property)\\b[\\x00-\\x20]*)?"
+          captures:
+            1:
+              name: "storage.type.function.monkeyx"
+            2:
+              name: "entity.name.function.monkeyx"
+            3:
+              name: "meta.function.return-type.monkeyx"
+              patterns:
+              - include: "#type-declaration"
+            4:
+              patterns:
+              - include: "#bracketed-parameter-list"
+            5:
+              name: "storage.modifier.property.monkeyx"
+            6:
+              name: "storage.modifier.abstract.monkeyx"
+            7:
+              name: "storage.modifier.property.monkeyx"
+        - begin: "[\\x00-\\x20]*\\b(?i)(Method)\\b[\\x00-\\x20]*((?:[A-Za-z]|_[A-Za-z])[_A-Za-z0-9]*)([^\\(]+)?([^\\)]+\\))(.+)?"
+          beginCaptures:
+            1:
+              name: "storage.type.function.monkeyx"
+            2:
+              name: "entity.name.function.monkeyx"
+            3:
+              name: "meta.function.return-type.monkeyx"
+              patterns:
+              - include: "#type-declaration"
+            4:
+              patterns:
+              - include: "#bracketed-parameter-list"
+            5:
+              patterns:
+              - name: "storage.modifier.property.monkeyx"
+                match: "[\\x00-\\x20]*\\b(?i)(Property)\\b[\\x00-\\x20]*"
+              - name: "storage.modifier.final.monkeyx"
+                match: "[\\x00-\\x20]*\\b(?i)(Final)\\b[\\x00-\\x20]*"
+          end: "[\\x00-\\x20]*\\b(?i)(End[\\x00-\\x20]+Method|End)\\b[\\x00-\\x20]*"
+          endCaptures:
+            1:
+              name: "storage.type.method.monkeyx"
+          patterns:
+          - include: "#comment"
+          - include: "#preprocessor-directive"
+          - include: "#statement"
+
+  statement:
+    patterns:
+    - begin: "(?<=^|;)[\\x00-\\x20]*"
+      end: "[\\x00-\\x20]*($|;)"
+      endCaptures:
+        0:
+          patterns:
+          - include: "#statement-terminator"
+      patterns:
+      - include: "#inline-statement"
+  inline-statement:
+    patterns:
+    - include: "#comment"
+    - include: "#preprocessor-directive"
+    - include: "#local-declaration"
+    - include: "#return-statement"
+    - include: "#if-statement"
+    - include: "#select-statement"
+    - include: "#while-loop"
+    - include: "#repeat-loop"
+    - include: "#numeric-for-loop"
+    - include: "#for-each-in-loop"
+    - include: "#exit-statement"
+    - include: "#continue-statement"
+    - include: "#throw-statement"
+    - include: "#try-statement"
+    - include: "#expression-statement"
+    - include: "#assignment-statement"
+  local-declaration:
+    patterns:
+    - begin: "[\\x00-\\x20]*\\b(?i)(Local)\\b[\\x00-\\x20]*"
+      beginCaptures:
+        1:
+          name: "keyword.other.local.monkeyx"
+      end: "(?=$)"
+      patterns:
+      - include: "#data-declarations"
+  return-statement:
+    patterns:
+    - match: "(?i)(Return)(?:[\\x00-\\x20]+([^$|;]+))?"
+      captures:
+        1:
+          name: "keyword.control.return.monkeyx"
+        2:
+          patterns:
+          - include: "#comment"
+          - include: "#expression"
+  if-statement:
+    patterns:
+    - begin: "[\\x00-\\x20]*\\b(?i)(If)\\b[\\x00-\\x20]*(.+?)[\\x00-\\x20]*\\b(?i)(Then)\\b[\\x00-\\x20]*"
+      beginCaptures:
+        1:
+          name: "keyword.control.conditional.if.monkeyx"
+        2:
+          patterns:
+          - include: "#expression"
+        3:
+          name: "keyword.control.conditional.then.monkeyx"
+      end: "[\\x00-\\x20]*\\b(?i)(End[\\x00-\\x20]*If|End)\\b[\\x00-\\x20]*"
+      endCaptures:
+        1:
+          name: "keyword.control.conditional.end-if.monkeyx"
+      patterns:
+      - include: "#comment"
+      - include: "#preprocessor-directive"
+      - include: "#else-if-statement"
+      - include: "#else-statement"
+      - include: "#statement"
+    - begin: "[\\x00-\\x20]*\\b(?i)(If)\\b[\\x00-\\x20]*(.+)"
+      beginCaptures:
+        1:
+          name: "keyword.control.conditional.if.monkeyx"
+        2:
+          patterns:
+          - include: "#expression"
+      end: "[\\x00-\\x20]*\\b(?i)(End[\\x00-\\x20]*If|End)\\b[\\x00-\\x20]*"
+      endCaptures:
+        1:
+          name: "keyword.control.conditional.end-if.monkeyx"
+      patterns:
+      - include: "#comment"
+      - include: "#preprocessor-directive"
+      - include: "#else-if-statement"
+      - include: "#else-statement"
+      - include: "#statement"
+    repository:
+      else-if-statement:
+        patterns:
+        - begin: "[\\x00-\\x20]*\\b(?i)(Else[\\x00-\\x20]*If)\\b[\\x00-\\x20]*(.+?)[\\x00-\\x20]*\\b(?i)(Then)\\b[\\x00-\\x20]*"
+          beginCaptures:
+            1:
+              name: "keyword.control.conditional.else.monkeyx"
+            2:
+              patterns:
+              - include: "#expression"
+            3:
+              name: "keyword.control.conditional.then.monkeyx"
+          end: "(?=[\\x00-\\x20]*\\b(?i:Else[\\x00-\\x20]*If|Else|End[\\x00-\\x20]*If|End)\\b[\\x00-\\x20]*)"
+          patterns:
+          - include: "#comment"
+          - include: "#preprocessor-directive"
+          - include: "#statement"
+        - begin: "[\\x00-\\x20]*\\b(?i)(Else[\\x00-\\x20]*If)\\b[\\x00-\\x20]*(.+)"
+          beginCaptures:
+            1:
+              name: "keyword.control.conditional.else.monkeyx"
+            2:
+              patterns:
+              - include: "#expression"
+          end: "(?=[\\x00-\\x20]*\\b(?i:Else[\\x00-\\x20]*If|Else|End[\\x00-\\x20]*If|End)\\b[\\x00-\\x20]*)"
+          patterns:
+          - include: "#comment"
+          - include: "#preprocessor-directive"
+          - include: "#statement"
+      else-statement:
+        patterns:
+        - begin: "[\\x00-\\x20]*\\b(?i)(Else)\\b[\\x00-\\x20]*"
+          beginCaptures:
+            1:
+              name: "keyword.control.conditional.else.monkeyx"
+          end: "(?=[\\x00-\\x20]*\\b(?i:End[\\x00-\\x20]*If|End)\\b[\\x00-\\x20]*)"
+          patterns:
+          - include: "#comment"
+          - include: "#preprocessor-directive"
+          - include: "#statement"
+  select-statement:
+    patterns:
+    - begin: "(?i)(Select)[\\x00-\\x20]+(.+)"
+      beginCaptures:
+        1:
+          name: "keyword.control.select.monkeyx"
+        2:
+          patterns:
+          - include: "#comment"
+          - include: "#expression"
+      end: "(?i)(End[\\x00-\\x20]+Select|End)[\\x00-\\x20]*"
+      endCaptures:
+        1:
+          name: "keyword.control.select.monkeyx"
+      patterns:
+      - include: "#comment"
+      - include: "#preprocessor-directive"
+      - include: "#case-statement"
+      - include: "#default-statement"
+    repository:
+      case-statement:
+        patterns:
+        - comment: "TODO: Does Case have to be on its own line? Is a space required to separate Case from its expression?"
+          begin: "^[\\x00-\\x20]*(?i)(Case)[\\x00-\\x20]+(.+)"
+          beginCaptures:
+            1:
+              name: "keyword.control.case.monkeyx"
+            2:
+              patterns:
+              - include: "#comment"
+              - include: "#preprocessor-directive"
+              - include: "#case-expression"
+          end: "(?=^[\\x00-\\x20]*(?i:Case|Default|End[\\x00-\\x20]+Select|End))"
+          patterns:
+          - include: "#comment"
+          - include: "#preprocessor-directive"
+          - include: "#statement"
+        repository:
+          case-expression:
+            patterns:
+            - comment: "TODO: Fix matching newline separated expressions. Syntax highlighting happens to be correct but this is not working correctly."
+              begin: "([^,]+)(?:(,)(.*))?"
+              beginCaptures:
+                1:
+                  patterns:
+                  - include: "#comment"
+                  - include: "#preprocessor-directive"
+                  - include: "#expression"
+                2:
+                  patterns:
+                  - include: "#punctuation-comma"
+                3:
+                  patterns:
+                  - begin: ".+"
+                    beginCaptures:
+                      0:
+                        patterns:
+                        - include: "#comment"
+                        - include: "#preprocessor-directive"
+                        - include: "#case-expression"
+                    end: "(?=$)"
+              end: "(?=$)"
+      default-statement:
+        patterns:
+        - comment: "TODO: Does Default have to be on its own line? Is a space required to separate Default from its statements?"
+          begin: "^[\\x00-\\x20]*(?i)(Default)[\\x00-\\x20]*"
+          beginCaptures:
+            1:
+              name: "keyword.control.default.monkeyx"
+          end: "(?=^[\\x00-\\x20]*(?i)(Case|Default|End[\\x00-\\x20]+Select|End))"
+          patterns:
+          - include: "#comment"
+          - include: "#preprocessor-directive"
+          - include: "#statement"
+  while-loop:
+    patterns:
+    - begin: "[\\x00-\\x20]*\\b(?i)(While)\\b[\\x00-\\x20]*(.+)"
+      beginCaptures:
+        1:
+          name: "keyword.control.while.monkeyx"
+        2:
+          patterns:
+          - include: "#expression"
+      end: "[\\x00-\\x20]*\\b(?i)(Wend|End[\\x00-\\x20]+While|End)\\b[\\x00-\\x20]*"
+      endCaptures:
+        1:
+          name: "keyword.control.while.monkeyx"
+      patterns:
+      - include: "#statement"
+  repeat-loop:
+    patterns:
+    - begin: "[\\x00-\\x20]*\\b(?i)(Repeat)\\b[\\x00-\\x20]*"
+      beginCaptures:
+        1:
+          name: "keyword.control.repeat.monkeyx"
+      end: "[\\x00-\\x20]*\\b(?i)(Forever|Until)\\b[\\x00-\\x20]*(.+)?"
+      endCaptures:
+        1:
+          name: "keyword.control.forever-until.monkeyx"
+        2:
+          patterns:
+          - include: "#expression"
+      patterns:
+      - include: "#statement"
+  numeric-for-loop:
+    patterns:
+    - begin: "[\\x00-\\x20]*\\b(?i)(For)\\b[\\x00-\\x20]*(.+)[\\x00-\\x20]*\\b(?i)(To|Until)\\b[\\x00-\\x20]*(.+?)[\\x00-\\x20]*\\b(?i)(Step)\\b[\\x00-\\x20]*(.+)"
+      beginCaptures:
+        1:
+          name: "keyword.control.for.monkeyx"
+        2:
+          patterns:
+          - include: "#local-declaration"
+        3:
+          name: "keyword.control.to-until.monkeyx"
+        4:
+          patterns:
+          - include: "#expression"
+        5:
+          name: "keyword.control.step.monkeyx"
+        6:
+          patterns:
+          - include: "#expression"
+      end: "[\\x00-\\x20]*\\b(?i)(Next|End[\\x00-\\x20]+For|End)\\b[\\x00-\\x20]*"
+      endCaptures:
+        1:
+          name: "keyword.control.for.monkeyx"
+      patterns:
+      - include: "#statement"
+    - begin: "[\\x00-\\x20]*\\b(?i)(For)\\b[\\x00-\\x20]*(.+)[\\x00-\\x20]*\\b(?i)(To|Until)\\b[\\x00-\\x20]*(.+)"
+      beginCaptures:
+        1:
+          name: "keyword.control.for.monkeyx"
+        2:
+          patterns:
+          - include: "#local-declaration"
+        3:
+          name: "keyword.control.to-until.monkeyx"
+        4:
+          patterns:
+          - include: "#expression"
+      end: "[\\x00-\\x20]*\\b(?i)(Next|End[\\x00-\\x20]+For|End)\\b[\\x00-\\x20]*"
+      endCaptures:
+        1:
+          name: "keyword.control.for.monkeyx"
+      patterns:
+      - include: "#statement"
+  for-each-in-loop:
+    patterns:
+    - begin: "[\\x00-\\x20]*\\b(?i)(For)\\b[\\x00-\\x20]*(.+)[\\x00-\\x20]*\\b(EachIn)\\b[\\x00-\\x20]*(.+)"
+      beginCaptures:
+        1:
+          name: "keyword.control.for.monkeyx"
+        2:
+          patterns:
+          - match: "\\b(?i)(Local)\\b[\\x00-\\x20]*((?:[A-Za-z]|_[A-Za-z])[_A-Za-z0-9]*)[\\x00-\\x20]*(:?=)[\\x00-\\x20]*"
+            captures:
+              1:
+                name: "keyword.other.local.monkeyx"
+              2:
+                patterns:
+                - include: "#identifier"
+              3:
+                name: "keyword.operator.infer-assignment.monkeyx"
+          - match: "\\b(?i)(Local)\\b[\\x00-\\x20]*((?:[A-Za-z]|_[A-Za-z])[_A-Za-z0-9]*)[\\x00-\\x20]*([^=]+)[\\x00-\\x20]*"
+            captures:
+              1:
+                name: "keyword.other.local.monkeyx"
+              2:
+                patterns:
+                - include: "#identifier"
+              3:
+                patterns:
+                - include: "#type-declaration"
+          - include: "#assignment-statement"
+        3:
+          name: "keyword.control.each-in.monkeyx"
+        4:
+          patterns:
+          - include: "#expression"
+      end: "[\\x00-\\x20]*\\b(?i)(Next|End[\\x00-\\x20]+For|End)\\b[\\x00-\\x20]*"
+      endCaptures:
+        1:
+          name: "keyword.control.for.monkeyx"
+      patterns:
+      - include: "#statement"
+  exit-statement:
+    patterns:
+    - match: "[\\x00-\\x20]*\\b(?i)(Exit)\\b[\\x00-\\x20]*"
+      captures:
+        1:
+          name: "keyword.control.exit.monkeyx"
+  continue-statement:
+    patterns:
+    - match: "[\\x00-\\x20]*\\b(?i)(Continue)\\b[\\x00-\\x20]*"
+      captures:
+        1:
+          name: "keyword.control.continue.monkeyx"
+  throw-statement:
+    patterns:
+    - match: "[\\x00-\\x20]*\\b(?i)(Throw)\\b[\\x00-\\x20]*(.+)"
+      captures:
+        1:
+          name: "keyword.control.throw.monkeyx"
+        2:
+          patterns:
+          - include: "#comment"
+          - include: "#expression"
+  try-statement:
+    patterns:
+    - comment: "TODO: Is End Try allowed?"
+      begin: "[\\x00-\\x20]*\\b(?i)(Try)\\b[\\x00-\\x20]*"
+      beginCaptures:
+        1:
+          name: "keyword.control.try.monkeyx"
+      end: "[\\x00-\\x20]*\\b(?i)(End)\\b[\\x00-\\x20]*"
+      endCaptures:
+        1:
+          name: "keyword.control.try.monkeyx"
+      patterns:
+      - include: "#comment"
+      - include: "#preprocessor-directive"
+      - include: "#catch-statement"
+      - include: "#statement"
+    repository:
+      catch-statement:
+        patterns:
+        - begin: "^[\\x00-\\x20]*\\b(?i)(Catch)\\b[\\x00-\\x20]*(.+)"
+          beginCaptures:
+            1:
+              name: "keyword.control.catch.monkeyx"
+            2:
+              patterns:
+              - include: "#comment"
+              - include: "#data-declaration"
+          end: "(?=^[\\x00-\\x20]*\\b(?i:Catch|End)\\b)"
+          patterns:
+          - include: "#comment"
+          - include: "#preprocessor-directive"
+          - include: "#statement"
+  assignment-statement:
+    patterns:
+    - match: "[\\x00-\\x20]*([^=<>]+)[\\x00-\\x20]*(?<!\\))[\\x00-\\x20]*(=|\\*=|/=|(?i)(?:Shl)=|(?i)(?:Shr)=|(?i)(?:Mod)=|\\+=|-=|&=|~=|\\|=)[\\x00-\\x20]*(.+)"
+      captures:
+        1:
+          patterns:
+          - include: "#expression"
+        2:
+          patterns:
+          - include: "#assignment-operator"
+        3:
+          patterns:
+          - include: "#expression"
+  assignment-operator:
+    patterns:
+    - name: "keyword.operator.assignment.monkeyx"
+      match: "="
+    - name: "keyword.operator.assignment.multiplication.monkeyx"
+      match: "\\*="
+    - name: "keyword.operator.assignment.division.monkeyx"
+      match: "/="
+    - name: "keyword.operator.assignment.bitwise.shift-left.monkeyx"
+      match: "(?i:Shl)="
+    - name: "keyword.operator.assignment.bitwise.shift-right.monkeyx"
+      match: "(?i:Shr)="
+    - name: "keyword.operator.assignment.modulus.monkeyx"
+      match: "(?i:Mod)="
+    - name: "keyword.operator.assignment.addition.monkeyx"
+      match: "\\+="
+    - name: "keyword.operator.assignment.subtraction.monkeyx"
+      match: "-="
+    - name: "keyword.operator.assignment.bitwise.and.monkeyx"
+      match: "&="
+    - name: "keyword.operator.assignment.bitwise.xor.monkeyx"
+      match: "~="
+    - name: "keyword.operator.assignment.bitwise.or.monkeyx"
+      match: "\\|="
+  expression-statement:
+    patterns:
+    - match: "[\\x00-\\x20]*(.+)"
+      captures:
+        1:
+          patterns:
+          - include: "#expression"
+  statement-terminator:
+    patterns:
+    - name: "punctuation.terminator.statement.monkeyx"
+      match: ";|$"
+
+  expression:
+    patterns:
+    - include: "#expression-operator"
+    - include: "#bracketed-argument-list"
+    - include: "#index-operator"
+    - include: "#grouping-expression"
+    - include: "#new-expression"
+    - include: "#null-literal"
+    - include: "#true-literal"
+    - include: "#false-literal"
+    - include: "#self-expression"
+    - include: "#super-expression"
+    - include: "#string-literal"
+    - include: "#float-literal"
+    - include: "#int-literal"
+    - include: "#array-literal"
+    - include: "#identifier"
+    - include: "#scope-member-access-expression"
+  grouping-expression:
+    patterns:
+    - begin: "\\("
+      end: "\\)"
+      patterns:
+      - include: "#expression"
+  new-expression:
+    patterns:
+    - match: "\\b(?i)(New)\\b[\\x00-\\x20]*([^[\\x00-\\x20]\\(]+)"
+      captures:
+        1:
+          name: "keyword.operator.new.monkeyx"
+        2:
+          patterns:
+          - include: "#type-reference"
+  null-literal:
+    patterns:
+    - match: "[\\x00-\\x20]*\\b(?i)(Null)\\b[\\x00-\\x20]*"
+      captures:
+        1:
+          name: "constant.language.null.monkeyx"
+  true-literal:
+    patterns:
+    - match: "[\\x00-\\x20]*\\b(?i)(True)\\b[\\x00-\\x20]*"
+      captures:
+        1:
+          name: "constant.language.true.monkeyx"
+  false-literal:
+    patterns:
+    - match: "[\\x00-\\x20]*\\b(?i)(False)\\b[\\x00-\\x20]*"
+      captures:
+        1:
+          name: "constant.language.false.monkeyx"
+  self-expression:
+    patterns:
+    - match: "[\\x00-\\x20]*\\b(?i)(Self)\\b[\\x00-\\x20]*"
+      captures:
+        1:
+          name: "variable.language.self.monkeyx"
+  super-expression:
+    patterns:
+    - match: "[\\x00-\\x20]*\\b(?i)(Super)\\b[\\x00-\\x20]*"
+      captures:
+        1:
+          name: "variable.language.super.monkeyx"
+  string-literal:
+    patterns:
+    - name: "string.quoted.double.monkeyx"
+      begin: "\""
+      beginCaptures:
+        0:
+          name: "punctuation.definition.string.begin"
+      end: "\""
+      endCaptures:
+        0:
+          name: "punctuation.definition.string.end"
+      patterns:
+      - comment: "TODO: Consider splitting this up into individual patterns with more specific scopes."
+        name: "constant.character.escape.monkeyx"
+        match: "~(?:q|n|r|t|z|~)"
+  float-literal:
+    patterns:
+    - name: "constant.numeric.float.monkeyx"
+      match: "[0-9]*\\.[0-9]+(?:[Ee](\\+|-)?[0-9]*)?"
+    - name: "constant.numeric.float.monkeyx"
+      match: "[0-9]+[Ee](\\+|-)?[0-9]*"
+  int-literal:
+    patterns:
+    - comment: "Hexadecimal number"
+      name: "constant.numeric.hex.monkeyx"
+      match: "\\$[0-9A-Fa-f]+"
+    - comment: "Binary number"
+      name: "constant.numeric.binary.monkeyx"
+      match: "%[0-1]+"
+    - comment: "Decimal number"
+      name: "constant.numeric.integer.monkeyx"
+      match: "[0-9]+"
+  array-literal:
+    patterns:
+    - begin: "\\["
+      end: "\\]"
+      patterns:
+      - include: "#expression"
+      - include: "#punctuation-comma"
+  scope-member-access-expression:
+    patterns:
+    - match: "(\\.)((?:[A-Za-z]|_[A-Za-z])[_A-Za-z0-9]*)"
+      captures:
+        1:
+          patterns:
+          - include: "#punctuation-accessor"
+        2:
+          name: "variable.name.monkeyx"
+  index-operator:
+    patterns:
+    - match: "\\[([^\\.]+)?\\.\\.([^\\]]+)?\\]"
+      captures:
+        1:
+          patterns:
+          - include: "#expression"
+        2:
+          patterns:
+          - include: "#expression"
+  expression-operator:
+    patterns:
+    - comment: "Unary plus | Addition"
+      name: "keyword.operator.unary-plus.monkeyx"
+      match: "[\\x00-\\x20]*\\+[\\x00-\\x20]*"
+    - comment: "Unary minus | Subtraction"
+      name: "keyword.operator.unary-minus.monkeyx"
+      match: "[\\x00-\\x20]*-[\\x00-\\x20]*"
+    - comment: "Bitwise complement | Bitwise 'xor'"
+      name: "keyword.operator.bitwise.xor.monkeyx"
+      match: "[\\x00-\\x20]*~[\\x00-\\x20]*"
+    - comment: "Boolean inverse"
+      name: "keyword.operator.logical.not.monkeyx"
+      match: "[\\x00-\\x20]*\\b(?i)(Not)\\b[\\x00-\\x20]*"
+    - name: "keyword.operator.arithmetic.multiplication.monkeyx"
+      match: "[\\x00-\\x20]*\\*[\\x00-\\x20]*"
+    - name: "keyword.operator.arithmetic.division.monkeyx"
+      match: "[\\x00-\\x20]*/[\\x00-\\x20]*"
+    - comment: "Modulus"
+      name: "keyword.operator.bitwise.mod.monkeyx"
+      match: "[\\x00-\\x20]*\\b(?i)(Mod)\\b[\\x00-\\x20]*"
+    - comment: "Bitwise shift left"
+      name: "keyword.operator.bitwise.shl.monkeyx"
+      match: "[\\x00-\\x20]*\\b(?i)(Shl)\\b[\\x00-\\x20]*"
+    - comment: "Bitwise shift right"
+      name: "keyword.operator.bitwise.shr.monkeyx"
+      match: "[\\x00-\\x20]*\\b(?i)(Shr)\\b[\\x00-\\x20]*"
+    - comment: "Bitwise 'and'"
+      name: "keyword.operator.bitwise.and.monkeyx"
+      match: "[\\x00-\\x20]*&[\\x00-\\x20]*"
+    - comment: "Bitwise 'or'"
+      name: "keyword.operator.bitwise.or.monkeyx"
+      match: "[\\x00-\\x20]*\\|[\\x00-\\x20]*"
+    - comment: "Less than or equals"
+      name: "keyword.operator.less-than-or-equals.monkeyx"
+      match: "[\\x00-\\x20]*<=[\\x00-\\x20]*"
+    - comment: "Greater than or equals"
+      name: "keyword.operator.greater-than-or-equals.monkeyx"
+      match: "[\\x00-\\x20]*>=[\\x00-\\x20]*"
+    - comment: "Not equals"
+      name: "keyword.operator.not-equals.monkeyx"
+      match: "[\\x00-\\x20]*<>[\\x00-\\x20]*"
+    - comment: "Equals"
+      name: "keyword.operator.equals.monkeyx"
+      match: "[\\x00-\\x20]*=[\\x00-\\x20]*"
+    - comment: "Less than"
+      name: "keyword.operator.less-than.monkeyx"
+      match: "[\\x00-\\x20]*<[\\x00-\\x20]*"
+    - comment: "Greater than"
+      name: "keyword.operator.greater-than.monkeyx"
+      match: "[\\x00-\\x20]*>[\\x00-\\x20]*"
+    - comment: "Conditional 'and'"
+      name: "keyword.operator.logical.and.monkeyx"
+      match: "[\\x00-\\x20]*\\b(?i)(And)\\b[\\x00-\\x20]*"
+    - comment: "Conditional 'or'"
+      name: "keyword.operator.logical.or.monkeyx"
+      match: "[\\x00-\\x20]*\\b(?i)(Or)\\b[\\x00-\\x20]*"
+
+  bracketed-argument-list:
+    patterns:
+    - begin: "\\("
+      beginCaptures:
+        0:
+          name: "punctuation.parenthesis.open.monkeyx"
+      end: "\\)"
+      endCaptures:
+        0:
+          name: "punctuation.parenthesis.close.monkeyx"
+      patterns:
+      - include: "#argument-list"
+  argument-list:
+    patterns:
+    - include: "#punctuation-comma"
+    - include: "#argument"
+  argument:
+    patterns:
+    - include: "#expression"
+  bracketed-parameter-list:
+    patterns:
+    - name: "meta.function.parameters.monkeyx"
+      begin: "\\("
+      beginCaptures:
+        0:
+          name: "punctuation.parenthesis.open.monkeyx"
+      end: "\\)"
+      endCaptures:
+        0:
+          name: "punctuation.parenthesis.close.monkeyx"
+      patterns:
+      - include: "#parameter-list"
+  parameter-list:
+    patterns:
+    - include: "#parameter"
+    - include: "#punctuation-comma"
+  parameter:
+    patterns:
+    - match: "((?:[A-Za-z]|_[A-Za-z])[_A-Za-z0-9]*)[\\x00-\\x20]*([^,]*)"
+      captures:
+        1:
+          name: "variable.parameter.monkeyx"
+        2:
+          patterns:
+          - include: "#type-declaration"
+  module-path:
+    patterns:
+    - comment: "Double capture to apply an aesthetic scope and a semantic scope."
+      name: "meta.selector.monkeyx"
+      match: ".+?"
+      captures:
+        0:
+          patterns:
+          - name: "entity.name.namespace.monkeyx"
+            match: ".+?"
+            captures:
+              0:
+                patterns:
+                - include: "#identifier"
+                - include: "#punctuation-accessor"
+  data-declarations:
+    patterns:
+    - include: "#data-declaration"
+    - include: "#punctuation-comma"
+  data-declaration:
+    patterns:
+    - comment: "Identifier := Expression"
+      begin: "((?:[A-Za-z]|_[A-Za-z])[_A-Za-z0-9]*)[\\x00-\\x20]*(:=)[\\x00-\\x20]*"
+      beginCaptures:
+        1:
+          patterns:
+          - include: "#identifier"
+        2:
+          name: "keyword.operator.assignment.infer.monkeyx"
+      end: "(?=,|$)"
+      patterns:
+      - include: "#expression"
+    - comment: "Identifier: Type = Expression | Identifier = Expression"
+      begin: "((?:[A-Za-z]|_[A-Za-z])[_A-Za-z0-9]*)[\\x00-\\x20]*([^=]*)[\\x00-\\x20]*(=)[\\x00-\\x20]*"
+      beginCaptures:
+        1:
+          patterns:
+          - include: "#identifier"
+        2:
+          patterns:
+          - include: "#type-declaration"
+        3:
+          name: "keyword.operator.assignment.monkeyx"
+      end: "(?=,|$)"
+      patterns:
+      - include: "#expression"
+    - comment: "Identifier: Type"
+      begin: "((?:[A-Za-z]|_[A-Za-z])[_A-Za-z0-9]*)[\\x00-\\x20]*([^,]+)"
+      beginCaptures:
+        1:
+          patterns:
+          - include: "#identifier"
+        2:
+          patterns:
+          - include: "#type-declaration"
+      end: "(?=,|$)"
+    - include: "#identifier"
+  type-declaration:
+    patterns:
+    - include: "#shorthand-type-reference"
+    - match: "(:)[\\x00-\\x20]*((?:((?:[A-Za-z]|_[A-Za-z])[_A-Za-z0-9]*)\\.)*((?:[A-Za-z]|_[A-Za-z])[_A-Za-z0-9]*)(<[^>]+>)?(\\[[^\\]]*\\])*)"
+      captures:
+        1:
+          name: "punctuation.colon.monkeyx"
+        2:
+          name: "entity.name.type.monkeyx"
+          patterns:
+          - include: "#longhand-type-reference"
+  type-references:
+    patterns:
+    - include: "#type-reference"
+    - include: "#punctuation-comma"
+  type-reference:
+    patterns:
+    - include: "#shorthand-type-reference"
+    - include: "#longhand-type-reference"
+  shorthand-type-reference:
+    patterns:
+    - name: "entity.name.type.monkeyx"
+      match: "(?:\\$|\\?|#|%)(\\[[^\\]]*\\])*"
+      captures:
+        1:
+          patterns:
+          - include: "#array-type-declaration"
+  longhand-type-reference:
+    patterns:
+    - match: "(?:((?:[A-Za-z]|_[A-Za-z])[_A-Za-z0-9]*)\\.)*((?:[A-Za-z]|_[A-Za-z])[_A-Za-z0-9]*)(<[^>]+>)?(\\[[^\\]]*\\])*"
+      captures:
+        1:
+          patterns:
+          - include: "#module-path"
+        2:
+          name: "entity.name.type.monkeyx"
+        3:
+          patterns:
+          - include: "#generic-type-arguments"
+        4:
+          patterns:
+          - include: "#array-type-declaration"
+  generic-type-arguments:
+    patterns:
+    - begin: "<"
+      end: ">"
+      patterns:
+      - include: "#type-references"
+  array-type-declaration:
+    patterns:
+    - begin: "\\["
+      end: "\\]"
+      patterns:
+      - include: "#expression"
+  identifier:
+    patterns:
+    - match: "(?:[A-Za-z]|_[A-Za-z])[_A-Za-z0-9]*"
+  punctuation-comma:
+    patterns:
+    - match: "[\\x00-\\x20]*(,)[\\x00-\\x20]*"
+      captures:
+        1:
+          name: "punctuation.separator.monkeyx"
+  punctuation-accessor:
+    patterns:
+    - name: "punctuation.accessor.monkeyx"
+      match: "\\."
+  punctuation-newline:
+    patterns:
+    - match: "\\n"
+  whitespace:
+    patterns:
+    - match: "[\\x00-\\x20]+"
+  debug-unhandled:
+    patterns:
+    - name: "markup.underline"
+      match: "."
