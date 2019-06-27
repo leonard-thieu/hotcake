@@ -3,20 +3,20 @@
   "name": "hotcake",
   "version": "0.0.1",
   "author": "Leonard Thieu",
-  "main": "index.js",
   "scripts": {
     "postinstall": "cd vscode && npm install && cd ..",
-    "build": "tsc && js-yaml vscode\\syntaxes\\monkeyx.tmLanguage.yaml > vscode\\syntaxes\\monkeyx.tmLanguage.json",
+    "vscode:prepublish": "webpack --mode production",
+    "build": "webpack --mode none && js-yaml vscode\\syntaxes\\monkeyx.tmLanguage.yaml > vscode\\syntaxes\\monkeyx.tmLanguage.json",
+    "build:test": "tsc",
+    "watch": "webpack --mode none --watch",
     "test": "mocha --require source-map-support/register \"./tests/!(MonkeyTests)*.js\"",
     "test:monkey": "mocha --require source-map-support/register \"./tests\"",
     "test:preprocessorTokenizer": "mocha --require source-map-support/register \"./tests/PreprocessorTokenizer*Tests.js\"",
     "test:preprocessorParser": "mocha --require source-map-support/register \"./tests/PreprocessorParserTests.js\"",
     "test:tokenizer": "mocha --require source-map-support/register \"./tests/TokenizerTests.js\"",
     "test:parser": "mocha --require source-map-support/register \"./tests/ParserTests.js\"",
-    "test:binder": "mocha --require source-map-support/register \"./tests/BinderTests.js\"",
-    "watch": "tsc --watch"
+    "test:binder": "mocha --require source-map-support/register \"./tests/BinderTests.js\""
   },
-  "dependencies": {},
   "devDependencies": {
     "@types/chai": "4.1.4",
     "@types/glob": "5.0.35",
@@ -30,6 +30,9 @@
     "mocha": "5.2.0",
     "natural-orderby": "1.0.2",
     "source-map-support": "0.5.9",
-    "typescript": "3.0.1"
+    "ts-loader": "6.0.4",
+    "typescript": "3.0.1",
+    "webpack": "4.35.0",
+    "webpack-cli": "3.3.5"
   }
 }
