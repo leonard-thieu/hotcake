@@ -1,0 +1,163 @@
+{
+    "kind": "ModuleDeclaration",
+    "members": [
+        {
+            "kind": "FunctionLikeDeclaration",
+            "statements": [
+                {
+                    "kind": "ExpressionStatement",
+                    "expression": {
+                        "kind": "InvokeExpression",
+                        "type": "Void",
+                        "arguments": [
+                            {
+                                "kind": "UnaryOpExpression",
+                                "type": "Int",
+                                "operand": {
+                                    "kind": "IntegerLiteralExpression",
+                                    "type": "Int"
+                                }
+                            }
+                        ]
+                    }
+                },
+                {
+                    "kind": "ExpressionStatement",
+                    "expression": {
+                        "kind": "InvokeExpression",
+                        "type": "Void",
+                        "arguments": [
+                            {
+                                "kind": "UnaryOpExpression",
+                                "type": "Float",
+                                "operand": {
+                                    "kind": "FloatLiteralExpression",
+                                    "type": "Float"
+                                }
+                            }
+                        ]
+                    }
+                },
+                {
+                    "kind": "ExpressionStatement",
+                    "expression": {
+                        "kind": "InvokeExpression",
+                        "type": "Void",
+                        "arguments": [
+                            {
+                                "kind": "UnaryOpExpression",
+                                "type": "Int",
+                                "operand": {
+                                    "kind": "IntegerLiteralExpression",
+                                    "type": "Int"
+                                }
+                            }
+                        ]
+                    }
+                },
+                {
+                    "kind": "ExpressionStatement",
+                    "expression": {
+                        "kind": "InvokeExpression",
+                        "type": "Void",
+                        "arguments": [
+                            {
+                                "kind": "UnaryOpExpression",
+                                "type": "Float",
+                                "operand": {
+                                    "kind": "FloatLiteralExpression",
+                                    "type": "Float"
+                                }
+                            }
+                        ]
+                    }
+                },
+                {
+                    "kind": "ExpressionStatement",
+                    "expression": {
+                        "kind": "InvokeExpression",
+                        "type": "Void",
+                        "arguments": [
+                            {
+                                "kind": "UnaryOpExpression",
+                                "type": "Int",
+                                "operand": {
+                                    "kind": "IntegerLiteralExpression",
+                                    "type": "Int"
+                                }
+                            }
+                        ]
+                    }
+                },
+                {
+                    "kind": "ExpressionStatement",
+                    "expression": {
+                        "kind": "InvokeExpression",
+                        "type": "Void",
+                        "arguments": [
+                            {
+                                "kind": "UnaryOpExpression",
+                                "type": "Bool",
+                                "operand": {
+                                    "kind": "BooleanLiteralExpression",
+                                    "type": "Bool"
+                                }
+                            }
+                        ]
+                    }
+                },
+                {
+                    "kind": "ExpressionStatement",
+                    "expression": {
+                        "kind": "InvokeExpression",
+                        "type": "Void",
+                        "arguments": [
+                            {
+                                "kind": "UnaryOpExpression",
+                                "type": "Bool",
+                                "operand": {
+                                    "kind": "IntegerLiteralExpression",
+                                    "type": "Int"
+                                }
+                            }
+                        ]
+                    }
+                },
+                {
+                    "kind": "ExpressionStatement",
+                    "expression": {
+                        "kind": "InvokeExpression",
+                        "type": "Void",
+                        "arguments": [
+                            {
+                                "kind": "UnaryOpExpression",
+                                "type": "Bool",
+                                "operand": {
+                                    "kind": "FloatLiteralExpression",
+                                    "type": "Float"
+                                }
+                            }
+                        ]
+                    }
+                },
+                {
+                    "kind": "ExpressionStatement",
+                    "expression": {
+                        "kind": "InvokeExpression",
+                        "type": "Void",
+                        "arguments": [
+                            {
+                                "kind": "UnaryOpExpression",
+                                "type": "Bool",
+                                "operand": {
+                                    "kind": "StringLiteralExpression",
+                                    "type": "String"
+                                }
+                            }
+                        ]
+                    }
+                }
+            ]
+        }
+    ]
+}

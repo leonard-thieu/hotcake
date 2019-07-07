@@ -4,6 +4,7 @@ import path = require('path');
 import mkdirp = require('mkdirp');
 import { orderBy } from 'natural-orderby';
 import { Binder } from '../src/Binder';
+import { BoundModuleDeclaration } from '../src/Binding/BoundModuleDeclaration';
 import { ModuleDeclaration } from '../src/Node/Declaration/ModuleDeclaration';
 import { PreprocessorModuleDeclaration } from '../src/Node/Declaration/PreprocessorModuleDeclaration';
 import { Parser } from '../src/Parser';
@@ -171,9 +172,9 @@ export function executeBinderTestCases(name: string, casesPath: string): void {
             const { _it, sourceRelativePath, contents } = context;
 
             _it(sourceRelativePath, function () {
-                const outputPath = path.resolve(__dirname, 'cases', name, sourceRelativePath) + '.symbols.json';
+                const outputPath = path.resolve(__dirname, 'cases', name, sourceRelativePath) + '.boundTree.json';
                 executeBaselineTestCase(outputPath, () => {
-                    return getBoundParseTree(sourceRelativePath, contents);
+                    return getBoundTree(sourceRelativePath, contents);
                 });
             });
         },
@@ -232,10 +233,9 @@ export function getParseTree(filePath: string, document: string): ModuleDeclarat
     return parser.parse(preprocessorModuleDeclaration, tokens);
 }
 
-export function getBoundParseTree(filePath: string, document: string): ModuleDeclaration {
+export function getBoundTree(filePath: string, document: string): BoundModuleDeclaration {
     const moduleDeclaration = getParseTree(filePath, document);
     const binder = new Binder();
-    binder.bind(moduleDeclaration);
 
-    return moduleDeclaration;
+    return binder.bind(moduleDeclaration);
 }

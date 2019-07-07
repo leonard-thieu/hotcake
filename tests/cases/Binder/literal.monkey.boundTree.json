@@ -1,0 +1,62 @@
+{
+    "kind": "ModuleDeclaration",
+    "members": [
+        {
+            "kind": "FunctionLikeDeclaration",
+            "statements": [
+                {
+                    "kind": "ExpressionStatement",
+                    "expression": {
+                        "kind": "InvokeExpression",
+                        "type": "Void",
+                        "arguments": [
+                            {
+                                "kind": "BooleanLiteralExpression",
+                                "type": "Bool"
+                            }
+                        ]
+                    }
+                },
+                {
+                    "kind": "ExpressionStatement",
+                    "expression": {
+                        "kind": "InvokeExpression",
+                        "type": "Void",
+                        "arguments": [
+                            {
+                                "kind": "IntegerLiteralExpression",
+                                "type": "Int"
+                            }
+                        ]
+                    }
+                },
+                {
+                    "kind": "ExpressionStatement",
+                    "expression": {
+                        "kind": "InvokeExpression",
+                        "type": "Void",
+                        "arguments": [
+                            {
+                                "kind": "FloatLiteralExpression",
+                                "type": "Float"
+                            }
+                        ]
+                    }
+                },
+                {
+                    "kind": "ExpressionStatement",
+                    "expression": {
+                        "kind": "InvokeExpression",
+                        "type": "Void",
+                        "arguments": [
+                            {
+                                "kind": "StringLiteralExpression",
+                                "type": "String"
+                            }
+                        ]
+                    }
+                }
+            ]
+        }
+    ]
+}

@@ -1,5 +1,16 @@
 import path = require('path');
-import { assertType } from './assertNever';
+import { assertNever, assertType } from './assertNever';
+import { BoundBinaryExpression } from './Binding/BoundBinaryExpression';
+import { BoundBooleanLiteralExpression } from './Binding/BoundBooleanLiteralExpression';
+import { BoundExpression } from './Binding/BoundExpression';
+import { BoundExpressionStatement } from './Binding/BoundExpressionStatement';
+import { BoundFloatLiteralExpression } from './Binding/BoundFloatLiteralExpression';
+import { BoundFunctionLikeDeclaration } from './Binding/BoundFunctionLikeDeclaration';
+import { BoundIntegerLiteralExpression } from './Binding/BoundIntegerLiteralExpression';
+import { BoundInvokeExpression } from './Binding/BoundInvokeExpression';
+import { BoundModuleDeclaration } from './Binding/BoundModuleDeclaration';
+import { BoundStringLiteralExpression } from './Binding/BoundStringLiteralExpression';
+import { BoundUnaryOpExpression } from './Binding/BoundUnaryOpExpression';
 import { CommaSeparator } from './Node/CommaSeparator';
 import { AccessibilityDirective } from './Node/Declaration/AccessibilityDirective';
 import { AliasDirectiveSequence } from './Node/Declaration/AliasDirectiveSequence';
@@ -16,7 +27,22 @@ import { ImportStatement } from './Node/Declaration/ImportStatement';
 import { InterfaceDeclaration } from './Node/Declaration/InterfaceDeclaration';
 import { InterfaceMethodDeclaration } from './Node/Declaration/InterfaceMethodDeclaration';
 import { ModuleDeclaration } from './Node/Declaration/ModuleDeclaration';
+import { ArrayLiteralExpression } from './Node/Expression/ArrayLiteralExpression';
 import { AssignmentExpression } from './Node/Expression/AssignmentExpression';
+import { BinaryExpression } from './Node/Expression/BinaryExpression';
+import { MissableExpression } from './Node/Expression/Expression';
+import { GlobalScopeExpression } from './Node/Expression/GlobalScopeExpression';
+import { GroupingExpression } from './Node/Expression/GroupingExpression';
+import { IdentifierExpression } from './Node/Expression/IdentifierExpression';
+import { IndexExpression } from './Node/Expression/IndexExpression';
+import { InvokeExpression } from './Node/Expression/InvokeExpression';
+import { NewExpression } from './Node/Expression/NewExpression';
+import { NullExpression } from './Node/Expression/NullExpression';
+import { ScopeMemberAccessExpression } from './Node/Expression/ScopeMemberAccessExpression';
+import { SelfExpression } from './Node/Expression/SelfExpression';
+import { SliceExpression } from './Node/Expression/SliceExpression';
+import { SuperExpression } from './Node/Expression/SuperExpression';
+import { UnaryOpExpression } from './Node/Expression/UnaryOpExpression';
 import { Nodes } from './Node/Node';
 import { NodeKind } from './Node/NodeKind';
 import { ContinueStatement } from './Node/Statement/ContinueStatement';
@@ -40,13 +66,13 @@ import { TokenKind } from './Token/TokenKind';
 export class Binder {
     private document: string = undefined!;
 
-    bind(moduleDeclaration: ModuleDeclaration): void {
+    bind(moduleDeclaration: ModuleDeclaration) {
         this.document = moduleDeclaration.document;
 
-        this.bindModuleDeclaration(moduleDeclaration);
+        return this.bindModuleDeclaration(moduleDeclaration);
     }
 
-    private bindModuleDeclaration(moduleDeclaration: ModuleDeclaration): void {
+    private bindModuleDeclaration(moduleDeclaration: ModuleDeclaration): BoundModuleDeclaration {
         this.declareSymbol(moduleDeclaration);
 
         for (const member of moduleDeclaration.headerMembers) {
@@ -72,6 +98,8 @@ export class Binder {
             }
         }
 
+        let boundMembers: BoundFunctionLikeDeclaration[] = [];
+
         for (const member of moduleDeclaration.members) {
             switch (member.kind) {
                 case NodeKind.AccessibilityDirective: {
@@ -85,7 +113,8 @@ export class Binder {
                 }
                 case NodeKind.FunctionDeclaration:
                 case NodeKind.ExternFunctionDeclaration: {
-                    this.bindFunctionLikeDeclaration(member, moduleDeclaration);
+                    const boundFunction = this.bindFunctionLikeDeclaration(member, moduleDeclaration);
+                    boundMembers.push(boundFunction);
                     break;
                 }
                 case NodeKind.InterfaceDeclaration: {
@@ -104,6 +133,8 @@ export class Binder {
                 }
             }
         }
+
+        return new BoundModuleDeclaration(boundMembers);
     }
 
     private bindAliasDirectiveSequence(aliasDirectiveSequence: AliasDirectiveSequence, parent: Nodes): void {
@@ -174,7 +205,7 @@ export class Binder {
         }
     }
 
-    private bindFunctionLikeDeclaration(functionLikeDeclaration: FunctionLikeDeclaration, parent: Nodes): void {
+    private bindFunctionLikeDeclaration(functionLikeDeclaration: FunctionLikeDeclaration, parent: Nodes): BoundFunctionLikeDeclaration {
         this.declareSymbol(functionLikeDeclaration, parent);
 
         for (const parameter of functionLikeDeclaration.parameters) {
@@ -190,11 +221,13 @@ export class Binder {
             }
         }
 
+        let boundStatements: BoundExpressionStatement[] = [];
+
         switch (functionLikeDeclaration.kind) {
             case NodeKind.FunctionDeclaration:
             case NodeKind.ClassMethodDeclaration: {
                 if (functionLikeDeclaration.statements) {
-                    this.bindStatements(functionLikeDeclaration);
+                    boundStatements.push(...this.bindStatements(functionLikeDeclaration));
                 }
                 break;
             }
@@ -208,23 +241,32 @@ export class Binder {
                 break;
             }
         }
+
+        return new BoundFunctionLikeDeclaration(boundStatements);
     }
 
-    private bindStatements(scopedNode: ScopedNode): void {
+    private bindStatements(scopedNode: ScopedNode) {
+        const boundStatements: BoundExpressionStatement[] = [];
+
         if (scopedNode.statements) {
             for (const statement of scopedNode.statements) {
                 switch (statement.kind) {
                     case TokenKind.Skipped: { break; }
                     default: {
-                        this.bindStatement(scopedNode, statement);
+                        const boundStatement = this.bindStatement(scopedNode, statement);
+                        if (boundStatement) {
+                            boundStatements.push(boundStatement);
+                        }
                         break;
                     }
                 }
             }
         }
+
+        return boundStatements;
     }
 
-    private bindStatement(parent: Nodes, statement: Statements): void {
+    private bindStatement(parent: Nodes, statement: Statements) {
         switch (statement.kind) {
             case NodeKind.DataDeclarationSequenceStatement: {
                 this.bindDataDeclarationSequence(statement.dataDeclarationSequence, parent);
@@ -251,6 +293,9 @@ export class Binder {
                 this.bindTryStatement(statement);
                 break;
             }
+            case NodeKind.ExpressionStatement: {
+                return this.bindExpressionStatement(statement);
+            }
             default: {
                 type ExpectedType =
                     ElseIfStatement | ElseStatement |
@@ -259,7 +304,6 @@ export class Binder {
                     ThrowStatement |
                     CatchStatement |
                     ReturnStatement |
-                    ExpressionStatement |
                     EmptyStatement
                     ;
                 assertType<ExpectedType>(statement);
@@ -344,6 +388,340 @@ export class Binder {
                 }
             }
         }
+    }
+
+    private bindExpressionStatement(statement: ExpressionStatement): BoundExpressionStatement {
+        const expression = this.bindExpression(statement.expression);
+
+        return new BoundExpressionStatement(expression);
+    }
+
+    private bindExpression(expression: MissableExpression): BoundExpression {
+        switch (expression.kind) {
+            case NodeKind.InvokeExpression: {
+                return this.bindInvokeExpression(expression);
+            }
+            case NodeKind.BinaryExpression: {
+                return this.bindBinaryExpression(expression);
+            }
+            case NodeKind.UnaryOpExpression: {
+                return this.bindUnaryOpExpression(expression);
+            }
+            case NodeKind.BooleanLiteralExpression: {
+                return this.bindBooleanLiteralExpression();
+            }
+            case NodeKind.IntegerLiteralExpression: {
+                return this.bindIntegerLiteralExpression();
+            }
+            case NodeKind.FloatLiteralExpression: {
+                return this.bindFloatLiteralExpression();
+            }
+            case NodeKind.StringLiteralExpression: {
+                return this.bindStringLiteralExpression();
+            }
+            default: {
+                type ExpectedType =
+                    NewExpression |
+                    NullExpression |
+                    SelfExpression |
+                    SuperExpression |
+                    ArrayLiteralExpression |
+                    IdentifierExpression |
+                    ScopeMemberAccessExpression |
+                    InvokeExpression |
+                    IndexExpression |
+                    SliceExpression |
+                    GroupingExpression |
+                    AssignmentExpression |
+                    GlobalScopeExpression |
+                    MissingToken<TokenKind.Expression>;
+                assertType<ExpectedType>(expression);
+                throw new Error(`Binding '${expression.kind}' is not implemented.`);
+            }
+        }
+    }
+
+    private bindInvokeExpression(expression: InvokeExpression): BoundInvokeExpression {
+        // TODO: Determine return type of invocation.
+        let type = 'Void';
+
+        let boundArguments: BoundExpression[] = [];
+
+        for (const argument of expression.arguments) {
+            switch (argument.kind) {
+                case NodeKind.CommaSeparator: { break; }
+                default: {
+                    const boundArgument = this.bindExpression(argument);
+                    boundArguments.push(boundArgument);
+                    break;
+                }
+            }
+        }
+
+        return new BoundInvokeExpression(type, boundArguments);
+    }
+
+    private bindBinaryExpression(expression: BinaryExpression): BoundBinaryExpression {
+        const leftOperand = this.bindExpression(expression.leftOperand);
+        const rightOperand = this.bindExpression(expression.rightOperand);
+
+        let type: string;
+
+        const operatorKind = expression.operator.kind;
+        switch (operatorKind) {
+            // Binary arithmetic operations
+            case TokenKind.Asterisk:
+            case TokenKind.Slash:
+            case TokenKind.ModKeyword:
+            case TokenKind.PlusSign:
+            case TokenKind.HyphenMinus: {
+                let balancedType = this.getBalancedType(leftOperand.type, rightOperand.type);
+
+                switch (balancedType) {
+                    case null: {
+                        throw new Error(`'${operatorKind}' is not valid for '${leftOperand.kind}' and '${rightOperand.kind}'.`);
+                    }
+                    case 'String': {
+                        if (operatorKind !== TokenKind.PlusSign) {
+                            throw new Error(`'${operatorKind}' is not valid for '${leftOperand.kind}' and '${rightOperand.kind}'.`);
+                        }
+
+                        break;
+                    }
+                    case 'Int':
+                    case 'Float': {
+                        break;
+                    }
+                    default: {
+                        throw new Error(`'${operatorKind}' is not valid for '${leftOperand.kind}' and '${rightOperand.kind}'.`);
+                    }
+                }
+
+                type = balancedType;
+                break;
+            }
+
+            // Bitwise operations
+            case TokenKind.ShlKeyword:
+            case TokenKind.ShrKeyword:
+            case TokenKind.Ampersand:
+            case TokenKind.Tilde:
+            case TokenKind.VerticalBar: {
+                if (!this.isImplicitlyConvertibleToInt(leftOperand.type) ||
+                    !this.isImplicitlyConvertibleToInt(rightOperand.type)) {
+                    throw new Error(`'${operatorKind}' is not valid for '${leftOperand.kind}' and '${rightOperand.kind}'.`);
+                }
+
+                type = 'Int';
+                break;
+            }
+
+            // Comparison operations
+            case TokenKind.EqualsSign:
+            case TokenKind.LessThanSign:
+            case TokenKind.GreaterThanSign:
+            case TokenKind.LessThanSignEqualsSign:
+            case TokenKind.GreaterThanSignEqualsSign:
+            case TokenKind.LessThanSignGreaterThanSign: {
+                let balancedType = this.getBalancedType(leftOperand.type, rightOperand.type);
+
+                switch (balancedType) {
+                    case null:
+                    case 'Array': {
+                        throw new Error(`'${operatorKind}' is not valid for '${leftOperand.kind}' and '${rightOperand.kind}'.`);
+                    }
+                    case 'Bool':
+                    case 'Object': {
+                        if (operatorKind !== TokenKind.EqualsSign &&
+                            operatorKind !== TokenKind.LessThanSignGreaterThanSign) {
+                            throw new Error(`'${operatorKind}' is not valid for '${leftOperand.kind}' and '${rightOperand.kind}'.`);
+                        }
+
+                        break;
+                    }
+                }
+
+                type = 'Bool';
+                break;
+            }
+
+            // Conditional operations
+            case TokenKind.AndKeyword:
+            case TokenKind.OrKeyword: {
+                type = 'Bool';
+                break;
+            }
+
+            default:
+                type = assertNever(operatorKind);
+                break;
+        }
+
+        return new BoundBinaryExpression(type, leftOperand, rightOperand);
+    }
+
+    private getBalancedType(leftOperandType: string, rightOperandType: string) {
+        // String
+
+        if (leftOperandType === 'String') {
+            if (this.isImplicitlyConvertibleToString(rightOperandType)) {
+                return 'String';
+            }
+
+            return null;
+        }
+
+        if (rightOperandType === 'String') {
+            if (this.isImplicitlyConvertibleToString(leftOperandType)) {
+                return 'String';
+            }
+
+            return null;
+        }
+
+        // Float
+
+        if (leftOperandType === 'Float') {
+            if (this.isImplicitlyConvertibleToFloat(rightOperandType)) {
+                return 'Float';
+            }
+
+            return null;
+        }
+
+        if (rightOperandType === 'Float') {
+            if (this.isImplicitlyConvertibleToFloat(leftOperandType)) {
+                return 'Float';
+            }
+
+            return null;
+        }
+
+        // Int
+
+        if (leftOperandType === 'Int') {
+            if (this.isImplicitlyConvertibleToInt(rightOperandType)) {
+                return 'Int';
+            }
+
+            return null;
+        }
+
+        if (rightOperandType === 'Int') {
+            if (this.isImplicitlyConvertibleToInt(leftOperandType)) {
+                return 'Int';
+            }
+
+            return null;
+        }
+
+        // Other
+
+        return null;
+    }
+
+    private bindUnaryOpExpression(expression: UnaryOpExpression): BoundUnaryOpExpression {
+        const boundOperand = this.bindExpression(expression.operand);
+
+        let type: string;
+
+        const operatorKind = expression.operator.kind;
+        switch (operatorKind) {
+            // Unary plus
+            case TokenKind.PlusSign:
+            // Unary minus
+            case TokenKind.HyphenMinus: {
+                const boundOperandType = boundOperand.type;
+                switch (boundOperandType) {
+                    case 'Int':
+                    case 'Float': {
+                        type = boundOperandType;
+                        break;
+                    }
+                    default: {
+                        throw new Error(`Unexpected operand type '${boundOperandType}' for unary operator '${operatorKind}'.`);
+                    }
+                }
+                break;
+            }
+            // Bitwise complement
+            case TokenKind.Tilde: {
+                if (this.isImplicitlyConvertibleToInt(boundOperand.type)) {
+                    type = 'Int';
+                } else {
+                    throw new Error(`Cannot get bitwise complement of '${boundOperand.type}'. '${boundOperand.type}' is not implicitly convertible to 'Int'.`);
+                }
+                break;
+            }
+            // Boolean inverse
+            case TokenKind.NotKeyword: {
+                type = 'Bool';
+                break;
+            }
+            default: {
+                type = assertNever(operatorKind);
+                break;
+            }
+        }
+
+        return new BoundUnaryOpExpression(type, boundOperand);
+    }
+
+    private isImplicitlyConvertibleToInt(type: string) {
+        switch (type) {
+            case 'Int':
+            case 'Float':
+            case 'Bool': {
+                return true;
+            }
+            default: {
+                // TODO: Implement unboxing convertible (type has a method ToInt: Int()).
+                throw new Error('TODO: Implement unboxing convertible (type has a method ToInt: Int())');
+            }
+        }
+    }
+
+    private isImplicitlyConvertibleToFloat(type: string) {
+        switch (type) {
+            case 'Int':
+            case 'Float': {
+                return true;
+            }
+            default: {
+                // TODO: Implement unboxing convertible (type has a method ToFloat: Float()).
+                throw new Error('TODO: Implement unboxing convertible (type has a method ToFloat: Float())');
+            }
+        }
+    }
+
+    private isImplicitlyConvertibleToString(type: string) {
+        switch (type) {
+            case 'Int':
+            case 'Float':
+            case 'String': {
+                return true;
+            }
+            default: {
+                // TODO: Implement unboxing convertible (type has a method ToString: String()).
+                throw new Error('TODO: Implement unboxing convertible (type has a method ToString: String())');
+            }
+        }
+    }
+
+    private bindBooleanLiteralExpression() {
+        return new BoundBooleanLiteralExpression();
+    }
+
+    private bindIntegerLiteralExpression() {
+        return new BoundIntegerLiteralExpression();
+    }
+
+    private bindFloatLiteralExpression() {
+        return new BoundFloatLiteralExpression();
+    }
+
+    private bindStringLiteralExpression() {
+        return new BoundStringLiteralExpression();
     }
 
     // #region Core

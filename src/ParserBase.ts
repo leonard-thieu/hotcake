@@ -1,5 +1,5 @@
 import { assertNever } from './assertNever';
-import { ArrayTypeDeclaration } from "./Node/ArrayTypeDeclaration";
+import { ArrayTypeDeclaration } from './Node/ArrayTypeDeclaration';
 import { CommaSeparator } from './Node/CommaSeparator';
 import { ConfigurationTag } from './Node/ConfigurationTag';
 import { ArrayLiteralExpression } from './Node/Expression/ArrayLiteralExpression';
