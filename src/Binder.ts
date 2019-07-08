@@ -11,6 +11,14 @@ import { BoundInvokeExpression } from './Binding/BoundInvokeExpression';
 import { BoundModuleDeclaration } from './Binding/BoundModuleDeclaration';
 import { BoundStringLiteralExpression } from './Binding/BoundStringLiteralExpression';
 import { BoundUnaryOpExpression } from './Binding/BoundUnaryOpExpression';
+import { ArrayType } from './Binding/Type/ArrayType';
+import { BoolType } from './Binding/Type/BoolType';
+import { FloatType } from './Binding/Type/FloatType';
+import { IntType } from './Binding/Type/IntType';
+import { ObjectType } from './Binding/Type/ObjectType';
+import { StringType } from './Binding/Type/StringType';
+import { Type } from './Binding/Type/Type';
+import { VoidType } from './Binding/Type/VoidType';
 import { CommaSeparator } from './Node/CommaSeparator';
 import { AccessibilityDirective } from './Node/Declaration/AccessibilityDirective';
 import { AliasDirectiveSequence } from './Node/Declaration/AliasDirectiveSequence';
@@ -443,7 +451,7 @@ export class Binder {
 
     private bindInvokeExpression(expression: InvokeExpression): BoundInvokeExpression {
         // TODO: Determine return type of invocation.
-        let type = 'Void';
+        let type = VoidType.type;
 
         let boundArguments: BoundExpression[] = [];
 
@@ -465,7 +473,7 @@ export class Binder {
         const leftOperand = this.bindExpression(expression.leftOperand);
         const rightOperand = this.bindExpression(expression.rightOperand);
 
-        let type: string;
+        let type: Type;
 
         const operatorKind = expression.operator.kind;
         switch (operatorKind) {
@@ -481,15 +489,15 @@ export class Binder {
                     case null: {
                         throw new Error(`'${operatorKind}' is not valid for '${leftOperand.kind}' and '${rightOperand.kind}'.`);
                     }
-                    case 'String': {
+                    case StringType.type: {
                         if (operatorKind !== TokenKind.PlusSign) {
                             throw new Error(`'${operatorKind}' is not valid for '${leftOperand.kind}' and '${rightOperand.kind}'.`);
                         }
 
                         break;
                     }
-                    case 'Int':
-                    case 'Float': {
+                    case IntType.type:
+                    case FloatType.type: {
                         break;
                     }
                     default: {
@@ -507,12 +515,12 @@ export class Binder {
             case TokenKind.Ampersand:
             case TokenKind.Tilde:
             case TokenKind.VerticalBar: {
-                if (!this.isImplicitlyConvertibleToInt(leftOperand.type) ||
-                    !this.isImplicitlyConvertibleToInt(rightOperand.type)) {
+                if (!leftOperand.type.isConvertibleTo(IntType.type) ||
+                    !rightOperand.type.isConvertibleTo(IntType.type)) {
                     throw new Error(`'${operatorKind}' is not valid for '${leftOperand.kind}' and '${rightOperand.kind}'.`);
                 }
 
-                type = 'Int';
+                type = IntType.type;
                 break;
             }
 
@@ -527,11 +535,11 @@ export class Binder {
 
                 switch (balancedType) {
                     case null:
-                    case 'Array': {
+                    case ArrayType.type: {
                         throw new Error(`'${operatorKind}' is not valid for '${leftOperand.kind}' and '${rightOperand.kind}'.`);
                     }
-                    case 'Bool':
-                    case 'Object': {
+                    case BoolType.type:
+                    case ObjectType.type: {
                         if (operatorKind !== TokenKind.EqualsSign &&
                             operatorKind !== TokenKind.LessThanSignGreaterThanSign) {
                             throw new Error(`'${operatorKind}' is not valid for '${leftOperand.kind}' and '${rightOperand.kind}'.`);
@@ -541,14 +549,14 @@ export class Binder {
                     }
                 }
 
-                type = 'Bool';
+                type = BoolType.type;
                 break;
             }
 
             // Conditional operations
             case TokenKind.AndKeyword:
             case TokenKind.OrKeyword: {
-                type = 'Bool';
+                type = BoolType.type;
                 break;
             }
 
@@ -560,62 +568,29 @@ export class Binder {
         return new BoundBinaryExpression(type, leftOperand, rightOperand);
     }
 
-    private getBalancedType(leftOperandType: string, rightOperandType: string) {
-        // String
-
-        if (leftOperandType === 'String') {
-            if (this.isImplicitlyConvertibleToString(rightOperandType)) {
-                return 'String';
-            }
-
-            return null;
+    private getBalancedType(leftOperandType: Type, rightOperandType: Type) {
+        if (leftOperandType === StringType.type ||
+            rightOperandType === StringType.type) {
+            return StringType.type;
         }
 
-        if (rightOperandType === 'String') {
-            if (this.isImplicitlyConvertibleToString(leftOperandType)) {
-                return 'String';
-            }
-
-            return null;
+        if (leftOperandType === FloatType.type ||
+            rightOperandType === FloatType.type) {
+            return FloatType.type;
         }
 
-        // Float
-
-        if (leftOperandType === 'Float') {
-            if (this.isImplicitlyConvertibleToFloat(rightOperandType)) {
-                return 'Float';
-            }
-
-            return null;
+        if (leftOperandType === IntType.type ||
+            rightOperandType === IntType.type) {
+            return IntType.type;
         }
 
-        if (rightOperandType === 'Float') {
-            if (this.isImplicitlyConvertibleToFloat(leftOperandType)) {
-                return 'Float';
-            }
-
-            return null;
+        if (leftOperandType.isConvertibleTo(rightOperandType)) {
+            return rightOperandType;
         }
 
-        // Int
-
-        if (leftOperandType === 'Int') {
-            if (this.isImplicitlyConvertibleToInt(rightOperandType)) {
-                return 'Int';
-            }
-
-            return null;
+        if (rightOperandType.isConvertibleTo(leftOperandType)) {
+            return leftOperandType;
         }
-
-        if (rightOperandType === 'Int') {
-            if (this.isImplicitlyConvertibleToInt(leftOperandType)) {
-                return 'Int';
-            }
-
-            return null;
-        }
-
-        // Other
 
         return null;
     }
@@ -623,7 +598,7 @@ export class Binder {
     private bindUnaryOpExpression(expression: UnaryOpExpression): BoundUnaryOpExpression {
         const boundOperand = this.bindExpression(expression.operand);
 
-        let type: string;
+        let type: Type;
 
         const operatorKind = expression.operator.kind;
         switch (operatorKind) {
@@ -633,8 +608,8 @@ export class Binder {
             case TokenKind.HyphenMinus: {
                 const boundOperandType = boundOperand.type;
                 switch (boundOperandType) {
-                    case 'Int':
-                    case 'Float': {
+                    case IntType.type:
+                    case FloatType.type: {
                         type = boundOperandType;
                         break;
                     }
@@ -646,8 +621,8 @@ export class Binder {
             }
             // Bitwise complement
             case TokenKind.Tilde: {
-                if (this.isImplicitlyConvertibleToInt(boundOperand.type)) {
-                    type = 'Int';
+                if (boundOperand.type.isConvertibleTo(IntType.type)) {
+                    type = IntType.type;
                 } else {
                     throw new Error(`Cannot get bitwise complement of '${boundOperand.type}'. '${boundOperand.type}' is not implicitly convertible to 'Int'.`);
                 }
@@ -655,7 +630,7 @@ export class Binder {
             }
             // Boolean inverse
             case TokenKind.NotKeyword: {
-                type = 'Bool';
+                type = BoolType.type;
                 break;
             }
             default: {
@@ -665,47 +640,6 @@ export class Binder {
         }
 
         return new BoundUnaryOpExpression(type, boundOperand);
-    }
-
-    private isImplicitlyConvertibleToInt(type: string) {
-        switch (type) {
-            case 'Int':
-            case 'Float':
-            case 'Bool': {
-                return true;
-            }
-            default: {
-                // TODO: Implement unboxing convertible (type has a method ToInt: Int()).
-                throw new Error('TODO: Implement unboxing convertible (type has a method ToInt: Int())');
-            }
-        }
-    }
-
-    private isImplicitlyConvertibleToFloat(type: string) {
-        switch (type) {
-            case 'Int':
-            case 'Float': {
-                return true;
-            }
-            default: {
-                // TODO: Implement unboxing convertible (type has a method ToFloat: Float()).
-                throw new Error('TODO: Implement unboxing convertible (type has a method ToFloat: Float())');
-            }
-        }
-    }
-
-    private isImplicitlyConvertibleToString(type: string) {
-        switch (type) {
-            case 'Int':
-            case 'Float':
-            case 'String': {
-                return true;
-            }
-            default: {
-                // TODO: Implement unboxing convertible (type has a method ToString: String()).
-                throw new Error('TODO: Implement unboxing convertible (type has a method ToString: String())');
-            }
-        }
     }
 
     private bindBooleanLiteralExpression() {

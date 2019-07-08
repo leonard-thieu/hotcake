@@ -1,9 +1,10 @@
 import { BoundExpression } from './BoundExpression';
 import { BoundNodeKind } from './BoundNodeKind';
+import { Type } from './Type/Type';
 
 export class BoundInvokeExpression extends BoundExpression {
     constructor(
-        type: string,
+        type: Type,
         args: BoundExpression[],
     ) {
         super(BoundNodeKind.InvokeExpression, type);

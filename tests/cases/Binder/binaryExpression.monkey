@@ -16,7 +16,7 @@ Function Main()
     BoxBool(42 > "43")
     BoxBool(24 <= 15.5)
     BoxBool(64 >= 5)
-    'BoxBool(True <> False)
+    BoxBool(True <> False)
 
     BoxBool(True And False)
     BoxBool(False Or True)

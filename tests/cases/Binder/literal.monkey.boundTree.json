@@ -8,11 +8,15 @@
                     "kind": "ExpressionStatement",
                     "expression": {
                         "kind": "InvokeExpression",
-                        "type": "Void",
+                        "type": {
+                            "name": "Void"
+                        },
                         "arguments": [
                             {
                                 "kind": "BooleanLiteralExpression",
-                                "type": "Bool"
+                                "type": {
+                                    "name": "Bool"
+                                }
                             }
                         ]
                     }
@@ -21,11 +25,15 @@
                     "kind": "ExpressionStatement",
                     "expression": {
                         "kind": "InvokeExpression",
-                        "type": "Void",
+                        "type": {
+                            "name": "Void"
+                        },
                         "arguments": [
                             {
                                 "kind": "IntegerLiteralExpression",
-                                "type": "Int"
+                                "type": {
+                                    "name": "Int"
+                                }
                             }
                         ]
                     }
@@ -34,11 +42,15 @@
                     "kind": "ExpressionStatement",
                     "expression": {
                         "kind": "InvokeExpression",
-                        "type": "Void",
+                        "type": {
+                            "name": "Void"
+                        },
                         "arguments": [
                             {
                                 "kind": "FloatLiteralExpression",
-                                "type": "Float"
+                                "type": {
+                                    "name": "Float"
+                                }
                             }
                         ]
                     }
@@ -47,11 +59,15 @@
                     "kind": "ExpressionStatement",
                     "expression": {
                         "kind": "InvokeExpression",
-                        "type": "Void",
+                        "type": {
+                            "name": "Void"
+                        },
                         "arguments": [
                             {
                                 "kind": "StringLiteralExpression",
-                                "type": "String"
+                                "type": {
+                                    "name": "String"
+                                }
                             }
                         ]
                     }
