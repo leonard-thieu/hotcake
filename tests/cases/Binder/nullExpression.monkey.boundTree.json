@@ -1,0 +1,27 @@
+{
+    "kind": "ModuleDeclaration",
+    "members": [
+        {
+            "kind": "FunctionLikeDeclaration",
+            "statements": [
+                {
+                    "kind": "ExpressionStatement",
+                    "expression": {
+                        "kind": "InvokeExpression",
+                        "type": {
+                            "name": "Void"
+                        },
+                        "arguments": [
+                            {
+                                "kind": "NullExpression",
+                                "type": {
+                                    "name": "Object"
+                                }
+                            }
+                        ]
+                    }
+                }
+            ]
+        }
+    ]
+}

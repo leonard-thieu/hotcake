@@ -2,15 +2,15 @@ import { Type } from './Type';
 
 export class ObjectType extends Type {
     static readonly type = new ObjectType();
+    static readonly nullType = new ObjectType();
 
     private constructor() {
         super('Object');
     }
 
     isConvertibleTo(target: Type): boolean {
-        // TODO: If is Null, convertible to everything else.
-
-        if (target === ObjectType.type) { return true; }
+        if (target === ObjectType.nullType) { return true; }
+        if (target === this) { return true; }
 
         // TODO: Implements `target`
         // TODO: `target` is super type

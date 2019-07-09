@@ -9,6 +9,7 @@ import { BoundFunctionLikeDeclaration } from './Binding/BoundFunctionLikeDeclara
 import { BoundIntegerLiteralExpression } from './Binding/BoundIntegerLiteralExpression';
 import { BoundInvokeExpression } from './Binding/BoundInvokeExpression';
 import { BoundModuleDeclaration } from './Binding/BoundModuleDeclaration';
+import { BoundNullExpression } from './Binding/BoundNullExpression';
 import { BoundStringLiteralExpression } from './Binding/BoundStringLiteralExpression';
 import { BoundUnaryOpExpression } from './Binding/BoundUnaryOpExpression';
 import { ArrayType } from './Binding/Type/ArrayType';
@@ -45,7 +46,6 @@ import { IdentifierExpression } from './Node/Expression/IdentifierExpression';
 import { IndexExpression } from './Node/Expression/IndexExpression';
 import { InvokeExpression } from './Node/Expression/InvokeExpression';
 import { NewExpression } from './Node/Expression/NewExpression';
-import { NullExpression } from './Node/Expression/NullExpression';
 import { ScopeMemberAccessExpression } from './Node/Expression/ScopeMemberAccessExpression';
 import { SelfExpression } from './Node/Expression/SelfExpression';
 import { SliceExpression } from './Node/Expression/SliceExpression';
@@ -415,6 +415,9 @@ export class Binder {
             case NodeKind.UnaryOpExpression: {
                 return this.bindUnaryOpExpression(expression);
             }
+            case NodeKind.NullExpression: {
+                return this.bindNullExpression();
+            }
             case NodeKind.BooleanLiteralExpression: {
                 return this.bindBooleanLiteralExpression();
             }
@@ -430,7 +433,6 @@ export class Binder {
             default: {
                 type ExpectedType =
                     NewExpression |
-                    NullExpression |
                     SelfExpression |
                     SuperExpression |
                     ArrayLiteralExpression |
@@ -642,19 +644,23 @@ export class Binder {
         return new BoundUnaryOpExpression(type, boundOperand);
     }
 
-    private bindBooleanLiteralExpression() {
+    private bindNullExpression(): BoundNullExpression {
+        return new BoundNullExpression();
+    }
+
+    private bindBooleanLiteralExpression(): BoundBooleanLiteralExpression {
         return new BoundBooleanLiteralExpression();
     }
 
-    private bindIntegerLiteralExpression() {
+    private bindIntegerLiteralExpression(): BoundIntegerLiteralExpression {
         return new BoundIntegerLiteralExpression();
     }
 
-    private bindFloatLiteralExpression() {
+    private bindFloatLiteralExpression(): BoundFloatLiteralExpression {
         return new BoundFloatLiteralExpression();
     }
 
-    private bindStringLiteralExpression() {
+    private bindStringLiteralExpression(): BoundStringLiteralExpression {
         return new BoundStringLiteralExpression();
     }
 
