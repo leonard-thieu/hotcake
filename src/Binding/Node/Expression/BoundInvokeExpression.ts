@@ -1,6 +1,6 @@
+import { Type } from '../../Type/Type';
+import { BoundNodeKind } from '../BoundNodeKind';
 import { BoundExpression } from './BoundExpression';
-import { BoundNodeKind } from './BoundNodeKind';
-import { Type } from './Type/Type';
 
 export class BoundInvokeExpression extends BoundExpression {
     constructor(

@@ -1,6 +1,6 @@
+import { IntType } from '../../Type/IntType';
+import { BoundNodeKind } from '../BoundNodeKind';
 import { BoundExpression } from './BoundExpression';
-import { BoundNodeKind } from './BoundNodeKind';
-import { IntType } from './Type/IntType';
 
 export class BoundIntegerLiteralExpression extends BoundExpression {
     constructor() {

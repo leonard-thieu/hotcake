@@ -1,6 +1,6 @@
-import { BoundExpression } from './BoundExpression';
-import { BoundNode } from './BoundNode';
-import { BoundNodeKind } from './BoundNodeKind';
+import { BoundNode } from '../BoundNode';
+import { BoundNodeKind } from '../BoundNodeKind';
+import { BoundExpression } from '../Expression/BoundExpression';
 
 export class BoundExpressionStatement extends BoundNode {
     constructor(readonly expression: BoundExpression) {

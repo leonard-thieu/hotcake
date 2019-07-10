@@ -1,6 +1,6 @@
+import { FloatType } from '../../Type/FloatType';
+import { BoundNodeKind } from '../BoundNodeKind';
 import { BoundExpression } from './BoundExpression';
-import { BoundNodeKind } from './BoundNodeKind';
-import { FloatType } from './Type/FloatType';
 
 export class BoundFloatLiteralExpression extends BoundExpression {
     constructor() {
