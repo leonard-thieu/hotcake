@@ -10,7 +10,6 @@ import { PreprocessorModuleDeclaration } from '../src/Node/Declaration/Preproces
 import { Parser } from '../src/Parser';
 import { PreprocessorParser } from '../src/PreprocessorParser';
 import { PreprocessorTokenizer } from '../src/PreprocessorTokenizer';
-import { SerializationOptions } from '../src/SerializationOptions';
 import { Tokens } from '../src/Token/Token';
 import { ConfigurationVariables, Tokenizer } from '../src/Tokenizer';
 
@@ -163,8 +162,6 @@ export function executeParserTestCases(name: string, casesPath: string): void {
 }
 
 export function executeBinderTestCases(name: string, casesPath: string): void {
-    let serializeSymbols: boolean;
-
     executeTestCases({
         name: name,
         casesPath: casesPath,
@@ -177,13 +174,6 @@ export function executeBinderTestCases(name: string, casesPath: string): void {
                     return getBoundTree(sourceRelativePath, contents);
                 });
             });
-        },
-        beforeCallback: function () {
-            serializeSymbols = SerializationOptions.serializeSymbols;
-            SerializationOptions.serializeSymbols = true;
-        },
-        afterCallback: function () {
-            SerializationOptions.serializeSymbols = serializeSymbols;
         },
     });
 }

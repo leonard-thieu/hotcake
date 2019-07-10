@@ -1,6 +1,4 @@
 import { assertType } from '../assertNever';
-import { BoundSymbolTable } from '../Binder';
-import { SerializationOptions } from '../SerializationOptions';
 import { ErrorableToken } from '../Token/Token';
 import { ArrayTypeDeclaration } from './ArrayTypeDeclaration';
 import { CommaSeparator } from './CommaSeparator';
@@ -22,8 +20,6 @@ export abstract class Node {
 
     abstract readonly kind: NodeKind;
     parent?: Nodes = undefined;
-
-    locals?: BoundSymbolTable = undefined;
 
     get root() {
         let root: Node = this;
@@ -184,10 +180,6 @@ export abstract class Node {
         const obj: any = {
             kind: this.kind,
         };
-
-        if (SerializationOptions.serializeSymbols) {
-            obj.locals = this.locals;
-        }
 
         for (const childName of this.getChildNames()) {
             obj[childName] = this[childName as keyof this];

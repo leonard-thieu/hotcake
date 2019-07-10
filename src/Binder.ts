@@ -81,7 +81,7 @@ export class Binder {
     }
 
     private bindModuleDeclaration(moduleDeclaration: ModuleDeclaration): BoundModuleDeclaration {
-        this.declareSymbol(moduleDeclaration);
+        // TODO: Bind module declaration
 
         for (const member of moduleDeclaration.headerMembers) {
             switch (member.kind) {
@@ -149,7 +149,7 @@ export class Binder {
         for (const child of aliasDirectiveSequence.children) {
             switch (child.kind) {
                 case NodeKind.AliasDirective: {
-                    this.declareSymbol(child, parent);
+                    // TOOD: Bind Alias directive
                     break;
                 }
                 default: {
@@ -161,7 +161,7 @@ export class Binder {
     }
 
     private bindInterfaceDeclaration(interfaceDeclaration: InterfaceDeclaration, parent: Nodes): void {
-        this.declareSymbol(interfaceDeclaration, parent);
+        // TODO: Bind interface declaration
 
         for (const member of interfaceDeclaration.members) {
             switch (member.kind) {
@@ -183,7 +183,7 @@ export class Binder {
     }
 
     private bindClassDeclaration(classDeclaration: ClassDeclaration | ExternClassDeclaration, parent: Nodes): void {
-        this.declareSymbol(classDeclaration, parent);
+        // TODO: Bind class declaration
 
         for (const member of classDeclaration.members) {
             switch (member.kind) {
@@ -214,12 +214,12 @@ export class Binder {
     }
 
     private bindFunctionLikeDeclaration(functionLikeDeclaration: FunctionLikeDeclaration, parent: Nodes): BoundFunctionLikeDeclaration {
-        this.declareSymbol(functionLikeDeclaration, parent);
+        // TODO: Bind function-like declaration
 
         for (const parameter of functionLikeDeclaration.parameters) {
             switch (parameter.kind) {
                 case NodeKind.DataDeclaration: {
-                    this.declareSymbol(functionLikeDeclaration, parameter);
+                    // TODO: Bind function-like parameters
                     break;
                 }
                 default: {
@@ -376,7 +376,7 @@ export class Binder {
 
     private bindCatchStatement(catchStatement: CatchStatement) {
         if (catchStatement.parameter.kind === NodeKind.DataDeclaration) {
-            this.declareSymbol(catchStatement.parameter, catchStatement);
+            // TODO: Bind catch statement parameter
         }
 
         this.bindStatements(catchStatement);
@@ -387,7 +387,7 @@ export class Binder {
             switch (child.kind) {
                 case NodeKind.DataDeclaration:
                 case NodeKind.ExternDataDeclaration: {
-                    this.declareSymbol(child, parent);
+                    // TODO: Bind data declarations
                     break;
                 }
                 default: {
@@ -665,29 +665,6 @@ export class Binder {
     }
 
     // #region Core
-
-    private declareSymbol(declaration: Declarations, parent?: Nodes): void {
-        const name = this.getDeclarationName(declaration);
-
-        let symbol: BoundSymbol | undefined;
-
-        if (parent) {
-            if (!parent.locals) {
-                parent.locals = new BoundSymbolTable();
-            }
-
-            symbol = parent.locals.get(name);
-            if (!symbol) {
-                symbol = new BoundSymbol(name);
-                parent.locals.set(name, symbol);
-            }
-        } else {
-            symbol = new BoundSymbol(name);
-        }
-
-        symbol.declarations.push(declaration);
-        declaration.symbol = symbol;
-    }
 
     private getDeclarationName(declaration: Declarations) {
         switch (declaration.kind) {

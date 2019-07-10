@@ -1,4 +1,3 @@
-import { SerializationOptions } from '../SerializationOptions';
 import { MissableTokenKinds, MissingToken } from './MissingToken';
 import { SkippedToken } from './SkippedToken';
 import { TokenKind } from './TokenKind';
@@ -23,10 +22,6 @@ export class Token<TTokenKind extends ErrorableTokenKinds> {
     }
 
     toJSON(): any {
-        if (SerializationOptions.serializeSymbols) {
-            return this.kind;
-        }
-
         return this;
     }
 }
