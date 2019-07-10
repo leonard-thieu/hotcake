@@ -3,7 +3,7 @@ import { BoundNodeKind } from '../BoundNodeKind';
 import { BoundExpression } from './BoundExpression';
 
 export class BoundIntegerLiteralExpression extends BoundExpression {
-    constructor() {
-        super(BoundNodeKind.IntegerLiteralExpression, IntType.type);
-    }
+    readonly kind = BoundNodeKind.IntegerLiteralExpression;
+
+    readonly type = IntType.type;
 }

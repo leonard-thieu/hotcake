@@ -3,7 +3,7 @@ import { BoundNodeKind } from '../BoundNodeKind';
 import { BoundExpression } from '../Expression/BoundExpression';
 
 export class BoundExpressionStatement extends BoundNode {
-    constructor(readonly expression: BoundExpression) {
-        super(BoundNodeKind.ExpressionStatement);
-    }
+    readonly kind = BoundNodeKind.ExpressionStatement;
+
+    expression: BoundExpression = undefined!;
 }

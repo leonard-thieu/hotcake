@@ -3,7 +3,7 @@ import { BoundNodeKind } from '../BoundNodeKind';
 import { BoundExpressionStatement } from '../Statement/BoundExpressionStatement';
 
 export class BoundFunctionLikeDeclaration extends BoundNode {
-    constructor(readonly statements: BoundExpressionStatement[]) {
-        super(BoundNodeKind.FunctionLikeDeclaration);
-    }
+    readonly kind = BoundNodeKind.FunctionLikeDeclaration;
+
+    statements?: BoundExpressionStatement[] = undefined;
 }

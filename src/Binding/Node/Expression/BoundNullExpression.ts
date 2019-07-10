@@ -3,7 +3,7 @@ import { BoundNodeKind } from '../BoundNodeKind';
 import { BoundExpression } from './BoundExpression';
 
 export class BoundNullExpression extends BoundExpression {
-    constructor() {
-        super(BoundNodeKind.NullExpression, ObjectType.nullType);
-    }
+    readonly kind = BoundNodeKind.NullExpression;
+
+    readonly type = ObjectType.nullType;
 }
