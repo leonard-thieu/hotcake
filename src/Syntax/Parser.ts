@@ -1,5 +1,5 @@
-import { Diagnostic } from './Diagnostic';
-import { DiagnosticKind, DiagnosticKinds } from './DiagnosticKind';
+import { Diagnostic } from '../Diagnostic';
+import { DiagnosticKind, DiagnosticKinds } from '../DiagnosticKind';
 import { AccessibilityDirective, AccessibilityKeywordToken } from './Node/Declaration/AccessibilityDirective';
 import { AliasDirective, AliasDirectiveSequence, MissableDeclarationReferenceIdentifier } from './Node/Declaration/AliasDirectiveSequence';
 import { ClassDeclaration } from './Node/Declaration/ClassDeclaration';

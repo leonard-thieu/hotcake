@@ -1,4 +1,4 @@
-import { BoundSymbol } from '../../Binder';
+import { BoundSymbol } from '../../../Binder';
 import { Node } from '../Node';
 import { AccessibilityDirective } from './AccessibilityDirective';
 import { AliasDirective, AliasDirectiveSequence } from './AliasDirectiveSequence';

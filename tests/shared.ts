@@ -5,13 +5,13 @@ import mkdirp = require('mkdirp');
 import { orderBy } from 'natural-orderby';
 import { Binder } from '../src/Binder';
 import { BoundModuleDeclaration } from '../src/Binding/BoundModuleDeclaration';
-import { ModuleDeclaration } from '../src/Node/Declaration/ModuleDeclaration';
-import { PreprocessorModuleDeclaration } from '../src/Node/Declaration/PreprocessorModuleDeclaration';
-import { Parser } from '../src/Parser';
-import { PreprocessorParser } from '../src/PreprocessorParser';
-import { PreprocessorTokenizer } from '../src/PreprocessorTokenizer';
-import { Tokens } from '../src/Token/Token';
-import { ConfigurationVariables, Tokenizer } from '../src/Tokenizer';
+import { ModuleDeclaration } from '../src/Syntax/Node/Declaration/ModuleDeclaration';
+import { PreprocessorModuleDeclaration } from '../src/Syntax/Node/Declaration/PreprocessorModuleDeclaration';
+import { Parser } from '../src/Syntax/Parser';
+import { PreprocessorParser } from '../src/Syntax/PreprocessorParser';
+import { PreprocessorTokenizer } from '../src/Syntax/PreprocessorTokenizer';
+import { Tokens } from '../src/Syntax/Token/Token';
+import { ConfigurationVariables, Tokenizer } from '../src/Syntax/Tokenizer';
 
 interface TestCaseOptions {
     name: string;

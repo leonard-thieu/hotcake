@@ -1,4 +1,4 @@
-import { assertType } from '../assertNever';
+import { assertType } from '../../assertNever';
 import { ErrorableToken } from '../Token/Token';
 import { ArrayTypeDeclaration } from './ArrayTypeDeclaration';
 import { CommaSeparator } from './CommaSeparator';

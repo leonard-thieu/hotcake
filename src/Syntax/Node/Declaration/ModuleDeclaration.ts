@@ -1,4 +1,4 @@
-import { Diagnostic } from '../../Diagnostic';
+import { Diagnostic } from '../../../Diagnostic';
 import { ParseContextElementArray, ParseContextElementSequence, ParseContextKind } from '../../ParserBase';
 import { EOFToken } from '../../Token/Token';
 import { isNode } from '../Node';

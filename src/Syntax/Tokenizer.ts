@@ -1,4 +1,4 @@
-import { assertNever, assertType } from './assertNever';
+import { assertNever, assertType } from '../assertNever';
 import { PreprocessorModuleDeclaration } from './Node/Declaration/PreprocessorModuleDeclaration';
 import { IfDirective } from './Node/Directive/IfDirective';
 import { MissableExpression } from './Node/Expression/Expression';
