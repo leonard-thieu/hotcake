@@ -709,28 +709,3 @@ type ScopedNode =
     ForLoop |
     TryStatement | CatchStatement
     ;
-
-export class BoundSymbol {
-    constructor(public name: string) { }
-
-    declarations: Declarations[] = [];
-
-    toJSON(): any {
-        return {
-            name: this.name,
-            declarations: this.declarations.map(d => d.kind),
-        };
-    }
-}
-
-export class BoundSymbolTable extends Map<string, BoundSymbol> {
-    toJSON(): any {
-        let obj = Object.create(null);
-
-        for (let [k, v] of this) {
-            obj[k] = v;
-        }
-
-        return obj;
-    }
-}

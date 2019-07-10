@@ -1,4 +1,3 @@
-import { BoundSymbol } from '../../../Binder';
 import { Node } from '../Node';
 import { AccessibilityDirective } from './AccessibilityDirective';
 import { AliasDirective, AliasDirectiveSequence } from './AliasDirectiveSequence';
@@ -20,9 +19,7 @@ import { StrictDirective } from './StrictDirective';
 import { TypeDeclaration } from './TypeDeclaration';
 import { TypeParameter } from './TypeParameter';
 
-export abstract class Declaration extends Node {
-    symbol?: BoundSymbol = undefined;
-}
+export abstract class Declaration extends Node { }
 
 export type Declarations =
     ExternDeclarations |
