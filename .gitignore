@@ -2,6 +2,7 @@
 
 node_modules/
 *.js
-*.js.map
 !/*.js
+!/scripts/*.js
+*.js.map
 /vscode/syntaxes/*.json

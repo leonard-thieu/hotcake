@@ -6,9 +6,10 @@
   "scripts": {
     "postinstall": "cd vscode && npm install && cd ..",
     "vscode:prepublish": "webpack --mode production",
-    "build": "webpack --mode none && js-yaml vscode\\syntaxes\\monkeyx.tmLanguage.yaml > vscode\\syntaxes\\monkeyx.tmLanguage.json",
+    "build": "webpack --mode none && js-yaml vscode/syntaxes/monkeyx.tmLanguage.yaml > vscode/syntaxes/monkeyx.tmLanguage.json",
     "build:test": "tsc",
     "watch": "webpack --mode none --watch",
+    "clean": "node scripts/clean.js",
     "test": "mocha --require source-map-support/register \"./tests/!(MonkeyTests)*.js\"",
     "test:monkey": "mocha --require source-map-support/register \"./tests\"",
     "test:preprocessorTokenizer": "mocha --require source-map-support/register \"./tests/PreprocessorTokenizer*Tests.js\"",
