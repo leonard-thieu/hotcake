@@ -20,7 +20,7 @@ import { SelfExpression } from './SelfExpression';
 import { SliceExpression } from './SliceExpression';
 import { StringLiteralExpression } from './StringLiteralExpression';
 import { SuperExpression } from './SuperExpression';
-import { UnaryOpExpression } from './UnaryOpExpression';
+import { UnaryExpression } from './UnaryExpression';
 
 export abstract class Expression extends Node {
     newlines?: ParseContextElementSequence<ParseContextKind.NewlineList> = undefined;
@@ -42,7 +42,7 @@ export type Expressions =
     IndexExpression |
     SliceExpression |
     GroupingExpression |
-    UnaryOpExpression |
+    UnaryExpression |
     BinaryExpression |
     AssignmentExpression |
     GlobalScopeExpression

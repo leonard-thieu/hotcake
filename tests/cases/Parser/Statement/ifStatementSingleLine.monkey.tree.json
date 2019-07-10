@@ -214,7 +214,7 @@
                                             "rightOperand": {
                                                 "kind": "BinaryExpression",
                                                 "leftOperand": {
-                                                    "kind": "UnaryOpExpression",
+                                                    "kind": "UnaryExpression",
                                                     "newlines": [],
                                                     "operator": {
                                                         "kind": "HyphenMinus",

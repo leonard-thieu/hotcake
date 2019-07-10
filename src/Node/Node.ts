@@ -271,7 +271,7 @@ export function isNode(nodeOrToken: Nodes | ErrorableToken): nodeOrToken is Node
         case NodeKind.IndexExpression:
         case NodeKind.SliceExpression:
         case NodeKind.GroupingExpression:
-        case NodeKind.UnaryOpExpression:
+        case NodeKind.UnaryExpression:
         case NodeKind.BinaryExpression:
         case NodeKind.AssignmentExpression:
         case NodeKind.GlobalScopeExpression:

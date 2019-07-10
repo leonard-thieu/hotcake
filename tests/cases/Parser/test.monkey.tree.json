@@ -5507,7 +5507,7 @@
                                 "length": 2
                             },
                             "rightOperand": {
-                                "kind": "UnaryOpExpression",
+                                "kind": "UnaryExpression",
                                 "newlines": [],
                                 "operator": {
                                     "kind": "HyphenMinus",

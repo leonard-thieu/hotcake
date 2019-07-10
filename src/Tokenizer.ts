@@ -185,7 +185,7 @@ export class Tokenizer {
                     }
                 }
             }
-            case NodeKind.UnaryOpExpression: {
+            case NodeKind.UnaryExpression: {
                 const operand = this.eval(expression.operand);
 
                 const { kind } = expression.operator;

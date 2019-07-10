@@ -3,14 +3,14 @@ import { isNode } from '../Node';
 import { NodeKind } from '../NodeKind';
 import { Expression, MissableExpression } from './Expression';
 
-export class UnaryOpExpression extends Expression {
-    static CHILD_NAMES: (keyof UnaryOpExpression)[] = [
+export class UnaryExpression extends Expression {
+    static CHILD_NAMES: (keyof UnaryExpression)[] = [
         'newlines',
         'operator',
         'operand',
     ];
 
-    readonly kind = NodeKind.UnaryOpExpression;
+    readonly kind = NodeKind.UnaryExpression;
 
     operator: UnaryOperatorToken = undefined!;
     operand: MissableExpression = undefined!;

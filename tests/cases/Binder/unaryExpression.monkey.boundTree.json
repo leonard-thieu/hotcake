@@ -13,7 +13,7 @@
                         },
                         "arguments": [
                             {
-                                "kind": "UnaryOpExpression",
+                                "kind": "UnaryExpression",
                                 "type": {
                                     "name": "Int"
                                 },
@@ -36,7 +36,7 @@
                         },
                         "arguments": [
                             {
-                                "kind": "UnaryOpExpression",
+                                "kind": "UnaryExpression",
                                 "type": {
                                     "name": "Float"
                                 },
@@ -59,7 +59,7 @@
                         },
                         "arguments": [
                             {
-                                "kind": "UnaryOpExpression",
+                                "kind": "UnaryExpression",
                                 "type": {
                                     "name": "Int"
                                 },
@@ -82,7 +82,7 @@
                         },
                         "arguments": [
                             {
-                                "kind": "UnaryOpExpression",
+                                "kind": "UnaryExpression",
                                 "type": {
                                     "name": "Float"
                                 },
@@ -105,7 +105,7 @@
                         },
                         "arguments": [
                             {
-                                "kind": "UnaryOpExpression",
+                                "kind": "UnaryExpression",
                                 "type": {
                                     "name": "Int"
                                 },
@@ -128,7 +128,7 @@
                         },
                         "arguments": [
                             {
-                                "kind": "UnaryOpExpression",
+                                "kind": "UnaryExpression",
                                 "type": {
                                     "name": "Bool"
                                 },
@@ -151,7 +151,7 @@
                         },
                         "arguments": [
                             {
-                                "kind": "UnaryOpExpression",
+                                "kind": "UnaryExpression",
                                 "type": {
                                     "name": "Bool"
                                 },
@@ -174,7 +174,7 @@
                         },
                         "arguments": [
                             {
-                                "kind": "UnaryOpExpression",
+                                "kind": "UnaryExpression",
                                 "type": {
                                     "name": "Bool"
                                 },
@@ -197,7 +197,7 @@
                         },
                         "arguments": [
                             {
-                                "kind": "UnaryOpExpression",
+                                "kind": "UnaryExpression",
                                 "type": {
                                     "name": "Bool"
                                 },

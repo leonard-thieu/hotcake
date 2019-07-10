@@ -21,7 +21,7 @@ import { SelfExpression } from './Node/Expression/SelfExpression';
 import { SliceExpression } from './Node/Expression/SliceExpression';
 import { MissableStringLiteralExpression, StringLiteralExpression } from './Node/Expression/StringLiteralExpression';
 import { SuperExpression } from './Node/Expression/SuperExpression';
-import { UnaryOperatorToken, UnaryOpExpression } from './Node/Expression/UnaryOpExpression';
+import { UnaryExpression, UnaryOperatorToken } from './Node/Expression/UnaryExpression';
 import { EscapedIdentifier, MissableIdentifier } from './Node/Identifier';
 import { isNode, Nodes } from './Node/Node';
 import { NodeKind } from './Node/NodeKind';
@@ -282,7 +282,7 @@ export abstract class ParserBase {
             case TokenKind.NotKeyword: {
                 this.advanceToken();
 
-                expression = this.parseUnaryOpExpression(parent, token);
+                expression = this.parseUnaryExpression(parent, token);
                 break;
             }
             default: {
@@ -306,13 +306,13 @@ export abstract class ParserBase {
         return expression;
     }
 
-    protected parseUnaryOpExpression(parent: Nodes, operator: UnaryOperatorToken): UnaryOpExpression {
-        const unaryOpExpression = new UnaryOpExpression();
-        unaryOpExpression.parent = parent;
-        unaryOpExpression.operator = operator;
-        unaryOpExpression.operand = this.parseUnaryExpressionOrHigher(unaryOpExpression);
+    protected parseUnaryExpression(parent: Nodes, operator: UnaryOperatorToken): UnaryExpression {
+        const unaryExpression = new UnaryExpression();
+        unaryExpression.parent = parent;
+        unaryExpression.operator = operator;
+        unaryExpression.operand = this.parseUnaryExpressionOrHigher(unaryExpression);
 
-        return unaryOpExpression;
+        return unaryExpression;
     }
 
     // #region Primary expressions

@@ -11,7 +11,7 @@ import { BoundInvokeExpression } from './Binding/BoundInvokeExpression';
 import { BoundModuleDeclaration } from './Binding/BoundModuleDeclaration';
 import { BoundNullExpression } from './Binding/BoundNullExpression';
 import { BoundStringLiteralExpression } from './Binding/BoundStringLiteralExpression';
-import { BoundUnaryOpExpression } from './Binding/BoundUnaryOpExpression';
+import { BoundUnaryExpression } from './Binding/BoundUnaryExpression';
 import { ArrayType } from './Binding/Type/ArrayType';
 import { BoolType } from './Binding/Type/BoolType';
 import { FloatType } from './Binding/Type/FloatType';
@@ -50,7 +50,7 @@ import { ScopeMemberAccessExpression } from './Node/Expression/ScopeMemberAccess
 import { SelfExpression } from './Node/Expression/SelfExpression';
 import { SliceExpression } from './Node/Expression/SliceExpression';
 import { SuperExpression } from './Node/Expression/SuperExpression';
-import { UnaryOpExpression } from './Node/Expression/UnaryOpExpression';
+import { UnaryExpression } from './Node/Expression/UnaryExpression';
 import { Nodes } from './Node/Node';
 import { NodeKind } from './Node/NodeKind';
 import { ContinueStatement } from './Node/Statement/ContinueStatement';
@@ -412,8 +412,8 @@ export class Binder {
             case NodeKind.BinaryExpression: {
                 return this.bindBinaryExpression(expression);
             }
-            case NodeKind.UnaryOpExpression: {
-                return this.bindUnaryOpExpression(expression);
+            case NodeKind.UnaryExpression: {
+                return this.bindUnaryExpression(expression);
             }
             case NodeKind.NullExpression: {
                 return this.bindNullExpression();
@@ -597,7 +597,7 @@ export class Binder {
         return null;
     }
 
-    private bindUnaryOpExpression(expression: UnaryOpExpression): BoundUnaryOpExpression {
+    private bindUnaryExpression(expression: UnaryExpression): BoundUnaryExpression {
         const boundOperand = this.bindExpression(expression.operand);
 
         let type: Type;
@@ -641,7 +641,7 @@ export class Binder {
             }
         }
 
-        return new BoundUnaryOpExpression(type, boundOperand);
+        return new BoundUnaryExpression(type, boundOperand);
     }
 
     private bindNullExpression(): BoundNullExpression {
