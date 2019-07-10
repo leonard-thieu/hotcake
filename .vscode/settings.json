@@ -1,6 +1,10 @@
 {
     "files.exclude": {
-        "**/node_modules": true
+        "**/node_modules": true,
+        "**/*.js": {
+            "when": "$(basename).ts"
+        },
+        "**/*.js.map": true
     },
     "typescript.tsdk": "node_modules\\typescript\\lib"
 }
