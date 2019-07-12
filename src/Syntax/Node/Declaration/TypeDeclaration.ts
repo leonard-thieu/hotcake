@@ -5,6 +5,8 @@ import { NodeKind } from '../NodeKind';
 import { MissableTypeReference } from '../TypeReference';
 import { Declaration } from './Declaration';
 
+// TODO: Shouldn't these be end with `Reference` instead of `Declaration`?
+
 export type TypeDeclaration =
     ShorthandTypeDeclaration |
     LonghandTypeDeclaration

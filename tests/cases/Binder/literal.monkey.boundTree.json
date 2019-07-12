@@ -1,22 +1,26 @@
 {
     "kind": "ModuleDeclaration",
+    "identifier": "literal",
+    "locals": [
+        "Main"
+    ],
     "members": [
         {
-            "kind": "FunctionLikeDeclaration",
+            "kind": "FunctionDeclaration",
+            "identifier": "Main",
+            "locals": [],
+            "returnType": "Int",
+            "parameters": [],
             "statements": [
                 {
                     "kind": "ExpressionStatement",
                     "expression": {
                         "kind": "InvokeExpression",
-                        "type": {
-                            "name": "Void"
-                        },
+                        "type": "Void",
                         "arguments": [
                             {
                                 "kind": "BooleanLiteralExpression",
-                                "type": {
-                                    "name": "Bool"
-                                }
+                                "type": "Bool"
                             }
                         ]
                     }
@@ -25,15 +29,11 @@
                     "kind": "ExpressionStatement",
                     "expression": {
                         "kind": "InvokeExpression",
-                        "type": {
-                            "name": "Void"
-                        },
+                        "type": "Void",
                         "arguments": [
                             {
                                 "kind": "IntegerLiteralExpression",
-                                "type": {
-                                    "name": "Int"
-                                }
+                                "type": "Int"
                             }
                         ]
                     }
@@ -42,15 +42,11 @@
                     "kind": "ExpressionStatement",
                     "expression": {
                         "kind": "InvokeExpression",
-                        "type": {
-                            "name": "Void"
-                        },
+                        "type": "Void",
                         "arguments": [
                             {
                                 "kind": "FloatLiteralExpression",
-                                "type": {
-                                    "name": "Float"
-                                }
+                                "type": "Float"
                             }
                         ]
                     }
@@ -59,15 +55,11 @@
                     "kind": "ExpressionStatement",
                     "expression": {
                         "kind": "InvokeExpression",
-                        "type": {
-                            "name": "Void"
-                        },
+                        "type": "Void",
                         "arguments": [
                             {
                                 "kind": "StringLiteralExpression",
-                                "type": {
-                                    "name": "String"
-                                }
+                                "type": "String"
                             }
                         ]
                     }

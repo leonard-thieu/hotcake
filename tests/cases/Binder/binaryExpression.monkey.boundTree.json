@@ -1,33 +1,33 @@
 {
     "kind": "ModuleDeclaration",
+    "identifier": "binaryExpression",
+    "locals": [
+        "Main"
+    ],
     "members": [
         {
-            "kind": "FunctionLikeDeclaration",
+            "kind": "FunctionDeclaration",
+            "identifier": "Main",
+            "locals": [],
+            "returnType": "Int",
+            "parameters": [],
             "statements": [
                 {
                     "kind": "ExpressionStatement",
                     "expression": {
                         "kind": "InvokeExpression",
-                        "type": {
-                            "name": "Void"
-                        },
+                        "type": "Void",
                         "arguments": [
                             {
                                 "kind": "BinaryExpression",
-                                "type": {
-                                    "name": "Int"
-                                },
+                                "type": "Int",
                                 "leftOperand": {
                                     "kind": "IntegerLiteralExpression",
-                                    "type": {
-                                        "name": "Int"
-                                    }
+                                    "type": "Int"
                                 },
                                 "rightOperand": {
                                     "kind": "IntegerLiteralExpression",
-                                    "type": {
-                                        "name": "Int"
-                                    }
+                                    "type": "Int"
                                 }
                             }
                         ]
@@ -37,26 +37,18 @@
                     "kind": "ExpressionStatement",
                     "expression": {
                         "kind": "InvokeExpression",
-                        "type": {
-                            "name": "Void"
-                        },
+                        "type": "Void",
                         "arguments": [
                             {
                                 "kind": "BinaryExpression",
-                                "type": {
-                                    "name": "Int"
-                                },
+                                "type": "Int",
                                 "leftOperand": {
                                     "kind": "IntegerLiteralExpression",
-                                    "type": {
-                                        "name": "Int"
-                                    }
+                                    "type": "Int"
                                 },
                                 "rightOperand": {
                                     "kind": "IntegerLiteralExpression",
-                                    "type": {
-                                        "name": "Int"
-                                    }
+                                    "type": "Int"
                                 }
                             }
                         ]
@@ -66,26 +58,18 @@
                     "kind": "ExpressionStatement",
                     "expression": {
                         "kind": "InvokeExpression",
-                        "type": {
-                            "name": "Void"
-                        },
+                        "type": "Void",
                         "arguments": [
                             {
                                 "kind": "BinaryExpression",
-                                "type": {
-                                    "name": "Int"
-                                },
+                                "type": "Int",
                                 "leftOperand": {
                                     "kind": "IntegerLiteralExpression",
-                                    "type": {
-                                        "name": "Int"
-                                    }
+                                    "type": "Int"
                                 },
                                 "rightOperand": {
                                     "kind": "IntegerLiteralExpression",
-                                    "type": {
-                                        "name": "Int"
-                                    }
+                                    "type": "Int"
                                 }
                             }
                         ]
@@ -95,26 +79,18 @@
                     "kind": "ExpressionStatement",
                     "expression": {
                         "kind": "InvokeExpression",
-                        "type": {
-                            "name": "Void"
-                        },
+                        "type": "Void",
                         "arguments": [
                             {
                                 "kind": "BinaryExpression",
-                                "type": {
-                                    "name": "Float"
-                                },
+                                "type": "Float",
                                 "leftOperand": {
                                     "kind": "IntegerLiteralExpression",
-                                    "type": {
-                                        "name": "Int"
-                                    }
+                                    "type": "Int"
                                 },
                                 "rightOperand": {
                                     "kind": "FloatLiteralExpression",
-                                    "type": {
-                                        "name": "Float"
-                                    }
+                                    "type": "Float"
                                 }
                             }
                         ]
@@ -124,26 +100,18 @@
                     "kind": "ExpressionStatement",
                     "expression": {
                         "kind": "InvokeExpression",
-                        "type": {
-                            "name": "Void"
-                        },
+                        "type": "Void",
                         "arguments": [
                             {
                                 "kind": "BinaryExpression",
-                                "type": {
-                                    "name": "Float"
-                                },
+                                "type": "Float",
                                 "leftOperand": {
                                     "kind": "IntegerLiteralExpression",
-                                    "type": {
-                                        "name": "Int"
-                                    }
+                                    "type": "Int"
                                 },
                                 "rightOperand": {
                                     "kind": "FloatLiteralExpression",
-                                    "type": {
-                                        "name": "Float"
-                                    }
+                                    "type": "Float"
                                 }
                             }
                         ]
@@ -153,26 +121,18 @@
                     "kind": "ExpressionStatement",
                     "expression": {
                         "kind": "InvokeExpression",
-                        "type": {
-                            "name": "Void"
-                        },
+                        "type": "Void",
                         "arguments": [
                             {
                                 "kind": "BinaryExpression",
-                                "type": {
-                                    "name": "Int"
-                                },
+                                "type": "Int",
                                 "leftOperand": {
                                     "kind": "IntegerLiteralExpression",
-                                    "type": {
-                                        "name": "Int"
-                                    }
+                                    "type": "Int"
                                 },
                                 "rightOperand": {
                                     "kind": "IntegerLiteralExpression",
-                                    "type": {
-                                        "name": "Int"
-                                    }
+                                    "type": "Int"
                                 }
                             }
                         ]
@@ -182,26 +142,18 @@
                     "kind": "ExpressionStatement",
                     "expression": {
                         "kind": "InvokeExpression",
-                        "type": {
-                            "name": "Void"
-                        },
+                        "type": "Void",
                         "arguments": [
                             {
                                 "kind": "BinaryExpression",
-                                "type": {
-                                    "name": "Int"
-                                },
+                                "type": "Int",
                                 "leftOperand": {
                                     "kind": "IntegerLiteralExpression",
-                                    "type": {
-                                        "name": "Int"
-                                    }
+                                    "type": "Int"
                                 },
                                 "rightOperand": {
                                     "kind": "IntegerLiteralExpression",
-                                    "type": {
-                                        "name": "Int"
-                                    }
+                                    "type": "Int"
                                 }
                             }
                         ]
@@ -211,26 +163,18 @@
                     "kind": "ExpressionStatement",
                     "expression": {
                         "kind": "InvokeExpression",
-                        "type": {
-                            "name": "Void"
-                        },
+                        "type": "Void",
                         "arguments": [
                             {
                                 "kind": "BinaryExpression",
-                                "type": {
-                                    "name": "Int"
-                                },
+                                "type": "Int",
                                 "leftOperand": {
                                     "kind": "IntegerLiteralExpression",
-                                    "type": {
-                                        "name": "Int"
-                                    }
+                                    "type": "Int"
                                 },
                                 "rightOperand": {
                                     "kind": "IntegerLiteralExpression",
-                                    "type": {
-                                        "name": "Int"
-                                    }
+                                    "type": "Int"
                                 }
                             }
                         ]
@@ -240,26 +184,18 @@
                     "kind": "ExpressionStatement",
                     "expression": {
                         "kind": "InvokeExpression",
-                        "type": {
-                            "name": "Void"
-                        },
+                        "type": "Void",
                         "arguments": [
                             {
                                 "kind": "BinaryExpression",
-                                "type": {
-                                    "name": "Int"
-                                },
+                                "type": "Int",
                                 "leftOperand": {
                                     "kind": "IntegerLiteralExpression",
-                                    "type": {
-                                        "name": "Int"
-                                    }
+                                    "type": "Int"
                                 },
                                 "rightOperand": {
                                     "kind": "IntegerLiteralExpression",
-                                    "type": {
-                                        "name": "Int"
-                                    }
+                                    "type": "Int"
                                 }
                             }
                         ]
@@ -269,26 +205,18 @@
                     "kind": "ExpressionStatement",
                     "expression": {
                         "kind": "InvokeExpression",
-                        "type": {
-                            "name": "Void"
-                        },
+                        "type": "Void",
                         "arguments": [
                             {
                                 "kind": "BinaryExpression",
-                                "type": {
-                                    "name": "Int"
-                                },
+                                "type": "Int",
                                 "leftOperand": {
                                     "kind": "IntegerLiteralExpression",
-                                    "type": {
-                                        "name": "Int"
-                                    }
+                                    "type": "Int"
                                 },
                                 "rightOperand": {
                                     "kind": "IntegerLiteralExpression",
-                                    "type": {
-                                        "name": "Int"
-                                    }
+                                    "type": "Int"
                                 }
                             }
                         ]
@@ -298,26 +226,18 @@
                     "kind": "ExpressionStatement",
                     "expression": {
                         "kind": "InvokeExpression",
-                        "type": {
-                            "name": "Void"
-                        },
+                        "type": "Void",
                         "arguments": [
                             {
                                 "kind": "BinaryExpression",
-                                "type": {
-                                    "name": "Bool"
-                                },
+                                "type": "Bool",
                                 "leftOperand": {
                                     "kind": "FloatLiteralExpression",
-                                    "type": {
-                                        "name": "Float"
-                                    }
+                                    "type": "Float"
                                 },
                                 "rightOperand": {
                                     "kind": "IntegerLiteralExpression",
-                                    "type": {
-                                        "name": "Int"
-                                    }
+                                    "type": "Int"
                                 }
                             }
                         ]
@@ -327,26 +247,18 @@
                     "kind": "ExpressionStatement",
                     "expression": {
                         "kind": "InvokeExpression",
-                        "type": {
-                            "name": "Void"
-                        },
+                        "type": "Void",
                         "arguments": [
                             {
                                 "kind": "BinaryExpression",
-                                "type": {
-                                    "name": "Bool"
-                                },
+                                "type": "Bool",
                                 "leftOperand": {
                                     "kind": "IntegerLiteralExpression",
-                                    "type": {
-                                        "name": "Int"
-                                    }
+                                    "type": "Int"
                                 },
                                 "rightOperand": {
                                     "kind": "BooleanLiteralExpression",
-                                    "type": {
-                                        "name": "Bool"
-                                    }
+                                    "type": "Bool"
                                 }
                             }
                         ]
@@ -356,26 +268,18 @@
                     "kind": "ExpressionStatement",
                     "expression": {
                         "kind": "InvokeExpression",
-                        "type": {
-                            "name": "Void"
-                        },
+                        "type": "Void",
                         "arguments": [
                             {
                                 "kind": "BinaryExpression",
-                                "type": {
-                                    "name": "Bool"
-                                },
+                                "type": "Bool",
                                 "leftOperand": {
                                     "kind": "IntegerLiteralExpression",
-                                    "type": {
-                                        "name": "Int"
-                                    }
+                                    "type": "Int"
                                 },
                                 "rightOperand": {
                                     "kind": "StringLiteralExpression",
-                                    "type": {
-                                        "name": "String"
-                                    }
+                                    "type": "String"
                                 }
                             }
                         ]
@@ -385,26 +289,18 @@
                     "kind": "ExpressionStatement",
                     "expression": {
                         "kind": "InvokeExpression",
-                        "type": {
-                            "name": "Void"
-                        },
+                        "type": "Void",
                         "arguments": [
                             {
                                 "kind": "BinaryExpression",
-                                "type": {
-                                    "name": "Bool"
-                                },
+                                "type": "Bool",
                                 "leftOperand": {
                                     "kind": "IntegerLiteralExpression",
-                                    "type": {
-                                        "name": "Int"
-                                    }
+                                    "type": "Int"
                                 },
                                 "rightOperand": {
                                     "kind": "FloatLiteralExpression",
-                                    "type": {
-                                        "name": "Float"
-                                    }
+                                    "type": "Float"
                                 }
                             }
                         ]
@@ -414,26 +310,18 @@
                     "kind": "ExpressionStatement",
                     "expression": {
                         "kind": "InvokeExpression",
-                        "type": {
-                            "name": "Void"
-                        },
+                        "type": "Void",
                         "arguments": [
                             {
                                 "kind": "BinaryExpression",
-                                "type": {
-                                    "name": "Bool"
-                                },
+                                "type": "Bool",
                                 "leftOperand": {
                                     "kind": "IntegerLiteralExpression",
-                                    "type": {
-                                        "name": "Int"
-                                    }
+                                    "type": "Int"
                                 },
                                 "rightOperand": {
                                     "kind": "IntegerLiteralExpression",
-                                    "type": {
-                                        "name": "Int"
-                                    }
+                                    "type": "Int"
                                 }
                             }
                         ]
@@ -443,26 +331,18 @@
                     "kind": "ExpressionStatement",
                     "expression": {
                         "kind": "InvokeExpression",
-                        "type": {
-                            "name": "Void"
-                        },
+                        "type": "Void",
                         "arguments": [
                             {
                                 "kind": "BinaryExpression",
-                                "type": {
-                                    "name": "Bool"
-                                },
+                                "type": "Bool",
                                 "leftOperand": {
                                     "kind": "BooleanLiteralExpression",
-                                    "type": {
-                                        "name": "Bool"
-                                    }
+                                    "type": "Bool"
                                 },
                                 "rightOperand": {
                                     "kind": "BooleanLiteralExpression",
-                                    "type": {
-                                        "name": "Bool"
-                                    }
+                                    "type": "Bool"
                                 }
                             }
                         ]
@@ -472,26 +352,18 @@
                     "kind": "ExpressionStatement",
                     "expression": {
                         "kind": "InvokeExpression",
-                        "type": {
-                            "name": "Void"
-                        },
+                        "type": "Void",
                         "arguments": [
                             {
                                 "kind": "BinaryExpression",
-                                "type": {
-                                    "name": "Bool"
-                                },
+                                "type": "Bool",
                                 "leftOperand": {
                                     "kind": "BooleanLiteralExpression",
-                                    "type": {
-                                        "name": "Bool"
-                                    }
+                                    "type": "Bool"
                                 },
                                 "rightOperand": {
                                     "kind": "BooleanLiteralExpression",
-                                    "type": {
-                                        "name": "Bool"
-                                    }
+                                    "type": "Bool"
                                 }
                             }
                         ]
@@ -501,26 +373,18 @@
                     "kind": "ExpressionStatement",
                     "expression": {
                         "kind": "InvokeExpression",
-                        "type": {
-                            "name": "Void"
-                        },
+                        "type": "Void",
                         "arguments": [
                             {
                                 "kind": "BinaryExpression",
-                                "type": {
-                                    "name": "Bool"
-                                },
+                                "type": "Bool",
                                 "leftOperand": {
                                     "kind": "BooleanLiteralExpression",
-                                    "type": {
-                                        "name": "Bool"
-                                    }
+                                    "type": "Bool"
                                 },
                                 "rightOperand": {
                                     "kind": "BooleanLiteralExpression",
-                                    "type": {
-                                        "name": "Bool"
-                                    }
+                                    "type": "Bool"
                                 }
                             }
                         ]
@@ -530,26 +394,18 @@
                     "kind": "ExpressionStatement",
                     "expression": {
                         "kind": "InvokeExpression",
-                        "type": {
-                            "name": "Void"
-                        },
+                        "type": "Void",
                         "arguments": [
                             {
                                 "kind": "BinaryExpression",
-                                "type": {
-                                    "name": "String"
-                                },
+                                "type": "String",
                                 "leftOperand": {
                                     "kind": "IntegerLiteralExpression",
-                                    "type": {
-                                        "name": "Int"
-                                    }
+                                    "type": "Int"
                                 },
                                 "rightOperand": {
                                     "kind": "StringLiteralExpression",
-                                    "type": {
-                                        "name": "String"
-                                    }
+                                    "type": "String"
                                 }
                             }
                         ]
@@ -559,26 +415,18 @@
                     "kind": "ExpressionStatement",
                     "expression": {
                         "kind": "InvokeExpression",
-                        "type": {
-                            "name": "Void"
-                        },
+                        "type": "Void",
                         "arguments": [
                             {
                                 "kind": "BinaryExpression",
-                                "type": {
-                                    "name": "String"
-                                },
+                                "type": "String",
                                 "leftOperand": {
                                     "kind": "FloatLiteralExpression",
-                                    "type": {
-                                        "name": "Float"
-                                    }
+                                    "type": "Float"
                                 },
                                 "rightOperand": {
                                     "kind": "StringLiteralExpression",
-                                    "type": {
-                                        "name": "String"
-                                    }
+                                    "type": "String"
                                 }
                             }
                         ]
@@ -588,26 +436,18 @@
                     "kind": "ExpressionStatement",
                     "expression": {
                         "kind": "InvokeExpression",
-                        "type": {
-                            "name": "Void"
-                        },
+                        "type": "Void",
                         "arguments": [
                             {
                                 "kind": "BinaryExpression",
-                                "type": {
-                                    "name": "String"
-                                },
+                                "type": "String",
                                 "leftOperand": {
                                     "kind": "StringLiteralExpression",
-                                    "type": {
-                                        "name": "String"
-                                    }
+                                    "type": "String"
                                 },
                                 "rightOperand": {
                                     "kind": "StringLiteralExpression",
-                                    "type": {
-                                        "name": "String"
-                                    }
+                                    "type": "String"
                                 }
                             }
                         ]

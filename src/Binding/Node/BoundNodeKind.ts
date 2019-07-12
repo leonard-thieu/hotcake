@@ -1,6 +1,7 @@
 export enum BoundNodeKind {
     ModuleDeclaration = 'ModuleDeclaration',
-    FunctionLikeDeclaration = 'FunctionLikeDeclaration',
+    FunctionDeclaration = 'FunctionDeclaration',
+    DataDeclaration = 'DataDeclaration',
 
     ExpressionStatement = 'ExpressionStatement',
 

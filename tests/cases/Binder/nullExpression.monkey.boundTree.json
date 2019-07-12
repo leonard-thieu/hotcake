@@ -1,22 +1,26 @@
 {
     "kind": "ModuleDeclaration",
+    "identifier": "nullExpression",
+    "locals": [
+        "Main"
+    ],
     "members": [
         {
-            "kind": "FunctionLikeDeclaration",
+            "kind": "FunctionDeclaration",
+            "identifier": "Main",
+            "locals": [],
+            "returnType": "Int",
+            "parameters": [],
             "statements": [
                 {
                     "kind": "ExpressionStatement",
                     "expression": {
                         "kind": "InvokeExpression",
-                        "type": {
-                            "name": "Void"
-                        },
+                        "type": "Void",
                         "arguments": [
                             {
                                 "kind": "NullExpression",
-                                "type": {
-                                    "name": "Object"
-                                }
+                                "type": "Object"
                             }
                         ]
                     }

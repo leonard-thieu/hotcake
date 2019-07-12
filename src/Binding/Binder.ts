@@ -6,16 +6,14 @@ import { AliasDirectiveSequence } from '../Syntax/Node/Declaration/AliasDirectiv
 import { ClassDeclaration } from '../Syntax/Node/Declaration/ClassDeclaration';
 import { ClassMethodDeclaration } from '../Syntax/Node/Declaration/ClassMethodDeclaration';
 import { DataDeclarationSequence } from '../Syntax/Node/Declaration/DataDeclarationSequence';
-import { Declarations, FunctionLikeDeclaration } from '../Syntax/Node/Declaration/Declaration';
+import { Declarations } from '../Syntax/Node/Declaration/Declaration';
 import { ExternClassDeclaration } from '../Syntax/Node/Declaration/ExternDeclaration/ExternClassDeclaration';
-import { ExternClassMethodDeclaration } from '../Syntax/Node/Declaration/ExternDeclaration/ExternClassMethodDeclaration';
 import { ExternDataDeclarationSequence } from '../Syntax/Node/Declaration/ExternDeclaration/ExternDataDeclarationSequence';
-import { ExternFunctionDeclaration } from '../Syntax/Node/Declaration/ExternDeclaration/ExternFunctionDeclaration';
 import { FunctionDeclaration } from '../Syntax/Node/Declaration/FunctionDeclaration';
 import { ImportStatement } from '../Syntax/Node/Declaration/ImportStatement';
 import { InterfaceDeclaration } from '../Syntax/Node/Declaration/InterfaceDeclaration';
-import { InterfaceMethodDeclaration } from '../Syntax/Node/Declaration/InterfaceMethodDeclaration';
 import { ModuleDeclaration } from '../Syntax/Node/Declaration/ModuleDeclaration';
+import { TypeDeclaration } from '../Syntax/Node/Declaration/TypeDeclaration';
 import { ArrayLiteralExpression } from '../Syntax/Node/Expression/ArrayLiteralExpression';
 import { AssignmentExpression } from '../Syntax/Node/Expression/AssignmentExpression';
 import { BinaryExpression } from '../Syntax/Node/Expression/BinaryExpression';
@@ -45,11 +43,16 @@ import { Statements } from '../Syntax/Node/Statement/Statement';
 import { ThrowStatement } from '../Syntax/Node/Statement/ThrowStatement';
 import { CatchStatement, TryStatement } from '../Syntax/Node/Statement/TryStatement';
 import { WhileLoop } from '../Syntax/Node/Statement/WhileLoop';
+import { ParseContextElementDelimitedSequence, ParseContextKind } from '../Syntax/ParserBase';
 import { MissingToken } from '../Syntax/Token/MissingToken';
 import { SkippedToken } from '../Syntax/Token/SkippedToken';
 import { NewlineToken, TokenKinds } from '../Syntax/Token/Token';
 import { TokenKind } from '../Syntax/Token/TokenKind';
-import { BoundFunctionLikeDeclaration } from './Node/Declaration/BoundFunctionLikeDeclaration';
+import { BoundNode } from './Node/BoundNode';
+import { BoundNodeKind } from './Node/BoundNodeKind';
+import { BoundDataDeclaration } from './Node/Declaration/BoundDataDeclaration';
+import { BoundDeclarations } from './Node/Declaration/BoundDeclaration';
+import { BoundFunctionDeclaration } from './Node/Declaration/BoundFunctionDeclaration';
 import { BoundModuleDeclaration } from './Node/Declaration/BoundModuleDeclaration';
 import { BoundBinaryExpression } from './Node/Expression/BoundBinaryExpression';
 import { BoundBooleanLiteralExpression } from './Node/Expression/BoundBooleanLiteralExpression';
@@ -61,13 +64,13 @@ import { BoundNullExpression } from './Node/Expression/BoundNullExpression';
 import { BoundStringLiteralExpression } from './Node/Expression/BoundStringLiteralExpression';
 import { BoundUnaryExpression } from './Node/Expression/BoundUnaryExpression';
 import { BoundExpressionStatement } from './Node/Statement/BoundExpressionStatement';
-import { ArrayType } from './Type/ArrayType';
 import { BoolType } from './Type/BoolType';
 import { FloatType } from './Type/FloatType';
 import { IntType } from './Type/IntType';
 import { ObjectType } from './Type/ObjectType';
 import { StringType } from './Type/StringType';
 import { Type } from './Type/Type';
+import { TypeKind } from './Type/TypeKind';
 import { VoidType } from './Type/VoidType';
 
 export class Binder {
@@ -81,8 +84,8 @@ export class Binder {
 
     private bindModuleDeclaration(moduleDeclaration: ModuleDeclaration): BoundModuleDeclaration {
         const boundModuleDeclaration = new BoundModuleDeclaration();
-
-        // TODO: Bind module declaration
+        boundModuleDeclaration.identifier = this.declareSymbol(moduleDeclaration, boundModuleDeclaration);
+        boundModuleDeclaration.locals = new BoundSymbolTable();
 
         for (const member of moduleDeclaration.headerMembers) {
             switch (member.kind) {
@@ -107,13 +110,16 @@ export class Binder {
             }
         }
 
-        boundModuleDeclaration.members = this.bindModuleDeclarationMembers(moduleDeclaration);
+        boundModuleDeclaration.members = this.bindModuleDeclarationMembers(moduleDeclaration, boundModuleDeclaration);
 
         return boundModuleDeclaration;
     }
 
-    private bindModuleDeclarationMembers(moduleDeclaration: ModuleDeclaration) {
-        const boundMembers: BoundFunctionLikeDeclaration[] = [];
+    private bindModuleDeclarationMembers(
+        moduleDeclaration: ModuleDeclaration,
+        parent: BoundModuleDeclaration,
+    ) {
+        const boundMembers: BoundFunctionDeclaration[] = [];
 
         for (const member of moduleDeclaration.members) {
             switch (member.kind) {
@@ -126,23 +132,28 @@ export class Binder {
                     this.bindDataDeclarationSequence(member);
                     break;
                 }
-                case NodeKind.FunctionDeclaration:
-                case NodeKind.ExternFunctionDeclaration: {
-                    const boundFunction = this.bindFunctionLikeDeclaration(member);
+                case NodeKind.FunctionDeclaration: {
+                    const boundFunction = this.bindFunctionDeclaration(member, parent);
                     boundMembers.push(boundFunction);
                     break;
                 }
+                case NodeKind.ExternFunctionDeclaration: {
+                    throw new Error('Method not implemented.');
+                }
                 case NodeKind.InterfaceDeclaration: {
-                    this.bindInterfaceDeclaration(member);
+                    this.bindInterfaceDeclaration(member, parent);
                     break;
                 }
                 case NodeKind.ClassDeclaration:
                 case NodeKind.ExternClassDeclaration: {
-                    this.bindClassDeclaration(member);
+                    this.bindClassDeclaration(member, parent);
                     break;
                 }
                 default: {
-                    type ExpectedType = NewlineToken | SkippedToken<TokenKinds>;
+                    type ExpectedType =
+                        NewlineToken |
+                        SkippedToken<TokenKinds>
+                        ;
                     assertType<ExpectedType>(member);
                     break;
                 }
@@ -167,7 +178,7 @@ export class Binder {
         }
     }
 
-    private bindInterfaceDeclaration(interfaceDeclaration: InterfaceDeclaration) {
+    private bindInterfaceDeclaration(interfaceDeclaration: InterfaceDeclaration, parent: BoundModuleDeclaration) {
         // TODO: Bind interface declaration
 
         for (const member of interfaceDeclaration.members) {
@@ -177,8 +188,7 @@ export class Binder {
                     break;
                 }
                 case NodeKind.InterfaceMethodDeclaration: {
-                    this.bindFunctionLikeDeclaration(member);
-                    break;
+                    throw new Error('Method not implemented.');
                 }
                 default: {
                     type ExpectedType = NewlineToken | SkippedToken<TokenKinds>;
@@ -189,7 +199,7 @@ export class Binder {
         }
     }
 
-    private bindClassDeclaration(classDeclaration: ClassDeclaration | ExternClassDeclaration) {
+    private bindClassDeclaration(classDeclaration: ClassDeclaration | ExternClassDeclaration, parent: BoundModuleDeclaration) {
         // TODO: Bind class declaration
 
         for (const member of classDeclaration.members) {
@@ -199,12 +209,14 @@ export class Binder {
                     this.bindDataDeclarationSequence(member);
                     break;
                 }
-                case NodeKind.FunctionDeclaration:
+                case NodeKind.FunctionDeclaration: {
+                    this.bindFunctionDeclaration(member, parent);
+                    break;
+                }
                 case NodeKind.ExternFunctionDeclaration:
                 case NodeKind.ClassMethodDeclaration:
                 case NodeKind.ExternClassMethodDeclaration: {
-                    this.bindFunctionLikeDeclaration(member);
-                    break;
+                    throw new Error('Method not implemented.');
                 }
                 case NodeKind.AccessibilityDirective:
                 default: {
@@ -220,15 +232,36 @@ export class Binder {
         }
     }
 
-    private bindFunctionLikeDeclaration(functionLikeDeclaration: FunctionLikeDeclaration): BoundFunctionLikeDeclaration {
-        const boundFunctionLikeDeclaration = new BoundFunctionLikeDeclaration();
+    private bindFunctionDeclaration(
+        functionDeclaration: FunctionDeclaration,
+        parent: BoundModuleDeclaration,
+    ): BoundFunctionDeclaration {
+        const boundFunctionDeclaration = new BoundFunctionDeclaration();
+        boundFunctionDeclaration.parent = parent;
+        boundFunctionDeclaration.identifier = this.declareSymbol(functionDeclaration, boundFunctionDeclaration);
+        boundFunctionDeclaration.locals = new BoundSymbolTable();
+        boundFunctionDeclaration.returnType = this.bindTypeReference(functionDeclaration.returnType);
+        boundFunctionDeclaration.parameters = this.bindDataDeclarations(functionDeclaration.parameters, boundFunctionDeclaration);
+        boundFunctionDeclaration.statements = this.bindStatements(functionDeclaration);
 
-        // TODO: Bind function-like declaration
+        return boundFunctionDeclaration;
+    }
 
-        for (const parameter of functionLikeDeclaration.parameters) {
+    private bindDataDeclarations(
+        parameters: ParseContextElementDelimitedSequence<ParseContextKind.DataDeclarationSequence>,
+        parent: BoundFunctionDeclaration,
+    ) {
+        const boundDataDeclarations: BoundDataDeclaration[] = [];
+
+        for (const parameter of parameters) {
             switch (parameter.kind) {
                 case NodeKind.DataDeclaration: {
-                    // TODO: Bind function-like parameters
+                    const boundDataDeclaration = new BoundDataDeclaration();
+                    boundDataDeclaration.parent = parent;
+                    boundDataDeclaration.identifier = this.declareSymbol(parameter, boundDataDeclaration);
+                    boundDataDeclaration.type = this.bindTypeReference(parameter.type);
+
+                    boundDataDeclarations.push(boundDataDeclaration);
                     break;
                 }
                 default: {
@@ -238,26 +271,7 @@ export class Binder {
             }
         }
 
-        switch (functionLikeDeclaration.kind) {
-            case NodeKind.FunctionDeclaration:
-            case NodeKind.ClassMethodDeclaration: {
-                if (functionLikeDeclaration.statements) {
-                    boundFunctionLikeDeclaration.statements = this.bindStatements(functionLikeDeclaration);
-                }
-                break;
-            }
-            default: {
-                type ExpectedType =
-                    ExternFunctionDeclaration |
-                    InterfaceMethodDeclaration |
-                    ExternClassMethodDeclaration
-                    ;
-                assertType<ExpectedType>(functionLikeDeclaration);
-                break;
-            }
-        }
-
-        return boundFunctionLikeDeclaration;
+        return boundDataDeclarations;
     }
 
     private bindStatements(scopedNode: ScopedNode) {
@@ -548,14 +562,16 @@ export class Binder {
             case TokenKind.GreaterThanSignEqualsSign:
             case TokenKind.LessThanSignGreaterThanSign: {
                 let balancedType = this.getBalancedType(leftOperand.type, rightOperand.type);
+                if (!balancedType) {
+                    throw new Error(`'${operatorKind}' is not valid for '${leftOperand.kind}' and '${rightOperand.kind}'.`);
+                }
 
-                switch (balancedType) {
-                    case null:
-                    case ArrayType.type: {
+                switch (balancedType.kind) {
+                    case TypeKind.Array: {
                         throw new Error(`'${operatorKind}' is not valid for '${leftOperand.kind}' and '${rightOperand.kind}'.`);
                     }
-                    case BoolType.type:
-                    case ObjectType.type: {
+                    case TypeKind.Bool:
+                    case TypeKind.Object: {
                         if (operatorKind !== TokenKind.EqualsSign &&
                             operatorKind !== TokenKind.LessThanSignGreaterThanSign) {
                             throw new Error(`'${operatorKind}' is not valid for '${leftOperand.kind}' and '${rightOperand.kind}'.`);
@@ -680,6 +696,101 @@ export class Binder {
 
     // #region Core
 
+    private bindTypeReference(typeDeclaration: TypeDeclaration | undefined): Type {
+        if (!typeDeclaration) {
+            return IntType.type;
+        }
+
+        switch (typeDeclaration.kind) {
+            case NodeKind.ShorthandTypeDeclaration: {
+                const { shorthandType } = typeDeclaration;
+                if (shorthandType) {
+                    switch (shorthandType.kind) {
+                        case TokenKind.QuestionMark: {
+                            return BoolType.type;
+                        }
+                        case TokenKind.NumberSign: {
+                            return IntType.type;
+                        }
+                        case TokenKind.PercentSign: {
+                            return FloatType.type;
+                        }
+                        case TokenKind.DollarSign: {
+                            return StringType.type;
+                        }
+                        default: {
+                            return assertNever(shorthandType);
+                        }
+                    }
+                } else {
+                    throw new Error('Method not implemented.');
+                }
+            }
+            case NodeKind.LonghandTypeDeclaration: {
+                const { typeReference } = typeDeclaration;
+                switch (typeReference.kind) {
+                    case NodeKind.TypeReference: {
+                        const { identifier } = typeReference;
+                        switch (identifier.kind) {
+                            case TokenKind.BoolKeyword: {
+                                return BoolType.type;
+                            }
+                            case TokenKind.IntKeyword: {
+                                return IntType.type;
+                            }
+                            case TokenKind.FloatKeyword: {
+                                return FloatType.type;
+                            }
+                            case TokenKind.StringKeyword: {
+                                return StringType.type;
+                            }
+                            case TokenKind.ObjectKeyword: {
+                                return ObjectType.type;
+                            }
+                            case TokenKind.VoidKeyword: {
+                                return VoidType.type;
+                            }
+                            case TokenKind.Missing: {
+                                throw new Error('Method not implemented.');
+                            }
+                            default: {
+                                throw new Error(`Binding '${identifier.kind}' types is not implemented.`);
+                            }
+                        }
+                    }
+                    case TokenKind.Missing: {
+                        throw new Error('Method not implemented.');
+                    }
+                    default: {
+                        return assertNever(typeReference);
+                    }
+                }
+            }
+            default: {
+                return assertNever(typeDeclaration);
+            }
+        }
+    }
+
+    private declareSymbol(declaration: Declarations, boundDeclaration: BoundDeclarations) {
+        const name = this.getDeclarationName(declaration);
+        const identifier = new BoundSymbol(name, boundDeclaration);
+
+        if (boundDeclaration.kind !== BoundNodeKind.ModuleDeclaration) {
+            const parentLocals = boundDeclaration.parent.locals;
+            const existingSymbol = parentLocals.get(name);
+
+            if (existingSymbol) {
+                throw new Error(`Duplicate symbol '${name}'.`);
+            }
+            else {
+                parentLocals.set(name, identifier);
+            }
+        }
+
+        return identifier;
+    }
+
     private getDeclarationName(declaration: Declarations) {
         switch (declaration.kind) {
             case NodeKind.ModuleDeclaration: {
@@ -723,3 +834,14 @@ type ScopedNode =
     ForLoop |
     TryStatement | CatchStatement
     ;
+
+export class BoundSymbol {
+    constructor(
+        public name: string,
+        public declaration: BoundNode,
+    ) { }
+
+    readonly references: BoundNode[] = [];
+}
+
+export class BoundSymbolTable extends Map<string, BoundSymbol> { }

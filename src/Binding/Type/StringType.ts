@@ -1,16 +1,21 @@
 import { Type } from './Type';
+import { TypeKind } from './TypeKind';
 
 export class StringType extends Type {
     static readonly type = new StringType();
 
     private constructor() {
-        super('String');
+        super(TypeKind.String);
     }
 
     isConvertibleTo(target: Type): boolean {
         // TODO: Boxing conversion
 
-        if (target === StringType.type) { return true; }
+        switch (target.kind) {
+            case TypeKind.String: {
+                return true;
+            }
+        }
 
         return false;
     }

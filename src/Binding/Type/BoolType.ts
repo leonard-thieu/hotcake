@@ -1,18 +1,22 @@
-import { IntType } from './IntType';
 import { Type } from './Type';
+import { TypeKind } from './TypeKind';
 
 export class BoolType extends Type {
     static readonly type = new BoolType();
 
     private constructor() {
-        super('Bool');
+        super(TypeKind.Bool);
     }
 
     isConvertibleTo(target: Type): boolean {
         // TODO: Boxing conversion
 
-        if (target === BoolType.type) { return true; }
-        if (target === IntType.type) { return true; }
+        switch (target.kind) {
+            case TypeKind.Bool:
+            case TypeKind.Int: {
+                return true;
+            }
+        }
 
         return false;
     }

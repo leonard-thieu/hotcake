@@ -1,11 +1,12 @@
 import { Type } from './Type';
+import { TypeKind } from './TypeKind';
 
 export class ObjectType extends Type {
     static readonly type = new ObjectType();
     static readonly nullType = new ObjectType();
 
     private constructor() {
-        super('Object');
+        super(TypeKind.Object);
     }
 
     isConvertibleTo(target: Type): boolean {

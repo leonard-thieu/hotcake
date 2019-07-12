@@ -1,15 +1,17 @@
 import { Type } from './Type';
+import { TypeKind } from './TypeKind';
+import { VoidType } from './VoidType';
 
 export class ArrayType extends Type {
-    static readonly type = new ArrayType();
-
-    private constructor() {
-        super('Array');
+    constructor(readonly elementType: Type) {
+        super(TypeKind.Array);
     }
 
     isConvertibleTo(target: Type): boolean {
-        if (target === ArrayType.type) {
-            // TODO: Same element type or Void element type
+        if (target.kind === TypeKind.Array) {
+            const t = target as ArrayType;
+            if (t.elementType === this.elementType) { return true; }
+            if (t.elementType === VoidType.type) { return true; }
         }
 
         return false;

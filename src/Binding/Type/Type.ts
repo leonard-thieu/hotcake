@@ -1,5 +1,7 @@
+import { TypeKind } from './TypeKind';
+
 export abstract class Type {
-    constructor(readonly name: string) { }
+    constructor(readonly kind: TypeKind) { }
 
     abstract isConvertibleTo(target: Type): boolean;
 }

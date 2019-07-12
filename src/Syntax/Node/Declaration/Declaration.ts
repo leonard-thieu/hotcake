@@ -4,10 +4,8 @@ import { AliasDirective, AliasDirectiveSequence } from './AliasDirectiveSequence
 import { ClassDeclaration } from './ClassDeclaration';
 import { ClassMethodDeclaration } from './ClassMethodDeclaration';
 import { DataDeclaration, DataDeclarationSequence } from './DataDeclarationSequence';
-import { ExternClassMethodDeclaration } from './ExternDeclaration/ExternClassMethodDeclaration';
 import { ExternDataDeclarationSequence } from './ExternDeclaration/ExternDataDeclarationSequence';
 import { ExternDeclarations } from './ExternDeclaration/ExternDeclaration';
-import { ExternFunctionDeclaration } from './ExternDeclaration/ExternFunctionDeclaration';
 import { FriendDirective } from './FriendDirective';
 import { FunctionDeclaration } from './FunctionDeclaration';
 import { ImportStatement } from './ImportStatement';
@@ -39,12 +37,4 @@ export type Declarations =
     StrictDirective |
     TypeDeclaration |
     TypeParameter
-    ;
-
-export type FunctionLikeDeclaration =
-    ExternFunctionDeclaration |
-    ExternClassMethodDeclaration |
-    FunctionDeclaration |
-    InterfaceMethodDeclaration |
-    ClassMethodDeclaration
     ;

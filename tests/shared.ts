@@ -75,7 +75,7 @@ export function executeTestCases(options: TestCaseOptions): void {
     });
 }
 
-export function executeBaselineTestCase(outputPath: string, testCallback: () => any): void {
+export function executeBaselineTestCase(outputPath: string, testCallback: () => any, replacer?: (key: string, value: any) => any): void {
     mkdirp.sync(path.dirname(outputPath));
 
     try {
@@ -89,7 +89,7 @@ export function executeBaselineTestCase(outputPath: string, testCallback: () => 
 
     const result = testCallback();
 
-    const json = JSON.stringify(result, /*replacer*/ null, 4);
+    const json = JSON.stringify(result, replacer, 4);
     fs.writeFileSync(outputPath, json);
 }
 
@@ -172,6 +172,29 @@ export function executeBinderTestCases(name: string, casesPath: string): void {
                 const outputPath = path.resolve(__dirname, 'cases', name, sourceRelativePath) + '.boundTree.json';
                 executeBaselineTestCase(outputPath, () => {
                     return getBoundTree(sourceRelativePath, contents);
+                }, function (this: any, key, value) {
+                    switch (key) {
+                        case 'parent':
+                        case 'declaration': {
+                            return undefined;
+                        }
+                        case 'identifier': {
+                            return value.name;
+                        }
+                        case 'locals': {
+                            const names: any[] = [];
+                            for (const [k] of value) {
+                                names.push(k);
+                            }
+                            return names;
+                        }
+                    }
+
+                    if (key.toLowerCase().endsWith('type')) {
+                        return value.kind;
+                    }
+
+                    return value;
                 });
             });
         },

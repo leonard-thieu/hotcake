@@ -1,9 +1,13 @@
+import { BoundSymbol, BoundSymbolTable } from '../../Binder';
 import { BoundNode } from '../BoundNode';
 import { BoundNodeKind } from '../BoundNodeKind';
-import { BoundFunctionLikeDeclaration } from './BoundFunctionLikeDeclaration';
+import { BoundFunctionDeclaration } from './BoundFunctionDeclaration';
 
 export class BoundModuleDeclaration extends BoundNode {
     readonly kind = BoundNodeKind.ModuleDeclaration;
 
-    members: BoundFunctionLikeDeclaration[] = undefined!;
+    identifier: BoundSymbol = undefined!;
+    locals: BoundSymbolTable = undefined!;
+
+    members: BoundFunctionDeclaration[] = undefined!;
 }

@@ -1,20 +1,23 @@
-import { IntType } from './IntType';
-import { StringType } from './StringType';
 import { Type } from './Type';
+import { TypeKind } from './TypeKind';
 
 export class FloatType extends Type {
     static readonly type = new FloatType();
 
     private constructor() {
-        super('Float');
+        super(TypeKind.Float);
     }
 
     isConvertibleTo(target: Type): boolean {
         // TODO: Boxing conversion
 
-        if (target === IntType.type) { return true; }
-        if (target === FloatType.type) { return true; }
-        if (target === StringType.type) { return true; }
+        switch (target.kind) {
+            case TypeKind.Int:
+            case TypeKind.Float:
+            case TypeKind.String: {
+                return true;
+            }
+        }
 
         return false;
     }
