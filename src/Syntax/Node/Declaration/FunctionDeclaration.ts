@@ -1,8 +1,9 @@
-import { ParseContextElementArray, ParseContextElementDelimitedSequence, ParseContextKind } from '../../ParserBase';
+import { ParseContextElementArray } from '../../ParserBase';
 import { MissableToken } from '../../Token/MissingToken';
 import { ClosingParenthesisToken, EndKeywordToken, FunctionKeywordToken, OpeningParenthesisToken } from '../../Token/Token';
 import { MissableIdentifier } from '../Identifier';
 import { NodeKind } from '../NodeKind';
+import { DataDeclarationSequence } from './DataDeclarationSequence';
 import { Declaration } from './Declaration';
 import { TypeDeclaration } from './TypeDeclaration';
 
@@ -25,7 +26,7 @@ export class FunctionDeclaration extends Declaration {
     identifier: MissableIdentifier = undefined!;
     returnType?: TypeDeclaration = undefined;
     openingParenthesis: MissableToken<OpeningParenthesisToken> = undefined!;
-    parameters: ParseContextElementDelimitedSequence<ParseContextKind.DataDeclarationSequence> = undefined!;
+    parameters: DataDeclarationSequence = undefined!;
     closingParenthesis: MissableToken<ClosingParenthesisToken> = undefined!;
     statements: ParseContextElementArray<FunctionDeclaration['kind']> = undefined!;
     endKeyword: MissableToken<EndKeywordToken> = undefined!;

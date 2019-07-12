@@ -16,11 +16,15 @@ export class DataDeclarationSequence extends Declaration {
 
     readonly kind = NodeKind.DataDeclarationSequence;
 
-    dataDeclarationKeyword: DataDeclarationKeywordToken = undefined!;
+    dataDeclarationKeyword?: DataDeclarationKeywordToken = undefined;
     children: ParseContextElementDelimitedSequence<ParseContextKind.DataDeclarationSequence> = undefined!;
 
     get firstToken() {
-        return this.dataDeclarationKeyword;
+        if (this.dataDeclarationKeyword) {
+            return this.dataDeclarationKeyword;
+        }
+
+        return this.children[0].firstToken;
     }
 
     get lastToken() {
@@ -28,7 +32,7 @@ export class DataDeclarationSequence extends Declaration {
             return this.children[this.children.length - 1].lastToken;
         }
 
-        return this.dataDeclarationKeyword;
+        return this.dataDeclarationKeyword!;
     }
 }
 

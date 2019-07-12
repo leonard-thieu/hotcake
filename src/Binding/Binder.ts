@@ -43,7 +43,6 @@ import { Statements } from '../Syntax/Node/Statement/Statement';
 import { ThrowStatement } from '../Syntax/Node/Statement/ThrowStatement';
 import { CatchStatement, TryStatement } from '../Syntax/Node/Statement/TryStatement';
 import { WhileLoop } from '../Syntax/Node/Statement/WhileLoop';
-import { ParseContextElementDelimitedSequence, ParseContextKind } from '../Syntax/ParserBase';
 import { MissingToken } from '../Syntax/Token/MissingToken';
 import { SkippedToken } from '../Syntax/Token/SkippedToken';
 import { NewlineToken, TokenKinds } from '../Syntax/Token/Token';
@@ -248,12 +247,12 @@ export class Binder {
     }
 
     private bindDataDeclarations(
-        parameters: ParseContextElementDelimitedSequence<ParseContextKind.DataDeclarationSequence>,
+        parameters: DataDeclarationSequence,
         parent: BoundFunctionDeclaration,
     ) {
         const boundDataDeclarations: BoundDataDeclaration[] = [];
 
-        for (const parameter of parameters) {
+        for (const parameter of parameters.children) {
             switch (parameter.kind) {
                 case NodeKind.DataDeclaration: {
                     const boundDataDeclaration = new BoundDataDeclaration();

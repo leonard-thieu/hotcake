@@ -1,9 +1,9 @@
-import { ParseContextElementDelimitedSequence, ParseContextKind } from '../../../ParserBase';
 import { MissableToken } from '../../../Token/MissingToken';
 import { ClosingParenthesisToken, FunctionKeywordToken, OpeningParenthesisToken } from '../../../Token/Token';
 import { MissableIdentifier } from '../../Identifier';
 import { isNode } from '../../Node';
 import { NodeKind } from '../../NodeKind';
+import { DataDeclarationSequence } from '../DataDeclarationSequence';
 import { TypeDeclaration } from '../TypeDeclaration';
 import { ExternDeclaration } from './ExternDeclaration';
 
@@ -25,7 +25,7 @@ export class ExternFunctionDeclaration extends ExternDeclaration {
     identifier: MissableIdentifier = undefined!;
     returnType?: TypeDeclaration = undefined;
     openingParenthesis: MissableToken<OpeningParenthesisToken> = undefined!;
-    parameters: ParseContextElementDelimitedSequence<ParseContextKind.DataDeclarationSequence> = undefined!;
+    parameters: DataDeclarationSequence = undefined!;
     closingParenthesis: MissableToken<ClosingParenthesisToken> = undefined!;
 
     get firstToken() {
