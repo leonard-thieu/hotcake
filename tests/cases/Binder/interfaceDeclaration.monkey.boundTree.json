@@ -13,6 +13,7 @@
             "locals": [
                 "Move"
             ],
+            "type": "Moveable",
             "members": [
                 {
                     "kind": "InterfaceMethodDeclaration",
@@ -29,6 +30,7 @@
             "locals": [
                 "Draw"
             ],
+            "type": "Drawable",
             "members": [
                 {
                     "kind": "InterfaceMethodDeclaration",
@@ -45,7 +47,11 @@
             "locals": [
                 "Name"
             ],
-            "baseTypes": [],
+            "type": "Actor",
+            "baseTypes": [
+                "Moveable",
+                "Drawable"
+            ],
             "members": [
                 {
                     "kind": "DataDeclaration",

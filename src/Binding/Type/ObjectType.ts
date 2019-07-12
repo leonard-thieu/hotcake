@@ -1,3 +1,4 @@
+import { BoundInterfaceDeclaration } from '../Node/Declaration/BoundInterfaceDeclaration';
 import { Type } from './Type';
 import { TypeKind } from './TypeKind';
 
@@ -5,7 +6,7 @@ export class ObjectType extends Type {
     static readonly type = new ObjectType();
     static readonly nullType = new ObjectType();
 
-    private constructor() {
+    constructor(readonly declaration?: BoundInterfaceDeclaration) {
         super(TypeKind.Object);
     }
 

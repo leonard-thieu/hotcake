@@ -5,6 +5,8 @@ import mkdirp = require('mkdirp');
 import { orderBy } from 'natural-orderby';
 import { Binder } from '../src/Binding/Binder';
 import { BoundModuleDeclaration } from '../src/Binding/Node/Declaration/BoundModuleDeclaration';
+import { ObjectType } from '../src/Binding/Type/ObjectType';
+import { Type } from '../src/Binding/Type/Type';
 import { ModuleDeclaration } from '../src/Syntax/Node/Declaration/ModuleDeclaration';
 import { PreprocessorModuleDeclaration } from '../src/Syntax/Node/Declaration/PreprocessorModuleDeclaration';
 import { Parser } from '../src/Syntax/Parser';
@@ -190,7 +192,12 @@ export function executeBinderTestCases(name: string, casesPath: string): void {
                         }
                     }
 
-                    if (key.toLowerCase().endsWith('type')) {
+                    if (value instanceof Type) {
+                        if (value instanceof ObjectType &&
+                            value.declaration) {
+                            return value.declaration.identifier.name;
+                        }
+
                         return value.kind;
                     }
 
