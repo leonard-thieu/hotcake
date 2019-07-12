@@ -3,9 +3,9 @@ import { MissableToken } from '../../Token/MissingToken';
 import { ClosingParenthesisToken, EndKeywordToken, FunctionKeywordToken, OpeningParenthesisToken } from '../../Token/Token';
 import { MissableIdentifier } from '../Identifier';
 import { NodeKind } from '../NodeKind';
+import { TypeAnnotation } from '../TypeAnnotation';
 import { DataDeclarationSequence } from './DataDeclarationSequence';
 import { Declaration } from './Declaration';
-import { TypeDeclaration } from './TypeDeclaration';
 
 export class FunctionDeclaration extends Declaration {
     static CHILD_NAMES: (keyof FunctionDeclaration)[] = [
@@ -24,7 +24,7 @@ export class FunctionDeclaration extends Declaration {
 
     functionKeyword: FunctionKeywordToken = undefined!;
     identifier: MissableIdentifier = undefined!;
-    returnType?: TypeDeclaration = undefined;
+    returnType?: TypeAnnotation = undefined;
     openingParenthesis: MissableToken<OpeningParenthesisToken> = undefined!;
     parameters: DataDeclarationSequence = undefined!;
     closingParenthesis: MissableToken<ClosingParenthesisToken> = undefined!;

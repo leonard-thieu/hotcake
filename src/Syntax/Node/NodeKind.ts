@@ -73,9 +73,9 @@ export enum NodeKind {
     GlobalScopeExpression = 'GlobalScopeExpression',
 
     ModulePath = 'ModulePath',
-    ArrayTypeDeclaration = 'ArrayTypeDeclaration',
-    ShorthandTypeDeclaration = 'ShorthandTypeDeclaration',
-    LonghandTypeDeclaration = 'LonghandTypeDeclaration',
+    ArrayTypeAnnotation = 'ArrayTypeAnnotation',
+    ShorthandTypeAnnotation = 'ShorthandTypeAnnotation',
+    LonghandTypeAnnotation = 'LonghandTypeAnnotation',
     TypeReference = 'TypeReference',
     TypeParameter = 'TypeParameter',
     EscapedIdentifier = 'EscapedIdentifier',

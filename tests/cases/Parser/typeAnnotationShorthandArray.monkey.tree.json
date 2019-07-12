@@ -63,10 +63,10 @@
                                     "length": 4
                                 },
                                 "type": {
-                                    "kind": "ShorthandTypeDeclaration",
-                                    "arrayTypeDeclarations": [
+                                    "kind": "ShorthandTypeAnnotation",
+                                    "arrayTypeAnnotations": [
                                         {
-                                            "kind": "ArrayTypeDeclaration",
+                                            "kind": "ArrayTypeAnnotation",
                                             "openingSquareBracket": {
                                                 "kind": "OpeningSquareBracket",
                                                 "fullStart": 30,

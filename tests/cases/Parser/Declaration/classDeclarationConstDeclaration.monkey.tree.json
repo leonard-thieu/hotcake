@@ -42,14 +42,14 @@
                                 "length": 13
                             },
                             "type": {
-                                "kind": "ShorthandTypeDeclaration",
+                                "kind": "ShorthandTypeAnnotation",
                                 "shorthandType": {
                                     "kind": "DollarSign",
                                     "fullStart": 35,
                                     "start": 35,
                                     "length": 1
                                 },
-                                "arrayTypeDeclarations": []
+                                "arrayTypeAnnotations": []
                             },
                             "equalsSign": {
                                 "kind": "EqualsSign",

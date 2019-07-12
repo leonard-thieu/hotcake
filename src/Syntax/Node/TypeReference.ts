@@ -13,7 +13,7 @@ export class TypeReference extends Node {
         'lessThanSign',
         'typeArguments',
         'greaterThanSign',
-        'arrayTypeDeclarations',
+        'arrayTypeAnnotations',
     ];
 
     readonly kind = NodeKind.TypeReference;
@@ -27,7 +27,7 @@ export class TypeReference extends Node {
     typeArguments?: ParseContextElementDelimitedSequence<ParseContextKind.TypeReferenceSequence> = undefined;
     greaterThanSign?: MissableToken<GreaterThanSignToken> = undefined;
 
-    arrayTypeDeclarations: ParseContextElementSequence<ParseContextKind.ArrayTypeDeclarationList> = undefined!;
+    arrayTypeAnnotations: ParseContextElementSequence<ParseContextKind.ArrayTypeAnnotationList> = undefined!;
 
     get firstToken() {
         if (this.moduleIdentifier) {
@@ -42,8 +42,8 @@ export class TypeReference extends Node {
     }
 
     get lastToken() {
-        if (this.arrayTypeDeclarations.length !== 0) {
-            return this.arrayTypeDeclarations[this.arrayTypeDeclarations.length - 1].lastToken;
+        if (this.arrayTypeAnnotations.length !== 0) {
+            return this.arrayTypeAnnotations[this.arrayTypeAnnotations.length - 1].lastToken;
         }
 
         if (this.greaterThanSign) {

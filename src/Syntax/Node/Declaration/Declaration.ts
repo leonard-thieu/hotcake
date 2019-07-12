@@ -14,7 +14,6 @@ import { InterfaceMethodDeclaration } from './InterfaceMethodDeclaration';
 import { ModuleDeclaration } from './ModuleDeclaration';
 import { PreprocessorModuleDeclaration } from './PreprocessorModuleDeclaration';
 import { StrictDirective } from './StrictDirective';
-import { TypeDeclaration } from './TypeDeclaration';
 import { TypeParameter } from './TypeParameter';
 
 export abstract class Declaration extends Node { }
@@ -35,6 +34,5 @@ export type Declarations =
     ModuleDeclaration |
     PreprocessorModuleDeclaration |
     StrictDirective |
-    TypeDeclaration |
     TypeParameter
     ;

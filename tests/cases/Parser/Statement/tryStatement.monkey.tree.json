@@ -88,7 +88,7 @@
                                             "start": 44,
                                             "length": 10
                                         },
-                                        "arrayTypeDeclarations": []
+                                        "arrayTypeAnnotations": []
                                     }
                                 },
                                 "openingParenthesis": {
@@ -132,7 +132,7 @@
                                     "length": 3
                                 },
                                 "type": {
-                                    "kind": "LonghandTypeDeclaration",
+                                    "kind": "LonghandTypeAnnotation",
                                     "colon": {
                                         "kind": "Colon",
                                         "fullStart": 69,
@@ -147,7 +147,7 @@
                                             "start": 71,
                                             "length": 10
                                         },
-                                        "arrayTypeDeclarations": []
+                                        "arrayTypeAnnotations": []
                                     }
                                 }
                             },

@@ -31,7 +31,7 @@
                     "start": 18,
                     "length": 10
                 },
-                "arrayTypeDeclarations": []
+                "arrayTypeAnnotations": []
             },
             "members": [
                 {
@@ -88,7 +88,7 @@
                     "start": 54,
                     "length": 10
                 },
-                "arrayTypeDeclarations": []
+                "arrayTypeAnnotations": []
             },
             "members": [
                 {
@@ -331,7 +331,7 @@
                                                         "start": 161,
                                                         "length": 4
                                                     },
-                                                    "arrayTypeDeclarations": []
+                                                    "arrayTypeAnnotations": []
                                                 }
                                             }
                                         }
@@ -370,7 +370,7 @@
                                                             "start": 180,
                                                             "length": 4
                                                         },
-                                                        "arrayTypeDeclarations": []
+                                                        "arrayTypeAnnotations": []
                                                     }
                                                 }
                                             }
@@ -402,7 +402,7 @@
                                             "length": 3
                                         },
                                         "type": {
-                                            "kind": "LonghandTypeDeclaration",
+                                            "kind": "LonghandTypeAnnotation",
                                             "colon": {
                                                 "kind": "Colon",
                                                 "fullStart": 201,
@@ -417,7 +417,7 @@
                                                     "start": 202,
                                                     "length": 3
                                                 },
-                                                "arrayTypeDeclarations": []
+                                                "arrayTypeAnnotations": []
                                             }
                                         }
                                     },
@@ -498,7 +498,7 @@
                                             "length": 3
                                         },
                                         "type": {
-                                            "kind": "LonghandTypeDeclaration",
+                                            "kind": "LonghandTypeAnnotation",
                                             "colon": {
                                                 "kind": "Colon",
                                                 "fullStart": 259,
@@ -513,7 +513,7 @@
                                                     "start": 260,
                                                     "length": 3
                                                 },
-                                                "arrayTypeDeclarations": []
+                                                "arrayTypeAnnotations": []
                                             }
                                         }
                                     },

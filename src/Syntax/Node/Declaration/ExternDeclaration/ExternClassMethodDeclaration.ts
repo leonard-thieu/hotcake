@@ -4,8 +4,8 @@ import { ClosingParenthesisToken, MethodKeywordToken, OpeningParenthesisToken } 
 import { MissableIdentifier } from '../../Identifier';
 import { isNode } from '../../Node';
 import { NodeKind } from '../../NodeKind';
+import { TypeAnnotation } from '../../TypeAnnotation';
 import { DataDeclarationSequence } from '../DataDeclarationSequence';
-import { TypeDeclaration } from '../TypeDeclaration';
 import { ExternDeclaration } from './ExternDeclaration';
 
 export class ExternClassMethodDeclaration extends ExternDeclaration {
@@ -25,7 +25,7 @@ export class ExternClassMethodDeclaration extends ExternDeclaration {
 
     methodKeyword: MethodKeywordToken = undefined!;
     identifier: MissableIdentifier = undefined!;
-    returnType?: TypeDeclaration = undefined;
+    returnType?: TypeAnnotation = undefined;
     openingParenthesis: MissableToken<OpeningParenthesisToken> = undefined!;
     parameters: DataDeclarationSequence = undefined!;
     closingParenthesis: MissableToken<ClosingParenthesisToken> = undefined!;

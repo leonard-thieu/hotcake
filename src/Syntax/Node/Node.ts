@@ -1,6 +1,6 @@
 import { assertType } from '../../assertNever';
 import { ErrorableToken } from '../Token/Token';
-import { ArrayTypeDeclaration } from './ArrayTypeDeclaration';
+import { ArrayTypeAnnotation } from './ArrayTypeAnnotation';
 import { CommaSeparator } from './CommaSeparator';
 import { ConfigurationTag } from './ConfigurationTag';
 import { Declarations } from './Declaration/Declaration';
@@ -11,6 +11,7 @@ import { ModulePath } from './ModulePath';
 import { NodeKind } from './NodeKind';
 import { NumericForLoopHeader } from './Statement/ForLoop';
 import { Statements } from './Statement/Statement';
+import { TypeAnnotation } from './TypeAnnotation';
 import { TypeReference } from './TypeReference';
 
 export abstract class Node {
@@ -200,7 +201,8 @@ export type Nodes =
     Statements |
     ConfigurationTag |
     NumericForLoopHeader |
-    ArrayTypeDeclaration |
+    ArrayTypeAnnotation |
+    TypeAnnotation |
     CommaSeparator |
     EscapedIdentifier |
     ModulePath |
@@ -276,9 +278,9 @@ export function isNode(nodeOrToken: Nodes | ErrorableToken): nodeOrToken is Node
         case NodeKind.AssignmentExpression:
         case NodeKind.GlobalScopeExpression:
         case NodeKind.ModulePath:
-        case NodeKind.ArrayTypeDeclaration:
-        case NodeKind.ShorthandTypeDeclaration:
-        case NodeKind.LonghandTypeDeclaration:
+        case NodeKind.ArrayTypeAnnotation:
+        case NodeKind.ShorthandTypeAnnotation:
+        case NodeKind.LonghandTypeAnnotation:
         case NodeKind.TypeReference:
         case NodeKind.TypeParameter:
         case NodeKind.EscapedIdentifier:

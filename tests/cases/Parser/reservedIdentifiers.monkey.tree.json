@@ -2884,7 +2884,7 @@
                                     "length": 6
                                 }
                             },
-                            "arrayTypeDeclarations": []
+                            "arrayTypeAnnotations": []
                         }
                     },
                     "terminator": {
@@ -3504,7 +3504,7 @@
                                             "start": 1748,
                                             "length": 6
                                         },
-                                        "arrayTypeDeclarations": []
+                                        "arrayTypeAnnotations": []
                                     }
                                 }
                             }
@@ -3608,7 +3608,7 @@
                                     "length": 11
                                 },
                                 "type": {
-                                    "kind": "LonghandTypeDeclaration",
+                                    "kind": "LonghandTypeAnnotation",
                                     "colon": {
                                         "kind": "Colon",
                                         "fullStart": 1795,
@@ -3632,7 +3632,7 @@
                                                 "length": 5
                                             }
                                         },
-                                        "arrayTypeDeclarations": []
+                                        "arrayTypeAnnotations": []
                                     }
                                 },
                                 "equalsSign": {
@@ -3698,7 +3698,7 @@
                                         "start": 1830,
                                         "length": 3
                                     },
-                                    "arrayTypeDeclarations": []
+                                    "arrayTypeAnnotations": []
                                 }
                             ],
                             "greaterThanSign": {
@@ -3996,7 +3996,7 @@
                                             "start": 2143,
                                             "length": 10
                                         },
-                                        "arrayTypeDeclarations": []
+                                        "arrayTypeAnnotations": []
                                     }
                                 },
                                 "openingParenthesis": {
@@ -4143,7 +4143,7 @@
                                             "start": 2224,
                                             "length": 10
                                         },
-                                        "arrayTypeDeclarations": []
+                                        "arrayTypeAnnotations": []
                                     }
                                 },
                                 "openingParenthesis": {
@@ -4264,7 +4264,7 @@
                                             "start": 2290,
                                             "length": 10
                                         },
-                                        "arrayTypeDeclarations": []
+                                        "arrayTypeAnnotations": []
                                     }
                                 },
                                 "openingParenthesis": {
@@ -4552,7 +4552,7 @@
                     "start": 2416,
                     "length": 6
                 },
-                "arrayTypeDeclarations": []
+                "arrayTypeAnnotations": []
             },
             "members": [
                 {

@@ -165,7 +165,7 @@ repository:
               - include: "#identifier"
             3:
               patterns:
-              - include: "#type-declaration"
+              - include: "#type-annotation"
             4:
               patterns:
               - include: "#bracketed-parameter-list"
@@ -235,7 +235,7 @@ repository:
                   - include: "#identifier"
                 3:
                   patterns:
-                  - include: "#type-declaration"
+                  - include: "#type-annotation"
                 4:
                   patterns:
                   - include: "#assignment-operator"
@@ -253,7 +253,7 @@ repository:
                   - include: "#identifier"
                 3:
                   patterns:
-                  - include: "#type-declaration"
+                  - include: "#type-annotation"
                 4:
                   patterns:
                   - include: "#bracketed-parameter-list"
@@ -313,7 +313,7 @@ repository:
               name: "entity.name.constant.monkeyx"
             2:
               patterns:
-              - include: "#type-declaration"
+              - include: "#type-annotation"
             3:
               name: "keyword.operator.assignment.monkeyx"
           end: "(?=,|$)"
@@ -351,7 +351,7 @@ repository:
               name: "entity.name.global.monkeyx"
             2:
               patterns:
-              - include: "#type-declaration"
+              - include: "#type-annotation"
             3:
               name: "keyword.operator.assignment.monkeyx"
           end: "(?=,|$)"
@@ -365,7 +365,7 @@ repository:
               name: "entity.name.global.monkeyx"
             2:
               patterns:
-              - include: "#type-declaration"
+              - include: "#type-annotation"
           end: "(?=,|$)"
           patterns:
           - include: "#comment"
@@ -381,7 +381,7 @@ repository:
         3:
           name: "meta.function.return-type.monkeyx"
           patterns:
-          - include: "#type-declaration"
+          - include: "#type-annotation"
         4:
           patterns:
           - include: "#bracketed-parameter-list"
@@ -436,7 +436,7 @@ repository:
             3:
               name: "meta.function.return-type.monkeyx"
               patterns:
-              - include: "#type-declaration"
+              - include: "#type-annotation"
             4:
               patterns:
               - include: "#bracketed-parameter-list"
@@ -540,7 +540,7 @@ repository:
                   name: "entity.name.field.monkeyx"
                 2:
                   patterns:
-                  - include: "#type-declaration"
+                  - include: "#type-annotation"
                 3:
                   name: "keyword.operator.assignment.monkeyx"
               end: "(?=,|$)"
@@ -554,7 +554,7 @@ repository:
                   name: "entity.name.field.monkeyx"
                 2:
                   patterns:
-                  - include: "#type-declaration"
+                  - include: "#type-annotation"
               end: "(?=,|$)"
               patterns:
               - include: "#comment"
@@ -570,7 +570,7 @@ repository:
             3:
               name: "meta.function.return-type.monkeyx"
               patterns:
-              - include: "#type-declaration"
+              - include: "#type-annotation"
             4:
               patterns:
               - include: "#bracketed-parameter-list"
@@ -589,7 +589,7 @@ repository:
             3:
               name: "meta.function.return-type.monkeyx"
               patterns:
-              - include: "#type-declaration"
+              - include: "#type-annotation"
             4:
               patterns:
               - include: "#bracketed-parameter-list"
@@ -906,7 +906,7 @@ repository:
                 - include: "#identifier"
               3:
                 patterns:
-                - include: "#type-declaration"
+                - include: "#type-annotation"
           - include: "#assignment-statement"
         3:
           name: "keyword.control.each-in.monkeyx"
@@ -1245,7 +1245,7 @@ repository:
           name: "variable.parameter.monkeyx"
         2:
           patterns:
-          - include: "#type-declaration"
+          - include: "#type-annotation"
   module-path:
     patterns:
     - comment: "Double capture to apply an aesthetic scope and a semantic scope."
@@ -1286,7 +1286,7 @@ repository:
           - include: "#identifier"
         2:
           patterns:
-          - include: "#type-declaration"
+          - include: "#type-annotation"
         3:
           name: "keyword.operator.assignment.monkeyx"
       end: "(?=,|$)"
@@ -1300,12 +1300,12 @@ repository:
           - include: "#identifier"
         2:
           patterns:
-          - include: "#type-declaration"
+          - include: "#type-annotation"
       end: "(?=,|$)"
     - include: "#identifier"
-  type-declaration:
+  type-annotation:
     patterns:
-    - include: "#shorthand-type-reference"
+    - include: "#shorthand-type-annotation"
     - match: "(:)[\\x00-\\x20]*((?:((?:[A-Za-z]|_[A-Za-z])[_A-Za-z0-9]*)\\.)*((?:[A-Za-z]|_[A-Za-z])[_A-Za-z0-9]*)(<[^>]+>)?(\\[[^\\]]*\\])*)"
       captures:
         1:
@@ -1313,24 +1313,24 @@ repository:
         2:
           name: "entity.name.type.monkeyx"
           patterns:
-          - include: "#longhand-type-reference"
+          - include: "#longhand-type-annotation"
   type-references:
     patterns:
     - include: "#type-reference"
     - include: "#punctuation-comma"
   type-reference:
     patterns:
-    - include: "#shorthand-type-reference"
-    - include: "#longhand-type-reference"
-  shorthand-type-reference:
+    - include: "#shorthand-type-annotation"
+    - include: "#longhand-type-annotation"
+  shorthand-type-annotation:
     patterns:
     - name: "entity.name.type.monkeyx"
       match: "(?:\\$|\\?|#|%)(\\[[^\\]]*\\])*"
       captures:
         1:
           patterns:
-          - include: "#array-type-declaration"
-  longhand-type-reference:
+          - include: "#array-type-annotation"
+  longhand-type-annotation:
     patterns:
     - match: "(?:((?:[A-Za-z]|_[A-Za-z])[_A-Za-z0-9]*)\\.)*((?:[A-Za-z]|_[A-Za-z])[_A-Za-z0-9]*)(<[^>]+>)?(\\[[^\\]]*\\])*"
       captures:
@@ -1344,14 +1344,14 @@ repository:
           - include: "#generic-type-arguments"
         4:
           patterns:
-          - include: "#array-type-declaration"
+          - include: "#array-type-annotation"
   generic-type-arguments:
     patterns:
     - begin: "<"
       end: ">"
       patterns:
       - include: "#type-references"
-  array-type-declaration:
+  array-type-annotation:
     patterns:
     - begin: "\\["
       end: "\\]"

@@ -4,14 +4,14 @@ import { MissableExpression } from './Expression/Expression';
 import { Node } from './Node';
 import { NodeKind } from './NodeKind';
 
-export class ArrayTypeDeclaration extends Node {
-    static CHILD_NAMES: (keyof ArrayTypeDeclaration)[] = [
+export class ArrayTypeAnnotation extends Node {
+    static CHILD_NAMES: (keyof ArrayTypeAnnotation)[] = [
         'openingSquareBracket',
         'expression',
         'closingSquareBracket',
     ];
 
-    readonly kind = NodeKind.ArrayTypeDeclaration;
+    readonly kind = NodeKind.ArrayTypeAnnotation;
 
     openingSquareBracket: OpeningSquareBracketToken = undefined!;
     expression?: MissableExpression = undefined;

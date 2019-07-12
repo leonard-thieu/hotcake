@@ -71,7 +71,7 @@
                                         "start": 33,
                                         "length": 3
                                     },
-                                    "arrayTypeDeclarations": []
+                                    "arrayTypeAnnotations": []
                                 }
                             ],
                             "greaterThanSign": {

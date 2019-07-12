@@ -5,8 +5,8 @@ import { MissableExpression } from '../Expression/Expression';
 import { Identifier } from '../Identifier';
 import { isNode } from '../Node';
 import { NodeKind } from '../NodeKind';
+import { TypeAnnotation } from '../TypeAnnotation';
 import { Declaration } from './Declaration';
-import { TypeDeclaration } from './TypeDeclaration';
 
 export class DataDeclarationSequence extends Declaration {
     static CHILD_NAMES: (keyof DataDeclarationSequence)[] = [
@@ -71,7 +71,7 @@ export class DataDeclaration extends Declaration {
     readonly kind = NodeKind.DataDeclaration;
 
     identifier: Identifier = undefined!;
-    type?: TypeDeclaration = undefined;
+    type?: TypeAnnotation = undefined;
     equalsSign?: MissableToken<EqualsSignToken | ColonEqualsSignToken> = undefined;
     eachInKeyword?: EachInKeywordToken = undefined;
     expression?: MissableExpression = undefined;

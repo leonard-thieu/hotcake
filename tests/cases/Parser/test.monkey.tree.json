@@ -396,7 +396,7 @@
                         "length": 4
                     },
                     "type": {
-                        "kind": "LonghandTypeDeclaration",
+                        "kind": "LonghandTypeAnnotation",
                         "colon": {
                             "kind": "Colon",
                             "fullStart": 1063,
@@ -411,7 +411,7 @@
                                 "start": 1065,
                                 "length": 4
                             },
-                            "arrayTypeDeclarations": []
+                            "arrayTypeAnnotations": []
                         }
                     },
                     "equalsSign": {
@@ -457,14 +457,14 @@
                         "length": 4
                     },
                     "type": {
-                        "kind": "ShorthandTypeDeclaration",
+                        "kind": "ShorthandTypeAnnotation",
                         "shorthandType": {
                             "kind": "DollarSign",
                             "fullStart": 1119,
                             "start": 1119,
                             "length": 1
                         },
-                        "arrayTypeDeclarations": []
+                        "arrayTypeAnnotations": []
                     },
                     "equalsSign": {
                         "kind": "EqualsSign",
@@ -690,7 +690,7 @@
                         "length": 4
                     },
                     "type": {
-                        "kind": "LonghandTypeDeclaration",
+                        "kind": "LonghandTypeAnnotation",
                         "colon": {
                             "kind": "Colon",
                             "fullStart": 1318,
@@ -705,7 +705,7 @@
                                 "start": 1320,
                                 "length": 4
                             },
-                            "arrayTypeDeclarations": []
+                            "arrayTypeAnnotations": []
                         }
                     },
                     "equalsSign": {
@@ -751,14 +751,14 @@
                         "length": 4
                     },
                     "type": {
-                        "kind": "ShorthandTypeDeclaration",
+                        "kind": "ShorthandTypeAnnotation",
                         "shorthandType": {
                             "kind": "DollarSign",
                             "fullStart": 1374,
                             "start": 1374,
                             "length": 1
                         },
-                        "arrayTypeDeclarations": []
+                        "arrayTypeAnnotations": []
                     },
                     "equalsSign": {
                         "kind": "EqualsSign",
@@ -978,7 +978,7 @@
                         "length": 4
                     },
                     "type": {
-                        "kind": "LonghandTypeDeclaration",
+                        "kind": "LonghandTypeAnnotation",
                         "colon": {
                             "kind": "Colon",
                             "fullStart": 1570,
@@ -993,7 +993,7 @@
                                 "start": 1572,
                                 "length": 6
                             },
-                            "arrayTypeDeclarations": []
+                            "arrayTypeAnnotations": []
                         }
                     }
                 }
@@ -1055,7 +1055,7 @@
                         "length": 13
                     },
                     "type": {
-                        "kind": "LonghandTypeDeclaration",
+                        "kind": "LonghandTypeAnnotation",
                         "colon": {
                             "kind": "Colon",
                             "fullStart": 1711,
@@ -1070,7 +1070,7 @@
                                 "start": 1712,
                                 "length": 6
                             },
-                            "arrayTypeDeclarations": []
+                            "arrayTypeAnnotations": []
                         }
                     },
                     "equalsSign": {
@@ -1133,7 +1133,7 @@
                 "length": 4
             },
             "returnType": {
-                "kind": "LonghandTypeDeclaration",
+                "kind": "LonghandTypeAnnotation",
                 "colon": {
                     "kind": "Colon",
                     "fullStart": 1762,
@@ -1148,7 +1148,7 @@
                         "start": 1763,
                         "length": 4
                     },
-                    "arrayTypeDeclarations": []
+                    "arrayTypeAnnotations": []
                 }
             },
             "openingParenthesis": {
@@ -1169,7 +1169,7 @@
                             "length": 7
                         },
                         "type": {
-                            "kind": "LonghandTypeDeclaration",
+                            "kind": "LonghandTypeAnnotation",
                             "colon": {
                                 "kind": "Colon",
                                 "fullStart": 1775,
@@ -1184,7 +1184,7 @@
                                     "start": 1776,
                                     "length": 3
                                 },
-                                "arrayTypeDeclarations": []
+                                "arrayTypeAnnotations": []
                             }
                         }
                     }
@@ -1267,7 +1267,7 @@
                             "length": 7
                         },
                         "type": {
-                            "kind": "LonghandTypeDeclaration",
+                            "kind": "LonghandTypeAnnotation",
                             "colon": {
                                 "kind": "Colon",
                                 "fullStart": 1858,
@@ -1282,7 +1282,7 @@
                                     "start": 1859,
                                     "length": 3
                                 },
-                                "arrayTypeDeclarations": []
+                                "arrayTypeAnnotations": []
                             }
                         }
                     },
@@ -1305,14 +1305,14 @@
                             "length": 6
                         },
                         "type": {
-                            "kind": "ShorthandTypeDeclaration",
+                            "kind": "ShorthandTypeAnnotation",
                             "shorthandType": {
                                 "kind": "QuestionMark",
                                 "fullStart": 1869,
                                 "start": 1869,
                                 "length": 1
                             },
-                            "arrayTypeDeclarations": []
+                            "arrayTypeAnnotations": []
                         }
                     }
                 ]
@@ -1683,7 +1683,7 @@
                         "length": 6
                     },
                     "returnType": {
-                        "kind": "LonghandTypeDeclaration",
+                        "kind": "LonghandTypeAnnotation",
                         "colon": {
                             "kind": "Colon",
                             "fullStart": 2273,
@@ -1698,7 +1698,7 @@
                                 "start": 2275,
                                 "length": 5
                             },
-                            "arrayTypeDeclarations": []
+                            "arrayTypeAnnotations": []
                         }
                     },
                     "openingParenthesis": {
@@ -1719,14 +1719,14 @@
                                     "length": 8
                                 },
                                 "type": {
-                                    "kind": "ShorthandTypeDeclaration",
+                                    "kind": "ShorthandTypeAnnotation",
                                     "shorthandType": {
                                         "kind": "QuestionMark",
                                         "fullStart": 2288,
                                         "start": 2288,
                                         "length": 1
                                     },
-                                    "arrayTypeDeclarations": []
+                                    "arrayTypeAnnotations": []
                                 }
                             },
                             {
@@ -1748,7 +1748,7 @@
                                     "length": 5
                                 },
                                 "type": {
-                                    "kind": "LonghandTypeDeclaration",
+                                    "kind": "LonghandTypeAnnotation",
                                     "colon": {
                                         "kind": "Colon",
                                         "fullStart": 2295,
@@ -1763,7 +1763,7 @@
                                             "start": 2296,
                                             "length": 4
                                         },
-                                        "arrayTypeDeclarations": []
+                                        "arrayTypeAnnotations": []
                                     }
                                 },
                                 "equalsSign": {
@@ -1925,7 +1925,7 @@
                         "start": 2414,
                         "length": 9
                     },
-                    "arrayTypeDeclarations": []
+                    "arrayTypeAnnotations": []
                 }
             ],
             "members": [
@@ -2075,7 +2075,7 @@
                         "start": 2575,
                         "length": 10
                     },
-                    "arrayTypeDeclarations": []
+                    "arrayTypeAnnotations": []
                 },
                 {
                     "kind": "CommaSeparator",
@@ -2095,7 +2095,7 @@
                         "start": 2586,
                         "length": 9
                     },
-                    "arrayTypeDeclarations": []
+                    "arrayTypeAnnotations": []
                 }
             ],
             "members": [
@@ -2168,7 +2168,7 @@
                         "length": 6
                     },
                     "returnType": {
-                        "kind": "LonghandTypeDeclaration",
+                        "kind": "LonghandTypeAnnotation",
                         "colon": {
                             "kind": "Colon",
                             "fullStart": 2733,
@@ -2183,7 +2183,7 @@
                                 "start": 2735,
                                 "length": 5
                             },
-                            "arrayTypeDeclarations": []
+                            "arrayTypeAnnotations": []
                         }
                     },
                     "openingParenthesis": {
@@ -2204,14 +2204,14 @@
                                     "length": 8
                                 },
                                 "type": {
-                                    "kind": "ShorthandTypeDeclaration",
+                                    "kind": "ShorthandTypeAnnotation",
                                     "shorthandType": {
                                         "kind": "QuestionMark",
                                         "fullStart": 2748,
                                         "start": 2748,
                                         "length": 1
                                     },
-                                    "arrayTypeDeclarations": []
+                                    "arrayTypeAnnotations": []
                                 }
                             },
                             {
@@ -2233,7 +2233,7 @@
                                     "length": 5
                                 },
                                 "type": {
-                                    "kind": "LonghandTypeDeclaration",
+                                    "kind": "LonghandTypeAnnotation",
                                     "colon": {
                                         "kind": "Colon",
                                         "fullStart": 2755,
@@ -2248,7 +2248,7 @@
                                             "start": 2756,
                                             "length": 4
                                         },
-                                        "arrayTypeDeclarations": []
+                                        "arrayTypeAnnotations": []
                                     }
                                 },
                                 "equalsSign": {
@@ -2453,7 +2453,7 @@
                                 "length": 2
                             },
                             "type": {
-                                "kind": "LonghandTypeDeclaration",
+                                "kind": "LonghandTypeAnnotation",
                                 "colon": {
                                     "kind": "Colon",
                                     "fullStart": 2973,
@@ -2468,7 +2468,7 @@
                                         "start": 2975,
                                         "length": 6
                                     },
-                                    "arrayTypeDeclarations": []
+                                    "arrayTypeAnnotations": []
                                 }
                             }
                         }
@@ -2498,14 +2498,14 @@
                                 "length": 2
                             },
                             "type": {
-                                "kind": "ShorthandTypeDeclaration",
+                                "kind": "ShorthandTypeAnnotation",
                                 "shorthandType": {
                                     "kind": "DollarSign",
                                     "fullStart": 3021,
                                     "start": 3021,
                                     "length": 1
                                 },
-                                "arrayTypeDeclarations": []
+                                "arrayTypeAnnotations": []
                             },
                             "equalsSign": {
                                 "kind": "EqualsSign",
@@ -3029,7 +3029,7 @@
                                     "length": 5
                                 },
                                 "type": {
-                                    "kind": "LonghandTypeDeclaration",
+                                    "kind": "LonghandTypeAnnotation",
                                     "colon": {
                                         "kind": "Colon",
                                         "fullStart": 3656,
@@ -3044,7 +3044,7 @@
                                             "start": 3657,
                                             "length": 1
                                         },
-                                        "arrayTypeDeclarations": []
+                                        "arrayTypeAnnotations": []
                                     }
                                 }
                             }
@@ -3117,7 +3117,7 @@
                         "length": 4
                     },
                     "returnType": {
-                        "kind": "LonghandTypeDeclaration",
+                        "kind": "LonghandTypeAnnotation",
                         "colon": {
                             "kind": "Colon",
                             "fullStart": 3716,
@@ -3132,7 +3132,7 @@
                                 "start": 3717,
                                 "length": 1
                             },
-                            "arrayTypeDeclarations": []
+                            "arrayTypeAnnotations": []
                         }
                     },
                     "openingParenthesis": {
@@ -3209,7 +3209,7 @@
                                 "length": 6
                             },
                             "type": {
-                                "kind": "LonghandTypeDeclaration",
+                                "kind": "LonghandTypeAnnotation",
                                 "colon": {
                                     "kind": "Colon",
                                     "fullStart": 3772,
@@ -3224,7 +3224,7 @@
                                         "start": 3773,
                                         "length": 1
                                     },
-                                    "arrayTypeDeclarations": []
+                                    "arrayTypeAnnotations": []
                                 }
                             }
                         }
@@ -3447,7 +3447,7 @@
                     "start": 3936,
                     "length": 8
                 },
-                "arrayTypeDeclarations": []
+                "arrayTypeAnnotations": []
             },
             "members": [
                 {
@@ -3533,7 +3533,7 @@
                     "start": 4063,
                     "length": 8
                 },
-                "arrayTypeDeclarations": []
+                "arrayTypeAnnotations": []
             },
             "attribute": {
                 "kind": "AbstractKeyword",
@@ -3626,7 +3626,7 @@
                         "start": 4201,
                         "length": 9
                     },
-                    "arrayTypeDeclarations": []
+                    "arrayTypeAnnotations": []
                 }
             ],
             "members": [
@@ -3714,7 +3714,7 @@
                         "start": 4322,
                         "length": 9
                     },
-                    "arrayTypeDeclarations": []
+                    "arrayTypeAnnotations": []
                 }
             ],
             "attribute": {
@@ -3808,7 +3808,7 @@
                         "start": 4459,
                         "length": 9
                     },
-                    "arrayTypeDeclarations": []
+                    "arrayTypeAnnotations": []
                 },
                 {
                     "kind": "CommaSeparator",
@@ -3828,7 +3828,7 @@
                         "start": 4468,
                         "length": 8
                     },
-                    "arrayTypeDeclarations": []
+                    "arrayTypeAnnotations": []
                 }
             ],
             "members": [
@@ -3915,7 +3915,7 @@
                     "start": 4578,
                     "length": 8
                 },
-                "arrayTypeDeclarations": []
+                "arrayTypeAnnotations": []
             },
             "implementsKeyword": {
                 "kind": "ImplementsKeyword",
@@ -3932,7 +3932,7 @@
                         "start": 4597,
                         "length": 9
                     },
-                    "arrayTypeDeclarations": []
+                    "arrayTypeAnnotations": []
                 },
                 {
                     "kind": "CommaSeparator",
@@ -3952,7 +3952,7 @@
                         "start": 4606,
                         "length": 8
                     },
-                    "arrayTypeDeclarations": []
+                    "arrayTypeAnnotations": []
                 }
             ],
             "members": [
@@ -4045,7 +4045,7 @@
                     "start": 4730,
                     "length": 8
                 },
-                "arrayTypeDeclarations": []
+                "arrayTypeAnnotations": []
             },
             "implementsKeyword": {
                 "kind": "ImplementsKeyword",
@@ -4062,7 +4062,7 @@
                         "start": 4749,
                         "length": 9
                     },
-                    "arrayTypeDeclarations": []
+                    "arrayTypeAnnotations": []
                 },
                 {
                     "kind": "CommaSeparator",
@@ -4082,7 +4082,7 @@
                         "start": 4758,
                         "length": 8
                     },
-                    "arrayTypeDeclarations": []
+                    "arrayTypeAnnotations": []
                 }
             ],
             "attribute": {
@@ -4162,7 +4162,7 @@
                             "length": 3
                         },
                         "type": {
-                            "kind": "LonghandTypeDeclaration",
+                            "kind": "LonghandTypeAnnotation",
                             "colon": {
                                 "kind": "Colon",
                                 "fullStart": 4891,
@@ -4177,7 +4177,7 @@
                                     "start": 4893,
                                     "length": 7
                                 },
-                                "arrayTypeDeclarations": []
+                                "arrayTypeAnnotations": []
                             }
                         }
                     }
@@ -5056,7 +5056,7 @@
                             "length": 3
                         },
                         "type": {
-                            "kind": "LonghandTypeDeclaration",
+                            "kind": "LonghandTypeAnnotation",
                             "colon": {
                                 "kind": "Colon",
                                 "fullStart": 5640,
@@ -5071,7 +5071,7 @@
                                     "start": 5642,
                                     "length": 7
                                 },
-                                "arrayTypeDeclarations": []
+                                "arrayTypeAnnotations": []
                             }
                         }
                     }
@@ -6196,7 +6196,7 @@
                                     "length": 2
                                 },
                                 "type": {
-                                    "kind": "LonghandTypeDeclaration",
+                                    "kind": "LonghandTypeAnnotation",
                                     "colon": {
                                         "kind": "Colon",
                                         "fullStart": 6802,
@@ -6211,7 +6211,7 @@
                                             "start": 6804,
                                             "length": 6
                                         },
-                                        "arrayTypeDeclarations": []
+                                        "arrayTypeAnnotations": []
                                     }
                                 }
                             }

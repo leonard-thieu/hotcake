@@ -64,7 +64,7 @@
                                     "start": 25,
                                     "length": 6
                                 },
-                                "arrayTypeDeclarations": []
+                                "arrayTypeAnnotations": []
                             }
                         },
                         "arguments": [

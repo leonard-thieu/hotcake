@@ -13,7 +13,6 @@ import { ImportStatement } from '../Syntax/Node/Declaration/ImportStatement';
 import { InterfaceDeclaration } from '../Syntax/Node/Declaration/InterfaceDeclaration';
 import { InterfaceMethodDeclaration } from '../Syntax/Node/Declaration/InterfaceMethodDeclaration';
 import { ModuleDeclaration } from '../Syntax/Node/Declaration/ModuleDeclaration';
-import { TypeDeclaration } from '../Syntax/Node/Declaration/TypeDeclaration';
 import { ArrayLiteralExpression } from '../Syntax/Node/Expression/ArrayLiteralExpression';
 import { AssignmentExpression } from '../Syntax/Node/Expression/AssignmentExpression';
 import { BinaryExpression } from '../Syntax/Node/Expression/BinaryExpression';
@@ -43,6 +42,7 @@ import { Statements } from '../Syntax/Node/Statement/Statement';
 import { ThrowStatement } from '../Syntax/Node/Statement/ThrowStatement';
 import { CatchStatement, TryStatement } from '../Syntax/Node/Statement/TryStatement';
 import { WhileLoop } from '../Syntax/Node/Statement/WhileLoop';
+import { TypeAnnotation } from '../Syntax/Node/TypeAnnotation';
 import { ParseContextElementDelimitedSequence, ParseContextKind } from '../Syntax/ParserBase';
 import { MissingToken } from '../Syntax/Token/MissingToken';
 import { SkippedToken } from '../Syntax/Token/SkippedToken';
@@ -742,13 +742,13 @@ export class Binder {
 
     // #region Core
 
-    private bindTypeReference(typeDeclaration: TypeDeclaration | undefined): Type {
+    private bindTypeReference(typeDeclaration: TypeAnnotation | undefined): Type {
         if (!typeDeclaration) {
             return IntType.type;
         }
 
         switch (typeDeclaration.kind) {
-            case NodeKind.ShorthandTypeDeclaration: {
+            case NodeKind.ShorthandTypeAnnotation: {
                 const { shorthandType } = typeDeclaration;
                 if (shorthandType) {
                     switch (shorthandType.kind) {
@@ -772,7 +772,7 @@ export class Binder {
                     throw new Error('Method not implemented.');
                 }
             }
-            case NodeKind.LonghandTypeDeclaration: {
+            case NodeKind.LonghandTypeAnnotation: {
                 const { typeReference } = typeDeclaration;
                 switch (typeReference.kind) {
                     case NodeKind.TypeReference: {

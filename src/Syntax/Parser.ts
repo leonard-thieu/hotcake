@@ -17,7 +17,6 @@ import { InterfaceMethodDeclaration } from './Node/Declaration/InterfaceMethodDe
 import { ModuleDeclaration } from './Node/Declaration/ModuleDeclaration';
 import { PreprocessorModuleDeclaration } from './Node/Declaration/PreprocessorModuleDeclaration';
 import { StrictDirective } from './Node/Declaration/StrictDirective';
-import { LonghandTypeDeclaration, ShorthandTypeDeclaration, ShorthandTypeToken } from './Node/Declaration/TypeDeclaration';
 import { TypeParameter } from './Node/Declaration/TypeParameter';
 import { Expressions, MissableExpression } from './Node/Expression/Expression';
 import { IdentifierStartToken } from './Node/Identifier';
@@ -38,6 +37,7 @@ import { Statement } from './Node/Statement/Statement';
 import { ThrowStatement } from './Node/Statement/ThrowStatement';
 import { CatchStatement, TryStatement } from './Node/Statement/TryStatement';
 import { WhileLoop } from './Node/Statement/WhileLoop';
+import { LonghandTypeAnnotation, ShorthandTypeAnnotation, ShorthandTypeToken } from './Node/TypeAnnotation';
 import { ParseContext, ParseContextElementMapBase, ParseContextKind, ParserBase } from './ParserBase';
 import { MissableTokenKinds, MissingToken } from './Token/MissingToken';
 import { SkippedToken } from './Token/SkippedToken';
@@ -508,7 +508,7 @@ export class Parser extends ParserBase {
         const dataDeclaration = new DataDeclaration();
         dataDeclaration.parent = parent;
         dataDeclaration.identifier = this.parseIdentifier(dataDeclaration, identifierStart);
-        dataDeclaration.type = this.parseTypeDeclaration(dataDeclaration);
+        dataDeclaration.type = this.parseTypeAnnotation(dataDeclaration);
         if (parent.kind === NodeKind.DataDeclarationSequence &&
             parent.dataDeclarationKeyword &&
             parent.dataDeclarationKeyword.kind === TokenKind.ConstKeyword
@@ -590,7 +590,7 @@ export class Parser extends ParserBase {
         const externDataDeclaration = new ExternDataDeclaration();
         externDataDeclaration.parent = parent;
         externDataDeclaration.identifier = this.parseIdentifier(parent, identifierStart);
-        externDataDeclaration.type = this.parseTypeDeclaration(externDataDeclaration);
+        externDataDeclaration.type = this.parseTypeAnnotation(externDataDeclaration);
         externDataDeclaration.equalsSign = this.eatOptional(TokenKind.EqualsSign);
         if (externDataDeclaration.equalsSign) {
             externDataDeclaration.nativeSymbol = this.parseMissableStringLiteralExpression(externDataDeclaration);
@@ -610,7 +610,7 @@ export class Parser extends ParserBase {
         functionDeclaration.parent = parent;
         functionDeclaration.functionKeyword = functionKeyword;
         functionDeclaration.identifier = this.parseMissableIdentifier(functionDeclaration);
-        functionDeclaration.returnType = this.parseTypeDeclaration(functionDeclaration);
+        functionDeclaration.returnType = this.parseTypeAnnotation(functionDeclaration);
         functionDeclaration.openingParenthesis = this.eatMissable(TokenKind.OpeningParenthesis);
         functionDeclaration.parameters = this.parseDataDeclarationSequence(functionDeclaration);
         functionDeclaration.closingParenthesis = this.eatMissable(TokenKind.ClosingParenthesis);
@@ -632,7 +632,7 @@ export class Parser extends ParserBase {
         externFunctionDeclaration.parent = parent;
         externFunctionDeclaration.functionKeyword = functionKeyword;
         externFunctionDeclaration.identifier = this.parseMissableIdentifier(externFunctionDeclaration)
-        externFunctionDeclaration.returnType = this.parseTypeDeclaration(externFunctionDeclaration);
+        externFunctionDeclaration.returnType = this.parseTypeAnnotation(externFunctionDeclaration);
         externFunctionDeclaration.openingParenthesis = this.eatMissable(TokenKind.OpeningParenthesis);
         externFunctionDeclaration.parameters = this.parseDataDeclarationSequence(externFunctionDeclaration);
         externFunctionDeclaration.closingParenthesis = this.eatMissable(TokenKind.ClosingParenthesis);
@@ -717,7 +717,7 @@ export class Parser extends ParserBase {
         interfaceMethodDeclaration.parent = parent;
         interfaceMethodDeclaration.methodKeyword = methodKeyword;
         interfaceMethodDeclaration.identifier = this.parseMissableIdentifier(interfaceMethodDeclaration)
-        interfaceMethodDeclaration.returnType = this.parseTypeDeclaration(interfaceMethodDeclaration);
+        interfaceMethodDeclaration.returnType = this.parseTypeAnnotation(interfaceMethodDeclaration);
         interfaceMethodDeclaration.openingParenthesis = this.eatMissable(TokenKind.OpeningParenthesis);
         interfaceMethodDeclaration.parameters = this.parseDataDeclarationSequence(interfaceMethodDeclaration);
         interfaceMethodDeclaration.closingParenthesis = this.eatMissable(TokenKind.ClosingParenthesis);
@@ -897,7 +897,7 @@ export class Parser extends ParserBase {
             classMethodDeclaration.identifier = newKeyword;
         } else {
             classMethodDeclaration.identifier = this.parseMissableIdentifier(classMethodDeclaration);
-            classMethodDeclaration.returnType = this.parseTypeDeclaration(classMethodDeclaration);
+            classMethodDeclaration.returnType = this.parseTypeAnnotation(classMethodDeclaration);
         }
         classMethodDeclaration.openingParenthesis = this.eatMissable(TokenKind.OpeningParenthesis);
         classMethodDeclaration.parameters = this.parseDataDeclarationSequence(classMethodDeclaration);
@@ -1018,7 +1018,7 @@ export class Parser extends ParserBase {
         externClassMethodDeclaration.parent = parent;
         externClassMethodDeclaration.methodKeyword = methodKeyword;
         externClassMethodDeclaration.identifier = this.parseMissableIdentifier(externClassMethodDeclaration);
-        externClassMethodDeclaration.returnType = this.parseTypeDeclaration(externClassMethodDeclaration);
+        externClassMethodDeclaration.returnType = this.parseTypeAnnotation(externClassMethodDeclaration);
         externClassMethodDeclaration.openingParenthesis = this.eatMissable(TokenKind.OpeningParenthesis);
         externClassMethodDeclaration.parameters = this.parseDataDeclarationSequence(externClassMethodDeclaration);
         externClassMethodDeclaration.closingParenthesis = this.eatMissable(TokenKind.ClosingParenthesis);
@@ -1070,9 +1070,9 @@ export class Parser extends ParserBase {
 
     // #endregion
 
-    // #region Type declaration
+    // #region Type annotation
 
-    private parseTypeDeclaration(parent: Nodes) {
+    private parseTypeAnnotation(parent: Nodes) {
         const token = this.getToken();
         switch (token.kind) {
             case TokenKind.QuestionMark:
@@ -1081,37 +1081,37 @@ export class Parser extends ParserBase {
             case TokenKind.DollarSign: {
                 this.advanceToken();
 
-                return this.parseShorthandTypeDeclaration(parent, token);
+                return this.parseShorthandTypeAnnotation(parent, token);
             }
             case TokenKind.OpeningSquareBracket: {
-                return this.parseShorthandTypeDeclaration(parent);
+                return this.parseShorthandTypeAnnotation(parent);
             }
             case TokenKind.Colon: {
                 this.advanceToken();
 
-                return this.parseLonghandTypeDeclaration(parent, token);
+                return this.parseLonghandTypeAnnotation(parent, token);
             }
         }
 
         return undefined;
     }
 
-    private parseShorthandTypeDeclaration(parent: Nodes, shorthandType?: ShorthandTypeToken): ShorthandTypeDeclaration {
-        const shorthandTypeDeclaration = new ShorthandTypeDeclaration();
-        shorthandTypeDeclaration.parent = parent;
-        shorthandTypeDeclaration.shorthandType = shorthandType;
-        shorthandTypeDeclaration.arrayTypeDeclarations = this.parseList(ParseContextKind.ArrayTypeDeclarationList, shorthandTypeDeclaration, /*delimiter*/ null);
+    private parseShorthandTypeAnnotation(parent: Nodes, shorthandType?: ShorthandTypeToken): ShorthandTypeAnnotation {
+        const shorthandTypeAnnotation = new ShorthandTypeAnnotation();
+        shorthandTypeAnnotation.parent = parent;
+        shorthandTypeAnnotation.shorthandType = shorthandType;
+        shorthandTypeAnnotation.arrayTypeAnnotations = this.parseList(ParseContextKind.ArrayTypeAnnotationList, shorthandTypeAnnotation, /*delimiter*/ null);
 
-        return shorthandTypeDeclaration;
+        return shorthandTypeAnnotation;
     }
 
-    private parseLonghandTypeDeclaration(parent: Nodes, colon: ColonToken): LonghandTypeDeclaration {
-        const longhandTypeDeclaration = new LonghandTypeDeclaration();
-        longhandTypeDeclaration.parent = parent;
-        longhandTypeDeclaration.colon = colon;
-        longhandTypeDeclaration.typeReference = this.parseMissableTypeReference(longhandTypeDeclaration);
+    private parseLonghandTypeAnnotation(parent: Nodes, colon: ColonToken): LonghandTypeAnnotation {
+        const longhandTypeAnnotation = new LonghandTypeAnnotation();
+        longhandTypeAnnotation.parent = parent;
+        longhandTypeAnnotation.colon = colon;
+        longhandTypeAnnotation.typeReference = this.parseMissableTypeReference(longhandTypeAnnotation);
 
-        return longhandTypeDeclaration;
+        return longhandTypeAnnotation;
     }
 
     // #endregion

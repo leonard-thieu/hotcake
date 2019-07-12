@@ -3,8 +3,8 @@ import { FieldKeywordToken, GlobalKeywordToken } from '../../../Token/Token';
 import { Identifier } from '../../Identifier';
 import { isNode } from '../../Node';
 import { NodeKind } from '../../NodeKind';
+import { TypeAnnotation } from '../../TypeAnnotation';
 import { Declaration } from '../Declaration';
-import { TypeDeclaration } from '../TypeDeclaration';
 import { ExternDeclaration } from './ExternDeclaration';
 
 export class ExternDataDeclarationSequence extends Declaration {
@@ -48,7 +48,7 @@ export class ExternDataDeclaration extends ExternDeclaration {
     readonly kind = NodeKind.ExternDataDeclaration;
 
     identifier: Identifier = undefined!;
-    type?: TypeDeclaration = undefined;
+    type?: TypeAnnotation = undefined;
 
     get firstToken() {
         if (isNode(this.identifier)) {

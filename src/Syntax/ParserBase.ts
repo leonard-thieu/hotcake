@@ -1,5 +1,5 @@
 import { assertNever } from '../assertNever';
-import { ArrayTypeDeclaration } from './Node/ArrayTypeDeclaration';
+import { ArrayTypeAnnotation } from './Node/ArrayTypeAnnotation';
 import { CommaSeparator } from './Node/CommaSeparator';
 import { ConfigurationTag } from './Node/ConfigurationTag';
 import { ArrayLiteralExpression } from './Node/Expression/ArrayLiteralExpression';
@@ -888,20 +888,20 @@ export abstract class ParserBase {
             }
         }
 
-        typeReference.arrayTypeDeclarations = this.parseList(ParseContextKind.ArrayTypeDeclarationList, typeReference, /*delimiter*/ null);
+        typeReference.arrayTypeAnnotations = this.parseList(ParseContextKind.ArrayTypeAnnotationList, typeReference, /*delimiter*/ null);
 
         return typeReference;
     }
 
     // #endregion
 
-    // #region Array type declaration list
+    // #region Array type annotation list
 
-    private isArrayTypeDeclarationListTerminator(token: Tokens): boolean {
-        return !this.isArrayTypeDeclarationListMemberStart(token);
+    private isArrayTypeAnnotationListTerminator(token: Tokens): boolean {
+        return !this.isArrayTypeAnnotationListMemberStart(token);
     }
 
-    private isArrayTypeDeclarationListMemberStart(token: Tokens): boolean {
+    private isArrayTypeAnnotationListMemberStart(token: Tokens): boolean {
         switch (token.kind) {
             case TokenKind.OpeningSquareBracket: {
                 return true;
@@ -911,31 +911,31 @@ export abstract class ParserBase {
         return false;
     }
 
-    private parseArrayTypeDeclarationListMember(parent: Nodes) {
+    private parseArrayTypeAnnotationListMember(parent: Nodes) {
         const token = this.getToken();
         switch (token.kind) {
             case TokenKind.OpeningSquareBracket: {
                 this.advanceToken();
 
-                return this.parseArrayTypeDeclaration(parent, token);
+                return this.parseArrayTypeAnnotation(parent, token);
             }
         }
 
         return this.parseCore(parent, token);
     }
 
-    // #region Array type declaration
+    // #region Array type annotation
 
-    protected parseArrayTypeDeclaration(parent: Nodes, openingSquareBracket: OpeningSquareBracketToken): ArrayTypeDeclaration {
-        const arrayTypeDeclaration = new ArrayTypeDeclaration();
-        arrayTypeDeclaration.parent = parent;
-        arrayTypeDeclaration.openingSquareBracket = openingSquareBracket;
+    protected parseArrayTypeAnnotation(parent: Nodes, openingSquareBracket: OpeningSquareBracketToken): ArrayTypeAnnotation {
+        const arrayTypeAnnotation = new ArrayTypeAnnotation();
+        arrayTypeAnnotation.parent = parent;
+        arrayTypeAnnotation.openingSquareBracket = openingSquareBracket;
         if (this.isExpressionStart(this.getToken())) {
-            arrayTypeDeclaration.expression = this.parseExpression(arrayTypeDeclaration);
+            arrayTypeAnnotation.expression = this.parseExpression(arrayTypeAnnotation);
         }
-        arrayTypeDeclaration.closingSquareBracket = this.eatMissable(TokenKind.ClosingSquareBracket);
+        arrayTypeAnnotation.closingSquareBracket = this.eatMissable(TokenKind.ClosingSquareBracket);
 
-        return arrayTypeDeclaration;
+        return arrayTypeAnnotation;
     }
 
     // #endregion
@@ -1137,8 +1137,8 @@ export abstract class ParserBase {
             case ParseContextKind.NewlineList: {
                 return this.isNewlineListTerminator(token);
             }
-            case ParseContextKind.ArrayTypeDeclarationList: {
-                return this.isArrayTypeDeclarationListTerminator(token);
+            case ParseContextKind.ArrayTypeAnnotationList: {
+                return this.isArrayTypeAnnotationListTerminator(token);
             }
             case ParseContextKind.TypeReferenceSequence: {
                 return this.isTypeReferenceSequenceTerminator(token);
@@ -1161,8 +1161,8 @@ export abstract class ParserBase {
             case ParseContextKind.NewlineList: {
                 return this.isNewlineListMemberStart(token);
             }
-            case ParseContextKind.ArrayTypeDeclarationList: {
-                return this.isArrayTypeDeclarationListMemberStart(token);
+            case ParseContextKind.ArrayTypeAnnotationList: {
+                return this.isArrayTypeAnnotationListMemberStart(token);
             }
             case ParseContextKind.TypeReferenceSequence: {
                 return this.isTypeReferenceSequenceMemberStart(token);
@@ -1185,8 +1185,8 @@ export abstract class ParserBase {
             case ParseContextKind.NewlineList: {
                 return this.parseNewlineListMember(parent);
             }
-            case ParseContextKind.ArrayTypeDeclarationList: {
-                return this.parseArrayTypeDeclarationListMember(parent);
+            case ParseContextKind.ArrayTypeAnnotationList: {
+                return this.parseArrayTypeAnnotationListMember(parent);
             }
             case ParseContextKind.TypeReferenceSequence: {
                 return this.parseTypeReferenceSequenceMember(parent);
@@ -1380,7 +1380,7 @@ function getBinaryOperatorPrecedenceAndAssociativity(token: Tokens, parent: Node
 
 export enum ParseContextKind {
     NewlineList = 'NewlineList',
-    ArrayTypeDeclarationList = 'ArrayTypeDeclarationList',
+    ArrayTypeAnnotationList = 'ArrayTypeAnnotationList',
     TypeReferenceSequence = 'TypeReferenceSequence',
     ExpressionSequence = 'ExpressionSequence',
 }
@@ -1388,7 +1388,7 @@ export enum ParseContextKind {
 export interface ParseContextElementMapBase {
     [NodeKind.StringLiteralExpression]: ReturnType<ParserBase['parseStringLiteralExpressionChild']>;
     [ParseContextKind.NewlineList]: ReturnType<ParserBase['parseNewlineListMember']>;
-    [ParseContextKind.ArrayTypeDeclarationList]: ReturnType<ParserBase['parseArrayTypeDeclarationListMember']>;
+    [ParseContextKind.ArrayTypeAnnotationList]: ReturnType<ParserBase['parseArrayTypeAnnotationListMember']>;
     [ParseContextKind.TypeReferenceSequence]: ReturnType<ParserBase['parseTypeReferenceSequenceMember']>;
     [ParseContextKind.ExpressionSequence]: ReturnType<ParserBase['parseExpressionSequenceMember']>;
 }

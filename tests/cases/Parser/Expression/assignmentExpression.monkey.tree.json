@@ -63,7 +63,7 @@
                                     "length": 2
                                 },
                                 "type": {
-                                    "kind": "LonghandTypeDeclaration",
+                                    "kind": "LonghandTypeAnnotation",
                                     "colon": {
                                         "kind": "Colon",
                                         "fullStart": 28,
@@ -78,7 +78,7 @@
                                             "start": 30,
                                             "length": 4
                                         },
-                                        "arrayTypeDeclarations": []
+                                        "arrayTypeAnnotations": []
                                     }
                                 }
                             }
