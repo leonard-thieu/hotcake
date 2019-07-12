@@ -1,0 +1,58 @@
+{
+    "kind": "ModuleDeclaration",
+    "identifier": "interfaceDeclaration",
+    "locals": [
+        "Moveable",
+        "Drawable",
+        "Actor"
+    ],
+    "members": [
+        {
+            "kind": "InterfaceDeclaration",
+            "identifier": "Moveable",
+            "locals": [
+                "Move"
+            ],
+            "members": [
+                {
+                    "kind": "InterfaceMethodDeclaration",
+                    "identifier": "Move",
+                    "locals": [],
+                    "returnType": "Int",
+                    "parameters": []
+                }
+            ]
+        },
+        {
+            "kind": "InterfaceDeclaration",
+            "identifier": "Drawable",
+            "locals": [
+                "Draw"
+            ],
+            "members": [
+                {
+                    "kind": "InterfaceMethodDeclaration",
+                    "identifier": "Draw",
+                    "locals": [],
+                    "returnType": "Int",
+                    "parameters": []
+                }
+            ]
+        },
+        {
+            "kind": "InterfaceDeclaration",
+            "identifier": "Actor",
+            "locals": [
+                "Name"
+            ],
+            "baseTypes": [],
+            "members": [
+                {
+                    "kind": "DataDeclaration",
+                    "identifier": "Name",
+                    "type": "String"
+                }
+            ]
+        }
+    ]
+}
