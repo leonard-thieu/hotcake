@@ -1,3 +1,15 @@
+Function BoxBool: Object(val: Bool)
+End
+
+Function BoxInt: Object(val: Int)
+End
+
+Function BoxFloat: Object(val: Float)
+End
+
+Function BoxString: Object(val: String)
+End
+
 Function Main()
     BoxInt(1 + 2)
     BoxInt(4 - 3)

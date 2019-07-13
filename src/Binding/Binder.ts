@@ -14,6 +14,7 @@ import { BinaryExpression } from '../Syntax/Node/Expression/BinaryExpression';
 import { MissableExpression } from '../Syntax/Node/Expression/Expression';
 import { IdentifierExpression } from '../Syntax/Node/Expression/IdentifierExpression';
 import { InvokeExpression } from '../Syntax/Node/Expression/InvokeExpression';
+import { NewExpression } from '../Syntax/Node/Expression/NewExpression';
 import { UnaryExpression } from '../Syntax/Node/Expression/UnaryExpression';
 import { EscapeOptionalIdentifierNameToken } from '../Syntax/Node/Identifier';
 import { NodeKind } from '../Syntax/Node/NodeKind';
@@ -51,6 +52,7 @@ import { BoundFloatLiteralExpression } from './Node/Expression/BoundFloatLiteral
 import { BoundIdentifierExpression } from './Node/Expression/BoundIdentifierExpression';
 import { BoundIntegerLiteralExpression } from './Node/Expression/BoundIntegerLiteralExpression';
 import { BoundInvokeExpression } from './Node/Expression/BoundInvokeExpression';
+import { BoundNewExpression } from './Node/Expression/BoundNewExpression';
 import { BoundNullExpression } from './Node/Expression/BoundNullExpression';
 import { BoundStringLiteralExpression } from './Node/Expression/BoundStringLiteralExpression';
 import { BoundUnaryExpression } from './Node/Expression/BoundUnaryExpression';
@@ -571,7 +573,9 @@ export class Binder {
             case NodeKind.IdentifierExpression: {
                 return this.bindIdentifierExpression(expression, parent);
             }
-            case NodeKind.NewExpression:
+            case NodeKind.NewExpression: {
+                return this.bindNewExpression(expression, parent);
+            }
             case NodeKind.SelfExpression:
             case NodeKind.SuperExpression:
             case NodeKind.ArrayLiteralExpression:
@@ -589,6 +593,14 @@ export class Binder {
                 throw new Error('Method not implemented.');
             }
         }
+    }
+
+    private bindNewExpression(expression: NewExpression, parent: BoundNode) {
+        const boundNewExpression = new BoundNewExpression();
+        boundNewExpression.type = this.bindTypeReference(expression.type);
+        boundNewExpression.parent = parent;
+
+        return boundNewExpression;
     }
 
     private bindIdentifierExpression(
@@ -684,8 +696,8 @@ export class Binder {
     ): BoundInvokeExpression {
         const boundInvokeExpression = new BoundInvokeExpression();
         boundInvokeExpression.parent = parent;
-        // TODO: Determine return type of invocation.
-        boundInvokeExpression.type = VoidType.type;
+        boundInvokeExpression.invokableExpression = this.bindExpression(expression.invokableExpression, boundInvokeExpression);
+        boundInvokeExpression.type = boundInvokeExpression.invokableExpression.type;
         boundInvokeExpression.arguments = this.bindArguments(expression, boundInvokeExpression);
 
         return boundInvokeExpression;

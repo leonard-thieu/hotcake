@@ -2,9 +2,77 @@
     "kind": "ModuleDeclaration",
     "identifier": "binaryExpression",
     "locals": [
+        "BoxBool",
+        "BoxInt",
+        "BoxFloat",
+        "BoxString",
         "Main"
     ],
     "members": [
+        {
+            "kind": "FunctionDeclaration",
+            "identifier": "BoxBool",
+            "locals": [
+                "val"
+            ],
+            "returnType": "Object",
+            "parameters": [
+                {
+                    "kind": "DataDeclaration",
+                    "identifier": "val",
+                    "type": "Bool"
+                }
+            ],
+            "statements": []
+        },
+        {
+            "kind": "FunctionDeclaration",
+            "identifier": "BoxInt",
+            "locals": [
+                "val"
+            ],
+            "returnType": "Object",
+            "parameters": [
+                {
+                    "kind": "DataDeclaration",
+                    "identifier": "val",
+                    "type": "Int"
+                }
+            ],
+            "statements": []
+        },
+        {
+            "kind": "FunctionDeclaration",
+            "identifier": "BoxFloat",
+            "locals": [
+                "val"
+            ],
+            "returnType": "Object",
+            "parameters": [
+                {
+                    "kind": "DataDeclaration",
+                    "identifier": "val",
+                    "type": "Float"
+                }
+            ],
+            "statements": []
+        },
+        {
+            "kind": "FunctionDeclaration",
+            "identifier": "BoxString",
+            "locals": [
+                "val"
+            ],
+            "returnType": "Object",
+            "parameters": [
+                {
+                    "kind": "DataDeclaration",
+                    "identifier": "val",
+                    "type": "String"
+                }
+            ],
+            "statements": []
+        },
         {
             "kind": "FunctionDeclaration",
             "identifier": "Main",
@@ -16,7 +84,10 @@
                     "kind": "ExpressionStatement",
                     "expression": {
                         "kind": "InvokeExpression",
-                        "type": "Void",
+                        "invokableExpression": {
+                            "kind": "IdentifierExpression",
+                            "identifier": "BoxInt"
+                        },
                         "arguments": [
                             {
                                 "kind": "BinaryExpression",
@@ -37,7 +108,10 @@
                     "kind": "ExpressionStatement",
                     "expression": {
                         "kind": "InvokeExpression",
-                        "type": "Void",
+                        "invokableExpression": {
+                            "kind": "IdentifierExpression",
+                            "identifier": "BoxInt"
+                        },
                         "arguments": [
                             {
                                 "kind": "BinaryExpression",
@@ -58,7 +132,10 @@
                     "kind": "ExpressionStatement",
                     "expression": {
                         "kind": "InvokeExpression",
-                        "type": "Void",
+                        "invokableExpression": {
+                            "kind": "IdentifierExpression",
+                            "identifier": "BoxFloat"
+                        },
                         "arguments": [
                             {
                                 "kind": "BinaryExpression",
@@ -79,7 +156,10 @@
                     "kind": "ExpressionStatement",
                     "expression": {
                         "kind": "InvokeExpression",
-                        "type": "Void",
+                        "invokableExpression": {
+                            "kind": "IdentifierExpression",
+                            "identifier": "BoxFloat"
+                        },
                         "arguments": [
                             {
                                 "kind": "BinaryExpression",
@@ -100,7 +180,10 @@
                     "kind": "ExpressionStatement",
                     "expression": {
                         "kind": "InvokeExpression",
-                        "type": "Void",
+                        "invokableExpression": {
+                            "kind": "IdentifierExpression",
+                            "identifier": "BoxFloat"
+                        },
                         "arguments": [
                             {
                                 "kind": "BinaryExpression",
@@ -121,7 +204,10 @@
                     "kind": "ExpressionStatement",
                     "expression": {
                         "kind": "InvokeExpression",
-                        "type": "Void",
+                        "invokableExpression": {
+                            "kind": "IdentifierExpression",
+                            "identifier": "BoxInt"
+                        },
                         "arguments": [
                             {
                                 "kind": "BinaryExpression",
@@ -142,7 +228,10 @@
                     "kind": "ExpressionStatement",
                     "expression": {
                         "kind": "InvokeExpression",
-                        "type": "Void",
+                        "invokableExpression": {
+                            "kind": "IdentifierExpression",
+                            "identifier": "BoxInt"
+                        },
                         "arguments": [
                             {
                                 "kind": "BinaryExpression",
@@ -163,7 +252,10 @@
                     "kind": "ExpressionStatement",
                     "expression": {
                         "kind": "InvokeExpression",
-                        "type": "Void",
+                        "invokableExpression": {
+                            "kind": "IdentifierExpression",
+                            "identifier": "BoxInt"
+                        },
                         "arguments": [
                             {
                                 "kind": "BinaryExpression",
@@ -184,7 +276,10 @@
                     "kind": "ExpressionStatement",
                     "expression": {
                         "kind": "InvokeExpression",
-                        "type": "Void",
+                        "invokableExpression": {
+                            "kind": "IdentifierExpression",
+                            "identifier": "BoxInt"
+                        },
                         "arguments": [
                             {
                                 "kind": "BinaryExpression",
@@ -205,7 +300,10 @@
                     "kind": "ExpressionStatement",
                     "expression": {
                         "kind": "InvokeExpression",
-                        "type": "Void",
+                        "invokableExpression": {
+                            "kind": "IdentifierExpression",
+                            "identifier": "BoxInt"
+                        },
                         "arguments": [
                             {
                                 "kind": "BinaryExpression",
@@ -226,7 +324,10 @@
                     "kind": "ExpressionStatement",
                     "expression": {
                         "kind": "InvokeExpression",
-                        "type": "Void",
+                        "invokableExpression": {
+                            "kind": "IdentifierExpression",
+                            "identifier": "BoxBool"
+                        },
                         "arguments": [
                             {
                                 "kind": "BinaryExpression",
@@ -247,7 +348,10 @@
                     "kind": "ExpressionStatement",
                     "expression": {
                         "kind": "InvokeExpression",
-                        "type": "Void",
+                        "invokableExpression": {
+                            "kind": "IdentifierExpression",
+                            "identifier": "BoxBool"
+                        },
                         "arguments": [
                             {
                                 "kind": "BinaryExpression",
@@ -268,7 +372,10 @@
                     "kind": "ExpressionStatement",
                     "expression": {
                         "kind": "InvokeExpression",
-                        "type": "Void",
+                        "invokableExpression": {
+                            "kind": "IdentifierExpression",
+                            "identifier": "BoxBool"
+                        },
                         "arguments": [
                             {
                                 "kind": "BinaryExpression",
@@ -289,7 +396,10 @@
                     "kind": "ExpressionStatement",
                     "expression": {
                         "kind": "InvokeExpression",
-                        "type": "Void",
+                        "invokableExpression": {
+                            "kind": "IdentifierExpression",
+                            "identifier": "BoxBool"
+                        },
                         "arguments": [
                             {
                                 "kind": "BinaryExpression",
@@ -310,7 +420,10 @@
                     "kind": "ExpressionStatement",
                     "expression": {
                         "kind": "InvokeExpression",
-                        "type": "Void",
+                        "invokableExpression": {
+                            "kind": "IdentifierExpression",
+                            "identifier": "BoxBool"
+                        },
                         "arguments": [
                             {
                                 "kind": "BinaryExpression",
@@ -331,7 +444,10 @@
                     "kind": "ExpressionStatement",
                     "expression": {
                         "kind": "InvokeExpression",
-                        "type": "Void",
+                        "invokableExpression": {
+                            "kind": "IdentifierExpression",
+                            "identifier": "BoxBool"
+                        },
                         "arguments": [
                             {
                                 "kind": "BinaryExpression",
@@ -352,7 +468,10 @@
                     "kind": "ExpressionStatement",
                     "expression": {
                         "kind": "InvokeExpression",
-                        "type": "Void",
+                        "invokableExpression": {
+                            "kind": "IdentifierExpression",
+                            "identifier": "BoxBool"
+                        },
                         "arguments": [
                             {
                                 "kind": "BinaryExpression",
@@ -373,7 +492,10 @@
                     "kind": "ExpressionStatement",
                     "expression": {
                         "kind": "InvokeExpression",
-                        "type": "Void",
+                        "invokableExpression": {
+                            "kind": "IdentifierExpression",
+                            "identifier": "BoxBool"
+                        },
                         "arguments": [
                             {
                                 "kind": "BinaryExpression",
@@ -394,7 +516,10 @@
                     "kind": "ExpressionStatement",
                     "expression": {
                         "kind": "InvokeExpression",
-                        "type": "Void",
+                        "invokableExpression": {
+                            "kind": "IdentifierExpression",
+                            "identifier": "BoxString"
+                        },
                         "arguments": [
                             {
                                 "kind": "BinaryExpression",
@@ -415,7 +540,10 @@
                     "kind": "ExpressionStatement",
                     "expression": {
                         "kind": "InvokeExpression",
-                        "type": "Void",
+                        "invokableExpression": {
+                            "kind": "IdentifierExpression",
+                            "identifier": "BoxString"
+                        },
                         "arguments": [
                             {
                                 "kind": "BinaryExpression",
@@ -436,7 +564,10 @@
                     "kind": "ExpressionStatement",
                     "expression": {
                         "kind": "InvokeExpression",
-                        "type": "Void",
+                        "invokableExpression": {
+                            "kind": "IdentifierExpression",
+                            "identifier": "BoxString"
+                        },
                         "arguments": [
                             {
                                 "kind": "BinaryExpression",

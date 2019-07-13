@@ -7,5 +7,6 @@ export class BoundInvokeExpression extends BoundExpression {
 
     parent: BoundNode = undefined!;
 
+    invokableExpression: BoundExpression = undefined!;
     arguments: BoundExpression[] = undefined!;
 }

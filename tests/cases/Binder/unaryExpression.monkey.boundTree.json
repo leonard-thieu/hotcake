@@ -2,9 +2,60 @@
     "kind": "ModuleDeclaration",
     "identifier": "unaryExpression",
     "locals": [
+        "BoxBool",
+        "BoxInt",
+        "BoxFloat",
         "Main"
     ],
     "members": [
+        {
+            "kind": "FunctionDeclaration",
+            "identifier": "BoxBool",
+            "locals": [
+                "val"
+            ],
+            "returnType": "Object",
+            "parameters": [
+                {
+                    "kind": "DataDeclaration",
+                    "identifier": "val",
+                    "type": "Bool"
+                }
+            ],
+            "statements": []
+        },
+        {
+            "kind": "FunctionDeclaration",
+            "identifier": "BoxInt",
+            "locals": [
+                "val"
+            ],
+            "returnType": "Object",
+            "parameters": [
+                {
+                    "kind": "DataDeclaration",
+                    "identifier": "val",
+                    "type": "Int"
+                }
+            ],
+            "statements": []
+        },
+        {
+            "kind": "FunctionDeclaration",
+            "identifier": "BoxFloat",
+            "locals": [
+                "val"
+            ],
+            "returnType": "Object",
+            "parameters": [
+                {
+                    "kind": "DataDeclaration",
+                    "identifier": "val",
+                    "type": "Float"
+                }
+            ],
+            "statements": []
+        },
         {
             "kind": "FunctionDeclaration",
             "identifier": "Main",
@@ -16,7 +67,10 @@
                     "kind": "ExpressionStatement",
                     "expression": {
                         "kind": "InvokeExpression",
-                        "type": "Void",
+                        "invokableExpression": {
+                            "kind": "IdentifierExpression",
+                            "identifier": "BoxInt"
+                        },
                         "arguments": [
                             {
                                 "kind": "UnaryExpression",
@@ -33,7 +87,10 @@
                     "kind": "ExpressionStatement",
                     "expression": {
                         "kind": "InvokeExpression",
-                        "type": "Void",
+                        "invokableExpression": {
+                            "kind": "IdentifierExpression",
+                            "identifier": "BoxFloat"
+                        },
                         "arguments": [
                             {
                                 "kind": "UnaryExpression",
@@ -50,7 +107,10 @@
                     "kind": "ExpressionStatement",
                     "expression": {
                         "kind": "InvokeExpression",
-                        "type": "Void",
+                        "invokableExpression": {
+                            "kind": "IdentifierExpression",
+                            "identifier": "BoxInt"
+                        },
                         "arguments": [
                             {
                                 "kind": "UnaryExpression",
@@ -67,7 +127,10 @@
                     "kind": "ExpressionStatement",
                     "expression": {
                         "kind": "InvokeExpression",
-                        "type": "Void",
+                        "invokableExpression": {
+                            "kind": "IdentifierExpression",
+                            "identifier": "BoxFloat"
+                        },
                         "arguments": [
                             {
                                 "kind": "UnaryExpression",
@@ -84,7 +147,10 @@
                     "kind": "ExpressionStatement",
                     "expression": {
                         "kind": "InvokeExpression",
-                        "type": "Void",
+                        "invokableExpression": {
+                            "kind": "IdentifierExpression",
+                            "identifier": "BoxInt"
+                        },
                         "arguments": [
                             {
                                 "kind": "UnaryExpression",
@@ -101,7 +167,10 @@
                     "kind": "ExpressionStatement",
                     "expression": {
                         "kind": "InvokeExpression",
-                        "type": "Void",
+                        "invokableExpression": {
+                            "kind": "IdentifierExpression",
+                            "identifier": "BoxBool"
+                        },
                         "arguments": [
                             {
                                 "kind": "UnaryExpression",
@@ -118,7 +187,10 @@
                     "kind": "ExpressionStatement",
                     "expression": {
                         "kind": "InvokeExpression",
-                        "type": "Void",
+                        "invokableExpression": {
+                            "kind": "IdentifierExpression",
+                            "identifier": "BoxBool"
+                        },
                         "arguments": [
                             {
                                 "kind": "UnaryExpression",
@@ -135,7 +207,10 @@
                     "kind": "ExpressionStatement",
                     "expression": {
                         "kind": "InvokeExpression",
-                        "type": "Void",
+                        "invokableExpression": {
+                            "kind": "IdentifierExpression",
+                            "identifier": "BoxBool"
+                        },
                         "arguments": [
                             {
                                 "kind": "UnaryExpression",
@@ -152,7 +227,10 @@
                     "kind": "ExpressionStatement",
                     "expression": {
                         "kind": "InvokeExpression",
-                        "type": "Void",
+                        "invokableExpression": {
+                            "kind": "IdentifierExpression",
+                            "identifier": "BoxBool"
+                        },
                         "arguments": [
                             {
                                 "kind": "UnaryExpression",
