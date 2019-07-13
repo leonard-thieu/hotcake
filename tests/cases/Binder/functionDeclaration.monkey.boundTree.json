@@ -12,7 +12,7 @@
                 "place",
                 "percentile"
             ],
-            "returnType": "String",
+            "returnType": "Void",
             "parameters": [
                 {
                     "kind": "DataDeclaration",
@@ -25,40 +25,7 @@
                     "type": "Float"
                 }
             ],
-            "statements": [
-                {
-                    "kind": "ReturnStatement",
-                    "type": "String",
-                    "expression": {
-                        "kind": "BinaryExpression",
-                        "type": "String",
-                        "leftOperand": {
-                            "kind": "BinaryExpression",
-                            "type": "String",
-                            "leftOperand": {
-                                "kind": "BinaryExpression",
-                                "type": "String",
-                                "leftOperand": {
-                                    "kind": "IntegerLiteralExpression",
-                                    "type": "Int"
-                                },
-                                "rightOperand": {
-                                    "kind": "StringLiteralExpression",
-                                    "type": "String"
-                                }
-                            },
-                            "rightOperand": {
-                                "kind": "IntegerLiteralExpression",
-                                "type": "Int"
-                            }
-                        },
-                        "rightOperand": {
-                            "kind": "StringLiteralExpression",
-                            "type": "String"
-                        }
-                    }
-                }
-            ]
+            "statements": []
         }
     ]
 }

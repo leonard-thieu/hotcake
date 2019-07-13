@@ -1,0 +1,71 @@
+{
+    "kind": "ModuleDeclaration",
+    "identifier": "identityExpression",
+    "locals": [
+        "Encode"
+    ],
+    "members": [
+        {
+            "kind": "FunctionDeclaration",
+            "identifier": "Encode",
+            "locals": [
+                "place",
+                "percentile"
+            ],
+            "returnType": "Void",
+            "parameters": [
+                {
+                    "kind": "DataDeclaration",
+                    "identifier": "place",
+                    "type": "Int"
+                },
+                {
+                    "kind": "DataDeclaration",
+                    "identifier": "percentile",
+                    "type": "Float"
+                }
+            ],
+            "statements": [
+                {
+                    "kind": "ExpressionStatement",
+                    "expression": {
+                        "kind": "InvokeExpression",
+                        "type": "Void",
+                        "arguments": [
+                            {
+                                "kind": "BinaryExpression",
+                                "type": "String",
+                                "leftOperand": {
+                                    "kind": "BinaryExpression",
+                                    "type": "String",
+                                    "leftOperand": {
+                                        "kind": "BinaryExpression",
+                                        "type": "String",
+                                        "leftOperand": {
+                                            "kind": "IdentifierExpression",
+                                            "type": "Int",
+                                            "identifier": "place"
+                                        },
+                                        "rightOperand": {
+                                            "kind": "StringLiteralExpression",
+                                            "type": "String"
+                                        }
+                                    },
+                                    "rightOperand": {
+                                        "kind": "IdentifierExpression",
+                                        "type": "Float",
+                                        "identifier": "percentile"
+                                    }
+                                },
+                                "rightOperand": {
+                                    "kind": "StringLiteralExpression",
+                                    "type": "String"
+                                }
+                            }
+                        ]
+                    }
+                }
+            ]
+        }
+    ]
+}

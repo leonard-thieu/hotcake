@@ -13,6 +13,7 @@ export enum BoundNodeKind {
     InvokeExpression = 'InvokeExpression',
     BinaryExpression = 'BinaryExpression',
     UnaryExpression = 'UnaryExpression',
+    IdentifierExpression = 'IdentifierExpression',
     NullExpression = 'NullExpression',
     BooleanLiteralExpression = 'BooleanLiteralExpression',
     IntegerLiteralExpression = 'IntegerLiteralExpression',

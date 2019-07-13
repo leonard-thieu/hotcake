@@ -12,6 +12,7 @@ import { InterfaceMethodDeclaration } from '../Syntax/Node/Declaration/Interface
 import { ModuleDeclaration } from '../Syntax/Node/Declaration/ModuleDeclaration';
 import { BinaryExpression } from '../Syntax/Node/Expression/BinaryExpression';
 import { MissableExpression } from '../Syntax/Node/Expression/Expression';
+import { IdentifierExpression } from '../Syntax/Node/Expression/IdentifierExpression';
 import { InvokeExpression } from '../Syntax/Node/Expression/InvokeExpression';
 import { UnaryExpression } from '../Syntax/Node/Expression/UnaryExpression';
 import { NodeKind } from '../Syntax/Node/NodeKind';
@@ -29,9 +30,10 @@ import { MissableTypeReference } from '../Syntax/Node/TypeReference';
 import { ParseContextElementDelimitedSequence, ParseContextKind } from '../Syntax/ParserBase';
 import { MissingToken } from '../Syntax/Token/MissingToken';
 import { SkippedToken } from '../Syntax/Token/SkippedToken';
-import { NewlineToken, TokenKinds } from '../Syntax/Token/Token';
+import { IdentifierToken, NewlineToken, TokenKinds } from '../Syntax/Token/Token';
 import { TokenKind } from '../Syntax/Token/TokenKind';
 import { BoundSymbol, BoundSymbolTable } from './BoundSymbol';
+import { BoundNode } from './Node/BoundNode';
 import { BoundNodeKind } from './Node/BoundNodeKind';
 import { BoundClassDeclaration, BoundClassDeclarationMember } from './Node/Declaration/BoundClassDeclaration';
 import { BoundClassMethodDeclaration } from './Node/Declaration/BoundClassMethodDeclaration';
@@ -45,6 +47,7 @@ import { BoundBinaryExpression } from './Node/Expression/BoundBinaryExpression';
 import { BoundBooleanLiteralExpression } from './Node/Expression/BoundBooleanLiteralExpression';
 import { BoundExpression } from './Node/Expression/BoundExpression';
 import { BoundFloatLiteralExpression } from './Node/Expression/BoundFloatLiteralExpression';
+import { BoundIdentifierExpression } from './Node/Expression/BoundIdentifierExpression';
 import { BoundIntegerLiteralExpression } from './Node/Expression/BoundIntegerLiteralExpression';
 import { BoundInvokeExpression } from './Node/Expression/BoundInvokeExpression';
 import { BoundNullExpression } from './Node/Expression/BoundNullExpression';
@@ -412,7 +415,7 @@ export class Binder {
                 return this.bindReturnStatement(statement, parent);
             }
             case NodeKind.ExpressionStatement: {
-                return this.bindExpressionStatement(statement);
+                return this.bindExpressionStatement(statement, parent);
             }
             case NodeKind.WhileLoop:
             case NodeKind.RepeatLoop:
@@ -435,11 +438,14 @@ export class Binder {
         }
     }
 
-    private bindReturnStatement(statement: ReturnStatement, parent: BoundStatementsParent) {
+    private bindReturnStatement(
+        statement: ReturnStatement,
+        parent: BoundStatementsParent,
+    ) {
         const boundReturnStatement = new BoundReturnStatement();
         boundReturnStatement.parent = parent;
         if (statement.expression) {
-            boundReturnStatement.expression = this.bindExpression(statement.expression);
+            boundReturnStatement.expression = this.bindExpression(statement.expression, boundReturnStatement);
             boundReturnStatement.type = boundReturnStatement.expression.type;
         } else {
             boundReturnStatement.type = VoidType.type;
@@ -521,20 +527,27 @@ export class Binder {
         // this.bindStatements(catchStatement);
     }
 
-    private bindExpressionStatement(statement: ExpressionStatement): BoundExpressionStatement {
+    private bindExpressionStatement(
+        statement: ExpressionStatement,
+        parent: BoundStatementsParent,
+    ): BoundExpressionStatement {
         const boundExpressionStatement = new BoundExpressionStatement();
-        boundExpressionStatement.expression = this.bindExpression(statement.expression);
+        boundExpressionStatement.parent = parent;
+        boundExpressionStatement.expression = this.bindExpression(statement.expression, boundExpressionStatement);
 
         return boundExpressionStatement;
     }
 
-    private bindExpression(expression: MissableExpression): BoundExpression {
+    private bindExpression(
+        expression: MissableExpression,
+        parent: BoundNode,
+    ): BoundExpression {
         switch (expression.kind) {
             case NodeKind.InvokeExpression: {
-                return this.bindInvokeExpression(expression);
+                return this.bindInvokeExpression(expression, parent);
             }
             case NodeKind.BinaryExpression: {
-                return this.bindBinaryExpression(expression);
+                return this.bindBinaryExpression(expression, parent);
             }
             case NodeKind.UnaryExpression: {
                 return this.bindUnaryExpression(expression);
@@ -555,8 +568,7 @@ export class Binder {
                 return this.bindStringLiteralExpression();
             }
             case NodeKind.IdentifierExpression: {
-                // TODO: Temporary to allow test to pass.
-                return this.bindIntegerLiteralExpression();
+                return this.bindIdentifierExpression(expression, parent);
             }
             case NodeKind.NewExpression:
             case NodeKind.SelfExpression:
@@ -578,23 +590,87 @@ export class Binder {
         }
     }
 
-    private bindInvokeExpression(expression: InvokeExpression): BoundInvokeExpression {
+    private bindIdentifierExpression(
+        identifierExpression: IdentifierExpression,
+        parent: BoundNode,
+    ) {
+        const boundIdentifierExpression = new BoundIdentifierExpression();
+        boundIdentifierExpression.parent = parent;
+        boundIdentifierExpression.identifier = this.getSymbol(identifierExpression.identifier as IdentifierToken, boundIdentifierExpression);
+
+        const declaration = boundIdentifierExpression.identifier.declaration;
+        switch (declaration.kind) {
+            case BoundNodeKind.InterfaceDeclaration:
+            case BoundNodeKind.ClassDeclaration:
+            case BoundNodeKind.DataDeclaration: {
+                boundIdentifierExpression.type = declaration.type;
+                break;
+            }
+            default: {
+                type ExpectedType =
+                    BoundModuleDeclaration |
+                    BoundInterfaceMethodDeclaration |
+                    BoundClassMethodDeclaration |
+                    BoundFunctionDeclaration
+                    ;
+                assertType<ExpectedType>(declaration);
+                break;
+            }
+        }
+
+        return boundIdentifierExpression;
+    }
+
+    private getSymbol(
+        identifier: IdentifierToken,
+        boundIdentifierExpression: BoundIdentifierExpression,
+    ) {
+        let identifierSymbol: BoundSymbol | undefined;
+
+        const identifierText = identifier.getText(this.document);
+        let node: any = boundIdentifierExpression.parent;
+        while (true) {
+            if (node.locals) {
+                identifierSymbol = node.locals.get(identifierText);
+                if (identifierSymbol) {
+                    break;
+                }
+            }
+
+            if (node.parent) {
+                node = node.parent;
+            } else {
+                throw new Error(`Could not find '${identifierText}'.`);
+            }
+        }
+
+        return identifierSymbol;
+    }
+
+    private bindInvokeExpression(
+        expression: InvokeExpression,
+        parent: BoundNode,
+    ): BoundInvokeExpression {
         const boundInvokeExpression = new BoundInvokeExpression();
+        boundInvokeExpression.parent = parent;
         // TODO: Determine return type of invocation.
         boundInvokeExpression.type = VoidType.type;
-        boundInvokeExpression.arguments = this.bindArguments(expression);
+        boundInvokeExpression.arguments = this.bindArguments(expression, boundInvokeExpression);
 
         return boundInvokeExpression;
     }
 
-    private bindArguments(expression: InvokeExpression) {
+    private bindArguments(
+        expression: InvokeExpression,
+        parent: BoundInvokeExpression,
+    ) {
         const boundArguments: BoundExpression[] = [];
 
         for (const argument of expression.arguments) {
             switch (argument.kind) {
                 case NodeKind.CommaSeparator: { break; }
                 default: {
-                    const boundArgument = this.bindExpression(argument);
+                    const boundArgument = this.bindExpression(argument, parent);
                     boundArguments.push(boundArgument);
                     break;
                 }
@@ -604,10 +680,14 @@ export class Binder {
         return boundArguments;
     }
 
-    private bindBinaryExpression(expression: BinaryExpression): BoundBinaryExpression {
+    private bindBinaryExpression(
+        expression: BinaryExpression,
+        parent: BoundNode,
+    ): BoundBinaryExpression {
         const boundBinaryExpression = new BoundBinaryExpression();
-        boundBinaryExpression.leftOperand = this.bindExpression(expression.leftOperand);
-        boundBinaryExpression.rightOperand = this.bindExpression(expression.rightOperand);
+        boundBinaryExpression.parent = parent;
+        boundBinaryExpression.leftOperand = this.bindExpression(expression.leftOperand, boundBinaryExpression);
+        boundBinaryExpression.rightOperand = this.bindExpression(expression.rightOperand, boundBinaryExpression);
 
         const { leftOperand, rightOperand } = boundBinaryExpression;
         const operatorKind = expression.operator.kind;
@@ -735,7 +815,7 @@ export class Binder {
 
     private bindUnaryExpression(expression: UnaryExpression): BoundUnaryExpression {
         const boundUnaryExpression = new BoundUnaryExpression();
-        boundUnaryExpression.operand = this.bindExpression(expression.operand);
+        boundUnaryExpression.operand = this.bindExpression(expression.operand, boundUnaryExpression);
 
         const boundOperandType = boundUnaryExpression.operand.type;
         const operatorKind = expression.operator.kind;
