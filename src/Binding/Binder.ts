@@ -96,9 +96,10 @@ export class Binder {
 
         for (const member of moduleDeclaration.headerMembers) {
             switch (member.kind) {
-                case NodeKind.FriendDirective: {
-                    // Selectively exports symbols.
-                    break;
+                case NodeKind.FriendDirective:
+                case NodeKind.ImportStatement:
+                case NodeKind.AccessibilityDirective: {
+                    throw new Error('Method not implemented.');
                 }
                 case NodeKind.AliasDirectiveSequence: {
                     this.bindAliasDirectiveSequence(member);
@@ -106,8 +107,6 @@ export class Binder {
                 }
                 default: {
                     type ExpectedType =
-                        ImportStatement |
-                        AccessibilityDirective |
                         NewlineToken |
                         SkippedToken<TokenKinds>
                         ;
@@ -130,9 +129,11 @@ export class Binder {
 
         for (const member of moduleDeclaration.members) {
             switch (member.kind) {
-                case NodeKind.AccessibilityDirective: {
-                    // Selectively exports symbols.
-                    break;
+                case NodeKind.AccessibilityDirective:
+                case NodeKind.ExternDataDeclarationSequence:
+                case NodeKind.ExternFunctionDeclaration:
+                case NodeKind.ExternClassDeclaration: {
+                    throw new Error('Method not implemented.');
                 }
                 case NodeKind.DataDeclarationSequence: {
                     const boundDataDeclarationSequence = this.bindDataDeclarationSequence(member, parent);
@@ -153,11 +154,6 @@ export class Binder {
                     const boundClass = this.bindClassDeclaration(member, parent);
                     boundMembers.push(boundClass);
                     break;
-                }
-                case NodeKind.ExternDataDeclarationSequence:
-                case NodeKind.ExternFunctionDeclaration:
-                case NodeKind.ExternClassDeclaration: {
-                    throw new Error('Method not implemented.');
                 }
                 default: {
                     type ExpectedType =
@@ -294,10 +290,11 @@ export class Binder {
                     boundMembers.push(boundClassMethodDeclaration);
                     break;
                 }
-                case NodeKind.AccessibilityDirective:
+                case NodeKind.AccessibilityDirective: {
+                    throw new Error('Method not implemented.');
+                }
                 default: {
                     type ExpectedType =
-                        AccessibilityDirective |
                         NewlineToken |
                         SkippedToken<TokenKinds>
                         ;
@@ -412,11 +409,6 @@ export class Binder {
                 this.bindSelectStatement(statement);
                 break;
             }
-            case NodeKind.WhileLoop:
-            case NodeKind.RepeatLoop: {
-                this.bindStatements(statement);
-                break;
-            }
             case NodeKind.ForLoop: {
                 this.bindForLoop(statement);
                 break;
@@ -428,14 +420,19 @@ export class Binder {
             case NodeKind.ExpressionStatement: {
                 return this.bindExpressionStatement(statement);
             }
+            case NodeKind.WhileLoop:
+            case NodeKind.RepeatLoop:
+            case NodeKind.ThrowStatement:
+            case NodeKind.ReturnStatement:
+            case NodeKind.ContinueStatement:
+            case NodeKind.ExitStatement: {
+                break;
+            }
             default: {
                 type ExpectedType =
                     ElseIfStatement | ElseStatement |
                     CaseStatement | DefaultStatement |
-                    ContinueStatement | ExitStatement |
-                    ThrowStatement |
                     CatchStatement |
-                    ReturnStatement |
                     EmptyStatement
                     ;
                 assertType<ExpectedType>(statement);
@@ -480,9 +477,11 @@ export class Binder {
                 }
                 break;
             }
+            case NodeKind.AssignmentExpression: {
+                throw new Error('Method not implemented.');
+            }
             default: {
-                type ExpectedType = AssignmentExpression | MissingToken<TokenKind.ForLoopHeader>;
-                assertType<ExpectedType>(statement.header);
+                assertType<MissingToken<TokenKind.ForLoopHeader>>(statement.header);
                 break;
             }
         }
@@ -539,23 +538,23 @@ export class Binder {
             case NodeKind.StringLiteralExpression: {
                 return this.bindStringLiteralExpression();
             }
-            default: {
-                type ExpectedType =
-                    NewExpression |
-                    SelfExpression |
-                    SuperExpression |
-                    ArrayLiteralExpression |
-                    IdentifierExpression |
-                    ScopeMemberAccessExpression |
-                    InvokeExpression |
-                    IndexExpression |
-                    SliceExpression |
-                    GroupingExpression |
-                    AssignmentExpression |
-                    GlobalScopeExpression |
-                    MissingToken<TokenKind.Expression>;
-                assertType<ExpectedType>(expression);
+            case NodeKind.NewExpression:
+            case NodeKind.SelfExpression:
+            case NodeKind.SuperExpression:
+            case NodeKind.ArrayLiteralExpression:
+            case NodeKind.IdentifierExpression:
+            case NodeKind.ScopeMemberAccessExpression:
+            case NodeKind.InvokeExpression:
+            case NodeKind.IndexExpression:
+            case NodeKind.SliceExpression:
+            case NodeKind.GroupingExpression:
+            case NodeKind.AssignmentExpression:
+            case NodeKind.GlobalScopeExpression: {
                 throw new Error(`Binding '${expression.kind}' is not implemented.`);
+            }
+            default: {
+                assertType<MissingToken<TokenKind.Expression>>(expression);
+                throw new Error('Method not implemented.');
             }
         }
     }
@@ -600,7 +599,7 @@ export class Binder {
             case TokenKind.ModKeyword:
             case TokenKind.PlusSign:
             case TokenKind.HyphenMinus: {
-                let balancedType = this.getBalancedType(leftOperand.type, rightOperand.type);
+                const balancedType = this.getBalancedType(leftOperand.type, rightOperand.type);
 
                 switch (balancedType) {
                     case null: {
