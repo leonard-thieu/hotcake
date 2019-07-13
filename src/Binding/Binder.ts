@@ -5,7 +5,7 @@ import { AccessibilityDirective } from '../Syntax/Node/Declaration/Accessibility
 import { AliasDirectiveSequence } from '../Syntax/Node/Declaration/AliasDirectiveSequence';
 import { ClassDeclaration } from '../Syntax/Node/Declaration/ClassDeclaration';
 import { ClassMethodDeclaration } from '../Syntax/Node/Declaration/ClassMethodDeclaration';
-import { DataDeclarationSequence } from '../Syntax/Node/Declaration/DataDeclarationSequence';
+import { DataDeclaration, DataDeclarationSequence } from '../Syntax/Node/Declaration/DataDeclarationSequence';
 import { Declarations } from '../Syntax/Node/Declaration/Declaration';
 import { FunctionDeclaration } from '../Syntax/Node/Declaration/FunctionDeclaration';
 import { ImportStatement } from '../Syntax/Node/Declaration/ImportStatement';
@@ -351,11 +351,7 @@ export class Binder {
         for (const dataDeclaration of dataDeclarationSequence.children) {
             switch (dataDeclaration.kind) {
                 case NodeKind.DataDeclaration: {
-                    const boundDataDeclaration = new BoundDataDeclaration();
-                    boundDataDeclaration.parent = parent;
-                    boundDataDeclaration.identifier = this.declareSymbol(dataDeclaration, boundDataDeclaration);
-                    boundDataDeclaration.type = this.bindTypeAnnotation(dataDeclaration.type);
-
+                    const boundDataDeclaration = this.bindDataDeclaration(dataDeclaration, parent);
                     boundDataDeclarations.push(boundDataDeclaration);
                     break;
                 }
@@ -367,6 +363,18 @@ export class Binder {
         }
 
         return boundDataDeclarations;
+    }
+
+    private bindDataDeclaration(
+        dataDeclaration: DataDeclaration,
+        parent: BoundDataDeclarationParent,
+    ) {
+        const boundDataDeclaration = new BoundDataDeclaration();
+        boundDataDeclaration.parent = parent;
+        boundDataDeclaration.identifier = this.declareSymbol(dataDeclaration, boundDataDeclaration);
+        boundDataDeclaration.type = this.bindTypeAnnotation(dataDeclaration.type);
+
+        return boundDataDeclaration;
     }
 
     private bindStatements(scopedNode: ScopedNode) {
