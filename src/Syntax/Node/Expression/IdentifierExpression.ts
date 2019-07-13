@@ -54,7 +54,7 @@ export type IdentifierExpressionIdentifier =
 
 export type IdentifierExpressionToken =
     EscapeOptionalIdentifierNameToken |
-    NewKeywordToken |
+    NewKeywordToken |   // Super.New()
     BoolKeywordToken |
     IntKeywordToken |
     FloatKeywordToken |

@@ -15,6 +15,7 @@ import { MissableExpression } from '../Syntax/Node/Expression/Expression';
 import { IdentifierExpression } from '../Syntax/Node/Expression/IdentifierExpression';
 import { InvokeExpression } from '../Syntax/Node/Expression/InvokeExpression';
 import { UnaryExpression } from '../Syntax/Node/Expression/UnaryExpression';
+import { EscapeOptionalIdentifierNameToken } from '../Syntax/Node/Identifier';
 import { NodeKind } from '../Syntax/Node/NodeKind';
 import { EmptyStatement } from '../Syntax/Node/Statement/EmptyStatement';
 import { ExpressionStatement } from '../Syntax/Node/Statement/ExpressionStatement';
@@ -30,7 +31,7 @@ import { MissableTypeReference } from '../Syntax/Node/TypeReference';
 import { ParseContextElementDelimitedSequence, ParseContextKind } from '../Syntax/ParserBase';
 import { MissingToken } from '../Syntax/Token/MissingToken';
 import { SkippedToken } from '../Syntax/Token/SkippedToken';
-import { IdentifierToken, NewlineToken, TokenKinds } from '../Syntax/Token/Token';
+import { NewlineToken, TokenKinds } from '../Syntax/Token/Token';
 import { TokenKind } from '../Syntax/Token/TokenKind';
 import { BoundSymbol, BoundSymbolTable } from './BoundSymbol';
 import { BoundNode } from './Node/BoundNode';
@@ -596,24 +597,54 @@ export class Binder {
     ) {
         const boundIdentifierExpression = new BoundIdentifierExpression();
         boundIdentifierExpression.parent = parent;
-        boundIdentifierExpression.identifier = this.getSymbol(identifierExpression.identifier as IdentifierToken, boundIdentifierExpression);
 
-        const declaration = boundIdentifierExpression.identifier.declaration;
-        switch (declaration.kind) {
-            case BoundNodeKind.InterfaceDeclaration:
-            case BoundNodeKind.ClassDeclaration:
-            case BoundNodeKind.DataDeclaration: {
-                boundIdentifierExpression.type = declaration.type;
+        const identifier = identifierExpression.identifier;
+        switch (identifier.kind) {
+            case TokenKind.Identifier:
+            case TokenKind.ObjectKeyword:
+            case TokenKind.ThrowableKeyword: {
+                boundIdentifierExpression.identifier = this.getSymbol(identifier, boundIdentifierExpression);
+
+                const declaration = boundIdentifierExpression.identifier.declaration;
+                switch (declaration.kind) {
+                    case BoundNodeKind.InterfaceDeclaration:
+                    case BoundNodeKind.ClassDeclaration:
+                    case BoundNodeKind.DataDeclaration: {
+                        boundIdentifierExpression.type = declaration.type;
+                        break;
+                    }
+                    default: {
+                        type ExpectedType =
+                            BoundModuleDeclaration |
+                            BoundInterfaceMethodDeclaration |
+                            BoundClassMethodDeclaration |
+                            BoundFunctionDeclaration
+                            ;
+                        assertType<ExpectedType>(declaration);
+                        break;
+                    }
+                }
+
+                break;
+            }
+            case TokenKind.BoolKeyword: {
+                boundIdentifierExpression.type = BoolType.type;
+                break;
+            }
+            case TokenKind.IntKeyword: {
+                boundIdentifierExpression.type = IntType.type;
+                break;
+            }
+            case TokenKind.FloatKeyword: {
+                boundIdentifierExpression.type = FloatType.type;
+                break;
+            }
+            case TokenKind.StringKeyword: {
+                boundIdentifierExpression.type = StringType.type;
                 break;
             }
             default: {
-                type ExpectedType =
-                    BoundModuleDeclaration |
-                    BoundInterfaceMethodDeclaration |
-                    BoundClassMethodDeclaration |
-                    BoundFunctionDeclaration
-                    ;
-                assertType<ExpectedType>(declaration);
+                identifier;
                 break;
             }
         }
@@ -622,7 +653,7 @@ export class Binder {
     }
 
     private getSymbol(
-        identifier: IdentifierToken,
+        identifier: EscapeOptionalIdentifierNameToken,
         boundIdentifierExpression: BoundIdentifierExpression,
     ) {
         let identifierSymbol: BoundSymbol | undefined;

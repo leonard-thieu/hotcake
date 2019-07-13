@@ -9,6 +9,6 @@ export class BoundIdentifierExpression extends BoundExpression {
 
     parent: BoundNode = undefined!;
 
-    identifier: BoundSymbol = undefined!;
+    identifier?: BoundSymbol = undefined;
     typeArguments?: Type[] = undefined;
 }
