@@ -35,13 +35,13 @@ import { SkippedToken } from '../Syntax/Token/SkippedToken';
 import { NewlineToken, TokenKinds } from '../Syntax/Token/Token';
 import { TokenKind } from '../Syntax/Token/TokenKind';
 import { BoundSymbol, BoundSymbolTable } from './BoundSymbol';
-import { BoundNode } from './Node/BoundNode';
+import { BoundNodes } from './Node/BoundNode';
 import { BoundNodeKind } from './Node/BoundNodeKind';
 import { BoundClassDeclaration, BoundClassDeclarationMember } from './Node/Declaration/BoundClassDeclaration';
 import { BoundClassMethodDeclaration } from './Node/Declaration/BoundClassMethodDeclaration';
-import { BoundDataDeclaration, BoundDataDeclarationParent } from './Node/Declaration/BoundDataDeclaration';
+import { BoundDataDeclaration } from './Node/Declaration/BoundDataDeclaration';
 import { BoundDeclarations } from './Node/Declaration/BoundDeclarations';
-import { BoundFunctionDeclaration, BoundFunctionDeclarationParent } from './Node/Declaration/BoundFunctionDeclaration';
+import { BoundFunctionDeclaration } from './Node/Declaration/BoundFunctionDeclaration';
 import { BoundInterfaceDeclaration, BoundInterfaceDeclarationMember } from './Node/Declaration/BoundInterfaceDeclaration';
 import { BoundInterfaceMethodDeclaration } from './Node/Declaration/BoundInterfaceMethodDeclaration';
 import { BoundModuleDeclaration, BoundModuleDeclarationMember } from './Node/Declaration/BoundModuleDeclaration';
@@ -58,7 +58,7 @@ import { BoundStringLiteralExpression } from './Node/Expression/BoundStringLiter
 import { BoundUnaryExpression } from './Node/Expression/BoundUnaryExpression';
 import { BoundExpressionStatement } from './Node/Statement/BoundExpressionStatement';
 import { BoundReturnStatement } from './Node/Statement/BoundReturnStatement';
-import { BoundStatements, BoundStatementsParent } from './Node/Statement/BoundStatements';
+import { BoundStatements } from './Node/Statement/BoundStatements';
 import { ArrayType } from './Type/ArrayType';
 import { BoolType } from './Type/BoolType';
 import { FloatType } from './Type/FloatType';
@@ -317,7 +317,7 @@ export class Binder {
 
     private bindFunctionDeclaration(
         functionDeclaration: FunctionDeclaration,
-        parent: BoundFunctionDeclarationParent,
+        parent: BoundNodes,
     ): BoundFunctionDeclaration {
         const boundFunctionDeclaration = new BoundFunctionDeclaration();
         boundFunctionDeclaration.parent = parent;
@@ -332,7 +332,7 @@ export class Binder {
 
     private bindDataDeclarationSequence(
         dataDeclarationSequence: DataDeclarationSequence,
-        parent: BoundDataDeclarationParent,
+        parent: BoundNodes,
     ): BoundDataDeclaration[] {
         const boundDataDeclarations: BoundDataDeclaration[] = [];
 
@@ -355,7 +355,7 @@ export class Binder {
 
     private bindDataDeclaration(
         dataDeclaration: DataDeclaration,
-        parent: BoundDataDeclarationParent,
+        parent: BoundNodes,
     ) {
         const boundDataDeclaration = new BoundDataDeclaration();
         boundDataDeclaration.parent = parent;
@@ -367,7 +367,7 @@ export class Binder {
 
     private bindStatements(
         statementsParent: StatementsParent,
-        boundStatementsParent: BoundStatementsParent,
+        parent: BoundNodes,
     ) {
         const boundStatements: BoundStatements[] = [];
 
@@ -376,7 +376,7 @@ export class Binder {
                 switch (statement.kind) {
                     case TokenKind.Skipped: { break; }
                     default: {
-                        const boundStatement = this.bindStatement(statement, boundStatementsParent);
+                        const boundStatement = this.bindStatement(statement, parent);
                         if (boundStatement) {
                             boundStatements.push(boundStatement);
                         }
@@ -391,7 +391,7 @@ export class Binder {
 
     private bindStatement(
         statement: Statements,
-        parent: BoundStatementsParent,
+        parent: BoundNodes,
     ) {
         switch (statement.kind) {
             case NodeKind.DataDeclarationSequenceStatement: {
@@ -443,7 +443,7 @@ export class Binder {
 
     private bindReturnStatement(
         statement: ReturnStatement,
-        parent: BoundStatementsParent,
+        parent: BoundNodes,
     ) {
         const boundReturnStatement = new BoundReturnStatement();
         boundReturnStatement.parent = parent;
@@ -454,13 +454,13 @@ export class Binder {
             boundReturnStatement.type = VoidType.type;
         }
 
-        const p = this.getNearestAncestor(boundReturnStatement, [
+        const functionOrMethod = this.getNearestAncestor(boundReturnStatement, [
             BoundNodeKind.FunctionDeclaration,
             BoundNodeKind.ClassMethodDeclaration
-        ]);
+        ]) as BoundFunctionDeclaration | BoundClassMethodDeclaration;
 
-        if (!boundReturnStatement.type.isConvertibleTo(p.returnType)) {
-            throw new Error(`'${boundReturnStatement.type}' is not convertible to '${p.returnType}'.`);
+        if (!boundReturnStatement.type.isConvertibleTo(functionOrMethod.returnType)) {
+            throw new Error(`'${boundReturnStatement.type}' is not convertible to '${functionOrMethod.returnType}'.`);
         }
 
         return boundReturnStatement;
@@ -532,7 +532,7 @@ export class Binder {
 
     private bindExpressionStatement(
         statement: ExpressionStatement,
-        parent: BoundStatementsParent,
+        parent: BoundNodes,
     ): BoundExpressionStatement {
         const boundExpressionStatement = new BoundExpressionStatement();
         boundExpressionStatement.parent = parent;
@@ -543,7 +543,7 @@ export class Binder {
 
     private bindExpression(
         expression: MissableExpression,
-        parent: BoundNode,
+        parent: BoundNodes,
     ): BoundExpression {
         switch (expression.kind) {
             case NodeKind.InvokeExpression: {
@@ -595,7 +595,10 @@ export class Binder {
         }
     }
 
-    private bindNewExpression(expression: NewExpression, parent: BoundNode) {
+    private bindNewExpression(
+        expression: NewExpression,
+        parent: BoundNodes,
+    ) {
         const boundNewExpression = new BoundNewExpression();
         boundNewExpression.type = this.bindTypeReference(expression.type);
         boundNewExpression.parent = parent;
@@ -605,7 +608,7 @@ export class Binder {
 
     private bindIdentifierExpression(
         identifierExpression: IdentifierExpression,
-        parent: BoundNode,
+        parent: BoundNodes,
     ) {
         const boundIdentifierExpression = new BoundIdentifierExpression();
         boundIdentifierExpression.parent = parent;
@@ -692,7 +695,7 @@ export class Binder {
 
     private bindInvokeExpression(
         expression: InvokeExpression,
-        parent: BoundNode,
+        parent: BoundNodes,
     ): BoundInvokeExpression {
         const boundInvokeExpression = new BoundInvokeExpression();
         boundInvokeExpression.parent = parent;
@@ -725,7 +728,7 @@ export class Binder {
 
     private bindBinaryExpression(
         expression: BinaryExpression,
-        parent: BoundNode,
+        parent: BoundNodes,
     ): BoundBinaryExpression {
         const boundBinaryExpression = new BoundBinaryExpression();
         boundBinaryExpression.parent = parent;
@@ -1101,8 +1104,9 @@ export class Binder {
         const name = this.getDeclarationName(declaration);
         const identifier = new BoundSymbol(name, boundDeclaration);
 
-        if (boundDeclaration.kind !== BoundNodeKind.ModuleDeclaration) {
-            const parentLocals = boundDeclaration.parent.locals;
+        if (boundDeclaration.parent) {
+            const parent = boundDeclaration.parent as any;
+            const parentLocals = parent.locals;
             const existingSymbol = parentLocals.get(name);
 
             if (existingSymbol) {
@@ -1148,13 +1152,17 @@ export class Binder {
     }
 
     private getNearestAncestor(node: BoundStatements, kinds: BoundNodeKind[]) {
-        let parent = node.parent;
+        let ancestor: BoundNodes | undefined;
 
-        while (!kinds.includes(parent.kind)) {
-            parent = parent.parent as unknown as BoundStatementsParent;
-        }
+        do {
+            ancestor = node.parent;
 
-        return parent;
+            if (!ancestor) {
+                throw new Error(`Could not find a matching ancestor.`);
+            }
+        } while (!kinds.includes(ancestor.kind));
+
+        return ancestor;
     }
 
     // #endregion
