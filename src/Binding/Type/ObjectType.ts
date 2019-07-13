@@ -28,7 +28,7 @@ export class ObjectType extends Type {
         }
 
         if (this.declaration) {
-            return this.declaration.kind;
+            return this.declaration.identifier.name;
         }
 
         return super.toString();

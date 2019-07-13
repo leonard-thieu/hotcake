@@ -1,0 +1,36 @@
+{
+    "kind": "ModuleDeclaration",
+    "identifier": "selfExpression",
+    "locals": [
+        "MyClass"
+    ],
+    "members": [
+        {
+            "kind": "ClassDeclaration",
+            "identifier": "MyClass",
+            "locals": [
+                "GetInstance"
+            ],
+            "type": "MyClass",
+            "members": [
+                {
+                    "kind": "ClassMethodDeclaration",
+                    "identifier": "GetInstance",
+                    "locals": [],
+                    "returnType": "MyClass",
+                    "parameters": [],
+                    "statements": [
+                        {
+                            "kind": "ReturnStatement",
+                            "type": "MyClass",
+                            "expression": {
+                                "kind": "SelfExpression",
+                                "type": "MyClass"
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

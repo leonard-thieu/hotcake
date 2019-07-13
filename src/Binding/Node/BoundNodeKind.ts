@@ -10,6 +10,7 @@ export enum BoundNodeKind {
     ReturnStatement = 'ReturnStatement',
     ExpressionStatement = 'ExpressionStatement',
 
+    SelfExpression = 'SelfExpression',
     NewExpression = 'NewExpression',
     InvokeExpression = 'InvokeExpression',
     BinaryExpression = 'BinaryExpression',

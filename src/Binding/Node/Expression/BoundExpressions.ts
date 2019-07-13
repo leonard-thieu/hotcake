@@ -6,6 +6,7 @@ import { BoundIntegerLiteralExpression } from './BoundIntegerLiteralExpression';
 import { BoundInvokeExpression } from './BoundInvokeExpression';
 import { BoundNewExpression } from './BoundNewExpression';
 import { BoundNullExpression } from './BoundNullExpression';
+import { BoundSelfExpression } from './BoundSelfExpression';
 import { BoundStringLiteralExpression } from './BoundStringLiteralExpression';
 import { BoundUnaryExpression } from './BoundUnaryExpression';
 
@@ -18,6 +19,7 @@ export type BoundExpressions =
     BoundInvokeExpression |
     BoundNewExpression |
     BoundNullExpression |
+    BoundSelfExpression |
     BoundStringLiteralExpression |
     BoundUnaryExpression
     ;

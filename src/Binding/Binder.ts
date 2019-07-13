@@ -54,6 +54,7 @@ import { BoundIntegerLiteralExpression } from './Node/Expression/BoundIntegerLit
 import { BoundInvokeExpression } from './Node/Expression/BoundInvokeExpression';
 import { BoundNewExpression } from './Node/Expression/BoundNewExpression';
 import { BoundNullExpression } from './Node/Expression/BoundNullExpression';
+import { BoundSelfExpression } from './Node/Expression/BoundSelfExpression';
 import { BoundStringLiteralExpression } from './Node/Expression/BoundStringLiteralExpression';
 import { BoundUnaryExpression } from './Node/Expression/BoundUnaryExpression';
 import { BoundExpressionStatement } from './Node/Statement/BoundExpressionStatement';
@@ -308,7 +309,7 @@ export class Binder {
         boundClassMethodDeclaration.locals = new BoundSymbolTable();
         boundClassMethodDeclaration.returnType = this.bindTypeAnnotation(classMethodDeclaration.returnType);
         boundClassMethodDeclaration.parameters = this.bindDataDeclarationSequence(classMethodDeclaration.parameters, boundClassMethodDeclaration);
-        if (boundClassMethodDeclaration.statements) {
+        if (classMethodDeclaration.statements) {
             boundClassMethodDeclaration.statements = this.bindStatements(classMethodDeclaration, boundClassMethodDeclaration);
         }
 
@@ -576,7 +577,9 @@ export class Binder {
             case NodeKind.NewExpression: {
                 return this.bindNewExpression(expression, parent);
             }
-            case NodeKind.SelfExpression:
+            case NodeKind.SelfExpression: {
+                return this.bindSelfExpression(parent);
+            }
             case NodeKind.SuperExpression:
             case NodeKind.ArrayLiteralExpression:
             case NodeKind.ScopeMemberAccessExpression:
@@ -593,6 +596,16 @@ export class Binder {
                 throw new Error('Method not implemented.');
             }
         }
+    }
+
+    private bindSelfExpression(parent: BoundNodes) {
+        const boundSelfExpression = new BoundSelfExpression();
+        boundSelfExpression.parent = parent;
+
+        const ancestor = this.getNearestAncestor(boundSelfExpression, [BoundNodeKind.ClassDeclaration]) as BoundClassDeclaration;
+        boundSelfExpression.type = ancestor.type;
+
+        return boundSelfExpression;
     }
 
     private bindNewExpression(
@@ -1151,11 +1164,11 @@ export class Binder {
         throw new Error(`Unexpected declaration: ${JSON.stringify(declaration.kind)}`);
     }
 
-    private getNearestAncestor(node: BoundStatements, kinds: BoundNodeKind[]) {
-        let ancestor: BoundNodes | undefined;
+    private getNearestAncestor(node: BoundNodes, kinds: BoundNodeKind[]) {
+        let ancestor: BoundNodes | undefined = node;
 
         do {
-            ancestor = node.parent;
+            ancestor = ancestor.parent;
 
             if (!ancestor) {
                 throw new Error(`Could not find a matching ancestor.`);
