@@ -14,6 +14,7 @@ export class ReturnStatement extends Statement {
     readonly kind = NodeKind.ReturnStatement;
 
     returnKeyword: ReturnKeywordToken = undefined!;
+    // TODO: Is this actually missable at the syntax level?
     expression?: MissableExpression = undefined;
 
     get firstToken() {
@@ -24,7 +25,7 @@ export class ReturnStatement extends Statement {
         if (this.terminator) {
             return this.terminator;
         }
-        
+
         if (this.expression) {
             if (isNode(this.expression)) {
                 return this.expression.lastToken;

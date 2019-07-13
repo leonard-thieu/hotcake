@@ -7,6 +7,7 @@ export enum BoundNodeKind {
     FunctionDeclaration = 'FunctionDeclaration',
     DataDeclaration = 'DataDeclaration',
 
+    ReturnStatement = 'ReturnStatement',
     ExpressionStatement = 'ExpressionStatement',
 
     InvokeExpression = 'InvokeExpression',

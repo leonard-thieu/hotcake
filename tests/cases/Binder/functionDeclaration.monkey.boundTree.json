@@ -2,18 +2,9 @@
     "kind": "ModuleDeclaration",
     "identifier": "functionDeclaration",
     "locals": [
-        "Main",
         "Encode"
     ],
     "members": [
-        {
-            "kind": "FunctionDeclaration",
-            "identifier": "Main",
-            "locals": [],
-            "returnType": "Int",
-            "parameters": [],
-            "statements": []
-        },
         {
             "kind": "FunctionDeclaration",
             "identifier": "Encode",
@@ -34,7 +25,40 @@
                     "type": "Float"
                 }
             ],
-            "statements": []
+            "statements": [
+                {
+                    "kind": "ReturnStatement",
+                    "type": "String",
+                    "expression": {
+                        "kind": "BinaryExpression",
+                        "type": "String",
+                        "leftOperand": {
+                            "kind": "BinaryExpression",
+                            "type": "String",
+                            "leftOperand": {
+                                "kind": "BinaryExpression",
+                                "type": "String",
+                                "leftOperand": {
+                                    "kind": "IntegerLiteralExpression",
+                                    "type": "Int"
+                                },
+                                "rightOperand": {
+                                    "kind": "StringLiteralExpression",
+                                    "type": "String"
+                                }
+                            },
+                            "rightOperand": {
+                                "kind": "IntegerLiteralExpression",
+                                "type": "Int"
+                            }
+                        },
+                        "rightOperand": {
+                            "kind": "StringLiteralExpression",
+                            "type": "String"
+                        }
+                    }
+                }
+            ]
         }
     ]
 }

@@ -2,7 +2,7 @@ import { BoundSymbol, BoundSymbolTable } from '../../BoundSymbol';
 import { Type } from '../../Type/Type';
 import { BoundNode } from '../BoundNode';
 import { BoundNodeKind } from '../BoundNodeKind';
-import { BoundExpressionStatement } from '../Statement/BoundExpressionStatement';
+import { BoundStatements } from '../Statement/BoundStatements';
 import { BoundClassDeclaration } from './BoundClassDeclaration';
 import { BoundDataDeclaration } from './BoundDataDeclaration';
 
@@ -20,5 +20,5 @@ export class BoundClassMethodDeclaration extends BoundNode {
 
     returnType: Type = undefined!;
     parameters: BoundDataDeclaration[] = undefined!;
-    statements?: BoundExpressionStatement[] = undefined;
+    statements?: BoundStatements[] = undefined;
 }

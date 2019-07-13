@@ -1,7 +1,3 @@
-Function Main()
-
-End
-
 Function Encode: String(place#, percentile: Float)
     Select place
         Case 1

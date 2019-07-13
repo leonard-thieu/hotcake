@@ -21,4 +21,16 @@ export class ObjectType extends Type {
 
         return false;
     }
+
+    toString() {
+        if (this === ObjectType.nullType) {
+            return 'Null';
+        }
+
+        if (this.declaration) {
+            return this.declaration.kind;
+        }
+
+        return super.toString();
+    }
 }
