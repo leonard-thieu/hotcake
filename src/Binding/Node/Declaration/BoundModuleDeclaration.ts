@@ -1,6 +1,7 @@
 import { BoundSymbol, BoundSymbolTable } from '../../Binder';
 import { BoundNode } from '../BoundNode';
 import { BoundNodeKind } from '../BoundNodeKind';
+import { BoundClassDeclaration } from './BoundClassDeclaration';
 import { BoundFunctionDeclaration } from './BoundFunctionDeclaration';
 import { BoundInterfaceDeclaration } from './BoundInterfaceDeclaration';
 
@@ -15,5 +16,6 @@ export class BoundModuleDeclaration extends BoundNode {
 
 export type BoundModuleDeclarationMember =
     BoundInterfaceDeclaration |
+    BoundClassDeclaration |
     BoundFunctionDeclaration
     ;

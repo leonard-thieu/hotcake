@@ -5,12 +5,11 @@ import { BoundNodeKind } from '../BoundNodeKind';
 import { BoundExpressionStatement } from '../Statement/BoundExpressionStatement';
 import { BoundClassDeclaration } from './BoundClassDeclaration';
 import { BoundDataDeclaration } from './BoundDataDeclaration';
-import { BoundModuleDeclaration } from './BoundModuleDeclaration';
 
-export class BoundFunctionDeclaration extends BoundNode {
-    readonly kind = BoundNodeKind.FunctionDeclaration;
+export class BoundClassMethodDeclaration extends BoundNode {
+    readonly kind = BoundNodeKind.ClassMethodDeclaration;
 
-    parent: BoundFunctionDeclarationParent = undefined!;
+    parent: BoundClassDeclaration = undefined!;
 
     get scope() {
         return this.parent;
@@ -23,8 +22,3 @@ export class BoundFunctionDeclaration extends BoundNode {
     parameters: BoundDataDeclaration[] = undefined!;
     statements?: BoundExpressionStatement[] = undefined;
 }
-
-export type BoundFunctionDeclarationParent =
-    BoundModuleDeclaration |
-    BoundClassDeclaration
-    ;
