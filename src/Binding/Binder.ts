@@ -48,12 +48,12 @@ import { MissingToken } from '../Syntax/Token/MissingToken';
 import { SkippedToken } from '../Syntax/Token/SkippedToken';
 import { NewlineToken, TokenKinds } from '../Syntax/Token/Token';
 import { TokenKind } from '../Syntax/Token/TokenKind';
-import { BoundNode } from './Node/BoundNode';
+import { BoundSymbol, BoundSymbolTable } from './BoundSymbol';
 import { BoundNodeKind } from './Node/BoundNodeKind';
 import { BoundClassDeclaration, BoundClassDeclarationMember } from './Node/Declaration/BoundClassDeclaration';
 import { BoundClassMethodDeclaration } from './Node/Declaration/BoundClassMethodDeclaration';
 import { BoundDataDeclaration, BoundDataDeclarationParent } from './Node/Declaration/BoundDataDeclaration';
-import { BoundDeclarations } from './Node/Declaration/BoundDeclaration';
+import { BoundDeclarations } from './Node/Declaration/BoundDeclarations';
 import { BoundFunctionDeclaration, BoundFunctionDeclarationParent } from './Node/Declaration/BoundFunctionDeclaration';
 import { BoundInterfaceDeclaration, BoundInterfaceDeclarationMember } from './Node/Declaration/BoundInterfaceDeclaration';
 import { BoundInterfaceMethodDeclaration } from './Node/Declaration/BoundInterfaceMethodDeclaration';
@@ -377,11 +377,11 @@ export class Binder {
         return boundDataDeclaration;
     }
 
-    private bindStatements(scopedNode: ScopedNode) {
+    private bindStatements(statementsParent: StatementsParent) {
         const boundStatements: BoundExpressionStatement[] = [];
 
-        if (scopedNode.statements) {
-            for (const statement of scopedNode.statements) {
+        if (statementsParent.statements) {
+            for (const statement of statementsParent.statements) {
                 switch (statement.kind) {
                     case TokenKind.Skipped: { break; }
                     default: {
@@ -1009,7 +1009,7 @@ export class Binder {
     // #endregion
 }
 
-type ScopedNode =
+type StatementsParent =
     FunctionDeclaration | ClassMethodDeclaration |
     IfStatement | ElseIfStatement | ElseStatement |
     CaseStatement | DefaultStatement |
@@ -1018,14 +1018,3 @@ type ScopedNode =
     ForLoop |
     TryStatement | CatchStatement
     ;
-
-export class BoundSymbol {
-    constructor(
-        public name: string,
-        public declaration: BoundDeclarations,
-    ) { }
-
-    readonly references: BoundNode[] = [];
-}
-
-export class BoundSymbolTable extends Map<string, BoundSymbol> { }

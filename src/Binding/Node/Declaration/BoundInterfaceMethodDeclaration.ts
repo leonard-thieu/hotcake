@@ -1,4 +1,4 @@
-import { BoundSymbol, BoundSymbolTable } from '../../Binder';
+import { BoundSymbol, BoundSymbolTable } from '../../BoundSymbol';
 import { Type } from '../../Type/Type';
 import { BoundNode } from '../BoundNode';
 import { BoundNodeKind } from '../BoundNodeKind';
