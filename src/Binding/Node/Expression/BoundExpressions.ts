@@ -8,6 +8,7 @@ import { BoundNewExpression } from './BoundNewExpression';
 import { BoundNullExpression } from './BoundNullExpression';
 import { BoundSelfExpression } from './BoundSelfExpression';
 import { BoundStringLiteralExpression } from './BoundStringLiteralExpression';
+import { BoundSuperExpression } from './BoundSuperExpression';
 import { BoundUnaryExpression } from './BoundUnaryExpression';
 
 export type BoundExpressions =
@@ -21,5 +22,6 @@ export type BoundExpressions =
     BoundNullExpression |
     BoundSelfExpression |
     BoundStringLiteralExpression |
+    BoundSuperExpression |
     BoundUnaryExpression
     ;

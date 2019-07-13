@@ -11,6 +11,7 @@ export enum BoundNodeKind {
     ExpressionStatement = 'ExpressionStatement',
 
     SelfExpression = 'SelfExpression',
+    SuperExpression = 'SuperExpression',
     NewExpression = 'NewExpression',
     InvokeExpression = 'InvokeExpression',
     BinaryExpression = 'BinaryExpression',

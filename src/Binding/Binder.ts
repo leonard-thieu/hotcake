@@ -56,6 +56,7 @@ import { BoundNewExpression } from './Node/Expression/BoundNewExpression';
 import { BoundNullExpression } from './Node/Expression/BoundNullExpression';
 import { BoundSelfExpression } from './Node/Expression/BoundSelfExpression';
 import { BoundStringLiteralExpression } from './Node/Expression/BoundStringLiteralExpression';
+import { BoundSuperExpression } from './Node/Expression/BoundSuperExpression';
 import { BoundUnaryExpression } from './Node/Expression/BoundUnaryExpression';
 import { BoundExpressionStatement } from './Node/Statement/BoundExpressionStatement';
 import { BoundReturnStatement } from './Node/Statement/BoundReturnStatement';
@@ -580,7 +581,9 @@ export class Binder {
             case NodeKind.SelfExpression: {
                 return this.bindSelfExpression(parent);
             }
-            case NodeKind.SuperExpression:
+            case NodeKind.SuperExpression: {
+                return this.bindSuperExpression(parent);
+            }
             case NodeKind.ArrayLiteralExpression:
             case NodeKind.ScopeMemberAccessExpression:
             case NodeKind.InvokeExpression:
@@ -606,6 +609,19 @@ export class Binder {
         boundSelfExpression.type = ancestor.type;
 
         return boundSelfExpression;
+    }
+
+    private bindSuperExpression(parent: BoundNodes) {
+        const boundSuperExpression = new BoundSuperExpression();
+        boundSuperExpression.parent = parent;
+
+        const ancestor = this.getNearestAncestor(boundSuperExpression, [BoundNodeKind.ClassDeclaration]) as BoundClassDeclaration;
+        if (!ancestor.baseType) {
+            throw new Error(`'${ancestor.identifier.name}' does not extend a base class.`);
+        }
+        boundSuperExpression.type = ancestor.baseType;
+
+        return boundSuperExpression;
     }
 
     private bindNewExpression(

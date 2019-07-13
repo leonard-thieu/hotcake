@@ -1,0 +1,45 @@
+{
+    "kind": "ModuleDeclaration",
+    "identifier": "superExpression",
+    "locals": [
+        "MyBaseClass",
+        "MyClass"
+    ],
+    "members": [
+        {
+            "kind": "ClassDeclaration",
+            "identifier": "MyBaseClass",
+            "locals": [],
+            "type": "MyBaseClass",
+            "members": []
+        },
+        {
+            "kind": "ClassDeclaration",
+            "identifier": "MyClass",
+            "locals": [
+                "GetBaseClass"
+            ],
+            "type": "MyClass",
+            "baseType": "MyBaseClass",
+            "members": [
+                {
+                    "kind": "ClassMethodDeclaration",
+                    "identifier": "GetBaseClass",
+                    "locals": [],
+                    "returnType": "MyBaseClass",
+                    "parameters": [],
+                    "statements": [
+                        {
+                            "kind": "ReturnStatement",
+                            "type": "MyBaseClass",
+                            "expression": {
+                                "kind": "SuperExpression",
+                                "type": "MyBaseClass"
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}
