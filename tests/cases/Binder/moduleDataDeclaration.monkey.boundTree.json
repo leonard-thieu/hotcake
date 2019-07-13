@@ -1,0 +1,20 @@
+{
+    "kind": "ModuleDeclaration",
+    "identifier": "moduleDataDeclaration",
+    "locals": [
+        "ScaleX",
+        "Version"
+    ],
+    "members": [
+        {
+            "kind": "DataDeclaration",
+            "identifier": "ScaleX",
+            "type": "Int"
+        },
+        {
+            "kind": "DataDeclaration",
+            "identifier": "Version",
+            "type": "Int"
+        }
+    ]
+}

@@ -135,7 +135,8 @@ export class Binder {
                     break;
                 }
                 case NodeKind.DataDeclarationSequence: {
-                    this.bindDataDeclarationSequence(member, parent);
+                    const boundDataDeclarationSequence = this.bindDataDeclarationSequence(member, parent);
+                    boundMembers.push(...boundDataDeclarationSequence);
                     break;
                 }
                 case NodeKind.FunctionDeclaration: {
