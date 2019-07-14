@@ -3,15 +3,17 @@ import fs = require('fs');
 import path = require('path');
 import mkdirp = require('mkdirp');
 import { orderBy } from 'natural-orderby';
-import { Binder } from '../src/Binder';
-import { ModuleDeclaration } from '../src/Node/Declaration/ModuleDeclaration';
-import { PreprocessorModuleDeclaration } from '../src/Node/Declaration/PreprocessorModuleDeclaration';
-import { Parser } from '../src/Parser';
-import { PreprocessorParser } from '../src/PreprocessorParser';
-import { PreprocessorTokenizer } from '../src/PreprocessorTokenizer';
-import { SerializationOptions } from '../src/SerializationOptions';
-import { Tokens } from '../src/Token/Token';
-import { ConfigurationVariables, Tokenizer } from '../src/Tokenizer';
+import { Binder } from '../src/Binding/Binder';
+import { BoundNodeKind } from '../src/Binding/Node/BoundNodeKind';
+import { BoundModuleDeclaration } from '../src/Binding/Node/Declaration/BoundModuleDeclaration';
+import { Type } from '../src/Binding/Type/Type';
+import { ModuleDeclaration } from '../src/Syntax/Node/Declaration/ModuleDeclaration';
+import { PreprocessorModuleDeclaration } from '../src/Syntax/Node/Declaration/PreprocessorModuleDeclaration';
+import { Parser } from '../src/Syntax/Parser';
+import { PreprocessorParser } from '../src/Syntax/PreprocessorParser';
+import { PreprocessorTokenizer } from '../src/Syntax/PreprocessorTokenizer';
+import { Tokens } from '../src/Syntax/Token/Token';
+import { ConfigurationVariables, Tokenizer } from '../src/Syntax/Tokenizer';
 
 interface TestCaseOptions {
     name: string;
@@ -75,7 +77,7 @@ export function executeTestCases(options: TestCaseOptions): void {
     });
 }
 
-export function executeBaselineTestCase(outputPath: string, testCallback: () => any): void {
+export function executeBaselineTestCase(outputPath: string, testCallback: () => any, replacer?: (key: string, value: any) => any): void {
     mkdirp.sync(path.dirname(outputPath));
 
     try {
@@ -89,7 +91,7 @@ export function executeBaselineTestCase(outputPath: string, testCallback: () => 
 
     const result = testCallback();
 
-    const json = JSON.stringify(result, /*replacer*/ null, 4);
+    const json = JSON.stringify(result, replacer, 4);
     fs.writeFileSync(outputPath, json);
 }
 
@@ -162,8 +164,6 @@ export function executeParserTestCases(name: string, casesPath: string): void {
 }
 
 export function executeBinderTestCases(name: string, casesPath: string): void {
-    let serializeSymbols: boolean;
-
     executeTestCases({
         name: name,
         casesPath: casesPath,
@@ -171,18 +171,39 @@ export function executeBinderTestCases(name: string, casesPath: string): void {
             const { _it, sourceRelativePath, contents } = context;
 
             _it(sourceRelativePath, function () {
-                const outputPath = path.resolve(__dirname, 'cases', name, sourceRelativePath) + '.symbols.json';
+                const outputPath = path.resolve(__dirname, 'cases', name, sourceRelativePath) + '.boundTree.json';
                 executeBaselineTestCase(outputPath, () => {
-                    return getBoundParseTree(sourceRelativePath, contents);
+                    return getBoundTree(sourceRelativePath, contents);
+                }, function (this: any, key, value) {
+                    switch (key) {
+                        case 'parent': {
+                            return undefined;
+                        }
+                        case 'declaration': {
+                            if (this.kind !== BoundNodeKind.DataDeclarationStatement) {
+                                return undefined;
+                            }
+                            break;
+                        }
+                        case 'identifier': {
+                            return value.name;
+                        }
+                        case 'locals': {
+                            const names: any[] = [];
+                            for (const [k] of value) {
+                                names.push(k);
+                            }
+                            return names;
+                        }
+                    }
+
+                    if (value instanceof Type) {
+                        return value.toString();
+                    }
+
+                    return value;
                 });
             });
-        },
-        beforeCallback: function () {
-            serializeSymbols = SerializationOptions.serializeSymbols;
-            SerializationOptions.serializeSymbols = true;
-        },
-        afterCallback: function () {
-            SerializationOptions.serializeSymbols = serializeSymbols;
         },
     });
 }
@@ -232,10 +253,9 @@ export function getParseTree(filePath: string, document: string): ModuleDeclarat
     return parser.parse(preprocessorModuleDeclaration, tokens);
 }
 
-export function getBoundParseTree(filePath: string, document: string): ModuleDeclaration {
+export function getBoundTree(filePath: string, document: string): BoundModuleDeclaration {
     const moduleDeclaration = getParseTree(filePath, document);
     const binder = new Binder();
-    binder.bind(moduleDeclaration);
 
-    return moduleDeclaration;
+    return binder.bind(moduleDeclaration);
 }

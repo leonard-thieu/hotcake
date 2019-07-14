@@ -1,0 +1,51 @@
+{
+    "kind": "ModuleDeclaration",
+    "identifier": "nullExpression",
+    "locals": [
+        "Print",
+        "Main"
+    ],
+    "members": [
+        {
+            "kind": "FunctionDeclaration",
+            "identifier": "Print",
+            "locals": [
+                "val"
+            ],
+            "returnType": "Void",
+            "parameters": [
+                {
+                    "kind": "DataDeclaration",
+                    "identifier": "val",
+                    "type": "String"
+                }
+            ],
+            "statements": []
+        },
+        {
+            "kind": "FunctionDeclaration",
+            "identifier": "Main",
+            "locals": [],
+            "returnType": "Int",
+            "parameters": [],
+            "statements": [
+                {
+                    "kind": "ExpressionStatement",
+                    "expression": {
+                        "kind": "InvokeExpression",
+                        "invokableExpression": {
+                            "kind": "IdentifierExpression",
+                            "identifier": "Print"
+                        },
+                        "arguments": [
+                            {
+                                "kind": "NullExpression",
+                                "type": "Null"
+                            }
+                        ]
+                    }
+                }
+            ]
+        }
+    ]
+}

@@ -1,0 +1,590 @@
+{
+    "kind": "ModuleDeclaration",
+    "identifier": "binaryExpression",
+    "locals": [
+        "BoxBool",
+        "BoxInt",
+        "BoxFloat",
+        "BoxString",
+        "Main"
+    ],
+    "members": [
+        {
+            "kind": "FunctionDeclaration",
+            "identifier": "BoxBool",
+            "locals": [
+                "val"
+            ],
+            "returnType": "Object",
+            "parameters": [
+                {
+                    "kind": "DataDeclaration",
+                    "identifier": "val",
+                    "type": "Bool"
+                }
+            ],
+            "statements": []
+        },
+        {
+            "kind": "FunctionDeclaration",
+            "identifier": "BoxInt",
+            "locals": [
+                "val"
+            ],
+            "returnType": "Object",
+            "parameters": [
+                {
+                    "kind": "DataDeclaration",
+                    "identifier": "val",
+                    "type": "Int"
+                }
+            ],
+            "statements": []
+        },
+        {
+            "kind": "FunctionDeclaration",
+            "identifier": "BoxFloat",
+            "locals": [
+                "val"
+            ],
+            "returnType": "Object",
+            "parameters": [
+                {
+                    "kind": "DataDeclaration",
+                    "identifier": "val",
+                    "type": "Float"
+                }
+            ],
+            "statements": []
+        },
+        {
+            "kind": "FunctionDeclaration",
+            "identifier": "BoxString",
+            "locals": [
+                "val"
+            ],
+            "returnType": "Object",
+            "parameters": [
+                {
+                    "kind": "DataDeclaration",
+                    "identifier": "val",
+                    "type": "String"
+                }
+            ],
+            "statements": []
+        },
+        {
+            "kind": "FunctionDeclaration",
+            "identifier": "Main",
+            "locals": [],
+            "returnType": "Int",
+            "parameters": [],
+            "statements": [
+                {
+                    "kind": "ExpressionStatement",
+                    "expression": {
+                        "kind": "InvokeExpression",
+                        "invokableExpression": {
+                            "kind": "IdentifierExpression",
+                            "identifier": "BoxInt"
+                        },
+                        "arguments": [
+                            {
+                                "kind": "BinaryExpression",
+                                "type": "Int",
+                                "leftOperand": {
+                                    "kind": "IntegerLiteralExpression",
+                                    "type": "Int"
+                                },
+                                "rightOperand": {
+                                    "kind": "IntegerLiteralExpression",
+                                    "type": "Int"
+                                }
+                            }
+                        ]
+                    }
+                },
+                {
+                    "kind": "ExpressionStatement",
+                    "expression": {
+                        "kind": "InvokeExpression",
+                        "invokableExpression": {
+                            "kind": "IdentifierExpression",
+                            "identifier": "BoxInt"
+                        },
+                        "arguments": [
+                            {
+                                "kind": "BinaryExpression",
+                                "type": "Int",
+                                "leftOperand": {
+                                    "kind": "IntegerLiteralExpression",
+                                    "type": "Int"
+                                },
+                                "rightOperand": {
+                                    "kind": "IntegerLiteralExpression",
+                                    "type": "Int"
+                                }
+                            }
+                        ]
+                    }
+                },
+                {
+                    "kind": "ExpressionStatement",
+                    "expression": {
+                        "kind": "InvokeExpression",
+                        "invokableExpression": {
+                            "kind": "IdentifierExpression",
+                            "identifier": "BoxFloat"
+                        },
+                        "arguments": [
+                            {
+                                "kind": "BinaryExpression",
+                                "type": "Int",
+                                "leftOperand": {
+                                    "kind": "IntegerLiteralExpression",
+                                    "type": "Int"
+                                },
+                                "rightOperand": {
+                                    "kind": "IntegerLiteralExpression",
+                                    "type": "Int"
+                                }
+                            }
+                        ]
+                    }
+                },
+                {
+                    "kind": "ExpressionStatement",
+                    "expression": {
+                        "kind": "InvokeExpression",
+                        "invokableExpression": {
+                            "kind": "IdentifierExpression",
+                            "identifier": "BoxFloat"
+                        },
+                        "arguments": [
+                            {
+                                "kind": "BinaryExpression",
+                                "type": "Float",
+                                "leftOperand": {
+                                    "kind": "IntegerLiteralExpression",
+                                    "type": "Int"
+                                },
+                                "rightOperand": {
+                                    "kind": "FloatLiteralExpression",
+                                    "type": "Float"
+                                }
+                            }
+                        ]
+                    }
+                },
+                {
+                    "kind": "ExpressionStatement",
+                    "expression": {
+                        "kind": "InvokeExpression",
+                        "invokableExpression": {
+                            "kind": "IdentifierExpression",
+                            "identifier": "BoxFloat"
+                        },
+                        "arguments": [
+                            {
+                                "kind": "BinaryExpression",
+                                "type": "Float",
+                                "leftOperand": {
+                                    "kind": "IntegerLiteralExpression",
+                                    "type": "Int"
+                                },
+                                "rightOperand": {
+                                    "kind": "FloatLiteralExpression",
+                                    "type": "Float"
+                                }
+                            }
+                        ]
+                    }
+                },
+                {
+                    "kind": "ExpressionStatement",
+                    "expression": {
+                        "kind": "InvokeExpression",
+                        "invokableExpression": {
+                            "kind": "IdentifierExpression",
+                            "identifier": "BoxInt"
+                        },
+                        "arguments": [
+                            {
+                                "kind": "BinaryExpression",
+                                "type": "Int",
+                                "leftOperand": {
+                                    "kind": "IntegerLiteralExpression",
+                                    "type": "Int"
+                                },
+                                "rightOperand": {
+                                    "kind": "IntegerLiteralExpression",
+                                    "type": "Int"
+                                }
+                            }
+                        ]
+                    }
+                },
+                {
+                    "kind": "ExpressionStatement",
+                    "expression": {
+                        "kind": "InvokeExpression",
+                        "invokableExpression": {
+                            "kind": "IdentifierExpression",
+                            "identifier": "BoxInt"
+                        },
+                        "arguments": [
+                            {
+                                "kind": "BinaryExpression",
+                                "type": "Int",
+                                "leftOperand": {
+                                    "kind": "IntegerLiteralExpression",
+                                    "type": "Int"
+                                },
+                                "rightOperand": {
+                                    "kind": "IntegerLiteralExpression",
+                                    "type": "Int"
+                                }
+                            }
+                        ]
+                    }
+                },
+                {
+                    "kind": "ExpressionStatement",
+                    "expression": {
+                        "kind": "InvokeExpression",
+                        "invokableExpression": {
+                            "kind": "IdentifierExpression",
+                            "identifier": "BoxInt"
+                        },
+                        "arguments": [
+                            {
+                                "kind": "BinaryExpression",
+                                "type": "Int",
+                                "leftOperand": {
+                                    "kind": "IntegerLiteralExpression",
+                                    "type": "Int"
+                                },
+                                "rightOperand": {
+                                    "kind": "IntegerLiteralExpression",
+                                    "type": "Int"
+                                }
+                            }
+                        ]
+                    }
+                },
+                {
+                    "kind": "ExpressionStatement",
+                    "expression": {
+                        "kind": "InvokeExpression",
+                        "invokableExpression": {
+                            "kind": "IdentifierExpression",
+                            "identifier": "BoxInt"
+                        },
+                        "arguments": [
+                            {
+                                "kind": "BinaryExpression",
+                                "type": "Int",
+                                "leftOperand": {
+                                    "kind": "IntegerLiteralExpression",
+                                    "type": "Int"
+                                },
+                                "rightOperand": {
+                                    "kind": "IntegerLiteralExpression",
+                                    "type": "Int"
+                                }
+                            }
+                        ]
+                    }
+                },
+                {
+                    "kind": "ExpressionStatement",
+                    "expression": {
+                        "kind": "InvokeExpression",
+                        "invokableExpression": {
+                            "kind": "IdentifierExpression",
+                            "identifier": "BoxInt"
+                        },
+                        "arguments": [
+                            {
+                                "kind": "BinaryExpression",
+                                "type": "Int",
+                                "leftOperand": {
+                                    "kind": "IntegerLiteralExpression",
+                                    "type": "Int"
+                                },
+                                "rightOperand": {
+                                    "kind": "IntegerLiteralExpression",
+                                    "type": "Int"
+                                }
+                            }
+                        ]
+                    }
+                },
+                {
+                    "kind": "ExpressionStatement",
+                    "expression": {
+                        "kind": "InvokeExpression",
+                        "invokableExpression": {
+                            "kind": "IdentifierExpression",
+                            "identifier": "BoxBool"
+                        },
+                        "arguments": [
+                            {
+                                "kind": "BinaryExpression",
+                                "type": "Bool",
+                                "leftOperand": {
+                                    "kind": "FloatLiteralExpression",
+                                    "type": "Float"
+                                },
+                                "rightOperand": {
+                                    "kind": "IntegerLiteralExpression",
+                                    "type": "Int"
+                                }
+                            }
+                        ]
+                    }
+                },
+                {
+                    "kind": "ExpressionStatement",
+                    "expression": {
+                        "kind": "InvokeExpression",
+                        "invokableExpression": {
+                            "kind": "IdentifierExpression",
+                            "identifier": "BoxBool"
+                        },
+                        "arguments": [
+                            {
+                                "kind": "BinaryExpression",
+                                "type": "Bool",
+                                "leftOperand": {
+                                    "kind": "IntegerLiteralExpression",
+                                    "type": "Int"
+                                },
+                                "rightOperand": {
+                                    "kind": "BooleanLiteralExpression",
+                                    "type": "Bool"
+                                }
+                            }
+                        ]
+                    }
+                },
+                {
+                    "kind": "ExpressionStatement",
+                    "expression": {
+                        "kind": "InvokeExpression",
+                        "invokableExpression": {
+                            "kind": "IdentifierExpression",
+                            "identifier": "BoxBool"
+                        },
+                        "arguments": [
+                            {
+                                "kind": "BinaryExpression",
+                                "type": "Bool",
+                                "leftOperand": {
+                                    "kind": "IntegerLiteralExpression",
+                                    "type": "Int"
+                                },
+                                "rightOperand": {
+                                    "kind": "StringLiteralExpression",
+                                    "type": "String"
+                                }
+                            }
+                        ]
+                    }
+                },
+                {
+                    "kind": "ExpressionStatement",
+                    "expression": {
+                        "kind": "InvokeExpression",
+                        "invokableExpression": {
+                            "kind": "IdentifierExpression",
+                            "identifier": "BoxBool"
+                        },
+                        "arguments": [
+                            {
+                                "kind": "BinaryExpression",
+                                "type": "Bool",
+                                "leftOperand": {
+                                    "kind": "IntegerLiteralExpression",
+                                    "type": "Int"
+                                },
+                                "rightOperand": {
+                                    "kind": "FloatLiteralExpression",
+                                    "type": "Float"
+                                }
+                            }
+                        ]
+                    }
+                },
+                {
+                    "kind": "ExpressionStatement",
+                    "expression": {
+                        "kind": "InvokeExpression",
+                        "invokableExpression": {
+                            "kind": "IdentifierExpression",
+                            "identifier": "BoxBool"
+                        },
+                        "arguments": [
+                            {
+                                "kind": "BinaryExpression",
+                                "type": "Bool",
+                                "leftOperand": {
+                                    "kind": "IntegerLiteralExpression",
+                                    "type": "Int"
+                                },
+                                "rightOperand": {
+                                    "kind": "IntegerLiteralExpression",
+                                    "type": "Int"
+                                }
+                            }
+                        ]
+                    }
+                },
+                {
+                    "kind": "ExpressionStatement",
+                    "expression": {
+                        "kind": "InvokeExpression",
+                        "invokableExpression": {
+                            "kind": "IdentifierExpression",
+                            "identifier": "BoxBool"
+                        },
+                        "arguments": [
+                            {
+                                "kind": "BinaryExpression",
+                                "type": "Bool",
+                                "leftOperand": {
+                                    "kind": "BooleanLiteralExpression",
+                                    "type": "Bool"
+                                },
+                                "rightOperand": {
+                                    "kind": "BooleanLiteralExpression",
+                                    "type": "Bool"
+                                }
+                            }
+                        ]
+                    }
+                },
+                {
+                    "kind": "ExpressionStatement",
+                    "expression": {
+                        "kind": "InvokeExpression",
+                        "invokableExpression": {
+                            "kind": "IdentifierExpression",
+                            "identifier": "BoxBool"
+                        },
+                        "arguments": [
+                            {
+                                "kind": "BinaryExpression",
+                                "type": "Bool",
+                                "leftOperand": {
+                                    "kind": "BooleanLiteralExpression",
+                                    "type": "Bool"
+                                },
+                                "rightOperand": {
+                                    "kind": "BooleanLiteralExpression",
+                                    "type": "Bool"
+                                }
+                            }
+                        ]
+                    }
+                },
+                {
+                    "kind": "ExpressionStatement",
+                    "expression": {
+                        "kind": "InvokeExpression",
+                        "invokableExpression": {
+                            "kind": "IdentifierExpression",
+                            "identifier": "BoxBool"
+                        },
+                        "arguments": [
+                            {
+                                "kind": "BinaryExpression",
+                                "type": "Bool",
+                                "leftOperand": {
+                                    "kind": "BooleanLiteralExpression",
+                                    "type": "Bool"
+                                },
+                                "rightOperand": {
+                                    "kind": "BooleanLiteralExpression",
+                                    "type": "Bool"
+                                }
+                            }
+                        ]
+                    }
+                },
+                {
+                    "kind": "ExpressionStatement",
+                    "expression": {
+                        "kind": "InvokeExpression",
+                        "invokableExpression": {
+                            "kind": "IdentifierExpression",
+                            "identifier": "BoxString"
+                        },
+                        "arguments": [
+                            {
+                                "kind": "BinaryExpression",
+                                "type": "String",
+                                "leftOperand": {
+                                    "kind": "IntegerLiteralExpression",
+                                    "type": "Int"
+                                },
+                                "rightOperand": {
+                                    "kind": "StringLiteralExpression",
+                                    "type": "String"
+                                }
+                            }
+                        ]
+                    }
+                },
+                {
+                    "kind": "ExpressionStatement",
+                    "expression": {
+                        "kind": "InvokeExpression",
+                        "invokableExpression": {
+                            "kind": "IdentifierExpression",
+                            "identifier": "BoxString"
+                        },
+                        "arguments": [
+                            {
+                                "kind": "BinaryExpression",
+                                "type": "String",
+                                "leftOperand": {
+                                    "kind": "FloatLiteralExpression",
+                                    "type": "Float"
+                                },
+                                "rightOperand": {
+                                    "kind": "StringLiteralExpression",
+                                    "type": "String"
+                                }
+                            }
+                        ]
+                    }
+                },
+                {
+                    "kind": "ExpressionStatement",
+                    "expression": {
+                        "kind": "InvokeExpression",
+                        "invokableExpression": {
+                            "kind": "IdentifierExpression",
+                            "identifier": "BoxString"
+                        },
+                        "arguments": [
+                            {
+                                "kind": "BinaryExpression",
+                                "type": "String",
+                                "leftOperand": {
+                                    "kind": "StringLiteralExpression",
+                                    "type": "String"
+                                },
+                                "rightOperand": {
+                                    "kind": "StringLiteralExpression",
+                                    "type": "String"
+                                }
+                            }
+                        ]
+                    }
+                }
+            ]
+        }
+    ]
+}

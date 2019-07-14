@@ -3,4 +3,4 @@ import { executeBinderTestCases } from './shared';
 
 const name = 'Binder';
 
-executeBinderTestCases(name, path.resolve(__dirname, '..', 'vscode', 'test', 'colorize-fixtures'));
+executeBinderTestCases(name, path.resolve(__dirname, 'cases', name));

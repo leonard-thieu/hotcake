@@ -1,0 +1,150 @@
+{
+    "kind": "ModuleDeclaration",
+    "identifier": "literal",
+    "locals": [
+        "BoxBool",
+        "BoxInt",
+        "BoxFloat",
+        "BoxString",
+        "Main"
+    ],
+    "members": [
+        {
+            "kind": "FunctionDeclaration",
+            "identifier": "BoxBool",
+            "locals": [
+                "val"
+            ],
+            "returnType": "Object",
+            "parameters": [
+                {
+                    "kind": "DataDeclaration",
+                    "identifier": "val",
+                    "type": "Bool"
+                }
+            ],
+            "statements": []
+        },
+        {
+            "kind": "FunctionDeclaration",
+            "identifier": "BoxInt",
+            "locals": [
+                "val"
+            ],
+            "returnType": "Object",
+            "parameters": [
+                {
+                    "kind": "DataDeclaration",
+                    "identifier": "val",
+                    "type": "Int"
+                }
+            ],
+            "statements": []
+        },
+        {
+            "kind": "FunctionDeclaration",
+            "identifier": "BoxFloat",
+            "locals": [
+                "val"
+            ],
+            "returnType": "Object",
+            "parameters": [
+                {
+                    "kind": "DataDeclaration",
+                    "identifier": "val",
+                    "type": "Float"
+                }
+            ],
+            "statements": []
+        },
+        {
+            "kind": "FunctionDeclaration",
+            "identifier": "BoxString",
+            "locals": [
+                "val"
+            ],
+            "returnType": "Object",
+            "parameters": [
+                {
+                    "kind": "DataDeclaration",
+                    "identifier": "val",
+                    "type": "String"
+                }
+            ],
+            "statements": []
+        },
+        {
+            "kind": "FunctionDeclaration",
+            "identifier": "Main",
+            "locals": [],
+            "returnType": "Int",
+            "parameters": [],
+            "statements": [
+                {
+                    "kind": "ExpressionStatement",
+                    "expression": {
+                        "kind": "InvokeExpression",
+                        "invokableExpression": {
+                            "kind": "IdentifierExpression",
+                            "identifier": "BoxBool"
+                        },
+                        "arguments": [
+                            {
+                                "kind": "BooleanLiteralExpression",
+                                "type": "Bool"
+                            }
+                        ]
+                    }
+                },
+                {
+                    "kind": "ExpressionStatement",
+                    "expression": {
+                        "kind": "InvokeExpression",
+                        "invokableExpression": {
+                            "kind": "IdentifierExpression",
+                            "identifier": "BoxInt"
+                        },
+                        "arguments": [
+                            {
+                                "kind": "IntegerLiteralExpression",
+                                "type": "Int"
+                            }
+                        ]
+                    }
+                },
+                {
+                    "kind": "ExpressionStatement",
+                    "expression": {
+                        "kind": "InvokeExpression",
+                        "invokableExpression": {
+                            "kind": "IdentifierExpression",
+                            "identifier": "BoxFloat"
+                        },
+                        "arguments": [
+                            {
+                                "kind": "FloatLiteralExpression",
+                                "type": "Float"
+                            }
+                        ]
+                    }
+                },
+                {
+                    "kind": "ExpressionStatement",
+                    "expression": {
+                        "kind": "InvokeExpression",
+                        "invokableExpression": {
+                            "kind": "IdentifierExpression",
+                            "identifier": "BoxString"
+                        },
+                        "arguments": [
+                            {
+                                "kind": "StringLiteralExpression",
+                                "type": "String"
+                            }
+                        ]
+                    }
+                }
+            ]
+        }
+    ]
+}

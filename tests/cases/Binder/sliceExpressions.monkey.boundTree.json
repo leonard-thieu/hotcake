@@ -1,0 +1,283 @@
+{
+    "kind": "ModuleDeclaration",
+    "identifier": "sliceExpressions",
+    "locals": [
+        "Print",
+        "Main"
+    ],
+    "members": [
+        {
+            "kind": "FunctionDeclaration",
+            "identifier": "Print",
+            "locals": [
+                "message"
+            ],
+            "returnType": "Int",
+            "parameters": [
+                {
+                    "kind": "DataDeclaration",
+                    "identifier": "message",
+                    "type": "String"
+                }
+            ],
+            "statements": []
+        },
+        {
+            "kind": "FunctionDeclaration",
+            "identifier": "Main",
+            "locals": [],
+            "returnType": "Int",
+            "parameters": [],
+            "statements": [
+                {
+                    "kind": "ExpressionStatement",
+                    "expression": {
+                        "kind": "InvokeExpression",
+                        "invokableExpression": {
+                            "kind": "IdentifierExpression",
+                            "identifier": "Print"
+                        },
+                        "arguments": [
+                            {
+                                "kind": "SliceExpression",
+                                "type": "String",
+                                "sliceableExpression": {
+                                    "kind": "StringLiteralExpression",
+                                    "type": "String"
+                                },
+                                "startExpression": {
+                                    "kind": "IntegerLiteralExpression",
+                                    "type": "Int"
+                                },
+                                "endExpression": {
+                                    "kind": "IntegerLiteralExpression",
+                                    "type": "Int"
+                                }
+                            }
+                        ]
+                    }
+                },
+                {
+                    "kind": "ExpressionStatement",
+                    "expression": {
+                        "kind": "InvokeExpression",
+                        "invokableExpression": {
+                            "kind": "IdentifierExpression",
+                            "identifier": "Print"
+                        },
+                        "arguments": [
+                            {
+                                "kind": "SliceExpression",
+                                "type": "String",
+                                "sliceableExpression": {
+                                    "kind": "StringLiteralExpression",
+                                    "type": "String"
+                                },
+                                "endExpression": {
+                                    "kind": "IntegerLiteralExpression",
+                                    "type": "Int"
+                                }
+                            }
+                        ]
+                    }
+                },
+                {
+                    "kind": "ExpressionStatement",
+                    "expression": {
+                        "kind": "InvokeExpression",
+                        "invokableExpression": {
+                            "kind": "IdentifierExpression",
+                            "identifier": "Print"
+                        },
+                        "arguments": [
+                            {
+                                "kind": "SliceExpression",
+                                "type": "String",
+                                "sliceableExpression": {
+                                    "kind": "StringLiteralExpression",
+                                    "type": "String"
+                                },
+                                "startExpression": {
+                                    "kind": "IntegerLiteralExpression",
+                                    "type": "Int"
+                                }
+                            }
+                        ]
+                    }
+                },
+                {
+                    "kind": "ExpressionStatement",
+                    "expression": {
+                        "kind": "InvokeExpression",
+                        "invokableExpression": {
+                            "kind": "IdentifierExpression",
+                            "identifier": "Print"
+                        },
+                        "arguments": [
+                            {
+                                "kind": "SliceExpression",
+                                "type": "String",
+                                "sliceableExpression": {
+                                    "kind": "StringLiteralExpression",
+                                    "type": "String"
+                                }
+                            }
+                        ]
+                    }
+                },
+                {
+                    "kind": "ExpressionStatement",
+                    "expression": {
+                        "kind": "InvokeExpression",
+                        "invokableExpression": {
+                            "kind": "IdentifierExpression",
+                            "identifier": "Print"
+                        },
+                        "arguments": [
+                            {
+                                "kind": "SliceExpression",
+                                "type": "String[]",
+                                "sliceableExpression": {
+                                    "kind": "ArrayLiteralExpression",
+                                    "type": "String[]",
+                                    "expressions": [
+                                        {
+                                            "kind": "StringLiteralExpression",
+                                            "type": "String"
+                                        },
+                                        {
+                                            "kind": "StringLiteralExpression",
+                                            "type": "String"
+                                        },
+                                        {
+                                            "kind": "StringLiteralExpression",
+                                            "type": "String"
+                                        }
+                                    ]
+                                },
+                                "startExpression": {
+                                    "kind": "IntegerLiteralExpression",
+                                    "type": "Int"
+                                },
+                                "endExpression": {
+                                    "kind": "IntegerLiteralExpression",
+                                    "type": "Int"
+                                }
+                            }
+                        ]
+                    }
+                },
+                {
+                    "kind": "ExpressionStatement",
+                    "expression": {
+                        "kind": "InvokeExpression",
+                        "invokableExpression": {
+                            "kind": "IdentifierExpression",
+                            "identifier": "Print"
+                        },
+                        "arguments": [
+                            {
+                                "kind": "SliceExpression",
+                                "type": "String[]",
+                                "sliceableExpression": {
+                                    "kind": "ArrayLiteralExpression",
+                                    "type": "String[]",
+                                    "expressions": [
+                                        {
+                                            "kind": "StringLiteralExpression",
+                                            "type": "String"
+                                        },
+                                        {
+                                            "kind": "StringLiteralExpression",
+                                            "type": "String"
+                                        },
+                                        {
+                                            "kind": "StringLiteralExpression",
+                                            "type": "String"
+                                        }
+                                    ]
+                                },
+                                "endExpression": {
+                                    "kind": "IntegerLiteralExpression",
+                                    "type": "Int"
+                                }
+                            }
+                        ]
+                    }
+                },
+                {
+                    "kind": "ExpressionStatement",
+                    "expression": {
+                        "kind": "InvokeExpression",
+                        "invokableExpression": {
+                            "kind": "IdentifierExpression",
+                            "identifier": "Print"
+                        },
+                        "arguments": [
+                            {
+                                "kind": "SliceExpression",
+                                "type": "String[]",
+                                "sliceableExpression": {
+                                    "kind": "ArrayLiteralExpression",
+                                    "type": "String[]",
+                                    "expressions": [
+                                        {
+                                            "kind": "StringLiteralExpression",
+                                            "type": "String"
+                                        },
+                                        {
+                                            "kind": "StringLiteralExpression",
+                                            "type": "String"
+                                        },
+                                        {
+                                            "kind": "StringLiteralExpression",
+                                            "type": "String"
+                                        }
+                                    ]
+                                },
+                                "startExpression": {
+                                    "kind": "IntegerLiteralExpression",
+                                    "type": "Int"
+                                }
+                            }
+                        ]
+                    }
+                },
+                {
+                    "kind": "ExpressionStatement",
+                    "expression": {
+                        "kind": "InvokeExpression",
+                        "invokableExpression": {
+                            "kind": "IdentifierExpression",
+                            "identifier": "Print"
+                        },
+                        "arguments": [
+                            {
+                                "kind": "SliceExpression",
+                                "type": "String[]",
+                                "sliceableExpression": {
+                                    "kind": "ArrayLiteralExpression",
+                                    "type": "String[]",
+                                    "expressions": [
+                                        {
+                                            "kind": "StringLiteralExpression",
+                                            "type": "String"
+                                        },
+                                        {
+                                            "kind": "StringLiteralExpression",
+                                            "type": "String"
+                                        },
+                                        {
+                                            "kind": "StringLiteralExpression",
+                                            "type": "String"
+                                        }
+                                    ]
+                                }
+                            }
+                        ]
+                    }
+                }
+            ]
+        }
+    ]
+}

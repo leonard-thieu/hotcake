@@ -42,14 +42,14 @@
                                 "length": 10
                             },
                             "type": {
-                                "kind": "ShorthandTypeDeclaration",
+                                "kind": "ShorthandTypeAnnotation",
                                 "shorthandType": {
                                     "kind": "PercentSign",
                                     "fullStart": 33,
                                     "start": 33,
                                     "length": 1
                                 },
-                                "arrayTypeDeclarations": []
+                                "arrayTypeAnnotations": []
                             },
                             "equalsSign": {
                                 "kind": "EqualsSign",

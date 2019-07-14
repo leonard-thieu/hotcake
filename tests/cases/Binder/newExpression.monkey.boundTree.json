@@ -1,0 +1,38 @@
+{
+    "kind": "ModuleDeclaration",
+    "identifier": "newExpression",
+    "locals": [
+        "MyClass",
+        "Main"
+    ],
+    "members": [
+        {
+            "kind": "ClassDeclaration",
+            "identifier": "MyClass",
+            "locals": [],
+            "type": "MyClass",
+            "members": []
+        },
+        {
+            "kind": "FunctionDeclaration",
+            "identifier": "Main",
+            "locals": [],
+            "returnType": "Int",
+            "parameters": [],
+            "statements": [
+                {
+                    "kind": "ExpressionStatement",
+                    "expression": {
+                        "kind": "InvokeExpression",
+                        "type": "MyClass",
+                        "invokableExpression": {
+                            "kind": "NewExpression",
+                            "type": "MyClass"
+                        },
+                        "arguments": []
+                    }
+                }
+            ]
+        }
+    ]
+}

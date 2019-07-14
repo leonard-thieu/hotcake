@@ -1,0 +1,31 @@
+{
+    "kind": "ModuleDeclaration",
+    "identifier": "functionDeclaration",
+    "locals": [
+        "Encode"
+    ],
+    "members": [
+        {
+            "kind": "FunctionDeclaration",
+            "identifier": "Encode",
+            "locals": [
+                "place",
+                "percentile"
+            ],
+            "returnType": "Void",
+            "parameters": [
+                {
+                    "kind": "DataDeclaration",
+                    "identifier": "place",
+                    "type": "Int"
+                },
+                {
+                    "kind": "DataDeclaration",
+                    "identifier": "percentile",
+                    "type": "Float"
+                }
+            ],
+            "statements": []
+        }
+    ]
+}

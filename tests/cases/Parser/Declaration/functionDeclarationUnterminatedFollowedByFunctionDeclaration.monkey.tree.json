@@ -23,7 +23,10 @@
                 "start": 10,
                 "length": 1
             },
-            "parameters": [],
+            "parameters": {
+                "kind": "DataDeclarationSequence",
+                "children": []
+            },
             "closingParenthesis": {
                 "kind": "ClosingParenthesis",
                 "fullStart": 11,
@@ -78,7 +81,10 @@
                 "start": 26,
                 "length": 1
             },
-            "parameters": [],
+            "parameters": {
+                "kind": "DataDeclarationSequence",
+                "children": []
+            },
             "closingParenthesis": {
                 "kind": "ClosingParenthesis",
                 "fullStart": 27,

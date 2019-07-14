@@ -396,7 +396,7 @@
                         "length": 4
                     },
                     "type": {
-                        "kind": "LonghandTypeDeclaration",
+                        "kind": "LonghandTypeAnnotation",
                         "colon": {
                             "kind": "Colon",
                             "fullStart": 1063,
@@ -411,7 +411,7 @@
                                 "start": 1065,
                                 "length": 4
                             },
-                            "arrayTypeDeclarations": []
+                            "arrayTypeAnnotations": []
                         }
                     },
                     "equalsSign": {
@@ -457,14 +457,14 @@
                         "length": 4
                     },
                     "type": {
-                        "kind": "ShorthandTypeDeclaration",
+                        "kind": "ShorthandTypeAnnotation",
                         "shorthandType": {
                             "kind": "DollarSign",
                             "fullStart": 1119,
                             "start": 1119,
                             "length": 1
                         },
-                        "arrayTypeDeclarations": []
+                        "arrayTypeAnnotations": []
                     },
                     "equalsSign": {
                         "kind": "EqualsSign",
@@ -690,7 +690,7 @@
                         "length": 4
                     },
                     "type": {
-                        "kind": "LonghandTypeDeclaration",
+                        "kind": "LonghandTypeAnnotation",
                         "colon": {
                             "kind": "Colon",
                             "fullStart": 1318,
@@ -705,7 +705,7 @@
                                 "start": 1320,
                                 "length": 4
                             },
-                            "arrayTypeDeclarations": []
+                            "arrayTypeAnnotations": []
                         }
                     },
                     "equalsSign": {
@@ -751,14 +751,14 @@
                         "length": 4
                     },
                     "type": {
-                        "kind": "ShorthandTypeDeclaration",
+                        "kind": "ShorthandTypeAnnotation",
                         "shorthandType": {
                             "kind": "DollarSign",
                             "fullStart": 1374,
                             "start": 1374,
                             "length": 1
                         },
-                        "arrayTypeDeclarations": []
+                        "arrayTypeAnnotations": []
                     },
                     "equalsSign": {
                         "kind": "EqualsSign",
@@ -978,7 +978,7 @@
                         "length": 4
                     },
                     "type": {
-                        "kind": "LonghandTypeDeclaration",
+                        "kind": "LonghandTypeAnnotation",
                         "colon": {
                             "kind": "Colon",
                             "fullStart": 1570,
@@ -993,7 +993,7 @@
                                 "start": 1572,
                                 "length": 6
                             },
-                            "arrayTypeDeclarations": []
+                            "arrayTypeAnnotations": []
                         }
                     }
                 }
@@ -1055,7 +1055,7 @@
                         "length": 13
                     },
                     "type": {
-                        "kind": "LonghandTypeDeclaration",
+                        "kind": "LonghandTypeAnnotation",
                         "colon": {
                             "kind": "Colon",
                             "fullStart": 1711,
@@ -1070,7 +1070,7 @@
                                 "start": 1712,
                                 "length": 6
                             },
-                            "arrayTypeDeclarations": []
+                            "arrayTypeAnnotations": []
                         }
                     },
                     "equalsSign": {
@@ -1133,7 +1133,7 @@
                 "length": 4
             },
             "returnType": {
-                "kind": "LonghandTypeDeclaration",
+                "kind": "LonghandTypeAnnotation",
                 "colon": {
                     "kind": "Colon",
                     "fullStart": 1762,
@@ -1148,7 +1148,7 @@
                         "start": 1763,
                         "length": 4
                     },
-                    "arrayTypeDeclarations": []
+                    "arrayTypeAnnotations": []
                 }
             },
             "openingParenthesis": {
@@ -1157,36 +1157,39 @@
                 "start": 1767,
                 "length": 1
             },
-            "parameters": [
-                {
-                    "kind": "DataDeclaration",
-                    "identifier": {
-                        "kind": "Identifier",
-                        "fullStart": 1768,
-                        "start": 1769,
-                        "length": 7
-                    },
-                    "type": {
-                        "kind": "LonghandTypeDeclaration",
-                        "colon": {
-                            "kind": "Colon",
-                            "fullStart": 1775,
-                            "start": 1775,
-                            "length": 1
+            "parameters": {
+                "kind": "DataDeclarationSequence",
+                "children": [
+                    {
+                        "kind": "DataDeclaration",
+                        "identifier": {
+                            "kind": "Identifier",
+                            "fullStart": 1768,
+                            "start": 1769,
+                            "length": 7
                         },
-                        "typeReference": {
-                            "kind": "TypeReference",
-                            "identifier": {
-                                "kind": "IntKeyword",
-                                "fullStart": 1776,
-                                "start": 1776,
-                                "length": 3
+                        "type": {
+                            "kind": "LonghandTypeAnnotation",
+                            "colon": {
+                                "kind": "Colon",
+                                "fullStart": 1775,
+                                "start": 1775,
+                                "length": 1
                             },
-                            "arrayTypeDeclarations": []
+                            "typeReference": {
+                                "kind": "TypeReference",
+                                "identifier": {
+                                    "kind": "IntKeyword",
+                                    "fullStart": 1776,
+                                    "start": 1776,
+                                    "length": 3
+                                },
+                                "arrayTypeAnnotations": []
+                            }
                         }
                     }
-                }
-            ],
+                ]
+            },
             "closingParenthesis": {
                 "kind": "ClosingParenthesis",
                 "fullStart": 1779,
@@ -1252,65 +1255,68 @@
                 "start": 1850,
                 "length": 1
             },
-            "parameters": [
-                {
-                    "kind": "DataDeclaration",
-                    "identifier": {
-                        "kind": "Identifier",
-                        "fullStart": 1851,
-                        "start": 1852,
-                        "length": 7
+            "parameters": {
+                "kind": "DataDeclarationSequence",
+                "children": [
+                    {
+                        "kind": "DataDeclaration",
+                        "identifier": {
+                            "kind": "Identifier",
+                            "fullStart": 1851,
+                            "start": 1852,
+                            "length": 7
+                        },
+                        "type": {
+                            "kind": "LonghandTypeAnnotation",
+                            "colon": {
+                                "kind": "Colon",
+                                "fullStart": 1858,
+                                "start": 1858,
+                                "length": 1
+                            },
+                            "typeReference": {
+                                "kind": "TypeReference",
+                                "identifier": {
+                                    "kind": "IntKeyword",
+                                    "fullStart": 1859,
+                                    "start": 1859,
+                                    "length": 3
+                                },
+                                "arrayTypeAnnotations": []
+                            }
+                        }
                     },
-                    "type": {
-                        "kind": "LonghandTypeDeclaration",
-                        "colon": {
-                            "kind": "Colon",
-                            "fullStart": 1858,
-                            "start": 1858,
+                    {
+                        "kind": "CommaSeparator",
+                        "separator": {
+                            "kind": "Comma",
+                            "fullStart": 1862,
+                            "start": 1862,
                             "length": 1
                         },
-                        "typeReference": {
-                            "kind": "TypeReference",
-                            "identifier": {
-                                "kind": "IntKeyword",
-                                "fullStart": 1859,
-                                "start": 1859,
-                                "length": 3
+                        "newlines": []
+                    },
+                    {
+                        "kind": "DataDeclaration",
+                        "identifier": {
+                            "kind": "Identifier",
+                            "fullStart": 1863,
+                            "start": 1864,
+                            "length": 6
+                        },
+                        "type": {
+                            "kind": "ShorthandTypeAnnotation",
+                            "shorthandType": {
+                                "kind": "QuestionMark",
+                                "fullStart": 1869,
+                                "start": 1869,
+                                "length": 1
                             },
-                            "arrayTypeDeclarations": []
+                            "arrayTypeAnnotations": []
                         }
                     }
-                },
-                {
-                    "kind": "CommaSeparator",
-                    "separator": {
-                        "kind": "Comma",
-                        "fullStart": 1862,
-                        "start": 1862,
-                        "length": 1
-                    },
-                    "newlines": []
-                },
-                {
-                    "kind": "DataDeclaration",
-                    "identifier": {
-                        "kind": "Identifier",
-                        "fullStart": 1863,
-                        "start": 1864,
-                        "length": 6
-                    },
-                    "type": {
-                        "kind": "ShorthandTypeDeclaration",
-                        "shorthandType": {
-                            "kind": "QuestionMark",
-                            "fullStart": 1869,
-                            "start": 1869,
-                            "length": 1
-                        },
-                        "arrayTypeDeclarations": []
-                    }
-                }
-            ],
+                ]
+            },
             "closingParenthesis": {
                 "kind": "ClosingParenthesis",
                 "fullStart": 1870,
@@ -1376,7 +1382,10 @@
                 "start": 1938,
                 "length": 1
             },
-            "parameters": [],
+            "parameters": {
+                "kind": "DataDeclarationSequence",
+                "children": []
+            },
             "closingParenthesis": {
                 "kind": "ClosingParenthesis",
                 "fullStart": 1939,
@@ -1442,7 +1451,10 @@
                 "start": 2029,
                 "length": 1
             },
-            "parameters": [],
+            "parameters": {
+                "kind": "DataDeclarationSequence",
+                "children": []
+            },
             "closingParenthesis": {
                 "kind": "ClosingParenthesis",
                 "fullStart": 2030,
@@ -1671,7 +1683,7 @@
                         "length": 6
                     },
                     "returnType": {
-                        "kind": "LonghandTypeDeclaration",
+                        "kind": "LonghandTypeAnnotation",
                         "colon": {
                             "kind": "Colon",
                             "fullStart": 2273,
@@ -1686,7 +1698,7 @@
                                 "start": 2275,
                                 "length": 5
                             },
-                            "arrayTypeDeclarations": []
+                            "arrayTypeAnnotations": []
                         }
                     },
                     "openingParenthesis": {
@@ -1695,81 +1707,84 @@
                         "start": 2279,
                         "length": 1
                     },
-                    "parameters": [
-                        {
-                            "kind": "DataDeclaration",
-                            "identifier": {
-                                "kind": "Identifier",
-                                "fullStart": 2280,
-                                "start": 2281,
-                                "length": 8
-                            },
-                            "type": {
-                                "kind": "ShorthandTypeDeclaration",
-                                "shorthandType": {
-                                    "kind": "QuestionMark",
-                                    "fullStart": 2288,
-                                    "start": 2288,
-                                    "length": 1
+                    "parameters": {
+                        "kind": "DataDeclarationSequence",
+                        "children": [
+                            {
+                                "kind": "DataDeclaration",
+                                "identifier": {
+                                    "kind": "Identifier",
+                                    "fullStart": 2280,
+                                    "start": 2281,
+                                    "length": 8
                                 },
-                                "arrayTypeDeclarations": []
-                            }
-                        },
-                        {
-                            "kind": "CommaSeparator",
-                            "separator": {
-                                "kind": "Comma",
-                                "fullStart": 2289,
-                                "start": 2289,
-                                "length": 1
-                            },
-                            "newlines": []
-                        },
-                        {
-                            "kind": "DataDeclaration",
-                            "identifier": {
-                                "kind": "Identifier",
-                                "fullStart": 2290,
-                                "start": 2290,
-                                "length": 5
-                            },
-                            "type": {
-                                "kind": "LonghandTypeDeclaration",
-                                "colon": {
-                                    "kind": "Colon",
-                                    "fullStart": 2295,
-                                    "start": 2295,
-                                    "length": 1
-                                },
-                                "typeReference": {
-                                    "kind": "TypeReference",
-                                    "identifier": {
-                                        "kind": "BoolKeyword",
-                                        "fullStart": 2296,
-                                        "start": 2296,
-                                        "length": 4
+                                "type": {
+                                    "kind": "ShorthandTypeAnnotation",
+                                    "shorthandType": {
+                                        "kind": "QuestionMark",
+                                        "fullStart": 2288,
+                                        "start": 2288,
+                                        "length": 1
                                     },
-                                    "arrayTypeDeclarations": []
+                                    "arrayTypeAnnotations": []
                                 }
                             },
-                            "equalsSign": {
-                                "kind": "EqualsSign",
-                                "fullStart": 2300,
-                                "start": 2300,
-                                "length": 1
+                            {
+                                "kind": "CommaSeparator",
+                                "separator": {
+                                    "kind": "Comma",
+                                    "fullStart": 2289,
+                                    "start": 2289,
+                                    "length": 1
+                                },
+                                "newlines": []
                             },
-                            "expression": {
-                                "kind": "BooleanLiteralExpression",
-                                "newlines": [],
-                                "value": {
-                                    "kind": "FalseKeyword",
-                                    "fullStart": 2301,
-                                    "start": 2301,
+                            {
+                                "kind": "DataDeclaration",
+                                "identifier": {
+                                    "kind": "Identifier",
+                                    "fullStart": 2290,
+                                    "start": 2290,
                                     "length": 5
+                                },
+                                "type": {
+                                    "kind": "LonghandTypeAnnotation",
+                                    "colon": {
+                                        "kind": "Colon",
+                                        "fullStart": 2295,
+                                        "start": 2295,
+                                        "length": 1
+                                    },
+                                    "typeReference": {
+                                        "kind": "TypeReference",
+                                        "identifier": {
+                                            "kind": "BoolKeyword",
+                                            "fullStart": 2296,
+                                            "start": 2296,
+                                            "length": 4
+                                        },
+                                        "arrayTypeAnnotations": []
+                                    }
+                                },
+                                "equalsSign": {
+                                    "kind": "EqualsSign",
+                                    "fullStart": 2300,
+                                    "start": 2300,
+                                    "length": 1
+                                },
+                                "expression": {
+                                    "kind": "BooleanLiteralExpression",
+                                    "newlines": [],
+                                    "value": {
+                                        "kind": "FalseKeyword",
+                                        "fullStart": 2301,
+                                        "start": 2301,
+                                        "length": 5
+                                    }
                                 }
                             }
-                        }
-                    ],
+                        ]
+                    },
                     "closingParenthesis": {
                         "kind": "ClosingParenthesis",
                         "fullStart": 2306,
@@ -1844,7 +1859,10 @@
                         "start": 2376,
                         "length": 1
                     },
-                    "parameters": [],
+                    "parameters": {
+                        "kind": "DataDeclarationSequence",
+                        "children": []
+                    },
                     "closingParenthesis": {
                         "kind": "ClosingParenthesis",
                         "fullStart": 2377,
@@ -1907,7 +1925,7 @@
                         "start": 2414,
                         "length": 9
                     },
-                    "arrayTypeDeclarations": []
+                    "arrayTypeAnnotations": []
                 }
             ],
             "members": [
@@ -1985,7 +2003,10 @@
                         "start": 2509,
                         "length": 1
                     },
-                    "parameters": [],
+                    "parameters": {
+                        "kind": "DataDeclarationSequence",
+                        "children": []
+                    },
                     "closingParenthesis": {
                         "kind": "ClosingParenthesis",
                         "fullStart": 2510,
@@ -2054,7 +2075,7 @@
                         "start": 2575,
                         "length": 10
                     },
-                    "arrayTypeDeclarations": []
+                    "arrayTypeAnnotations": []
                 },
                 {
                     "kind": "CommaSeparator",
@@ -2074,7 +2095,7 @@
                         "start": 2586,
                         "length": 9
                     },
-                    "arrayTypeDeclarations": []
+                    "arrayTypeAnnotations": []
                 }
             ],
             "members": [
@@ -2147,7 +2168,7 @@
                         "length": 6
                     },
                     "returnType": {
-                        "kind": "LonghandTypeDeclaration",
+                        "kind": "LonghandTypeAnnotation",
                         "colon": {
                             "kind": "Colon",
                             "fullStart": 2733,
@@ -2162,7 +2183,7 @@
                                 "start": 2735,
                                 "length": 5
                             },
-                            "arrayTypeDeclarations": []
+                            "arrayTypeAnnotations": []
                         }
                     },
                     "openingParenthesis": {
@@ -2171,81 +2192,84 @@
                         "start": 2739,
                         "length": 1
                     },
-                    "parameters": [
-                        {
-                            "kind": "DataDeclaration",
-                            "identifier": {
-                                "kind": "Identifier",
-                                "fullStart": 2740,
-                                "start": 2741,
-                                "length": 8
-                            },
-                            "type": {
-                                "kind": "ShorthandTypeDeclaration",
-                                "shorthandType": {
-                                    "kind": "QuestionMark",
-                                    "fullStart": 2748,
-                                    "start": 2748,
-                                    "length": 1
+                    "parameters": {
+                        "kind": "DataDeclarationSequence",
+                        "children": [
+                            {
+                                "kind": "DataDeclaration",
+                                "identifier": {
+                                    "kind": "Identifier",
+                                    "fullStart": 2740,
+                                    "start": 2741,
+                                    "length": 8
                                 },
-                                "arrayTypeDeclarations": []
-                            }
-                        },
-                        {
-                            "kind": "CommaSeparator",
-                            "separator": {
-                                "kind": "Comma",
-                                "fullStart": 2749,
-                                "start": 2749,
-                                "length": 1
-                            },
-                            "newlines": []
-                        },
-                        {
-                            "kind": "DataDeclaration",
-                            "identifier": {
-                                "kind": "Identifier",
-                                "fullStart": 2750,
-                                "start": 2750,
-                                "length": 5
-                            },
-                            "type": {
-                                "kind": "LonghandTypeDeclaration",
-                                "colon": {
-                                    "kind": "Colon",
-                                    "fullStart": 2755,
-                                    "start": 2755,
-                                    "length": 1
-                                },
-                                "typeReference": {
-                                    "kind": "TypeReference",
-                                    "identifier": {
-                                        "kind": "BoolKeyword",
-                                        "fullStart": 2756,
-                                        "start": 2756,
-                                        "length": 4
+                                "type": {
+                                    "kind": "ShorthandTypeAnnotation",
+                                    "shorthandType": {
+                                        "kind": "QuestionMark",
+                                        "fullStart": 2748,
+                                        "start": 2748,
+                                        "length": 1
                                     },
-                                    "arrayTypeDeclarations": []
+                                    "arrayTypeAnnotations": []
                                 }
                             },
-                            "equalsSign": {
-                                "kind": "EqualsSign",
-                                "fullStart": 2760,
-                                "start": 2760,
-                                "length": 1
+                            {
+                                "kind": "CommaSeparator",
+                                "separator": {
+                                    "kind": "Comma",
+                                    "fullStart": 2749,
+                                    "start": 2749,
+                                    "length": 1
+                                },
+                                "newlines": []
                             },
-                            "expression": {
-                                "kind": "BooleanLiteralExpression",
-                                "newlines": [],
-                                "value": {
-                                    "kind": "FalseKeyword",
-                                    "fullStart": 2761,
-                                    "start": 2761,
+                            {
+                                "kind": "DataDeclaration",
+                                "identifier": {
+                                    "kind": "Identifier",
+                                    "fullStart": 2750,
+                                    "start": 2750,
                                     "length": 5
+                                },
+                                "type": {
+                                    "kind": "LonghandTypeAnnotation",
+                                    "colon": {
+                                        "kind": "Colon",
+                                        "fullStart": 2755,
+                                        "start": 2755,
+                                        "length": 1
+                                    },
+                                    "typeReference": {
+                                        "kind": "TypeReference",
+                                        "identifier": {
+                                            "kind": "BoolKeyword",
+                                            "fullStart": 2756,
+                                            "start": 2756,
+                                            "length": 4
+                                        },
+                                        "arrayTypeAnnotations": []
+                                    }
+                                },
+                                "equalsSign": {
+                                    "kind": "EqualsSign",
+                                    "fullStart": 2760,
+                                    "start": 2760,
+                                    "length": 1
+                                },
+                                "expression": {
+                                    "kind": "BooleanLiteralExpression",
+                                    "newlines": [],
+                                    "value": {
+                                        "kind": "FalseKeyword",
+                                        "fullStart": 2761,
+                                        "start": 2761,
+                                        "length": 5
+                                    }
                                 }
                             }
-                        }
-                    ],
+                        ]
+                    },
                     "closingParenthesis": {
                         "kind": "ClosingParenthesis",
                         "fullStart": 2766,
@@ -2279,7 +2303,10 @@
                         "start": 2806,
                         "length": 1
                     },
-                    "parameters": [],
+                    "parameters": {
+                        "kind": "DataDeclarationSequence",
+                        "children": []
+                    },
                     "closingParenthesis": {
                         "kind": "ClosingParenthesis",
                         "fullStart": 2807,
@@ -2426,7 +2453,7 @@
                                 "length": 2
                             },
                             "type": {
-                                "kind": "LonghandTypeDeclaration",
+                                "kind": "LonghandTypeAnnotation",
                                 "colon": {
                                     "kind": "Colon",
                                     "fullStart": 2973,
@@ -2441,7 +2468,7 @@
                                         "start": 2975,
                                         "length": 6
                                     },
-                                    "arrayTypeDeclarations": []
+                                    "arrayTypeAnnotations": []
                                 }
                             }
                         }
@@ -2471,14 +2498,14 @@
                                 "length": 2
                             },
                             "type": {
-                                "kind": "ShorthandTypeDeclaration",
+                                "kind": "ShorthandTypeAnnotation",
                                 "shorthandType": {
                                     "kind": "DollarSign",
                                     "fullStart": 3021,
                                     "start": 3021,
                                     "length": 1
                                 },
-                                "arrayTypeDeclarations": []
+                                "arrayTypeAnnotations": []
                             },
                             "equalsSign": {
                                 "kind": "EqualsSign",
@@ -2825,7 +2852,10 @@
                         "start": 3449,
                         "length": 1
                     },
-                    "parameters": [],
+                    "parameters": {
+                        "kind": "DataDeclarationSequence",
+                        "children": []
+                    },
                     "closingParenthesis": {
                         "kind": "ClosingParenthesis",
                         "fullStart": 3450,
@@ -2873,7 +2903,10 @@
                         "start": 3520,
                         "length": 1
                     },
-                    "parameters": [],
+                    "parameters": {
+                        "kind": "DataDeclarationSequence",
+                        "children": []
+                    },
                     "closingParenthesis": {
                         "kind": "ClosingParenthesis",
                         "fullStart": 3521,
@@ -2927,7 +2960,10 @@
                         "start": 3590,
                         "length": 1
                     },
-                    "parameters": [],
+                    "parameters": {
+                        "kind": "DataDeclarationSequence",
+                        "children": []
+                    },
                     "closingParenthesis": {
                         "kind": "ClosingParenthesis",
                         "fullStart": 3591,
@@ -2981,36 +3017,39 @@
                         "start": 3650,
                         "length": 1
                     },
-                    "parameters": [
-                        {
-                            "kind": "DataDeclaration",
-                            "identifier": {
-                                "kind": "Identifier",
-                                "fullStart": 3651,
-                                "start": 3652,
-                                "length": 5
-                            },
-                            "type": {
-                                "kind": "LonghandTypeDeclaration",
-                                "colon": {
-                                    "kind": "Colon",
-                                    "fullStart": 3656,
-                                    "start": 3656,
-                                    "length": 1
+                    "parameters": {
+                        "kind": "DataDeclarationSequence",
+                        "children": [
+                            {
+                                "kind": "DataDeclaration",
+                                "identifier": {
+                                    "kind": "Identifier",
+                                    "fullStart": 3651,
+                                    "start": 3652,
+                                    "length": 5
                                 },
-                                "typeReference": {
-                                    "kind": "TypeReference",
-                                    "identifier": {
-                                        "kind": "Identifier",
-                                        "fullStart": 3657,
-                                        "start": 3657,
+                                "type": {
+                                    "kind": "LonghandTypeAnnotation",
+                                    "colon": {
+                                        "kind": "Colon",
+                                        "fullStart": 3656,
+                                        "start": 3656,
                                         "length": 1
                                     },
-                                    "arrayTypeDeclarations": []
+                                    "typeReference": {
+                                        "kind": "TypeReference",
+                                        "identifier": {
+                                            "kind": "Identifier",
+                                            "fullStart": 3657,
+                                            "start": 3657,
+                                            "length": 1
+                                        },
+                                        "arrayTypeAnnotations": []
+                                    }
                                 }
                             }
-                        }
-                    ],
+                        ]
+                    },
                     "closingParenthesis": {
                         "kind": "ClosingParenthesis",
                         "fullStart": 3658,
@@ -3078,7 +3117,7 @@
                         "length": 4
                     },
                     "returnType": {
-                        "kind": "LonghandTypeDeclaration",
+                        "kind": "LonghandTypeAnnotation",
                         "colon": {
                             "kind": "Colon",
                             "fullStart": 3716,
@@ -3093,7 +3132,7 @@
                                 "start": 3717,
                                 "length": 1
                             },
-                            "arrayTypeDeclarations": []
+                            "arrayTypeAnnotations": []
                         }
                     },
                     "openingParenthesis": {
@@ -3102,7 +3141,10 @@
                         "start": 3718,
                         "length": 1
                     },
-                    "parameters": [],
+                    "parameters": {
+                        "kind": "DataDeclarationSequence",
+                        "children": []
+                    },
                     "closingParenthesis": {
                         "kind": "ClosingParenthesis",
                         "fullStart": 3719,
@@ -3167,7 +3209,7 @@
                                 "length": 6
                             },
                             "type": {
-                                "kind": "LonghandTypeDeclaration",
+                                "kind": "LonghandTypeAnnotation",
                                 "colon": {
                                     "kind": "Colon",
                                     "fullStart": 3772,
@@ -3182,7 +3224,7 @@
                                         "start": 3773,
                                         "length": 1
                                     },
-                                    "arrayTypeDeclarations": []
+                                    "arrayTypeAnnotations": []
                                 }
                             }
                         }
@@ -3220,7 +3262,10 @@
                         "start": 3793,
                         "length": 1
                     },
-                    "parameters": [],
+                    "parameters": {
+                        "kind": "DataDeclarationSequence",
+                        "children": []
+                    },
                     "closingParenthesis": {
                         "kind": "ClosingParenthesis",
                         "fullStart": 3794,
@@ -3281,7 +3326,10 @@
                         "start": 3853,
                         "length": 1
                     },
-                    "parameters": [],
+                    "parameters": {
+                        "kind": "DataDeclarationSequence",
+                        "children": []
+                    },
                     "closingParenthesis": {
                         "kind": "ClosingParenthesis",
                         "fullStart": 3854,
@@ -3399,7 +3447,7 @@
                     "start": 3936,
                     "length": 8
                 },
-                "arrayTypeDeclarations": []
+                "arrayTypeAnnotations": []
             },
             "members": [
                 {
@@ -3485,7 +3533,7 @@
                     "start": 4063,
                     "length": 8
                 },
-                "arrayTypeDeclarations": []
+                "arrayTypeAnnotations": []
             },
             "attribute": {
                 "kind": "AbstractKeyword",
@@ -3578,7 +3626,7 @@
                         "start": 4201,
                         "length": 9
                     },
-                    "arrayTypeDeclarations": []
+                    "arrayTypeAnnotations": []
                 }
             ],
             "members": [
@@ -3666,7 +3714,7 @@
                         "start": 4322,
                         "length": 9
                     },
-                    "arrayTypeDeclarations": []
+                    "arrayTypeAnnotations": []
                 }
             ],
             "attribute": {
@@ -3760,7 +3808,7 @@
                         "start": 4459,
                         "length": 9
                     },
-                    "arrayTypeDeclarations": []
+                    "arrayTypeAnnotations": []
                 },
                 {
                     "kind": "CommaSeparator",
@@ -3780,7 +3828,7 @@
                         "start": 4468,
                         "length": 8
                     },
-                    "arrayTypeDeclarations": []
+                    "arrayTypeAnnotations": []
                 }
             ],
             "members": [
@@ -3867,7 +3915,7 @@
                     "start": 4578,
                     "length": 8
                 },
-                "arrayTypeDeclarations": []
+                "arrayTypeAnnotations": []
             },
             "implementsKeyword": {
                 "kind": "ImplementsKeyword",
@@ -3884,7 +3932,7 @@
                         "start": 4597,
                         "length": 9
                     },
-                    "arrayTypeDeclarations": []
+                    "arrayTypeAnnotations": []
                 },
                 {
                     "kind": "CommaSeparator",
@@ -3904,7 +3952,7 @@
                         "start": 4606,
                         "length": 8
                     },
-                    "arrayTypeDeclarations": []
+                    "arrayTypeAnnotations": []
                 }
             ],
             "members": [
@@ -3997,7 +4045,7 @@
                     "start": 4730,
                     "length": 8
                 },
-                "arrayTypeDeclarations": []
+                "arrayTypeAnnotations": []
             },
             "implementsKeyword": {
                 "kind": "ImplementsKeyword",
@@ -4014,7 +4062,7 @@
                         "start": 4749,
                         "length": 9
                     },
-                    "arrayTypeDeclarations": []
+                    "arrayTypeAnnotations": []
                 },
                 {
                     "kind": "CommaSeparator",
@@ -4034,7 +4082,7 @@
                         "start": 4758,
                         "length": 8
                     },
-                    "arrayTypeDeclarations": []
+                    "arrayTypeAnnotations": []
                 }
             ],
             "attribute": {
@@ -4102,36 +4150,39 @@
                 "start": 4887,
                 "length": 1
             },
-            "parameters": [
-                {
-                    "kind": "DataDeclaration",
-                    "identifier": {
-                        "kind": "Identifier",
-                        "fullStart": 4888,
-                        "start": 4888,
-                        "length": 3
-                    },
-                    "type": {
-                        "kind": "LonghandTypeDeclaration",
-                        "colon": {
-                            "kind": "Colon",
-                            "fullStart": 4891,
-                            "start": 4891,
-                            "length": 1
+            "parameters": {
+                "kind": "DataDeclarationSequence",
+                "children": [
+                    {
+                        "kind": "DataDeclaration",
+                        "identifier": {
+                            "kind": "Identifier",
+                            "fullStart": 4888,
+                            "start": 4888,
+                            "length": 3
                         },
-                        "typeReference": {
-                            "kind": "TypeReference",
-                            "identifier": {
-                                "kind": "StringKeyword",
-                                "fullStart": 4892,
-                                "start": 4893,
-                                "length": 7
+                        "type": {
+                            "kind": "LonghandTypeAnnotation",
+                            "colon": {
+                                "kind": "Colon",
+                                "fullStart": 4891,
+                                "start": 4891,
+                                "length": 1
                             },
-                            "arrayTypeDeclarations": []
+                            "typeReference": {
+                                "kind": "TypeReference",
+                                "identifier": {
+                                    "kind": "StringKeyword",
+                                    "fullStart": 4892,
+                                    "start": 4893,
+                                    "length": 7
+                                },
+                                "arrayTypeAnnotations": []
+                            }
                         }
                     }
-                }
-            ],
+                ]
+            },
             "closingParenthesis": {
                 "kind": "ClosingParenthesis",
                 "fullStart": 4899,
@@ -4993,36 +5044,39 @@
                 "start": 5636,
                 "length": 1
             },
-            "parameters": [
-                {
-                    "kind": "DataDeclaration",
-                    "identifier": {
-                        "kind": "Identifier",
-                        "fullStart": 5637,
-                        "start": 5637,
-                        "length": 3
-                    },
-                    "type": {
-                        "kind": "LonghandTypeDeclaration",
-                        "colon": {
-                            "kind": "Colon",
-                            "fullStart": 5640,
-                            "start": 5640,
-                            "length": 1
+            "parameters": {
+                "kind": "DataDeclarationSequence",
+                "children": [
+                    {
+                        "kind": "DataDeclaration",
+                        "identifier": {
+                            "kind": "Identifier",
+                            "fullStart": 5637,
+                            "start": 5637,
+                            "length": 3
                         },
-                        "typeReference": {
-                            "kind": "TypeReference",
-                            "identifier": {
-                                "kind": "StringKeyword",
-                                "fullStart": 5641,
-                                "start": 5642,
-                                "length": 7
+                        "type": {
+                            "kind": "LonghandTypeAnnotation",
+                            "colon": {
+                                "kind": "Colon",
+                                "fullStart": 5640,
+                                "start": 5640,
+                                "length": 1
                             },
-                            "arrayTypeDeclarations": []
+                            "typeReference": {
+                                "kind": "TypeReference",
+                                "identifier": {
+                                    "kind": "StringKeyword",
+                                    "fullStart": 5641,
+                                    "start": 5642,
+                                    "length": 7
+                                },
+                                "arrayTypeAnnotations": []
+                            }
                         }
                     }
-                }
-            ],
+                ]
+            },
             "closingParenthesis": {
                 "kind": "ClosingParenthesis",
                 "fullStart": 5648,
@@ -5224,7 +5278,10 @@
                 "start": 5751,
                 "length": 1
             },
-            "parameters": [],
+            "parameters": {
+                "kind": "DataDeclarationSequence",
+                "children": []
+            },
             "closingParenthesis": {
                 "kind": "ClosingParenthesis",
                 "fullStart": 5752,
@@ -5507,7 +5564,7 @@
                                 "length": 2
                             },
                             "rightOperand": {
-                                "kind": "UnaryOpExpression",
+                                "kind": "UnaryExpression",
                                 "newlines": [],
                                 "operator": {
                                     "kind": "HyphenMinus",
@@ -5590,7 +5647,10 @@
                 "start": 6151,
                 "length": 1
             },
-            "parameters": [],
+            "parameters": {
+                "kind": "DataDeclarationSequence",
+                "children": []
+            },
             "closingParenthesis": {
                 "kind": "ClosingParenthesis",
                 "fullStart": 6152,
@@ -6096,7 +6156,10 @@
                 "start": 6787,
                 "length": 1
             },
-            "parameters": [],
+            "parameters": {
+                "kind": "DataDeclarationSequence",
+                "children": []
+            },
             "closingParenthesis": {
                 "kind": "ClosingParenthesis",
                 "fullStart": 6788,
@@ -6133,7 +6196,7 @@
                                     "length": 2
                                 },
                                 "type": {
-                                    "kind": "LonghandTypeDeclaration",
+                                    "kind": "LonghandTypeAnnotation",
                                     "colon": {
                                         "kind": "Colon",
                                         "fullStart": 6802,
@@ -6148,7 +6211,7 @@
                                             "start": 6804,
                                             "length": 6
                                         },
-                                        "arrayTypeDeclarations": []
+                                        "arrayTypeAnnotations": []
                                     }
                                 }
                             }

@@ -1,0 +1,124 @@
+{
+    "kind": "ModuleDeclaration",
+    "identifier": "forLoop",
+    "locals": [
+        "Main"
+    ],
+    "members": [
+        {
+            "kind": "FunctionDeclaration",
+            "identifier": "Main",
+            "locals": [
+                "i",
+                "val",
+                "val2"
+            ],
+            "returnType": "Int",
+            "parameters": [],
+            "statements": [
+                {
+                    "kind": "ForLoop",
+                    "statement": {
+                        "kind": "DataDeclarationStatement",
+                        "declaration": {
+                            "kind": "DataDeclaration",
+                            "declarationKind": "LocalKeyword",
+                            "identifier": "i",
+                            "type": "Int",
+                            "expression": {
+                                "kind": "IntegerLiteralExpression",
+                                "type": "Int"
+                            }
+                        }
+                    },
+                    "lastValueExpression": {
+                        "kind": "IntegerLiteralExpression",
+                        "type": "Int"
+                    },
+                    "stepValueExpression": {
+                        "kind": "UnaryExpression",
+                        "type": "Int",
+                        "operand": {
+                            "kind": "IntegerLiteralExpression",
+                            "type": "Int"
+                        }
+                    },
+                    "statements": []
+                },
+                {
+                    "kind": "ForLoop",
+                    "statement": {
+                        "kind": "DataDeclarationStatement",
+                        "declaration": {
+                            "kind": "DataDeclaration",
+                            "declarationKind": "LocalKeyword",
+                            "identifier": "val",
+                            "type": "Int[]",
+                            "expression": {
+                                "kind": "ArrayLiteralExpression",
+                                "type": "Int[]",
+                                "expressions": [
+                                    {
+                                        "kind": "IntegerLiteralExpression",
+                                        "type": "Int"
+                                    },
+                                    {
+                                        "kind": "IntegerLiteralExpression",
+                                        "type": "Int"
+                                    },
+                                    {
+                                        "kind": "IntegerLiteralExpression",
+                                        "type": "Int"
+                                    }
+                                ]
+                            }
+                        }
+                    },
+                    "statements": []
+                },
+                {
+                    "kind": "DataDeclarationStatement",
+                    "declaration": {
+                        "kind": "DataDeclaration",
+                        "declarationKind": "LocalKeyword",
+                        "identifier": "val2",
+                        "type": "Int[]"
+                    }
+                },
+                {
+                    "kind": "ForLoop",
+                    "statement": {
+                        "kind": "ExpressionStatement",
+                        "expression": {
+                            "kind": "AssignmentExpression",
+                            "leftOperand": {
+                                "kind": "IdentifierExpression",
+                                "type": "Int[]",
+                                "identifier": "val2"
+                            },
+                            "rightOperand": {
+                                "kind": "ArrayLiteralExpression",
+                                "type": "Int[]",
+                                "expressions": [
+                                    {
+                                        "kind": "IntegerLiteralExpression",
+                                        "type": "Int"
+                                    },
+                                    {
+                                        "kind": "IntegerLiteralExpression",
+                                        "type": "Int"
+                                    },
+                                    {
+                                        "kind": "IntegerLiteralExpression",
+                                        "type": "Int"
+                                    }
+                                ]
+                            }
+                        }
+                    },
+                    "statements": []
+                }
+            ]
+        }
+    ]
+}

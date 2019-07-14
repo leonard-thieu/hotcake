@@ -23,7 +23,10 @@
                 "start": 13,
                 "length": 1
             },
-            "parameters": [],
+            "parameters": {
+                "kind": "DataDeclarationSequence",
+                "children": []
+            },
             "closingParenthesis": {
                 "kind": "ClosingParenthesis",
                 "fullStart": 14,
@@ -214,7 +217,7 @@
                                             "rightOperand": {
                                                 "kind": "BinaryExpression",
                                                 "leftOperand": {
-                                                    "kind": "UnaryOpExpression",
+                                                    "kind": "UnaryExpression",
                                                     "newlines": [],
                                                     "operator": {
                                                         "kind": "HyphenMinus",

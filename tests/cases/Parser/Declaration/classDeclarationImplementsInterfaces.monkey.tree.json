@@ -32,7 +32,7 @@
                         "start": 23,
                         "length": 9
                     },
-                    "arrayTypeDeclarations": []
+                    "arrayTypeAnnotations": []
                 },
                 {
                     "kind": "CommaSeparator",
@@ -52,7 +52,7 @@
                         "start": 32,
                         "length": 8
                     },
-                    "arrayTypeDeclarations": []
+                    "arrayTypeAnnotations": []
                 }
             ],
             "members": [

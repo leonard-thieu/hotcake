@@ -109,7 +109,10 @@
                 "start": 73,
                 "length": 1
             },
-            "parameters": [],
+            "parameters": {
+                "kind": "DataDeclarationSequence",
+                "children": []
+            },
             "closingParenthesis": {
                 "kind": "ClosingParenthesis",
                 "fullStart": 74,
@@ -2881,7 +2884,7 @@
                                     "length": 6
                                 }
                             },
-                            "arrayTypeDeclarations": []
+                            "arrayTypeAnnotations": []
                         }
                     },
                     "terminator": {
@@ -3501,7 +3504,7 @@
                                             "start": 1748,
                                             "length": 6
                                         },
-                                        "arrayTypeDeclarations": []
+                                        "arrayTypeAnnotations": []
                                     }
                                 }
                             }
@@ -3605,7 +3608,7 @@
                                     "length": 11
                                 },
                                 "type": {
-                                    "kind": "LonghandTypeDeclaration",
+                                    "kind": "LonghandTypeAnnotation",
                                     "colon": {
                                         "kind": "Colon",
                                         "fullStart": 1795,
@@ -3629,7 +3632,7 @@
                                                 "length": 5
                                             }
                                         },
-                                        "arrayTypeDeclarations": []
+                                        "arrayTypeAnnotations": []
                                     }
                                 },
                                 "equalsSign": {
@@ -3695,7 +3698,7 @@
                                         "start": 1830,
                                         "length": 3
                                     },
-                                    "arrayTypeDeclarations": []
+                                    "arrayTypeAnnotations": []
                                 }
                             ],
                             "greaterThanSign": {
@@ -3946,7 +3949,10 @@
                         "start": 2121,
                         "length": 1
                     },
-                    "parameters": [],
+                    "parameters": {
+                        "kind": "DataDeclarationSequence",
+                        "children": []
+                    },
                     "closingParenthesis": {
                         "kind": "ClosingParenthesis",
                         "fullStart": 2122,
@@ -3990,7 +3996,7 @@
                                             "start": 2143,
                                             "length": 10
                                         },
-                                        "arrayTypeDeclarations": []
+                                        "arrayTypeAnnotations": []
                                     }
                                 },
                                 "openingParenthesis": {
@@ -4090,7 +4096,10 @@
                         "start": 2202,
                         "length": 1
                     },
-                    "parameters": [],
+                    "parameters": {
+                        "kind": "DataDeclarationSequence",
+                        "children": []
+                    },
                     "closingParenthesis": {
                         "kind": "ClosingParenthesis",
                         "fullStart": 2203,
@@ -4134,7 +4143,7 @@
                                             "start": 2224,
                                             "length": 10
                                         },
-                                        "arrayTypeDeclarations": []
+                                        "arrayTypeAnnotations": []
                                     }
                                 },
                                 "openingParenthesis": {
@@ -4208,7 +4217,10 @@
                         "start": 2268,
                         "length": 1
                     },
-                    "parameters": [],
+                    "parameters": {
+                        "kind": "DataDeclarationSequence",
+                        "children": []
+                    },
                     "closingParenthesis": {
                         "kind": "ClosingParenthesis",
                         "fullStart": 2269,
@@ -4252,7 +4264,7 @@
                                             "start": 2290,
                                             "length": 10
                                         },
-                                        "arrayTypeDeclarations": []
+                                        "arrayTypeAnnotations": []
                                     }
                                 },
                                 "openingParenthesis": {
@@ -4326,36 +4338,39 @@
                         "start": 2331,
                         "length": 1
                     },
-                    "parameters": [
-                        {
-                            "kind": "DataDeclaration",
-                            "identifier": {
-                                "kind": "Identifier",
-                                "fullStart": 2332,
-                                "start": 2332,
-                                "length": 1
-                            }
-                        },
-                        {
-                            "kind": "CommaSeparator",
-                            "separator": {
-                                "kind": "Comma",
-                                "fullStart": 2333,
-                                "start": 2333,
-                                "length": 1
+                    "parameters": {
+                        "kind": "DataDeclarationSequence",
+                        "children": [
+                            {
+                                "kind": "DataDeclaration",
+                                "identifier": {
+                                    "kind": "Identifier",
+                                    "fullStart": 2332,
+                                    "start": 2332,
+                                    "length": 1
+                                }
                             },
-                            "newlines": []
-                        },
-                        {
-                            "kind": "DataDeclaration",
-                            "identifier": {
-                                "kind": "Identifier",
-                                "fullStart": 2334,
-                                "start": 2335,
-                                "length": 2
+                            {
+                                "kind": "CommaSeparator",
+                                "separator": {
+                                    "kind": "Comma",
+                                    "fullStart": 2333,
+                                    "start": 2333,
+                                    "length": 1
+                                },
+                                "newlines": []
+                            },
+                            {
+                                "kind": "DataDeclaration",
+                                "identifier": {
+                                    "kind": "Identifier",
+                                    "fullStart": 2334,
+                                    "start": 2335,
+                                    "length": 2
+                                }
                             }
-                        }
-                    ],
+                        ]
+                    },
                     "closingParenthesis": {
                         "kind": "ClosingParenthesis",
                         "fullStart": 2336,
@@ -4421,17 +4436,20 @@
                         "start": 2365,
                         "length": 1
                     },
-                    "parameters": [
-                        {
-                            "kind": "DataDeclaration",
-                            "identifier": {
-                                "kind": "Identifier",
-                                "fullStart": 2366,
-                                "start": 2366,
-                                "length": 1
+                    "parameters": {
+                        "kind": "DataDeclarationSequence",
+                        "children": [
+                            {
+                                "kind": "DataDeclaration",
+                                "identifier": {
+                                    "kind": "Identifier",
+                                    "fullStart": 2366,
+                                    "start": 2366,
+                                    "length": 1
+                                }
                             }
-                        }
-                    ],
+                        ]
+                    },
                     "closingParenthesis": {
                         "kind": "ClosingParenthesis",
                         "fullStart": 2367,
@@ -4534,7 +4552,7 @@
                     "start": 2416,
                     "length": 6
                 },
-                "arrayTypeDeclarations": []
+                "arrayTypeAnnotations": []
             },
             "members": [
                 {

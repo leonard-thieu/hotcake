@@ -16,7 +16,7 @@
                 "length": 2
             },
             "expression": {
-                "kind": "UnaryOpExpression",
+                "kind": "UnaryExpression",
                 "newlines": [],
                 "operator": {
                     "kind": "PlusSign",
