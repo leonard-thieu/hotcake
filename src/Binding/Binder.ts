@@ -4,7 +4,7 @@ import { CommaSeparator } from '../Syntax/Node/CommaSeparator';
 import { AliasDirectiveSequence } from '../Syntax/Node/Declaration/AliasDirectiveSequence';
 import { ClassDeclaration } from '../Syntax/Node/Declaration/ClassDeclaration';
 import { ClassMethodDeclaration } from '../Syntax/Node/Declaration/ClassMethodDeclaration';
-import { DataDeclaration, DataDeclarationSequence } from '../Syntax/Node/Declaration/DataDeclarationSequence';
+import { DataDeclaration, DataDeclarationKeywordToken, DataDeclarationSequence } from '../Syntax/Node/Declaration/DataDeclarationSequence';
 import { Declarations } from '../Syntax/Node/Declaration/Declaration';
 import { FunctionDeclaration } from '../Syntax/Node/Declaration/FunctionDeclaration';
 import { InterfaceDeclaration } from '../Syntax/Node/Declaration/InterfaceDeclaration';
@@ -23,6 +23,7 @@ import { SliceExpression } from '../Syntax/Node/Expression/SliceExpression';
 import { UnaryExpression } from '../Syntax/Node/Expression/UnaryExpression';
 import { EscapeOptionalIdentifierNameToken } from '../Syntax/Node/Identifier';
 import { NodeKind } from '../Syntax/Node/NodeKind';
+import { DataDeclarationSequenceStatement } from '../Syntax/Node/Statement/DataDeclarationSequenceStatement';
 import { EmptyStatement } from '../Syntax/Node/Statement/EmptyStatement';
 import { ExpressionStatement } from '../Syntax/Node/Statement/ExpressionStatement';
 import { ForLoop } from '../Syntax/Node/Statement/ForLoop';
@@ -68,6 +69,7 @@ import { BoundSliceExpression } from './Node/Expression/BoundSliceExpression';
 import { BoundStringLiteralExpression } from './Node/Expression/BoundStringLiteralExpression';
 import { BoundSuperExpression } from './Node/Expression/BoundSuperExpression';
 import { BoundUnaryExpression } from './Node/Expression/BoundUnaryExpression';
+import { BoundDataDeclarationStatement } from './Node/Statement/BoundDataDeclarationStatement';
 import { BoundExpressionStatement } from './Node/Statement/BoundExpressionStatement';
 import { BoundReturnStatement } from './Node/Statement/BoundReturnStatement';
 import { BoundStatements } from './Node/Statement/BoundStatements';
@@ -351,12 +353,13 @@ export class Binder {
         for (const dataDeclaration of dataDeclarationSequence.children) {
             switch (dataDeclaration.kind) {
                 case NodeKind.DataDeclaration: {
-                    const boundDataDeclaration = this.bindDataDeclaration(dataDeclaration, parent);
+                    const boundDataDeclaration = this.bindDataDeclaration(dataDeclaration, parent, dataDeclarationSequence.dataDeclarationKeyword);
                     boundDataDeclarations.push(boundDataDeclaration);
                     break;
                 }
+                case NodeKind.CommaSeparator: { break; }
                 default: {
-                    assertType<CommaSeparator>(dataDeclaration);
+                    assertNever(dataDeclaration);
                     break;
                 }
             }
@@ -368,11 +371,35 @@ export class Binder {
     private bindDataDeclaration(
         dataDeclaration: DataDeclaration,
         parent: BoundNodes,
+        dataDeclarationKeyword?: DataDeclarationKeywordToken,
     ) {
         const boundDataDeclaration = new BoundDataDeclaration();
         boundDataDeclaration.parent = parent;
+
+        if (dataDeclarationKeyword) {
+            boundDataDeclaration.declarationKind = dataDeclarationKeyword.kind;
+        }
+
         boundDataDeclaration.identifier = this.declareSymbol(dataDeclaration, boundDataDeclaration);
-        boundDataDeclaration.type = this.bindTypeAnnotation(dataDeclaration.type);
+
+        // TODO: Should this be lowered to an assignment expression?
+        if (dataDeclaration.expression) {
+            boundDataDeclaration.expression = this.bindExpression(dataDeclaration.expression, boundDataDeclaration);
+        }
+
+        if (dataDeclaration.equalsSign &&
+            dataDeclaration.equalsSign.kind === TokenKind.ColonEqualsSign) {
+            if (boundDataDeclaration.expression) {
+                boundDataDeclaration.type = boundDataDeclaration.expression.type;
+            }
+        } else {
+            boundDataDeclaration.type = this.bindTypeAnnotation(dataDeclaration.type);
+            if (boundDataDeclaration.expression) {
+                if (!boundDataDeclaration.expression.type.isConvertibleTo(boundDataDeclaration.type)) {
+                    throw new Error(`'${boundDataDeclaration.expression.type}' is not convertible to '${boundDataDeclaration.type}'.`);
+                }
+            }
+        }
 
         return boundDataDeclaration;
     }
@@ -386,12 +413,36 @@ export class Binder {
         if (statementsParent.statements) {
             for (const statement of statementsParent.statements) {
                 switch (statement.kind) {
-                    case TokenKind.Skipped: { break; }
-                    default: {
+                    case NodeKind.DataDeclarationSequenceStatement:
+                    case NodeKind.ReturnStatement:
+                    case NodeKind.IfStatement:
+                    case NodeKind.SelectStatement:
+                    case NodeKind.CaseStatement:
+                    case NodeKind.DefaultStatement:
+                    case NodeKind.WhileLoop:
+                    case NodeKind.RepeatLoop:
+                    case NodeKind.ForLoop:
+                    case NodeKind.ContinueStatement:
+                    case NodeKind.ExitStatement:
+                    case NodeKind.ThrowStatement:
+                    case NodeKind.TryStatement:
+                    case NodeKind.ExpressionStatement: {
                         const boundStatement = this.bindStatement(statement, parent);
                         if (boundStatement) {
-                            boundStatements.push(boundStatement);
+                            if (Array.isArray(boundStatement)) {
+                                boundStatements.push(...boundStatement);
+                            } else {
+                                boundStatements.push(boundStatement);
+                            }
                         }
+                        break;
+                    }
+
+                    case NodeKind.EmptyStatement:
+                    case TokenKind.Skipped: { break; }
+
+                    default: {
+                        assertNever(statement);
                         break;
                     }
                 }
@@ -407,8 +458,7 @@ export class Binder {
     ) {
         switch (statement.kind) {
             case NodeKind.DataDeclarationSequenceStatement: {
-                this.bindDataDeclarationSequence(statement.dataDeclarationSequence, parent);
-                break;
+                return this.bindDataDeclarationSequenceStatement(statement, parent);
             }
             case NodeKind.IfStatement: {
                 this.bindIfStatement(statement);
@@ -451,6 +501,44 @@ export class Binder {
                 break;
             }
         }
+    }
+
+    private bindDataDeclarationSequenceStatement(
+        statement: DataDeclarationSequenceStatement,
+        parent: BoundNodes,
+    ) {
+        const { dataDeclarationSequence } = statement;
+
+        const boundDataDeclarationStatements: BoundDataDeclarationStatement[] = [];
+
+        for (const dataDeclaration of dataDeclarationSequence.children) {
+            switch (dataDeclaration.kind) {
+                case NodeKind.DataDeclaration: {
+                    const boundDataDeclarationStatement = this.bindDataDeclarationStatement(dataDeclaration, parent, dataDeclarationSequence.dataDeclarationKeyword);
+                    boundDataDeclarationStatements.push(boundDataDeclarationStatement);
+                    break;
+                }
+                case NodeKind.CommaSeparator: { break; }
+                default: {
+                    assertNever(dataDeclaration);
+                    break;
+                }
+            }
+        }
+
+        return boundDataDeclarationStatements;
+    }
+
+    private bindDataDeclarationStatement(
+        dataDeclaration: DataDeclaration,
+        parent: BoundNodes,
+        dataDeclarationKeyword?: DataDeclarationKeywordToken,
+    ) {
+        const boundDataDeclarationStatement = new BoundDataDeclarationStatement();
+        boundDataDeclarationStatement.parent = parent;
+        boundDataDeclarationStatement.declaration = this.bindDataDeclaration(dataDeclaration, boundDataDeclarationStatement, dataDeclarationKeyword);
+
+        return boundDataDeclarationStatement;
     }
 
     private bindReturnStatement(
@@ -1413,20 +1501,41 @@ export class Binder {
         const name = this.getDeclarationName(declaration);
         const identifier = new BoundSymbol(name, boundDeclaration);
 
-        if (boundDeclaration.parent) {
-            const parent = boundDeclaration.parent as any;
-            const parentLocals = parent.locals;
-            const existingSymbol = parentLocals.get(name);
+        const scope = this.getScope(boundDeclaration);
+        if (scope) {
+            const existingSymbol = scope.locals.get(name);
 
             if (existingSymbol) {
                 throw new Error(`Duplicate symbol '${name}'.`);
-            }
-            else {
-                parentLocals.set(name, identifier);
+            } else {
+                scope.locals.set(name, identifier);
             }
         }
 
         return identifier;
+    }
+
+    private getScope(boundDeclaration: BoundDeclarations) {
+        let node = boundDeclaration.parent;
+
+        while (true) {
+            if (!node) {
+                return undefined;
+            }
+
+            switch (node.kind) {
+                case BoundNodeKind.ClassDeclaration:
+                case BoundNodeKind.ClassMethodDeclaration:
+                case BoundNodeKind.FunctionDeclaration:
+                case BoundNodeKind.InterfaceDeclaration:
+                case BoundNodeKind.InterfaceMethodDeclaration:
+                case BoundNodeKind.ModuleDeclaration: {
+                    return node;
+                }
+            }
+
+            node = node.parent;
+        }
     }
 
     private getDeclarationName(declaration: Declarations) {

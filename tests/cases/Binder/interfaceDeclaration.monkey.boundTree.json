@@ -55,8 +55,13 @@
             "members": [
                 {
                     "kind": "DataDeclaration",
+                    "declarationKind": "ConstKeyword",
                     "identifier": "Name",
-                    "type": "String"
+                    "type": "String",
+                    "expression": {
+                        "kind": "StringLiteralExpression",
+                        "type": "String"
+                    }
                 }
             ]
         }

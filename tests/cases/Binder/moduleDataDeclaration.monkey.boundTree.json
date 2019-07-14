@@ -8,13 +8,23 @@
     "members": [
         {
             "kind": "DataDeclaration",
+            "declarationKind": "GlobalKeyword",
             "identifier": "ScaleX",
-            "type": "Int"
+            "type": "Int",
+            "expression": {
+                "kind": "IntegerLiteralExpression",
+                "type": "Int"
+            }
         },
         {
             "kind": "DataDeclaration",
+            "declarationKind": "ConstKeyword",
             "identifier": "Version",
-            "type": "Int"
+            "type": "String",
+            "expression": {
+                "kind": "StringLiteralExpression",
+                "type": "String"
+            }
         }
     ]
 }

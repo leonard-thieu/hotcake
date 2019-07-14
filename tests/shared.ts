@@ -4,6 +4,7 @@ import path = require('path');
 import mkdirp = require('mkdirp');
 import { orderBy } from 'natural-orderby';
 import { Binder } from '../src/Binding/Binder';
+import { BoundNodeKind } from '../src/Binding/Node/BoundNodeKind';
 import { BoundModuleDeclaration } from '../src/Binding/Node/Declaration/BoundModuleDeclaration';
 import { Type } from '../src/Binding/Type/Type';
 import { ModuleDeclaration } from '../src/Syntax/Node/Declaration/ModuleDeclaration';
@@ -175,9 +176,14 @@ export function executeBinderTestCases(name: string, casesPath: string): void {
                     return getBoundTree(sourceRelativePath, contents);
                 }, function (this: any, key, value) {
                     switch (key) {
-                        case 'parent':
-                        case 'declaration': {
+                        case 'parent': {
                             return undefined;
+                        }
+                        case 'declaration': {
+                            if (this.kind !== BoundNodeKind.DataDeclarationStatement) {
+                                return undefined;
+                            }
+                            break;
                         }
                         case 'identifier': {
                             return value.name;
