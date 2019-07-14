@@ -17,6 +17,7 @@ import { IdentifierExpression } from '../Syntax/Node/Expression/IdentifierExpres
 import { IndexExpression } from '../Syntax/Node/Expression/IndexExpression';
 import { InvokeExpression } from '../Syntax/Node/Expression/InvokeExpression';
 import { NewExpression } from '../Syntax/Node/Expression/NewExpression';
+import { SliceExpression } from '../Syntax/Node/Expression/SliceExpression';
 import { UnaryExpression } from '../Syntax/Node/Expression/UnaryExpression';
 import { EscapeOptionalIdentifierNameToken } from '../Syntax/Node/Identifier';
 import { NodeKind } from '../Syntax/Node/NodeKind';
@@ -60,6 +61,7 @@ import { BoundInvokeExpression } from './Node/Expression/BoundInvokeExpression';
 import { BoundNewExpression } from './Node/Expression/BoundNewExpression';
 import { BoundNullExpression } from './Node/Expression/BoundNullExpression';
 import { BoundSelfExpression } from './Node/Expression/BoundSelfExpression';
+import { BoundSliceExpression } from './Node/Expression/BoundSliceExpression';
 import { BoundStringLiteralExpression } from './Node/Expression/BoundStringLiteralExpression';
 import { BoundSuperExpression } from './Node/Expression/BoundSuperExpression';
 import { BoundUnaryExpression } from './Node/Expression/BoundUnaryExpression';
@@ -595,8 +597,10 @@ export class Binder {
             case NodeKind.IndexExpression: {
                 return this.bindIndexExpression(expression, parent);
             }
+            case NodeKind.SliceExpression: {
+                return this.bindSliceExpression(expression, parent);
+            }
             case NodeKind.ScopeMemberAccessExpression:
-            case NodeKind.SliceExpression:
             case NodeKind.GroupingExpression:
             case NodeKind.AssignmentExpression:
             case NodeKind.GlobalScopeExpression: {
@@ -607,6 +611,45 @@ export class Binder {
                 throw new Error('Method not implemented.');
             }
         }
+    }
+
+    private bindSliceExpression(
+        expression: SliceExpression,
+        parent: BoundNodes,
+    ) {
+        const boundSliceExpression = new BoundSliceExpression();
+        boundSliceExpression.parent = parent;
+
+        boundSliceExpression.sliceableExpression = this.bindExpression(expression.sliceableExpression, boundSliceExpression);
+
+        const sliceableExpression = boundSliceExpression.sliceableExpression;
+        switch (sliceableExpression.type.kind) {
+            case TypeKind.String:
+            case TypeKind.Array: {
+                boundSliceExpression.type = sliceableExpression.type;
+                break;
+            }
+            default: {
+                throw new Error(`Expressions of type '${sliceableExpression.type}' cannot be sliced.`);
+            }
+        }
+
+        if (expression.startExpression) {
+            boundSliceExpression.startExpression = this.bindExpression(expression.startExpression, boundSliceExpression);
+            if (!boundSliceExpression.startExpression.type.isConvertibleTo(IntType.type)) {
+                throw new Error(`Start index expression is '${boundSliceExpression.startExpression.type}' but must be '${IntType.type}'.`)
+            }
+
+        }
+
+        if (expression.endExpression) {
+            boundSliceExpression.endExpression = this.bindExpression(expression.endExpression, boundSliceExpression);
+            if (!boundSliceExpression.endExpression.type.isConvertibleTo(IntType.type)) {
+                throw new Error(`End index expression is '${boundSliceExpression.endExpression.type}' but must be '${IntType.type}'.`)
+            }
+        }
+
+        return boundSliceExpression;
     }
 
     private bindIndexExpression(

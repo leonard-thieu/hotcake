@@ -12,6 +12,7 @@ export enum BoundNodeKind {
 
     ArrayLiteralExpression = 'ArrayLiteralExpression',
     IndexExpression = 'IndexExpression',
+    SliceExpression = 'SliceExpression',
     SelfExpression = 'SelfExpression',
     SuperExpression = 'SuperExpression',
     NewExpression = 'NewExpression',
