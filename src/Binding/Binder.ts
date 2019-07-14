@@ -74,6 +74,7 @@ import { BoundElseIfStatement, BoundElseStatement, BoundIfStatement } from './No
 import { BoundReturnStatement } from './Node/Statement/BoundReturnStatement';
 import { BoundCaseStatement, BoundDefaultStatement, BoundSelectStatement } from './Node/Statement/BoundSelectStatement';
 import { BoundStatements } from './Node/Statement/BoundStatements';
+import { BoundCatchStatement, BoundTryStatement } from './Node/Statement/BoundTryStatement';
 import { ArrayType } from './Type/ArrayType';
 import { BoolType } from './Type/BoolType';
 import { FloatType } from './Type/FloatType';
@@ -480,8 +481,7 @@ export class Binder {
                 return this.bindForLoop(statement, parent);
             }
             case NodeKind.TryStatement: {
-                this.bindTryStatement(statement);
-                break;
+                return this.bindTryStatement(statement, parent);
             }
             case NodeKind.ReturnStatement: {
                 return this.bindReturnStatement(statement, parent);
@@ -741,22 +741,49 @@ export class Binder {
         return boundForLoop;
     }
 
-    private bindTryStatement(statement: TryStatement) {
-        // this.bindStatements(statement);
+    private bindTryStatement(
+        tryStatement: TryStatement,
+        parent: BoundNodes,
+    ) {
+        const boundTryStatement = new BoundTryStatement();
+        boundTryStatement.parent = parent;
+        boundTryStatement.statements = this.bindStatements(tryStatement.statements, boundTryStatement);
+        boundTryStatement.catchStatements = this.bindbindCatchStatements(tryStatement, boundTryStatement);
 
-        // if (statement.catchStatements) {
-        //     for (const catchStatement of statement.catchStatements) {
-        //         this.bindCatchStatement(catchStatement);
-        //     }
-        // }
+        return boundTryStatement;
     }
 
-    private bindCatchStatement(catchStatement: CatchStatement) {
-        // if (catchStatement.parameter.kind === NodeKind.DataDeclaration) {
-        //     // TODO: Bind catch statement parameter
-        // }
+    private bindbindCatchStatements(
+        tryStatement: TryStatement,
+        parent: BoundTryStatement,
+    ) {
+        const boundCatchStatements: BoundCatchStatement[] = [];
 
-        // this.bindStatements(catchStatement);
+        for (const catchStatement of tryStatement.catchStatements) {
+            const boundCatchStatement = this.bindCatchStatement(catchStatement, parent);
+            boundCatchStatements.push(boundCatchStatement);
+        }
+
+        return boundCatchStatements;
+    }
+
+    private bindCatchStatement(
+        catchStatement: CatchStatement,
+        parent: BoundTryStatement,
+    ) {
+        const boundCatchStatement = new BoundCatchStatement();
+        boundCatchStatement.parent = parent;
+
+        if (catchStatement.parameter.kind === TokenKind.Missing) {
+            throw new Error('Catch block must declare a parameter.');
+        }
+        else {
+            boundCatchStatement.parameter = this.bindDataDeclaration(catchStatement.parameter, boundCatchStatement);
+        }
+
+        boundCatchStatement.statements = this.bindStatements(catchStatement.statements, boundCatchStatement);
+
+        return boundCatchStatement;
     }
 
     private bindExpressionStatement(
@@ -1589,6 +1616,7 @@ export class Binder {
             case TokenKind.VoidKeyword: {
                 return VoidType.type;
             }
+            case TokenKind.ThrowableKeyword:
             case TokenKind.Identifier: {
                 if (typeReference.moduleIdentifier) {
                     const moduleIdentifierText = typeReference.moduleIdentifier.getText(this.document);
