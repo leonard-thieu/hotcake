@@ -28,6 +28,7 @@ import { EmptyStatement } from '../Syntax/Node/Statement/EmptyStatement';
 import { ExpressionStatement } from '../Syntax/Node/Statement/ExpressionStatement';
 import { ForLoop } from '../Syntax/Node/Statement/ForLoop';
 import { ElseIfStatement, ElseStatement, IfStatement } from '../Syntax/Node/Statement/IfStatement';
+import { RepeatLoop } from '../Syntax/Node/Statement/RepeatLoop';
 import { ReturnStatement } from '../Syntax/Node/Statement/ReturnStatement';
 import { CaseStatement, DefaultStatement, SelectStatement } from '../Syntax/Node/Statement/SelectStatement';
 import { Statements } from '../Syntax/Node/Statement/Statement';
@@ -72,6 +73,7 @@ import { BoundDataDeclarationStatement } from './Node/Statement/BoundDataDeclara
 import { BoundExpressionStatement } from './Node/Statement/BoundExpressionStatement';
 import { BoundForLoop } from './Node/Statement/BoundForLoop';
 import { BoundElseIfStatement, BoundElseStatement, BoundIfStatement } from './Node/Statement/BoundIfStatement';
+import { BoundRepeatLoop } from './Node/Statement/BoundRepeatLoop';
 import { BoundReturnStatement } from './Node/Statement/BoundReturnStatement';
 import { BoundCaseStatement, BoundDefaultStatement, BoundSelectStatement } from './Node/Statement/BoundSelectStatement';
 import { BoundStatements } from './Node/Statement/BoundStatements';
@@ -494,7 +496,9 @@ export class Binder {
             case NodeKind.WhileLoop: {
                 return this.bindWhileLoop(statement, parent);
             }
-            case NodeKind.RepeatLoop:
+            case NodeKind.RepeatLoop: {
+                return this.bindRepeatLoop(statement, parent);
+            }
             case NodeKind.ThrowStatement:
             case NodeKind.ReturnStatement:
             case NodeKind.ContinueStatement:
@@ -512,6 +516,20 @@ export class Binder {
                 break;
             }
         }
+    }
+
+    private bindRepeatLoop(
+        repeatLoop: RepeatLoop,
+        parent: BoundNodes,
+    ) {
+        const boundRepeatLoop = new BoundRepeatLoop();
+        boundRepeatLoop.parent = parent;
+        if (repeatLoop.untilExpression) {
+            boundRepeatLoop.expression = this.bindExpression(repeatLoop.untilExpression, boundRepeatLoop);
+        }
+        boundRepeatLoop.statements = this.bindStatements(repeatLoop.statements, boundRepeatLoop);
+
+        return boundRepeatLoop;
     }
 
     private bindWhileLoop(
