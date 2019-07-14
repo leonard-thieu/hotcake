@@ -72,6 +72,7 @@ import { BoundSuperExpression } from './Node/Expression/BoundSuperExpression';
 import { BoundUnaryExpression } from './Node/Expression/BoundUnaryExpression';
 import { BoundContinueStatement } from './Node/Statement/BoundContinueStatement';
 import { BoundDataDeclarationStatement } from './Node/Statement/BoundDataDeclarationStatement';
+import { BoundExitStatement } from './Node/Statement/BoundExitStatement';
 import { BoundExpressionStatement } from './Node/Statement/BoundExpressionStatement';
 import { BoundForLoop } from './Node/Statement/BoundForLoop';
 import { BoundElseIfStatement, BoundElseStatement, BoundIfStatement } from './Node/Statement/BoundIfStatement';
@@ -509,7 +510,7 @@ export class Binder {
                 return this.bindContinueStatement(parent);
             }
             case NodeKind.ExitStatement: {
-                break;
+                return this.bindExitStatement(parent);
             }
             default: {
                 type ExpectedType =
@@ -522,6 +523,13 @@ export class Binder {
                 break;
             }
         }
+    }
+
+    private bindExitStatement(parent: BoundNodes) {
+        const boundExitStatement = new BoundExitStatement();
+        boundExitStatement.parent = parent;
+
+        return boundExitStatement;
     }
 
     private bindContinueStatement(parent: BoundNodes) {

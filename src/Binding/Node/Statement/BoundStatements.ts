@@ -1,5 +1,6 @@
 import { BoundContinueStatement } from './BoundContinueStatement';
 import { BoundDataDeclarationStatement } from './BoundDataDeclarationStatement';
+import { BoundExitStatement } from './BoundExitStatement';
 import { BoundExpressionStatement } from './BoundExpressionStatement';
 import { BoundForLoop } from './BoundForLoop';
 import { BoundElseIfStatement, BoundElseStatement, BoundIfStatement } from './BoundIfStatement';
@@ -23,6 +24,7 @@ export type BoundStatements =
     BoundWhileLoop |
     BoundRepeatLoop |
     BoundContinueStatement |
+    BoundExitStatement |
     BoundTryStatement |
     BoundCatchStatement |
     BoundThrowStatement |

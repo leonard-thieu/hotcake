@@ -18,6 +18,7 @@ export enum BoundNodeKind {
     WhileLoop = 'WhileLoop',
     RepeatLoop = 'RepeatLoop',
     ContinueStatement = 'ContinueStatement',
+    ExitStatement = 'ExitStatement',
     TryStatement = 'TryStatement',
     CatchStatement = 'CatchStatement',
     ThrowStatement = 'ThrowStatement',
