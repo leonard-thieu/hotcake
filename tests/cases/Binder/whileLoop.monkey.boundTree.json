@@ -1,0 +1,26 @@
+{
+    "kind": "ModuleDeclaration",
+    "identifier": "whileLoop",
+    "locals": [
+        "Main"
+    ],
+    "members": [
+        {
+            "kind": "FunctionDeclaration",
+            "identifier": "Main",
+            "locals": [],
+            "returnType": "Int",
+            "parameters": [],
+            "statements": [
+                {
+                    "kind": "WhileLoop",
+                    "expression": {
+                        "kind": "BooleanLiteralExpression",
+                        "type": "Bool"
+                    },
+                    "statements": []
+                }
+            ]
+        }
+    ]
+}

@@ -5,6 +5,7 @@ import { BoundElseIfStatement, BoundElseStatement, BoundIfStatement } from './Bo
 import { BoundReturnStatement } from './BoundReturnStatement';
 import { BoundCaseStatement, BoundDefaultStatement, BoundSelectStatement } from './BoundSelectStatement';
 import { BoundCatchStatement, BoundTryStatement } from './BoundTryStatement';
+import { BoundWhileLoop } from "./BoundWhileLoop";
 
 export type BoundStatements =
     BoundDataDeclarationStatement |
@@ -16,6 +17,7 @@ export type BoundStatements =
     BoundDefaultStatement |
     BoundReturnStatement |
     BoundForLoop |
+    BoundWhileLoop |
     BoundTryStatement |
     BoundCatchStatement |
     BoundExpressionStatement

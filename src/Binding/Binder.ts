@@ -32,6 +32,7 @@ import { ReturnStatement } from '../Syntax/Node/Statement/ReturnStatement';
 import { CaseStatement, DefaultStatement, SelectStatement } from '../Syntax/Node/Statement/SelectStatement';
 import { Statements } from '../Syntax/Node/Statement/Statement';
 import { CatchStatement, TryStatement } from '../Syntax/Node/Statement/TryStatement';
+import { WhileLoop } from '../Syntax/Node/Statement/WhileLoop';
 import { ShorthandTypeToken, TypeAnnotation } from '../Syntax/Node/TypeAnnotation';
 import { MissableTypeReference, TypeReference } from '../Syntax/Node/TypeReference';
 import { ParseContextElementDelimitedSequence, ParseContextElementSequence, ParseContextKind } from '../Syntax/ParserBase';
@@ -75,6 +76,7 @@ import { BoundReturnStatement } from './Node/Statement/BoundReturnStatement';
 import { BoundCaseStatement, BoundDefaultStatement, BoundSelectStatement } from './Node/Statement/BoundSelectStatement';
 import { BoundStatements } from './Node/Statement/BoundStatements';
 import { BoundCatchStatement, BoundTryStatement } from './Node/Statement/BoundTryStatement';
+import { BoundWhileLoop } from './Node/Statement/BoundWhileLoop';
 import { ArrayType } from './Type/ArrayType';
 import { BoolType } from './Type/BoolType';
 import { FloatType } from './Type/FloatType';
@@ -489,7 +491,9 @@ export class Binder {
             case NodeKind.ExpressionStatement: {
                 return this.bindExpressionStatement(statement, parent);
             }
-            case NodeKind.WhileLoop:
+            case NodeKind.WhileLoop: {
+                return this.bindWhileLoop(statement, parent);
+            }
             case NodeKind.RepeatLoop:
             case NodeKind.ThrowStatement:
             case NodeKind.ReturnStatement:
@@ -508,6 +512,18 @@ export class Binder {
                 break;
             }
         }
+    }
+
+    private bindWhileLoop(
+        whileLoop: WhileLoop,
+        parent: BoundNodes,
+    ) {
+        const boundWhileLoop = new BoundWhileLoop();
+        boundWhileLoop.parent = parent;
+        boundWhileLoop.expression = this.bindExpression(whileLoop.expression, boundWhileLoop);
+        boundWhileLoop.statements = this.bindStatements(whileLoop.statements, boundWhileLoop);
+
+        return boundWhileLoop;
     }
 
     private bindDataDeclarationSequenceStatement(
