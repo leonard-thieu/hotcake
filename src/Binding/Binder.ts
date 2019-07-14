@@ -54,7 +54,6 @@ import { BoundArrayLiteralExpression } from './Node/Expression/BoundArrayLiteral
 import { BoundAssignmentExpression } from './Node/Expression/BoundAssignmentExpression';
 import { BoundBinaryExpression } from './Node/Expression/BoundBinaryExpression';
 import { BoundBooleanLiteralExpression } from './Node/Expression/BoundBooleanLiteralExpression';
-import { BoundExpression } from './Node/Expression/BoundExpression';
 import { BoundExpressions } from './Node/Expression/BoundExpressions';
 import { BoundFloatLiteralExpression } from './Node/Expression/BoundFloatLiteralExpression';
 import { BoundGroupingExpression } from './Node/Expression/BoundGroupingExpression';
@@ -972,7 +971,7 @@ export class Binder {
         expression: InvokeExpression,
         parent: BoundInvokeExpression,
     ) {
-        const boundArguments: BoundExpression[] = [];
+        const boundArguments: BoundExpressions[] = [];
 
         for (const argument of expression.arguments) {
             switch (argument.kind) {
@@ -1048,9 +1047,9 @@ export class Binder {
     }
 
     private bindBinaryArithmeticOperationType(
-        leftOperand: BoundExpression,
+        leftOperand: BoundExpressions,
         operatorKind: TokenKind,
-        rightOperand: BoundExpression,
+        rightOperand: BoundExpressions,
     ) {
         const balancedType = this.getBalancedType(leftOperand.type, rightOperand.type);
         switch (balancedType) {
@@ -1076,9 +1075,9 @@ export class Binder {
     }
 
     private bindBitwiseOperationType(
-        leftOperand: BoundExpression,
+        leftOperand: BoundExpressions,
         operatorKind: TokenKind,
-        rightOperand: BoundExpression,
+        rightOperand: BoundExpressions,
     ) {
         if (!leftOperand.type.isConvertibleTo(IntType.type) ||
             !rightOperand.type.isConvertibleTo(IntType.type)) {
@@ -1089,9 +1088,9 @@ export class Binder {
     }
 
     private bindComparisonOperationType(
-        leftOperand: BoundExpression,
+        leftOperand: BoundExpressions,
         operatorKind: TokenKind,
-        rightOperand: BoundExpression,
+        rightOperand: BoundExpressions,
     ) {
         let balancedType = this.getBalancedType(leftOperand.type, rightOperand.type);
         if (!balancedType) {
