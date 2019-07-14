@@ -10,6 +10,7 @@ import { FunctionDeclaration } from '../Syntax/Node/Declaration/FunctionDeclarat
 import { InterfaceDeclaration } from '../Syntax/Node/Declaration/InterfaceDeclaration';
 import { InterfaceMethodDeclaration } from '../Syntax/Node/Declaration/InterfaceMethodDeclaration';
 import { ModuleDeclaration } from '../Syntax/Node/Declaration/ModuleDeclaration';
+import { ArrayLiteralExpression } from '../Syntax/Node/Expression/ArrayLiteralExpression';
 import { BinaryExpression } from '../Syntax/Node/Expression/BinaryExpression';
 import { MissableExpression } from '../Syntax/Node/Expression/Expression';
 import { IdentifierExpression } from '../Syntax/Node/Expression/IdentifierExpression';
@@ -28,7 +29,7 @@ import { Statements } from '../Syntax/Node/Statement/Statement';
 import { StatementsParent } from '../Syntax/Node/Statement/StatementsParent';
 import { CatchStatement, TryStatement } from '../Syntax/Node/Statement/TryStatement';
 import { ShorthandTypeToken, TypeAnnotation } from '../Syntax/Node/TypeAnnotation';
-import { MissableTypeReference } from '../Syntax/Node/TypeReference';
+import { MissableTypeReference, TypeReference } from '../Syntax/Node/TypeReference';
 import { ParseContextElementDelimitedSequence, ParseContextKind } from '../Syntax/ParserBase';
 import { MissingToken } from '../Syntax/Token/MissingToken';
 import { SkippedToken } from '../Syntax/Token/SkippedToken';
@@ -45,9 +46,11 @@ import { BoundFunctionDeclaration } from './Node/Declaration/BoundFunctionDeclar
 import { BoundInterfaceDeclaration, BoundInterfaceDeclarationMember } from './Node/Declaration/BoundInterfaceDeclaration';
 import { BoundInterfaceMethodDeclaration } from './Node/Declaration/BoundInterfaceMethodDeclaration';
 import { BoundModuleDeclaration, BoundModuleDeclarationMember } from './Node/Declaration/BoundModuleDeclaration';
+import { BoundArrayLiteralExpression } from './Node/Expression/BoundArrayLiteralExpression';
 import { BoundBinaryExpression } from './Node/Expression/BoundBinaryExpression';
 import { BoundBooleanLiteralExpression } from './Node/Expression/BoundBooleanLiteralExpression';
 import { BoundExpression } from './Node/Expression/BoundExpression';
+import { BoundExpressions } from './Node/Expression/BoundExpressions';
 import { BoundFloatLiteralExpression } from './Node/Expression/BoundFloatLiteralExpression';
 import { BoundIdentifierExpression } from './Node/Expression/BoundIdentifierExpression';
 import { BoundIntegerLiteralExpression } from './Node/Expression/BoundIntegerLiteralExpression';
@@ -67,8 +70,8 @@ import { FloatType } from './Type/FloatType';
 import { IntType } from './Type/IntType';
 import { ObjectType } from './Type/ObjectType';
 import { StringType } from './Type/StringType';
-import { Type } from './Type/Type';
 import { TypeKind } from './Type/TypeKind';
+import { Types } from './Type/Types';
 import { VoidType } from './Type/VoidType';
 
 export class Binder {
@@ -546,7 +549,7 @@ export class Binder {
     private bindExpression(
         expression: MissableExpression,
         parent: BoundNodes,
-    ): BoundExpression {
+    ): BoundExpressions {
         switch (expression.kind) {
             case NodeKind.InvokeExpression: {
                 return this.bindInvokeExpression(expression, parent);
@@ -584,9 +587,10 @@ export class Binder {
             case NodeKind.SuperExpression: {
                 return this.bindSuperExpression(parent);
             }
-            case NodeKind.ArrayLiteralExpression:
+            case NodeKind.ArrayLiteralExpression: {
+                return this.bindArrayLiteralExpression(expression, parent);
+            }
             case NodeKind.ScopeMemberAccessExpression:
-            case NodeKind.InvokeExpression:
             case NodeKind.IndexExpression:
             case NodeKind.SliceExpression:
             case NodeKind.GroupingExpression:
@@ -599,6 +603,47 @@ export class Binder {
                 throw new Error('Method not implemented.');
             }
         }
+    }
+
+    private bindArrayLiteralExpression(
+        arrayLiteralExpression: ArrayLiteralExpression,
+        parent: BoundNodes,
+    ) {
+        const boundArrayLiteralExpression = new BoundArrayLiteralExpression();
+        boundArrayLiteralExpression.parent = parent;
+        boundArrayLiteralExpression.expressions = this.bindExpressionSequence(arrayLiteralExpression.expressions, boundArrayLiteralExpression);
+
+        let type = boundArrayLiteralExpression.expressions[0].type;
+        for (const expression of boundArrayLiteralExpression.expressions) {
+            const balancedType = this.getBalancedType(type, expression.type);
+            if (!balancedType) {
+                throw new Error('Array must contain a common type.');
+            }
+            type = balancedType;
+        }
+        boundArrayLiteralExpression.type = new ArrayType(type);
+
+        return boundArrayLiteralExpression;
+    }
+
+    private bindExpressionSequence(
+        expressions: ParseContextElementDelimitedSequence<ParseContextKind.ExpressionSequence>,
+        parent: BoundArrayLiteralExpression,
+    ) {
+        const boundExpressions: BoundExpressions[] = [];
+
+        for (const expression of expressions) {
+            switch (expression.kind) {
+                case NodeKind.CommaSeparator: { break; }
+                default: {
+                    const boundExpression = this.bindExpression(expression, parent);
+                    boundExpressions.push(boundExpression);
+                    break;
+                }
+            }
+        }
+
+        return boundExpressions;
     }
 
     private bindSelfExpression(parent: BoundNodes) {
@@ -861,7 +906,7 @@ export class Binder {
         return boundBinaryExpression;
     }
 
-    private getBalancedType(leftOperandType: Type, rightOperandType: Type) {
+    private getBalancedType(leftOperandType: Types, rightOperandType: Types) {
         if (leftOperandType === StringType.type ||
             rightOperandType === StringType.type) {
             return StringType.type;
@@ -957,7 +1002,7 @@ export class Binder {
     // #region Core
 
     private bindTypeReferenceSequence(typeReferences: ParseContextElementDelimitedSequence<ParseContextKind.TypeReferenceSequence>) {
-        const types: Type[] = [];
+        const types: Types[] = [];
 
         for (const typeReference of typeReferences) {
             switch (typeReference.kind) {
@@ -976,7 +1021,7 @@ export class Binder {
         return types;
     }
 
-    private bindTypeAnnotation(typeAnnotation: TypeAnnotation | undefined): Type {
+    private bindTypeAnnotation(typeAnnotation: TypeAnnotation | undefined) {
         if (!typeAnnotation) {
             return IntType.type;
         }
@@ -986,7 +1031,7 @@ export class Binder {
                 // TODO: Nested array annotations
                 const { arrayTypeAnnotations, shorthandType } = typeAnnotation;
                 if (arrayTypeAnnotations.length) {
-                    let elementType: Type;
+                    let elementType: Types;
                     if (!shorthandType) {
                         elementType = IntType.type;
                     } else {
@@ -1030,82 +1075,91 @@ export class Binder {
     private bindTypeReference(typeReference: MissableTypeReference) {
         switch (typeReference.kind) {
             case NodeKind.TypeReference: {
-                const { identifier } = typeReference;
-                switch (identifier.kind) {
-                    case TokenKind.BoolKeyword: {
-                        return BoolType.type;
-                    }
-                    case TokenKind.IntKeyword: {
-                        return IntType.type;
-                    }
-                    case TokenKind.FloatKeyword: {
-                        return FloatType.type;
-                    }
-                    case TokenKind.StringKeyword: {
-                        return StringType.type;
-                    }
-                    case TokenKind.ObjectKeyword: {
-                        return ObjectType.type;
-                    }
-                    case TokenKind.VoidKeyword: {
-                        return VoidType.type;
-                    }
-                    case TokenKind.Identifier: {
-                        if (typeReference.moduleIdentifier) {
-                            const moduleIdentifierText = typeReference.moduleIdentifier.getText(this.document);
-                            const moduleReferenceSymbol = this.module.locals.get(moduleIdentifierText);
-                            if (!moduleReferenceSymbol) {
-                                throw new Error(`The '${moduleIdentifierText}' module is not imported.`);
-                            } else {
-                                const moduleDeclaration = moduleReferenceSymbol.declaration;
-                                switch (moduleDeclaration.kind) {
-                                    case BoundNodeKind.ModuleDeclaration: {
-                                        const identifierText = identifier.getText(this.document);
-                                        const type = this.bindTypeReferenceFromModule(identifierText, moduleDeclaration);
-                                        if (!type) {
-                                            throw new Error(`Could not find '${identifierText}' in '${moduleIdentifierText}'.`);
-                                        } else {
-                                            return type;
-                                        }
-                                    }
-                                    default: {
-                                        throw new Error(`'${moduleIdentifierText}' is not a module.`);
-                                    }
-                                }
-                            }
-                        } else {
-                            const identifierText = identifier.getText(this.document);
-                            const type = this.bindTypeReferenceFromModule(identifierText, this.module);
-                            if (!type) {
-                                for (const [name, node] of this.module.locals) {
-                                    const { declaration } = node;
-                                    switch (declaration.kind) {
-                                        case BoundNodeKind.ModuleDeclaration: {
-                                            const type = this.bindTypeReferenceFromModule(identifierText, declaration);
-                                            if (type) {
-                                                return type;
-                                            }
-                                            break;
-                                        }
-                                    }
-                                }
-
-                                throw new Error(`Could not find '${identifierText}'.`);
-                            } else {
-                                return type;
-                            }
-                        }
-                    }
-                    default: {
-                        throw new Error(`Binding '${identifier.kind}' types is not implemented.`);
-                    }
+                let type = this.getElementType(typeReference);
+                for (const { } of typeReference.arrayTypeAnnotations) {
+                    type = new ArrayType(type);
                 }
+
+                return type;
             }
             case TokenKind.Missing: {
                 throw new Error('Method not implemented.');
             }
             default: {
                 return assertNever(typeReference);
+            }
+        }
+    }
+
+    private getElementType(typeReference: TypeReference) {
+        const { identifier } = typeReference;
+        switch (identifier.kind) {
+            case TokenKind.BoolKeyword: {
+                return BoolType.type;
+            }
+            case TokenKind.IntKeyword: {
+                return IntType.type;
+            }
+            case TokenKind.FloatKeyword: {
+                return FloatType.type;
+            }
+            case TokenKind.StringKeyword: {
+                return StringType.type;
+            }
+            case TokenKind.ObjectKeyword: {
+                return ObjectType.type;
+            }
+            case TokenKind.VoidKeyword: {
+                return VoidType.type;
+            }
+            case TokenKind.Identifier: {
+                if (typeReference.moduleIdentifier) {
+                    const moduleIdentifierText = typeReference.moduleIdentifier.getText(this.document);
+                    const moduleReferenceSymbol = this.module.locals.get(moduleIdentifierText);
+                    if (!moduleReferenceSymbol) {
+                        throw new Error(`The '${moduleIdentifierText}' module is not imported.`);
+                    } else {
+                        const moduleDeclaration = moduleReferenceSymbol.declaration;
+                        switch (moduleDeclaration.kind) {
+                            case BoundNodeKind.ModuleDeclaration: {
+                                const identifierText = identifier.getText(this.document);
+                                const type = this.bindTypeReferenceFromModule(identifierText, moduleDeclaration);
+                                if (!type) {
+                                    throw new Error(`Could not find '${identifierText}' in '${moduleIdentifierText}'.`);
+                                } else {
+                                    return type;
+                                }
+                            }
+                            default: {
+                                throw new Error(`'${moduleIdentifierText}' is not a module.`);
+                            }
+                        }
+                    }
+                } else {
+                    const identifierText = identifier.getText(this.document);
+                    const type = this.bindTypeReferenceFromModule(identifierText, this.module);
+                    if (!type) {
+                        for (const [, node] of this.module.locals) {
+                            const { declaration } = node;
+                            switch (declaration.kind) {
+                                case BoundNodeKind.ModuleDeclaration: {
+                                    const type = this.bindTypeReferenceFromModule(identifierText, declaration);
+                                    if (type) {
+                                        return type;
+                                    }
+                                    break;
+                                }
+                            }
+                        }
+
+                        throw new Error(`Could not find '${identifierText}'.`);
+                    } else {
+                        return type;
+                    }
+                }
+            }
+            default: {
+                throw new Error(`Binding '${identifier.kind}' types is not implemented.`);
             }
         }
     }

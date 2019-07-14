@@ -40,7 +40,7 @@
                         "arguments": [
                             {
                                 "kind": "NullExpression",
-                                "type": "Object"
+                                "type": "Null"
                             }
                         ]
                     }

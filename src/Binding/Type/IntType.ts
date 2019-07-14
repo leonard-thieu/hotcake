@@ -1,14 +1,17 @@
 import { Type } from './Type';
 import { TypeKind } from './TypeKind';
+import { Types } from './Types';
 
 export class IntType extends Type {
     static readonly type = new IntType();
 
     private constructor() {
-        super(TypeKind.Int);
+        super();
     }
 
-    isConvertibleTo(target: Type): boolean {
+    readonly kind = TypeKind.Int;
+
+    isConvertibleTo(target: Types): boolean {
         // TODO: Boxing conversion
 
         switch (target.kind) {

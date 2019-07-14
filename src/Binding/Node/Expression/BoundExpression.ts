@@ -1,6 +1,6 @@
-import { Type } from '../../Type/Type';
+import { Types } from '../../Type/Types';
 import { BoundNode } from '../BoundNode';
 
 export abstract class BoundExpression extends BoundNode {
-    type: Type = undefined!;
+    type: Types = undefined!;
 }

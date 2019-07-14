@@ -2,16 +2,19 @@ import { BoundClassDeclaration } from '../Node/Declaration/BoundClassDeclaration
 import { BoundInterfaceDeclaration } from '../Node/Declaration/BoundInterfaceDeclaration';
 import { Type } from './Type';
 import { TypeKind } from './TypeKind';
+import { Types } from './Types';
 
 export class ObjectType extends Type {
     static readonly type = new ObjectType();
     static readonly nullType = new ObjectType();
 
     constructor(readonly declaration?: BoundInterfaceDeclaration | BoundClassDeclaration) {
-        super(TypeKind.Object);
+        super();
     }
 
-    isConvertibleTo(target: Type): boolean {
+    readonly kind = TypeKind.Object;
+
+    isConvertibleTo(target: Types): boolean {
         if (target === ObjectType.nullType) { return true; }
         if (target === this) { return true; }
 

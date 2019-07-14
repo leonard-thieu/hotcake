@@ -1,5 +1,5 @@
 import { BoundSymbol, BoundSymbolTable } from '../../BoundSymbol';
-import { Type } from '../../Type/Type';
+import { Types } from '../../Type/Types';
 import { BoundNode } from '../BoundNode';
 import { BoundNodeKind } from '../BoundNodeKind';
 import { BoundDataDeclaration } from './BoundDataDeclaration';
@@ -10,9 +10,9 @@ export class BoundInterfaceDeclaration extends BoundNode {
 
     identifier: BoundSymbol = undefined!;
     locals: BoundSymbolTable = undefined!;
-    type: Type = undefined!;
+    type: Types = undefined!;
 
-    baseTypes?: Type[] = undefined;
+    baseTypes?: Types[] = undefined;
     members: BoundInterfaceDeclarationMember[] = undefined!;
 }
 

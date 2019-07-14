@@ -1,3 +1,4 @@
+import { BoundArrayLiteralExpression } from './BoundArrayLiteralExpression';
 import { BoundBinaryExpression } from './BoundBinaryExpression';
 import { BoundBooleanLiteralExpression } from './BoundBooleanLiteralExpression';
 import { BoundFloatLiteralExpression } from './BoundFloatLiteralExpression';
@@ -12,6 +13,7 @@ import { BoundSuperExpression } from './BoundSuperExpression';
 import { BoundUnaryExpression } from './BoundUnaryExpression';
 
 export type BoundExpressions =
+    BoundArrayLiteralExpression |
     BoundBinaryExpression |
     BoundBooleanLiteralExpression |
     BoundFloatLiteralExpression |
