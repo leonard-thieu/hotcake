@@ -11,6 +11,7 @@ import { InterfaceDeclaration } from '../Syntax/Node/Declaration/InterfaceDeclar
 import { InterfaceMethodDeclaration } from '../Syntax/Node/Declaration/InterfaceMethodDeclaration';
 import { ModuleDeclaration } from '../Syntax/Node/Declaration/ModuleDeclaration';
 import { ArrayLiteralExpression } from '../Syntax/Node/Expression/ArrayLiteralExpression';
+import { AssignmentExpression } from '../Syntax/Node/Expression/AssignmentExpression';
 import { BinaryExpression } from '../Syntax/Node/Expression/BinaryExpression';
 import { MissableExpression } from '../Syntax/Node/Expression/Expression';
 import { GroupingExpression } from '../Syntax/Node/Expression/GroupingExpression';
@@ -50,6 +51,7 @@ import { BoundInterfaceDeclaration, BoundInterfaceDeclarationMember } from './No
 import { BoundInterfaceMethodDeclaration } from './Node/Declaration/BoundInterfaceMethodDeclaration';
 import { BoundModuleDeclaration, BoundModuleDeclarationMember } from './Node/Declaration/BoundModuleDeclaration';
 import { BoundArrayLiteralExpression } from './Node/Expression/BoundArrayLiteralExpression';
+import { BoundAssignmentExpression } from './Node/Expression/BoundAssignmentExpression';
 import { BoundBinaryExpression } from './Node/Expression/BoundBinaryExpression';
 import { BoundBooleanLiteralExpression } from './Node/Expression/BoundBooleanLiteralExpression';
 import { BoundExpression } from './Node/Expression/BoundExpression';
@@ -605,8 +607,10 @@ export class Binder {
             case NodeKind.GroupingExpression: {
                 return this.bindGroupingExpression(expression, parent);
             }
+            case NodeKind.AssignmentExpression: {
+                return this.bindAssignmentExpression(expression, parent);
+            }
             case NodeKind.ScopeMemberAccessExpression:
-            case NodeKind.AssignmentExpression:
             case NodeKind.GlobalScopeExpression: {
                 throw new Error(`Binding '${expression.kind}' is not implemented.`);
             }
@@ -615,6 +619,95 @@ export class Binder {
                 throw new Error('Method not implemented.');
             }
         }
+    }
+
+    private bindAssignmentExpression(
+        expression: AssignmentExpression,
+        parent: BoundNodes,
+    ) {
+        const boundAssignmentExpression = new BoundAssignmentExpression();
+        boundAssignmentExpression.parent = parent;
+        boundAssignmentExpression.leftOperand = this.bindExpression(expression.leftOperand, boundAssignmentExpression);
+        boundAssignmentExpression.rightOperand = this.bindExpression(expression.rightOperand, boundAssignmentExpression);
+
+        const { leftOperand, rightOperand } = boundAssignmentExpression;
+
+        // Lower update assignments to an assignment of a binary expression
+        const operatorKind = expression.operator.kind;
+        if (operatorKind !== TokenKind.EqualsSign) {
+            const boundBinaryExpression = new BoundBinaryExpression();
+            boundBinaryExpression.parent = boundAssignmentExpression;
+            boundBinaryExpression.leftOperand = leftOperand;
+            boundBinaryExpression.rightOperand = rightOperand;
+
+            switch (operatorKind) {
+                // Binary arithmetic operations
+                case TokenKind.AsteriskEqualsSign: {
+                    boundBinaryExpression.type = this.bindBinaryArithmeticOperationType(leftOperand, TokenKind.Asterisk, rightOperand);
+                    break;
+                }
+                case TokenKind.SlashEqualsSign: {
+                    boundBinaryExpression.type = this.bindBinaryArithmeticOperationType(leftOperand, TokenKind.Slash, rightOperand);
+                    break;
+                }
+                case TokenKind.ModKeywordEqualsSign: {
+                    boundBinaryExpression.type = this.bindBinaryArithmeticOperationType(leftOperand, TokenKind.ModKeyword, rightOperand);
+                    break;
+                }
+                case TokenKind.PlusSignEqualsSign: {
+                    boundBinaryExpression.type = this.bindBinaryArithmeticOperationType(leftOperand, TokenKind.PlusSign, rightOperand);
+                    break;
+                }
+                case TokenKind.HyphenMinusEqualsSign: {
+                    boundBinaryExpression.type = this.bindBinaryArithmeticOperationType(leftOperand, TokenKind.HyphenMinus, rightOperand);
+                    break;
+                }
+
+                // Bitwise operations
+                case TokenKind.ShlKeywordEqualsSign: {
+                    boundBinaryExpression.type = this.bindBitwiseOperationType(leftOperand, TokenKind.ShlKeyword, rightOperand);
+                    break;
+                }
+                case TokenKind.ShrKeywordEqualsSign: {
+                    boundBinaryExpression.type = this.bindBitwiseOperationType(leftOperand, TokenKind.ShrKeyword, rightOperand);
+                    break;
+                }
+                case TokenKind.AmpersandEqualsSign: {
+                    boundBinaryExpression.type = this.bindBitwiseOperationType(leftOperand, TokenKind.Ampersand, rightOperand);
+                    break;
+                }
+                case TokenKind.TildeEqualsSign: {
+                    boundBinaryExpression.type = this.bindBitwiseOperationType(leftOperand, TokenKind.Tilde, rightOperand);
+                    break;
+                }
+                case TokenKind.VerticalBarEqualsSign: {
+                    boundBinaryExpression.type = this.bindBitwiseOperationType(leftOperand, TokenKind.VerticalBar, rightOperand);
+                    break;
+                }
+
+                default: {
+                    assertNever(operatorKind);
+                    break;
+                }
+            }
+
+            boundAssignmentExpression.rightOperand = boundBinaryExpression;
+
+        }
+
+        switch (leftOperand.kind) {
+            case BoundNodeKind.IndexExpression:
+            case BoundNodeKind.IdentifierExpression: { break; }
+            default: {
+                throw new Error(`'${leftOperand.kind}' cannot be assigned to.`);
+            }
+        }
+
+        if (!rightOperand.type.isConvertibleTo(leftOperand.type)) {
+            throw new Error(`'${rightOperand.type}' cannot be converted to '${leftOperand.type}'.`);
+        }
+
+        return boundAssignmentExpression;
     }
 
     private bindGroupingExpression(
@@ -913,29 +1006,7 @@ export class Binder {
             case TokenKind.ModKeyword:
             case TokenKind.PlusSign:
             case TokenKind.HyphenMinus: {
-                const balancedType = this.getBalancedType(leftOperand.type, rightOperand.type);
-
-                switch (balancedType) {
-                    case null: {
-                        throw new Error(`'${operatorKind}' is not valid for '${leftOperand.kind}' and '${rightOperand.kind}'.`);
-                    }
-                    case StringType.type: {
-                        if (operatorKind !== TokenKind.PlusSign) {
-                            throw new Error(`'${operatorKind}' is not valid for '${leftOperand.kind}' and '${rightOperand.kind}'.`);
-                        }
-
-                        break;
-                    }
-                    case IntType.type:
-                    case FloatType.type: {
-                        break;
-                    }
-                    default: {
-                        throw new Error(`'${operatorKind}' is not valid for '${leftOperand.kind}' and '${rightOperand.kind}'.`);
-                    }
-                }
-
-                boundBinaryExpression.type = balancedType;
+                boundBinaryExpression.type = this.bindBinaryArithmeticOperationType(leftOperand, operatorKind, rightOperand);
                 break;
             }
 
@@ -945,12 +1016,7 @@ export class Binder {
             case TokenKind.Ampersand:
             case TokenKind.Tilde:
             case TokenKind.VerticalBar: {
-                if (!leftOperand.type.isConvertibleTo(IntType.type) ||
-                    !rightOperand.type.isConvertibleTo(IntType.type)) {
-                    throw new Error(`'${operatorKind}' is not valid for '${leftOperand.kind}' and '${rightOperand.kind}'.`);
-                }
-
-                boundBinaryExpression.type = IntType.type;
+                boundBinaryExpression.type = this.bindBitwiseOperationType(leftOperand, operatorKind, rightOperand);
                 break;
             }
 
@@ -961,27 +1027,7 @@ export class Binder {
             case TokenKind.LessThanSignEqualsSign:
             case TokenKind.GreaterThanSignEqualsSign:
             case TokenKind.LessThanSignGreaterThanSign: {
-                let balancedType = this.getBalancedType(leftOperand.type, rightOperand.type);
-                if (!balancedType) {
-                    throw new Error(`'${operatorKind}' is not valid for '${leftOperand.kind}' and '${rightOperand.kind}'.`);
-                }
-
-                switch (balancedType.kind) {
-                    case TypeKind.Array: {
-                        throw new Error(`'${operatorKind}' is not valid for '${leftOperand.kind}' and '${rightOperand.kind}'.`);
-                    }
-                    case TypeKind.Bool:
-                    case TypeKind.Object: {
-                        if (operatorKind !== TokenKind.EqualsSign &&
-                            operatorKind !== TokenKind.LessThanSignGreaterThanSign) {
-                            throw new Error(`'${operatorKind}' is not valid for '${leftOperand.kind}' and '${rightOperand.kind}'.`);
-                        }
-
-                        break;
-                    }
-                }
-
-                boundBinaryExpression.type = BoolType.type;
+                boundBinaryExpression.type = this.bindComparisonOperationType(leftOperand, operatorKind, rightOperand);
                 break;
             }
 
@@ -999,6 +1045,73 @@ export class Binder {
         }
 
         return boundBinaryExpression;
+    }
+
+    private bindBinaryArithmeticOperationType(
+        leftOperand: BoundExpression,
+        operatorKind: TokenKind,
+        rightOperand: BoundExpression,
+    ) {
+        const balancedType = this.getBalancedType(leftOperand.type, rightOperand.type);
+        switch (balancedType) {
+            case null: {
+                throw new Error(`'${operatorKind}' is not valid for '${leftOperand.kind}' and '${rightOperand.kind}'.`);
+            }
+            case StringType.type: {
+                if (operatorKind !== TokenKind.PlusSign) {
+                    throw new Error(`'${operatorKind}' is not valid for '${leftOperand.kind}' and '${rightOperand.kind}'.`);
+                }
+                break;
+            }
+            case IntType.type:
+            case FloatType.type: {
+                break;
+            }
+            default: {
+                throw new Error(`'${operatorKind}' is not valid for '${leftOperand.kind}' and '${rightOperand.kind}'.`);
+            }
+        }
+
+        return balancedType;
+    }
+
+    private bindBitwiseOperationType(
+        leftOperand: BoundExpression,
+        operatorKind: TokenKind,
+        rightOperand: BoundExpression,
+    ) {
+        if (!leftOperand.type.isConvertibleTo(IntType.type) ||
+            !rightOperand.type.isConvertibleTo(IntType.type)) {
+            throw new Error(`'${operatorKind}' is not valid for '${leftOperand.kind}' and '${rightOperand.kind}'.`);
+        }
+
+        return IntType.type;
+    }
+
+    private bindComparisonOperationType(
+        leftOperand: BoundExpression,
+        operatorKind: TokenKind,
+        rightOperand: BoundExpression,
+    ) {
+        let balancedType = this.getBalancedType(leftOperand.type, rightOperand.type);
+        if (!balancedType) {
+            throw new Error(`'${operatorKind}' is not valid for '${leftOperand.kind}' and '${rightOperand.kind}'.`);
+        }
+        switch (balancedType.kind) {
+            case TypeKind.Array: {
+                throw new Error(`'${operatorKind}' is not valid for '${leftOperand.kind}' and '${rightOperand.kind}'.`);
+            }
+            case TypeKind.Bool:
+            case TypeKind.Object: {
+                if (operatorKind !== TokenKind.EqualsSign &&
+                    operatorKind !== TokenKind.LessThanSignGreaterThanSign) {
+                    throw new Error(`'${operatorKind}' is not valid for '${leftOperand.kind}' and '${rightOperand.kind}'.`);
+                }
+                break;
+            }
+        }
+
+        return BoolType.type;
     }
 
     private getBalancedType(leftOperandType: Types, rightOperandType: Types) {
