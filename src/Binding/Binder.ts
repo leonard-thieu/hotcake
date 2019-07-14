@@ -32,6 +32,7 @@ import { RepeatLoop } from '../Syntax/Node/Statement/RepeatLoop';
 import { ReturnStatement } from '../Syntax/Node/Statement/ReturnStatement';
 import { CaseStatement, DefaultStatement, SelectStatement } from '../Syntax/Node/Statement/SelectStatement';
 import { Statements } from '../Syntax/Node/Statement/Statement';
+import { ThrowStatement } from '../Syntax/Node/Statement/ThrowStatement';
 import { CatchStatement, TryStatement } from '../Syntax/Node/Statement/TryStatement';
 import { WhileLoop } from '../Syntax/Node/Statement/WhileLoop';
 import { ShorthandTypeToken, TypeAnnotation } from '../Syntax/Node/TypeAnnotation';
@@ -77,6 +78,7 @@ import { BoundRepeatLoop } from './Node/Statement/BoundRepeatLoop';
 import { BoundReturnStatement } from './Node/Statement/BoundReturnStatement';
 import { BoundCaseStatement, BoundDefaultStatement, BoundSelectStatement } from './Node/Statement/BoundSelectStatement';
 import { BoundStatements } from './Node/Statement/BoundStatements';
+import { BoundThrowStatement } from './Node/Statement/BoundThrowStatement';
 import { BoundCatchStatement, BoundTryStatement } from './Node/Statement/BoundTryStatement';
 import { BoundWhileLoop } from './Node/Statement/BoundWhileLoop';
 import { ArrayType } from './Type/ArrayType';
@@ -499,7 +501,9 @@ export class Binder {
             case NodeKind.RepeatLoop: {
                 return this.bindRepeatLoop(statement, parent);
             }
-            case NodeKind.ThrowStatement:
+            case NodeKind.ThrowStatement: {
+                return this.bindThrowStatement(statement, parent);
+            }
             case NodeKind.ReturnStatement:
             case NodeKind.ContinueStatement:
             case NodeKind.ExitStatement: {
@@ -516,6 +520,17 @@ export class Binder {
                 break;
             }
         }
+    }
+
+    private bindThrowStatement(
+        throwStatement: ThrowStatement,
+        parent: BoundNodes,
+    ) {
+        const boundThrowStatement = new BoundThrowStatement();
+        boundThrowStatement.parent = parent;
+        boundThrowStatement.expression = this.bindExpression(throwStatement.expression, boundThrowStatement);
+
+        return boundThrowStatement;
     }
 
     private bindRepeatLoop(

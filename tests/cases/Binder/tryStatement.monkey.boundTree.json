@@ -101,10 +101,26 @@
                                             }
                                         }
                                     },
-                                    "statements": [],
+                                    "statements": [
+                                        {
+                                            "kind": "ThrowStatement",
+                                            "expression": {
+                                                "kind": "NewExpression",
+                                                "type": "Ex1"
+                                            }
+                                        }
+                                    ],
                                     "elseStatement": {
                                         "kind": "ElseStatement",
-                                        "statements": []
+                                        "statements": [
+                                            {
+                                                "kind": "ThrowStatement",
+                                                "expression": {
+                                                    "kind": "NewExpression",
+                                                    "type": "Ex2"
+                                                }
+                                            }
+                                        ]
                                     }
                                 }
                             ],

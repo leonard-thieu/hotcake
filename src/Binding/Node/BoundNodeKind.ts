@@ -19,6 +19,7 @@ export enum BoundNodeKind {
     RepeatLoop = 'RepeatLoop',
     TryStatement = 'TryStatement',
     CatchStatement = 'CatchStatement',
+    ThrowStatement = 'ThrowStatement',
     ReturnStatement = 'ReturnStatement',
     ExpressionStatement = 'ExpressionStatement',
 
