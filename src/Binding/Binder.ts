@@ -1,5 +1,5 @@
 import path = require('path');
-import { assertNever, assertType } from '../assertNever';
+import { assertNever } from '../assertNever';
 import { CommaSeparator } from '../Syntax/Node/CommaSeparator';
 import { AliasDirectiveSequence } from '../Syntax/Node/Declaration/AliasDirectiveSequence';
 import { ClassDeclaration } from '../Syntax/Node/Declaration/ClassDeclaration';
@@ -24,7 +24,6 @@ import { UnaryExpression } from '../Syntax/Node/Expression/UnaryExpression';
 import { EscapeOptionalIdentifierNameToken } from '../Syntax/Node/Identifier';
 import { NodeKind } from '../Syntax/Node/NodeKind';
 import { DataDeclarationSequenceStatement } from '../Syntax/Node/Statement/DataDeclarationSequenceStatement';
-import { EmptyStatement } from '../Syntax/Node/Statement/EmptyStatement';
 import { ExpressionStatement } from '../Syntax/Node/Statement/ExpressionStatement';
 import { ForLoop } from '../Syntax/Node/Statement/ForLoop';
 import { ElseIfStatement, ElseStatement, IfStatement } from '../Syntax/Node/Statement/IfStatement';
@@ -37,9 +36,8 @@ import { CatchStatement, TryStatement } from '../Syntax/Node/Statement/TryStatem
 import { WhileLoop } from '../Syntax/Node/Statement/WhileLoop';
 import { ShorthandTypeToken, TypeAnnotation } from '../Syntax/Node/TypeAnnotation';
 import { MissableTypeReference, TypeReference } from '../Syntax/Node/TypeReference';
-import { ParseContextElementDelimitedSequence, ParseContextElementSequence, ParseContextKind } from '../Syntax/ParserBase';
 import { SkippedToken } from '../Syntax/Token/SkippedToken';
-import { NewlineToken, TokenKinds } from '../Syntax/Token/Token';
+import { TokenKinds } from '../Syntax/Token/Token';
 import { TokenKind } from '../Syntax/Token/TokenKind';
 import { BoundSymbol, BoundSymbolTable } from './BoundSymbol';
 import { BoundNodes } from './Node/BoundNode';
@@ -105,7 +103,7 @@ export class Binder {
 
     // #region Declarations
 
-    private bindModuleDeclaration(moduleDeclaration: ModuleDeclaration): BoundModuleDeclaration {
+    private bindModuleDeclaration(moduleDeclaration: ModuleDeclaration) {
         const boundModuleDeclaration = new BoundModuleDeclaration();
         this.module = boundModuleDeclaration;
         boundModuleDeclaration.identifier = this.declareSymbol(moduleDeclaration, boundModuleDeclaration);
@@ -122,12 +120,12 @@ export class Binder {
                     this.bindAliasDirectiveSequence(member);
                     break;
                 }
+                case TokenKind.Newline:
+                case TokenKind.Skipped: {
+                    break;
+                }
                 default: {
-                    type ExpectedType =
-                        NewlineToken |
-                        SkippedToken<TokenKinds>
-                        ;
-                    assertType<ExpectedType>(member);
+                    assertNever(member);
                     break;
                 }
             }
@@ -172,12 +170,12 @@ export class Binder {
                     boundMembers.push(boundClass);
                     break;
                 }
+                case TokenKind.Newline:
+                case TokenKind.Skipped: {
+                    break;
+                }
                 default: {
-                    type ExpectedType =
-                        NewlineToken |
-                        SkippedToken<TokenKinds>
-                        ;
-                    assertType<ExpectedType>(member);
+                    assertNever(member);
                     break;
                 }
             }
@@ -193,8 +191,9 @@ export class Binder {
                     // TOOD: Bind Alias directive
                     break;
                 }
+                case NodeKind.CommaSeparator: { break; }
                 default: {
-                    assertType<CommaSeparator>(child);
+                    assertNever(child);
                     break;
                 }
             }
@@ -204,7 +203,7 @@ export class Binder {
     private bindInterfaceDeclaration(
         interfaceDeclaration: InterfaceDeclaration,
         parent: BoundModuleDeclaration,
-    ): BoundInterfaceDeclaration {
+    ) {
         const boundInterfaceDeclaration = new BoundInterfaceDeclaration();
         boundInterfaceDeclaration.parent = parent;
         boundInterfaceDeclaration.identifier = this.declareSymbol(interfaceDeclaration, boundInterfaceDeclaration);
@@ -235,12 +234,12 @@ export class Binder {
                     boundMembers.push(boundInterfaceMethodDeclaration);
                     break;
                 }
+                case TokenKind.Newline:
+                case TokenKind.Skipped: {
+                    break;
+                }
                 default: {
-                    type ExpectedType =
-                        NewlineToken |
-                        SkippedToken<TokenKinds>
-                        ;
-                    assertType<ExpectedType>(member);
+                    assertNever(member);
                     break;
                 }
             }
@@ -252,7 +251,7 @@ export class Binder {
     private bindInterfaceMethodDeclaration(
         interfaceMethodDeclaration: InterfaceMethodDeclaration,
         parent: BoundInterfaceDeclaration,
-    ): BoundInterfaceMethodDeclaration {
+    ) {
         const boundInterfaceMethodDeclaration = new BoundInterfaceMethodDeclaration();
         boundInterfaceMethodDeclaration.parent = parent;
         boundInterfaceMethodDeclaration.identifier = this.declareSymbol(interfaceMethodDeclaration, boundInterfaceMethodDeclaration);
@@ -310,12 +309,12 @@ export class Binder {
                 case NodeKind.AccessibilityDirective: {
                     throw new Error('Method not implemented.');
                 }
+                case TokenKind.Newline:
+                case TokenKind.Skipped: {
+                    break;
+                }
                 default: {
-                    type ExpectedType =
-                        NewlineToken |
-                        SkippedToken<TokenKinds>
-                        ;
-                    assertType<ExpectedType>(member);
+                    assertNever(member);
                     break;
                 }
             }
@@ -344,7 +343,7 @@ export class Binder {
     private bindFunctionDeclaration(
         functionDeclaration: FunctionDeclaration,
         parent: BoundNodes,
-    ): BoundFunctionDeclaration {
+    ) {
         const boundFunctionDeclaration = new BoundFunctionDeclaration();
         boundFunctionDeclaration.parent = parent;
         boundFunctionDeclaration.identifier = this.declareSymbol(functionDeclaration, boundFunctionDeclaration);
@@ -359,7 +358,7 @@ export class Binder {
     private bindDataDeclarationSequence(
         dataDeclarationSequence: DataDeclarationSequence,
         parent: BoundNodes,
-    ): BoundDataDeclaration[] {
+    ) {
         const boundDataDeclarations: BoundDataDeclaration[] = [];
 
         for (const dataDeclaration of dataDeclarationSequence.children) {
@@ -512,15 +511,16 @@ export class Binder {
             case NodeKind.ExitStatement: {
                 return this.bindExitStatement(parent);
             }
-            default: {
-                type ExpectedType =
-                    ElseIfStatement | ElseStatement |
-                    CaseStatement | DefaultStatement |
-                    CatchStatement |
-                    EmptyStatement
-                    ;
-                assertType<ExpectedType>(statement);
+            case NodeKind.ElseIfStatement:
+            case NodeKind.ElseStatement:
+            case NodeKind.CaseStatement:
+            case NodeKind.DefaultStatement:
+            case NodeKind.CatchStatement:
+            case NodeKind.EmptyStatement: {
                 break;
+            }
+            default: {
+                return assertNever(statement);
             }
         }
     }
@@ -577,10 +577,10 @@ export class Binder {
     }
 
     private bindDataDeclarationSequenceStatement(
-        statement: DataDeclarationSequenceStatement,
+        dataDeclarationSequenceStatement: DataDeclarationSequenceStatement,
         parent: BoundNodes,
     ) {
-        const { dataDeclarationSequence } = statement;
+        const { dataDeclarationSequence } = dataDeclarationSequenceStatement;
 
         const boundDataDeclarationStatements: BoundDataDeclarationStatement[] = [];
 
@@ -711,7 +711,7 @@ export class Binder {
     }
 
     private bindCaseStatements(
-        caseStatements: ParseContextElementSequence<ParseContextKind.CaseStatementList>,
+        caseStatements: CaseStatement[],
         parent: BoundSelectStatement,
     ) {
         const boundCaseStatements: BoundCaseStatement[] = [];
@@ -814,12 +814,12 @@ export class Binder {
         const boundTryStatement = new BoundTryStatement();
         boundTryStatement.parent = parent;
         boundTryStatement.statements = this.bindStatements(tryStatement.statements, boundTryStatement);
-        boundTryStatement.catchStatements = this.bindbindCatchStatements(tryStatement, boundTryStatement);
+        boundTryStatement.catchStatements = this.bindCatchStatements(tryStatement, boundTryStatement);
 
         return boundTryStatement;
     }
 
-    private bindbindCatchStatements(
+    private bindCatchStatements(
         tryStatement: TryStatement,
         parent: BoundTryStatement,
     ) {
@@ -853,12 +853,12 @@ export class Binder {
     }
 
     private bindExpressionStatement(
-        statement: ExpressionStatement,
+        expressionStatement: ExpressionStatement,
         parent: BoundNodes,
-    ): BoundExpressionStatement {
+    ) {
         const boundExpressionStatement = new BoundExpressionStatement();
         boundExpressionStatement.parent = parent;
-        boundExpressionStatement.expression = this.bindExpression(statement.expression, boundExpressionStatement);
+        boundExpressionStatement.expression = this.bindExpression(expressionStatement.expression, boundExpressionStatement);
 
         return boundExpressionStatement;
     }
@@ -937,18 +937,18 @@ export class Binder {
     }
 
     private bindAssignmentExpression(
-        expression: AssignmentExpression,
+        assignmentExpression: AssignmentExpression,
         parent: BoundNodes,
     ) {
         const boundAssignmentExpression = new BoundAssignmentExpression();
         boundAssignmentExpression.parent = parent;
-        boundAssignmentExpression.leftOperand = this.bindExpression(expression.leftOperand, boundAssignmentExpression);
-        boundAssignmentExpression.rightOperand = this.bindExpression(expression.rightOperand, boundAssignmentExpression);
+        boundAssignmentExpression.leftOperand = this.bindExpression(assignmentExpression.leftOperand, boundAssignmentExpression);
+        boundAssignmentExpression.rightOperand = this.bindExpression(assignmentExpression.rightOperand, boundAssignmentExpression);
 
         const { leftOperand, rightOperand } = boundAssignmentExpression;
 
         // Lower update assignments to an assignment of a binary expression
-        const operatorKind = expression.operator.kind;
+        const operatorKind = assignmentExpression.operator.kind;
         if (operatorKind !== TokenKind.EqualsSign) {
             const boundBinaryExpression = new BoundBinaryExpression();
             boundBinaryExpression.parent = boundAssignmentExpression;
@@ -1007,7 +1007,6 @@ export class Binder {
             }
 
             boundAssignmentExpression.rightOperand = boundBinaryExpression;
-
         }
 
         switch (leftOperand.kind) {
@@ -1026,25 +1025,25 @@ export class Binder {
     }
 
     private bindGroupingExpression(
-        expression: GroupingExpression,
+        groupingExpression: GroupingExpression,
         parent: BoundNodes,
     ) {
         const boundGroupingExpression = new BoundGroupingExpression();
         boundGroupingExpression.parent = parent;
-        boundGroupingExpression.expression = this.bindExpression(expression.expression, boundGroupingExpression);
+        boundGroupingExpression.expression = this.bindExpression(groupingExpression.expression, boundGroupingExpression);
         boundGroupingExpression.type = boundGroupingExpression.expression.type;
 
         return boundGroupingExpression;
     }
 
     private bindSliceExpression(
-        expression: SliceExpression,
+        sliceExpression: SliceExpression,
         parent: BoundNodes,
     ) {
         const boundSliceExpression = new BoundSliceExpression();
         boundSliceExpression.parent = parent;
 
-        boundSliceExpression.sliceableExpression = this.bindExpression(expression.sliceableExpression, boundSliceExpression);
+        boundSliceExpression.sliceableExpression = this.bindExpression(sliceExpression.sliceableExpression, boundSliceExpression);
 
         const sliceableExpression = boundSliceExpression.sliceableExpression;
         switch (sliceableExpression.type.kind) {
@@ -1058,16 +1057,16 @@ export class Binder {
             }
         }
 
-        if (expression.startExpression) {
-            boundSliceExpression.startExpression = this.bindExpression(expression.startExpression, boundSliceExpression);
+        if (sliceExpression.startExpression) {
+            boundSliceExpression.startExpression = this.bindExpression(sliceExpression.startExpression, boundSliceExpression);
             if (!boundSliceExpression.startExpression.type.isConvertibleTo(IntType.type)) {
                 throw new Error(`Start index expression is '${boundSliceExpression.startExpression.type}' but must be '${IntType.type}'.`)
             }
 
         }
 
-        if (expression.endExpression) {
-            boundSliceExpression.endExpression = this.bindExpression(expression.endExpression, boundSliceExpression);
+        if (sliceExpression.endExpression) {
+            boundSliceExpression.endExpression = this.bindExpression(sliceExpression.endExpression, boundSliceExpression);
             if (!boundSliceExpression.endExpression.type.isConvertibleTo(IntType.type)) {
                 throw new Error(`End index expression is '${boundSliceExpression.endExpression.type}' but must be '${IntType.type}'.`)
             }
@@ -1130,7 +1129,7 @@ export class Binder {
     }
 
     private bindExpressionSequence(
-        expressions: ParseContextElementDelimitedSequence<ParseContextKind.ExpressionSequence>,
+        expressions: (MissableExpression | CommaSeparator)[],
         parent: BoundNodes,
     ) {
         const boundExpressions: BoundExpressions[] = [];
@@ -1199,11 +1198,11 @@ export class Binder {
     }
 
     private bindNewExpression(
-        expression: NewExpression,
+        newExpression: NewExpression,
         parent: BoundNodes,
     ) {
         const boundNewExpression = new BoundNewExpression();
-        boundNewExpression.type = this.bindTypeReference(expression.type);
+        boundNewExpression.type = this.bindTypeReference(newExpression.type);
         boundNewExpression.parent = parent;
 
         return boundNewExpression;
@@ -1216,14 +1215,14 @@ export class Binder {
         const boundIdentifierExpression = new BoundIdentifierExpression();
         boundIdentifierExpression.parent = parent;
 
-        const identifier = identifierExpression.identifier;
+        const { identifier } = identifierExpression;
         switch (identifier.kind) {
             case TokenKind.Identifier:
             case TokenKind.ObjectKeyword:
             case TokenKind.ThrowableKeyword: {
                 boundIdentifierExpression.identifier = this.getSymbol(identifier, boundIdentifierExpression);
 
-                const declaration = boundIdentifierExpression.identifier.declaration;
+                const { declaration } = boundIdentifierExpression.identifier;
                 switch (declaration.kind) {
                     case BoundNodeKind.InterfaceDeclaration:
                     case BoundNodeKind.ClassDeclaration:
@@ -1231,18 +1230,19 @@ export class Binder {
                         boundIdentifierExpression.type = declaration.type;
                         break;
                     }
+
+                    case BoundNodeKind.ModuleDeclaration:
+                    case BoundNodeKind.InterfaceMethodDeclaration:
+                    case BoundNodeKind.ClassMethodDeclaration:
+                    case BoundNodeKind.FunctionDeclaration: {
+                        break;
+                    }
+
                     default: {
-                        type ExpectedType =
-                            BoundModuleDeclaration |
-                            BoundInterfaceMethodDeclaration |
-                            BoundClassMethodDeclaration |
-                            BoundFunctionDeclaration
-                            ;
-                        assertType<ExpectedType>(declaration);
+                        assertNever(declaration);
                         break;
                     }
                 }
-
                 break;
             }
             case TokenKind.BoolKeyword: {
@@ -1261,8 +1261,12 @@ export class Binder {
                 boundIdentifierExpression.type = StringType.type;
                 break;
             }
+            case TokenKind.NewKeyword:
+            case NodeKind.EscapedIdentifier: {
+                break;
+            }
             default: {
-                identifier;
+                assertNever(identifier);
                 break;
             }
         }
@@ -1299,7 +1303,7 @@ export class Binder {
     private bindInvokeExpression(
         expression: InvokeExpression,
         parent: BoundNodes,
-    ): BoundInvokeExpression {
+    ) {
         const boundInvokeExpression = new BoundInvokeExpression();
         boundInvokeExpression.parent = parent;
         boundInvokeExpression.invokableExpression = this.bindExpression(expression.invokableExpression, boundInvokeExpression);
@@ -1332,7 +1336,7 @@ export class Binder {
     private bindBinaryExpression(
         expression: BinaryExpression,
         parent: BoundNodes,
-    ): BoundBinaryExpression {
+    ) {
         const boundBinaryExpression = new BoundBinaryExpression();
         boundBinaryExpression.parent = parent;
         boundBinaryExpression.leftOperand = this.bindExpression(expression.leftOperand, boundBinaryExpression);
@@ -1485,7 +1489,7 @@ export class Binder {
     private bindUnaryExpression(
         expression: UnaryExpression,
         parent: BoundNodes,
-    ): BoundUnaryExpression {
+    ) {
         const boundUnaryExpression = new BoundUnaryExpression();
         boundUnaryExpression.parent = parent;
         boundUnaryExpression.operand = this.bindExpression(expression.operand, boundUnaryExpression);
@@ -1532,35 +1536,35 @@ export class Binder {
         return boundUnaryExpression;
     }
 
-    private bindNullExpression(parent: BoundNodes): BoundNullExpression {
+    private bindNullExpression(parent: BoundNodes) {
         const boundNullExpression = new BoundNullExpression();
         boundNullExpression.parent = parent;
 
         return boundNullExpression;
     }
 
-    private bindBooleanLiteralExpression(parent: BoundNodes): BoundBooleanLiteralExpression {
+    private bindBooleanLiteralExpression(parent: BoundNodes) {
         const boundBooleanLiteralExpression = new BoundBooleanLiteralExpression();
         boundBooleanLiteralExpression.parent = parent;
 
         return boundBooleanLiteralExpression;
     }
 
-    private bindIntegerLiteralExpression(parent: BoundNodes): BoundIntegerLiteralExpression {
+    private bindIntegerLiteralExpression(parent: BoundNodes) {
         const boundIntegerLiteralExpression = new BoundIntegerLiteralExpression();
         boundIntegerLiteralExpression.parent = parent;
 
         return boundIntegerLiteralExpression;
     }
 
-    private bindFloatLiteralExpression(parent: BoundNodes): BoundFloatLiteralExpression {
+    private bindFloatLiteralExpression(parent: BoundNodes) {
         const boundFloatLiteralExpression = new BoundFloatLiteralExpression();
         boundFloatLiteralExpression.parent = parent;
 
         return boundFloatLiteralExpression;
     }
 
-    private bindStringLiteralExpression(parent: BoundNodes): BoundStringLiteralExpression {
+    private bindStringLiteralExpression(parent: BoundNodes) {
         const boundStringLiteralExpression = new BoundStringLiteralExpression();
         boundStringLiteralExpression.parent = parent;
 
@@ -1571,7 +1575,7 @@ export class Binder {
 
     // #region Core
 
-    private bindTypeReferenceSequence(typeReferences: ParseContextElementDelimitedSequence<ParseContextKind.TypeReferenceSequence>) {
+    private bindTypeReferenceSequence(typeReferences: (TypeReference | CommaSeparator)[]) {
         const types: Types[] = [];
 
         for (const typeReference of typeReferences) {
@@ -1581,8 +1585,9 @@ export class Binder {
                     types.push(type);
                     break;
                 }
+                case NodeKind.CommaSeparator: { break; }
                 default: {
-                    assertType<CommaSeparator>(typeReference);
+                    assertNever(typeReference);
                     break;
                 }
             }

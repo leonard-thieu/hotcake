@@ -1,4 +1,4 @@
-import { BoundNode } from './Node/BoundNode';
+import { BoundNodes } from './Node/BoundNode';
 import { BoundDeclarations } from './Node/Declaration/BoundDeclarations';
 
 export class BoundSymbol {
@@ -7,7 +7,7 @@ export class BoundSymbol {
         public declaration: BoundDeclarations,
     ) { }
 
-    readonly references: BoundNode[] = [];
+    readonly references: BoundNodes[] = [];
 }
 
 export class BoundSymbolTable extends Map<string, BoundSymbol> { }
