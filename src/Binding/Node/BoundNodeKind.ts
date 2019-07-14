@@ -14,6 +14,7 @@ export enum BoundNodeKind {
     SelectStatement = 'SelectStatement',
     CaseStatement = 'CaseStatement',
     DefaultStatement = 'DefaultStatement',
+    ForLoop = 'ForLoop',
     ReturnStatement = 'ReturnStatement',
     ExpressionStatement = 'ExpressionStatement',
 

@@ -35,7 +35,6 @@ import { CatchStatement, TryStatement } from '../Syntax/Node/Statement/TryStatem
 import { ShorthandTypeToken, TypeAnnotation } from '../Syntax/Node/TypeAnnotation';
 import { MissableTypeReference, TypeReference } from '../Syntax/Node/TypeReference';
 import { ParseContextElementDelimitedSequence, ParseContextElementSequence, ParseContextKind } from '../Syntax/ParserBase';
-import { MissingToken } from '../Syntax/Token/MissingToken';
 import { SkippedToken } from '../Syntax/Token/SkippedToken';
 import { NewlineToken, TokenKinds } from '../Syntax/Token/Token';
 import { TokenKind } from '../Syntax/Token/TokenKind';
@@ -70,6 +69,7 @@ import { BoundSuperExpression } from './Node/Expression/BoundSuperExpression';
 import { BoundUnaryExpression } from './Node/Expression/BoundUnaryExpression';
 import { BoundDataDeclarationStatement } from './Node/Statement/BoundDataDeclarationStatement';
 import { BoundExpressionStatement } from './Node/Statement/BoundExpressionStatement';
+import { BoundForLoop } from './Node/Statement/BoundForLoop';
 import { BoundElseIfStatement, BoundElseStatement, BoundIfStatement } from './Node/Statement/BoundIfStatement';
 import { BoundReturnStatement } from './Node/Statement/BoundReturnStatement';
 import { BoundCaseStatement, BoundDefaultStatement, BoundSelectStatement } from './Node/Statement/BoundSelectStatement';
@@ -477,8 +477,7 @@ export class Binder {
                 return this.bindSelectStatement(statement, parent);
             }
             case NodeKind.ForLoop: {
-                this.bindForLoop(statement);
-                break;
+                return this.bindForLoop(statement, parent);
             }
             case NodeKind.TryStatement: {
                 this.bindTryStatement(statement);
@@ -682,26 +681,64 @@ export class Binder {
         return boundDefaultStatement;
     }
 
-    private bindForLoop(statement: ForLoop) {
-        switch (statement.header.kind) {
-            case NodeKind.DataDeclarationSequenceStatement: {
-                this.bindDataDeclarationSequence(statement.header.dataDeclarationSequence, undefined!);
-                break;
-            }
+    private bindForLoop(
+        forLoop: ForLoop,
+        parent: BoundNodes,
+    ) {
+        const boundForLoop = new BoundForLoop();
+        boundForLoop.parent = parent;
+
+        const { header } = forLoop;
+        switch (header.kind) {
             case NodeKind.NumericForLoopHeader: {
-                if (statement.header.loopVariableExpression.kind === NodeKind.DataDeclarationSequenceStatement) {
-                    this.bindDataDeclarationSequence(statement.header.loopVariableExpression.dataDeclarationSequence, undefined!);
+                const { loopVariableExpression } = header;
+                switch (loopVariableExpression.kind) {
+                    case NodeKind.DataDeclarationSequenceStatement: {
+                        boundForLoop.statement = this.bindDataDeclarationSequenceStatement(loopVariableExpression, boundForLoop)[0];
+                        break;
+                    }
+                    case NodeKind.AssignmentExpression: {
+                        const boundExpressionStatement = new BoundExpressionStatement();
+                        boundExpressionStatement.parent = boundForLoop;
+                        boundExpressionStatement.expression = this.bindAssignmentExpression(loopVariableExpression, boundExpressionStatement);
+                        boundForLoop.statement = boundExpressionStatement;
+                        break;
+                    }
+                    default: {
+                        assertNever(loopVariableExpression);
+                        break;
+                    }
+                }
+
+                boundForLoop.lastValueExpression = this.bindExpression(header.lastValueExpression, boundForLoop);
+                if (header.stepValueExpression) {
+                    boundForLoop.stepValueExpression = this.bindExpression(header.stepValueExpression, boundForLoop);
                 }
                 break;
             }
+            case NodeKind.DataDeclarationSequenceStatement: {
+                boundForLoop.statement = this.bindDataDeclarationSequenceStatement(header, boundForLoop)[0];
+                break;
+            }
             case NodeKind.AssignmentExpression: {
-                throw new Error('Method not implemented.');
+                const boundExpressionStatement = new BoundExpressionStatement();
+                boundExpressionStatement.parent = boundForLoop;
+                boundExpressionStatement.expression = this.bindAssignmentExpression(header, boundExpressionStatement);
+                boundForLoop.statement = boundExpressionStatement;
+                break;
+            }
+            case TokenKind.Missing: {
+                break;
             }
             default: {
-                assertType<MissingToken<TokenKind.ForLoopHeader>>(statement.header);
+                assertNever(header);
                 break;
             }
         }
+
+        boundForLoop.statements = this.bindStatements(forLoop.statements, boundForLoop);
+
+        return boundForLoop;
     }
 
     private bindTryStatement(statement: TryStatement) {
@@ -740,7 +777,7 @@ export class Binder {
     private bindExpression(
         expression: MissableExpression,
         parent: BoundNodes,
-    ): BoundExpressions {
+    ) {
         switch (expression.kind) {
             case NodeKind.InvokeExpression: {
                 return this.bindInvokeExpression(expression, parent);
@@ -797,9 +834,11 @@ export class Binder {
             case NodeKind.GlobalScopeExpression: {
                 throw new Error(`Binding '${expression.kind}' is not implemented.`);
             }
+            case TokenKind.Missing: {
+                throw new Error('Expression is missing.');
+            }
             default: {
-                assertType<MissingToken<TokenKind.Expression>>(expression);
-                throw new Error('Method not implemented.');
+                return assertNever(expression);
             }
         }
     }
