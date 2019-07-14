@@ -70,6 +70,7 @@ import { BoundSliceExpression } from './Node/Expression/BoundSliceExpression';
 import { BoundStringLiteralExpression } from './Node/Expression/BoundStringLiteralExpression';
 import { BoundSuperExpression } from './Node/Expression/BoundSuperExpression';
 import { BoundUnaryExpression } from './Node/Expression/BoundUnaryExpression';
+import { BoundContinueStatement } from './Node/Statement/BoundContinueStatement';
 import { BoundDataDeclarationStatement } from './Node/Statement/BoundDataDeclarationStatement';
 import { BoundExpressionStatement } from './Node/Statement/BoundExpressionStatement';
 import { BoundForLoop } from './Node/Statement/BoundForLoop';
@@ -504,8 +505,9 @@ export class Binder {
             case NodeKind.ThrowStatement: {
                 return this.bindThrowStatement(statement, parent);
             }
-            case NodeKind.ReturnStatement:
-            case NodeKind.ContinueStatement:
+            case NodeKind.ContinueStatement: {
+                return this.bindContinueStatement(parent);
+            }
             case NodeKind.ExitStatement: {
                 break;
             }
@@ -520,6 +522,13 @@ export class Binder {
                 break;
             }
         }
+    }
+
+    private bindContinueStatement(parent: BoundNodes) {
+        const boundContinueStatement = new BoundContinueStatement();
+        boundContinueStatement.parent = parent;
+
+        return boundContinueStatement;
     }
 
     private bindThrowStatement(
