@@ -13,6 +13,7 @@ import { ModuleDeclaration } from '../Syntax/Node/Declaration/ModuleDeclaration'
 import { ArrayLiteralExpression } from '../Syntax/Node/Expression/ArrayLiteralExpression';
 import { BinaryExpression } from '../Syntax/Node/Expression/BinaryExpression';
 import { MissableExpression } from '../Syntax/Node/Expression/Expression';
+import { GroupingExpression } from '../Syntax/Node/Expression/GroupingExpression';
 import { IdentifierExpression } from '../Syntax/Node/Expression/IdentifierExpression';
 import { IndexExpression } from '../Syntax/Node/Expression/IndexExpression';
 import { InvokeExpression } from '../Syntax/Node/Expression/InvokeExpression';
@@ -54,6 +55,7 @@ import { BoundBooleanLiteralExpression } from './Node/Expression/BoundBooleanLit
 import { BoundExpression } from './Node/Expression/BoundExpression';
 import { BoundExpressions } from './Node/Expression/BoundExpressions';
 import { BoundFloatLiteralExpression } from './Node/Expression/BoundFloatLiteralExpression';
+import { BoundGroupingExpression } from './Node/Expression/BoundGroupingExpression';
 import { BoundIdentifierExpression } from './Node/Expression/BoundIdentifierExpression';
 import { BoundIndexExpression } from './Node/Expression/BoundIndexExpression';
 import { BoundIntegerLiteralExpression } from './Node/Expression/BoundIntegerLiteralExpression';
@@ -600,8 +602,10 @@ export class Binder {
             case NodeKind.SliceExpression: {
                 return this.bindSliceExpression(expression, parent);
             }
+            case NodeKind.GroupingExpression: {
+                return this.bindGroupingExpression(expression, parent);
+            }
             case NodeKind.ScopeMemberAccessExpression:
-            case NodeKind.GroupingExpression:
             case NodeKind.AssignmentExpression:
             case NodeKind.GlobalScopeExpression: {
                 throw new Error(`Binding '${expression.kind}' is not implemented.`);
@@ -611,6 +615,18 @@ export class Binder {
                 throw new Error('Method not implemented.');
             }
         }
+    }
+
+    private bindGroupingExpression(
+        expression: GroupingExpression,
+        parent: BoundNodes,
+    ) {
+        const boundGroupingExpression = new BoundGroupingExpression();
+        boundGroupingExpression.parent = parent;
+        boundGroupingExpression.expression = this.bindExpression(expression.expression, boundGroupingExpression);
+        boundGroupingExpression.type = boundGroupingExpression.expression.type;
+
+        return boundGroupingExpression;
     }
 
     private bindSliceExpression(
