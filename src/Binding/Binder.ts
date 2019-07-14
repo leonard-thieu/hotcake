@@ -565,22 +565,22 @@ export class Binder {
                 return this.bindBinaryExpression(expression, parent);
             }
             case NodeKind.UnaryExpression: {
-                return this.bindUnaryExpression(expression);
+                return this.bindUnaryExpression(expression, parent);
             }
             case NodeKind.NullExpression: {
-                return this.bindNullExpression();
+                return this.bindNullExpression(parent);
             }
             case NodeKind.BooleanLiteralExpression: {
-                return this.bindBooleanLiteralExpression();
+                return this.bindBooleanLiteralExpression(parent);
             }
             case NodeKind.IntegerLiteralExpression: {
-                return this.bindIntegerLiteralExpression();
+                return this.bindIntegerLiteralExpression(parent);
             }
             case NodeKind.FloatLiteralExpression: {
-                return this.bindFloatLiteralExpression();
+                return this.bindFloatLiteralExpression(parent);
             }
             case NodeKind.StringLiteralExpression: {
-                return this.bindStringLiteralExpression();
+                return this.bindStringLiteralExpression(parent);
             }
             case NodeKind.IdentifierExpression: {
                 return this.bindIdentifierExpression(expression, parent);
@@ -1140,8 +1140,12 @@ export class Binder {
         return null;
     }
 
-    private bindUnaryExpression(expression: UnaryExpression): BoundUnaryExpression {
+    private bindUnaryExpression(
+        expression: UnaryExpression,
+        parent: BoundNodes,
+    ): BoundUnaryExpression {
         const boundUnaryExpression = new BoundUnaryExpression();
+        boundUnaryExpression.parent = parent;
         boundUnaryExpression.operand = this.bindExpression(expression.operand, boundUnaryExpression);
 
         const boundOperandType = boundUnaryExpression.operand.type;
@@ -1186,24 +1190,39 @@ export class Binder {
         return boundUnaryExpression;
     }
 
-    private bindNullExpression(): BoundNullExpression {
-        return new BoundNullExpression();
+    private bindNullExpression(parent: BoundNodes): BoundNullExpression {
+        const boundNullExpression = new BoundNullExpression();
+        boundNullExpression.parent = parent;
+
+        return boundNullExpression;
     }
 
-    private bindBooleanLiteralExpression(): BoundBooleanLiteralExpression {
-        return new BoundBooleanLiteralExpression();
+    private bindBooleanLiteralExpression(parent: BoundNodes): BoundBooleanLiteralExpression {
+        const boundBooleanLiteralExpression = new BoundBooleanLiteralExpression();
+        boundBooleanLiteralExpression.parent = parent;
+
+        return boundBooleanLiteralExpression;
     }
 
-    private bindIntegerLiteralExpression(): BoundIntegerLiteralExpression {
-        return new BoundIntegerLiteralExpression();
+    private bindIntegerLiteralExpression(parent: BoundNodes): BoundIntegerLiteralExpression {
+        const boundIntegerLiteralExpression = new BoundIntegerLiteralExpression();
+        boundIntegerLiteralExpression.parent = parent;
+
+        return boundIntegerLiteralExpression;
     }
 
-    private bindFloatLiteralExpression(): BoundFloatLiteralExpression {
-        return new BoundFloatLiteralExpression();
+    private bindFloatLiteralExpression(parent: BoundNodes): BoundFloatLiteralExpression {
+        const boundFloatLiteralExpression = new BoundFloatLiteralExpression();
+        boundFloatLiteralExpression.parent = parent;
+
+        return boundFloatLiteralExpression;
     }
 
-    private bindStringLiteralExpression(): BoundStringLiteralExpression {
-        return new BoundStringLiteralExpression();
+    private bindStringLiteralExpression(parent: BoundNodes): BoundStringLiteralExpression {
+        const boundStringLiteralExpression = new BoundStringLiteralExpression();
+        boundStringLiteralExpression.parent = parent;
+
+        return boundStringLiteralExpression;
     }
 
     // #region Core
