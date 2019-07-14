@@ -34,7 +34,7 @@ import { Statements } from '../Syntax/Node/Statement/Statement';
 import { CatchStatement, TryStatement } from '../Syntax/Node/Statement/TryStatement';
 import { ShorthandTypeToken, TypeAnnotation } from '../Syntax/Node/TypeAnnotation';
 import { MissableTypeReference, TypeReference } from '../Syntax/Node/TypeReference';
-import { ParseContextElementDelimitedSequence, ParseContextKind } from '../Syntax/ParserBase';
+import { ParseContextElementDelimitedSequence, ParseContextElementSequence, ParseContextKind } from '../Syntax/ParserBase';
 import { MissingToken } from '../Syntax/Token/MissingToken';
 import { SkippedToken } from '../Syntax/Token/SkippedToken';
 import { NewlineToken, TokenKinds } from '../Syntax/Token/Token';
@@ -72,6 +72,7 @@ import { BoundDataDeclarationStatement } from './Node/Statement/BoundDataDeclara
 import { BoundExpressionStatement } from './Node/Statement/BoundExpressionStatement';
 import { BoundElseIfStatement, BoundElseStatement, BoundIfStatement } from './Node/Statement/BoundIfStatement';
 import { BoundReturnStatement } from './Node/Statement/BoundReturnStatement';
+import { BoundCaseStatement, BoundDefaultStatement, BoundSelectStatement } from './Node/Statement/BoundSelectStatement';
 import { BoundStatements } from './Node/Statement/BoundStatements';
 import { ArrayType } from './Type/ArrayType';
 import { BoolType } from './Type/BoolType';
@@ -473,8 +474,7 @@ export class Binder {
                 return this.bindIfStatement(statement, parent);
             }
             case NodeKind.SelectStatement: {
-                this.bindSelectStatement(statement);
-                break;
+                return this.bindSelectStatement(statement, parent);
             }
             case NodeKind.ForLoop: {
                 this.bindForLoop(statement);
@@ -631,14 +631,55 @@ export class Binder {
         return boundElseStatement;
     }
 
-    private bindSelectStatement(statement: SelectStatement) {
-        // for (const caseStatement of statement.caseStatements) {
-        //     this.bindStatements(caseStatement);
-        // }
+    private bindSelectStatement(
+        selectStatement: SelectStatement,
+        parent: BoundNodes,
+    ) {
+        const boundSelectStatement = new BoundSelectStatement();
+        boundSelectStatement.parent = parent;
+        boundSelectStatement.caseStatements = this.bindCaseStatements(selectStatement.caseStatements, boundSelectStatement);
+        if (selectStatement.defaultStatement) {
+            boundSelectStatement.defaultStatement = this.bindDefaultStatement(selectStatement.defaultStatement, boundSelectStatement);
+        }
 
-        // if (statement.defaultStatement) {
-        //     this.bindStatements(statement.defaultStatement);
-        // }
+        return boundSelectStatement;
+    }
+
+    private bindCaseStatements(
+        caseStatements: ParseContextElementSequence<ParseContextKind.CaseStatementList>,
+        parent: BoundSelectStatement,
+    ) {
+        const boundCaseStatements: BoundCaseStatement[] = [];
+
+        for (const caseStatement of caseStatements) {
+            const boundCaseStatement = this.bindCaseStatement(caseStatement, parent);
+            boundCaseStatements.push(boundCaseStatement);
+        }
+
+        return boundCaseStatements;
+    }
+
+    private bindCaseStatement(
+        caseStatement: CaseStatement,
+        parent: BoundSelectStatement,
+    ) {
+        const boundCaseStatement = new BoundCaseStatement();
+        boundCaseStatement.parent = parent;
+        boundCaseStatement.expressions = this.bindExpressionSequence(caseStatement.expressions, boundCaseStatement);
+        boundCaseStatement.statements = this.bindStatements(caseStatement.statements, boundCaseStatement);
+
+        return boundCaseStatement;
+    }
+
+    private bindDefaultStatement(
+        defaultStatement: DefaultStatement,
+        parent: BoundSelectStatement,
+    ) {
+        const boundDefaultStatement = new BoundDefaultStatement();
+        boundDefaultStatement.parent = parent;
+        boundDefaultStatement.statements = this.bindStatements(defaultStatement.statements, boundDefaultStatement);
+
+        return boundDefaultStatement;
     }
 
     private bindForLoop(statement: ForLoop) {
@@ -958,16 +999,42 @@ export class Binder {
 
     private bindExpressionSequence(
         expressions: ParseContextElementDelimitedSequence<ParseContextKind.ExpressionSequence>,
-        parent: BoundArrayLiteralExpression,
+        parent: BoundNodes,
     ) {
         const boundExpressions: BoundExpressions[] = [];
 
         for (const expression of expressions) {
             switch (expression.kind) {
-                case NodeKind.CommaSeparator: { break; }
-                default: {
+                case NodeKind.NewExpression:
+                case NodeKind.NullExpression:
+                case NodeKind.BooleanLiteralExpression:
+                case NodeKind.SelfExpression:
+                case NodeKind.SuperExpression:
+                case NodeKind.IntegerLiteralExpression:
+                case NodeKind.FloatLiteralExpression:
+                case NodeKind.StringLiteralExpression:
+                case NodeKind.ArrayLiteralExpression:
+                case NodeKind.IdentifierExpression:
+                case NodeKind.ScopeMemberAccessExpression:
+                case NodeKind.InvokeExpression:
+                case NodeKind.IndexExpression:
+                case NodeKind.SliceExpression:
+                case NodeKind.GroupingExpression:
+                case NodeKind.UnaryExpression:
+                case NodeKind.BinaryExpression:
+                case NodeKind.AssignmentExpression:
+                case NodeKind.GlobalScopeExpression: {
                     const boundExpression = this.bindExpression(expression, parent);
                     boundExpressions.push(boundExpression);
+                }
+
+                case NodeKind.CommaSeparator:
+                case TokenKind.Missing: {
+                    break;
+                }
+
+                default: {
+                    assertNever(expression);
                     break;
                 }
             }

@@ -11,6 +11,9 @@ export enum BoundNodeKind {
     IfStatement = 'IfStatement',
     ElseIfStatement = 'ElseIfStatement',
     ElseStatement = 'ElseStatement',
+    SelectStatement = 'SelectStatement',
+    CaseStatement = 'CaseStatement',
+    DefaultStatement = 'DefaultStatement',
     ReturnStatement = 'ReturnStatement',
     ExpressionStatement = 'ExpressionStatement',
 

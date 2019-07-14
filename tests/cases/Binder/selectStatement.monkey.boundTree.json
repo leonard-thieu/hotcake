@@ -1,0 +1,135 @@
+{
+    "kind": "ModuleDeclaration",
+    "identifier": "selectStatement",
+    "locals": [
+        "Print",
+        "Main"
+    ],
+    "members": [
+        {
+            "kind": "FunctionDeclaration",
+            "identifier": "Print",
+            "locals": [
+                "message"
+            ],
+            "returnType": "Int",
+            "parameters": [
+                {
+                    "kind": "DataDeclaration",
+                    "identifier": "message",
+                    "type": "String"
+                }
+            ],
+            "statements": []
+        },
+        {
+            "kind": "FunctionDeclaration",
+            "identifier": "Main",
+            "locals": [
+                "val"
+            ],
+            "returnType": "Int",
+            "parameters": [],
+            "statements": [
+                {
+                    "kind": "DataDeclarationStatement",
+                    "declaration": {
+                        "kind": "DataDeclaration",
+                        "declarationKind": "LocalKeyword",
+                        "identifier": "val",
+                        "type": "Int",
+                        "expression": {
+                            "kind": "IntegerLiteralExpression",
+                            "type": "Int"
+                        }
+                    }
+                },
+                {
+                    "kind": "SelectStatement",
+                    "caseStatements": [
+                        {
+                            "kind": "CaseStatement",
+                            "expressions": [
+                                {
+                                    "kind": "IntegerLiteralExpression",
+                                    "type": "Int"
+                                }
+                            ],
+                            "statements": [
+                                {
+                                    "kind": "ExpressionStatement",
+                                    "expression": {
+                                        "kind": "InvokeExpression",
+                                        "invokableExpression": {
+                                            "kind": "IdentifierExpression",
+                                            "identifier": "Print"
+                                        },
+                                        "arguments": [
+                                            {
+                                                "kind": "StringLiteralExpression",
+                                                "type": "String"
+                                            }
+                                        ]
+                                    }
+                                }
+                            ]
+                        },
+                        {
+                            "kind": "CaseStatement",
+                            "expressions": [
+                                {
+                                    "kind": "IntegerLiteralExpression",
+                                    "type": "Int"
+                                },
+                                {
+                                    "kind": "IntegerLiteralExpression",
+                                    "type": "Int"
+                                }
+                            ],
+                            "statements": [
+                                {
+                                    "kind": "ExpressionStatement",
+                                    "expression": {
+                                        "kind": "InvokeExpression",
+                                        "invokableExpression": {
+                                            "kind": "IdentifierExpression",
+                                            "identifier": "Print"
+                                        },
+                                        "arguments": [
+                                            {
+                                                "kind": "IdentifierExpression",
+                                                "type": "Int",
+                                                "identifier": "val"
+                                            }
+                                        ]
+                                    }
+                                }
+                            ]
+                        }
+                    ],
+                    "defaultStatement": {
+                        "kind": "DefaultStatement",
+                        "statements": [
+                            {
+                                "kind": "ExpressionStatement",
+                                "expression": {
+                                    "kind": "InvokeExpression",
+                                    "invokableExpression": {
+                                        "kind": "IdentifierExpression",
+                                        "identifier": "Print"
+                                    },
+                                    "arguments": [
+                                        {
+                                            "kind": "StringLiteralExpression",
+                                            "type": "String"
+                                        }
+                                    ]
+                                }
+                            }
+                        ]
+                    }
+                }
+            ]
+        }
+    ]
+}
