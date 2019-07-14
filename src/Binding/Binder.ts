@@ -93,6 +93,8 @@ export class Binder {
         return this.bindModuleDeclaration(moduleDeclaration);
     }
 
+    // #region Declarations
+
     private bindModuleDeclaration(moduleDeclaration: ModuleDeclaration): BoundModuleDeclaration {
         const boundModuleDeclaration = new BoundModuleDeclaration();
         this.module = boundModuleDeclaration;
@@ -404,6 +406,10 @@ export class Binder {
         return boundDataDeclaration;
     }
 
+    // #endregion
+
+    // #region Statements
+
     private bindStatements(
         statementsParent: StatementsParent,
         parent: BoundNodes,
@@ -640,6 +646,10 @@ export class Binder {
 
         return boundExpressionStatement;
     }
+
+    // #endregion
+
+    // #region Expressions
 
     private bindExpression(
         expression: MissableExpression,
@@ -1312,6 +1322,8 @@ export class Binder {
 
         return boundStringLiteralExpression;
     }
+
+    // #endregion
 
     // #region Core
 
