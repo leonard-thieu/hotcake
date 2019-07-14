@@ -3,6 +3,7 @@ import { BoundBinaryExpression } from './BoundBinaryExpression';
 import { BoundBooleanLiteralExpression } from './BoundBooleanLiteralExpression';
 import { BoundFloatLiteralExpression } from './BoundFloatLiteralExpression';
 import { BoundIdentifierExpression } from './BoundIdentifierExpression';
+import { BoundIndexExpression } from './BoundIndexExpression';
 import { BoundIntegerLiteralExpression } from './BoundIntegerLiteralExpression';
 import { BoundInvokeExpression } from './BoundInvokeExpression';
 import { BoundNewExpression } from './BoundNewExpression';
@@ -18,6 +19,7 @@ export type BoundExpressions =
     BoundBooleanLiteralExpression |
     BoundFloatLiteralExpression |
     BoundIdentifierExpression |
+    BoundIndexExpression |
     BoundIntegerLiteralExpression |
     BoundInvokeExpression |
     BoundNewExpression |

@@ -14,6 +14,7 @@ import { ArrayLiteralExpression } from '../Syntax/Node/Expression/ArrayLiteralEx
 import { BinaryExpression } from '../Syntax/Node/Expression/BinaryExpression';
 import { MissableExpression } from '../Syntax/Node/Expression/Expression';
 import { IdentifierExpression } from '../Syntax/Node/Expression/IdentifierExpression';
+import { IndexExpression } from '../Syntax/Node/Expression/IndexExpression';
 import { InvokeExpression } from '../Syntax/Node/Expression/InvokeExpression';
 import { NewExpression } from '../Syntax/Node/Expression/NewExpression';
 import { UnaryExpression } from '../Syntax/Node/Expression/UnaryExpression';
@@ -53,6 +54,7 @@ import { BoundExpression } from './Node/Expression/BoundExpression';
 import { BoundExpressions } from './Node/Expression/BoundExpressions';
 import { BoundFloatLiteralExpression } from './Node/Expression/BoundFloatLiteralExpression';
 import { BoundIdentifierExpression } from './Node/Expression/BoundIdentifierExpression';
+import { BoundIndexExpression } from './Node/Expression/BoundIndexExpression';
 import { BoundIntegerLiteralExpression } from './Node/Expression/BoundIntegerLiteralExpression';
 import { BoundInvokeExpression } from './Node/Expression/BoundInvokeExpression';
 import { BoundNewExpression } from './Node/Expression/BoundNewExpression';
@@ -590,8 +592,10 @@ export class Binder {
             case NodeKind.ArrayLiteralExpression: {
                 return this.bindArrayLiteralExpression(expression, parent);
             }
+            case NodeKind.IndexExpression: {
+                return this.bindIndexExpression(expression, parent);
+            }
             case NodeKind.ScopeMemberAccessExpression:
-            case NodeKind.IndexExpression:
             case NodeKind.SliceExpression:
             case NodeKind.GroupingExpression:
             case NodeKind.AssignmentExpression:
@@ -603,6 +607,38 @@ export class Binder {
                 throw new Error('Method not implemented.');
             }
         }
+    }
+
+    private bindIndexExpression(
+        indexExpression: IndexExpression,
+        parent: BoundNodes,
+    ) {
+        const boundIndexExpression = new BoundIndexExpression();
+        boundIndexExpression.parent = parent;
+        boundIndexExpression.indexableExpression = this.bindExpression(indexExpression.indexableExpression, boundIndexExpression);
+        boundIndexExpression.indexExpressionExpression = this.bindExpression(indexExpression.indexExpressionExpression, boundIndexExpression);
+
+        const { indexableExpression, indexExpressionExpression } = boundIndexExpression;
+
+        switch (indexableExpression.type.kind) {
+            case TypeKind.String: {
+                boundIndexExpression.type = IntType.type;
+                break;
+            }
+            case TypeKind.Array: {
+                boundIndexExpression.type = indexableExpression.type.elementType;
+                break;
+            }
+            default: {
+                throw new Error(`Expressions of type '${indexableExpression.type}' cannot be accessed by index.`);
+            }
+        }
+
+        if (!indexExpressionExpression.type.isConvertibleTo(IntType.type)) {
+            throw new Error(`Index expression is '${indexExpressionExpression.type}' but must be '${IntType.type}'.`)
+        }
+
+        return boundIndexExpression;
     }
 
     private bindArrayLiteralExpression(
