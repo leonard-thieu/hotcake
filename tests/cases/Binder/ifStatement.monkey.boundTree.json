@@ -1,0 +1,116 @@
+{
+    "kind": "ModuleDeclaration",
+    "identifier": "ifStatement",
+    "locals": [
+        "Print",
+        "Main"
+    ],
+    "members": [
+        {
+            "kind": "FunctionDeclaration",
+            "identifier": "Print",
+            "locals": [
+                "message"
+            ],
+            "returnType": "Int",
+            "parameters": [
+                {
+                    "kind": "DataDeclaration",
+                    "identifier": "message",
+                    "type": "String"
+                }
+            ],
+            "statements": []
+        },
+        {
+            "kind": "FunctionDeclaration",
+            "identifier": "Main",
+            "locals": [],
+            "returnType": "Int",
+            "parameters": [],
+            "statements": [
+                {
+                    "kind": "IfStatement",
+                    "expression": {
+                        "kind": "BinaryExpression",
+                        "type": "Bool",
+                        "leftOperand": {
+                            "kind": "IntegerLiteralExpression",
+                            "type": "Int"
+                        },
+                        "rightOperand": {
+                            "kind": "IntegerLiteralExpression",
+                            "type": "Int"
+                        }
+                    },
+                    "statements": [
+                        {
+                            "kind": "ExpressionStatement",
+                            "expression": {
+                                "kind": "InvokeExpression",
+                                "invokableExpression": {
+                                    "kind": "IdentifierExpression",
+                                    "identifier": "Print"
+                                },
+                                "arguments": [
+                                    {
+                                        "kind": "StringLiteralExpression",
+                                        "type": "String"
+                                    }
+                                ]
+                            }
+                        }
+                    ],
+                    "elseIfStatements": [
+                        {
+                            "kind": "ElseIfStatement",
+                            "expression": {
+                                "kind": "NullExpression",
+                                "type": "Null"
+                            },
+                            "statements": [
+                                {
+                                    "kind": "ExpressionStatement",
+                                    "expression": {
+                                        "kind": "InvokeExpression",
+                                        "invokableExpression": {
+                                            "kind": "IdentifierExpression",
+                                            "identifier": "Print"
+                                        },
+                                        "arguments": [
+                                            {
+                                                "kind": "StringLiteralExpression",
+                                                "type": "String"
+                                            }
+                                        ]
+                                    }
+                                }
+                            ]
+                        }
+                    ],
+                    "elseStatement": {
+                        "kind": "ElseStatement",
+                        "statements": [
+                            {
+                                "kind": "ExpressionStatement",
+                                "expression": {
+                                    "kind": "InvokeExpression",
+                                    "invokableExpression": {
+                                        "kind": "IdentifierExpression",
+                                        "identifier": "Print"
+                                    },
+                                    "arguments": [
+                                        {
+                                            "kind": "StringLiteralExpression",
+                                            "type": "String"
+                                        }
+                                    ]
+                                }
+                            }
+                        ]
+                    }
+                }
+            ]
+        }
+    ]
+}

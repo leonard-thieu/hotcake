@@ -31,7 +31,6 @@ import { ElseIfStatement, ElseStatement, IfStatement } from '../Syntax/Node/Stat
 import { ReturnStatement } from '../Syntax/Node/Statement/ReturnStatement';
 import { CaseStatement, DefaultStatement, SelectStatement } from '../Syntax/Node/Statement/SelectStatement';
 import { Statements } from '../Syntax/Node/Statement/Statement';
-import { StatementsParent } from '../Syntax/Node/Statement/StatementsParent';
 import { CatchStatement, TryStatement } from '../Syntax/Node/Statement/TryStatement';
 import { ShorthandTypeToken, TypeAnnotation } from '../Syntax/Node/TypeAnnotation';
 import { MissableTypeReference, TypeReference } from '../Syntax/Node/TypeReference';
@@ -71,6 +70,7 @@ import { BoundSuperExpression } from './Node/Expression/BoundSuperExpression';
 import { BoundUnaryExpression } from './Node/Expression/BoundUnaryExpression';
 import { BoundDataDeclarationStatement } from './Node/Statement/BoundDataDeclarationStatement';
 import { BoundExpressionStatement } from './Node/Statement/BoundExpressionStatement';
+import { BoundElseIfStatement, BoundElseStatement, BoundIfStatement } from './Node/Statement/BoundIfStatement';
 import { BoundReturnStatement } from './Node/Statement/BoundReturnStatement';
 import { BoundStatements } from './Node/Statement/BoundStatements';
 import { ArrayType } from './Type/ArrayType';
@@ -325,7 +325,7 @@ export class Binder {
         boundClassMethodDeclaration.returnType = this.bindTypeAnnotation(classMethodDeclaration.returnType);
         boundClassMethodDeclaration.parameters = this.bindDataDeclarationSequence(classMethodDeclaration.parameters, boundClassMethodDeclaration);
         if (classMethodDeclaration.statements) {
-            boundClassMethodDeclaration.statements = this.bindStatements(classMethodDeclaration, boundClassMethodDeclaration);
+            boundClassMethodDeclaration.statements = this.bindStatements(classMethodDeclaration.statements, boundClassMethodDeclaration);
         }
 
         return boundClassMethodDeclaration;
@@ -341,7 +341,7 @@ export class Binder {
         boundFunctionDeclaration.locals = new BoundSymbolTable();
         boundFunctionDeclaration.returnType = this.bindTypeAnnotation(functionDeclaration.returnType);
         boundFunctionDeclaration.parameters = this.bindDataDeclarationSequence(functionDeclaration.parameters, boundFunctionDeclaration);
-        boundFunctionDeclaration.statements = this.bindStatements(functionDeclaration, boundFunctionDeclaration);
+        boundFunctionDeclaration.statements = this.bindStatements(functionDeclaration.statements, boundFunctionDeclaration);
 
         return boundFunctionDeclaration;
     }
@@ -411,46 +411,49 @@ export class Binder {
     // #region Statements
 
     private bindStatements(
-        statementsParent: StatementsParent,
+        statements: (Statements | SkippedToken<TokenKinds>)[],
         parent: BoundNodes,
     ) {
         const boundStatements: BoundStatements[] = [];
 
-        if (statementsParent.statements) {
-            for (const statement of statementsParent.statements) {
-                switch (statement.kind) {
-                    case NodeKind.DataDeclarationSequenceStatement:
-                    case NodeKind.ReturnStatement:
-                    case NodeKind.IfStatement:
-                    case NodeKind.SelectStatement:
-                    case NodeKind.CaseStatement:
-                    case NodeKind.DefaultStatement:
-                    case NodeKind.WhileLoop:
-                    case NodeKind.RepeatLoop:
-                    case NodeKind.ForLoop:
-                    case NodeKind.ContinueStatement:
-                    case NodeKind.ExitStatement:
-                    case NodeKind.ThrowStatement:
-                    case NodeKind.TryStatement:
-                    case NodeKind.ExpressionStatement: {
-                        const boundStatement = this.bindStatement(statement, parent);
-                        if (boundStatement) {
-                            if (Array.isArray(boundStatement)) {
-                                boundStatements.push(...boundStatement);
-                            } else {
-                                boundStatements.push(boundStatement);
-                            }
+        for (const statement of statements) {
+            switch (statement.kind) {
+                case NodeKind.DataDeclarationSequenceStatement:
+                case NodeKind.ReturnStatement:
+                case NodeKind.IfStatement:
+                case NodeKind.SelectStatement:
+                case NodeKind.CaseStatement:
+                case NodeKind.DefaultStatement:
+                case NodeKind.WhileLoop:
+                case NodeKind.RepeatLoop:
+                case NodeKind.ForLoop:
+                case NodeKind.ContinueStatement:
+                case NodeKind.ExitStatement:
+                case NodeKind.ThrowStatement:
+                case NodeKind.TryStatement:
+                case NodeKind.ExpressionStatement: {
+                    const boundStatement = this.bindStatement(statement, parent);
+                    if (boundStatement) {
+                        if (Array.isArray(boundStatement)) {
+                            boundStatements.push(...boundStatement);
+                        } else {
+                            boundStatements.push(boundStatement);
                         }
-                        break;
                     }
+                    break;
+                }
 
-                    case NodeKind.EmptyStatement:
-                    case TokenKind.Skipped: { break; }
+                case NodeKind.ElseIfStatement:
+                case NodeKind.ElseStatement:
+                case NodeKind.CatchStatement:
+                case NodeKind.EmptyStatement:
+                case TokenKind.Skipped: {
+                    break;
+                }
 
-                    default: {
-                        assertNever(statement);
-                        break;
-                    }
+                default: {
+                    assertNever(statement);
+                    break;
                 }
             }
         }
@@ -467,8 +470,7 @@ export class Binder {
                 return this.bindDataDeclarationSequenceStatement(statement, parent);
             }
             case NodeKind.IfStatement: {
-                this.bindIfStatement(statement);
-                break;
+                return this.bindIfStatement(statement, parent);
             }
             case NodeKind.SelectStatement: {
                 this.bindSelectStatement(statement);
@@ -572,18 +574,61 @@ export class Binder {
         return boundReturnStatement;
     }
 
-    private bindIfStatement(statement: IfStatement) {
-        // this.bindStatements(statement);
+    private bindIfStatement(
+        ifStatement: IfStatement,
+        parent: BoundNodes,
+    ) {
+        const boundIfStatement = new BoundIfStatement();
+        boundIfStatement.parent = parent;
+        boundIfStatement.expression = this.bindExpression(ifStatement.expression, boundIfStatement);
+        boundIfStatement.statements = this.bindStatements(ifStatement.statements, boundIfStatement);
 
-        // if (statement.elseIfStatements) {
-        //     for (const elseifStatement of statement.elseIfStatements) {
-        //         this.bindStatements(elseifStatement);
-        //     }
-        // }
+        if (ifStatement.elseIfStatements) {
+            boundIfStatement.elseIfStatements = this.bindElseIfStatements(ifStatement.elseIfStatements, boundIfStatement);
+        }
 
-        // if (statement.elseStatement) {
-        //     this.bindStatements(statement.elseStatement);
-        // }
+        if (ifStatement.elseStatement) {
+            boundIfStatement.elseStatement = this.bindElseStatement(ifStatement.elseStatement, boundIfStatement);
+        }
+
+        return boundIfStatement;
+    }
+
+    private bindElseIfStatements(
+        elseIfStatements: ElseIfStatement[],
+        parent: BoundIfStatement,
+    ) {
+        const boundElseIfStatements: BoundElseIfStatement[] = [];
+
+        for (const elseifStatement of elseIfStatements) {
+            const boundElseIfStatement = this.bindElseIfStatement(elseifStatement, parent);
+            boundElseIfStatements.push(boundElseIfStatement);
+        }
+
+        return boundElseIfStatements;
+    }
+
+    private bindElseIfStatement(
+        elseifStatement: ElseIfStatement,
+        parent: BoundIfStatement,
+    ) {
+        const boundElseIfStatement = new BoundElseIfStatement();
+        boundElseIfStatement.parent = parent;
+        boundElseIfStatement.expression = this.bindExpression(elseifStatement.expression, boundElseIfStatement);
+        boundElseIfStatement.statements = this.bindStatements(elseifStatement.statements, boundElseIfStatement);
+
+        return boundElseIfStatement;
+    }
+
+    private bindElseStatement(
+        elseStatement: ElseStatement,
+        parent: BoundIfStatement,
+    ) {
+        const boundElseStatement = new BoundElseStatement();
+        boundElseStatement.parent = parent;
+        boundElseStatement.statements = this.bindStatements(elseStatement.statements, boundElseStatement);
+
+        return boundElseStatement;
     }
 
     private bindSelectStatement(statement: SelectStatement) {
