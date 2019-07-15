@@ -1,11 +1,10 @@
-import { assertNever, assertType } from '../assertNever';
+import { assertNever } from '../assertNever';
 import { PreprocessorModuleDeclaration } from './Node/Declaration/PreprocessorModuleDeclaration';
 import { IfDirective } from './Node/Directive/IfDirective';
 import { MissableExpression } from './Node/Expression/Expression';
 import { NodeKind } from './Node/NodeKind';
 import { ParseContextElementSequence } from './ParserBase';
-import { SkippedToken } from './Token/SkippedToken';
-import { InvalidEscapeSequenceToken, TokenKinds, Tokens } from './Token/Token';
+import { Tokens } from './Token/Token';
 import { TokenKind } from './Token/TokenKind';
 
 export class Tokenizer {
@@ -236,9 +235,13 @@ export class Tokenizer {
                             }
                             break;
                         }
-                        default: {
-                            assertType<SkippedToken<TokenKinds> | InvalidEscapeSequenceToken>(child);
+                        case TokenKind.Skipped:
+                        case TokenKind.InvalidEscapeSequence: {
                             console.log(`Skipped ${JSON.stringify(child.kind)}`);
+                            break;
+                        }
+                        default: {
+                            assertNever(child);
                             break;
                         }
                     }

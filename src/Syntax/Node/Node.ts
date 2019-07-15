@@ -1,5 +1,6 @@
-import { assertType } from '../../assertNever';
+import { assertNever } from '../../assertNever';
 import { ErrorableToken } from '../Token/Token';
+import { TokenKind } from '../Token/TokenKind';
 import { ArrayTypeAnnotation } from './ArrayTypeAnnotation';
 import { CommaSeparator } from './CommaSeparator';
 import { ConfigurationTag } from './ConfigurationTag';
@@ -293,9 +294,148 @@ export function isNode(nodeOrToken: Nodes | ErrorableToken): nodeOrToken is Node
         case NodeKind.CommaSeparator: {
             return true;
         }
+
+        case TokenKind.Unknown:
+        case TokenKind.EOF:
+        case TokenKind.Newline:
+        case TokenKind.IntegerLiteral:
+        case TokenKind.FloatLiteral:
+        case TokenKind.StringLiteralText:
+        case TokenKind.EscapeNull:
+        case TokenKind.EscapeCharacterTabulation:
+        case TokenKind.EscapeLineFeedLf:
+        case TokenKind.EscapeCarriageReturnCr:
+        case TokenKind.EscapeQuotationMark:
+        case TokenKind.EscapeTilde:
+        case TokenKind.EscapeUnicodeHexValue:
+        case TokenKind.InvalidEscapeSequence:
+        case TokenKind.ConfigurationTagStart:
+        case TokenKind.ConfigurationTagEnd:
+        case TokenKind.IfDirectiveKeyword:
+        case TokenKind.ElseIfDirectiveKeyword:
+        case TokenKind.ElseDirectiveKeyword:
+        case TokenKind.EndDirectiveKeyword:
+        case TokenKind.RemDirectiveKeyword:
+        case TokenKind.RemDirectiveBody:
+        case TokenKind.PrintDirectiveKeyword:
+        case TokenKind.ErrorDirectiveKeyword:
+        case TokenKind.ConfigurationVariable:
+        case TokenKind.QuotationMark:
+        case TokenKind.NumberSign:
+        case TokenKind.DollarSign:
+        case TokenKind.PercentSign:
+        case TokenKind.Ampersand:
+        case TokenKind.OpeningParenthesis:
+        case TokenKind.ClosingParenthesis:
+        case TokenKind.Asterisk:
+        case TokenKind.PlusSign:
+        case TokenKind.Comma:
+        case TokenKind.HyphenMinus:
+        case TokenKind.Period:
+        case TokenKind.Slash:
+        case TokenKind.Colon:
+        case TokenKind.Semicolon:
+        case TokenKind.LessThanSign:
+        case TokenKind.EqualsSign:
+        case TokenKind.GreaterThanSign:
+        case TokenKind.QuestionMark:
+        case TokenKind.CommercialAt:
+        case TokenKind.OpeningSquareBracket:
+        case TokenKind.ClosingSquareBracket:
+        case TokenKind.VerticalBar:
+        case TokenKind.Tilde:
+        case TokenKind.PeriodPeriod:
+        case TokenKind.AmpersandEqualsSign:
+        case TokenKind.AsteriskEqualsSign:
+        case TokenKind.PlusSignEqualsSign:
+        case TokenKind.HyphenMinusEqualsSign:
+        case TokenKind.SlashEqualsSign:
+        case TokenKind.ColonEqualsSign:
+        case TokenKind.LessThanSignEqualsSign:
+        case TokenKind.GreaterThanSignEqualsSign:
+        case TokenKind.VerticalBarEqualsSign:
+        case TokenKind.TildeEqualsSign:
+        case TokenKind.ShlKeywordEqualsSign:
+        case TokenKind.ShrKeywordEqualsSign:
+        case TokenKind.ModKeywordEqualsSign:
+        case TokenKind.LessThanSignGreaterThanSign:
+        case TokenKind.Identifier:
+        case TokenKind.VoidKeyword:
+        case TokenKind.StrictKeyword:
+        case TokenKind.PublicKeyword:
+        case TokenKind.PrivateKeyword:
+        case TokenKind.ProtectedKeyword:
+        case TokenKind.FriendKeyword:
+        case TokenKind.PropertyKeyword:
+        case TokenKind.BoolKeyword:
+        case TokenKind.IntKeyword:
+        case TokenKind.FloatKeyword:
+        case TokenKind.StringKeyword:
+        case TokenKind.ArrayKeyword:
+        case TokenKind.ObjectKeyword:
+        case TokenKind.ModKeyword:
+        case TokenKind.ContinueKeyword:
+        case TokenKind.ExitKeyword:
+        case TokenKind.IncludeKeyword:
+        case TokenKind.ImportKeyword:
+        case TokenKind.ModuleKeyword:
+        case TokenKind.ExternKeyword:
+        case TokenKind.NewKeyword:
+        case TokenKind.SelfKeyword:
+        case TokenKind.SuperKeyword:
+        case TokenKind.EachInKeyword:
+        case TokenKind.TrueKeyword:
+        case TokenKind.FalseKeyword:
+        case TokenKind.NullKeyword:
+        case TokenKind.NotKeyword:
+        case TokenKind.ExtendsKeyword:
+        case TokenKind.AbstractKeyword:
+        case TokenKind.FinalKeyword:
+        case TokenKind.SelectKeyword:
+        case TokenKind.CaseKeyword:
+        case TokenKind.DefaultKeyword:
+        case TokenKind.ConstKeyword:
+        case TokenKind.LocalKeyword:
+        case TokenKind.GlobalKeyword:
+        case TokenKind.FieldKeyword:
+        case TokenKind.MethodKeyword:
+        case TokenKind.FunctionKeyword:
+        case TokenKind.ClassKeyword:
+        case TokenKind.AndKeyword:
+        case TokenKind.OrKeyword:
+        case TokenKind.ShlKeyword:
+        case TokenKind.ShrKeyword:
+        case TokenKind.EndKeyword:
+        case TokenKind.IfKeyword:
+        case TokenKind.ThenKeyword:
+        case TokenKind.ElseKeyword:
+        case TokenKind.ElseIfKeyword:
+        case TokenKind.EndIfKeyword:
+        case TokenKind.WhileKeyword:
+        case TokenKind.WendKeyword:
+        case TokenKind.RepeatKeyword:
+        case TokenKind.UntilKeyword:
+        case TokenKind.ForeverKeyword:
+        case TokenKind.ForKeyword:
+        case TokenKind.ToKeyword:
+        case TokenKind.StepKeyword:
+        case TokenKind.NextKeyword:
+        case TokenKind.ReturnKeyword:
+        case TokenKind.InterfaceKeyword:
+        case TokenKind.ImplementsKeyword:
+        case TokenKind.InlineKeyword:
+        case TokenKind.AliasKeyword:
+        case TokenKind.TryKeyword:
+        case TokenKind.CatchKeyword:
+        case TokenKind.ThrowKeyword:
+        case TokenKind.ThrowableKeyword:
+        case TokenKind.Missing:
+        case TokenKind.Skipped: {
+            return false;
+        }
+
+        default: {
+            return assertNever(nodeOrToken);
+        }
     }
-
-    assertType<ErrorableToken>(nodeOrToken);
-
-    return false;
 }
