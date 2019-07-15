@@ -994,10 +994,7 @@ export class Binder {
                         break;
                     }
                     case NodeKind.AssignmentExpression: {
-                        const boundExpressionStatement = new BoundExpressionStatement();
-                        boundExpressionStatement.parent = boundForLoop;
-                        boundExpressionStatement.expression = this.bindAssignmentExpression(loopVariableExpression, boundExpressionStatement);
-                        boundForLoop.statement = boundExpressionStatement;
+                        boundForLoop.statement = this.bindAssignmentExpressionStatement(loopVariableExpression, boundForLoop);
                         break;
                     }
                     default: {
@@ -1017,15 +1014,10 @@ export class Binder {
                 break;
             }
             case NodeKind.AssignmentExpression: {
-                const boundExpressionStatement = new BoundExpressionStatement();
-                boundExpressionStatement.parent = boundForLoop;
-                boundExpressionStatement.expression = this.bindAssignmentExpression(header, boundExpressionStatement);
-                boundForLoop.statement = boundExpressionStatement;
+                boundForLoop.statement = this.bindAssignmentExpressionStatement(header, boundForLoop);
                 break;
             }
-            case TokenKind.Missing: {
-                break;
-            }
+            case TokenKind.Missing: { break; }
             default: {
                 assertNever(header);
                 break;
@@ -1037,16 +1029,31 @@ export class Binder {
         return boundForLoop;
     }
 
+    private bindAssignmentExpressionStatement(
+        assignmentExpression: AssignmentExpression,
+        parent: BoundForLoop,
+    ): BoundExpressionStatement {
+        const boundAssignmentExpressionStatement = new BoundExpressionStatement();
+        boundAssignmentExpressionStatement.parent = parent;
+        boundAssignmentExpressionStatement.expression = this.bindAssignmentExpression(assignmentExpression, boundAssignmentExpressionStatement);
+
+        return boundAssignmentExpressionStatement;
+    }
+
     // #endregion
 
-    private bindContinueStatement(parent: BoundNodes): BoundContinueStatement {
+    private bindContinueStatement(
+        parent: BoundNodes,
+    ): BoundContinueStatement {
         const boundContinueStatement = new BoundContinueStatement();
         boundContinueStatement.parent = parent;
 
         return boundContinueStatement;
     }
 
-    private bindExitStatement(parent: BoundNodes): BoundExitStatement {
+    private bindExitStatement(
+        parent: BoundNodes,
+    ): BoundExitStatement {
         const boundExitStatement = new BoundExitStatement();
         boundExitStatement.parent = parent;
 
@@ -1368,6 +1375,7 @@ export class Binder {
         rightOperand: BoundExpressions,
     ) {
         const balancedType = this.getBalancedType(leftOperand.type, rightOperand.type);
+
         switch (balancedType) {
             case null: {
                 throw new Error(`'${operatorKind}' is not valid for '${leftOperand.kind}' and '${rightOperand.kind}'.`);
@@ -1409,9 +1417,11 @@ export class Binder {
         rightOperand: BoundExpressions,
     ) {
         const balancedType = this.getBalancedType(leftOperand.type, rightOperand.type);
+
         if (!balancedType) {
             throw new Error(`'${operatorKind}' is not valid for '${leftOperand.kind}' and '${rightOperand.kind}'.`);
         }
+
         switch (balancedType.kind) {
             case TypeKind.Array: {
                 throw new Error(`'${operatorKind}' is not valid for '${leftOperand.kind}' and '${rightOperand.kind}'.`);
@@ -1502,7 +1512,9 @@ export class Binder {
 
     // #region Null expression
 
-    private bindNullExpression(parent: BoundNodes): BoundNullExpression {
+    private bindNullExpression(
+        parent: BoundNodes,
+    ): BoundNullExpression {
         const boundNullExpression = new BoundNullExpression();
         boundNullExpression.parent = parent;
 
@@ -1513,7 +1525,9 @@ export class Binder {
 
     // #region Boolean literal expression
 
-    private bindBooleanLiteralExpression(parent: BoundNodes): BoundBooleanLiteralExpression {
+    private bindBooleanLiteralExpression(
+        parent: BoundNodes,
+    ): BoundBooleanLiteralExpression {
         const boundBooleanLiteralExpression = new BoundBooleanLiteralExpression();
         boundBooleanLiteralExpression.parent = parent;
 
@@ -1524,7 +1538,9 @@ export class Binder {
 
     // #region Self expression
 
-    private bindSelfExpression(parent: BoundNodes): BoundSelfExpression {
+    private bindSelfExpression(
+        parent: BoundNodes,
+    ): BoundSelfExpression {
         const boundSelfExpression = new BoundSelfExpression();
         boundSelfExpression.parent = parent;
 
@@ -1538,7 +1554,9 @@ export class Binder {
 
     // #region Super expression
 
-    private bindSuperExpression(parent: BoundNodes): BoundSuperExpression {
+    private bindSuperExpression(
+        parent: BoundNodes,
+    ): BoundSuperExpression {
         const boundSuperExpression = new BoundSuperExpression();
         boundSuperExpression.parent = parent;
 
@@ -1555,7 +1573,9 @@ export class Binder {
 
     // #region String literal expression
 
-    private bindStringLiteralExpression(parent: BoundNodes): BoundStringLiteralExpression {
+    private bindStringLiteralExpression(
+        parent: BoundNodes,
+    ): BoundStringLiteralExpression {
         const boundStringLiteralExpression = new BoundStringLiteralExpression();
         boundStringLiteralExpression.parent = parent;
 
@@ -1566,7 +1586,9 @@ export class Binder {
 
     // #region Float literal expression
 
-    private bindFloatLiteralExpression(parent: BoundNodes): BoundFloatLiteralExpression {
+    private bindFloatLiteralExpression(
+        parent: BoundNodes,
+    ): BoundFloatLiteralExpression {
         const boundFloatLiteralExpression = new BoundFloatLiteralExpression();
         boundFloatLiteralExpression.parent = parent;
 
@@ -1577,7 +1599,9 @@ export class Binder {
 
     // #region Integer literal expression
 
-    private bindIntegerLiteralExpression(parent: BoundNodes): BoundIntegerLiteralExpression {
+    private bindIntegerLiteralExpression(
+        parent: BoundNodes,
+    ): BoundIntegerLiteralExpression {
         const boundIntegerLiteralExpression = new BoundIntegerLiteralExpression();
         boundIntegerLiteralExpression.parent = parent;
 
@@ -1672,7 +1696,7 @@ export class Binder {
             }
             case TokenKind.NewKeyword:
             case NodeKind.EscapedIdentifier: {
-                break;
+                throw new Error('Method not implemented.');
             }
             default: {
                 assertNever(identifier);
@@ -1766,10 +1790,9 @@ export class Binder {
     ): BoundSliceExpression {
         const boundSliceExpression = new BoundSliceExpression();
         boundSliceExpression.parent = parent;
-
         boundSliceExpression.sliceableExpression = this.bindExpression(sliceExpression.sliceableExpression, boundSliceExpression);
 
-        const sliceableExpression = boundSliceExpression.sliceableExpression;
+        const { sliceableExpression } = boundSliceExpression;
         switch (sliceableExpression.type.kind) {
             case TypeKind.String:
             case TypeKind.Array: {
