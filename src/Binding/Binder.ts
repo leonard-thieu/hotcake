@@ -24,6 +24,7 @@ import { UnaryExpression } from '../Syntax/Node/Expression/UnaryExpression';
 import { EscapeOptionalIdentifierNameToken } from '../Syntax/Node/Identifier';
 import { NodeKind } from '../Syntax/Node/NodeKind';
 import { DataDeclarationSequenceStatement } from '../Syntax/Node/Statement/DataDeclarationSequenceStatement';
+import { EmptyStatement } from '../Syntax/Node/Statement/EmptyStatement';
 import { ExpressionStatement } from '../Syntax/Node/Statement/ExpressionStatement';
 import { ForLoop } from '../Syntax/Node/Statement/ForLoop';
 import { ElseClause, ElseIfClause, IfStatement } from '../Syntax/Node/Statement/IfStatement';
@@ -463,7 +464,12 @@ export class Binder {
 
         for (const statement of statements) {
             switch (statement.kind) {
-                case NodeKind.DataDeclarationSequenceStatement:
+                case NodeKind.DataDeclarationSequenceStatement: {
+                    const boundStatement = this.bindDataDeclarationSequenceStatement(statement, parent);
+                    boundStatements.push(...boundStatement);
+                    break;
+                }
+
                 case NodeKind.ReturnStatement:
                 case NodeKind.IfStatement:
                 case NodeKind.SelectStatement:
@@ -476,13 +482,7 @@ export class Binder {
                 case NodeKind.TryStatement:
                 case NodeKind.ExpressionStatement: {
                     const boundStatement = this.bindStatement(statement, parent);
-                    if (boundStatement) {
-                        if (Array.isArray(boundStatement)) {
-                            boundStatements.push(...boundStatement);
-                        } else {
-                            boundStatements.push(boundStatement);
-                        }
-                    }
+                    boundStatements.push(boundStatement);
                     break;
                 }
 
@@ -502,13 +502,10 @@ export class Binder {
     }
 
     private bindStatement(
-        statement: Statements,
+        statement: Exclude<Statements, DataDeclarationSequenceStatement | EmptyStatement>,
         parent: BoundNodes,
     ) {
         switch (statement.kind) {
-            case NodeKind.DataDeclarationSequenceStatement: {
-                return this.bindDataDeclarationSequenceStatement(statement, parent);
-            }
             case NodeKind.IfStatement: {
                 return this.bindIfStatement(statement, parent);
             }
@@ -541,9 +538,6 @@ export class Binder {
             }
             case NodeKind.ExitStatement: {
                 return this.bindExitStatement(parent);
-            }
-            case NodeKind.EmptyStatement: {
-                break;
             }
             default: {
                 return assertNever(statement);
