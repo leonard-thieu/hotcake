@@ -1,5 +1,6 @@
 import { BoundClassDeclaration } from '../Node/Declaration/BoundClassDeclaration';
 import { BoundInterfaceDeclaration } from '../Node/Declaration/BoundInterfaceDeclaration';
+import { BoundExternClassDeclaration } from '../Node/Declaration/Extern/BoundExternClassDeclaration';
 import { Type } from './Type';
 import { TypeKind } from './TypeKind';
 import { Types } from './Types';
@@ -8,7 +9,7 @@ export class ObjectType extends Type {
     static readonly type = new ObjectType();
     static readonly nullType = new ObjectType();
 
-    constructor(readonly declaration?: BoundInterfaceDeclaration | BoundClassDeclaration) {
+    constructor(readonly declaration?: BoundExternClassDeclaration | BoundInterfaceDeclaration | BoundClassDeclaration) {
         super();
     }
 

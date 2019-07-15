@@ -5,6 +5,7 @@ import { BoundClassDeclaration } from './BoundClassDeclaration';
 import { BoundDataDeclaration } from './BoundDataDeclaration';
 import { BoundFunctionDeclaration } from './BoundFunctionDeclaration';
 import { BoundInterfaceDeclaration } from './BoundInterfaceDeclaration';
+import { BoundExternClassDeclaration } from './Extern/BoundExternClassDeclaration';
 import { BoundExternDataDeclaration } from './Extern/BoundExternDataDeclaration';
 import { BoundExternFunctionDeclaration } from './Extern/BoundExternFunctionDeclaration';
 
@@ -20,6 +21,7 @@ export class BoundModuleDeclaration extends BoundNode {
 export type BoundModuleDeclarationMember =
     BoundExternDataDeclaration |
     BoundExternFunctionDeclaration |
+    BoundExternClassDeclaration |
     BoundDataDeclaration |
     BoundFunctionDeclaration |
     BoundInterfaceDeclaration |

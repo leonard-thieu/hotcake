@@ -5,13 +5,11 @@ import { BoundFunctionDeclaration } from './BoundFunctionDeclaration';
 import { BoundInterfaceDeclaration } from './BoundInterfaceDeclaration';
 import { BoundInterfaceMethodDeclaration } from './BoundInterfaceMethodDeclaration';
 import { BoundModuleDeclaration } from './BoundModuleDeclaration';
-import { BoundExternDataDeclaration } from './Extern/BoundExternDataDeclaration';
-import { BoundExternFunctionDeclaration } from './Extern/BoundExternFunctionDeclaration';
+import { BoundExternDeclarations } from './Extern/BoundExternDeclarations';
 
 export type BoundDeclarations =
     BoundModuleDeclaration |
-    BoundExternDataDeclaration |
-    BoundExternFunctionDeclaration |
+    BoundExternDeclarations |
     BoundDataDeclaration |
     BoundFunctionDeclaration |
     BoundInterfaceDeclaration |

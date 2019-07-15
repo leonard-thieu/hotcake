@@ -7,6 +7,8 @@ import { ClassDeclaration } from '../Syntax/Node/Declaration/ClassDeclaration';
 import { ClassMethodDeclaration } from '../Syntax/Node/Declaration/ClassMethodDeclaration';
 import { DataDeclaration, DataDeclarationKeywordToken, DataDeclarationSequence } from '../Syntax/Node/Declaration/DataDeclarationSequence';
 import { Declarations } from '../Syntax/Node/Declaration/Declaration';
+import { ExternClassDeclaration } from '../Syntax/Node/Declaration/ExternDeclaration/ExternClassDeclaration';
+import { ExternClassMethodDeclaration } from '../Syntax/Node/Declaration/ExternDeclaration/ExternClassMethodDeclaration';
 import { ExternDataDeclaration, ExternDataDeclarationKeywordToken, ExternDataDeclarationSequence } from '../Syntax/Node/Declaration/ExternDeclaration/ExternDataDeclarationSequence';
 import { ExternFunctionDeclaration } from '../Syntax/Node/Declaration/ExternDeclaration/ExternFunctionDeclaration';
 import { FunctionDeclaration } from '../Syntax/Node/Declaration/FunctionDeclaration';
@@ -53,6 +55,8 @@ import { BoundFunctionDeclaration } from './Node/Declaration/BoundFunctionDeclar
 import { BoundInterfaceDeclaration, BoundInterfaceDeclarationMember } from './Node/Declaration/BoundInterfaceDeclaration';
 import { BoundInterfaceMethodDeclaration } from './Node/Declaration/BoundInterfaceMethodDeclaration';
 import { BoundModuleDeclaration, BoundModuleDeclarationMember } from './Node/Declaration/BoundModuleDeclaration';
+import { BoundExternClassDeclaration, BoundExternClassDeclarationMember } from './Node/Declaration/Extern/BoundExternClassDeclaration';
+import { BoundExternClassMethodDeclaration } from './Node/Declaration/Extern/BoundExternClassMethodDeclaration';
 import { BoundExternDataDeclaration } from './Node/Declaration/Extern/BoundExternDataDeclaration';
 import { BoundExternFunctionDeclaration } from './Node/Declaration/Extern/BoundExternFunctionDeclaration';
 import { BoundArrayLiteralExpression } from './Node/Expression/BoundArrayLiteralExpression';
@@ -145,15 +149,12 @@ export class Binder {
 
     private bindModuleDeclarationMembers(
         moduleDeclaration: ModuleDeclaration,
-        parent: BoundModuleDeclaration,
+        parent: BoundNodes,
     ): BoundModuleDeclarationMember[] {
         const boundModuleDeclarationMembers: BoundModuleDeclarationMember[] = [];
 
         for (const moduleDeclarationMember of moduleDeclaration.members) {
             switch (moduleDeclarationMember.kind) {
-                case NodeKind.ExternClassDeclaration: {
-                    throw new Error('Method not implemented.');
-                }
                 case NodeKind.AccessibilityDirective: {
                     this.bindAccessibilityDirective(moduleDeclarationMember);
                     break;
@@ -166,6 +167,11 @@ export class Binder {
                 case NodeKind.ExternFunctionDeclaration: {
                     const boundExternFunctionDeclaration = this.bindExternFunctionDeclaration(moduleDeclarationMember, parent);
                     boundModuleDeclarationMembers.push(boundExternFunctionDeclaration);
+                    break;
+                }
+                case NodeKind.ExternClassDeclaration: {
+                    const boundExternClassDeclaration = this.bindExternClassDeclaration(moduleDeclarationMember, parent);
+                    boundModuleDeclarationMembers.push(boundExternClassDeclaration);
                     break;
                 }
                 case NodeKind.DataDeclarationSequence: {
@@ -258,7 +264,7 @@ export class Binder {
 
     private bindExternDataDeclarationSequence(
         externDataDeclarationSequence: ExternDataDeclarationSequence,
-        parent: BoundModuleDeclaration,
+        parent: BoundNodes,
     ): BoundExternDataDeclaration[] {
         const boundExternDataDeclarations: BoundExternDataDeclaration[] = [];
 
@@ -282,7 +288,7 @@ export class Binder {
 
     private bindExternDataDeclaration(
         externDataDeclaration: ExternDataDeclaration,
-        parent: BoundModuleDeclaration,
+        parent: BoundNodes,
         dataDeclarationKeyword: ExternDataDeclarationKeywordToken,
     ): BoundExternDataDeclaration {
         const boundExternDataDeclaration = new BoundExternDataDeclaration();
@@ -303,7 +309,7 @@ export class Binder {
 
     private bindExternFunctionDeclaration(
         externFunctionDeclaration: ExternFunctionDeclaration,
-        parent: BoundModuleDeclaration,
+        parent: BoundNodes,
     ): BoundExternFunctionDeclaration {
         const boundExternFunctionDeclaration = new BoundExternFunctionDeclaration();
         boundExternFunctionDeclaration.parent = parent;
@@ -317,6 +323,95 @@ export class Binder {
 
         return boundExternFunctionDeclaration;
     }
+
+    // #endregion
+
+    // #region Extern class declaration
+
+    private bindExternClassDeclaration(
+        externClassDeclaration: ExternClassDeclaration,
+        parent: BoundNodes,
+    ): BoundExternClassDeclaration {
+        const boundExternClassDeclaration = new BoundExternClassDeclaration();
+        boundExternClassDeclaration.parent = parent;
+        boundExternClassDeclaration.locals = new BoundSymbolTable();
+        boundExternClassDeclaration.identifier = this.declareSymbol(externClassDeclaration, boundExternClassDeclaration);
+        boundExternClassDeclaration.type = new ObjectType(boundExternClassDeclaration);
+        if (externClassDeclaration.baseType) {
+            if (externClassDeclaration.baseType.kind === TokenKind.NullKeyword) {
+                throw new Error('Extending from Null is not implemented.');
+            } else {
+                boundExternClassDeclaration.baseType = this.bindTypeReference(externClassDeclaration.baseType);
+            }
+        }
+        if (externClassDeclaration.nativeSymbol) {
+            boundExternClassDeclaration.nativeSymbol = this.bindStringLiteralExpression(boundExternClassDeclaration);
+        }
+        boundExternClassDeclaration.members = this.bindExternClassDeclarationMembers(externClassDeclaration, boundExternClassDeclaration);
+
+        return boundExternClassDeclaration;
+    }
+
+    private bindExternClassDeclarationMembers(
+        externClassDeclaration: ExternClassDeclaration,
+        parent: BoundNodes,
+    ): BoundExternClassDeclarationMember[] {
+        const boundExternClassDeclarationMembers: BoundExternClassDeclarationMember[] = [];
+
+        for (const externClassDeclarationMember of externClassDeclaration.members) {
+            switch (externClassDeclarationMember.kind) {
+                case NodeKind.AccessibilityDirective: {
+                    throw new Error('Method not implemented.');
+                }
+                case NodeKind.ExternDataDeclarationSequence: {
+                    const boundExternDataDeclarations = this.bindExternDataDeclarationSequence(externClassDeclarationMember, parent);
+                    boundExternClassDeclarationMembers.push(...boundExternDataDeclarations);
+                    break;
+                }
+                case NodeKind.ExternFunctionDeclaration: {
+                    const boundExternFunctionDeclaration = this.bindExternFunctionDeclaration(externClassDeclarationMember, parent);
+                    boundExternClassDeclarationMembers.push(boundExternFunctionDeclaration);
+                    break;
+                }
+                case NodeKind.ExternClassMethodDeclaration: {
+                    const boundExternClassMethodDeclaration = this.bindExternClassMethodDeclaration(externClassDeclarationMember, parent);
+                    boundExternClassDeclarationMembers.push(boundExternClassMethodDeclaration);
+                    break;
+                }
+                case TokenKind.Newline:
+                case TokenKind.Skipped: {
+                    break;
+                }
+                default: {
+                    assertNever(externClassDeclarationMember);
+                    break;
+                }
+            }
+        }
+
+        return boundExternClassDeclarationMembers;
+    }
+
+    // #region Extern class method declaration
+
+    private bindExternClassMethodDeclaration(
+        externClassMethodDeclaration: ExternClassMethodDeclaration,
+        parent: BoundNodes,
+    ): BoundExternClassMethodDeclaration {
+        const boundExternClassMethodDeclaration = new BoundExternClassMethodDeclaration();
+        boundExternClassMethodDeclaration.parent = parent;
+        boundExternClassMethodDeclaration.locals = new BoundSymbolTable();
+        boundExternClassMethodDeclaration.identifier = this.declareSymbol(externClassMethodDeclaration, boundExternClassMethodDeclaration);
+        boundExternClassMethodDeclaration.returnType = this.bindTypeAnnotation(externClassMethodDeclaration.returnType);
+        boundExternClassMethodDeclaration.parameters = this.bindDataDeclarationSequence(externClassMethodDeclaration.parameters, boundExternClassMethodDeclaration);
+        if (externClassMethodDeclaration.nativeSymbol) {
+            boundExternClassMethodDeclaration.nativeSymbol = this.bindStringLiteralExpression(boundExternClassMethodDeclaration);
+        }
+
+        return boundExternClassMethodDeclaration;
+    }
+
+    // #endregion
 
     // #endregion
 
@@ -411,7 +506,7 @@ export class Binder {
 
     private bindInterfaceDeclaration(
         interfaceDeclaration: InterfaceDeclaration,
-        parent: BoundModuleDeclaration,
+        parent: BoundNodes,
     ): BoundInterfaceDeclaration {
         const boundInterfaceDeclaration = new BoundInterfaceDeclaration();
         boundInterfaceDeclaration.parent = parent;
@@ -428,19 +523,20 @@ export class Binder {
 
     private bindInterfaceDeclarationMembers(
         interfaceDeclaration: InterfaceDeclaration,
-        boundInterfaceDeclaration: BoundInterfaceDeclaration,
+        parent: BoundNodes,
     ): BoundInterfaceDeclarationMember[] {
-        const boundMembers: BoundInterfaceDeclarationMember[] = [];
+        const boundInterfaceDeclarationMembers: BoundInterfaceDeclarationMember[] = [];
 
-        for (const member of interfaceDeclaration.members) {
-            switch (member.kind) {
+        for (const interfaceDeclarationMember of interfaceDeclaration.members) {
+            switch (interfaceDeclarationMember.kind) {
                 case NodeKind.DataDeclarationSequence: {
-                    boundMembers.push(...this.bindDataDeclarationSequence(member, boundInterfaceDeclaration));
+                    const boundDataDeclarations = this.bindDataDeclarationSequence(interfaceDeclarationMember, parent);
+                    boundInterfaceDeclarationMembers.push(...boundDataDeclarations);
                     break;
                 }
                 case NodeKind.InterfaceMethodDeclaration: {
-                    const boundInterfaceMethodDeclaration = this.bindInterfaceMethodDeclaration(member, boundInterfaceDeclaration);
-                    boundMembers.push(boundInterfaceMethodDeclaration);
+                    const boundInterfaceMethodDeclaration = this.bindInterfaceMethodDeclaration(interfaceDeclarationMember, parent);
+                    boundInterfaceDeclarationMembers.push(boundInterfaceMethodDeclaration);
                     break;
                 }
                 case TokenKind.Newline:
@@ -448,20 +544,20 @@ export class Binder {
                     break;
                 }
                 default: {
-                    assertNever(member);
+                    assertNever(interfaceDeclarationMember);
                     break;
                 }
             }
         }
 
-        return boundMembers;
+        return boundInterfaceDeclarationMembers;
     }
 
     // #region Interface method declaration
 
     private bindInterfaceMethodDeclaration(
         interfaceMethodDeclaration: InterfaceMethodDeclaration,
-        parent: BoundInterfaceDeclaration,
+        parent: BoundNodes,
     ): BoundInterfaceMethodDeclaration {
         const boundInterfaceMethodDeclaration = new BoundInterfaceMethodDeclaration();
         boundInterfaceMethodDeclaration.parent = parent;
@@ -481,7 +577,7 @@ export class Binder {
 
     private bindClassDeclaration(
         classDeclaration: ClassDeclaration,
-        parent: BoundModuleDeclaration,
+        parent: BoundNodes,
     ): BoundClassDeclaration {
         const boundClassDeclaration = new BoundClassDeclaration();
         boundClassDeclaration.parent = parent;
@@ -502,49 +598,49 @@ export class Binder {
 
     private bindClassDeclarationMembers(
         classDeclaration: ClassDeclaration,
-        parent: BoundClassDeclaration,
+        parent: BoundNodes,
     ): BoundClassDeclarationMember[] {
-        const boundMembers: BoundClassDeclarationMember[] = [];
+        const boundClassDeclarationMembers: BoundClassDeclarationMember[] = [];
 
-        for (const member of classDeclaration.members) {
-            switch (member.kind) {
+        for (const classDeclarationMember of classDeclaration.members) {
+            switch (classDeclarationMember.kind) {
+                case NodeKind.AccessibilityDirective: {
+                    throw new Error('Method not implemented.');
+                }
                 case NodeKind.DataDeclarationSequence: {
-                    const boundDataDeclarationSequence = this.bindDataDeclarationSequence(member, parent);
-                    boundMembers.push(...boundDataDeclarationSequence);
+                    const boundDataDeclarationSequence = this.bindDataDeclarationSequence(classDeclarationMember, parent);
+                    boundClassDeclarationMembers.push(...boundDataDeclarationSequence);
                     break;
                 }
                 case NodeKind.FunctionDeclaration: {
-                    const boundFunctionDeclaration = this.bindFunctionDeclaration(member, parent);
-                    boundMembers.push(boundFunctionDeclaration);
+                    const boundFunctionDeclaration = this.bindFunctionDeclaration(classDeclarationMember, parent);
+                    boundClassDeclarationMembers.push(boundFunctionDeclaration);
                     break;
                 }
                 case NodeKind.ClassMethodDeclaration: {
-                    const boundClassMethodDeclaration = this.bindClassMethodDeclaration(member, parent);
-                    boundMembers.push(boundClassMethodDeclaration);
+                    const boundClassMethodDeclaration = this.bindClassMethodDeclaration(classDeclarationMember, parent);
+                    boundClassDeclarationMembers.push(boundClassMethodDeclaration);
                     break;
-                }
-                case NodeKind.AccessibilityDirective: {
-                    throw new Error('Method not implemented.');
                 }
                 case TokenKind.Newline:
                 case TokenKind.Skipped: {
                     break;
                 }
                 default: {
-                    assertNever(member);
+                    assertNever(classDeclarationMember);
                     break;
                 }
             }
         }
 
-        return boundMembers;
+        return boundClassDeclarationMembers;
     }
 
     // #region Class method declaration
 
     private bindClassMethodDeclaration(
         classMethodDeclaration: ClassMethodDeclaration,
-        parent: BoundClassDeclaration,
+        parent: BoundNodes,
     ): BoundClassMethodDeclaration {
         const boundClassMethodDeclaration = new BoundClassMethodDeclaration();
         boundClassMethodDeclaration.parent = parent;
@@ -752,7 +848,7 @@ export class Binder {
 
     private bindElseIfClauses(
         elseIfClauses: ElseIfClause[],
-        parent: BoundIfStatement,
+        parent: BoundNodes,
     ): BoundElseIfClause[] {
         const boundElseIfClauses: BoundElseIfClause[] = [];
 
@@ -766,7 +862,7 @@ export class Binder {
 
     private bindElseIfClause(
         elseifClause: ElseIfClause,
-        parent: BoundIfStatement,
+        parent: BoundNodes,
     ): BoundElseIfClause {
         const boundElseIfClause = new BoundElseIfClause();
         boundElseIfClause.parent = parent;
@@ -779,7 +875,7 @@ export class Binder {
 
     private bindElseClause(
         elseClause: ElseClause,
-        parent: BoundIfStatement,
+        parent: BoundNodes,
     ): BoundElseClause {
         const boundElseClause = new BoundElseClause();
         boundElseClause.parent = parent;
@@ -809,7 +905,7 @@ export class Binder {
 
     private bindCaseClauses(
         caseClauses: CaseClause[],
-        parent: BoundSelectStatement,
+        parent: BoundNodes,
     ): BoundCaseClause[] {
         const boundCaseClauses: BoundCaseClause[] = [];
 
@@ -823,7 +919,7 @@ export class Binder {
 
     private bindCaseClause(
         caseClause: CaseClause,
-        parent: BoundSelectStatement,
+        parent: BoundNodes,
     ): BoundCaseClause {
         const boundCaseClause = new BoundCaseClause();
         boundCaseClause.parent = parent;
@@ -836,7 +932,7 @@ export class Binder {
 
     private bindDefaultClause(
         defaultClause: DefaultClause,
-        parent: BoundSelectStatement,
+        parent: BoundNodes,
     ): BoundDefaultClause {
         const boundDefaultClause = new BoundDefaultClause();
         boundDefaultClause.parent = parent;
@@ -999,7 +1095,7 @@ export class Binder {
 
     private bindCatchClauses(
         tryStatement: TryStatement,
-        parent: BoundTryStatement,
+        parent: BoundNodes,
     ): BoundCatchClause[] {
         const boundCatchClauses: BoundCatchClause[] = [];
 
@@ -1013,7 +1109,7 @@ export class Binder {
 
     private bindCatchClause(
         catchClause: CatchClause,
-        parent: BoundTryStatement,
+        parent: BoundNodes,
     ): BoundCatchClause {
         const boundCatchClause = new BoundCatchClause();
         boundCatchClause.parent = parent;
@@ -1542,6 +1638,7 @@ export class Binder {
                 const { declaration } = boundIdentifierExpression.identifier;
                 switch (declaration.kind) {
                     case BoundNodeKind.ExternDataDeclaration:
+                    case BoundNodeKind.ExternClassDeclaration:
                     case BoundNodeKind.DataDeclaration:
                     case BoundNodeKind.InterfaceDeclaration:
                     case BoundNodeKind.ClassDeclaration: {
@@ -1551,6 +1648,7 @@ export class Binder {
 
                     case BoundNodeKind.ModuleDeclaration:
                     case BoundNodeKind.ExternFunctionDeclaration:
+                    case BoundNodeKind.ExternClassMethodDeclaration:
                     case BoundNodeKind.FunctionDeclaration:
                     case BoundNodeKind.InterfaceMethodDeclaration:
                     case BoundNodeKind.ClassMethodDeclaration: {
@@ -2019,6 +2117,8 @@ export class Binder {
             switch (ancestor.kind) {
                 case BoundNodeKind.ModuleDeclaration:
                 case BoundNodeKind.ExternFunctionDeclaration:
+                case BoundNodeKind.ExternClassDeclaration:
+                case BoundNodeKind.ExternClassMethodDeclaration:
                 case BoundNodeKind.FunctionDeclaration:
                 case BoundNodeKind.InterfaceDeclaration:
                 case BoundNodeKind.InterfaceMethodDeclaration:
@@ -2048,16 +2148,16 @@ export class Binder {
                 return path.basename(declaration.filePath, path.extname(declaration.filePath));
             }
             case NodeKind.AliasDirective:
-            case NodeKind.DataDeclaration:
             case NodeKind.ExternDataDeclaration:
-            case NodeKind.FunctionDeclaration:
             case NodeKind.ExternFunctionDeclaration:
+            case NodeKind.ExternClassDeclaration:
+            case NodeKind.ExternClassMethodDeclaration:
+            case NodeKind.DataDeclaration:
+            case NodeKind.FunctionDeclaration:
             case NodeKind.InterfaceDeclaration:
             case NodeKind.InterfaceMethodDeclaration:
             case NodeKind.ClassDeclaration:
-            case NodeKind.ClassMethodDeclaration:
-            case NodeKind.ExternClassDeclaration:
-            case NodeKind.ExternClassMethodDeclaration: {
+            case NodeKind.ClassMethodDeclaration: {
                 switch (declaration.identifier.kind) {
                     case TokenKind.Missing: { break; }
                     case NodeKind.EscapedIdentifier: {
