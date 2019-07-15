@@ -147,45 +147,45 @@ export class Binder {
         moduleDeclaration: ModuleDeclaration,
         parent: BoundModuleDeclaration,
     ): BoundModuleDeclarationMember[] {
-        const boundMembers: BoundModuleDeclarationMember[] = [];
+        const boundModuleDeclarationMembers: BoundModuleDeclarationMember[] = [];
 
-        for (const member of moduleDeclaration.members) {
-            switch (member.kind) {
+        for (const moduleDeclarationMember of moduleDeclaration.members) {
+            switch (moduleDeclarationMember.kind) {
                 case NodeKind.ExternClassDeclaration: {
                     throw new Error('Method not implemented.');
                 }
                 case NodeKind.AccessibilityDirective: {
-                    this.bindAccessibilityDirective(member);
+                    this.bindAccessibilityDirective(moduleDeclarationMember);
                     break;
                 }
                 case NodeKind.ExternDataDeclarationSequence: {
-                    const boundExternDataDeclarations = this.bindExternDataDeclarationSequence(member, parent);
-                    boundMembers.push(...boundExternDataDeclarations);
+                    const boundExternDataDeclarations = this.bindExternDataDeclarationSequence(moduleDeclarationMember, parent);
+                    boundModuleDeclarationMembers.push(...boundExternDataDeclarations);
                     break;
                 }
                 case NodeKind.ExternFunctionDeclaration: {
-                    const boundExternFunctionDeclaration = this.bindExternFunctionDeclaration(member, parent);
-                    boundMembers.push(boundExternFunctionDeclaration);
+                    const boundExternFunctionDeclaration = this.bindExternFunctionDeclaration(moduleDeclarationMember, parent);
+                    boundModuleDeclarationMembers.push(boundExternFunctionDeclaration);
                     break;
                 }
                 case NodeKind.DataDeclarationSequence: {
-                    const boundDataDeclarationSequence = this.bindDataDeclarationSequence(member, parent);
-                    boundMembers.push(...boundDataDeclarationSequence);
+                    const boundDataDeclarationSequence = this.bindDataDeclarationSequence(moduleDeclarationMember, parent);
+                    boundModuleDeclarationMembers.push(...boundDataDeclarationSequence);
                     break;
                 }
                 case NodeKind.FunctionDeclaration: {
-                    const boundFunction = this.bindFunctionDeclaration(member, parent);
-                    boundMembers.push(boundFunction);
+                    const boundFunctionDeclaration = this.bindFunctionDeclaration(moduleDeclarationMember, parent);
+                    boundModuleDeclarationMembers.push(boundFunctionDeclaration);
                     break;
                 }
                 case NodeKind.InterfaceDeclaration: {
-                    const boundInterface = this.bindInterfaceDeclaration(member, parent);
-                    boundMembers.push(boundInterface);
+                    const boundInterfaceDeclaration = this.bindInterfaceDeclaration(moduleDeclarationMember, parent);
+                    boundModuleDeclarationMembers.push(boundInterfaceDeclaration);
                     break;
                 }
                 case NodeKind.ClassDeclaration: {
-                    const boundClass = this.bindClassDeclaration(member, parent);
-                    boundMembers.push(boundClass);
+                    const boundClassDeclaration = this.bindClassDeclaration(moduleDeclarationMember, parent);
+                    boundModuleDeclarationMembers.push(boundClassDeclaration);
                     break;
                 }
                 case TokenKind.Newline:
@@ -193,13 +193,13 @@ export class Binder {
                     break;
                 }
                 default: {
-                    assertNever(member);
+                    assertNever(moduleDeclarationMember);
                     break;
                 }
             }
         }
 
-        return boundMembers;
+        return boundModuleDeclarationMembers;
     }
 
     // #endregion
@@ -226,7 +226,9 @@ export class Binder {
 
     // #region Accessibility directive
 
-    private bindAccessibilityDirective(accessibilityDirective: AccessibilityDirective): void {
+    private bindAccessibilityDirective(
+        accessibilityDirective: AccessibilityDirective,
+    ): void {
         const { accessibilityKeyword } = accessibilityDirective;
         switch (accessibilityKeyword.kind) {
             case TokenKind.PrivateKeyword:
