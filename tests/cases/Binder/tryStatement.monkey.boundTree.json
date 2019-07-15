@@ -124,9 +124,9 @@
                                     }
                                 }
                             ],
-                            "catchStatements": [
+                            "catchClauses": [
                                 {
-                                    "kind": "CatchStatement",
+                                    "kind": "CatchClause",
                                     "parameter": {
                                         "kind": "DataDeclaration",
                                         "identifier": "ex1",
@@ -152,7 +152,7 @@
                                     ]
                                 },
                                 {
-                                    "kind": "CatchStatement",
+                                    "kind": "CatchClause",
                                     "parameter": {
                                         "kind": "DataDeclaration",
                                         "identifier": "ex2",

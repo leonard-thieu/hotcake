@@ -32,7 +32,7 @@ import { ReturnStatement } from '../Syntax/Node/Statement/ReturnStatement';
 import { CaseClause, DefaultClause, SelectStatement } from '../Syntax/Node/Statement/SelectStatement';
 import { Statements } from '../Syntax/Node/Statement/Statement';
 import { ThrowStatement } from '../Syntax/Node/Statement/ThrowStatement';
-import { CatchStatement, TryStatement } from '../Syntax/Node/Statement/TryStatement';
+import { CatchClause, TryStatement } from '../Syntax/Node/Statement/TryStatement';
 import { WhileLoop } from '../Syntax/Node/Statement/WhileLoop';
 import { ShorthandTypeToken, TypeAnnotation } from '../Syntax/Node/TypeAnnotation';
 import { MissableTypeReference, TypeReference } from '../Syntax/Node/TypeReference';
@@ -79,7 +79,7 @@ import { BoundReturnStatement } from './Node/Statement/BoundReturnStatement';
 import { BoundCaseClause, BoundDefaultClause, BoundSelectStatement } from './Node/Statement/BoundSelectStatement';
 import { BoundStatements } from './Node/Statement/BoundStatements';
 import { BoundThrowStatement } from './Node/Statement/BoundThrowStatement';
-import { BoundCatchStatement, BoundTryStatement } from './Node/Statement/BoundTryStatement';
+import { BoundCatchClause, BoundTryStatement } from './Node/Statement/BoundTryStatement';
 import { BoundWhileLoop } from './Node/Statement/BoundWhileLoop';
 import { ArrayType } from './Type/ArrayType';
 import { BoolType } from './Type/BoolType';
@@ -486,7 +486,6 @@ export class Binder {
                     break;
                 }
 
-                case NodeKind.CatchStatement:
                 case NodeKind.EmptyStatement:
                 case TokenKind.Skipped: {
                     break;
@@ -543,7 +542,6 @@ export class Binder {
             case NodeKind.ExitStatement: {
                 return this.bindExitStatement(parent);
             }
-            case NodeKind.CatchStatement:
             case NodeKind.EmptyStatement: {
                 break;
             }
@@ -880,42 +878,42 @@ export class Binder {
         const boundTryStatement = new BoundTryStatement();
         boundTryStatement.parent = parent;
         boundTryStatement.statements = this.bindStatements(tryStatement.statements, boundTryStatement);
-        boundTryStatement.catchStatements = this.bindCatchStatements(tryStatement, boundTryStatement);
+        boundTryStatement.catchClauses = this.bindCatchClauses(tryStatement, boundTryStatement);
 
         return boundTryStatement;
     }
 
-    private bindCatchStatements(
+    private bindCatchClauses(
         tryStatement: TryStatement,
         parent: BoundTryStatement,
-    ): BoundCatchStatement[] {
-        const boundCatchStatements: BoundCatchStatement[] = [];
+    ): BoundCatchClause[] {
+        const boundCatchClauses: BoundCatchClause[] = [];
 
-        for (const catchStatement of tryStatement.catchStatements) {
-            const boundCatchStatement = this.bindCatchStatement(catchStatement, parent);
-            boundCatchStatements.push(boundCatchStatement);
+        for (const catchClause of tryStatement.catchClauses) {
+            const boundCatchClause = this.bindCatchClause(catchClause, parent);
+            boundCatchClauses.push(boundCatchClause);
         }
 
-        return boundCatchStatements;
+        return boundCatchClauses;
     }
 
-    private bindCatchStatement(
-        catchStatement: CatchStatement,
+    private bindCatchClause(
+        catchClause: CatchClause,
         parent: BoundTryStatement,
-    ): BoundCatchStatement {
-        const boundCatchStatement = new BoundCatchStatement();
-        boundCatchStatement.parent = parent;
+    ): BoundCatchClause {
+        const boundCatchClause = new BoundCatchClause();
+        boundCatchClause.parent = parent;
 
-        if (catchStatement.parameter.kind === TokenKind.Missing) {
-            throw new Error('Catch block must declare a parameter.');
+        if (catchClause.parameter.kind === TokenKind.Missing) {
+            throw new Error('Catch clause must declare a parameter.');
         }
         else {
-            boundCatchStatement.parameter = this.bindDataDeclaration(catchStatement.parameter, boundCatchStatement);
+            boundCatchClause.parameter = this.bindDataDeclaration(catchClause.parameter, boundCatchClause);
         }
 
-        boundCatchStatement.statements = this.bindStatements(catchStatement.statements, boundCatchStatement);
+        boundCatchClause.statements = this.bindStatements(catchClause.statements, boundCatchClause);
 
-        return boundCatchStatement;
+        return boundCatchClause;
     }
 
     // #endregion

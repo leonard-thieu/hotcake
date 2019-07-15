@@ -20,7 +20,7 @@ export enum BoundNodeKind {
     ContinueStatement = 'ContinueStatement',
     ExitStatement = 'ExitStatement',
     TryStatement = 'TryStatement',
-    CatchStatement = 'CatchStatement',
+    CatchClause = 'CatchClause',
     ThrowStatement = 'ThrowStatement',
     ReturnStatement = 'ReturnStatement',
     ExpressionStatement = 'ExpressionStatement',

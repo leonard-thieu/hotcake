@@ -13,6 +13,7 @@ import { NumericForLoopHeader } from './Statement/ForLoop';
 import { ElseClause, ElseIfClause } from './Statement/IfStatement';
 import { CaseClause, DefaultClause } from './Statement/SelectStatement';
 import { Statements } from './Statement/Statement';
+import { CatchClause } from './Statement/TryStatement';
 import { TypeAnnotation } from './TypeAnnotation';
 import { TypeReference } from './TypeReference';
 
@@ -205,6 +206,7 @@ export type Nodes =
     ElseIfClause | ElseClause |
     CaseClause | DefaultClause |
     NumericForLoopHeader |
+    CatchClause |
     ArrayTypeAnnotation |
     TypeAnnotation |
     CommaSeparator |
@@ -258,7 +260,7 @@ export function isNode(nodeOrToken: Nodes | ErrorableToken): nodeOrToken is Node
         case NodeKind.ExitStatement:
         case NodeKind.ThrowStatement:
         case NodeKind.TryStatement:
-        case NodeKind.CatchStatement:
+        case NodeKind.CatchClause:
         case NodeKind.ExpressionStatement:
         case NodeKind.EmptyStatement:
         case NodeKind.NewExpression:

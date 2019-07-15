@@ -11,7 +11,7 @@ import { RepeatLoop } from './RepeatLoop';
 import { ReturnStatement } from './ReturnStatement';
 import { SelectStatement } from './SelectStatement';
 import { ThrowStatement } from './ThrowStatement';
-import { CatchStatement, TryStatement } from './TryStatement';
+import { TryStatement } from './TryStatement';
 import { WhileLoop } from './WhileLoop';
 
 export abstract class Statement extends Node {
@@ -30,6 +30,6 @@ export type Statements =
     ReturnStatement |
     SelectStatement |
     ThrowStatement |
-    TryStatement | CatchStatement |
+    TryStatement |
     WhileLoop
     ;

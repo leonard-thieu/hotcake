@@ -8,7 +8,7 @@ import { BoundRepeatLoop } from './BoundRepeatLoop';
 import { BoundReturnStatement } from './BoundReturnStatement';
 import { BoundSelectStatement } from './BoundSelectStatement';
 import { BoundThrowStatement } from './BoundThrowStatement';
-import { BoundCatchStatement, BoundTryStatement } from './BoundTryStatement';
+import { BoundTryStatement } from './BoundTryStatement';
 import { BoundWhileLoop } from "./BoundWhileLoop";
 
 export type BoundStatements =
@@ -22,7 +22,6 @@ export type BoundStatements =
     BoundContinueStatement |
     BoundExitStatement |
     BoundTryStatement |
-    BoundCatchStatement |
     BoundThrowStatement |
     BoundExpressionStatement
     ;

@@ -114,9 +114,9 @@
                             }
                         }
                     ],
-                    "catchStatements": [
+                    "catchClauses": [
                         {
-                            "kind": "CatchStatement",
+                            "kind": "CatchClause",
                             "catchKeyword": {
                                 "kind": "CatchKeyword",
                                 "fullStart": 57,

@@ -2,7 +2,7 @@ import { ParseContextElementArray, ParseContextElementSequence, ParseContextKind
 import { MissableToken } from '../../Token/MissingToken';
 import { CatchKeywordToken, EndKeywordToken, TryKeywordToken } from '../../Token/Token';
 import { MissableDataDeclaration } from '../Declaration/DataDeclarationSequence';
-import { isNode } from '../Node';
+import { isNode, Node } from '../Node';
 import { NodeKind } from '../NodeKind';
 import { Statement } from './Statement';
 
@@ -10,7 +10,7 @@ export class TryStatement extends Statement {
     static CHILD_NAMES: (keyof TryStatement)[] = [
         'tryKeyword',
         'statements',
-        'catchStatements',
+        'catchClauses',
         'endKeyword',
         'endTryKeyword',
         'terminator',
@@ -20,7 +20,7 @@ export class TryStatement extends Statement {
 
     tryKeyword: TryKeywordToken = undefined!;
     statements: ParseContextElementArray<TryStatement['kind']> = undefined!;
-    catchStatements: ParseContextElementSequence<ParseContextKind.CatchStatementList> = undefined!;
+    catchClauses: ParseContextElementSequence<ParseContextKind.CatchClauseList> = undefined!;
     endKeyword: MissableToken<EndKeywordToken> = undefined!;
     endTryKeyword?: TryKeywordToken = undefined;
 
@@ -32,7 +32,7 @@ export class TryStatement extends Statement {
         if (this.terminator) {
             return this.terminator;
         }
-        
+
         if (this.endTryKeyword) {
             return this.endTryKeyword;
         }
@@ -41,18 +41,18 @@ export class TryStatement extends Statement {
     }
 }
 
-export class CatchStatement extends Statement {
-    static CHILD_NAMES: (keyof CatchStatement)[] = [
+export class CatchClause extends Node {
+    static CHILD_NAMES: (keyof CatchClause)[] = [
         'catchKeyword',
         'parameter',
         'statements',
     ];
 
-    readonly kind = NodeKind.CatchStatement;
+    readonly kind = NodeKind.CatchClause;
 
     catchKeyword: CatchKeywordToken = undefined!;
     parameter: MissableDataDeclaration = undefined!;
-    statements: ParseContextElementArray<CatchStatement['kind']> = undefined!;
+    statements: ParseContextElementArray<CatchClause['kind']> = undefined!;
 
     get firstToken() {
         return this.catchKeyword;

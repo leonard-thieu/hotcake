@@ -35,7 +35,7 @@ import { ReturnStatement } from './Node/Statement/ReturnStatement';
 import { CaseClause, DefaultClause, SelectStatement } from './Node/Statement/SelectStatement';
 import { Statement } from './Node/Statement/Statement';
 import { ThrowStatement } from './Node/Statement/ThrowStatement';
-import { CatchStatement, TryStatement } from './Node/Statement/TryStatement';
+import { CatchClause, TryStatement } from './Node/Statement/TryStatement';
 import { WhileLoop } from './Node/Statement/WhileLoop';
 import { LonghandTypeAnnotation, ShorthandTypeAnnotation, ShorthandTypeToken } from './Node/TypeAnnotation';
 import { ParseContextElementMapBase, ParseContextKind, ParserBase } from './ParserBase';
@@ -1669,7 +1669,7 @@ export class Parser extends ParserBase {
         tryStatement.parent = parent;
         tryStatement.tryKeyword = tryKeyword;
         tryStatement.statements = this.parseList(tryStatement.kind, tryStatement);
-        tryStatement.catchStatements = this.parseList(ParseContextKind.CatchStatementList, tryStatement, /*delimiter*/ null);
+        tryStatement.catchClauses = this.parseList(ParseContextKind.CatchClauseList, tryStatement, /*delimiter*/ null);
         tryStatement.endKeyword = this.eatMissable(TokenKind.EndKeyword);
         if (tryStatement.endKeyword.kind === TokenKind.EndKeyword) {
             tryStatement.endTryKeyword = this.eatOptional(TokenKind.TryKeyword);
@@ -1690,13 +1690,13 @@ export class Parser extends ParserBase {
         return false;
     }
 
-    // #region Catch statement list members
+    // #region Catch clause list members
 
-    private isCatchStatementListTerminator(token: Tokens): boolean {
-        return !this.isCatchStatementListMemberStart(token);
+    private isCatchClauseListTerminator(token: Tokens): boolean {
+        return !this.isCatchClauseListMemberStart(token);
     }
 
-    private isCatchStatementListMemberStart(token: Tokens): boolean {
+    private isCatchClauseListMemberStart(token: Tokens): boolean {
         switch (token.kind) {
             case TokenKind.CatchKeyword: {
                 return true;
@@ -1706,27 +1706,27 @@ export class Parser extends ParserBase {
         return false;
     }
 
-    private parseCatchStatementListMember(parent: Nodes) {
+    private parseCatchClauseListMember(parent: Nodes) {
         const token = this.getToken();
         switch (token.kind) {
             case TokenKind.CatchKeyword: {
                 this.advanceToken();
 
-                return this.parseCatchStatement(parent, token);
+                return this.parseCatchClause(parent, token);
             }
         }
 
         return this.parseCore(parent, token);
     }
 
-    private parseCatchStatement(parent: Nodes, catchKeyword: CatchKeywordToken): CatchStatement {
-        const catchStatement = new CatchStatement();
-        catchStatement.parent = parent;
-        catchStatement.catchKeyword = catchKeyword;
-        catchStatement.parameter = this.parseMissableDataDeclaration(catchStatement);
-        catchStatement.statements = this.parseList(catchStatement.kind, catchStatement);
+    private parseCatchClause(parent: Nodes, catchKeyword: CatchKeywordToken): CatchClause {
+        const catchClause = new CatchClause();
+        catchClause.parent = parent;
+        catchClause.catchKeyword = catchKeyword;
+        catchClause.parameter = this.parseMissableDataDeclaration(catchClause);
+        catchClause.statements = this.parseList(catchClause.kind, catchClause);
 
-        return catchStatement;
+        return catchClause;
     }
 
     // #endregion
@@ -1808,7 +1808,7 @@ export class Parser extends ParserBase {
                 return this.isForLoopStatementsListTerminator(token);
             }
             case NodeKind.TryStatement:
-            case NodeKind.CatchStatement: {
+            case NodeKind.CatchClause: {
                 return this.isTryStatementStatementsListTerminator(token);
             }
             case NodeKind.AliasDirectiveSequence: {
@@ -1835,8 +1835,8 @@ export class Parser extends ParserBase {
             case ParseContextKind.CaseClauseList: {
                 return this.isCaseClauseListTerminator(token);
             }
-            case ParseContextKind.CatchStatementList: {
-                return this.isCatchStatementListTerminator(token);
+            case ParseContextKind.CatchClauseList: {
+                return this.isCatchClauseListTerminator(token);
             }
         }
 
@@ -1871,7 +1871,7 @@ export class Parser extends ParserBase {
             case NodeKind.RepeatLoop:
             case NodeKind.ForLoop:
             case NodeKind.TryStatement:
-            case NodeKind.CatchStatement: {
+            case NodeKind.CatchClause: {
                 return this.isStatementListMemberStart(token);
             }
             case ParseContextKind.ModuleDeclarationHeader: {
@@ -1898,8 +1898,8 @@ export class Parser extends ParserBase {
             case ParseContextKind.CaseClauseList: {
                 return this.isCaseClauseListMemberStart(token);
             }
-            case ParseContextKind.CatchStatementList: {
-                return this.isCatchStatementListMemberStart(token);
+            case ParseContextKind.CatchClauseList: {
+                return this.isCatchClauseListMemberStart(token);
             }
         }
 
@@ -1934,7 +1934,7 @@ export class Parser extends ParserBase {
             case NodeKind.RepeatLoop:
             case NodeKind.ForLoop:
             case NodeKind.TryStatement:
-            case NodeKind.CatchStatement: {
+            case NodeKind.CatchClause: {
                 return this.parseStatementListMember(parent);
             }
             case NodeKind.AliasDirectiveSequence: {
@@ -1961,8 +1961,8 @@ export class Parser extends ParserBase {
             case ParseContextKind.CaseClauseList: {
                 return this.parseCaseClauseListMember(parent);
             }
-            case ParseContextKind.CatchStatementList: {
-                return this.parseCatchStatementListMember(parent);
+            case ParseContextKind.CatchClauseList: {
+                return this.parseCatchClauseListMember(parent);
             }
         }
 
@@ -2081,8 +2081,8 @@ interface ParserParseContextElementMap extends ParseContextElementMapBase {
     [NodeKind.RepeatLoop]: ReturnType<Parser['parseStatementListMember']>;
     [NodeKind.ForLoop]: ReturnType<Parser['parseStatementListMember']>;
     [NodeKind.TryStatement]: ReturnType<Parser['parseStatementListMember']>;
-    [ParseContextKind.CatchStatementList]: ReturnType<Parser['parseCatchStatementListMember']>;
-    [NodeKind.CatchStatement]: ReturnType<Parser['parseStatementListMember']>;
+    [ParseContextKind.CatchClauseList]: ReturnType<Parser['parseCatchClauseListMember']>;
+    [NodeKind.CatchClause]: ReturnType<Parser['parseStatementListMember']>;
     [NodeKind.AliasDirectiveSequence]: ReturnType<Parser['parseAliasDirectiveSequenceMember']>;
 }
 
@@ -2096,7 +2096,7 @@ _ParseContextKind.TypeParameterSequence = 'TypeParameterSequence' as ParseContex
 _ParseContextKind.ClassMethodAttributes = 'ClassMethodAttributes' as ParseContextKind.ClassMethodAttributes;
 _ParseContextKind.ElseIfClauseList = 'ElseIfClauseList' as ParseContextKind.ElseIfClauseList;
 _ParseContextKind.CaseClauseList = 'CaseClauseList' as ParseContextKind.CaseClauseList;
-_ParseContextKind.CatchStatementList = 'CatchStatementList' as ParseContextKind.CatchStatementList;
+_ParseContextKind.CatchClauseList = 'CatchClauseList' as ParseContextKind.CatchClauseList;
 
 declare module './ParserBase' {
     enum ParseContextKind {
@@ -2107,7 +2107,7 @@ declare module './ParserBase' {
         ClassMethodAttributes = 'ClassMethodAttributes',
         ElseIfClauseList = 'ElseIfClauseList',
         CaseClauseList = 'CaseClauseList',
-        CatchStatementList = 'CatchStatementList',
+        CatchClauseList = 'CatchClauseList',
     }
 
     interface ParseContextElementMap extends ParserParseContextElementMap { }

@@ -47,7 +47,7 @@ export enum NodeKind {
     ExitStatement = 'ExitStatement',
     ThrowStatement = 'ThrowStatement',
     TryStatement = 'TryStatement',
-    CatchStatement = 'CatchStatement',
+    CatchClause = 'CatchClause',
     ExpressionStatement = 'ExpressionStatement',
     EmptyStatement = 'EmptyStatement',
 
