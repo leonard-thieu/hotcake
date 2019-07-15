@@ -9,7 +9,7 @@ import { ForLoop } from './ForLoop';
 import { IfStatement } from './IfStatement';
 import { RepeatLoop } from './RepeatLoop';
 import { ReturnStatement } from './ReturnStatement';
-import { CaseStatement, DefaultStatement, SelectStatement } from './SelectStatement';
+import { SelectStatement } from './SelectStatement';
 import { ThrowStatement } from './ThrowStatement';
 import { CatchStatement, TryStatement } from './TryStatement';
 import { WhileLoop } from './WhileLoop';
@@ -28,7 +28,7 @@ export type Statements =
     IfStatement |
     RepeatLoop |
     ReturnStatement |
-    SelectStatement | CaseStatement | DefaultStatement |
+    SelectStatement |
     ThrowStatement |
     TryStatement | CatchStatement |
     WhileLoop

@@ -32,7 +32,7 @@ import { ForLoop, NumericForLoopHeader } from './Node/Statement/ForLoop';
 import { ElseClause, ElseIfClause, IfStatement } from './Node/Statement/IfStatement';
 import { RepeatLoop } from './Node/Statement/RepeatLoop';
 import { ReturnStatement } from './Node/Statement/ReturnStatement';
-import { CaseStatement, DefaultStatement, SelectStatement } from './Node/Statement/SelectStatement';
+import { CaseClause, DefaultClause, SelectStatement } from './Node/Statement/SelectStatement';
 import { Statement } from './Node/Statement/Statement';
 import { ThrowStatement } from './Node/Statement/ThrowStatement';
 import { CatchStatement, TryStatement } from './Node/Statement/TryStatement';
@@ -1177,16 +1177,6 @@ export class Parser extends ParserBase {
 
                 return this.parseSelectStatement(parent, token);
             }
-            case TokenKind.CaseKeyword: {
-                this.advanceToken();
-
-                return this.parseCaseStatement(parent, token);
-            }
-            case TokenKind.DefaultKeyword: {
-                this.advanceToken();
-
-                return this.parseDefaultStatement(parent, token);
-            }
             case TokenKind.WhileKeyword: {
                 this.advanceToken();
 
@@ -1412,13 +1402,13 @@ export class Parser extends ParserBase {
         selectStatement.selectKeyword = selectKeyword;
         selectStatement.expression = this.parseExpression(selectStatement);
         selectStatement.newlines = this.parseList(ParseContextKind.NewlineList, selectStatement, /*delimiter*/ null);
-        selectStatement.caseStatements = this.parseList(ParseContextKind.CaseStatementList, selectStatement, /*delimiter*/ null);
+        selectStatement.caseClauses = this.parseList(ParseContextKind.CaseClauseList, selectStatement, /*delimiter*/ null);
 
         const defaultKeyword = this.getToken();
         if (defaultKeyword.kind === TokenKind.DefaultKeyword) {
             this.advanceToken();
 
-            selectStatement.defaultStatement = this.parseDefaultStatement(selectStatement, defaultKeyword);
+            selectStatement.defaultClause = this.parseDefaultClause(selectStatement, defaultKeyword);
         }
 
         selectStatement.endKeyword = this.eatMissable(TokenKind.EndKeyword);
@@ -1430,13 +1420,13 @@ export class Parser extends ParserBase {
         return selectStatement;
     }
 
-    // #region Case statement list members
+    // #region Case clause list members
 
-    private isCaseStatementListTerminator(token: Tokens): boolean {
-        return !this.isCaseStatementListMemberStart(token);
+    private isCaseClauseListTerminator(token: Tokens): boolean {
+        return !this.isCaseClauseListMemberStart(token);
     }
 
-    private isCaseStatementListMemberStart(token: Tokens): boolean {
+    private isCaseClauseListMemberStart(token: Tokens): boolean {
         switch (token.kind) {
             case TokenKind.CaseKeyword: {
                 return true;
@@ -1446,41 +1436,41 @@ export class Parser extends ParserBase {
         return false;
     }
 
-    private parseCaseStatementListMember(parent: Nodes) {
+    private parseCaseClauseListMember(parent: Nodes) {
         const token = this.getToken();
         switch (token.kind) {
             case TokenKind.CaseKeyword: {
                 this.advanceToken();
 
-                return this.parseCaseStatement(parent, token);
+                return this.parseCaseClause(parent, token);
             }
         }
 
         return this.parseCore(parent, token);
     }
 
-    private parseCaseStatement(parent: Nodes, caseKeyword: CaseKeywordToken): CaseStatement {
-        const caseStatement = new CaseStatement();
-        caseStatement.parent = parent;
-        caseStatement.caseKeyword = caseKeyword;
-        caseStatement.expressions = this.parseList(ParseContextKind.ExpressionSequence, caseStatement, TokenKind.Comma);
-        caseStatement.statements = this.parseList(caseStatement.kind, caseStatement);
+    private parseCaseClause(parent: Nodes, caseKeyword: CaseKeywordToken): CaseClause {
+        const caseClause = new CaseClause();
+        caseClause.parent = parent;
+        caseClause.caseKeyword = caseKeyword;
+        caseClause.expressions = this.parseList(ParseContextKind.ExpressionSequence, caseClause, TokenKind.Comma);
+        caseClause.statements = this.parseList(caseClause.kind, caseClause);
 
-        return caseStatement;
+        return caseClause;
     }
 
     // #endregion
 
-    private parseDefaultStatement(parent: Nodes, defaultKeyword: DefaultKeywordToken): DefaultStatement {
-        const defaultStatement = new DefaultStatement();
-        defaultStatement.parent = parent;
-        defaultStatement.defaultKeyword = defaultKeyword;
-        defaultStatement.statements = this.parseList(defaultStatement.kind, defaultStatement);
+    private parseDefaultClause(parent: Nodes, defaultKeyword: DefaultKeywordToken): DefaultClause {
+        const defaultClause = new DefaultClause();
+        defaultClause.parent = parent;
+        defaultClause.defaultKeyword = defaultKeyword;
+        defaultClause.statements = this.parseList(defaultClause.kind, defaultClause);
 
-        return defaultStatement;
+        return defaultClause;
     }
 
-    private isCaseOrDefaultStatementStatementsListTerminator(token: Tokens): boolean {
+    private isCaseOrDefaultClauseStatementsListTerminator(token: Tokens): boolean {
         switch (token.kind) {
             case TokenKind.CaseKeyword:
             case TokenKind.DefaultKeyword:
@@ -1804,9 +1794,9 @@ export class Parser extends ParserBase {
             case NodeKind.ElseClause: {
                 return this.isIfStatementLikeStatementsListTerminator(token);
             }
-            case NodeKind.CaseStatement:
-            case NodeKind.DefaultStatement: {
-                return this.isCaseOrDefaultStatementStatementsListTerminator(token);
+            case NodeKind.CaseClause:
+            case NodeKind.DefaultClause: {
+                return this.isCaseOrDefaultClauseStatementsListTerminator(token);
             }
             case NodeKind.WhileLoop: {
                 return this.isWhileLoopStatementsListTerminator(token);
@@ -1842,8 +1832,8 @@ export class Parser extends ParserBase {
             case ParseContextKind.ElseIfClauseList: {
                 return this.isElseIfClauseListTerminator(token);
             }
-            case ParseContextKind.CaseStatementList: {
-                return this.isCaseStatementListTerminator(token);
+            case ParseContextKind.CaseClauseList: {
+                return this.isCaseClauseListTerminator(token);
             }
             case ParseContextKind.CatchStatementList: {
                 return this.isCatchStatementListTerminator(token);
@@ -1875,8 +1865,8 @@ export class Parser extends ParserBase {
             case NodeKind.IfStatement:
             case NodeKind.ElseIfClause:
             case NodeKind.ElseClause:
-            case NodeKind.CaseStatement:
-            case NodeKind.DefaultStatement:
+            case NodeKind.CaseClause:
+            case NodeKind.DefaultClause:
             case NodeKind.WhileLoop:
             case NodeKind.RepeatLoop:
             case NodeKind.ForLoop:
@@ -1905,8 +1895,8 @@ export class Parser extends ParserBase {
             case ParseContextKind.ElseIfClauseList: {
                 return this.isElseIfClauseListMemberStart(token);
             }
-            case ParseContextKind.CaseStatementList: {
-                return this.isCaseStatementListMemberStart(token);
+            case ParseContextKind.CaseClauseList: {
+                return this.isCaseClauseListMemberStart(token);
             }
             case ParseContextKind.CatchStatementList: {
                 return this.isCatchStatementListMemberStart(token);
@@ -1938,8 +1928,8 @@ export class Parser extends ParserBase {
             case NodeKind.IfStatement:
             case NodeKind.ElseIfClause:
             case NodeKind.ElseClause:
-            case NodeKind.CaseStatement:
-            case NodeKind.DefaultStatement:
+            case NodeKind.CaseClause:
+            case NodeKind.DefaultClause:
             case NodeKind.WhileLoop:
             case NodeKind.RepeatLoop:
             case NodeKind.ForLoop:
@@ -1968,8 +1958,8 @@ export class Parser extends ParserBase {
             case ParseContextKind.ElseIfClauseList: {
                 return this.parseElseIfClauseListMember(parent);
             }
-            case ParseContextKind.CaseStatementList: {
-                return this.parseCaseStatementListMember(parent);
+            case ParseContextKind.CaseClauseList: {
+                return this.parseCaseClauseListMember(parent);
             }
             case ParseContextKind.CatchStatementList: {
                 return this.parseCatchStatementListMember(parent);
@@ -2084,9 +2074,9 @@ interface ParserParseContextElementMap extends ParseContextElementMapBase {
     [ParseContextKind.ElseIfClauseList]: ReturnType<Parser['parseElseIfClauseListMember']>;
     [NodeKind.ElseIfClause]: ReturnType<Parser['parseStatementListMember']>;
     [NodeKind.ElseClause]: ReturnType<Parser['parseStatementListMember']>;
-    [ParseContextKind.CaseStatementList]: ReturnType<Parser['parseCaseStatementListMember']>;
-    [NodeKind.CaseStatement]: ReturnType<Parser['parseStatementListMember']>;
-    [NodeKind.DefaultStatement]: ReturnType<Parser['parseStatementListMember']>;
+    [ParseContextKind.CaseClauseList]: ReturnType<Parser['parseCaseClauseListMember']>;
+    [NodeKind.CaseClause]: ReturnType<Parser['parseStatementListMember']>;
+    [NodeKind.DefaultClause]: ReturnType<Parser['parseStatementListMember']>;
     [NodeKind.WhileLoop]: ReturnType<Parser['parseStatementListMember']>;
     [NodeKind.RepeatLoop]: ReturnType<Parser['parseStatementListMember']>;
     [NodeKind.ForLoop]: ReturnType<Parser['parseStatementListMember']>;
@@ -2105,7 +2095,7 @@ _ParseContextKind.DataDeclarationSequence = 'DataDeclarationSequence' as ParseCo
 _ParseContextKind.TypeParameterSequence = 'TypeParameterSequence' as ParseContextKind.TypeParameterSequence;
 _ParseContextKind.ClassMethodAttributes = 'ClassMethodAttributes' as ParseContextKind.ClassMethodAttributes;
 _ParseContextKind.ElseIfClauseList = 'ElseIfClauseList' as ParseContextKind.ElseIfClauseList;
-_ParseContextKind.CaseStatementList = 'CaseStatementList' as ParseContextKind.CaseStatementList;
+_ParseContextKind.CaseClauseList = 'CaseClauseList' as ParseContextKind.CaseClauseList;
 _ParseContextKind.CatchStatementList = 'CatchStatementList' as ParseContextKind.CatchStatementList;
 
 declare module './ParserBase' {
@@ -2116,7 +2106,7 @@ declare module './ParserBase' {
         TypeParameterSequence = 'TypeParameterSequence',
         ClassMethodAttributes = 'ClassMethodAttributes',
         ElseIfClauseList = 'ElseIfClauseList',
-        CaseStatementList = 'CaseStatementList',
+        CaseClauseList = 'CaseClauseList',
         CatchStatementList = 'CatchStatementList',
     }
 

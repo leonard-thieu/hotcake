@@ -29,7 +29,7 @@ import { ForLoop } from '../Syntax/Node/Statement/ForLoop';
 import { ElseClause, ElseIfClause, IfStatement } from '../Syntax/Node/Statement/IfStatement';
 import { RepeatLoop } from '../Syntax/Node/Statement/RepeatLoop';
 import { ReturnStatement } from '../Syntax/Node/Statement/ReturnStatement';
-import { CaseStatement, DefaultStatement, SelectStatement } from '../Syntax/Node/Statement/SelectStatement';
+import { CaseClause, DefaultClause, SelectStatement } from '../Syntax/Node/Statement/SelectStatement';
 import { Statements } from '../Syntax/Node/Statement/Statement';
 import { ThrowStatement } from '../Syntax/Node/Statement/ThrowStatement';
 import { CatchStatement, TryStatement } from '../Syntax/Node/Statement/TryStatement';
@@ -76,7 +76,7 @@ import { BoundForLoop } from './Node/Statement/BoundForLoop';
 import { BoundElseClause, BoundElseIfClause, BoundIfStatement } from './Node/Statement/BoundIfStatement';
 import { BoundRepeatLoop } from './Node/Statement/BoundRepeatLoop';
 import { BoundReturnStatement } from './Node/Statement/BoundReturnStatement';
-import { BoundCaseStatement, BoundDefaultStatement, BoundSelectStatement } from './Node/Statement/BoundSelectStatement';
+import { BoundCaseClause, BoundDefaultClause, BoundSelectStatement } from './Node/Statement/BoundSelectStatement';
 import { BoundStatements } from './Node/Statement/BoundStatements';
 import { BoundThrowStatement } from './Node/Statement/BoundThrowStatement';
 import { BoundCatchStatement, BoundTryStatement } from './Node/Statement/BoundTryStatement';
@@ -486,8 +486,6 @@ export class Binder {
                     break;
                 }
 
-                case NodeKind.CaseStatement:
-                case NodeKind.DefaultStatement:
                 case NodeKind.CatchStatement:
                 case NodeKind.EmptyStatement:
                 case TokenKind.Skipped: {
@@ -545,8 +543,6 @@ export class Binder {
             case NodeKind.ExitStatement: {
                 return this.bindExitStatement(parent);
             }
-            case NodeKind.CaseStatement:
-            case NodeKind.DefaultStatement:
             case NodeKind.CatchStatement:
             case NodeKind.EmptyStatement: {
                 break;
@@ -697,49 +693,49 @@ export class Binder {
     ): BoundSelectStatement {
         const boundSelectStatement = new BoundSelectStatement();
         boundSelectStatement.parent = parent;
-        boundSelectStatement.caseStatements = this.bindCaseStatements(selectStatement.caseStatements, boundSelectStatement);
-        if (selectStatement.defaultStatement) {
-            boundSelectStatement.defaultStatement = this.bindDefaultStatement(selectStatement.defaultStatement, boundSelectStatement);
+        boundSelectStatement.caseClauses = this.bindCaseClauses(selectStatement.caseClauses, boundSelectStatement);
+        if (selectStatement.defaultClause) {
+            boundSelectStatement.defaultClause = this.bindDefaultClause(selectStatement.defaultClause, boundSelectStatement);
         }
 
         return boundSelectStatement;
     }
 
-    private bindCaseStatements(
-        caseStatements: CaseStatement[],
+    private bindCaseClauses(
+        caseClauses: CaseClause[],
         parent: BoundSelectStatement,
-    ): BoundCaseStatement[] {
-        const boundCaseStatements: BoundCaseStatement[] = [];
+    ): BoundCaseClause[] {
+        const boundCaseClauses: BoundCaseClause[] = [];
 
-        for (const caseStatement of caseStatements) {
-            const boundCaseStatement = this.bindCaseStatement(caseStatement, parent);
-            boundCaseStatements.push(boundCaseStatement);
+        for (const caseClause of caseClauses) {
+            const boundCaseClause = this.bindCaseClause(caseClause, parent);
+            boundCaseClauses.push(boundCaseClause);
         }
 
-        return boundCaseStatements;
+        return boundCaseClauses;
     }
 
-    private bindCaseStatement(
-        caseStatement: CaseStatement,
+    private bindCaseClause(
+        caseClause: CaseClause,
         parent: BoundSelectStatement,
-    ): BoundCaseStatement {
-        const boundCaseStatement = new BoundCaseStatement();
-        boundCaseStatement.parent = parent;
-        boundCaseStatement.expressions = this.bindExpressionSequence(caseStatement.expressions, boundCaseStatement);
-        boundCaseStatement.statements = this.bindStatements(caseStatement.statements, boundCaseStatement);
+    ): BoundCaseClause {
+        const boundCaseClause = new BoundCaseClause();
+        boundCaseClause.parent = parent;
+        boundCaseClause.expressions = this.bindExpressionSequence(caseClause.expressions, boundCaseClause);
+        boundCaseClause.statements = this.bindStatements(caseClause.statements, boundCaseClause);
 
-        return boundCaseStatement;
+        return boundCaseClause;
     }
 
-    private bindDefaultStatement(
-        defaultStatement: DefaultStatement,
+    private bindDefaultClause(
+        defaultClause: DefaultClause,
         parent: BoundSelectStatement,
-    ): BoundDefaultStatement {
-        const boundDefaultStatement = new BoundDefaultStatement();
-        boundDefaultStatement.parent = parent;
-        boundDefaultStatement.statements = this.bindStatements(defaultStatement.statements, boundDefaultStatement);
+    ): BoundDefaultClause {
+        const boundDefaultClause = new BoundDefaultClause();
+        boundDefaultClause.parent = parent;
+        boundDefaultClause.statements = this.bindStatements(defaultClause.statements, boundDefaultClause);
 
-        return boundDefaultStatement;
+        return boundDefaultClause;
     }
 
     // #endregion

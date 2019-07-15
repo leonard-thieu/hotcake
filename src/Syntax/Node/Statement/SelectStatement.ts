@@ -2,7 +2,7 @@ import { ParseContextElementArray, ParseContextElementDelimitedSequence, ParseCo
 import { MissableToken } from '../../Token/MissingToken';
 import { CaseKeywordToken, DefaultKeywordToken, EndKeywordToken, ErrorableToken, SelectKeywordToken } from '../../Token/Token';
 import { MissableExpression } from '../Expression/Expression';
-import { isNode } from '../Node';
+import { isNode, Node } from '../Node';
 import { NodeKind } from '../NodeKind';
 import { Statement } from './Statement';
 
@@ -11,8 +11,8 @@ export class SelectStatement extends Statement {
         'selectKeyword',
         'expression',
         'newlines',
-        'caseStatements',
-        'defaultStatement',
+        'caseClauses',
+        'defaultClause',
         'endKeyword',
         'endSelectKeyword',
         'terminator',
@@ -23,8 +23,8 @@ export class SelectStatement extends Statement {
     selectKeyword: SelectKeywordToken = undefined!;
     expression: MissableExpression = undefined!;
     newlines: ParseContextElementSequence<ParseContextKind.NewlineList> = undefined!;
-    caseStatements: ParseContextElementSequence<ParseContextKind.CaseStatementList> = undefined!;
-    defaultStatement?: DefaultStatement = undefined;
+    caseClauses: ParseContextElementSequence<ParseContextKind.CaseClauseList> = undefined!;
+    defaultClause?: DefaultClause = undefined;
     endKeyword: MissableToken<EndKeywordToken> = undefined!;
     endSelectKeyword?: SelectKeywordToken = undefined;
 
@@ -36,7 +36,7 @@ export class SelectStatement extends Statement {
         if (this.terminator) {
             return this.terminator;
         }
-        
+
         if (this.endSelectKeyword) {
             return this.endSelectKeyword;
         }
@@ -45,18 +45,18 @@ export class SelectStatement extends Statement {
     }
 }
 
-export class CaseStatement extends Statement {
-    static CHILD_NAMES: (keyof CaseStatement)[] = [
+export class CaseClause extends Node {
+    static CHILD_NAMES: (keyof CaseClause)[] = [
         'caseKeyword',
         'expressions',
         'statements',
     ];
 
-    readonly kind = NodeKind.CaseStatement;
+    readonly kind = NodeKind.CaseClause;
 
     caseKeyword: CaseKeywordToken = undefined!;
     expressions: ParseContextElementDelimitedSequence<ParseContextKind.ExpressionSequence> = undefined!;
-    statements: ParseContextElementArray<CaseStatement['kind']> = undefined!;
+    statements: ParseContextElementArray<CaseClause['kind']> = undefined!;
 
     get firstToken() {
         return this.caseKeyword;
@@ -86,16 +86,16 @@ export class CaseStatement extends Statement {
     }
 }
 
-export class DefaultStatement extends Statement {
-    static CHILD_NAMES: (keyof DefaultStatement)[] = [
+export class DefaultClause extends Node {
+    static CHILD_NAMES: (keyof DefaultClause)[] = [
         'defaultKeyword',
         'statements',
     ];
 
-    readonly kind = NodeKind.DefaultStatement;
+    readonly kind = NodeKind.DefaultClause;
 
     defaultKeyword: DefaultKeywordToken = undefined!;
-    statements: ParseContextElementArray<DefaultStatement['kind']> = undefined!;
+    statements: ParseContextElementArray<DefaultClause['kind']> = undefined!;
 
     get firstToken() {
         return this.defaultKeyword;

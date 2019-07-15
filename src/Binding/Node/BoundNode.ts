@@ -2,6 +2,7 @@ import { BoundNodeKind } from './BoundNodeKind';
 import { BoundDeclarations } from './Declaration/BoundDeclarations';
 import { BoundExpressions } from './Expression/BoundExpressions';
 import { BoundElseClause, BoundElseIfClause } from './Statement/BoundIfStatement';
+import { BoundCaseClause, BoundDefaultClause } from './Statement/BoundSelectStatement';
 import { BoundStatements } from './Statement/BoundStatements';
 
 export abstract class BoundNode {
@@ -13,5 +14,6 @@ export type BoundNodes =
     BoundDeclarations |
     BoundStatements |
     BoundElseIfClause | BoundElseClause |
+    BoundCaseClause | BoundDefaultClause |
     BoundExpressions
     ;

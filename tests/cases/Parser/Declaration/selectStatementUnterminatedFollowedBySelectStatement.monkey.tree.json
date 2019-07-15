@@ -75,7 +75,7 @@
                             "length": 2
                         }
                     ],
-                    "caseStatements": [],
+                    "caseClauses": [],
                     "endKeyword": {
                         "kind": "Missing",
                         "fullStart": 30,
@@ -110,7 +110,7 @@
                             "length": 2
                         }
                     ],
-                    "caseStatements": [],
+                    "caseClauses": [],
                     "endKeyword": {
                         "kind": "EndKeyword",
                         "fullStart": 44,

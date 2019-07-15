@@ -46,9 +46,9 @@
                 },
                 {
                     "kind": "SelectStatement",
-                    "caseStatements": [
+                    "caseClauses": [
                         {
-                            "kind": "CaseStatement",
+                            "kind": "CaseClause",
                             "expressions": [
                                 {
                                     "kind": "IntegerLiteralExpression",
@@ -75,7 +75,7 @@
                             ]
                         },
                         {
-                            "kind": "CaseStatement",
+                            "kind": "CaseClause",
                             "expressions": [
                                 {
                                     "kind": "IntegerLiteralExpression",
@@ -107,8 +107,8 @@
                             ]
                         }
                     ],
-                    "defaultStatement": {
-                        "kind": "DefaultStatement",
+                    "defaultClause": {
+                        "kind": "DefaultClause",
                         "statements": [
                             {
                                 "kind": "ExpressionStatement",

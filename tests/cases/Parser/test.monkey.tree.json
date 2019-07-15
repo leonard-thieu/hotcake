@@ -5708,9 +5708,9 @@
                             "length": 43
                         }
                     ],
-                    "caseStatements": [
+                    "caseClauses": [
                         {
-                            "kind": "CaseStatement",
+                            "kind": "CaseClause",
                             "caseKeyword": {
                                 "kind": "CaseKeyword",
                                 "fullStart": 6244,
@@ -5757,7 +5757,7 @@
                             ]
                         },
                         {
-                            "kind": "CaseStatement",
+                            "kind": "CaseClause",
                             "caseKeyword": {
                                 "kind": "CaseKeyword",
                                 "fullStart": 6304,
@@ -5844,8 +5844,8 @@
                             ]
                         }
                     ],
-                    "defaultStatement": {
-                        "kind": "DefaultStatement",
+                    "defaultClause": {
+                        "kind": "DefaultClause",
                         "defaultKeyword": {
                             "kind": "DefaultKeyword",
                             "fullStart": 6378,
@@ -5888,9 +5888,9 @@
                                         "length": 2
                                     }
                                 ],
-                                "caseStatements": [
+                                "caseClauses": [
                                     {
-                                        "kind": "CaseStatement",
+                                        "kind": "CaseClause",
                                         "caseKeyword": {
                                             "kind": "CaseKeyword",
                                             "fullStart": 6449,
@@ -5937,7 +5937,7 @@
                                         ]
                                     },
                                     {
-                                        "kind": "CaseStatement",
+                                        "kind": "CaseClause",
                                         "caseKeyword": {
                                             "kind": "CaseKeyword",
                                             "fullStart": 6499,
@@ -6038,8 +6038,8 @@
                                         ]
                                     }
                                 ],
-                                "defaultStatement": {
-                                    "kind": "DefaultStatement",
+                                "defaultClause": {
+                                    "kind": "DefaultClause",
                                     "defaultKeyword": {
                                         "kind": "DefaultKeyword",
                                         "fullStart": 6635,

@@ -11,6 +11,7 @@ import { ModulePath } from './ModulePath';
 import { NodeKind } from './NodeKind';
 import { NumericForLoopHeader } from './Statement/ForLoop';
 import { ElseClause, ElseIfClause } from './Statement/IfStatement';
+import { CaseClause, DefaultClause } from './Statement/SelectStatement';
 import { Statements } from './Statement/Statement';
 import { TypeAnnotation } from './TypeAnnotation';
 import { TypeReference } from './TypeReference';
@@ -202,6 +203,7 @@ export type Nodes =
     Statements |
     ConfigurationTag |
     ElseIfClause | ElseClause |
+    CaseClause | DefaultClause |
     NumericForLoopHeader |
     ArrayTypeAnnotation |
     TypeAnnotation |
@@ -246,8 +248,8 @@ export function isNode(nodeOrToken: Nodes | ErrorableToken): nodeOrToken is Node
         case NodeKind.ElseIfClause:
         case NodeKind.ElseClause:
         case NodeKind.SelectStatement:
-        case NodeKind.CaseStatement:
-        case NodeKind.DefaultStatement:
+        case NodeKind.CaseClause:
+        case NodeKind.DefaultClause:
         case NodeKind.WhileLoop:
         case NodeKind.RepeatLoop:
         case NodeKind.ForLoop:

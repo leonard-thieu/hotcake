@@ -7,19 +7,19 @@ export class BoundSelectStatement extends BoundNode {
     readonly kind = BoundNodeKind.SelectStatement;
 
     expression: BoundExpression = undefined!;
-    caseStatements: BoundCaseStatement[] = undefined!;
-    defaultStatement?: BoundDefaultStatement = undefined;
+    caseClauses: BoundCaseClause[] = undefined!;
+    defaultClause?: BoundDefaultClause = undefined;
 }
 
-export class BoundCaseStatement extends BoundNode {
-    readonly kind = BoundNodeKind.CaseStatement;
+export class BoundCaseClause extends BoundNode {
+    readonly kind = BoundNodeKind.CaseClause;
 
     expressions: BoundExpression[] = undefined!;
     statements: BoundStatements[] = undefined!;
 }
 
-export class BoundDefaultStatement extends BoundNode {
-    readonly kind = BoundNodeKind.DefaultStatement;
+export class BoundDefaultClause extends BoundNode {
+    readonly kind = BoundNodeKind.DefaultClause;
 
     statements: BoundStatements[] = undefined!;
 }
