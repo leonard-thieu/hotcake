@@ -21,7 +21,6 @@ import { InvokeExpression } from '../Syntax/Node/Expression/InvokeExpression';
 import { NewExpression } from '../Syntax/Node/Expression/NewExpression';
 import { SliceExpression } from '../Syntax/Node/Expression/SliceExpression';
 import { UnaryExpression } from '../Syntax/Node/Expression/UnaryExpression';
-import { EscapeOptionalIdentifierNameToken } from '../Syntax/Node/Identifier';
 import { NodeKind } from '../Syntax/Node/NodeKind';
 import { DataDeclarationSequenceStatement } from '../Syntax/Node/Statement/DataDeclarationSequenceStatement';
 import { EmptyStatement } from '../Syntax/Node/Statement/EmptyStatement';
@@ -38,7 +37,7 @@ import { WhileLoop } from '../Syntax/Node/Statement/WhileLoop';
 import { ShorthandTypeToken, TypeAnnotation } from '../Syntax/Node/TypeAnnotation';
 import { MissableTypeReference, TypeReference } from '../Syntax/Node/TypeReference';
 import { SkippedToken } from '../Syntax/Token/SkippedToken';
-import { TokenKinds } from '../Syntax/Token/Token';
+import { TokenKinds, Tokens } from '../Syntax/Token/Token';
 import { TokenKind } from '../Syntax/Token/TokenKind';
 import { BoundSymbol, BoundSymbolTable } from './BoundSymbol';
 import { BoundNodes } from './Node/BoundNode';
@@ -1471,29 +1470,24 @@ export class Binder {
     }
 
     private getSymbol(
-        identifier: EscapeOptionalIdentifierNameToken,
-        boundIdentifierExpression: BoundIdentifierExpression,
+        token: Tokens,
+        node: BoundNodes,
     ): BoundSymbol {
-        let identifierSymbol: BoundSymbol | undefined;
+        const identifierText = token.getText(this.document);
 
-        const identifierText = identifier.getText(this.document);
-        let node: any = boundIdentifierExpression.parent;
+        let scope = this.getScope(node);
         while (true) {
-            if (node.locals) {
-                identifierSymbol = node.locals.get(identifierText);
-                if (identifierSymbol) {
-                    break;
-                }
-            }
-
-            if (node.parent) {
-                node = node.parent;
-            } else {
+            if (!scope) {
                 throw new Error(`Could not find '${identifierText}'.`);
             }
-        }
 
-        return identifierSymbol;
+            const identifierSymbol = scope.locals.get(identifierText);
+            if (identifierSymbol) {
+                return identifierSymbol;
+            }
+
+            scope = this.getScope(scope);
+        }
     }
 
     // #endregion
@@ -1909,26 +1903,26 @@ export class Binder {
         return identifier;
     }
 
-    private getScope(boundDeclaration: BoundDeclarations) {
-        let node = boundDeclaration.parent;
+    private getScope(node: BoundNodes) {
+        let ancestor = node.parent;
 
         while (true) {
-            if (!node) {
+            if (!ancestor) {
                 return undefined;
             }
 
-            switch (node.kind) {
+            switch (ancestor.kind) {
                 case BoundNodeKind.ClassDeclaration:
                 case BoundNodeKind.ClassMethodDeclaration:
                 case BoundNodeKind.FunctionDeclaration:
                 case BoundNodeKind.InterfaceDeclaration:
                 case BoundNodeKind.InterfaceMethodDeclaration:
                 case BoundNodeKind.ModuleDeclaration: {
-                    return node;
+                    return ancestor;
                 }
             }
 
-            node = node.parent;
+            ancestor = ancestor.parent;
         }
     }
 
