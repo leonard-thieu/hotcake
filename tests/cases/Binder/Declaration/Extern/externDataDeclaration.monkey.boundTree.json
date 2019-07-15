@@ -1,0 +1,27 @@
+{
+    "kind": "ModuleDeclaration",
+    "identifier": "externDataDeclaration",
+    "locals": [
+        "Driver",
+        "ActiveDriver"
+    ],
+    "members": [
+        {
+            "kind": "ClassDeclaration",
+            "identifier": "Driver",
+            "locals": [],
+            "type": "Driver",
+            "members": []
+        },
+        {
+            "kind": "ExternDataDeclaration",
+            "declarationKind": "GlobalKeyword",
+            "identifier": "ActiveDriver",
+            "type": "Driver",
+            "nativeSymbol": {
+                "kind": "StringLiteralExpression",
+                "type": "String"
+            }
+        }
+    ]
+}

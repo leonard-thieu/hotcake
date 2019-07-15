@@ -1,5 +1,8 @@
 export enum BoundNodeKind {
     ModuleDeclaration = 'ModuleDeclaration',
+
+    ExternDataDeclaration = 'ExternDataDeclaration',
+
     DataDeclaration = 'DataDeclaration',
     FunctionDeclaration = 'FunctionDeclaration',
     InterfaceDeclaration = 'InterfaceDeclaration',

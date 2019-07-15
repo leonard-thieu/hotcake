@@ -1,11 +1,13 @@
 import path = require('path');
 import { assertNever } from '../assertNever';
 import { CommaSeparator } from '../Syntax/Node/CommaSeparator';
+import { AccessibilityDirective } from '../Syntax/Node/Declaration/AccessibilityDirective';
 import { AliasDirectiveSequence } from '../Syntax/Node/Declaration/AliasDirectiveSequence';
 import { ClassDeclaration } from '../Syntax/Node/Declaration/ClassDeclaration';
 import { ClassMethodDeclaration } from '../Syntax/Node/Declaration/ClassMethodDeclaration';
 import { DataDeclaration, DataDeclarationKeywordToken, DataDeclarationSequence } from '../Syntax/Node/Declaration/DataDeclarationSequence';
 import { Declarations } from '../Syntax/Node/Declaration/Declaration';
+import { ExternDataDeclaration, ExternDataDeclarationKeywordToken, ExternDataDeclarationSequence } from '../Syntax/Node/Declaration/ExternDeclaration/ExternDataDeclarationSequence';
 import { FunctionDeclaration } from '../Syntax/Node/Declaration/FunctionDeclaration';
 import { InterfaceDeclaration } from '../Syntax/Node/Declaration/InterfaceDeclaration';
 import { InterfaceMethodDeclaration } from '../Syntax/Node/Declaration/InterfaceMethodDeclaration';
@@ -50,6 +52,7 @@ import { BoundFunctionDeclaration } from './Node/Declaration/BoundFunctionDeclar
 import { BoundInterfaceDeclaration, BoundInterfaceDeclarationMember } from './Node/Declaration/BoundInterfaceDeclaration';
 import { BoundInterfaceMethodDeclaration } from './Node/Declaration/BoundInterfaceMethodDeclaration';
 import { BoundModuleDeclaration, BoundModuleDeclarationMember } from './Node/Declaration/BoundModuleDeclaration';
+import { BoundExternDataDeclaration } from './Node/Declaration/Extern/BoundExternDataDeclaration';
 import { BoundArrayLiteralExpression } from './Node/Expression/BoundArrayLiteralExpression';
 import { BoundAssignmentExpression } from './Node/Expression/BoundAssignmentExpression';
 import { BoundBinaryExpression } from './Node/Expression/BoundBinaryExpression';
@@ -146,11 +149,18 @@ export class Binder {
 
         for (const member of moduleDeclaration.members) {
             switch (member.kind) {
-                case NodeKind.AccessibilityDirective:
-                case NodeKind.ExternDataDeclarationSequence:
                 case NodeKind.ExternFunctionDeclaration:
                 case NodeKind.ExternClassDeclaration: {
                     throw new Error('Method not implemented.');
+                }
+                case NodeKind.AccessibilityDirective: {
+                    this.bindAccessibilityDirective(member);
+                    break;
+                }
+                case NodeKind.ExternDataDeclarationSequence: {
+                    const boundExternDataDeclarations = this.bindExternDataDeclarationSequence(member, parent);
+                    boundMembers.push(...boundExternDataDeclarations);
+                    break;
                 }
                 case NodeKind.DataDeclarationSequence: {
                     const boundDataDeclarationSequence = this.bindDataDeclarationSequence(member, parent);
@@ -204,6 +214,79 @@ export class Binder {
                 }
             }
         }
+    }
+
+    // #endregion
+
+    // #region Accessibility directive
+
+    private bindAccessibilityDirective(accessibilityDirective: AccessibilityDirective): void {
+        const { accessibilityKeyword } = accessibilityDirective;
+        switch (accessibilityKeyword.kind) {
+            case TokenKind.PrivateKeyword:
+            case TokenKind.PublicKeyword:
+            case TokenKind.ProtectedKeyword: {
+                throw new Error('Method not implemented.');
+            }
+            case TokenKind.ExternKeyword: {
+                // Extern is handled by the parser but is it also implicitly public?
+                // If it does, encountering extern while private would require special handling.
+
+                if (accessibilityDirective.externPrivateKeyword) {
+                    throw new Error('Method not implemented.');
+                }
+                break;
+            }
+            default: {
+                assertNever(accessibilityKeyword);
+                break;
+            }
+        }
+    }
+
+    // #endregion
+
+    // #region Extern data declaration sequence
+
+    private bindExternDataDeclarationSequence(
+        externDataDeclarationSequence: ExternDataDeclarationSequence,
+        parent: BoundModuleDeclaration,
+    ): BoundExternDataDeclaration[] {
+        const boundExternDataDeclarations: BoundExternDataDeclaration[] = [];
+
+        for (const externDataDeclaration of externDataDeclarationSequence.children) {
+            switch (externDataDeclaration.kind) {
+                case NodeKind.ExternDataDeclaration: {
+                    const boundExternDataDeclaration = this.bindExternDataDeclaration(externDataDeclaration, parent, externDataDeclarationSequence.dataDeclarationKeyword);
+                    boundExternDataDeclarations.push(boundExternDataDeclaration);
+                    break;
+                }
+                case NodeKind.CommaSeparator: { break; }
+                default: {
+                    assertNever(externDataDeclaration);
+                    break;
+                }
+            }
+        }
+
+        return boundExternDataDeclarations;
+    }
+
+    private bindExternDataDeclaration(
+        externDataDeclaration: ExternDataDeclaration,
+        parent: BoundModuleDeclaration,
+        dataDeclarationKeyword: ExternDataDeclarationKeywordToken,
+    ): BoundExternDataDeclaration {
+        const boundExternDataDeclaration = new BoundExternDataDeclaration();
+        boundExternDataDeclaration.parent = parent;
+        boundExternDataDeclaration.declarationKind = dataDeclarationKeyword.kind;
+        boundExternDataDeclaration.identifier = this.declareSymbol(externDataDeclaration, boundExternDataDeclaration);
+        boundExternDataDeclaration.type = this.bindTypeAnnotation(externDataDeclaration.type);
+        if (externDataDeclaration.nativeSymbol) {
+            boundExternDataDeclaration.nativeSymbol = this.bindStringLiteralExpression(boundExternDataDeclaration);
+        }
+
+        return boundExternDataDeclaration;
     }
 
     // #endregion
@@ -1429,17 +1512,18 @@ export class Binder {
 
                 const { declaration } = boundIdentifierExpression.identifier;
                 switch (declaration.kind) {
+                    case BoundNodeKind.ExternDataDeclaration:
+                    case BoundNodeKind.DataDeclaration:
                     case BoundNodeKind.InterfaceDeclaration:
-                    case BoundNodeKind.ClassDeclaration:
-                    case BoundNodeKind.DataDeclaration: {
+                    case BoundNodeKind.ClassDeclaration: {
                         boundIdentifierExpression.type = declaration.type;
                         break;
                     }
 
                     case BoundNodeKind.ModuleDeclaration:
+                    case BoundNodeKind.FunctionDeclaration:
                     case BoundNodeKind.InterfaceMethodDeclaration:
-                    case BoundNodeKind.ClassMethodDeclaration:
-                    case BoundNodeKind.FunctionDeclaration: {
+                    case BoundNodeKind.ClassMethodDeclaration: {
                         break;
                     }
 
