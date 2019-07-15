@@ -6,12 +6,12 @@ import { EmptyStatement } from './EmptyStatement';
 import { ExitStatement } from './ExitStatement';
 import { ExpressionStatement } from './ExpressionStatement';
 import { ForLoop } from './ForLoop';
-import { ElseIfStatement, ElseStatement, IfStatement } from './IfStatement';
+import { IfStatement } from './IfStatement';
 import { RepeatLoop } from './RepeatLoop';
 import { ReturnStatement } from './ReturnStatement';
-import { CaseStatement, DefaultStatement, SelectStatement } from './SelectStatement';
+import { SelectStatement } from './SelectStatement';
 import { ThrowStatement } from './ThrowStatement';
-import { CatchStatement, TryStatement } from './TryStatement';
+import { TryStatement } from './TryStatement';
 import { WhileLoop } from './WhileLoop';
 
 export abstract class Statement extends Node {
@@ -25,11 +25,11 @@ export type Statements =
     ExitStatement |
     ExpressionStatement |
     ForLoop |
-    IfStatement | ElseIfStatement | ElseStatement |
+    IfStatement |
     RepeatLoop |
     ReturnStatement |
-    SelectStatement | CaseStatement | DefaultStatement |
+    SelectStatement |
     ThrowStatement |
-    TryStatement | CatchStatement |
+    TryStatement |
     WhileLoop
     ;

@@ -4271,7 +4271,7 @@
                             }
                         }
                     ],
-                    "elseIfStatements": [],
+                    "elseIfClauses": [],
                     "endKeyword": {
                         "kind": "EndKeyword",
                         "fullStart": 4964,
@@ -4372,9 +4372,9 @@
                             }
                         }
                     ],
-                    "elseIfStatements": [],
-                    "elseStatement": {
-                        "kind": "ElseStatement",
+                    "elseIfClauses": [],
+                    "elseClause": {
+                        "kind": "ElseClause",
                         "elseKeyword": {
                             "kind": "ElseKeyword",
                             "fullStart": 5040,
@@ -4502,9 +4502,9 @@
                             }
                         }
                     ],
-                    "elseIfStatements": [
+                    "elseIfClauses": [
                         {
-                            "kind": "ElseIfStatement",
+                            "kind": "ElseIfClause",
                             "elseIfKeyword": {
                                 "kind": "ElseKeyword",
                                 "fullStart": 5159,
@@ -4675,9 +4675,9 @@
                             }
                         }
                     ],
-                    "elseIfStatements": [
+                    "elseIfClauses": [
                         {
-                            "kind": "ElseIfStatement",
+                            "kind": "ElseIfClause",
                             "elseIfKeyword": {
                                 "kind": "ElseKeyword",
                                 "fullStart": 5296,
@@ -4748,8 +4748,8 @@
                             ]
                         }
                     ],
-                    "elseStatement": {
-                        "kind": "ElseStatement",
+                    "elseClause": {
+                        "kind": "ElseClause",
                         "elseKeyword": {
                             "kind": "ElseKeyword",
                             "fullStart": 5353,
@@ -4877,9 +4877,9 @@
                             }
                         }
                     ],
-                    "elseIfStatements": [
+                    "elseIfClauses": [
                         {
-                            "kind": "ElseIfStatement",
+                            "kind": "ElseIfClause",
                             "elseIfKeyword": {
                                 "kind": "ElseKeyword",
                                 "fullStart": 5476,
@@ -4956,8 +4956,8 @@
                             ]
                         }
                     ],
-                    "elseStatement": {
-                        "kind": "ElseStatement",
+                    "elseClause": {
+                        "kind": "ElseClause",
                         "elseKeyword": {
                             "kind": "ElseKeyword",
                             "fullStart": 5538,
@@ -5708,9 +5708,9 @@
                             "length": 43
                         }
                     ],
-                    "caseStatements": [
+                    "caseClauses": [
                         {
-                            "kind": "CaseStatement",
+                            "kind": "CaseClause",
                             "caseKeyword": {
                                 "kind": "CaseKeyword",
                                 "fullStart": 6244,
@@ -5757,7 +5757,7 @@
                             ]
                         },
                         {
-                            "kind": "CaseStatement",
+                            "kind": "CaseClause",
                             "caseKeyword": {
                                 "kind": "CaseKeyword",
                                 "fullStart": 6304,
@@ -5844,8 +5844,8 @@
                             ]
                         }
                     ],
-                    "defaultStatement": {
-                        "kind": "DefaultStatement",
+                    "defaultClause": {
+                        "kind": "DefaultClause",
                         "defaultKeyword": {
                             "kind": "DefaultKeyword",
                             "fullStart": 6378,
@@ -5888,9 +5888,9 @@
                                         "length": 2
                                     }
                                 ],
-                                "caseStatements": [
+                                "caseClauses": [
                                     {
-                                        "kind": "CaseStatement",
+                                        "kind": "CaseClause",
                                         "caseKeyword": {
                                             "kind": "CaseKeyword",
                                             "fullStart": 6449,
@@ -5937,7 +5937,7 @@
                                         ]
                                     },
                                     {
-                                        "kind": "CaseStatement",
+                                        "kind": "CaseClause",
                                         "caseKeyword": {
                                             "kind": "CaseKeyword",
                                             "fullStart": 6499,
@@ -6038,8 +6038,8 @@
                                         ]
                                     }
                                 ],
-                                "defaultStatement": {
-                                    "kind": "DefaultStatement",
+                                "defaultClause": {
+                                    "kind": "DefaultClause",
                                     "defaultKeyword": {
                                         "kind": "DefaultKeyword",
                                         "fullStart": 6635,

@@ -1,11 +1,10 @@
-import { assertNever, assertType } from '../assertNever';
+import { assertNever } from '../assertNever';
 import { PreprocessorModuleDeclaration } from './Node/Declaration/PreprocessorModuleDeclaration';
 import { IfDirective } from './Node/Directive/IfDirective';
 import { MissableExpression } from './Node/Expression/Expression';
 import { NodeKind } from './Node/NodeKind';
 import { ParseContextElementSequence } from './ParserBase';
-import { SkippedToken } from './Token/SkippedToken';
-import { InvalidEscapeSequenceToken, TokenKinds, Tokens } from './Token/Token';
+import { Tokens } from './Token/Token';
 import { TokenKind } from './Token/TokenKind';
 
 export class Tokenizer {
@@ -15,8 +14,8 @@ export class Tokenizer {
 
     getTokens(
         preprocessorModuleDeclaration: PreprocessorModuleDeclaration,
-        configVars: ConfigurationVariables
-    ) {
+        configVars: ConfigurationVariables,
+    ): Tokens[] {
         this.document = preprocessorModuleDeclaration.document;
         this.configVars = createConfigurationVariableMap(configVars);
         this.tokens = [];
@@ -28,7 +27,7 @@ export class Tokenizer {
     }
 
     // TODO: Ensure operator semantics and implicit type conversions match Monkey X behavior.
-    private readMembers(members: ParseContextElementSequence<PreprocessorModuleDeclaration['kind']>) {
+    private readMembers(members: ParseContextElementSequence<PreprocessorModuleDeclaration['kind']>): void {
         for (const member of members) {
             switch (member.kind) {
                 case NodeKind.IfDirective: {
@@ -236,9 +235,13 @@ export class Tokenizer {
                             }
                             break;
                         }
-                        default: {
-                            assertType<SkippedToken<TokenKinds> | InvalidEscapeSequenceToken>(child);
+                        case TokenKind.Skipped:
+                        case TokenKind.InvalidEscapeSequence: {
                             console.log(`Skipped ${JSON.stringify(child.kind)}`);
+                            break;
+                        }
+                        default: {
+                            assertNever(child);
                             break;
                         }
                     }
@@ -306,7 +309,7 @@ export interface ConfigurationVariables {
     [key: string]: any;
 }
 
-function createConfigurationVariableMap(configVars: ConfigurationVariables) {
+function createConfigurationVariableMap(configVars: ConfigurationVariables): Map<string, any> {
     const configVarMap = new Map<string, any>(Object.entries(configVars));
     const mapGet = configVarMap.get.bind(configVarMap);
     configVarMap.get = function get(key: string) {

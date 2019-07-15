@@ -89,7 +89,7 @@
                                     }
                                 }
                             ],
-                            "catchStatements": [],
+                            "catchClauses": [],
                             "endKeyword": {
                                 "kind": "EndKeyword",
                                 "fullStart": 34,
@@ -104,7 +104,7 @@
                             }
                         }
                     ],
-                    "catchStatements": [],
+                    "catchClauses": [],
                     "endKeyword": {
                         "kind": "EndKeyword",
                         "fullStart": 43,

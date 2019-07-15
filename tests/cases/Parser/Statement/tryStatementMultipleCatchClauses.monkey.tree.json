@@ -336,8 +336,8 @@
                                             }
                                         }
                                     ],
-                                    "elseStatement": {
-                                        "kind": "ElseStatement",
+                                    "elseClause": {
+                                        "kind": "ElseClause",
                                         "elseKeyword": {
                                             "kind": "ElseKeyword",
                                             "fullStart": 164,
@@ -384,9 +384,9 @@
                                     }
                                 }
                             ],
-                            "catchStatements": [
+                            "catchClauses": [
                                 {
-                                    "kind": "CatchStatement",
+                                    "kind": "CatchClause",
                                     "catchKeyword": {
                                         "kind": "CatchKeyword",
                                         "fullStart": 185,
@@ -482,7 +482,7 @@
                                     ]
                                 },
                                 {
-                                    "kind": "CatchStatement",
+                                    "kind": "CatchClause",
                                     "catchKeyword": {
                                         "kind": "CatchKeyword",
                                         "fullStart": 243,

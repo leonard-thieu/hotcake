@@ -25,7 +25,7 @@ import { UnaryExpression, UnaryOperatorToken } from './Node/Expression/UnaryExpr
 import { EscapedIdentifier, MissableIdentifier } from './Node/Identifier';
 import { isNode, Nodes } from './Node/Node';
 import { NodeKind } from './Node/NodeKind';
-import { TypeReference, TypeReferenceIdentifierStartToken } from './Node/TypeReference';
+import { MissableTypeReference, TypeReference, TypeReferenceIdentifierStartToken } from './Node/TypeReference';
 import { GreaterThanSignEqualsSignToken } from './Token/GreaterThanSignEqualsSignToken';
 import { MissableTokenKinds, MissingToken } from './Token/MissingToken';
 import { ModKeywordEqualsSignToken } from './Token/ModKeywordEqualsSignToken';
@@ -235,7 +235,7 @@ export abstract class ParserBase {
         leftOperand: MissableExpression,
         operator: AssignmentOperatorToken,
         newPrecedence: Precedence,
-    ) {
+    ): AssignmentExpression {
         const assignmentExpression = new AssignmentExpression();
         assignmentExpression.parent = parent;
         assignmentExpression.leftOperand = leftOperand;
@@ -254,7 +254,7 @@ export abstract class ParserBase {
         leftOperand: MissableExpression,
         operator: BinaryExpressionOperatorToken,
         newPrecedence: Precedence,
-    ) {
+    ): BinaryExpression {
         const binaryExpression = new BinaryExpression();
         binaryExpression.parent = parent;
         binaryExpression.leftOperand = leftOperand;
@@ -270,7 +270,7 @@ export abstract class ParserBase {
     // #region Unary expressions
 
     protected parseUnaryExpressionOrHigher(parent: Nodes): MissableExpression {
-        let newlines = this.parseList(ParseContextKind.NewlineList);
+        const newlines = this.parseList(ParseContextKind.NewlineList);
 
         let expression: MissableExpression;
 
@@ -288,14 +288,12 @@ export abstract class ParserBase {
             default: {
                 expression = this.parsePrimaryExpression(parent);
 
-                // TODO: Is this the best way to go about this?
-                let expression2: MissableExpression;
                 while (true) {
-                    expression2 = this.parsePostfixExpression(expression);
-                    if (expression2 === expression) {
+                    const postfixExpression = this.parsePostfixExpression(expression);
+                    if (postfixExpression === expression) {
                         break;
                     }
-                    expression = expression2;
+                    expression = postfixExpression;
                 }
                 break;
             }
@@ -317,7 +315,7 @@ export abstract class ParserBase {
 
     // #region Primary expressions
 
-    protected parsePrimaryExpression(parent: Nodes): MissableExpression {
+    protected parsePrimaryExpression(parent: Nodes) {
         const token = this.getToken();
         switch (token.kind) {
             case TokenKind.NewKeyword: {
@@ -445,22 +443,6 @@ export abstract class ParserBase {
         return superExpression;
     }
 
-    protected parseIntegerLiteralExpression(parent: Nodes, value: IntegerLiteralToken): IntegerLiteralExpression {
-        const integerLiteralExpression = new IntegerLiteralExpression();
-        integerLiteralExpression.parent = parent;
-        integerLiteralExpression.value = value;
-
-        return integerLiteralExpression;
-    }
-
-    protected parseFloatLiteralExpression(parent: Nodes, value: FloatLiteralToken): FloatLiteralExpression {
-        const floatLiteralExpression = new FloatLiteralExpression();
-        floatLiteralExpression.parent = parent;
-        floatLiteralExpression.value = value;
-
-        return floatLiteralExpression;
-    }
-
     // #region String literal expression
 
     protected parseMissableStringLiteralExpression(parent: Nodes): MissableStringLiteralExpression {
@@ -558,6 +540,22 @@ export abstract class ParserBase {
 
     // #endregion
 
+    protected parseFloatLiteralExpression(parent: Nodes, value: FloatLiteralToken): FloatLiteralExpression {
+        const floatLiteralExpression = new FloatLiteralExpression();
+        floatLiteralExpression.parent = parent;
+        floatLiteralExpression.value = value;
+
+        return floatLiteralExpression;
+    }
+
+    protected parseIntegerLiteralExpression(parent: Nodes, value: IntegerLiteralToken): IntegerLiteralExpression {
+        const integerLiteralExpression = new IntegerLiteralExpression();
+        integerLiteralExpression.parent = parent;
+        integerLiteralExpression.value = value;
+
+        return integerLiteralExpression;
+    }
+
     protected parseArrayLiteralExpression(parent: Nodes, openingSquareBracket: OpeningSquareBracketToken): ArrayLiteralExpression {
         const arrayLiteralExpression = new ArrayLiteralExpression();
         arrayLiteralExpression.parent = parent;
@@ -654,7 +652,7 @@ export abstract class ParserBase {
         let indexExpressionExpressionOrstartExpression: MissableExpression | undefined = undefined;
         const token = this.getToken();
         if (this.isExpressionStart(token)) {
-            indexExpressionExpressionOrstartExpression = this.parseExpression(undefined!) as Expressions;
+            indexExpressionExpressionOrstartExpression = this.parseExpression(/*parent*/ undefined!) as Expressions;
         }
 
         const sliceOperator = this.eatOptional(TokenKind.PeriodPeriod);
@@ -672,7 +670,7 @@ export abstract class ParserBase {
     protected parseIndexExpression(
         expression: Expressions,
         openingSquareBracket: OpeningSquareBracketToken,
-        indexExpressionExpression: MissableExpression
+        indexExpressionExpression: MissableExpression,
     ): IndexExpression {
         const indexExpression = new IndexExpression();
         indexExpression.parent = expression.parent;
@@ -692,7 +690,7 @@ export abstract class ParserBase {
         expression: Expressions,
         openingSquareBracket: OpeningSquareBracketToken,
         startExpression: Expressions | undefined,
-        sliceOperator: PeriodPeriodToken
+        sliceOperator: PeriodPeriodToken,
     ): SliceExpression {
         const sliceExpression = new SliceExpression();
         sliceExpression.parent = expression.parent;
@@ -825,7 +823,7 @@ export abstract class ParserBase {
         return false;
     }
 
-    protected parseMissableTypeReference(parent: Nodes): TypeReference | MissingToken<NodeKind.TypeReference> {
+    protected parseMissableTypeReference(parent: Nodes): MissableTypeReference {
         const token = this.getToken();
         if (this.isTypeReferenceStart(token)) {
             this.advanceToken();
@@ -973,9 +971,18 @@ export abstract class ParserBase {
         return this.createMissingToken(token.fullStart, TokenKind.Identifier);
     }
 
-    protected parseIdentifier(parent: Nodes, identifierStart: CommercialAtToken): EscapedIdentifier;
-    protected parseIdentifier<T extends IdentifierExpressionToken>(parent: Nodes, identifierStart: T | CommercialAtToken): EscapedIdentifier | T;
-    protected parseIdentifier<T extends IdentifierExpressionToken>(parent: Nodes, identifierStart: T | CommercialAtToken): EscapedIdentifier | T {
+    protected parseIdentifier(
+        parent: Nodes,
+        identifierStart: CommercialAtToken,
+    ): EscapedIdentifier;
+    protected parseIdentifier<TIdentifier extends IdentifierExpressionToken>(
+        parent: Nodes,
+        identifierStart: CommercialAtToken | TIdentifier,
+    ): EscapedIdentifier | TIdentifier;
+    protected parseIdentifier<TIdentifier extends IdentifierExpressionToken>(
+        parent: Nodes,
+        identifierStart: CommercialAtToken | TIdentifier,
+    ): EscapedIdentifier | TIdentifier {
         if (identifierStart.kind !== TokenKind.CommercialAt) {
             return identifierStart;
         }
@@ -983,7 +990,7 @@ export abstract class ParserBase {
         return this.parseEscapedIdentifier(parent, identifierStart);
     }
 
-    private parseEscapedIdentifier(parent: Nodes, commercialAt: CommercialAtToken) {
+    private parseEscapedIdentifier(parent: Nodes, commercialAt: CommercialAtToken): EscapedIdentifier {
         const escapedIdentifier = new EscapedIdentifier();
         escapedIdentifier.parent = parent;
         escapedIdentifier.commercialAt = commercialAt;
@@ -1231,7 +1238,9 @@ export abstract class ParserBase {
         return new SkippedToken(token);
     }
 
-    protected eatMissable<TMissableKind extends TokenKinds>(kind: TMissableKind): TokenKindTokenMap[TMissableKind] | MissingToken<TMissableKind>;
+    protected eatMissable<TMissableKind extends TokenKinds>(
+        kind: TMissableKind,
+    ): TokenKindTokenMap[TMissableKind] | MissingToken<TMissableKind>;
     protected eatMissable<TMissableKind extends TokenKinds, TTokenKind extends TokenKinds>(
         kind: TMissableKind,
         ...kinds: TTokenKind[]
@@ -1273,7 +1282,7 @@ export abstract class ParserBase {
         return undefined;
     }
 
-    protected getToken(offset: number = 0) {
+    protected getToken(offset: number = 0): Tokens {
         return this.tokens[this.position + offset];
     }
 

@@ -165,8 +165,8 @@
                             }
                         }
                     ],
-                    "elseStatement": {
-                        "kind": "ElseStatement",
+                    "elseClause": {
+                        "kind": "ElseClause",
                         "elseKeyword": {
                             "kind": "ElseKeyword",
                             "fullStart": 46,

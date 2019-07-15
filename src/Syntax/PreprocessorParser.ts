@@ -4,10 +4,9 @@ import { ErrorDirective } from './Node/Directive/ErrorDirective';
 import { ElseDirective, ElseIfDirective, IfDirective } from './Node/Directive/IfDirective';
 import { PrintDirective } from './Node/Directive/PrintDirective';
 import { RemDirective } from './Node/Directive/RemDirective';
-import { Expressions } from './Node/Expression/Expression';
 import { Nodes } from './Node/Node';
 import { NodeKind } from './Node/NodeKind';
-import { ParseContext, ParseContextElementMapBase, ParseContextKind, ParserBase } from './ParserBase';
+import { ParseContextElementMapBase, ParseContextKind, ParserBase } from './ParserBase';
 import { ConfigurationVariableToken, ElseDirectiveKeywordToken, ElseIfDirectiveKeywordToken, ErrorDirectiveKeywordToken, IfDirectiveKeywordToken, NumberSignToken, PrintDirectiveKeywordToken, RemDirectiveKeywordToken, Tokens } from './Token/Token';
 import { TokenKind } from './Token/TokenKind';
 
@@ -217,7 +216,7 @@ export class PreprocessorParser extends ParserBase {
         return elseDirective;
     }
 
-    private isIfOrElseIfOrElseDirectiveMembersListTerminator(token: Tokens) {
+    private isIfOrElseIfOrElseDirectiveMembersListTerminator(token: Tokens): boolean {
         switch (token.kind) {
             case TokenKind.NumberSign: {
                 const nextToken = this.getToken(1);
@@ -272,7 +271,7 @@ export class PreprocessorParser extends ParserBase {
         return false;
     }
 
-    private isRemDirectiveMemberStart(token: Tokens) {
+    private isRemDirectiveMemberStart(token: Tokens): boolean {
         switch (token.kind) {
             case TokenKind.NumberSign: {
                 const nextToken = this.getToken(1);
@@ -374,9 +373,7 @@ export class PreprocessorParser extends ParserBase {
 
     // #region Parse lists
 
-    protected isListTerminator(parseContext: ParseContext, token: Tokens): boolean {
-        parseContext = parseContext as PreprocessorParserParseContext;
-
+    protected isListTerminator(parseContext: PreprocessorParserParseContext, token: Tokens): boolean {
         if (token.kind === TokenKind.EOF) {
             return true;
         }
@@ -401,9 +398,7 @@ export class PreprocessorParser extends ParserBase {
         return super.isListTerminatorCore(parseContext, token);
     }
 
-    protected isValidListElement(parseContext: ParseContext, token: Tokens): boolean {
-        parseContext = parseContext as PreprocessorParserParseContext;
-
+    protected isValidListElement(parseContext: PreprocessorParserParseContext, token: Tokens): boolean {
         switch (parseContext) {
             case NodeKind.PreprocessorModuleDeclaration:
             case NodeKind.IfDirective:
@@ -422,9 +417,7 @@ export class PreprocessorParser extends ParserBase {
         return super.isValidListElementCore(parseContext, token);
     }
 
-    protected parseListElement(parseContext: ParseContext, parent: Nodes) {
-        parseContext = parseContext as PreprocessorParserParseContext;
-
+    protected parseListElement(parseContext: PreprocessorParserParseContext, parent: Nodes) {
         switch (parseContext) {
             case NodeKind.PreprocessorModuleDeclaration:
             case NodeKind.IfDirective:
@@ -445,7 +438,7 @@ export class PreprocessorParser extends ParserBase {
 
     // #endregion
 
-    protected isInvokeExpressionStart(token: Tokens, expression: Expressions): boolean {
+    protected isInvokeExpressionStart(token: Tokens): boolean {
         switch (token.kind) {
             case TokenKind.OpeningParenthesis: {
                 return true;

@@ -1,3 +1,4 @@
+import { BoundSymbolTable } from '../../BoundSymbol';
 import { BoundNode } from '../BoundNode';
 import { BoundNodeKind } from '../BoundNodeKind';
 import { BoundExpression } from '../Expression/BoundExpression';
@@ -7,19 +8,23 @@ export class BoundSelectStatement extends BoundNode {
     readonly kind = BoundNodeKind.SelectStatement;
 
     expression: BoundExpression = undefined!;
-    caseStatements: BoundCaseStatement[] = undefined!;
-    defaultStatement?: BoundDefaultStatement = undefined;
+    caseClauses: BoundCaseClause[] = undefined!;
+    defaultClause?: BoundDefaultClause = undefined;
 }
 
-export class BoundCaseStatement extends BoundNode {
-    readonly kind = BoundNodeKind.CaseStatement;
+export class BoundCaseClause extends BoundNode {
+    readonly kind = BoundNodeKind.CaseClause;
+
+    locals: BoundSymbolTable = undefined!;
 
     expressions: BoundExpression[] = undefined!;
     statements: BoundStatements[] = undefined!;
 }
 
-export class BoundDefaultStatement extends BoundNode {
-    readonly kind = BoundNodeKind.DefaultStatement;
+export class BoundDefaultClause extends BoundNode {
+    readonly kind = BoundNodeKind.DefaultClause;
+
+    locals: BoundSymbolTable = undefined!;
 
     statements: BoundStatements[] = undefined!;
 }

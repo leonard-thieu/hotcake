@@ -4,8 +4,16 @@ import { Token, TokenKinds, TokenKindTokenMap, Tokens } from './Token';
 import { TokenKind } from './TokenKind';
 
 export class MissingToken<TTokenKind extends MissableTokenKinds> extends Token<TokenKind.Missing> {
-    constructor(fullStart: number, public originalKind: TTokenKind) {
-        super(TokenKind.Missing, fullStart, fullStart, 0);
+    constructor(
+        fullStart: number,
+        public originalKind: TTokenKind,
+    ) {
+        super(
+            TokenKind.Missing,
+            fullStart,
+            fullStart,
+            0,
+        );
     }
 
     newlines: ParseContextElementArray<ParseContextKind.NewlineList> = undefined!;

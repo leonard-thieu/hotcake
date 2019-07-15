@@ -5,7 +5,7 @@ Function Main()
     For Local val := EachIn [1, 2, 3]
     End
 
-    Local val2: Int[]
-    For val2 = EachIn [3, 4, 5]
+    Local val: Int[]
+    For val = EachIn [3, 4, 5]
     End
 End

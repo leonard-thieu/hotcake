@@ -1,6 +1,6 @@
 {
     "kind": "ModuleDeclaration",
-    "identifier": "selectStatement",
+    "identifier": "ifStatement",
     "locals": [
         "Print",
         "Main"
@@ -25,36 +25,51 @@
         {
             "kind": "FunctionDeclaration",
             "identifier": "Main",
-            "locals": [
-                "val"
-            ],
+            "locals": [],
             "returnType": "Int",
             "parameters": [],
             "statements": [
                 {
-                    "kind": "DataDeclarationStatement",
-                    "declaration": {
-                        "kind": "DataDeclaration",
-                        "declarationKind": "LocalKeyword",
-                        "identifier": "val",
-                        "type": "Int",
-                        "expression": {
+                    "kind": "IfStatement",
+                    "locals": [],
+                    "expression": {
+                        "kind": "BinaryExpression",
+                        "type": "Bool",
+                        "leftOperand": {
+                            "kind": "IntegerLiteralExpression",
+                            "type": "Int"
+                        },
+                        "rightOperand": {
                             "kind": "IntegerLiteralExpression",
                             "type": "Int"
                         }
-                    }
-                },
-                {
-                    "kind": "SelectStatement",
-                    "caseStatements": [
+                    },
+                    "statements": [
                         {
-                            "kind": "CaseStatement",
-                            "expressions": [
-                                {
-                                    "kind": "IntegerLiteralExpression",
-                                    "type": "Int"
-                                }
-                            ],
+                            "kind": "ExpressionStatement",
+                            "expression": {
+                                "kind": "InvokeExpression",
+                                "invokableExpression": {
+                                    "kind": "IdentifierExpression",
+                                    "identifier": "Print"
+                                },
+                                "arguments": [
+                                    {
+                                        "kind": "StringLiteralExpression",
+                                        "type": "String"
+                                    }
+                                ]
+                            }
+                        }
+                    ],
+                    "elseIfClauses": [
+                        {
+                            "kind": "ElseIfClause",
+                            "locals": [],
+                            "expression": {
+                                "kind": "NullExpression",
+                                "type": "Null"
+                            },
                             "statements": [
                                 {
                                     "kind": "ExpressionStatement",
@@ -73,42 +88,11 @@
                                     }
                                 }
                             ]
-                        },
-                        {
-                            "kind": "CaseStatement",
-                            "expressions": [
-                                {
-                                    "kind": "IntegerLiteralExpression",
-                                    "type": "Int"
-                                },
-                                {
-                                    "kind": "IntegerLiteralExpression",
-                                    "type": "Int"
-                                }
-                            ],
-                            "statements": [
-                                {
-                                    "kind": "ExpressionStatement",
-                                    "expression": {
-                                        "kind": "InvokeExpression",
-                                        "invokableExpression": {
-                                            "kind": "IdentifierExpression",
-                                            "identifier": "Print"
-                                        },
-                                        "arguments": [
-                                            {
-                                                "kind": "IdentifierExpression",
-                                                "type": "Int",
-                                                "identifier": "val"
-                                            }
-                                        ]
-                                    }
-                                }
-                            ]
                         }
                     ],
-                    "defaultStatement": {
-                        "kind": "DefaultStatement",
+                    "elseClause": {
+                        "kind": "ElseClause",
+                        "locals": [],
                         "statements": [
                             {
                                 "kind": "ExpressionStatement",

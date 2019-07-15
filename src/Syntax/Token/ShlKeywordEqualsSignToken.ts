@@ -2,12 +2,15 @@ import { EqualsSignToken, ShlKeywordToken, Token } from './Token';
 import { TokenKind } from './TokenKind';
 
 export class ShlKeywordEqualsSignToken extends Token<TokenKind.ShlKeywordEqualsSign> {
-    constructor(public shlKeyword: ShlKeywordToken, public equalsSign: EqualsSignToken) {
+    constructor(
+        public shlKeyword: ShlKeywordToken,
+        public equalsSign: EqualsSignToken,
+    ) {
         super(
             TokenKind.ShlKeywordEqualsSign,
             shlKeyword.fullStart,
             shlKeyword.start,
-            shlKeyword.length + equalsSign.length
+            shlKeyword.length + equalsSign.length,
         );
     }
 

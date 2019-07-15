@@ -1,6 +1,6 @@
 {
     "kind": "ModuleDeclaration",
-    "identifier": "continueStatement",
+    "identifier": "exitStatement",
     "locals": [
         "Main"
     ],
@@ -14,13 +14,14 @@
             "statements": [
                 {
                     "kind": "WhileLoop",
+                    "locals": [],
                     "expression": {
                         "kind": "BooleanLiteralExpression",
                         "type": "Bool"
                     },
                     "statements": [
                         {
-                            "kind": "ContinueStatement"
+                            "kind": "ExitStatement"
                         }
                     ]
                 }

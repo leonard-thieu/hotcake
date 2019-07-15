@@ -7,9 +7,10 @@ export class Token<TTokenKind extends ErrorableTokenKinds> {
         public kind: TTokenKind,
         public fullStart: number,
         public start: number,
-        public length: number) { }
+        public length: number,
+    ) { }
 
-    get end() {
+    get end(): number {
         return this.fullStart + this.length;
     }
 

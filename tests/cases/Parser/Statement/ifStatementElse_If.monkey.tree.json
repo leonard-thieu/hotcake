@@ -73,9 +73,9 @@
                             }
                         }
                     ],
-                    "elseIfStatements": [
+                    "elseIfClauses": [
                         {
-                            "kind": "ElseIfStatement",
+                            "kind": "ElseIfClause",
                             "elseIfKeyword": {
                                 "kind": "ElseKeyword",
                                 "fullStart": 30,
