@@ -28,7 +28,6 @@ import { SliceExpression } from '../Syntax/Node/Expression/SliceExpression';
 import { UnaryExpression } from '../Syntax/Node/Expression/UnaryExpression';
 import { NodeKind } from '../Syntax/Node/NodeKind';
 import { DataDeclarationSequenceStatement } from '../Syntax/Node/Statement/DataDeclarationSequenceStatement';
-import { EmptyStatement } from '../Syntax/Node/Statement/EmptyStatement';
 import { ExpressionStatement } from '../Syntax/Node/Statement/ExpressionStatement';
 import { ForLoop } from '../Syntax/Node/Statement/ForLoop';
 import { ElseClause, ElseIfClause, IfStatement } from '../Syntax/Node/Statement/IfStatement';
@@ -672,32 +671,69 @@ export class Binder {
         for (const statement of statements) {
             switch (statement.kind) {
                 case NodeKind.DataDeclarationSequenceStatement: {
-                    const boundStatement = this.bindDataDeclarationSequenceStatement(statement, parent);
-                    boundStatements.push(...boundStatement);
+                    const boundDataDeclarations = this.bindDataDeclarationSequenceStatement(statement, parent);
+                    boundStatements.push(...boundDataDeclarations);
                     break;
                 }
-
-                case NodeKind.ReturnStatement:
-                case NodeKind.IfStatement:
-                case NodeKind.SelectStatement:
-                case NodeKind.WhileLoop:
-                case NodeKind.RepeatLoop:
-                case NodeKind.ForLoop:
-                case NodeKind.ContinueStatement:
-                case NodeKind.ExitStatement:
-                case NodeKind.ThrowStatement:
-                case NodeKind.TryStatement:
+                case NodeKind.ReturnStatement: {
+                    const boundReturnStatement = this.bindReturnStatement(statement, parent);
+                    boundStatements.push(boundReturnStatement);
+                    break;
+                }
+                case NodeKind.IfStatement: {
+                    const boundIfStatement = this.bindIfStatement(statement, parent);
+                    boundStatements.push(boundIfStatement);
+                    break;
+                }
+                case NodeKind.SelectStatement: {
+                    const boundSelectStatement = this.bindSelectStatement(statement, parent);
+                    boundStatements.push(boundSelectStatement);
+                    break;
+                }
+                case NodeKind.WhileLoop: {
+                    const boundWhileLoop = this.bindWhileLoop(statement, parent);
+                    boundStatements.push(boundWhileLoop);
+                    break;
+                }
+                case NodeKind.RepeatLoop: {
+                    const boundRepeatLoop = this.bindRepeatLoop(statement, parent);
+                    boundStatements.push(boundRepeatLoop);
+                    break;
+                }
+                case NodeKind.ForLoop: {
+                    const boundForLoop = this.bindForLoop(statement, parent);
+                    boundStatements.push(boundForLoop);
+                    break;
+                }
+                case NodeKind.ContinueStatement: {
+                    const boundContinueStatement = this.bindContinueStatement(parent);
+                    boundStatements.push(boundContinueStatement);
+                    break;
+                }
+                case NodeKind.ExitStatement: {
+                    const boundExitStatement = this.bindExitStatement(parent);
+                    boundStatements.push(boundExitStatement);
+                    break;
+                }
+                case NodeKind.ThrowStatement: {
+                    const boundThrowStatement = this.bindThrowStatement(statement, parent);
+                    boundStatements.push(boundThrowStatement);
+                    break;
+                }
+                case NodeKind.TryStatement: {
+                    const boundTryStatement = this.bindTryStatement(statement, parent);
+                    boundStatements.push(boundTryStatement);
+                    break;
+                }
                 case NodeKind.ExpressionStatement: {
-                    const boundStatement = this.bindStatement(statement, parent);
-                    boundStatements.push(boundStatement);
+                    const boundExpressionStatement = this.bindExpressionStatement(statement, parent);
+                    boundStatements.push(boundExpressionStatement);
                     break;
                 }
-
                 case NodeKind.EmptyStatement:
                 case TokenKind.Skipped: {
                     break;
                 }
-
                 default: {
                     assertNever(statement);
                     break;
@@ -706,50 +742,6 @@ export class Binder {
         }
 
         return boundStatements;
-    }
-
-    private bindStatement(
-        statement: Exclude<Statements, DataDeclarationSequenceStatement | EmptyStatement>,
-        parent: BoundNodes,
-    ) {
-        switch (statement.kind) {
-            case NodeKind.IfStatement: {
-                return this.bindIfStatement(statement, parent);
-            }
-            case NodeKind.SelectStatement: {
-                return this.bindSelectStatement(statement, parent);
-            }
-            case NodeKind.ForLoop: {
-                return this.bindForLoop(statement, parent);
-            }
-            case NodeKind.TryStatement: {
-                return this.bindTryStatement(statement, parent);
-            }
-            case NodeKind.ReturnStatement: {
-                return this.bindReturnStatement(statement, parent);
-            }
-            case NodeKind.ExpressionStatement: {
-                return this.bindExpressionStatement(statement, parent);
-            }
-            case NodeKind.WhileLoop: {
-                return this.bindWhileLoop(statement, parent);
-            }
-            case NodeKind.RepeatLoop: {
-                return this.bindRepeatLoop(statement, parent);
-            }
-            case NodeKind.ThrowStatement: {
-                return this.bindThrowStatement(statement, parent);
-            }
-            case NodeKind.ContinueStatement: {
-                return this.bindContinueStatement(parent);
-            }
-            case NodeKind.ExitStatement: {
-                return this.bindExitStatement(parent);
-            }
-            default: {
-                return assertNever(statement);
-            }
-        }
     }
 
     // #region Data declaration sequence statement
