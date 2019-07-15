@@ -110,8 +110,8 @@
                                             }
                                         }
                                     ],
-                                    "elseStatement": {
-                                        "kind": "ElseStatement",
+                                    "elseClause": {
+                                        "kind": "ElseClause",
                                         "statements": [
                                             {
                                                 "kind": "ThrowStatement",

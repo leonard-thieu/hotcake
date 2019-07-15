@@ -73,7 +73,7 @@
                             }
                         }
                     ],
-                    "elseIfStatements": [],
+                    "elseIfClauses": [],
                     "endKeyword": {
                         "kind": "EndIfKeyword",
                         "fullStart": 30,

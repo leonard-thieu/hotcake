@@ -149,7 +149,7 @@
                                     }
                                 }
                             ],
-                            "elseIfStatements": [],
+                            "elseIfClauses": [],
                             "endKeyword": {
                                 "kind": "EndKeyword",
                                 "fullStart": 44,
@@ -164,7 +164,7 @@
                             }
                         }
                     ],
-                    "elseIfStatements": [],
+                    "elseIfClauses": [],
                     "endKeyword": {
                         "kind": "EndKeyword",
                         "fullStart": 53,

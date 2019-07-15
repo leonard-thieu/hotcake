@@ -10,6 +10,7 @@ import { EscapedIdentifier } from './Identifier';
 import { ModulePath } from './ModulePath';
 import { NodeKind } from './NodeKind';
 import { NumericForLoopHeader } from './Statement/ForLoop';
+import { ElseClause, ElseIfClause } from './Statement/IfStatement';
 import { Statements } from './Statement/Statement';
 import { TypeAnnotation } from './TypeAnnotation';
 import { TypeReference } from './TypeReference';
@@ -200,6 +201,7 @@ export type Nodes =
     Expressions |
     Statements |
     ConfigurationTag |
+    ElseIfClause | ElseClause |
     NumericForLoopHeader |
     ArrayTypeAnnotation |
     TypeAnnotation |
@@ -241,8 +243,8 @@ export function isNode(nodeOrToken: Nodes | ErrorableToken): nodeOrToken is Node
         case NodeKind.DataDeclarationSequenceStatement:
         case NodeKind.ReturnStatement:
         case NodeKind.IfStatement:
-        case NodeKind.ElseIfStatement:
-        case NodeKind.ElseStatement:
+        case NodeKind.ElseIfClause:
+        case NodeKind.ElseClause:
         case NodeKind.SelectStatement:
         case NodeKind.CaseStatement:
         case NodeKind.DefaultStatement:

@@ -9,8 +9,8 @@ export enum BoundNodeKind {
 
     DataDeclarationStatement = 'DataDeclarationStatement',
     IfStatement = 'IfStatement',
-    ElseIfStatement = 'ElseIfStatement',
-    ElseStatement = 'ElseStatement',
+    ElseIfClause = 'ElseIfClause',
+    ElseClause = 'ElseClause',
     SelectStatement = 'SelectStatement',
     CaseStatement = 'CaseStatement',
     DefaultStatement = 'DefaultStatement',

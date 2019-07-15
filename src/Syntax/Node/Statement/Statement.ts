@@ -6,7 +6,7 @@ import { EmptyStatement } from './EmptyStatement';
 import { ExitStatement } from './ExitStatement';
 import { ExpressionStatement } from './ExpressionStatement';
 import { ForLoop } from './ForLoop';
-import { ElseIfStatement, ElseStatement, IfStatement } from './IfStatement';
+import { IfStatement } from './IfStatement';
 import { RepeatLoop } from './RepeatLoop';
 import { ReturnStatement } from './ReturnStatement';
 import { CaseStatement, DefaultStatement, SelectStatement } from './SelectStatement';
@@ -25,7 +25,7 @@ export type Statements =
     ExitStatement |
     ExpressionStatement |
     ForLoop |
-    IfStatement | ElseIfStatement | ElseStatement |
+    IfStatement |
     RepeatLoop |
     ReturnStatement |
     SelectStatement | CaseStatement | DefaultStatement |

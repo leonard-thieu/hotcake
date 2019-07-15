@@ -73,9 +73,9 @@
                             }
                         }
                     ],
-                    "elseIfStatements": [],
-                    "elseStatement": {
-                        "kind": "ElseStatement",
+                    "elseIfClauses": [],
+                    "elseClause": {
+                        "kind": "ElseClause",
                         "elseKeyword": {
                             "kind": "ElseKeyword",
                             "fullStart": 30,

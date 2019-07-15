@@ -29,7 +29,7 @@ import { EmptyStatement } from './Node/Statement/EmptyStatement';
 import { ExitStatement } from './Node/Statement/ExitStatement';
 import { ExpressionStatement } from './Node/Statement/ExpressionStatement';
 import { ForLoop, NumericForLoopHeader } from './Node/Statement/ForLoop';
-import { ElseIfStatement, ElseStatement, IfStatement } from './Node/Statement/IfStatement';
+import { ElseClause, ElseIfClause, IfStatement } from './Node/Statement/IfStatement';
 import { RepeatLoop } from './Node/Statement/RepeatLoop';
 import { ReturnStatement } from './Node/Statement/ReturnStatement';
 import { CaseStatement, DefaultStatement, SelectStatement } from './Node/Statement/SelectStatement';
@@ -1277,13 +1277,13 @@ export class Parser extends ParserBase {
 
         if (this.getToken().kind === TokenKind.Newline) {
             ifStatement.statements = this.parseList(ifStatement.kind, ifStatement);
-            ifStatement.elseIfStatements = this.parseList(ParseContextKind.ElseIfStatementList, ifStatement, /*delimiter*/ null);
+            ifStatement.elseIfClauses = this.parseList(ParseContextKind.ElseIfClauseList, ifStatement, /*delimiter*/ null);
 
             const elseKeyword = this.getToken();
             if (elseKeyword.kind === TokenKind.ElseKeyword) {
                 this.advanceToken();
 
-                ifStatement.elseStatement = this.parseElseStatement(ifStatement, elseKeyword);
+                ifStatement.elseClause = this.parseElseClause(ifStatement, elseKeyword);
             }
 
             ifStatement.endKeyword = this.eatMissable(TokenKind.EndIfKeyword, TokenKind.EndKeyword);
@@ -1298,7 +1298,7 @@ export class Parser extends ParserBase {
             if (elseKeyword.kind === TokenKind.ElseKeyword) {
                 this.advanceToken();
 
-                ifStatement.elseStatement = this.parseElseStatement(ifStatement, elseKeyword);
+                ifStatement.elseClause = this.parseElseClause(ifStatement, elseKeyword);
             }
         }
 
@@ -1307,13 +1307,13 @@ export class Parser extends ParserBase {
         return ifStatement;
     }
 
-    // #region ElseIf statement list members
+    // #region ElseIf clause list members
 
-    private isElseIfStatementListTerminator(token: Tokens): boolean {
-        return !this.isElseIfStatementListMemberStart(token);
+    private isElseIfClauseListTerminator(token: Tokens): boolean {
+        return !this.isElseIfClauseListMemberStart(token);
     }
 
-    private isElseIfStatementListMemberStart(token: Tokens): boolean {
+    private isElseIfClauseListMemberStart(token: Tokens): boolean {
         switch (token.kind) {
             case TokenKind.ElseIfKeyword: {
                 return true;
@@ -1332,13 +1332,13 @@ export class Parser extends ParserBase {
         return false;
     }
 
-    private parseElseIfStatementListMember(parent: Nodes) {
+    private parseElseIfClauseListMember(parent: Nodes) {
         const token = this.getToken();
         switch (token.kind) {
             case TokenKind.ElseIfKeyword: {
                 this.advanceToken();
 
-                return this.parseElseIfStatement(parent, token);
+                return this.parseElseIfClause(parent, token);
             }
             case TokenKind.ElseKeyword: {
                 const nextToken = this.getToken(1);
@@ -1347,7 +1347,7 @@ export class Parser extends ParserBase {
                         this.advanceToken();
                         this.advanceToken();
 
-                        return this.parseElseIfStatement(parent, token, nextToken);
+                        return this.parseElseIfClause(parent, token, nextToken);
                     }
                 }
                 break;
@@ -1357,39 +1357,39 @@ export class Parser extends ParserBase {
         return this.parseCore(parent, token);
     }
 
-    private parseElseIfStatement(
+    private parseElseIfClause(
         parent: Nodes,
         elseIfKeyword: ElseIfKeywordToken | ElseKeywordToken,
         ifKeyword?: IfKeywordToken,
-    ): ElseIfStatement {
-        const elseIfStatement = new ElseIfStatement();
-        elseIfStatement.parent = parent;
-        elseIfStatement.elseIfKeyword = elseIfKeyword;
-        elseIfStatement.ifKeyword = ifKeyword;
-        elseIfStatement.expression = this.parseExpression(elseIfStatement);
-        elseIfStatement.thenKeyword = this.eatOptional(TokenKind.ThenKeyword);
-        elseIfStatement.statements = this.parseList(elseIfStatement.kind, elseIfStatement);
+    ): ElseIfClause {
+        const elseIfClause = new ElseIfClause();
+        elseIfClause.parent = parent;
+        elseIfClause.elseIfKeyword = elseIfKeyword;
+        elseIfClause.ifKeyword = ifKeyword;
+        elseIfClause.expression = this.parseExpression(elseIfClause);
+        elseIfClause.thenKeyword = this.eatOptional(TokenKind.ThenKeyword);
+        elseIfClause.statements = this.parseList(elseIfClause.kind, elseIfClause);
 
-        return elseIfStatement;
+        return elseIfClause;
     }
 
     // #endregion
 
-    private parseElseStatement(parent: IfStatement, elseKeyword: ElseKeywordToken): ElseStatement {
-        const elseStatement = new ElseStatement();
-        elseStatement.parent = parent;
-        elseStatement.elseKeyword = elseKeyword;
+    private parseElseClause(parent: IfStatement, elseKeyword: ElseKeywordToken): ElseClause {
+        const elseClause = new ElseClause();
+        elseClause.parent = parent;
+        elseClause.elseKeyword = elseKeyword;
 
-        if (!elseStatement.isSingleLine) {
-            elseStatement.statements = this.parseList(elseStatement.kind, elseStatement);
+        if (!elseClause.isSingleLine) {
+            elseClause.statements = this.parseList(elseClause.kind, elseClause);
         } else {
-            elseStatement.statements = [this.parseStatementListMember(elseStatement)] as typeof elseStatement.statements;
+            elseClause.statements = [this.parseStatementListMember(elseClause)] as typeof elseClause.statements;
         }
 
-        return elseStatement;
+        return elseClause;
     }
 
-    private isIfOrElseIfOrElseStatementStatementsListTerminator(token: Tokens): boolean {
+    private isIfStatementLikeStatementsListTerminator(token: Tokens): boolean {
         switch (token.kind) {
             case TokenKind.ElseIfKeyword:
             case TokenKind.ElseKeyword:
@@ -1800,9 +1800,9 @@ export class Parser extends ParserBase {
                 return this.isFunctionLikeStatementsListTerminator(token);
             }
             case NodeKind.IfStatement:
-            case NodeKind.ElseIfStatement:
-            case NodeKind.ElseStatement: {
-                return this.isIfOrElseIfOrElseStatementStatementsListTerminator(token);
+            case NodeKind.ElseIfClause:
+            case NodeKind.ElseClause: {
+                return this.isIfStatementLikeStatementsListTerminator(token);
             }
             case NodeKind.CaseStatement:
             case NodeKind.DefaultStatement: {
@@ -1839,8 +1839,8 @@ export class Parser extends ParserBase {
             case ParseContextKind.ClassMethodAttributes: {
                 return this.isClassMethodAttributesTerminator(token);
             }
-            case ParseContextKind.ElseIfStatementList: {
-                return this.isElseIfStatementListTerminator(token);
+            case ParseContextKind.ElseIfClauseList: {
+                return this.isElseIfClauseListTerminator(token);
             }
             case ParseContextKind.CaseStatementList: {
                 return this.isCaseStatementListTerminator(token);
@@ -1873,8 +1873,8 @@ export class Parser extends ParserBase {
             case NodeKind.FunctionDeclaration:
             case NodeKind.ClassMethodDeclaration:
             case NodeKind.IfStatement:
-            case NodeKind.ElseIfStatement:
-            case NodeKind.ElseStatement:
+            case NodeKind.ElseIfClause:
+            case NodeKind.ElseClause:
             case NodeKind.CaseStatement:
             case NodeKind.DefaultStatement:
             case NodeKind.WhileLoop:
@@ -1902,8 +1902,8 @@ export class Parser extends ParserBase {
             case ParseContextKind.ClassMethodAttributes: {
                 return this.isClassMethodAttributeStart(token);
             }
-            case ParseContextKind.ElseIfStatementList: {
-                return this.isElseIfStatementListMemberStart(token);
+            case ParseContextKind.ElseIfClauseList: {
+                return this.isElseIfClauseListMemberStart(token);
             }
             case ParseContextKind.CaseStatementList: {
                 return this.isCaseStatementListMemberStart(token);
@@ -1936,8 +1936,8 @@ export class Parser extends ParserBase {
             case NodeKind.FunctionDeclaration:
             case NodeKind.ClassMethodDeclaration:
             case NodeKind.IfStatement:
-            case NodeKind.ElseIfStatement:
-            case NodeKind.ElseStatement:
+            case NodeKind.ElseIfClause:
+            case NodeKind.ElseClause:
             case NodeKind.CaseStatement:
             case NodeKind.DefaultStatement:
             case NodeKind.WhileLoop:
@@ -1965,8 +1965,8 @@ export class Parser extends ParserBase {
             case ParseContextKind.ClassMethodAttributes: {
                 return this.parseClassMethodAttribute(parent);
             }
-            case ParseContextKind.ElseIfStatementList: {
-                return this.parseElseIfStatementListMember(parent);
+            case ParseContextKind.ElseIfClauseList: {
+                return this.parseElseIfClauseListMember(parent);
             }
             case ParseContextKind.CaseStatementList: {
                 return this.parseCaseStatementListMember(parent);
@@ -2010,7 +2010,7 @@ export class Parser extends ParserBase {
 
         switch (parent.kind) {
             case NodeKind.IfStatement:
-            case NodeKind.ElseStatement: {
+            case NodeKind.ElseClause: {
                 return parent.isSingleLine;
             }
             case NodeKind.ForLoop: {
@@ -2081,9 +2081,9 @@ interface ParserParseContextElementMap extends ParseContextElementMapBase {
     [NodeKind.ExternClassDeclaration]: ReturnType<Parser['parseExternClassDeclarationMember']>;
     [ParseContextKind.ClassMethodAttributes]: ReturnType<Parser['parseClassMethodAttribute']>;
     [NodeKind.IfStatement]: ReturnType<Parser['parseStatementListMember']>;
-    [ParseContextKind.ElseIfStatementList]: ReturnType<Parser['parseElseIfStatementListMember']>;
-    [NodeKind.ElseIfStatement]: ReturnType<Parser['parseStatementListMember']>;
-    [NodeKind.ElseStatement]: ReturnType<Parser['parseStatementListMember']>;
+    [ParseContextKind.ElseIfClauseList]: ReturnType<Parser['parseElseIfClauseListMember']>;
+    [NodeKind.ElseIfClause]: ReturnType<Parser['parseStatementListMember']>;
+    [NodeKind.ElseClause]: ReturnType<Parser['parseStatementListMember']>;
     [ParseContextKind.CaseStatementList]: ReturnType<Parser['parseCaseStatementListMember']>;
     [NodeKind.CaseStatement]: ReturnType<Parser['parseStatementListMember']>;
     [NodeKind.DefaultStatement]: ReturnType<Parser['parseStatementListMember']>;
@@ -2104,7 +2104,7 @@ _ParseContextKind.ModulePathSequence = 'ModulePathSequence' as ParseContextKind.
 _ParseContextKind.DataDeclarationSequence = 'DataDeclarationSequence' as ParseContextKind.DataDeclarationSequence;
 _ParseContextKind.TypeParameterSequence = 'TypeParameterSequence' as ParseContextKind.TypeParameterSequence;
 _ParseContextKind.ClassMethodAttributes = 'ClassMethodAttributes' as ParseContextKind.ClassMethodAttributes;
-_ParseContextKind.ElseIfStatementList = 'ElseIfStatementList' as ParseContextKind.ElseIfStatementList;
+_ParseContextKind.ElseIfClauseList = 'ElseIfClauseList' as ParseContextKind.ElseIfClauseList;
 _ParseContextKind.CaseStatementList = 'CaseStatementList' as ParseContextKind.CaseStatementList;
 _ParseContextKind.CatchStatementList = 'CatchStatementList' as ParseContextKind.CatchStatementList;
 
@@ -2115,7 +2115,7 @@ declare module './ParserBase' {
         DataDeclarationSequence = 'DataDeclarationSequence',
         TypeParameterSequence = 'TypeParameterSequence',
         ClassMethodAttributes = 'ClassMethodAttributes',
-        ElseIfStatementList = 'ElseIfStatementList',
+        ElseIfClauseList = 'ElseIfClauseList',
         CaseStatementList = 'CaseStatementList',
         CatchStatementList = 'CatchStatementList',
     }

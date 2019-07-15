@@ -8,19 +8,19 @@ export class BoundIfStatement extends BoundNode {
 
     expression: BoundExpressions = undefined!;
     statements: BoundStatements[] = undefined!;
-    elseIfStatements?: BoundElseIfStatement[] = undefined;
-    elseStatement?: BoundElseStatement = undefined;
+    elseIfClauses?: BoundElseIfClause[] = undefined;
+    elseClause?: BoundElseClause = undefined;
 }
 
-export class BoundElseIfStatement extends BoundNode {
-    readonly kind = BoundNodeKind.ElseIfStatement;
+export class BoundElseIfClause extends BoundNode {
+    readonly kind = BoundNodeKind.ElseIfClause;
 
     expression: BoundExpressions = undefined!;
     statements: BoundStatements[] = undefined!;
 }
 
-export class BoundElseStatement extends BoundNode {
-    readonly kind = BoundNodeKind.ElseStatement;
+export class BoundElseClause extends BoundNode {
+    readonly kind = BoundNodeKind.ElseClause;
 
     statements: BoundStatements[] = undefined!;
 }

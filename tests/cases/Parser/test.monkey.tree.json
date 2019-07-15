@@ -4271,7 +4271,7 @@
                             }
                         }
                     ],
-                    "elseIfStatements": [],
+                    "elseIfClauses": [],
                     "endKeyword": {
                         "kind": "EndKeyword",
                         "fullStart": 4964,
@@ -4372,9 +4372,9 @@
                             }
                         }
                     ],
-                    "elseIfStatements": [],
-                    "elseStatement": {
-                        "kind": "ElseStatement",
+                    "elseIfClauses": [],
+                    "elseClause": {
+                        "kind": "ElseClause",
                         "elseKeyword": {
                             "kind": "ElseKeyword",
                             "fullStart": 5040,
@@ -4502,9 +4502,9 @@
                             }
                         }
                     ],
-                    "elseIfStatements": [
+                    "elseIfClauses": [
                         {
-                            "kind": "ElseIfStatement",
+                            "kind": "ElseIfClause",
                             "elseIfKeyword": {
                                 "kind": "ElseKeyword",
                                 "fullStart": 5159,
@@ -4675,9 +4675,9 @@
                             }
                         }
                     ],
-                    "elseIfStatements": [
+                    "elseIfClauses": [
                         {
-                            "kind": "ElseIfStatement",
+                            "kind": "ElseIfClause",
                             "elseIfKeyword": {
                                 "kind": "ElseKeyword",
                                 "fullStart": 5296,
@@ -4748,8 +4748,8 @@
                             ]
                         }
                     ],
-                    "elseStatement": {
-                        "kind": "ElseStatement",
+                    "elseClause": {
+                        "kind": "ElseClause",
                         "elseKeyword": {
                             "kind": "ElseKeyword",
                             "fullStart": 5353,
@@ -4877,9 +4877,9 @@
                             }
                         }
                     ],
-                    "elseIfStatements": [
+                    "elseIfClauses": [
                         {
-                            "kind": "ElseIfStatement",
+                            "kind": "ElseIfClause",
                             "elseIfKeyword": {
                                 "kind": "ElseKeyword",
                                 "fullStart": 5476,
@@ -4956,8 +4956,8 @@
                             ]
                         }
                     ],
-                    "elseStatement": {
-                        "kind": "ElseStatement",
+                    "elseClause": {
+                        "kind": "ElseClause",
                         "elseKeyword": {
                             "kind": "ElseKeyword",
                             "fullStart": 5538,

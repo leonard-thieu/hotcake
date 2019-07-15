@@ -2,7 +2,7 @@ import { ParseContextElementArray, ParseContextElementSequence, ParseContextKind
 import { MissableToken } from '../../Token/MissingToken';
 import { ElseIfKeywordToken, ElseKeywordToken, EndIfKeywordToken, EndKeywordToken, ErrorableToken, IfKeywordToken, ThenKeywordToken } from '../../Token/Token';
 import { MissableExpression } from '../Expression/Expression';
-import { isNode } from '../Node';
+import { isNode, Node } from '../Node';
 import { NodeKind } from '../NodeKind';
 import { Statement } from './Statement';
 
@@ -13,8 +13,8 @@ export class IfStatement extends Statement {
         'thenKeyword',
         'isSingleLine',
         'statements',
-        'elseIfStatements',
-        'elseStatement',
+        'elseIfClauses',
+        'elseClause',
         'endKeyword',
         'endIfKeyword',
         'terminator',
@@ -27,8 +27,8 @@ export class IfStatement extends Statement {
     thenKeyword?: ThenKeywordToken = undefined;
     isSingleLine: boolean = false;
     statements: ParseContextElementArray<IfStatement['kind']> = undefined!;
-    elseIfStatements?: ParseContextElementSequence<ParseContextKind.ElseIfStatementList> = undefined;
-    elseStatement?: ElseStatement = undefined;
+    elseIfClauses?: ParseContextElementSequence<ParseContextKind.ElseIfClauseList> = undefined;
+    elseClause?: ElseClause = undefined;
     endKeyword?: MissableToken<EndIfKeywordToken | EndKeywordToken> = undefined;
     endIfKeyword?: IfKeywordToken = undefined;
 
@@ -42,8 +42,8 @@ export class IfStatement extends Statement {
         }
 
         if (this.isSingleLine) {
-            if (this.elseStatement) {
-                return this.elseStatement.lastToken;
+            if (this.elseClause) {
+                return this.elseClause.lastToken;
             }
 
             // TODO: `parseList` should guarantee a statement for single line If statements.
@@ -75,8 +75,8 @@ export class IfStatement extends Statement {
     }
 }
 
-export class ElseIfStatement extends Statement {
-    static CHILD_NAMES: (keyof ElseIfStatement)[] = [
+export class ElseIfClause extends Node {
+    static CHILD_NAMES: (keyof ElseIfClause)[] = [
         'elseIfKeyword',
         'ifKeyword',
         'expression',
@@ -84,13 +84,13 @@ export class ElseIfStatement extends Statement {
         'statements',
     ];
 
-    readonly kind = NodeKind.ElseIfStatement;
+    readonly kind = NodeKind.ElseIfClause;
 
     elseIfKeyword: ElseIfKeywordToken | ElseKeywordToken = undefined!;
     ifKeyword?: IfKeywordToken = undefined;
     expression: MissableExpression = undefined!;
     thenKeyword?: ThenKeywordToken = undefined;
-    statements: ParseContextElementArray<ElseIfStatement['kind']> = undefined!;
+    statements: ParseContextElementArray<ElseIfClause['kind']> = undefined!;
 
     get firstToken() {
         return this.elseIfKeyword;
@@ -118,16 +118,16 @@ export class ElseIfStatement extends Statement {
     }
 }
 
-export class ElseStatement extends Statement {
-    static CHILD_NAMES: (keyof ElseStatement)[] = [
+export class ElseClause extends Node {
+    static CHILD_NAMES: (keyof ElseClause)[] = [
         'elseKeyword',
         'statements',
     ];
 
-    readonly kind = NodeKind.ElseStatement;
+    readonly kind = NodeKind.ElseClause;
 
     elseKeyword: ElseKeywordToken = undefined!;
-    statements: ParseContextElementArray<ElseStatement['kind']> = undefined!;
+    statements: ParseContextElementArray<ElseClause['kind']> = undefined!;
 
     get firstToken() {
         return this.elseKeyword;

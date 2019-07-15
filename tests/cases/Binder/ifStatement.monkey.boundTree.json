@@ -61,9 +61,9 @@
                             }
                         }
                     ],
-                    "elseIfStatements": [
+                    "elseIfClauses": [
                         {
-                            "kind": "ElseIfStatement",
+                            "kind": "ElseIfClause",
                             "expression": {
                                 "kind": "NullExpression",
                                 "type": "Null"
@@ -88,8 +88,8 @@
                             ]
                         }
                     ],
-                    "elseStatement": {
-                        "kind": "ElseStatement",
+                    "elseClause": {
+                        "kind": "ElseClause",
                         "statements": [
                             {
                                 "kind": "ExpressionStatement",

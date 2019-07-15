@@ -26,7 +26,7 @@ import { NodeKind } from '../Syntax/Node/NodeKind';
 import { DataDeclarationSequenceStatement } from '../Syntax/Node/Statement/DataDeclarationSequenceStatement';
 import { ExpressionStatement } from '../Syntax/Node/Statement/ExpressionStatement';
 import { ForLoop } from '../Syntax/Node/Statement/ForLoop';
-import { ElseIfStatement, ElseStatement, IfStatement } from '../Syntax/Node/Statement/IfStatement';
+import { ElseClause, ElseIfClause, IfStatement } from '../Syntax/Node/Statement/IfStatement';
 import { RepeatLoop } from '../Syntax/Node/Statement/RepeatLoop';
 import { ReturnStatement } from '../Syntax/Node/Statement/ReturnStatement';
 import { CaseStatement, DefaultStatement, SelectStatement } from '../Syntax/Node/Statement/SelectStatement';
@@ -73,7 +73,7 @@ import { BoundDataDeclarationStatement } from './Node/Statement/BoundDataDeclara
 import { BoundExitStatement } from './Node/Statement/BoundExitStatement';
 import { BoundExpressionStatement } from './Node/Statement/BoundExpressionStatement';
 import { BoundForLoop } from './Node/Statement/BoundForLoop';
-import { BoundElseIfStatement, BoundElseStatement, BoundIfStatement } from './Node/Statement/BoundIfStatement';
+import { BoundElseClause, BoundElseIfClause, BoundIfStatement } from './Node/Statement/BoundIfStatement';
 import { BoundRepeatLoop } from './Node/Statement/BoundRepeatLoop';
 import { BoundReturnStatement } from './Node/Statement/BoundReturnStatement';
 import { BoundCaseStatement, BoundDefaultStatement, BoundSelectStatement } from './Node/Statement/BoundSelectStatement';
@@ -486,8 +486,6 @@ export class Binder {
                     break;
                 }
 
-                case NodeKind.ElseIfStatement:
-                case NodeKind.ElseStatement:
                 case NodeKind.CaseStatement:
                 case NodeKind.DefaultStatement:
                 case NodeKind.CatchStatement:
@@ -547,8 +545,6 @@ export class Binder {
             case NodeKind.ExitStatement: {
                 return this.bindExitStatement(parent);
             }
-            case NodeKind.ElseIfStatement:
-            case NodeKind.ElseStatement:
             case NodeKind.CaseStatement:
             case NodeKind.DefaultStatement:
             case NodeKind.CatchStatement:
@@ -643,52 +639,52 @@ export class Binder {
         boundIfStatement.expression = this.bindExpression(ifStatement.expression, boundIfStatement);
         boundIfStatement.statements = this.bindStatements(ifStatement.statements, boundIfStatement);
 
-        if (ifStatement.elseIfStatements) {
-            boundIfStatement.elseIfStatements = this.bindElseIfStatements(ifStatement.elseIfStatements, boundIfStatement);
+        if (ifStatement.elseIfClauses) {
+            boundIfStatement.elseIfClauses = this.bindElseIfClauses(ifStatement.elseIfClauses, boundIfStatement);
         }
 
-        if (ifStatement.elseStatement) {
-            boundIfStatement.elseStatement = this.bindElseStatement(ifStatement.elseStatement, boundIfStatement);
+        if (ifStatement.elseClause) {
+            boundIfStatement.elseClause = this.bindElseClause(ifStatement.elseClause, boundIfStatement);
         }
 
         return boundIfStatement;
     }
 
-    private bindElseIfStatements(
-        elseIfStatements: ElseIfStatement[],
+    private bindElseIfClauses(
+        elseIfClauses: ElseIfClause[],
         parent: BoundIfStatement,
-    ): BoundElseIfStatement[] {
-        const boundElseIfStatements: BoundElseIfStatement[] = [];
+    ): BoundElseIfClause[] {
+        const boundElseIfClauses: BoundElseIfClause[] = [];
 
-        for (const elseifStatement of elseIfStatements) {
-            const boundElseIfStatement = this.bindElseIfStatement(elseifStatement, parent);
-            boundElseIfStatements.push(boundElseIfStatement);
+        for (const elseifClause of elseIfClauses) {
+            const boundElseIfClause = this.bindElseIfClause(elseifClause, parent);
+            boundElseIfClauses.push(boundElseIfClause);
         }
 
-        return boundElseIfStatements;
+        return boundElseIfClauses;
     }
 
-    private bindElseIfStatement(
-        elseifStatement: ElseIfStatement,
+    private bindElseIfClause(
+        elseifClause: ElseIfClause,
         parent: BoundIfStatement,
-    ): BoundElseIfStatement {
-        const boundElseIfStatement = new BoundElseIfStatement();
-        boundElseIfStatement.parent = parent;
-        boundElseIfStatement.expression = this.bindExpression(elseifStatement.expression, boundElseIfStatement);
-        boundElseIfStatement.statements = this.bindStatements(elseifStatement.statements, boundElseIfStatement);
+    ): BoundElseIfClause {
+        const boundElseIfClause = new BoundElseIfClause();
+        boundElseIfClause.parent = parent;
+        boundElseIfClause.expression = this.bindExpression(elseifClause.expression, boundElseIfClause);
+        boundElseIfClause.statements = this.bindStatements(elseifClause.statements, boundElseIfClause);
 
-        return boundElseIfStatement;
+        return boundElseIfClause;
     }
 
-    private bindElseStatement(
-        elseStatement: ElseStatement,
+    private bindElseClause(
+        elseClause: ElseClause,
         parent: BoundIfStatement,
-    ): BoundElseStatement {
-        const boundElseStatement = new BoundElseStatement();
-        boundElseStatement.parent = parent;
-        boundElseStatement.statements = this.bindStatements(elseStatement.statements, boundElseStatement);
+    ): BoundElseClause {
+        const boundElseClause = new BoundElseClause();
+        boundElseClause.parent = parent;
+        boundElseClause.statements = this.bindStatements(elseClause.statements, boundElseClause);
 
-        return boundElseStatement;
+        return boundElseClause;
     }
 
     // #endregion

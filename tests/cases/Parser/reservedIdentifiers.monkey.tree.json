@@ -2992,7 +2992,7 @@
                             }
                         }
                     ],
-                    "elseIfStatements": [],
+                    "elseIfClauses": [],
                     "endKeyword": {
                         "kind": "EndKeyword",
                         "fullStart": 1499,
@@ -3086,7 +3086,7 @@
                             }
                         }
                     ],
-                    "elseIfStatements": [],
+                    "elseIfClauses": [],
                     "endKeyword": {
                         "kind": "EndKeyword",
                         "fullStart": 1531,
@@ -3171,7 +3171,7 @@
                             }
                         }
                     ],
-                    "elseIfStatements": [],
+                    "elseIfClauses": [],
                     "endKeyword": {
                         "kind": "EndKeyword",
                         "fullStart": 1563,
@@ -3265,7 +3265,7 @@
                             }
                         }
                     ],
-                    "elseIfStatements": [],
+                    "elseIfClauses": [],
                     "endKeyword": {
                         "kind": "EndKeyword",
                         "fullStart": 1596,
