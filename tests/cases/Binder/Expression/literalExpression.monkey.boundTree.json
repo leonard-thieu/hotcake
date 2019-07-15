@@ -1,6 +1,6 @@
 {
     "kind": "ModuleDeclaration",
-    "identifier": "literal",
+    "identifier": "literalExpression",
     "locals": [
         "BoxBool",
         "BoxInt",
