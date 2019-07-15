@@ -1712,20 +1712,21 @@ export class Binder {
 
         switch (typeAnnotation.kind) {
             case NodeKind.ShorthandTypeAnnotation: {
-                // TODO: Nested array annotations
                 const { arrayTypeAnnotations, shorthandType } = typeAnnotation;
-                if (arrayTypeAnnotations.length) {
-                    let elementType: Types;
-                    if (!shorthandType) {
-                        elementType = IntType.type;
-                    } else {
-                        elementType = this.bindShorthandType(shorthandType);
-                    }
 
-                    return new ArrayType(elementType);
+                let type: Types;
+
+                if (!shorthandType) {
+                    type = IntType.type;
                 } else {
-                    return this.bindShorthandType(shorthandType!);
+                    type = this.bindShorthandType(shorthandType);
                 }
+
+                for (const { } of arrayTypeAnnotations) {
+                    type = new ArrayType(type);
+                }
+
+                return type;
             }
             case NodeKind.LonghandTypeAnnotation: {
                 return this.bindTypeReference(typeAnnotation.typeReference);
