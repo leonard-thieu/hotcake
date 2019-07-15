@@ -17,21 +17,21 @@ import { BoundSuperExpression } from './BoundSuperExpression';
 import { BoundUnaryExpression } from './BoundUnaryExpression';
 
 export type BoundExpressions =
-    BoundArrayLiteralExpression |
     BoundAssignmentExpression |
     BoundBinaryExpression |
-    BoundBooleanLiteralExpression |
-    BoundFloatLiteralExpression |
-    BoundGroupingExpression |
-    BoundIdentifierExpression |
-    BoundIndexExpression |
-    BoundIntegerLiteralExpression |
-    BoundInvokeExpression |
+    BoundUnaryExpression |
     BoundNewExpression |
     BoundNullExpression |
+    BoundBooleanLiteralExpression |
     BoundSelfExpression |
-    BoundSliceExpression |
-    BoundStringLiteralExpression |
     BoundSuperExpression |
-    BoundUnaryExpression
+    BoundStringLiteralExpression |
+    BoundFloatLiteralExpression |
+    BoundIntegerLiteralExpression |
+    BoundArrayLiteralExpression |
+    BoundIdentifierExpression |
+    BoundGroupingExpression |
+    BoundIndexExpression |
+    BoundSliceExpression |
+    BoundInvokeExpression
     ;

@@ -17,7 +17,7 @@ export class BoundModuleDeclaration extends BoundNode {
 
 export type BoundModuleDeclarationMember =
     BoundDataDeclaration |
+    BoundFunctionDeclaration |
     BoundInterfaceDeclaration |
-    BoundClassDeclaration |
-    BoundFunctionDeclaration
+    BoundClassDeclaration
     ;

@@ -8,10 +8,10 @@ import { BoundModuleDeclaration } from './BoundModuleDeclaration';
 
 export type BoundDeclarations =
     BoundModuleDeclaration |
+    BoundDataDeclaration |
+    BoundFunctionDeclaration |
     BoundInterfaceDeclaration |
     BoundInterfaceMethodDeclaration |
     BoundClassDeclaration |
-    BoundClassMethodDeclaration |
-    BoundFunctionDeclaration |
-    BoundDataDeclaration
+    BoundClassMethodDeclaration
     ;
