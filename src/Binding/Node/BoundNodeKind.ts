@@ -2,6 +2,7 @@ export enum BoundNodeKind {
     ModuleDeclaration = 'ModuleDeclaration',
 
     ExternDataDeclaration = 'ExternDataDeclaration',
+    ExternFunctionDeclaration = 'ExternFunctionDeclaration',
 
     DataDeclaration = 'DataDeclaration',
     FunctionDeclaration = 'FunctionDeclaration',

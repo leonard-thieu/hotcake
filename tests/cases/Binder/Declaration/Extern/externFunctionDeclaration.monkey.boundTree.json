@@ -1,0 +1,44 @@
+{
+    "kind": "ModuleDeclaration",
+    "identifier": "externFunctionDeclaration",
+    "locals": [
+        "ReadFile",
+        "WriteFile"
+    ],
+    "members": [
+        {
+            "kind": "ExternFunctionDeclaration",
+            "identifier": "ReadFile",
+            "locals": [
+                "filePath"
+            ],
+            "returnType": "Int[]",
+            "parameters": [
+                {
+                    "kind": "DataDeclaration",
+                    "identifier": "filePath",
+                    "type": "String"
+                }
+            ]
+        },
+        {
+            "kind": "ExternFunctionDeclaration",
+            "identifier": "WriteFile",
+            "locals": [
+                "filePath"
+            ],
+            "returnType": "Void",
+            "parameters": [
+                {
+                    "kind": "DataDeclaration",
+                    "identifier": "filePath",
+                    "type": "String"
+                }
+            ],
+            "nativeSymbol": {
+                "kind": "StringLiteralExpression",
+                "type": "String"
+            }
+        }
+    ]
+}

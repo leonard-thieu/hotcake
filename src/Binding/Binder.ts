@@ -8,6 +8,7 @@ import { ClassMethodDeclaration } from '../Syntax/Node/Declaration/ClassMethodDe
 import { DataDeclaration, DataDeclarationKeywordToken, DataDeclarationSequence } from '../Syntax/Node/Declaration/DataDeclarationSequence';
 import { Declarations } from '../Syntax/Node/Declaration/Declaration';
 import { ExternDataDeclaration, ExternDataDeclarationKeywordToken, ExternDataDeclarationSequence } from '../Syntax/Node/Declaration/ExternDeclaration/ExternDataDeclarationSequence';
+import { ExternFunctionDeclaration } from '../Syntax/Node/Declaration/ExternDeclaration/ExternFunctionDeclaration';
 import { FunctionDeclaration } from '../Syntax/Node/Declaration/FunctionDeclaration';
 import { InterfaceDeclaration } from '../Syntax/Node/Declaration/InterfaceDeclaration';
 import { InterfaceMethodDeclaration } from '../Syntax/Node/Declaration/InterfaceMethodDeclaration';
@@ -53,6 +54,7 @@ import { BoundInterfaceDeclaration, BoundInterfaceDeclarationMember } from './No
 import { BoundInterfaceMethodDeclaration } from './Node/Declaration/BoundInterfaceMethodDeclaration';
 import { BoundModuleDeclaration, BoundModuleDeclarationMember } from './Node/Declaration/BoundModuleDeclaration';
 import { BoundExternDataDeclaration } from './Node/Declaration/Extern/BoundExternDataDeclaration';
+import { BoundExternFunctionDeclaration } from './Node/Declaration/Extern/BoundExternFunctionDeclaration';
 import { BoundArrayLiteralExpression } from './Node/Expression/BoundArrayLiteralExpression';
 import { BoundAssignmentExpression } from './Node/Expression/BoundAssignmentExpression';
 import { BoundBinaryExpression } from './Node/Expression/BoundBinaryExpression';
@@ -149,7 +151,6 @@ export class Binder {
 
         for (const member of moduleDeclaration.members) {
             switch (member.kind) {
-                case NodeKind.ExternFunctionDeclaration:
                 case NodeKind.ExternClassDeclaration: {
                     throw new Error('Method not implemented.');
                 }
@@ -160,6 +161,11 @@ export class Binder {
                 case NodeKind.ExternDataDeclarationSequence: {
                     const boundExternDataDeclarations = this.bindExternDataDeclarationSequence(member, parent);
                     boundMembers.push(...boundExternDataDeclarations);
+                    break;
+                }
+                case NodeKind.ExternFunctionDeclaration: {
+                    const boundExternFunctionDeclaration = this.bindExternFunctionDeclaration(member, parent);
+                    boundMembers.push(boundExternFunctionDeclaration);
                     break;
                 }
                 case NodeKind.DataDeclarationSequence: {
@@ -287,6 +293,27 @@ export class Binder {
         }
 
         return boundExternDataDeclaration;
+    }
+
+    // #endregion
+
+    // #region Extern function declaration
+
+    private bindExternFunctionDeclaration(
+        externFunctionDeclaration: ExternFunctionDeclaration,
+        parent: BoundModuleDeclaration,
+    ): BoundExternFunctionDeclaration {
+        const boundExternFunctionDeclaration = new BoundExternFunctionDeclaration();
+        boundExternFunctionDeclaration.parent = parent;
+        boundExternFunctionDeclaration.locals = new BoundSymbolTable();
+        boundExternFunctionDeclaration.identifier = this.declareSymbol(externFunctionDeclaration, boundExternFunctionDeclaration);
+        boundExternFunctionDeclaration.returnType = this.bindTypeAnnotation(externFunctionDeclaration.returnType);
+        boundExternFunctionDeclaration.parameters = this.bindDataDeclarationSequence(externFunctionDeclaration.parameters, boundExternFunctionDeclaration);
+        if (externFunctionDeclaration.nativeSymbol) {
+            boundExternFunctionDeclaration.nativeSymbol = this.bindStringLiteralExpression(boundExternFunctionDeclaration);
+        }
+
+        return boundExternFunctionDeclaration;
     }
 
     // #endregion
@@ -1521,6 +1548,7 @@ export class Binder {
                     }
 
                     case BoundNodeKind.ModuleDeclaration:
+                    case BoundNodeKind.ExternFunctionDeclaration:
                     case BoundNodeKind.FunctionDeclaration:
                     case BoundNodeKind.InterfaceMethodDeclaration:
                     case BoundNodeKind.ClassMethodDeclaration: {
@@ -1988,6 +2016,7 @@ export class Binder {
 
             switch (ancestor.kind) {
                 case BoundNodeKind.ModuleDeclaration:
+                case BoundNodeKind.ExternFunctionDeclaration:
                 case BoundNodeKind.FunctionDeclaration:
                 case BoundNodeKind.InterfaceDeclaration:
                 case BoundNodeKind.InterfaceMethodDeclaration:
