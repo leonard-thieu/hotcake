@@ -1607,29 +1607,9 @@ export class Binder {
         boundInvokeExpression.parent = parent;
         boundInvokeExpression.invokableExpression = this.bindExpression(expression.invokableExpression, boundInvokeExpression);
         boundInvokeExpression.type = boundInvokeExpression.invokableExpression.type;
-        boundInvokeExpression.arguments = this.bindArguments(expression, boundInvokeExpression);
+        boundInvokeExpression.arguments = this.bindExpressionSequence(expression.arguments, boundInvokeExpression);
 
         return boundInvokeExpression;
-    }
-
-    private bindArguments(
-        expression: InvokeExpression,
-        parent: BoundInvokeExpression,
-    ): BoundExpressions[] {
-        const boundArguments: BoundExpressions[] = [];
-
-        for (const argument of expression.arguments) {
-            switch (argument.kind) {
-                case NodeKind.CommaSeparator: { break; }
-                default: {
-                    const boundArgument = this.bindExpression(argument, parent);
-                    boundArguments.push(boundArgument);
-                    break;
-                }
-            }
-        }
-
-        return boundArguments;
     }
 
     // #endregion
