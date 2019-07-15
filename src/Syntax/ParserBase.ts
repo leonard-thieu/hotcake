@@ -443,22 +443,6 @@ export abstract class ParserBase {
         return superExpression;
     }
 
-    protected parseIntegerLiteralExpression(parent: Nodes, value: IntegerLiteralToken): IntegerLiteralExpression {
-        const integerLiteralExpression = new IntegerLiteralExpression();
-        integerLiteralExpression.parent = parent;
-        integerLiteralExpression.value = value;
-
-        return integerLiteralExpression;
-    }
-
-    protected parseFloatLiteralExpression(parent: Nodes, value: FloatLiteralToken): FloatLiteralExpression {
-        const floatLiteralExpression = new FloatLiteralExpression();
-        floatLiteralExpression.parent = parent;
-        floatLiteralExpression.value = value;
-
-        return floatLiteralExpression;
-    }
-
     // #region String literal expression
 
     protected parseMissableStringLiteralExpression(parent: Nodes): MissableStringLiteralExpression {
@@ -555,6 +539,22 @@ export abstract class ParserBase {
     // #endregion
 
     // #endregion
+
+    protected parseFloatLiteralExpression(parent: Nodes, value: FloatLiteralToken): FloatLiteralExpression {
+        const floatLiteralExpression = new FloatLiteralExpression();
+        floatLiteralExpression.parent = parent;
+        floatLiteralExpression.value = value;
+
+        return floatLiteralExpression;
+    }
+
+    protected parseIntegerLiteralExpression(parent: Nodes, value: IntegerLiteralToken): IntegerLiteralExpression {
+        const integerLiteralExpression = new IntegerLiteralExpression();
+        integerLiteralExpression.parent = parent;
+        integerLiteralExpression.value = value;
+
+        return integerLiteralExpression;
+    }
 
     protected parseArrayLiteralExpression(parent: Nodes, openingSquareBracket: OpeningSquareBracketToken): ArrayLiteralExpression {
         const arrayLiteralExpression = new ArrayLiteralExpression();
