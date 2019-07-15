@@ -15,8 +15,8 @@ export class Tokenizer {
 
     getTokens(
         preprocessorModuleDeclaration: PreprocessorModuleDeclaration,
-        configVars: ConfigurationVariables
-    ) {
+        configVars: ConfigurationVariables,
+    ): Tokens[] {
         this.document = preprocessorModuleDeclaration.document;
         this.configVars = createConfigurationVariableMap(configVars);
         this.tokens = [];
@@ -28,7 +28,7 @@ export class Tokenizer {
     }
 
     // TODO: Ensure operator semantics and implicit type conversions match Monkey X behavior.
-    private readMembers(members: ParseContextElementSequence<PreprocessorModuleDeclaration['kind']>) {
+    private readMembers(members: ParseContextElementSequence<PreprocessorModuleDeclaration['kind']>): void {
         for (const member of members) {
             switch (member.kind) {
                 case NodeKind.IfDirective: {
@@ -306,7 +306,7 @@ export interface ConfigurationVariables {
     [key: string]: any;
 }
 
-function createConfigurationVariableMap(configVars: ConfigurationVariables) {
+function createConfigurationVariableMap(configVars: ConfigurationVariables): Map<string, any> {
     const configVarMap = new Map<string, any>(Object.entries(configVars));
     const mapGet = configVarMap.get.bind(configVarMap);
     configVarMap.get = function get(key: string) {

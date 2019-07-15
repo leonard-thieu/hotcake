@@ -95,7 +95,7 @@ export class Binder {
     private document: string = undefined!;
     private module: BoundModuleDeclaration = undefined!;
 
-    bind(moduleDeclaration: ModuleDeclaration) {
+    bind(moduleDeclaration: ModuleDeclaration): BoundModuleDeclaration {
         this.document = moduleDeclaration.document;
 
         return this.bindModuleDeclaration(moduleDeclaration);
@@ -103,7 +103,7 @@ export class Binder {
 
     // #region Declarations
 
-    private bindModuleDeclaration(moduleDeclaration: ModuleDeclaration) {
+    private bindModuleDeclaration(moduleDeclaration: ModuleDeclaration): BoundModuleDeclaration {
         const boundModuleDeclaration = new BoundModuleDeclaration();
         this.module = boundModuleDeclaration;
         boundModuleDeclaration.identifier = this.declareSymbol(moduleDeclaration, boundModuleDeclaration);
@@ -139,7 +139,7 @@ export class Binder {
     private bindModuleDeclarationMembers(
         moduleDeclaration: ModuleDeclaration,
         parent: BoundModuleDeclaration,
-    ) {
+    ): BoundModuleDeclarationMember[] {
         const boundMembers: BoundModuleDeclarationMember[] = [];
 
         for (const member of moduleDeclaration.members) {
@@ -203,7 +203,7 @@ export class Binder {
     private bindInterfaceDeclaration(
         interfaceDeclaration: InterfaceDeclaration,
         parent: BoundModuleDeclaration,
-    ) {
+    ): BoundInterfaceDeclaration {
         const boundInterfaceDeclaration = new BoundInterfaceDeclaration();
         boundInterfaceDeclaration.parent = parent;
         boundInterfaceDeclaration.identifier = this.declareSymbol(interfaceDeclaration, boundInterfaceDeclaration);
@@ -220,7 +220,7 @@ export class Binder {
     private bindInterfaceDeclarationMembers(
         interfaceDeclaration: InterfaceDeclaration,
         boundInterfaceDeclaration: BoundInterfaceDeclaration,
-    ) {
+    ): BoundInterfaceDeclarationMember[] {
         const boundMembers: BoundInterfaceDeclarationMember[] = [];
 
         for (const member of interfaceDeclaration.members) {
@@ -251,7 +251,7 @@ export class Binder {
     private bindInterfaceMethodDeclaration(
         interfaceMethodDeclaration: InterfaceMethodDeclaration,
         parent: BoundInterfaceDeclaration,
-    ) {
+    ): BoundInterfaceMethodDeclaration {
         const boundInterfaceMethodDeclaration = new BoundInterfaceMethodDeclaration();
         boundInterfaceMethodDeclaration.parent = parent;
         boundInterfaceMethodDeclaration.identifier = this.declareSymbol(interfaceMethodDeclaration, boundInterfaceMethodDeclaration);
@@ -265,7 +265,7 @@ export class Binder {
     private bindClassDeclaration(
         classDeclaration: ClassDeclaration,
         parent: BoundModuleDeclaration,
-    ) {
+    ): BoundClassDeclaration {
         const boundClassDeclaration = new BoundClassDeclaration();
         boundClassDeclaration.parent = parent;
         boundClassDeclaration.identifier = this.declareSymbol(classDeclaration, boundClassDeclaration);
@@ -286,7 +286,7 @@ export class Binder {
     private bindClassDeclarationMembers(
         classDeclaration: ClassDeclaration,
         parent: BoundClassDeclaration,
-    ) {
+    ): BoundClassDeclarationMember[] {
         const boundMembers: BoundClassDeclarationMember[] = [];
 
         for (const member of classDeclaration.members) {
@@ -326,7 +326,7 @@ export class Binder {
     private bindClassMethodDeclaration(
         classMethodDeclaration: ClassMethodDeclaration,
         parent: BoundClassDeclaration,
-    ) {
+    ): BoundClassMethodDeclaration {
         const boundClassMethodDeclaration = new BoundClassMethodDeclaration();
         boundClassMethodDeclaration.parent = parent;
         boundClassMethodDeclaration.identifier = this.declareSymbol(classMethodDeclaration, boundClassMethodDeclaration);
@@ -343,7 +343,7 @@ export class Binder {
     private bindFunctionDeclaration(
         functionDeclaration: FunctionDeclaration,
         parent: BoundNodes,
-    ) {
+    ): BoundFunctionDeclaration {
         const boundFunctionDeclaration = new BoundFunctionDeclaration();
         boundFunctionDeclaration.parent = parent;
         boundFunctionDeclaration.identifier = this.declareSymbol(functionDeclaration, boundFunctionDeclaration);
@@ -358,7 +358,7 @@ export class Binder {
     private bindDataDeclarationSequence(
         dataDeclarationSequence: DataDeclarationSequence,
         parent: BoundNodes,
-    ) {
+    ): BoundDataDeclaration[] {
         const boundDataDeclarations: BoundDataDeclaration[] = [];
 
         for (const dataDeclaration of dataDeclarationSequence.children) {
@@ -383,7 +383,7 @@ export class Binder {
         dataDeclaration: DataDeclaration,
         parent: BoundNodes,
         dataDeclarationKeyword?: DataDeclarationKeywordToken,
-    ) {
+    ): BoundDataDeclaration {
         const boundDataDeclaration = new BoundDataDeclaration();
         boundDataDeclaration.parent = parent;
 
@@ -422,7 +422,7 @@ export class Binder {
     private bindStatements(
         statements: (Statements | SkippedToken<TokenKinds>)[],
         parent: BoundNodes,
-    ) {
+    ): BoundStatements[] {
         const boundStatements: BoundStatements[] = [];
 
         for (const statement of statements) {
@@ -525,14 +525,14 @@ export class Binder {
         }
     }
 
-    private bindExitStatement(parent: BoundNodes) {
+    private bindExitStatement(parent: BoundNodes): BoundExitStatement {
         const boundExitStatement = new BoundExitStatement();
         boundExitStatement.parent = parent;
 
         return boundExitStatement;
     }
 
-    private bindContinueStatement(parent: BoundNodes) {
+    private bindContinueStatement(parent: BoundNodes): BoundContinueStatement {
         const boundContinueStatement = new BoundContinueStatement();
         boundContinueStatement.parent = parent;
 
@@ -542,7 +542,7 @@ export class Binder {
     private bindThrowStatement(
         throwStatement: ThrowStatement,
         parent: BoundNodes,
-    ) {
+    ): BoundThrowStatement {
         const boundThrowStatement = new BoundThrowStatement();
         boundThrowStatement.parent = parent;
         boundThrowStatement.expression = this.bindExpression(throwStatement.expression, boundThrowStatement);
@@ -553,7 +553,7 @@ export class Binder {
     private bindRepeatLoop(
         repeatLoop: RepeatLoop,
         parent: BoundNodes,
-    ) {
+    ): BoundRepeatLoop {
         const boundRepeatLoop = new BoundRepeatLoop();
         boundRepeatLoop.parent = parent;
         if (repeatLoop.untilExpression) {
@@ -567,7 +567,7 @@ export class Binder {
     private bindWhileLoop(
         whileLoop: WhileLoop,
         parent: BoundNodes,
-    ) {
+    ): BoundWhileLoop {
         const boundWhileLoop = new BoundWhileLoop();
         boundWhileLoop.parent = parent;
         boundWhileLoop.expression = this.bindExpression(whileLoop.expression, boundWhileLoop);
@@ -579,7 +579,7 @@ export class Binder {
     private bindDataDeclarationSequenceStatement(
         dataDeclarationSequenceStatement: DataDeclarationSequenceStatement,
         parent: BoundNodes,
-    ) {
+    ): BoundDataDeclarationStatement[] {
         const { dataDeclarationSequence } = dataDeclarationSequenceStatement;
 
         const boundDataDeclarationStatements: BoundDataDeclarationStatement[] = [];
@@ -606,7 +606,7 @@ export class Binder {
         dataDeclaration: DataDeclaration,
         parent: BoundNodes,
         dataDeclarationKeyword?: DataDeclarationKeywordToken,
-    ) {
+    ): BoundDataDeclarationStatement {
         const boundDataDeclarationStatement = new BoundDataDeclarationStatement();
         boundDataDeclarationStatement.parent = parent;
         boundDataDeclarationStatement.declaration = this.bindDataDeclaration(dataDeclaration, boundDataDeclarationStatement, dataDeclarationKeyword);
@@ -617,7 +617,7 @@ export class Binder {
     private bindReturnStatement(
         statement: ReturnStatement,
         parent: BoundNodes,
-    ) {
+    ): BoundReturnStatement {
         const boundReturnStatement = new BoundReturnStatement();
         boundReturnStatement.parent = parent;
         if (statement.expression) {
@@ -642,7 +642,7 @@ export class Binder {
     private bindIfStatement(
         ifStatement: IfStatement,
         parent: BoundNodes,
-    ) {
+    ): BoundIfStatement {
         const boundIfStatement = new BoundIfStatement();
         boundIfStatement.parent = parent;
         boundIfStatement.expression = this.bindExpression(ifStatement.expression, boundIfStatement);
@@ -662,7 +662,7 @@ export class Binder {
     private bindElseIfStatements(
         elseIfStatements: ElseIfStatement[],
         parent: BoundIfStatement,
-    ) {
+    ): BoundElseIfStatement[] {
         const boundElseIfStatements: BoundElseIfStatement[] = [];
 
         for (const elseifStatement of elseIfStatements) {
@@ -676,7 +676,7 @@ export class Binder {
     private bindElseIfStatement(
         elseifStatement: ElseIfStatement,
         parent: BoundIfStatement,
-    ) {
+    ): BoundElseIfStatement {
         const boundElseIfStatement = new BoundElseIfStatement();
         boundElseIfStatement.parent = parent;
         boundElseIfStatement.expression = this.bindExpression(elseifStatement.expression, boundElseIfStatement);
@@ -688,7 +688,7 @@ export class Binder {
     private bindElseStatement(
         elseStatement: ElseStatement,
         parent: BoundIfStatement,
-    ) {
+    ): BoundElseStatement {
         const boundElseStatement = new BoundElseStatement();
         boundElseStatement.parent = parent;
         boundElseStatement.statements = this.bindStatements(elseStatement.statements, boundElseStatement);
@@ -699,7 +699,7 @@ export class Binder {
     private bindSelectStatement(
         selectStatement: SelectStatement,
         parent: BoundNodes,
-    ) {
+    ): BoundSelectStatement {
         const boundSelectStatement = new BoundSelectStatement();
         boundSelectStatement.parent = parent;
         boundSelectStatement.caseStatements = this.bindCaseStatements(selectStatement.caseStatements, boundSelectStatement);
@@ -713,7 +713,7 @@ export class Binder {
     private bindCaseStatements(
         caseStatements: CaseStatement[],
         parent: BoundSelectStatement,
-    ) {
+    ): BoundCaseStatement[] {
         const boundCaseStatements: BoundCaseStatement[] = [];
 
         for (const caseStatement of caseStatements) {
@@ -727,7 +727,7 @@ export class Binder {
     private bindCaseStatement(
         caseStatement: CaseStatement,
         parent: BoundSelectStatement,
-    ) {
+    ): BoundCaseStatement {
         const boundCaseStatement = new BoundCaseStatement();
         boundCaseStatement.parent = parent;
         boundCaseStatement.expressions = this.bindExpressionSequence(caseStatement.expressions, boundCaseStatement);
@@ -739,7 +739,7 @@ export class Binder {
     private bindDefaultStatement(
         defaultStatement: DefaultStatement,
         parent: BoundSelectStatement,
-    ) {
+    ): BoundDefaultStatement {
         const boundDefaultStatement = new BoundDefaultStatement();
         boundDefaultStatement.parent = parent;
         boundDefaultStatement.statements = this.bindStatements(defaultStatement.statements, boundDefaultStatement);
@@ -750,7 +750,7 @@ export class Binder {
     private bindForLoop(
         forLoop: ForLoop,
         parent: BoundNodes,
-    ) {
+    ): BoundForLoop {
         const boundForLoop = new BoundForLoop();
         boundForLoop.parent = parent;
 
@@ -810,7 +810,7 @@ export class Binder {
     private bindTryStatement(
         tryStatement: TryStatement,
         parent: BoundNodes,
-    ) {
+    ): BoundTryStatement {
         const boundTryStatement = new BoundTryStatement();
         boundTryStatement.parent = parent;
         boundTryStatement.statements = this.bindStatements(tryStatement.statements, boundTryStatement);
@@ -822,7 +822,7 @@ export class Binder {
     private bindCatchStatements(
         tryStatement: TryStatement,
         parent: BoundTryStatement,
-    ) {
+    ): BoundCatchStatement[] {
         const boundCatchStatements: BoundCatchStatement[] = [];
 
         for (const catchStatement of tryStatement.catchStatements) {
@@ -836,7 +836,7 @@ export class Binder {
     private bindCatchStatement(
         catchStatement: CatchStatement,
         parent: BoundTryStatement,
-    ) {
+    ): BoundCatchStatement {
         const boundCatchStatement = new BoundCatchStatement();
         boundCatchStatement.parent = parent;
 
@@ -855,7 +855,7 @@ export class Binder {
     private bindExpressionStatement(
         expressionStatement: ExpressionStatement,
         parent: BoundNodes,
-    ) {
+    ): BoundExpressionStatement {
         const boundExpressionStatement = new BoundExpressionStatement();
         boundExpressionStatement.parent = parent;
         boundExpressionStatement.expression = this.bindExpression(expressionStatement.expression, boundExpressionStatement);
@@ -939,7 +939,7 @@ export class Binder {
     private bindAssignmentExpression(
         assignmentExpression: AssignmentExpression,
         parent: BoundNodes,
-    ) {
+    ): BoundAssignmentExpression {
         const boundAssignmentExpression = new BoundAssignmentExpression();
         boundAssignmentExpression.parent = parent;
         boundAssignmentExpression.leftOperand = this.bindExpression(assignmentExpression.leftOperand, boundAssignmentExpression);
@@ -1027,7 +1027,7 @@ export class Binder {
     private bindGroupingExpression(
         groupingExpression: GroupingExpression,
         parent: BoundNodes,
-    ) {
+    ): BoundGroupingExpression {
         const boundGroupingExpression = new BoundGroupingExpression();
         boundGroupingExpression.parent = parent;
         boundGroupingExpression.expression = this.bindExpression(groupingExpression.expression, boundGroupingExpression);
@@ -1039,7 +1039,7 @@ export class Binder {
     private bindSliceExpression(
         sliceExpression: SliceExpression,
         parent: BoundNodes,
-    ) {
+    ): BoundSliceExpression {
         const boundSliceExpression = new BoundSliceExpression();
         boundSliceExpression.parent = parent;
 
@@ -1078,7 +1078,7 @@ export class Binder {
     private bindIndexExpression(
         indexExpression: IndexExpression,
         parent: BoundNodes,
-    ) {
+    ): BoundIndexExpression {
         const boundIndexExpression = new BoundIndexExpression();
         boundIndexExpression.parent = parent;
         boundIndexExpression.indexableExpression = this.bindExpression(indexExpression.indexableExpression, boundIndexExpression);
@@ -1110,7 +1110,7 @@ export class Binder {
     private bindArrayLiteralExpression(
         arrayLiteralExpression: ArrayLiteralExpression,
         parent: BoundNodes,
-    ) {
+    ): BoundArrayLiteralExpression {
         const boundArrayLiteralExpression = new BoundArrayLiteralExpression();
         boundArrayLiteralExpression.parent = parent;
         boundArrayLiteralExpression.expressions = this.bindExpressionSequence(arrayLiteralExpression.expressions, boundArrayLiteralExpression);
@@ -1131,7 +1131,7 @@ export class Binder {
     private bindExpressionSequence(
         expressions: (MissableExpression | CommaSeparator)[],
         parent: BoundNodes,
-    ) {
+    ): BoundExpressions[] {
         const boundExpressions: BoundExpressions[] = [];
 
         for (const expression of expressions) {
@@ -1174,7 +1174,7 @@ export class Binder {
         return boundExpressions;
     }
 
-    private bindSelfExpression(parent: BoundNodes) {
+    private bindSelfExpression(parent: BoundNodes): BoundSelfExpression {
         const boundSelfExpression = new BoundSelfExpression();
         boundSelfExpression.parent = parent;
 
@@ -1184,7 +1184,7 @@ export class Binder {
         return boundSelfExpression;
     }
 
-    private bindSuperExpression(parent: BoundNodes) {
+    private bindSuperExpression(parent: BoundNodes): BoundSuperExpression {
         const boundSuperExpression = new BoundSuperExpression();
         boundSuperExpression.parent = parent;
 
@@ -1200,7 +1200,7 @@ export class Binder {
     private bindNewExpression(
         newExpression: NewExpression,
         parent: BoundNodes,
-    ) {
+    ): BoundNewExpression {
         const boundNewExpression = new BoundNewExpression();
         boundNewExpression.type = this.bindTypeReference(newExpression.type);
         boundNewExpression.parent = parent;
@@ -1211,7 +1211,7 @@ export class Binder {
     private bindIdentifierExpression(
         identifierExpression: IdentifierExpression,
         parent: BoundNodes,
-    ) {
+    ): BoundIdentifierExpression {
         const boundIdentifierExpression = new BoundIdentifierExpression();
         boundIdentifierExpression.parent = parent;
 
@@ -1277,7 +1277,7 @@ export class Binder {
     private getSymbol(
         identifier: EscapeOptionalIdentifierNameToken,
         boundIdentifierExpression: BoundIdentifierExpression,
-    ) {
+    ): BoundSymbol {
         let identifierSymbol: BoundSymbol | undefined;
 
         const identifierText = identifier.getText(this.document);
@@ -1303,7 +1303,7 @@ export class Binder {
     private bindInvokeExpression(
         expression: InvokeExpression,
         parent: BoundNodes,
-    ) {
+    ): BoundInvokeExpression {
         const boundInvokeExpression = new BoundInvokeExpression();
         boundInvokeExpression.parent = parent;
         boundInvokeExpression.invokableExpression = this.bindExpression(expression.invokableExpression, boundInvokeExpression);
@@ -1316,7 +1316,7 @@ export class Binder {
     private bindArguments(
         expression: InvokeExpression,
         parent: BoundInvokeExpression,
-    ) {
+    ): BoundExpressions[] {
         const boundArguments: BoundExpressions[] = [];
 
         for (const argument of expression.arguments) {
@@ -1336,7 +1336,7 @@ export class Binder {
     private bindBinaryExpression(
         expression: BinaryExpression,
         parent: BoundNodes,
-    ) {
+    ): BoundBinaryExpression {
         const boundBinaryExpression = new BoundBinaryExpression();
         boundBinaryExpression.parent = parent;
         boundBinaryExpression.leftOperand = this.bindExpression(expression.leftOperand, boundBinaryExpression);
@@ -1438,7 +1438,7 @@ export class Binder {
         operatorKind: TokenKind,
         rightOperand: BoundExpressions,
     ) {
-        let balancedType = this.getBalancedType(leftOperand.type, rightOperand.type);
+        const balancedType = this.getBalancedType(leftOperand.type, rightOperand.type);
         if (!balancedType) {
             throw new Error(`'${operatorKind}' is not valid for '${leftOperand.kind}' and '${rightOperand.kind}'.`);
         }
@@ -1489,7 +1489,7 @@ export class Binder {
     private bindUnaryExpression(
         expression: UnaryExpression,
         parent: BoundNodes,
-    ) {
+    ): BoundUnaryExpression {
         const boundUnaryExpression = new BoundUnaryExpression();
         boundUnaryExpression.parent = parent;
         boundUnaryExpression.operand = this.bindExpression(expression.operand, boundUnaryExpression);
@@ -1536,35 +1536,35 @@ export class Binder {
         return boundUnaryExpression;
     }
 
-    private bindNullExpression(parent: BoundNodes) {
+    private bindNullExpression(parent: BoundNodes): BoundNullExpression {
         const boundNullExpression = new BoundNullExpression();
         boundNullExpression.parent = parent;
 
         return boundNullExpression;
     }
 
-    private bindBooleanLiteralExpression(parent: BoundNodes) {
+    private bindBooleanLiteralExpression(parent: BoundNodes): BoundBooleanLiteralExpression {
         const boundBooleanLiteralExpression = new BoundBooleanLiteralExpression();
         boundBooleanLiteralExpression.parent = parent;
 
         return boundBooleanLiteralExpression;
     }
 
-    private bindIntegerLiteralExpression(parent: BoundNodes) {
+    private bindIntegerLiteralExpression(parent: BoundNodes): BoundIntegerLiteralExpression {
         const boundIntegerLiteralExpression = new BoundIntegerLiteralExpression();
         boundIntegerLiteralExpression.parent = parent;
 
         return boundIntegerLiteralExpression;
     }
 
-    private bindFloatLiteralExpression(parent: BoundNodes) {
+    private bindFloatLiteralExpression(parent: BoundNodes): BoundFloatLiteralExpression {
         const boundFloatLiteralExpression = new BoundFloatLiteralExpression();
         boundFloatLiteralExpression.parent = parent;
 
         return boundFloatLiteralExpression;
     }
 
-    private bindStringLiteralExpression(parent: BoundNodes) {
+    private bindStringLiteralExpression(parent: BoundNodes): BoundStringLiteralExpression {
         const boundStringLiteralExpression = new BoundStringLiteralExpression();
         boundStringLiteralExpression.parent = parent;
 
@@ -1575,7 +1575,7 @@ export class Binder {
 
     // #region Core
 
-    private bindTypeReferenceSequence(typeReferences: (TypeReference | CommaSeparator)[]) {
+    private bindTypeReferenceSequence(typeReferences: (TypeReference | CommaSeparator)[]): Types[] {
         const types: Types[] = [];
 
         for (const typeReference of typeReferences) {
@@ -1759,7 +1759,7 @@ export class Binder {
         }
     }
 
-    private declareSymbol(declaration: Declarations, boundDeclaration: BoundDeclarations) {
+    private declareSymbol(declaration: Declarations, boundDeclaration: BoundDeclarations): BoundSymbol {
         const name = this.getDeclarationName(declaration);
         const identifier = new BoundSymbol(name, boundDeclaration);
 
@@ -1800,7 +1800,7 @@ export class Binder {
         }
     }
 
-    private getDeclarationName(declaration: Declarations) {
+    private getDeclarationName(declaration: Declarations): string {
         switch (declaration.kind) {
             case NodeKind.ModuleDeclaration: {
                 return path.basename(declaration.filePath, path.extname(declaration.filePath));
@@ -1831,7 +1831,7 @@ export class Binder {
         throw new Error(`Unexpected declaration: ${JSON.stringify(declaration.kind)}`);
     }
 
-    private getNearestAncestor(node: BoundNodes, kinds: BoundNodeKind[]) {
+    private getNearestAncestor(node: BoundNodes, kinds: BoundNodeKind[]): BoundNodes {
         let ancestor: BoundNodes | undefined = node;
 
         do {

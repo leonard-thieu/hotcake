@@ -38,7 +38,7 @@ import { ThrowStatement } from './Node/Statement/ThrowStatement';
 import { CatchStatement, TryStatement } from './Node/Statement/TryStatement';
 import { WhileLoop } from './Node/Statement/WhileLoop';
 import { LonghandTypeAnnotation, ShorthandTypeAnnotation, ShorthandTypeToken } from './Node/TypeAnnotation';
-import { ParseContext, ParseContextElementMapBase, ParseContextKind, ParserBase } from './ParserBase';
+import { ParseContextElementMapBase, ParseContextKind, ParserBase } from './ParserBase';
 import { MissableTokenKinds, MissingToken } from './Token/MissingToken';
 import { SkippedToken } from './Token/SkippedToken';
 import { AliasKeywordToken, CaseKeywordToken, CatchKeywordToken, ClassKeywordToken, ColonToken, ConstKeywordToken, ContinueKeywordToken, DefaultKeywordToken, ElseIfKeywordToken, ElseKeywordToken, ExitKeywordToken, ForKeywordToken, FriendKeywordToken, FunctionKeywordToken, IfKeywordToken, ImportKeywordToken, InterfaceKeywordToken, LocalKeywordToken, MethodKeywordToken, RepeatKeywordToken, ReturnKeywordToken, SelectKeywordToken, StrictKeywordToken, ThrowKeywordToken, Token, TokenKinds, Tokens, TryKeywordToken, WhileKeywordToken } from './Token/Token';
@@ -1237,7 +1237,7 @@ export class Parser extends ParserBase {
 
     private parseDataDeclarationSequenceStatement(
         parent: Nodes,
-        dataDeclarationKeyword: ConstKeywordToken | LocalKeywordToken
+        dataDeclarationKeyword: ConstKeywordToken | LocalKeywordToken,
     ): DataDeclarationSequenceStatement {
         const dataDeclarationSequenceStatement = new DataDeclarationSequenceStatement();
         dataDeclarationSequenceStatement.parent = parent;
@@ -1774,9 +1774,7 @@ export class Parser extends ParserBase {
 
     // #region Parse lists
 
-    protected isListTerminator(parseContext: ParseContext, token: Tokens): boolean {
-        parseContext = parseContext as ParserParseContext;
-
+    protected isListTerminator(parseContext: ParserParseContext, token: Tokens): boolean {
         if (token.kind === TokenKind.EOF) {
             return true;
         }
@@ -1855,9 +1853,7 @@ export class Parser extends ParserBase {
         return super.isListTerminatorCore(parseContext, token);
     }
 
-    protected isValidListElement(parseContext: ParseContext, token: Tokens): boolean {
-        parseContext = parseContext as ParserParseContext;
-
+    protected isValidListElement(parseContext: ParserParseContext, token: Tokens): boolean {
         switch (parseContext) {
             case NodeKind.ModuleDeclaration: {
                 return this.isModuleDeclarationMemberStart(token);
@@ -1920,9 +1916,7 @@ export class Parser extends ParserBase {
         return super.isValidListElementCore(parseContext, token);
     }
 
-    protected parseListElement(parseContext: ParseContext, parent: Nodes) {
-        parseContext = parseContext as ParserParseContext;
-
+    protected parseListElement(parseContext: ParserParseContext, parent: Nodes) {
         switch (parseContext) {
             case NodeKind.ModuleDeclaration: {
                 return this.parseModuleDeclarationMember(parent);
@@ -2012,7 +2006,7 @@ export class Parser extends ParserBase {
     }
 
     private isInlineStatement(statement: Statement): boolean {
-        let parent = statement.parent!;
+        const parent = statement.parent!;
 
         switch (parent.kind) {
             case NodeKind.IfStatement:
