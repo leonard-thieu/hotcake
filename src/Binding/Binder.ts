@@ -623,6 +623,7 @@ export class Binder {
     ): BoundIfStatement {
         const boundIfStatement = new BoundIfStatement();
         boundIfStatement.parent = parent;
+        boundIfStatement.locals = new BoundSymbolTable();
         boundIfStatement.expression = this.bindExpression(ifStatement.expression, boundIfStatement);
         boundIfStatement.statements = this.bindStatements(ifStatement.statements, boundIfStatement);
 
@@ -657,6 +658,7 @@ export class Binder {
     ): BoundElseIfClause {
         const boundElseIfClause = new BoundElseIfClause();
         boundElseIfClause.parent = parent;
+        boundElseIfClause.locals = new BoundSymbolTable();
         boundElseIfClause.expression = this.bindExpression(elseifClause.expression, boundElseIfClause);
         boundElseIfClause.statements = this.bindStatements(elseifClause.statements, boundElseIfClause);
 
@@ -669,6 +671,7 @@ export class Binder {
     ): BoundElseClause {
         const boundElseClause = new BoundElseClause();
         boundElseClause.parent = parent;
+        boundElseClause.locals = new BoundSymbolTable();
         boundElseClause.statements = this.bindStatements(elseClause.statements, boundElseClause);
 
         return boundElseClause;
@@ -712,6 +715,7 @@ export class Binder {
     ): BoundCaseClause {
         const boundCaseClause = new BoundCaseClause();
         boundCaseClause.parent = parent;
+        boundCaseClause.locals = new BoundSymbolTable();
         boundCaseClause.expressions = this.bindExpressionSequence(caseClause.expressions, boundCaseClause);
         boundCaseClause.statements = this.bindStatements(caseClause.statements, boundCaseClause);
 
@@ -724,6 +728,7 @@ export class Binder {
     ): BoundDefaultClause {
         const boundDefaultClause = new BoundDefaultClause();
         boundDefaultClause.parent = parent;
+        boundDefaultClause.locals = new BoundSymbolTable();
         boundDefaultClause.statements = this.bindStatements(defaultClause.statements, boundDefaultClause);
 
         return boundDefaultClause;
@@ -741,6 +746,7 @@ export class Binder {
     ): BoundWhileLoop {
         const boundWhileLoop = new BoundWhileLoop();
         boundWhileLoop.parent = parent;
+        boundWhileLoop.locals = new BoundSymbolTable();
         boundWhileLoop.expression = this.bindExpression(whileLoop.expression, boundWhileLoop);
         boundWhileLoop.statements = this.bindStatements(whileLoop.statements, boundWhileLoop);
 
@@ -757,6 +763,7 @@ export class Binder {
     ): BoundRepeatLoop {
         const boundRepeatLoop = new BoundRepeatLoop();
         boundRepeatLoop.parent = parent;
+        boundRepeatLoop.locals = new BoundSymbolTable();
         if (repeatLoop.untilExpression) {
             boundRepeatLoop.expression = this.bindExpression(repeatLoop.untilExpression, boundRepeatLoop);
         }
@@ -775,6 +782,7 @@ export class Binder {
     ): BoundForLoop {
         const boundForLoop = new BoundForLoop();
         boundForLoop.parent = parent;
+        boundForLoop.locals = new BoundSymbolTable();
 
         const { header } = forLoop;
         switch (header.kind) {
@@ -870,6 +878,7 @@ export class Binder {
     ): BoundTryStatement {
         const boundTryStatement = new BoundTryStatement();
         boundTryStatement.parent = parent;
+        boundTryStatement.locals = new BoundSymbolTable();
         boundTryStatement.statements = this.bindStatements(tryStatement.statements, boundTryStatement);
         boundTryStatement.catchClauses = this.bindCatchClauses(tryStatement, boundTryStatement);
 
@@ -896,6 +905,7 @@ export class Binder {
     ): BoundCatchClause {
         const boundCatchClause = new BoundCatchClause();
         boundCatchClause.parent = parent;
+        boundCatchClause.locals = new BoundSymbolTable();
 
         if (catchClause.parameter.kind === TokenKind.Missing) {
             throw new Error('Catch clause must declare a parameter.');
@@ -1912,12 +1922,22 @@ export class Binder {
             }
 
             switch (ancestor.kind) {
-                case BoundNodeKind.ClassDeclaration:
-                case BoundNodeKind.ClassMethodDeclaration:
+                case BoundNodeKind.ModuleDeclaration:
                 case BoundNodeKind.FunctionDeclaration:
                 case BoundNodeKind.InterfaceDeclaration:
                 case BoundNodeKind.InterfaceMethodDeclaration:
-                case BoundNodeKind.ModuleDeclaration: {
+                case BoundNodeKind.ClassDeclaration:
+                case BoundNodeKind.ClassMethodDeclaration:
+                case BoundNodeKind.IfStatement:
+                case BoundNodeKind.ElseIfClause:
+                case BoundNodeKind.ElseClause:
+                case BoundNodeKind.CaseClause:
+                case BoundNodeKind.DefaultClause:
+                case BoundNodeKind.WhileLoop:
+                case BoundNodeKind.RepeatLoop:
+                case BoundNodeKind.ForLoop:
+                case BoundNodeKind.TryStatement:
+                case BoundNodeKind.CatchClause: {
                     return ancestor;
                 }
             }

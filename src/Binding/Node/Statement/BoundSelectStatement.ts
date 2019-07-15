@@ -1,3 +1,4 @@
+import { BoundSymbolTable } from '../../BoundSymbol';
 import { BoundNode } from '../BoundNode';
 import { BoundNodeKind } from '../BoundNodeKind';
 import { BoundExpression } from '../Expression/BoundExpression';
@@ -14,12 +15,16 @@ export class BoundSelectStatement extends BoundNode {
 export class BoundCaseClause extends BoundNode {
     readonly kind = BoundNodeKind.CaseClause;
 
+    locals: BoundSymbolTable = undefined!;
+
     expressions: BoundExpression[] = undefined!;
     statements: BoundStatements[] = undefined!;
 }
 
 export class BoundDefaultClause extends BoundNode {
     readonly kind = BoundNodeKind.DefaultClause;
+
+    locals: BoundSymbolTable = undefined!;
 
     statements: BoundStatements[] = undefined!;
 }

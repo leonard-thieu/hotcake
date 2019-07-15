@@ -31,6 +31,7 @@
             "statements": [
                 {
                     "kind": "IfStatement",
+                    "locals": [],
                     "expression": {
                         "kind": "BinaryExpression",
                         "type": "Bool",
@@ -64,6 +65,7 @@
                     "elseIfClauses": [
                         {
                             "kind": "ElseIfClause",
+                            "locals": [],
                             "expression": {
                                 "kind": "NullExpression",
                                 "type": "Null"
@@ -90,6 +92,7 @@
                     ],
                     "elseClause": {
                         "kind": "ElseClause",
+                        "locals": [],
                         "statements": [
                             {
                                 "kind": "ExpressionStatement",

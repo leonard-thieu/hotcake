@@ -9,15 +9,16 @@
             "kind": "FunctionDeclaration",
             "identifier": "Main",
             "locals": [
-                "i",
-                "val",
-                "val2"
+                "val"
             ],
             "returnType": "Int",
             "parameters": [],
             "statements": [
                 {
                     "kind": "ForLoop",
+                    "locals": [
+                        "i"
+                    ],
                     "statement": {
                         "kind": "DataDeclarationStatement",
                         "declaration": {
@@ -47,6 +48,9 @@
                 },
                 {
                     "kind": "ForLoop",
+                    "locals": [
+                        "val"
+                    ],
                     "statement": {
                         "kind": "DataDeclarationStatement",
                         "declaration": {
@@ -81,12 +85,13 @@
                     "declaration": {
                         "kind": "DataDeclaration",
                         "declarationKind": "LocalKeyword",
-                        "identifier": "val2",
+                        "identifier": "val",
                         "type": "Int[]"
                     }
                 },
                 {
                     "kind": "ForLoop",
+                    "locals": [],
                     "statement": {
                         "kind": "ExpressionStatement",
                         "expression": {
@@ -94,7 +99,7 @@
                             "leftOperand": {
                                 "kind": "IdentifierExpression",
                                 "type": "Int[]",
-                                "identifier": "val2"
+                                "identifier": "val"
                             },
                             "rightOperand": {
                                 "kind": "ArrayLiteralExpression",

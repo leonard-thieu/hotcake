@@ -14,6 +14,7 @@
             "statements": [
                 {
                     "kind": "WhileLoop",
+                    "locals": [],
                     "expression": {
                         "kind": "BooleanLiteralExpression",
                         "type": "Bool"

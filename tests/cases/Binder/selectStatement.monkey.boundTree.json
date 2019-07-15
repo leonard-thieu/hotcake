@@ -49,6 +49,7 @@
                     "caseClauses": [
                         {
                             "kind": "CaseClause",
+                            "locals": [],
                             "expressions": [
                                 {
                                     "kind": "IntegerLiteralExpression",
@@ -76,6 +77,7 @@
                         },
                         {
                             "kind": "CaseClause",
+                            "locals": [],
                             "expressions": [
                                 {
                                     "kind": "IntegerLiteralExpression",
@@ -109,6 +111,7 @@
                     ],
                     "defaultClause": {
                         "kind": "DefaultClause",
+                        "locals": [],
                         "statements": [
                             {
                                 "kind": "ExpressionStatement",

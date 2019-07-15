@@ -51,16 +51,15 @@
         {
             "kind": "FunctionDeclaration",
             "identifier": "Main",
-            "locals": [
-                "i",
-                "ex1",
-                "ex2"
-            ],
+            "locals": [],
             "returnType": "Int",
             "parameters": [],
             "statements": [
                 {
                     "kind": "ForLoop",
+                    "locals": [
+                        "i"
+                    ],
                     "statement": {
                         "kind": "DataDeclarationStatement",
                         "declaration": {
@@ -81,9 +80,11 @@
                     "statements": [
                         {
                             "kind": "TryStatement",
+                            "locals": [],
                             "statements": [
                                 {
                                     "kind": "IfStatement",
+                                    "locals": [],
                                     "expression": {
                                         "kind": "GroupingExpression",
                                         "type": "Int",
@@ -112,6 +113,7 @@
                                     ],
                                     "elseClause": {
                                         "kind": "ElseClause",
+                                        "locals": [],
                                         "statements": [
                                             {
                                                 "kind": "ThrowStatement",
@@ -127,9 +129,12 @@
                             "catchClauses": [
                                 {
                                     "kind": "CatchClause",
+                                    "locals": [
+                                        "ex"
+                                    ],
                                     "parameter": {
                                         "kind": "DataDeclaration",
-                                        "identifier": "ex1",
+                                        "identifier": "ex",
                                         "type": "Ex1"
                                     },
                                     "statements": [
@@ -153,9 +158,12 @@
                                 },
                                 {
                                     "kind": "CatchClause",
+                                    "locals": [
+                                        "ex"
+                                    ],
                                     "parameter": {
                                         "kind": "DataDeclaration",
-                                        "identifier": "ex2",
+                                        "identifier": "ex",
                                         "type": "Ex2"
                                     },
                                     "statements": [
