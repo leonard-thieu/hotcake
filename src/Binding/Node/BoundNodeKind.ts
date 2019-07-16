@@ -43,6 +43,7 @@ export enum BoundNodeKind {
     FloatLiteralExpression = 'FloatLiteralExpression',
     IntegerLiteralExpression = 'IntegerLiteralExpression',
     ArrayLiteralExpression = 'ArrayLiteralExpression',
+    GlobalScopeExpression = 'GlobalScopeExpression',
     IdentifierExpression = 'IdentifierExpression',
     GroupingExpression = 'GroupingExpression',
     ScopeMemberAccessExpression = 'ScopeMemberAccessExpression',

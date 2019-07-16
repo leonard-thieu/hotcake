@@ -65,6 +65,7 @@ import { BoundBinaryExpression } from './Node/Expression/BoundBinaryExpression';
 import { BoundBooleanLiteralExpression } from './Node/Expression/BoundBooleanLiteralExpression';
 import { BoundExpressions } from './Node/Expression/BoundExpressions';
 import { BoundFloatLiteralExpression } from './Node/Expression/BoundFloatLiteralExpression';
+import { BoundGlobalScopeExpression } from './Node/Expression/BoundGlobalScopeExpression';
 import { BoundGroupingExpression } from './Node/Expression/BoundGroupingExpression';
 import { BoundIdentifierExpression } from './Node/Expression/BoundIdentifierExpression';
 import { BoundIndexExpression } from './Node/Expression/BoundIndexExpression';
@@ -1190,6 +1191,9 @@ export class Binder {
             case NodeKind.ArrayLiteralExpression: {
                 return this.bindArrayLiteralExpression(expression, parent);
             }
+            case NodeKind.GlobalScopeExpression: {
+                return this.bindGlobalScopeExpression(parent);
+            }
             case NodeKind.IdentifierExpression: {
                 return this.bindIdentifierExpression(expression, parent);
             }
@@ -1207,9 +1211,6 @@ export class Binder {
             }
             case NodeKind.InvokeExpression: {
                 return this.bindInvokeExpression(expression, parent);
-            }
-            case NodeKind.GlobalScopeExpression: {
-                throw new Error(`Binding '${expression.kind}' is not implemented.`);
             }
             case TokenKind.Missing: {
                 throw new Error('Expression is missing.');
@@ -1642,6 +1643,19 @@ export class Binder {
 
     // #endregion
 
+    // #region Global scope expression
+
+    private bindGlobalScopeExpression(
+        parent: BoundNodes,
+    ): BoundGlobalScopeExpression {
+        const boundGlobalScopeExpression = new BoundGlobalScopeExpression();
+        boundGlobalScopeExpression.parent = parent;
+
+        return boundGlobalScopeExpression;
+    }
+
+    // #endregion
+
     // #region Identifier expression
 
     private bindIdentifierExpression(
@@ -1662,20 +1676,17 @@ export class Binder {
                             boundIdentifierExpression.identifier = this.getSymbol(identifier, boundIdentifierExpression);
                         } else {
                             const { type } = parent.scopableExpression;
-                            switch (type.kind) {
-                                case TypeKind.Object: {
-                                    const identifierText = identifier.getText(this.document);
-                                    const { locals } = type.declaration!;
-                                    const identifierSymbol = locals.get(identifierText);
-                                    if (!identifierSymbol) {
-                                        throw new Error(`'${identifierText}' does not exist on '${type.declaration!.identifier.name}'.`);
+                            if (!type) {
+                                boundIdentifierExpression.identifier = this.getSymbolInScope(identifier, this.module);
+                            } else {
+                                switch (type.kind) {
+                                    case TypeKind.Object: {
+                                        boundIdentifierExpression.identifier = this.getSymbolInScope(identifier, type.declaration!);
+                                        break;
                                     }
-
-                                    boundIdentifierExpression.identifier = identifierSymbol;
-                                    break;
-                                }
-                                default: {
-                                    throw new Error('Method not implemented.');
+                                    default: {
+                                        throw new Error('Method not implemented.');
+                                    }
                                 }
                             }
                         }
@@ -1762,6 +1773,19 @@ export class Binder {
 
             scope = this.getScope(scope);
         }
+    }
+
+    private getSymbolInScope(
+        identifier: Tokens,
+        scope: BoundModuleDeclaration | BoundExternClassDeclaration | BoundInterfaceDeclaration | BoundClassDeclaration,
+    ): BoundSymbol {
+        const identifierText = identifier.getText(this.document);
+        const identifierSymbol = scope.locals.get(identifierText);
+        if (!identifierSymbol) {
+            throw new Error(`'${identifierText}' does not exist on '${scope.identifier.name}'.`);
+        }
+
+        return identifierSymbol;
     }
 
     // #endregion
