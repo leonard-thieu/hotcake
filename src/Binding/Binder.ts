@@ -24,6 +24,7 @@ import { IdentifierExpression } from '../Syntax/Node/Expression/IdentifierExpres
 import { IndexExpression } from '../Syntax/Node/Expression/IndexExpression';
 import { InvokeExpression } from '../Syntax/Node/Expression/InvokeExpression';
 import { NewExpression } from '../Syntax/Node/Expression/NewExpression';
+import { ScopeMemberAccessExpression } from '../Syntax/Node/Expression/ScopeMemberAccessExpression';
 import { SliceExpression } from '../Syntax/Node/Expression/SliceExpression';
 import { UnaryExpression } from '../Syntax/Node/Expression/UnaryExpression';
 import { NodeKind } from '../Syntax/Node/NodeKind';
@@ -71,6 +72,7 @@ import { BoundIntegerLiteralExpression } from './Node/Expression/BoundIntegerLit
 import { BoundInvokeExpression } from './Node/Expression/BoundInvokeExpression';
 import { BoundNewExpression } from './Node/Expression/BoundNewExpression';
 import { BoundNullExpression } from './Node/Expression/BoundNullExpression';
+import { BoundScopeMemberAccessExpression } from './Node/Expression/BoundScopeMemberAccessExpression';
 import { BoundSelfExpression } from './Node/Expression/BoundSelfExpression';
 import { BoundSliceExpression } from './Node/Expression/BoundSliceExpression';
 import { BoundStringLiteralExpression } from './Node/Expression/BoundStringLiteralExpression';
@@ -1194,6 +1196,9 @@ export class Binder {
             case NodeKind.GroupingExpression: {
                 return this.bindGroupingExpression(expression, parent);
             }
+            case NodeKind.ScopeMemberAccessExpression: {
+                return this.bindScopeMemberAccessExpression(expression, parent);
+            }
             case NodeKind.IndexExpression: {
                 return this.bindIndexExpression(expression, parent);
             }
@@ -1203,7 +1208,6 @@ export class Binder {
             case NodeKind.InvokeExpression: {
                 return this.bindInvokeExpression(expression, parent);
             }
-            case NodeKind.ScopeMemberAccessExpression:
             case NodeKind.GlobalScopeExpression: {
                 throw new Error(`Binding '${expression.kind}' is not implemented.`);
             }
@@ -1293,7 +1297,10 @@ export class Binder {
 
         switch (leftOperand.kind) {
             case BoundNodeKind.IndexExpression:
-            case BoundNodeKind.IdentifierExpression: { break; }
+            case BoundNodeKind.IdentifierExpression:
+            case BoundNodeKind.ScopeMemberAccessExpression: {
+                break;
+            }
             default: {
                 throw new Error(`'${leftOperand.kind}' cannot be assigned to.`);
             }
@@ -1649,7 +1656,36 @@ export class Binder {
             case TokenKind.Identifier:
             case TokenKind.ObjectKeyword:
             case TokenKind.ThrowableKeyword: {
-                boundIdentifierExpression.identifier = this.getSymbol(identifier, boundIdentifierExpression);
+                switch (parent.kind) {
+                    case BoundNodeKind.ScopeMemberAccessExpression: {
+                        if (!parent.scopableExpression) {
+                            boundIdentifierExpression.identifier = this.getSymbol(identifier, boundIdentifierExpression);
+                        } else {
+                            const { type } = parent.scopableExpression;
+                            switch (type.kind) {
+                                case TypeKind.Object: {
+                                    const identifierText = identifier.getText(this.document);
+                                    const { locals } = type.declaration!;
+                                    const identifierSymbol = locals.get(identifierText);
+                                    if (!identifierSymbol) {
+                                        throw new Error(`'${identifierText}' does not exist on '${type.declaration!.identifier.name}'.`);
+                                    }
+
+                                    boundIdentifierExpression.identifier = identifierSymbol;
+                                    break;
+                                }
+                                default: {
+                                    throw new Error('Method not implemented.');
+                                }
+                            }
+                        }
+                        break;
+                    }
+                    default: {
+                        boundIdentifierExpression.identifier = this.getSymbol(identifier, boundIdentifierExpression);
+                        break;
+                    }
+                }
 
                 const { declaration } = boundIdentifierExpression.identifier;
                 switch (declaration.kind) {
@@ -1742,6 +1778,23 @@ export class Binder {
         boundGroupingExpression.type = boundGroupingExpression.expression.type;
 
         return boundGroupingExpression;
+    }
+
+    // #endregion
+
+    // #region Scope member access expression
+
+    private bindScopeMemberAccessExpression(
+        scopeMemberAccessExpression: ScopeMemberAccessExpression,
+        parent: BoundNodes,
+    ): BoundScopeMemberAccessExpression {
+        const boundScopeMemberAccessExpression = new BoundScopeMemberAccessExpression();
+        boundScopeMemberAccessExpression.parent = parent;
+        boundScopeMemberAccessExpression.scopableExpression = this.bindExpression(scopeMemberAccessExpression.scopableExpression, boundScopeMemberAccessExpression);
+        boundScopeMemberAccessExpression.member = this.bindExpression(scopeMemberAccessExpression.member, boundScopeMemberAccessExpression);
+        boundScopeMemberAccessExpression.type = boundScopeMemberAccessExpression.member.type;
+
+        return boundScopeMemberAccessExpression;
     }
 
     // #endregion

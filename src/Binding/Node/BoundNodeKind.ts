@@ -45,6 +45,7 @@ export enum BoundNodeKind {
     ArrayLiteralExpression = 'ArrayLiteralExpression',
     IdentifierExpression = 'IdentifierExpression',
     GroupingExpression = 'GroupingExpression',
+    ScopeMemberAccessExpression = 'ScopeMemberAccessExpression',
     IndexExpression = 'IndexExpression',
     SliceExpression = 'SliceExpression',
     InvokeExpression = 'InvokeExpression',
