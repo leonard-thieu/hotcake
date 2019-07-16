@@ -13,15 +13,15 @@ import { BoundWhileLoop } from "./BoundWhileLoop";
 
 export type BoundStatements =
     BoundDataDeclarationStatement |
+    BoundReturnStatement |
     BoundIfStatement |
     BoundSelectStatement |
-    BoundReturnStatement |
-    BoundForLoop |
     BoundWhileLoop |
     BoundRepeatLoop |
+    BoundForLoop |
     BoundContinueStatement |
     BoundExitStatement |
-    BoundTryStatement |
     BoundThrowStatement |
+    BoundTryStatement |
     BoundExpressionStatement
     ;

@@ -1,9 +1,9 @@
 export enum TypeKind {
+    Array = 'Array',
     Bool = 'Bool',
-    Int = 'Int',
     Float = 'Float',
+    Int = 'Int',
     String = 'String',
     Object = 'Object',
-    Array = 'Array',
     Void = 'Void',
 }

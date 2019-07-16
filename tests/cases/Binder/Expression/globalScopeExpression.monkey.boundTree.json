@@ -1,0 +1,64 @@
+{
+    "kind": "ModuleDeclaration",
+    "identifier": "globalScopeExpression",
+    "locals": [
+        "T",
+        "Actor"
+    ],
+    "members": [
+        {
+            "kind": "DataDeclaration",
+            "declarationKind": "GlobalKeyword",
+            "identifier": "T",
+            "type": "Int"
+        },
+        {
+            "kind": "ClassDeclaration",
+            "identifier": "Actor",
+            "locals": [
+                "T",
+                "Act"
+            ],
+            "type": "Actor",
+            "members": [
+                {
+                    "kind": "DataDeclaration",
+                    "declarationKind": "GlobalKeyword",
+                    "identifier": "T",
+                    "type": "Int[]"
+                },
+                {
+                    "kind": "ClassMethodDeclaration",
+                    "identifier": "Act",
+                    "locals": [],
+                    "returnType": "Int",
+                    "parameters": [],
+                    "statements": [
+                        {
+                            "kind": "ExpressionStatement",
+                            "expression": {
+                                "kind": "AssignmentExpression",
+                                "leftOperand": {
+                                    "kind": "ScopeMemberAccessExpression",
+                                    "type": "Int",
+                                    "scopableExpression": {
+                                        "kind": "GlobalScopeExpression"
+                                    },
+                                    "member": {
+                                        "kind": "IdentifierExpression",
+                                        "type": "Int",
+                                        "identifier": "T"
+                                    }
+                                },
+                                "rightOperand": {
+                                    "kind": "IntegerLiteralExpression",
+                                    "type": "Int"
+                                }
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

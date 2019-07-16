@@ -1,0 +1,38 @@
+{
+    "kind": "ModuleDeclaration",
+    "identifier": "externClassDeclaration",
+    "locals": [
+        "Driver"
+    ],
+    "members": [
+        {
+            "kind": "ExternClassDeclaration",
+            "identifier": "Driver",
+            "locals": [
+                "Method1",
+                "Method2"
+            ],
+            "type": "Driver",
+            "members": [
+                {
+                    "kind": "ExternClassMethodDeclaration",
+                    "identifier": "Method1",
+                    "locals": [],
+                    "returnType": "Int",
+                    "parameters": []
+                },
+                {
+                    "kind": "ExternClassMethodDeclaration",
+                    "identifier": "Method2",
+                    "locals": [],
+                    "returnType": "Int",
+                    "parameters": []
+                }
+            ],
+            "nativeSymbol": {
+                "kind": "StringLiteralExpression",
+                "type": "String"
+            }
+        }
+    ]
+}
