@@ -1,0 +1,36 @@
+{
+    "kind": "ModuleDeclaration",
+    "identifier": "aliasDirective",
+    "locals": [],
+    "members": [
+        {
+            "kind": "ImportStatement",
+            "path": {
+                "kind": "ModulePath",
+                "children": [
+                    {
+                        "kind": "Identifier",
+                        "fullStart": 6,
+                        "start": 7,
+                        "length": 6
+                    }
+                ]
+            }
+        },
+        {
+            "kind": "AliasDirective",
+            "moduleIdentifier": {
+                "kind": "Identifier",
+                "fullStart": 24,
+                "start": 24,
+                "length": 5
+            },
+            "target": {
+                "kind": "Identifier",
+                "fullStart": 30,
+                "start": 30,
+                "length": 1
+            }
+        }
+    ]
+}

@@ -2,7 +2,7 @@ import path = require('path');
 import { assertNever } from '../assertNever';
 import { CommaSeparator } from '../Syntax/Node/CommaSeparator';
 import { AccessibilityDirective } from '../Syntax/Node/Declaration/AccessibilityDirective';
-import { AliasDirectiveSequence } from '../Syntax/Node/Declaration/AliasDirectiveSequence';
+import { AliasDirective, AliasDirectiveSequence } from '../Syntax/Node/Declaration/AliasDirectiveSequence';
 import { ClassDeclaration } from '../Syntax/Node/Declaration/ClassDeclaration';
 import { ClassMethodDeclaration } from '../Syntax/Node/Declaration/ClassMethodDeclaration';
 import { DataDeclaration, DataDeclarationKeywordToken, DataDeclarationSequence } from '../Syntax/Node/Declaration/DataDeclarationSequence';
@@ -50,6 +50,7 @@ import { BoundSymbol, BoundSymbolTable } from './BoundSymbol';
 import { BoundModulePath } from "./Node/BoundModulePath";
 import { BoundNodes } from './Node/BoundNode';
 import { BoundNodeKind } from './Node/BoundNodeKind';
+import { BoundAliasDirective } from './Node/Declaration/BoundAliasDirective';
 import { BoundClassDeclaration, BoundClassDeclarationMember } from './Node/Declaration/BoundClassDeclaration';
 import { BoundClassMethodDeclaration } from './Node/Declaration/BoundClassMethodDeclaration';
 import { BoundDataDeclaration } from './Node/Declaration/BoundDataDeclaration';
@@ -149,7 +150,8 @@ export class Binder {
                     throw new Error('Method not implemented.');
                 }
                 case NodeKind.AliasDirectiveSequence: {
-                    this.bindAliasDirectiveSequence(member);
+                    const boundAliasDirectives = this.bindAliasDirectiveSequence(member, parent);
+                    boundHeaderMembers.push(...boundAliasDirectives);
                     break;
                 }
                 case TokenKind.Newline:
@@ -299,20 +301,59 @@ export class Binder {
 
     // #region Alias directive sequence
 
-    private bindAliasDirectiveSequence(aliasDirectiveSequence: AliasDirectiveSequence) {
-        for (const child of aliasDirectiveSequence.children) {
-            switch (child.kind) {
+    private bindAliasDirectiveSequence(
+        aliasDirectiveSequence: AliasDirectiveSequence,
+        parent: BoundNodes,
+    ): BoundAliasDirective[] {
+        const boundAliasDirectives: BoundAliasDirective[] = [];
+
+        for (const aliasDirective of aliasDirectiveSequence.children) {
+            switch (aliasDirective.kind) {
                 case NodeKind.AliasDirective: {
-                    // TOOD: Bind Alias directive
+                    const boundAliasDirective = this.bindAliasDirective(aliasDirective, parent);
+                    boundAliasDirectives.push(boundAliasDirective);
                     break;
                 }
                 case NodeKind.CommaSeparator: { break; }
                 default: {
-                    assertNever(child);
+                    assertNever(aliasDirective);
                     break;
                 }
             }
         }
+
+        return boundAliasDirectives;
+    }
+
+    private bindAliasDirective(
+        aliasDirective: AliasDirective,
+        parent: BoundNodes,
+    ): BoundAliasDirective {
+        const boundAliasDirective = new BoundAliasDirective();
+        boundAliasDirective.parent = parent;
+        boundAliasDirective.moduleIdentifier = aliasDirective.moduleIdentifier;
+        boundAliasDirective.typeIdentifier = aliasDirective.typeIdentifier;
+
+        const { target } = aliasDirective;
+        switch (target.kind) {
+            case NodeKind.EscapedIdentifier:
+            case TokenKind.Identifier:
+            case TokenKind.ObjectKeyword:
+            case TokenKind.ThrowableKeyword:
+            case TokenKind.IntKeyword:
+            case TokenKind.FloatKeyword:
+            case TokenKind.StringKeyword: {
+                boundAliasDirective.target = target;
+                break;
+            }
+            case TokenKind.Missing: { break; }
+            default: {
+                assertNever(target);
+                break;
+            }
+        }
+
+        return boundAliasDirective;
     }
 
     // #endregion

@@ -1,6 +1,7 @@
 import { BoundSymbol, BoundSymbolTable } from '../../BoundSymbol';
 import { BoundNode } from '../BoundNode';
 import { BoundNodeKind } from '../BoundNodeKind';
+import { BoundAliasDirective } from './BoundAliasDirective';
 import { BoundClassDeclaration } from './BoundClassDeclaration';
 import { BoundDataDeclaration } from './BoundDataDeclaration';
 import { BoundFunctionDeclaration } from './BoundFunctionDeclaration';
@@ -21,6 +22,7 @@ export class BoundModuleDeclaration extends BoundNode {
 
 export type BoundModuleDeclarationMember =
     BoundImportStatement |
+    BoundAliasDirective |
     BoundExternDataDeclaration |
     BoundExternFunctionDeclaration |
     BoundExternClassDeclaration |

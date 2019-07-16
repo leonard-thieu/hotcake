@@ -3,6 +3,7 @@ export enum BoundNodeKind {
 
     ImportStatement = 'ImportStatement',
     ModulePath = 'ModulePath',
+    AliasDirective = 'AliasDirective',
 
     ExternDataDeclaration = 'ExternDataDeclaration',
     ExternFunctionDeclaration = 'ExternFunctionDeclaration',
