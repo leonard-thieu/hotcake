@@ -1,6 +1,9 @@
 export enum BoundNodeKind {
     ModuleDeclaration = 'ModuleDeclaration',
 
+    ImportStatement = 'ImportStatement',
+    ModulePath = 'ModulePath',
+
     ExternDataDeclaration = 'ExternDataDeclaration',
     ExternFunctionDeclaration = 'ExternFunctionDeclaration',
     ExternClassDeclaration = 'ExternClassDeclaration',
