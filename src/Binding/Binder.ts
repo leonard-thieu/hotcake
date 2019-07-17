@@ -1,5 +1,6 @@
 import path = require('path');
 import { assertNever } from '../assertNever';
+import { FILE_EXTENSION, Project } from '../Project';
 import { CommaSeparator } from '../Syntax/Node/CommaSeparator';
 import { AccessibilityDirective } from '../Syntax/Node/Declaration/AccessibilityDirective';
 import { AliasDirective, AliasDirectiveSequence } from '../Syntax/Node/Declaration/AliasDirectiveSequence';
@@ -44,9 +45,10 @@ import { WhileLoop } from '../Syntax/Node/Statement/WhileLoop';
 import { ShorthandTypeToken, TypeAnnotation } from '../Syntax/Node/TypeAnnotation';
 import { MissableTypeReference, TypeReference } from '../Syntax/Node/TypeReference';
 import { SkippedToken } from '../Syntax/Token/SkippedToken';
-import { IdentifierToken, PeriodToken, TokenKinds, Tokens } from '../Syntax/Token/Token';
+import { TokenKinds, Tokens } from '../Syntax/Token/Token';
 import { TokenKind } from '../Syntax/Token/TokenKind';
 import { BoundSymbol, BoundSymbolTable } from './BoundSymbol';
+import { ModuleReference } from './ModuleReference';
 import { BoundModulePath } from "./Node/BoundModulePath";
 import { BoundNodes } from './Node/BoundNode';
 import { BoundNodeKind } from './Node/BoundNodeKind';
@@ -55,6 +57,7 @@ import { BoundClassDeclaration, BoundClassDeclarationMember } from './Node/Decla
 import { BoundClassMethodDeclaration } from './Node/Declaration/BoundClassMethodDeclaration';
 import { BoundDataDeclaration } from './Node/Declaration/BoundDataDeclaration';
 import { BoundDeclarations } from './Node/Declaration/BoundDeclarations';
+import { BoundDirectory } from './Node/Declaration/BoundDirectory';
 import { BoundFunctionDeclaration } from './Node/Declaration/BoundFunctionDeclaration';
 import { BoundImportStatement } from './Node/Declaration/BoundImportStatement';
 import { BoundInterfaceDeclaration, BoundInterfaceDeclarationMember } from './Node/Declaration/BoundInterfaceDeclaration';
@@ -111,20 +114,36 @@ export class Binder {
     private document: string = undefined!;
     private module: BoundModuleDeclaration = undefined!;
 
-    bind(moduleDeclaration: ModuleDeclaration): BoundModuleDeclaration {
+    bind(
+        moduleDeclaration: ModuleDeclaration,
+        project: Project,
+        boundDirectory: BoundDirectory,
+        moduleIdentifier: string,
+    ): BoundModuleDeclaration {
         this.document = moduleDeclaration.document;
 
-        return this.bindModuleDeclaration(moduleDeclaration);
+        return this.bindModuleDeclaration(moduleDeclaration, project, boundDirectory, moduleIdentifier);
     }
 
     // #region Declarations
 
     // #region Module declaration
 
-    private bindModuleDeclaration(moduleDeclaration: ModuleDeclaration): BoundModuleDeclaration {
+    private bindModuleDeclaration(
+        moduleDeclaration: ModuleDeclaration,
+        project: Project,
+        boundDirectory: BoundDirectory,
+        moduleIdentifier: string,
+    ): BoundModuleDeclaration {
         const boundModuleDeclaration = new BoundModuleDeclaration();
         this.module = boundModuleDeclaration;
-        boundModuleDeclaration.identifier = this.declareSymbol(moduleDeclaration, boundModuleDeclaration);
+        boundModuleDeclaration.project = project;
+        boundModuleDeclaration.directory = boundDirectory;
+
+        const boundSymbol = new BoundSymbol(moduleIdentifier, boundModuleDeclaration);
+        boundModuleDeclaration.directory.locals.set(moduleIdentifier, boundSymbol);
+        boundModuleDeclaration.identifier = boundSymbol;
+
         boundModuleDeclaration.locals = new BoundSymbolTable();
         boundModuleDeclaration.members = this.bindModuleDeclarationHeaderMembers(moduleDeclaration, boundModuleDeclaration);
         boundModuleDeclaration.members.push(...this.bindModuleDeclarationMembers(moduleDeclaration, boundModuleDeclaration));
@@ -270,31 +289,39 @@ export class Binder {
     ): BoundModulePath {
         const boundModulePath = new BoundModulePath();
         boundModulePath.parent = parent;
-        boundModulePath.children = this.bindbindModulePathChildren(modulePath.children);
 
-        return boundModulePath;
-    }
+        const { moduleIdentifier } = modulePath;
+        switch (moduleIdentifier.kind) {
+            case TokenKind.Identifier: {
+                const { project } = this.module;
+                const modulePathComponents = project.getModulePathComponents(modulePath.children, this.document);
+                const moduleIdentifier = modulePath.moduleIdentifier.getText(this.document);
+                const boundTargetModuleDirectory = project.resolveModuleDirectory(this.module.directory.fullPath, modulePathComponents, moduleIdentifier);
+                if (!boundTargetModuleDirectory) {
+                    const pathComponents = [
+                        ...modulePathComponents,
+                        moduleIdentifier
+                    ];
 
-    private bindbindModulePathChildren(
-        modulePathChildren: (IdentifierToken | PeriodToken)[],
-    ): IdentifierToken[] {
-        const children: IdentifierToken[] = [];
-
-        for (const child of modulePathChildren) {
-            switch (child.kind) {
-                case TokenKind.Identifier: {
-                    children.push(child);
-                    break;
+                    throw new Error(`Could not resolve '${pathComponents.join('.')}'.`);
                 }
-                case TokenKind.Period: { break; }
-                default: {
-                    assertNever(child);
-                    break;
-                }
+
+                const targetModulePath = path.resolve(boundTargetModuleDirectory.fullPath, moduleIdentifier + FILE_EXTENSION);
+                const boundTargetModule = project.importModule(targetModulePath);
+                const moduleReference = new ModuleReference(boundTargetModule);
+                boundModulePath.moduleIdentifier = moduleReference;
+                break;
+            }
+            case TokenKind.Missing: {
+                throw new Error('Method not implemented.');
+            }
+            default: {
+                assertNever(moduleIdentifier);
+                break;
             }
         }
 
-        return children;
+        return boundModulePath;
     }
 
     // #endregion
@@ -465,13 +492,25 @@ export class Binder {
         boundExternClassDeclaration.locals = new BoundSymbolTable();
         boundExternClassDeclaration.identifier = this.declareSymbol(externClassDeclaration, boundExternClassDeclaration);
         boundExternClassDeclaration.type = new ObjectType(boundExternClassDeclaration);
-        if (externClassDeclaration.baseType) {
-            if (externClassDeclaration.baseType.kind === TokenKind.NullKeyword) {
-                throw new Error('Extending from Null is not implemented.');
-            } else {
-                boundExternClassDeclaration.baseType = this.bindTypeReference(externClassDeclaration.baseType);
+
+        const { baseType } = externClassDeclaration;
+        if (!baseType) {
+            boundExternClassDeclaration.baseType = ObjectType.type;
+        } else {
+            switch (baseType.kind) {
+                case NodeKind.TypeReference: {
+                    boundExternClassDeclaration.baseType = this.bindTypeReference(baseType);
+                    break;
+                }
+                case TokenKind.NullKeyword:
+                case TokenKind.Missing: { break; }
+                default: {
+                    assertNever(baseType);
+                    break;
+                }
             }
         }
+
         if (externClassDeclaration.nativeSymbol) {
             boundExternClassDeclaration.nativeSymbol = this.bindStringLiteralExpression(boundExternClassDeclaration);
         }
@@ -1835,6 +1874,7 @@ export class Binder {
                         break;
                     }
 
+                    case BoundNodeKind.Directory:
                     case BoundNodeKind.ModuleDeclaration:
                     case BoundNodeKind.ImportStatement:
                     case BoundNodeKind.ExternFunctionDeclaration:
@@ -2316,7 +2356,18 @@ export class Binder {
             const existingSymbol = scope.locals.get(name);
 
             if (existingSymbol) {
-                throw new Error(`Duplicate symbol '${name}'.`);
+                switch (boundDeclaration.kind) {
+                    case BoundNodeKind.ExternFunctionDeclaration:
+                    case BoundNodeKind.ExternClassMethodDeclaration:
+                    case BoundNodeKind.FunctionDeclaration:
+                    case BoundNodeKind.ClassMethodDeclaration: {
+                        console.log('Overloads are not implemented.');
+                        break;
+                    }
+                    default: {
+                        throw new Error(`Duplicate symbol '${name}'.`);
+                    }
+                }
             } else {
                 scope.locals.set(name, identifier);
             }
@@ -2363,9 +2414,6 @@ export class Binder {
 
     private getDeclarationName(declaration: Declarations): string {
         switch (declaration.kind) {
-            case NodeKind.ModuleDeclaration: {
-                return path.basename(declaration.filePath, path.extname(declaration.filePath));
-            }
             case NodeKind.AliasDirective:
             case NodeKind.ExternDataDeclaration:
             case NodeKind.ExternFunctionDeclaration:

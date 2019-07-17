@@ -7,28 +7,23 @@
             "kind": "ImportStatement",
             "path": {
                 "kind": "ModulePath",
-                "children": [
-                    {
-                        "kind": "Identifier",
-                        "fullStart": 6,
-                        "start": 7,
-                        "length": 6
-                    }
-                ]
+                "moduleIdentifier": {
+                    "declaration": "aliasDirective_file2"
+                }
             }
         },
         {
             "kind": "AliasDirective",
             "moduleIdentifier": {
                 "kind": "Identifier",
-                "fullStart": 24,
-                "start": 24,
-                "length": 5
+                "fullStart": 39,
+                "start": 39,
+                "length": 20
             },
             "target": {
                 "kind": "Identifier",
-                "fullStart": 30,
-                "start": 30,
+                "fullStart": 60,
+                "start": 60,
                 "length": 1
             }
         }

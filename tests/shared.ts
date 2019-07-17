@@ -1,12 +1,13 @@
 import glob = require('glob');
 import fs = require('fs');
 import path = require('path');
+import process = require('process');
 import mkdirp = require('mkdirp');
 import { orderBy } from 'natural-orderby';
-import { Binder } from '../src/Binding/Binder';
 import { BoundNodeKind } from '../src/Binding/Node/BoundNodeKind';
 import { BoundModuleDeclaration } from '../src/Binding/Node/Declaration/BoundModuleDeclaration';
 import { Type } from '../src/Binding/Type/Type';
+import { Project } from '../src/Project';
 import { ModuleDeclaration } from '../src/Syntax/Node/Declaration/ModuleDeclaration';
 import { PreprocessorModuleDeclaration } from '../src/Syntax/Node/Declaration/PreprocessorModuleDeclaration';
 import { Parser } from '../src/Syntax/Parser';
@@ -173,14 +174,20 @@ export function executeBinderTestCases(name: string, casesPath: string): void {
             _it(sourceRelativePath, function () {
                 const outputPath = path.resolve(__dirname, 'cases', name, sourceRelativePath) + '.boundTree.json';
                 executeBaselineTestCase(outputPath, () => {
-                    return getBoundTree(sourceRelativePath, contents);
+                    return getBoundTree(path.resolve(casesPath, sourceRelativePath), contents);
                 }, function (this: any, key, value) {
                     switch (key) {
+                        case 'project':
+                        case 'directory':
                         case 'parent': {
                             return undefined;
                         }
                         case 'declaration': {
                             if (this.kind !== BoundNodeKind.DataDeclarationStatement) {
+                                if (value.kind === BoundNodeKind.ModuleDeclaration) {
+                                    return value.identifier.name;
+                                }
+
                                 return undefined;
                             }
                             break;
@@ -254,8 +261,14 @@ export function getParseTree(filePath: string, document: string): ModuleDeclarat
 }
 
 export function getBoundTree(filePath: string, document: string): BoundModuleDeclaration {
-    const moduleDeclaration = getParseTree(filePath, document);
-    const binder = new Binder();
+    let frameworkDirectory = process.env.HOTCAKE_FRAMEWORK_DIR;
+    if (!frameworkDirectory) {
+        throw new Error(`The environment variable 'HOTCAKE_FRAMEWORK_DIR' must be set to the framework root directory.`);
+    }
+    frameworkDirectory = path.resolve(frameworkDirectory);
 
-    return binder.bind(moduleDeclaration);
+    const projectDirectory = path.dirname(filePath);
+    const project = new Project(frameworkDirectory, projectDirectory);
+
+    return project.importModule(filePath);
 }

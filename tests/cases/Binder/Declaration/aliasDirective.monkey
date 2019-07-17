@@ -1,3 +1,3 @@
-Import file2
+Import aliasDirective_file2
 
-Alias T=file2.T                'which 'T' to use
+Alias T=aliasDirective_file2.T                'which 'T' to use
