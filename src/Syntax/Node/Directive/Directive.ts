@@ -15,9 +15,9 @@ export abstract class Directive extends Node {
 }
 
 export type Directives =
-    AssignmentDirective |
-    ErrorDirective |
-    IfDirective | ElseIfDirective | ElseDirective |
-    PrintDirective |
-    RemDirective
+    | AssignmentDirective
+    | ErrorDirective
+    | IfDirective | ElseIfDirective | ElseDirective
+    | PrintDirective
+    | RemDirective
     ;

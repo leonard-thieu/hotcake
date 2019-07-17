@@ -26,13 +26,13 @@ export class BoundModuleDeclaration extends BoundNode {
 }
 
 export type BoundModuleDeclarationMember =
-    BoundImportStatement |
-    BoundAliasDirective |
-    BoundExternDataDeclaration |
-    BoundExternFunctionDeclaration |
-    BoundExternClassDeclaration |
-    BoundDataDeclaration |
-    BoundFunctionDeclaration |
-    BoundInterfaceDeclaration |
-    BoundClassDeclaration
+    | BoundImportStatement
+    | BoundAliasDirective
+    | BoundExternDataDeclaration
+    | BoundExternFunctionDeclaration
+    | BoundExternClassDeclaration
+    | BoundDataDeclaration
+    | BoundFunctionDeclaration
+    | BoundInterfaceDeclaration
+    | BoundClassDeclaration
     ;

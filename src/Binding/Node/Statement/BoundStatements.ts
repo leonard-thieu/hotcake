@@ -12,16 +12,16 @@ import { BoundTryStatement } from './BoundTryStatement';
 import { BoundWhileLoop } from "./BoundWhileLoop";
 
 export type BoundStatements =
-    BoundDataDeclarationStatement |
-    BoundReturnStatement |
-    BoundIfStatement |
-    BoundSelectStatement |
-    BoundWhileLoop |
-    BoundRepeatLoop |
-    BoundForLoop |
-    BoundContinueStatement |
-    BoundExitStatement |
-    BoundThrowStatement |
-    BoundTryStatement |
-    BoundExpressionStatement
+    | BoundDataDeclarationStatement
+    | BoundReturnStatement
+    | BoundIfStatement
+    | BoundSelectStatement
+    | BoundWhileLoop
+    | BoundRepeatLoop
+    | BoundForLoop
+    | BoundContinueStatement
+    | BoundExitStatement
+    | BoundThrowStatement
+    | BoundTryStatement
+    | BoundExpressionStatement
     ;

@@ -41,15 +41,15 @@ export class AssignmentExpression extends Expression {
 }
 
 export type AssignmentOperatorToken =
-    VerticalBarEqualsSignToken |
-    TildeEqualsSignToken |
-    AmpersandEqualsSignToken |
-    HyphenMinusEqualsSignToken |
-    PlusSignEqualsSignToken |
-    ShrKeywordEqualsSignToken |
-    ShlKeywordEqualsSignToken |
-    ModKeywordEqualsSignToken |
-    SlashEqualsSignToken |
-    AsteriskEqualsSignToken |
-    EqualsSignToken
+    | VerticalBarEqualsSignToken
+    | TildeEqualsSignToken
+    | AmpersandEqualsSignToken
+    | HyphenMinusEqualsSignToken
+    | PlusSignEqualsSignToken
+    | ShrKeywordEqualsSignToken
+    | ShlKeywordEqualsSignToken
+    | ModKeywordEqualsSignToken
+    | SlashEqualsSignToken
+    | AsteriskEqualsSignToken
+    | EqualsSignToken
     ;

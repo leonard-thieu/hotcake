@@ -4,8 +4,8 @@ import { BoundExternDataDeclaration } from './BoundExternDataDeclaration';
 import { BoundExternFunctionDeclaration } from './BoundExternFunctionDeclaration';
 
 export type BoundExternDeclarations =
-    BoundExternDataDeclaration |
-    BoundExternFunctionDeclaration |
-    BoundExternClassDeclaration |
-    BoundExternClassMethodDeclaration
+    | BoundExternDataDeclaration
+    | BoundExternFunctionDeclaration
+    | BoundExternClassDeclaration
+    | BoundExternClassMethodDeclaration
     ;

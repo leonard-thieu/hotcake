@@ -74,10 +74,13 @@ export class AliasDirective extends Declaration {
 
 // NOTE: Does not include BoolKeywordToken.
 export type DeclarationReferenceIdentifier =
-    Identifier |
-    IntKeywordToken |
-    FloatKeywordToken |
-    StringKeywordToken
+    | Identifier
+    | IntKeywordToken
+    | FloatKeywordToken
+    | StringKeywordToken
     ;
 
-export type MissableDeclarationReferenceIdentifier = DeclarationReferenceIdentifier | MissingToken<TokenKind.Identifier>;
+export type MissableDeclarationReferenceIdentifier =
+    | DeclarationReferenceIdentifier
+    | MissingToken<TokenKind.Identifier>
+    ;

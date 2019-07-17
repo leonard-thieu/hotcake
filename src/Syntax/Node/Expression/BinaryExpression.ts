@@ -39,22 +39,22 @@ export class BinaryExpression extends Expression {
 }
 
 export type BinaryExpressionOperatorToken =
-    OrKeywordToken |
-    AndKeywordToken |
-    LessThanSignGreaterThanSignToken |
-    GreaterThanSignEqualsSignToken |
-    LessThanSignEqualsSignToken |
-    GreaterThanSignToken |
-    LessThanSignToken |
-    EqualsSignToken |
-    VerticalBarToken |
-    TildeToken |
-    AmpersandToken |
-    HyphenMinusToken |
-    PlusSignToken |
-    ShrKeywordToken |
-    ShlKeywordToken |
-    ModKeywordToken |
-    SlashToken |
-    AsteriskToken
+    | OrKeywordToken
+    | AndKeywordToken
+    | LessThanSignGreaterThanSignToken
+    | GreaterThanSignEqualsSignToken
+    | LessThanSignEqualsSignToken
+    | GreaterThanSignToken
+    | LessThanSignToken
+    | EqualsSignToken
+    | VerticalBarToken
+    | TildeToken
+    | AmpersandToken
+    | HyphenMinusToken
+    | PlusSignToken
+    | ShrKeywordToken
+    | ShlKeywordToken
+    | ModKeywordToken
+    | SlashToken
+    | AsteriskToken
     ;

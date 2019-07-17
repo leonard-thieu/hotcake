@@ -33,8 +33,8 @@ export class UnaryExpression extends Expression {
 }
 
 export type UnaryOperatorToken =
-    PlusSignToken |
-    HyphenMinusToken |
-    TildeToken |
-    NotKeywordToken
+    | PlusSignToken
+    | HyphenMinusToken
+    | TildeToken
+    | NotKeywordToken
     ;

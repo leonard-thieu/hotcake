@@ -48,15 +48,15 @@ export class IdentifierExpression extends Expression {
 }
 
 export type IdentifierExpressionIdentifier =
-    Identifier |
-    IdentifierExpressionToken
+    | Identifier
+    | IdentifierExpressionToken
     ;
 
 export type IdentifierExpressionToken =
-    EscapeOptionalIdentifierNameToken |
-    NewKeywordToken |   // Super.New()
-    BoolKeywordToken |
-    IntKeywordToken |
-    FloatKeywordToken |
-    StringKeywordToken
+    | EscapeOptionalIdentifierNameToken
+    | NewKeywordToken // Super.New()
+    | BoolKeywordToken
+    | IntKeywordToken
+    | FloatKeywordToken
+    | StringKeywordToken
     ;

@@ -27,8 +27,8 @@ export class AccessibilityDirective extends Declaration {
 }
 
 export type AccessibilityKeywordToken =
-    PrivateKeywordToken |
-    PublicKeywordToken |
-    ProtectedKeywordToken |
-    ExternKeywordToken
+    | PrivateKeywordToken
+    | PublicKeywordToken
+    | ProtectedKeywordToken
+    | ExternKeywordToken
     ;

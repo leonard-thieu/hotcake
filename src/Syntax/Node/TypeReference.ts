@@ -59,21 +59,24 @@ export class TypeReference extends Node {
 }
 
 export type TypeReferenceIdentifier =
-    Identifier |
-    BoolKeywordToken |
-    IntKeywordToken |
-    FloatKeywordToken |
-    StringKeywordToken |
-    VoidKeywordToken
+    | Identifier
+    | BoolKeywordToken
+    | IntKeywordToken
+    | FloatKeywordToken
+    | StringKeywordToken
+    | VoidKeywordToken
     ;
 
 export type TypeReferenceIdentifierStartToken =
-    IdentifierStartToken |
-    BoolKeywordToken |
-    IntKeywordToken |
-    FloatKeywordToken |
-    StringKeywordToken |
-    VoidKeywordToken
+    | IdentifierStartToken
+    | BoolKeywordToken
+    | IntKeywordToken
+    | FloatKeywordToken
+    | StringKeywordToken
+    | VoidKeywordToken
     ;
 
-export type MissableTypeReference = TypeReference | MissingToken<TypeReference['kind']>;
+export type MissableTypeReference =
+    | TypeReference
+    | MissingToken<TypeReference['kind']>
+    ;

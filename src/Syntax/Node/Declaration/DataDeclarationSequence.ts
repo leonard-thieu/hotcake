@@ -37,10 +37,10 @@ export class DataDeclarationSequence extends Declaration {
 }
 
 export type DataDeclarationKeywordToken =
-    ConstKeywordToken |
-    GlobalKeywordToken |
-    FieldKeywordToken |
-    LocalKeywordToken
+    | ConstKeywordToken
+    | GlobalKeywordToken
+    | FieldKeywordToken
+    | LocalKeywordToken
     ;
 
 /**
@@ -105,4 +105,7 @@ export class DataDeclaration extends Declaration {
     }
 }
 
-export type MissableDataDeclaration = DataDeclaration | MissingToken<DataDeclaration['kind']>;
+export type MissableDataDeclaration =
+    | DataDeclaration
+    | MissingToken<DataDeclaration['kind']>
+    ;

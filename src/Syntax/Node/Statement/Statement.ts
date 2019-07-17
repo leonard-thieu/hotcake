@@ -19,17 +19,17 @@ export abstract class Statement extends Node {
 }
 
 export type Statements =
-    ContinueStatement |
-    DataDeclarationSequenceStatement |
-    EmptyStatement |
-    ExitStatement |
-    ExpressionStatement |
-    ForLoop |
-    IfStatement |
-    RepeatLoop |
-    ReturnStatement |
-    SelectStatement |
-    ThrowStatement |
-    TryStatement |
-    WhileLoop
+    | ContinueStatement
+    | DataDeclarationSequenceStatement
+    | EmptyStatement
+    | ExitStatement
+    | ExpressionStatement
+    | ForLoop
+    | IfStatement
+    | RepeatLoop
+    | ReturnStatement
+    | SelectStatement
+    | ThrowStatement
+    | TryStatement
+    | WhileLoop
     ;

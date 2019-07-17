@@ -199,21 +199,21 @@ export abstract class Node {
 }
 
 export type Nodes =
-    Declarations |
-    Directives |
-    Expressions |
-    Statements |
-    ConfigurationTag |
-    ElseIfClause | ElseClause |
-    CaseClause | DefaultClause |
-    NumericForLoopHeader |
-    CatchClause |
-    ArrayTypeAnnotation |
-    TypeAnnotation |
-    CommaSeparator |
-    EscapedIdentifier |
-    ModulePath |
-    TypeReference
+    | Declarations
+    | Directives
+    | Expressions
+    | Statements
+    | ConfigurationTag
+    | ElseIfClause | ElseClause
+    | CaseClause | DefaultClause
+    | NumericForLoopHeader
+    | CatchClause
+    | ArrayTypeAnnotation
+    | TypeAnnotation
+    | CommaSeparator
+    | EscapedIdentifier
+    | ModulePath
+    | TypeReference
     ;
 
 export function isNode(nodeOrToken: Nodes | ErrorableToken): nodeOrToken is Nodes {

@@ -307,13 +307,13 @@ export type TokenKinds = keyof TokenKindTokenMap;
 export type Tokens = TokenKindTokenMap[TokenKinds];
 
 export type ErrorableTokenKinds =
-    TokenKinds |
-    TokenKind.Missing |
-    MissableTokenKinds |
-    TokenKind.Skipped
+    | TokenKinds
+    | TokenKind.Missing
+    | MissableTokenKinds
+    | TokenKind.Skipped
     ;
 export type ErrorableToken =
-    Tokens |
-    MissingToken<MissableTokenKinds> |
-    SkippedToken<TokenKinds>
+    | Tokens
+    | MissingToken<MissableTokenKinds>
+    | SkippedToken<TokenKinds>
     ;

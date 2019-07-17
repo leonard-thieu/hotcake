@@ -19,23 +19,23 @@ import { BoundSuperExpression } from './BoundSuperExpression';
 import { BoundUnaryExpression } from './BoundUnaryExpression';
 
 export type BoundExpressions =
-    BoundAssignmentExpression |
-    BoundBinaryExpression |
-    BoundUnaryExpression |
-    BoundNewExpression |
-    BoundNullExpression |
-    BoundBooleanLiteralExpression |
-    BoundSelfExpression |
-    BoundSuperExpression |
-    BoundStringLiteralExpression |
-    BoundFloatLiteralExpression |
-    BoundIntegerLiteralExpression |
-    BoundArrayLiteralExpression |
-    BoundGlobalScopeExpression |
-    BoundIdentifierExpression |
-    BoundGroupingExpression |
-    BoundScopeMemberAccessExpression |
-    BoundIndexExpression |
-    BoundSliceExpression |
-    BoundInvokeExpression
+    | BoundAssignmentExpression
+    | BoundBinaryExpression
+    | BoundUnaryExpression
+    | BoundNewExpression
+    | BoundNullExpression
+    | BoundBooleanLiteralExpression
+    | BoundSelfExpression
+    | BoundSuperExpression
+    | BoundStringLiteralExpression
+    | BoundFloatLiteralExpression
+    | BoundIntegerLiteralExpression
+    | BoundArrayLiteralExpression
+    | BoundGlobalScopeExpression
+    | BoundIdentifierExpression
+    | BoundGroupingExpression
+    | BoundScopeMemberAccessExpression
+    | BoundIndexExpression
+    | BoundSliceExpression
+    | BoundInvokeExpression
     ;

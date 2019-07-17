@@ -27,25 +27,28 @@ export abstract class Expression extends Node {
 }
 
 export type Expressions =
-    NewExpression |
-    NullExpression |
-    BooleanLiteralExpression |
-    SelfExpression |
-    SuperExpression |
-    IntegerLiteralExpression |
-    FloatLiteralExpression |
-    StringLiteralExpression |
-    ArrayLiteralExpression |
-    IdentifierExpression |
-    ScopeMemberAccessExpression |
-    InvokeExpression |
-    IndexExpression |
-    SliceExpression |
-    GroupingExpression |
-    UnaryExpression |
-    BinaryExpression |
-    AssignmentExpression |
-    GlobalScopeExpression
+    | NewExpression
+    | NullExpression
+    | BooleanLiteralExpression
+    | SelfExpression
+    | SuperExpression
+    | IntegerLiteralExpression
+    | FloatLiteralExpression
+    | StringLiteralExpression
+    | ArrayLiteralExpression
+    | IdentifierExpression
+    | ScopeMemberAccessExpression
+    | InvokeExpression
+    | IndexExpression
+    | SliceExpression
+    | GroupingExpression
+    | UnaryExpression
+    | BinaryExpression
+    | AssignmentExpression
+    | GlobalScopeExpression
     ;
 
-export type MissableExpression = Expressions | MissingToken<TokenKind.Expression>;
+export type MissableExpression =
+    | Expressions
+    | MissingToken<TokenKind.Expression>
+    ;

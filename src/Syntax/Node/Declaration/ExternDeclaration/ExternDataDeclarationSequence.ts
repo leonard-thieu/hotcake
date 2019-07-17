@@ -33,8 +33,8 @@ export class ExternDataDeclarationSequence extends Declaration {
 }
 
 export type ExternDataDeclarationKeywordToken =
-    GlobalKeywordToken |
-    FieldKeywordToken
+    | GlobalKeywordToken
+    | FieldKeywordToken
     ;
 
 export class ExternDataDeclaration extends ExternDeclaration {

@@ -5,8 +5,8 @@ import { NodeKind } from './NodeKind';
 import { MissableTypeReference } from './TypeReference';
 
 export type TypeAnnotation =
-    ShorthandTypeAnnotation |
-    LonghandTypeAnnotation
+    | ShorthandTypeAnnotation
+    | LonghandTypeAnnotation
     ;
 
 export class ShorthandTypeAnnotation extends Node {
@@ -38,10 +38,10 @@ export class ShorthandTypeAnnotation extends Node {
 }
 
 export type ShorthandTypeToken =
-    QuestionMarkToken |
-    PercentSignToken |
-    NumberSignToken |
-    DollarSignToken
+    | QuestionMarkToken
+    | PercentSignToken
+    | NumberSignToken
+    | DollarSignToken
     ;
 
 export class LonghandTypeAnnotation extends Node {

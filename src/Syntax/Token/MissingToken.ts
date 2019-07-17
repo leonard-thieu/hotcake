@@ -20,16 +20,16 @@ export class MissingToken<TTokenKind extends MissableTokenKinds> extends Token<T
 }
 
 export type MissableTokenKinds =
-    TokenKinds |
-    TokenKind.Expression |
-    TokenKind.ForLoopHeader |
-    TokenKind.ImportStatementPath |
-    NodeKind.DataDeclaration |
-    NodeKind.StringLiteralExpression |
-    NodeKind.TypeReference
+    | TokenKinds
+    | TokenKind.Expression
+    | TokenKind.ForLoopHeader
+    | TokenKind.ImportStatementPath
+    | NodeKind.DataDeclaration
+    | NodeKind.StringLiteralExpression
+    | NodeKind.TypeReference
     ;
 
 export type MissableToken<TToken extends Tokens> =
-    TokenKindTokenMap[TToken['kind']] |
-    MissingToken<TToken['kind']>
+    | TokenKindTokenMap[TToken['kind']]
+    | MissingToken<TToken['kind']>
     ;

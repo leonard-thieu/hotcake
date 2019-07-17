@@ -26,6 +26,6 @@ export class BooleanLiteralExpression extends Expression {
 }
 
 export type BooleanLiteralExpressionValueToken =
-    TrueKeywordToken |
-    FalseKeywordToken
+    | TrueKeywordToken
+    | FalseKeywordToken
     ;
