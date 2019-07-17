@@ -25,14 +25,13 @@
             },
             "path": {
                 "kind": "ModulePath",
-                "children": [
-                    {
-                        "kind": "Identifier",
-                        "fullStart": 76,
-                        "start": 77,
-                        "length": 20
-                    }
-                ]
+                "children": [],
+                "moduleIdentifier": {
+                    "kind": "Identifier",
+                    "fullStart": 76,
+                    "start": 77,
+                    "length": 20
+                }
             }
         },
         {
@@ -75,14 +74,14 @@
                         "fullStart": 120,
                         "start": 120,
                         "length": 1
-                    },
-                    {
-                        "kind": "Identifier",
-                        "fullStart": 121,
-                        "start": 121,
-                        "length": 5
                     }
-                ]
+                ],
+                "moduleIdentifier": {
+                    "kind": "Identifier",
+                    "fullStart": 121,
+                    "start": 121,
+                    "length": 5
+                }
             }
         },
         {

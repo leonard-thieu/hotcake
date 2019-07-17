@@ -1,8 +1,9 @@
 import path = require('path');
 import { assertNever } from '../assertNever';
+import { FILE_EXTENSION, Project } from '../Project';
 import { CommaSeparator } from '../Syntax/Node/CommaSeparator';
 import { AccessibilityDirective } from '../Syntax/Node/Declaration/AccessibilityDirective';
-import { AliasDirectiveSequence } from '../Syntax/Node/Declaration/AliasDirectiveSequence';
+import { AliasDirective, AliasDirectiveSequence } from '../Syntax/Node/Declaration/AliasDirectiveSequence';
 import { ClassDeclaration } from '../Syntax/Node/Declaration/ClassDeclaration';
 import { ClassMethodDeclaration } from '../Syntax/Node/Declaration/ClassMethodDeclaration';
 import { DataDeclaration, DataDeclarationKeywordToken, DataDeclarationSequence } from '../Syntax/Node/Declaration/DataDeclarationSequence';
@@ -12,6 +13,7 @@ import { ExternClassMethodDeclaration } from '../Syntax/Node/Declaration/ExternD
 import { ExternDataDeclaration, ExternDataDeclarationKeywordToken, ExternDataDeclarationSequence } from '../Syntax/Node/Declaration/ExternDeclaration/ExternDataDeclarationSequence';
 import { ExternFunctionDeclaration } from '../Syntax/Node/Declaration/ExternDeclaration/ExternFunctionDeclaration';
 import { FunctionDeclaration } from '../Syntax/Node/Declaration/FunctionDeclaration';
+import { ImportStatement } from '../Syntax/Node/Declaration/ImportStatement';
 import { InterfaceDeclaration } from '../Syntax/Node/Declaration/InterfaceDeclaration';
 import { InterfaceMethodDeclaration } from '../Syntax/Node/Declaration/InterfaceMethodDeclaration';
 import { ModuleDeclaration } from '../Syntax/Node/Declaration/ModuleDeclaration';
@@ -27,6 +29,7 @@ import { NewExpression } from '../Syntax/Node/Expression/NewExpression';
 import { ScopeMemberAccessExpression } from '../Syntax/Node/Expression/ScopeMemberAccessExpression';
 import { SliceExpression } from '../Syntax/Node/Expression/SliceExpression';
 import { UnaryExpression } from '../Syntax/Node/Expression/UnaryExpression';
+import { ModulePath } from '../Syntax/Node/ModulePath';
 import { NodeKind } from '../Syntax/Node/NodeKind';
 import { DataDeclarationSequenceStatement } from '../Syntax/Node/Statement/DataDeclarationSequenceStatement';
 import { ExpressionStatement } from '../Syntax/Node/Statement/ExpressionStatement';
@@ -45,13 +48,18 @@ import { SkippedToken } from '../Syntax/Token/SkippedToken';
 import { TokenKinds, Tokens } from '../Syntax/Token/Token';
 import { TokenKind } from '../Syntax/Token/TokenKind';
 import { BoundSymbol, BoundSymbolTable } from './BoundSymbol';
+import { ModuleReference } from './ModuleReference';
+import { BoundModulePath } from "./Node/BoundModulePath";
 import { BoundNodes } from './Node/BoundNode';
 import { BoundNodeKind } from './Node/BoundNodeKind';
+import { BoundAliasDirective } from './Node/Declaration/BoundAliasDirective';
 import { BoundClassDeclaration, BoundClassDeclarationMember } from './Node/Declaration/BoundClassDeclaration';
 import { BoundClassMethodDeclaration } from './Node/Declaration/BoundClassMethodDeclaration';
 import { BoundDataDeclaration } from './Node/Declaration/BoundDataDeclaration';
 import { BoundDeclarations } from './Node/Declaration/BoundDeclarations';
+import { BoundDirectory } from './Node/Declaration/BoundDirectory';
 import { BoundFunctionDeclaration } from './Node/Declaration/BoundFunctionDeclaration';
+import { BoundImportStatement } from './Node/Declaration/BoundImportStatement';
 import { BoundInterfaceDeclaration, BoundInterfaceDeclarationMember } from './Node/Declaration/BoundInterfaceDeclaration';
 import { BoundInterfaceMethodDeclaration } from './Node/Declaration/BoundInterfaceMethodDeclaration';
 import { BoundModuleDeclaration, BoundModuleDeclarationMember } from './Node/Declaration/BoundModuleDeclaration';
@@ -106,31 +114,63 @@ export class Binder {
     private document: string = undefined!;
     private module: BoundModuleDeclaration = undefined!;
 
-    bind(moduleDeclaration: ModuleDeclaration): BoundModuleDeclaration {
+    bind(
+        moduleDeclaration: ModuleDeclaration,
+        project: Project,
+        boundDirectory: BoundDirectory,
+        moduleIdentifier: string,
+    ): BoundModuleDeclaration {
         this.document = moduleDeclaration.document;
 
-        return this.bindModuleDeclaration(moduleDeclaration);
+        return this.bindModuleDeclaration(moduleDeclaration, project, boundDirectory, moduleIdentifier);
     }
 
     // #region Declarations
 
     // #region Module declaration
 
-    private bindModuleDeclaration(moduleDeclaration: ModuleDeclaration): BoundModuleDeclaration {
+    private bindModuleDeclaration(
+        moduleDeclaration: ModuleDeclaration,
+        project: Project,
+        boundDirectory: BoundDirectory,
+        moduleIdentifier: string,
+    ): BoundModuleDeclaration {
         const boundModuleDeclaration = new BoundModuleDeclaration();
         this.module = boundModuleDeclaration;
-        boundModuleDeclaration.identifier = this.declareSymbol(moduleDeclaration, boundModuleDeclaration);
+        boundModuleDeclaration.project = project;
+        boundModuleDeclaration.directory = boundDirectory;
+
+        const boundSymbol = new BoundSymbol(moduleIdentifier, boundModuleDeclaration);
+        boundModuleDeclaration.directory.locals.set(moduleIdentifier, boundSymbol);
+        boundModuleDeclaration.identifier = boundSymbol;
+
         boundModuleDeclaration.locals = new BoundSymbolTable();
+        boundModuleDeclaration.members = this.bindModuleDeclarationHeaderMembers(moduleDeclaration, boundModuleDeclaration);
+        boundModuleDeclaration.members.push(...this.bindModuleDeclarationMembers(moduleDeclaration, boundModuleDeclaration));
+
+        return boundModuleDeclaration;
+    }
+
+    private bindModuleDeclarationHeaderMembers(
+        moduleDeclaration: ModuleDeclaration,
+        parent: BoundNodes,
+    ): BoundModuleDeclarationMember[] {
+        const boundHeaderMembers: BoundModuleDeclarationMember[] = [];
 
         for (const member of moduleDeclaration.headerMembers) {
             switch (member.kind) {
-                case NodeKind.ImportStatement:
+                case NodeKind.ImportStatement: {
+                    const boundImportStatement = this.bindImportStatement(member, parent);
+                    boundHeaderMembers.push(boundImportStatement);
+                    break;
+                }
                 case NodeKind.FriendDirective:
                 case NodeKind.AccessibilityDirective: {
                     throw new Error('Method not implemented.');
                 }
                 case NodeKind.AliasDirectiveSequence: {
-                    this.bindAliasDirectiveSequence(member);
+                    const boundAliasDirectives = this.bindAliasDirectiveSequence(member, parent);
+                    boundHeaderMembers.push(...boundAliasDirectives);
                     break;
                 }
                 case TokenKind.Newline:
@@ -144,9 +184,7 @@ export class Binder {
             }
         }
 
-        boundModuleDeclaration.members = this.bindModuleDeclarationMembers(moduleDeclaration, boundModuleDeclaration);
-
-        return boundModuleDeclaration;
+        return boundHeaderMembers;
     }
 
     private bindModuleDeclarationMembers(
@@ -212,22 +250,137 @@ export class Binder {
 
     // #endregion
 
+    // #region Import statement
+
+    private bindImportStatement(
+        importStatement: ImportStatement,
+        parent: BoundNodes,
+    ): BoundImportStatement {
+        const boundImportStatement = new BoundImportStatement();
+        boundImportStatement.parent = parent;
+
+        const { path } = importStatement;
+        switch (path.kind) {
+            case NodeKind.StringLiteralExpression: {
+                boundImportStatement.path = this.bindStringLiteralExpression(boundImportStatement);
+                break;
+            }
+            case NodeKind.ModulePath: {
+                boundImportStatement.path = this.bindModulePath(path, boundImportStatement);
+                break;
+            }
+            case TokenKind.Missing: { break; }
+            default: {
+                assertNever(path);
+                break;
+            }
+        }
+
+        return boundImportStatement;
+    }
+
+    // #endregion
+
+    // #region Module path
+
+    private bindModulePath(
+        modulePath: ModulePath,
+        parent: BoundNodes,
+    ): BoundModulePath {
+        const boundModulePath = new BoundModulePath();
+        boundModulePath.parent = parent;
+
+        const { moduleIdentifier } = modulePath;
+        switch (moduleIdentifier.kind) {
+            case TokenKind.Identifier: {
+                const { project } = this.module;
+                const modulePathComponents = project.getModulePathComponents(modulePath.children, this.document);
+                const moduleIdentifier = modulePath.moduleIdentifier.getText(this.document);
+                const boundTargetModuleDirectory = project.resolveModuleDirectory(this.module.directory.fullPath, modulePathComponents, moduleIdentifier);
+                if (!boundTargetModuleDirectory) {
+                    const pathComponents = [
+                        ...modulePathComponents,
+                        moduleIdentifier
+                    ];
+
+                    throw new Error(`Could not resolve '${pathComponents.join('.')}'.`);
+                }
+
+                const targetModulePath = path.resolve(boundTargetModuleDirectory.fullPath, moduleIdentifier + FILE_EXTENSION);
+                const boundTargetModule = project.importModule(targetModulePath);
+                const moduleReference = new ModuleReference(boundTargetModule);
+                boundModulePath.moduleIdentifier = moduleReference;
+                break;
+            }
+            case TokenKind.Missing: {
+                throw new Error('Method not implemented.');
+            }
+            default: {
+                assertNever(moduleIdentifier);
+                break;
+            }
+        }
+
+        return boundModulePath;
+    }
+
+    // #endregion
+
     // #region Alias directive sequence
 
-    private bindAliasDirectiveSequence(aliasDirectiveSequence: AliasDirectiveSequence) {
-        for (const child of aliasDirectiveSequence.children) {
-            switch (child.kind) {
+    private bindAliasDirectiveSequence(
+        aliasDirectiveSequence: AliasDirectiveSequence,
+        parent: BoundNodes,
+    ): BoundAliasDirective[] {
+        const boundAliasDirectives: BoundAliasDirective[] = [];
+
+        for (const aliasDirective of aliasDirectiveSequence.children) {
+            switch (aliasDirective.kind) {
                 case NodeKind.AliasDirective: {
-                    // TOOD: Bind Alias directive
+                    const boundAliasDirective = this.bindAliasDirective(aliasDirective, parent);
+                    boundAliasDirectives.push(boundAliasDirective);
                     break;
                 }
                 case NodeKind.CommaSeparator: { break; }
                 default: {
-                    assertNever(child);
+                    assertNever(aliasDirective);
                     break;
                 }
             }
         }
+
+        return boundAliasDirectives;
+    }
+
+    private bindAliasDirective(
+        aliasDirective: AliasDirective,
+        parent: BoundNodes,
+    ): BoundAliasDirective {
+        const boundAliasDirective = new BoundAliasDirective();
+        boundAliasDirective.parent = parent;
+        boundAliasDirective.moduleIdentifier = aliasDirective.moduleIdentifier;
+        boundAliasDirective.typeIdentifier = aliasDirective.typeIdentifier;
+
+        const { target } = aliasDirective;
+        switch (target.kind) {
+            case NodeKind.EscapedIdentifier:
+            case TokenKind.Identifier:
+            case TokenKind.ObjectKeyword:
+            case TokenKind.ThrowableKeyword:
+            case TokenKind.IntKeyword:
+            case TokenKind.FloatKeyword:
+            case TokenKind.StringKeyword: {
+                boundAliasDirective.target = target;
+                break;
+            }
+            case TokenKind.Missing: { break; }
+            default: {
+                assertNever(target);
+                break;
+            }
+        }
+
+        return boundAliasDirective;
     }
 
     // #endregion
@@ -339,13 +492,25 @@ export class Binder {
         boundExternClassDeclaration.locals = new BoundSymbolTable();
         boundExternClassDeclaration.identifier = this.declareSymbol(externClassDeclaration, boundExternClassDeclaration);
         boundExternClassDeclaration.type = new ObjectType(boundExternClassDeclaration);
-        if (externClassDeclaration.baseType) {
-            if (externClassDeclaration.baseType.kind === TokenKind.NullKeyword) {
-                throw new Error('Extending from Null is not implemented.');
-            } else {
-                boundExternClassDeclaration.baseType = this.bindTypeReference(externClassDeclaration.baseType);
+
+        const { baseType } = externClassDeclaration;
+        if (!baseType) {
+            boundExternClassDeclaration.baseType = ObjectType.type;
+        } else {
+            switch (baseType.kind) {
+                case NodeKind.TypeReference: {
+                    boundExternClassDeclaration.baseType = this.bindTypeReference(baseType);
+                    break;
+                }
+                case TokenKind.NullKeyword:
+                case TokenKind.Missing: { break; }
+                default: {
+                    assertNever(baseType);
+                    break;
+                }
             }
         }
+
         if (externClassDeclaration.nativeSymbol) {
             boundExternClassDeclaration.nativeSymbol = this.bindStringLiteralExpression(boundExternClassDeclaration);
         }
@@ -1709,7 +1874,9 @@ export class Binder {
                         break;
                     }
 
+                    case BoundNodeKind.Directory:
                     case BoundNodeKind.ModuleDeclaration:
+                    case BoundNodeKind.ImportStatement:
                     case BoundNodeKind.ExternFunctionDeclaration:
                     case BoundNodeKind.ExternClassMethodDeclaration:
                     case BoundNodeKind.FunctionDeclaration:
@@ -2189,7 +2356,18 @@ export class Binder {
             const existingSymbol = scope.locals.get(name);
 
             if (existingSymbol) {
-                throw new Error(`Duplicate symbol '${name}'.`);
+                switch (boundDeclaration.kind) {
+                    case BoundNodeKind.ExternFunctionDeclaration:
+                    case BoundNodeKind.ExternClassMethodDeclaration:
+                    case BoundNodeKind.FunctionDeclaration:
+                    case BoundNodeKind.ClassMethodDeclaration: {
+                        console.log('Overloads are not implemented.');
+                        break;
+                    }
+                    default: {
+                        throw new Error(`Duplicate symbol '${name}'.`);
+                    }
+                }
             } else {
                 scope.locals.set(name, identifier);
             }
@@ -2236,9 +2414,6 @@ export class Binder {
 
     private getDeclarationName(declaration: Declarations): string {
         switch (declaration.kind) {
-            case NodeKind.ModuleDeclaration: {
-                return path.basename(declaration.filePath, path.extname(declaration.filePath));
-            }
             case NodeKind.AliasDirective:
             case NodeKind.ExternDataDeclaration:
             case NodeKind.ExternFunctionDeclaration:

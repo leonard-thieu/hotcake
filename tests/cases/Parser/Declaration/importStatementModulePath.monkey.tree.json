@@ -12,14 +12,13 @@
             },
             "path": {
                 "kind": "ModulePath",
-                "children": [
-                    {
-                        "kind": "Identifier",
-                        "fullStart": 6,
-                        "start": 7,
-                        "length": 6
-                    }
-                ]
+                "children": [],
+                "moduleIdentifier": {
+                    "kind": "Identifier",
+                    "fullStart": 6,
+                    "start": 7,
+                    "length": 6
+                }
             }
         }
     ],

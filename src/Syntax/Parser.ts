@@ -252,7 +252,7 @@ export class Parser extends ParserBase {
 
                 // Needed when parsing Alias directives.
                 // Allows disambiguation between a module identifier and a type identifier.
-                const moduleIdentifier = importStatement.path.children[importStatement.path.children.length - 1];
+                const { moduleIdentifier } = importStatement.path;
                 if (moduleIdentifier.kind === TokenKind.Identifier) {
                     this.moduleIdentifiers.push(moduleIdentifier.getText(this.document));
                 }
@@ -288,6 +288,21 @@ export class Parser extends ParserBase {
         const modulePath = new ModulePath();
         modulePath.parent = parent;
         modulePath.children = this.parseList(ParseContextKind.ModulePathSequence, modulePath, TokenKind.Period);
+
+        const { children } = modulePath;
+        const lastChild = children.pop();
+        if (lastChild &&
+            lastChild.kind === TokenKind.Identifier) {
+            modulePath.moduleIdentifier = lastChild;
+        } else {
+            if (lastChild) {
+                // Give the child back
+                children.push(lastChild);
+            }
+
+            const token = this.getToken();
+            modulePath.moduleIdentifier = this.createMissingToken(token.fullStart, TokenKind.Identifier);
+        }
 
         return modulePath;
     }

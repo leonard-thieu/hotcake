@@ -9,6 +9,7 @@
     "build": "webpack --mode none && js-yaml vscode/syntaxes/monkeyx.tmLanguage.yaml > vscode/syntaxes/monkeyx.tmLanguage.json",
     "build:test": "tsc",
     "watch": "webpack --mode none --watch",
+    "watch:test": "tsc --watch",
     "clean": "node scripts/clean.js",
     "test": "mocha --require source-map-support/register \"./tests/!(MonkeyTests)*.js\"",
     "test:monkey": "mocha --require source-map-support/register \"./tests\"",

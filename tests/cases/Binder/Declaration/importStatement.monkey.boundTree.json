@@ -1,0 +1,16 @@
+{
+    "kind": "ModuleDeclaration",
+    "identifier": "importStatement",
+    "locals": [],
+    "members": [
+        {
+            "kind": "ImportStatement",
+            "path": {
+                "kind": "ModulePath",
+                "moduleIdentifier": {
+                    "declaration": "lang"
+                }
+            }
+        }
+    ]
+}

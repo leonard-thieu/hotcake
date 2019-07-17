@@ -1,5 +1,12 @@
 export enum BoundNodeKind {
+    Directory = 'Directory',
+
     ModuleDeclaration = 'ModuleDeclaration',
+
+    ImportStatement = 'ImportStatement',
+    ModulePath = 'ModulePath',
+    AliasDirective = 'AliasDirective',
+    ModuleReference = 'ModuleReference',
 
     ExternDataDeclaration = 'ExternDataDeclaration',
     ExternFunctionDeclaration = 'ExternFunctionDeclaration',

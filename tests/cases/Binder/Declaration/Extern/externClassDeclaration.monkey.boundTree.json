@@ -13,6 +13,7 @@
                 "Method2"
             ],
             "type": "Driver",
+            "baseType": "Object",
             "members": [
                 {
                     "kind": "ExternClassMethodDeclaration",
