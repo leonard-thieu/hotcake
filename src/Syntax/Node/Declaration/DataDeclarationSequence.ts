@@ -62,5 +62,5 @@ export class DataDeclaration extends Declaration {
 
 export type MissableDataDeclaration =
     | DataDeclaration
-    | MissingToken<DataDeclaration['kind']>
+    | MissingToken
     ;

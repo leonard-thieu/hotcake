@@ -1,6 +1,5 @@
 import { ParseContextElementSequence, ParseContextKind } from '../../ParserBase';
 import { MissingToken } from '../../Token/MissingToken';
-import { TokenKind } from '../../Token/TokenKind';
 import { Node } from '../Node';
 import { ArrayLiteralExpression } from './ArrayLiteralExpression';
 import { AssignmentExpression } from './AssignmentExpression';
@@ -50,5 +49,5 @@ export type Expressions =
 
 export type MissableExpression =
     | Expressions
-    | MissingToken<TokenKind.Expression>
+    | MissingToken
     ;

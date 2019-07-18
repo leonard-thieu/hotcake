@@ -50,5 +50,5 @@ export type TypeReferenceIdentifierStartToken =
 
 export type MissableTypeReference =
     | TypeReference
-    | MissingToken<TypeReference['kind']>
+    | MissingToken
     ;

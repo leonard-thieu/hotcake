@@ -1,4 +1,4 @@
-import { MissableTokenKinds, MissingToken } from './MissingToken';
+import { MissingTokenKinds, MissingToken } from './MissingToken';
 import { SkippedToken } from './SkippedToken';
 import { TokenKind } from './TokenKind';
 
@@ -305,11 +305,11 @@ export type Tokens = TokenKindTokenMap[TokenKinds];
 export type ErrorableTokenKinds =
     | TokenKinds
     | TokenKind.Missing
-    | MissableTokenKinds
+    | MissingTokenKinds
     | TokenKind.Skipped
     ;
 export type ErrorableToken =
     | Tokens
-    | MissingToken<MissableTokenKinds>
+    | MissingToken
     | SkippedToken
     ;

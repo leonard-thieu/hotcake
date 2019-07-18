@@ -53,5 +53,5 @@ export type DeclarationReferenceIdentifier =
 
 export type MissableDeclarationReferenceIdentifier =
     | DeclarationReferenceIdentifier
-    | MissingToken<TokenKind.Identifier>
+    | MissingToken
     ;

@@ -39,9 +39,9 @@ import { CatchClause, TryStatement } from './Node/Statement/TryStatement';
 import { WhileLoop } from './Node/Statement/WhileLoop';
 import { LonghandTypeAnnotation, ShorthandTypeAnnotation, ShorthandTypeToken } from './Node/TypeAnnotation';
 import { ParseContextElementMapBase, ParseContextKind, ParserBase } from './ParserBase';
-import { MissableTokenKinds, MissingToken } from './Token/MissingToken';
+import { MissingToken, MissingTokenKinds } from './Token/MissingToken';
 import { SkippedToken } from './Token/SkippedToken';
-import { AliasKeywordToken, CaseKeywordToken, CatchKeywordToken, ClassKeywordToken, ColonToken, ConstKeywordToken, ContinueKeywordToken, DefaultKeywordToken, ElseIfKeywordToken, ElseKeywordToken, ExitKeywordToken, ForKeywordToken, FriendKeywordToken, FunctionKeywordToken, IfKeywordToken, ImportKeywordToken, InterfaceKeywordToken, LocalKeywordToken, MethodKeywordToken, RepeatKeywordToken, ReturnKeywordToken, SelectKeywordToken, StrictKeywordToken, ThrowKeywordToken, Token, TokenKinds, Tokens, TryKeywordToken, WhileKeywordToken } from './Token/Token';
+import { AliasKeywordToken, CaseKeywordToken, CatchKeywordToken, ClassKeywordToken, ColonToken, ConstKeywordToken, ContinueKeywordToken, DefaultKeywordToken, ElseIfKeywordToken, ElseKeywordToken, ExitKeywordToken, ForKeywordToken, FriendKeywordToken, FunctionKeywordToken, IfKeywordToken, ImportKeywordToken, InterfaceKeywordToken, LocalKeywordToken, MethodKeywordToken, RepeatKeywordToken, ReturnKeywordToken, SelectKeywordToken, StrictKeywordToken, ThrowKeywordToken, Tokens, TryKeywordToken, WhileKeywordToken } from './Token/Token';
 import { TokenKind } from './Token/TokenKind';
 
 export class Parser extends ParserBase {
@@ -2034,10 +2034,10 @@ export class Parser extends ParserBase {
 
     // #region Tokens
 
-    protected createMissingToken<TTokenKind extends MissableTokenKinds>(fullStart: number, originalKind: TTokenKind): MissingToken<TTokenKind> {
+    protected createMissingToken(fullStart: number, originalKind: MissingTokenKinds): MissingToken {
         this.addDiagnostic(
             DiagnosticKind.Error,
-            `Missing token: ${JSON.stringify(originalKind)}.`,
+            `Missing token: '${originalKind}'.`,
             fullStart,
             0,
         );

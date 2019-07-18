@@ -27,7 +27,7 @@ import { Nodes } from './Node/Node';
 import { NodeKind } from './Node/NodeKind';
 import { MissableTypeReference, TypeReference, TypeReferenceIdentifierStartToken } from './Node/TypeReference';
 import { GreaterThanSignEqualsSignToken } from './Token/GreaterThanSignEqualsSignToken';
-import { MissableTokenKinds, MissingToken } from './Token/MissingToken';
+import { MissingToken, MissingTokenKinds } from './Token/MissingToken';
 import { ModKeywordEqualsSignToken } from './Token/ModKeywordEqualsSignToken';
 import { ShlKeywordEqualsSignToken } from './Token/ShlKeywordEqualsSignToken';
 import { ShrKeywordEqualsSignToken } from './Token/ShrKeywordEqualsSignToken';
@@ -1230,7 +1230,7 @@ export abstract class ParserBase {
 
     // #region Tokens
 
-    protected createMissingToken<TTokenKind extends MissableTokenKinds>(fullStart: number, originalKind: TTokenKind): MissingToken<TTokenKind> {
+    protected createMissingToken(fullStart: number, originalKind: MissingTokenKinds): MissingToken {
         return new MissingToken(fullStart, originalKind);
     }
 
@@ -1240,15 +1240,15 @@ export abstract class ParserBase {
 
     protected eatMissable<TMissableKind extends TokenKinds>(
         kind: TMissableKind,
-    ): TokenKindTokenMap[TMissableKind] | MissingToken<TMissableKind>;
+    ): TokenKindTokenMap[TMissableKind] | MissingToken;
     protected eatMissable<TMissableKind extends TokenKinds, TTokenKind extends TokenKinds>(
         kind: TMissableKind,
         ...kinds: TTokenKind[]
-    ): TokenKindTokenMap[TMissableKind | TTokenKind] | MissingToken<TMissableKind>;
+    ): TokenKindTokenMap[TMissableKind | TTokenKind] | MissingToken;
     protected eatMissable<TMissableKind extends TokenKinds, TTokenKind extends TokenKinds>(
         kind: TMissableKind,
         ...kinds: TTokenKind[]
-    ): TokenKindTokenMap[TMissableKind | TTokenKind] | MissingToken<TMissableKind> {
+    ): TokenKindTokenMap[TMissableKind | TTokenKind] | MissingToken {
         const token = this.getToken();
         if (kind === token.kind ||
             kinds.includes(token.kind as TTokenKind)) {

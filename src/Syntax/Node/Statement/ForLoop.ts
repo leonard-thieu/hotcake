@@ -22,7 +22,7 @@ export class ForLoop extends Statement {
     readonly kind = NodeKind.ForLoop;
 
     forKeyword: ForKeywordToken = undefined!;
-    header: NumericForLoopHeader | DataDeclarationSequenceStatement | AssignmentExpression | MissingToken<TokenKind.ForLoopHeader> = undefined!;
+    header: NumericForLoopHeader | DataDeclarationSequenceStatement | AssignmentExpression | MissingToken = undefined!;
     statements: ParseContextElementArray<ForLoop['kind']> = undefined!;
     endKeyword: MissableToken<NextKeywordToken | EndKeywordToken> = undefined!;
     endForKeyword?: ForKeywordToken = undefined;

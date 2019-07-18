@@ -21,5 +21,5 @@ export class StringLiteralExpression extends Expression {
 
 export type MissableStringLiteralExpression =
     | StringLiteralExpression
-    | MissingToken<StringLiteralExpression['kind']>
+    | MissingToken
     ;
