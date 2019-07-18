@@ -976,11 +976,11 @@ export abstract class ParserBase {
         parent: Nodes,
         identifierStart: CommercialAtToken | TIdentifier,
     ): EscapedIdentifier | TIdentifier {
-        if (identifierStart.kind !== TokenKind.CommercialAt) {
-            return identifierStart;
+        if (identifierStart.kind === TokenKind.CommercialAt) {
+            return this.parseEscapedIdentifier(parent, identifierStart);
         }
 
-        return this.parseEscapedIdentifier(parent, identifierStart);
+        return identifierStart;
     }
 
     private parseEscapedIdentifier(parent: Nodes, commercialAt: CommercialAtToken): EscapedIdentifier {
