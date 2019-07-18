@@ -39,6 +39,7 @@ import { CatchClause, TryStatement } from './Node/Statement/TryStatement';
 import { WhileLoop } from './Node/Statement/WhileLoop';
 import { LonghandTypeAnnotation, ShorthandTypeAnnotation, ShorthandTypeToken } from './Node/TypeAnnotation';
 import { ParseContextElementMapBase, ParseContextKind, ParserBase } from './ParserBase';
+import { ParseTreeVisitor } from './ParseTreeVisitor';
 import { MissingToken, MissingTokenKinds } from './Token/MissingToken';
 import { SkippedToken } from './Token/SkippedToken';
 import { AliasKeywordToken, CaseKeywordToken, CatchKeywordToken, ClassKeywordToken, ColonToken, ConstKeywordToken, ContinueKeywordToken, DefaultKeywordToken, ElseIfKeywordToken, ElseKeywordToken, ExitKeywordToken, ForKeywordToken, FriendKeywordToken, FunctionKeywordToken, IfKeywordToken, ImportKeywordToken, InterfaceKeywordToken, LocalKeywordToken, MethodKeywordToken, RepeatKeywordToken, ReturnKeywordToken, SelectKeywordToken, StrictKeywordToken, ThrowKeywordToken, Tokens, TryKeywordToken, WhileKeywordToken } from './Token/Token';
@@ -1260,13 +1261,29 @@ export class Parser extends ParserBase {
         const returnStatement = new ReturnStatement();
         returnStatement.parent = parent;
         returnStatement.returnKeyword = returnKeyword;
-        // TODO: Is there sufficient information at this point to determine whether the return expression is required?
-        if (this.isExpressionStart(this.getToken())) {
+        if (this.isReturnStatementExpressionRequired(returnStatement)) {
             returnStatement.expression = this.parseExpression(returnStatement);
         }
         returnStatement.terminator = this.eatStatementTerminator(returnStatement);
 
         return returnStatement;
+    }
+
+    private isReturnStatementExpressionRequired(returnStatement: ReturnStatement) {
+        const functionOrMethod = ParseTreeVisitor.getAncestor(returnStatement,
+            NodeKind.FunctionDeclaration,
+            NodeKind.ClassMethodDeclaration
+        ) as FunctionDeclaration | ClassMethodDeclaration;
+
+        if (functionOrMethod.returnType &&
+            functionOrMethod.returnType.kind === NodeKind.LonghandTypeAnnotation &&
+            functionOrMethod.returnType.typeReference.kind !== TokenKind.Missing &&
+            functionOrMethod.returnType.typeReference.identifier.kind === TokenKind.VoidKeyword
+        ) {
+            return false;
+        }
+
+        return true;
     }
 
     // #endregion
