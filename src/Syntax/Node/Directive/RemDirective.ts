@@ -5,15 +5,6 @@ import { NodeKind } from '../NodeKind';
 import { Directive } from './Directive';
 
 export class RemDirective extends Directive {
-    static CHILD_NAMES: (keyof RemDirective)[] = [
-        'numberSign',
-        'remDirectiveKeyword',
-        'children',
-        'endDirectiveNumberSign',
-        'endDirectiveKeyword',
-        'endIfDirectiveKeyword',
-    ];
-
     readonly kind = NodeKind.RemDirective;
 
     remDirectiveKeyword: RemDirectiveKeywordToken = undefined!;
@@ -21,12 +12,4 @@ export class RemDirective extends Directive {
     endDirectiveNumberSign: MissableToken<NumberSignToken> = undefined!;
     endDirectiveKeyword: MissableToken<EndDirectiveKeywordToken> = undefined!;
     endIfDirectiveKeyword?: IfDirectiveKeywordToken = undefined;
-
-    get lastToken() {
-        if (this.endIfDirectiveKeyword) {
-            return this.endIfDirectiveKeyword;
-        }
-
-        return this.endDirectiveKeyword;
-    }
 }

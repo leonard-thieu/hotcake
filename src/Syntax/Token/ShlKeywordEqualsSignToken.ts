@@ -13,11 +13,4 @@ export class ShlKeywordEqualsSignToken extends Token<TokenKind.ShlKeywordEqualsS
             shlKeyword.length + equalsSign.length,
         );
     }
-
-    toJSON(): any {
-        return Object.assign({}, this, {
-            shlKeyword: this.shlKeyword,
-            equalsSign: this.equalsSign,
-        });
-    }
 }

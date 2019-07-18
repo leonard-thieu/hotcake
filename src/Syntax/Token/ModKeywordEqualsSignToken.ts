@@ -13,11 +13,4 @@ export class ModKeywordEqualsSignToken extends Token<TokenKind.ModKeywordEqualsS
             modKeyword.length + equalsSign.length,
         );
     }
-
-    toJSON(): any {
-        return Object.assign({}, this, {
-            modKeyword: this.modKeyword,
-            equalsSign: this.equalsSign,
-        });
-    }
 }

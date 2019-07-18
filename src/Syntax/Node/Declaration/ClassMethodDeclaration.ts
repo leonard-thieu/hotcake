@@ -8,19 +8,6 @@ import { DataDeclarationSequence } from './DataDeclarationSequence';
 import { Declaration } from './Declaration';
 
 export class ClassMethodDeclaration extends Declaration {
-    static CHILD_NAMES: (keyof ClassMethodDeclaration)[] = [
-        'methodKeyword',
-        'identifier',
-        'returnType',
-        'openingParenthesis',
-        'parameters',
-        'closingParenthesis',
-        'attributes',
-        'statements',
-        'endKeyword',
-        'endMethodKeyword',
-    ];
-
     readonly kind = NodeKind.ClassMethodDeclaration;
 
     methodKeyword: MethodKeywordToken = undefined!;
@@ -33,20 +20,4 @@ export class ClassMethodDeclaration extends Declaration {
     statements?: ParseContextElementArray<ClassMethodDeclaration['kind']> = undefined;
     endKeyword?: MissableToken<EndKeywordToken> = undefined;
     endMethodKeyword?: MethodKeywordToken = undefined;
-
-    get firstToken() {
-        return this.methodKeyword;
-    }
-
-    get lastToken() {
-        if (this.endMethodKeyword) {
-            return this.endMethodKeyword;
-        }
-
-        if (this.endKeyword) {
-            return this.endKeyword;
-        }
-
-        return this.attributes[this.attributes.length - 1];
-    }
 }

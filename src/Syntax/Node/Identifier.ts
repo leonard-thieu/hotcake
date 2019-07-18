@@ -20,23 +20,10 @@ export type IdentifierStartToken =
     ;
 
 export class EscapedIdentifier extends Node {
-    static CHILD_NAMES: (keyof EscapedIdentifier)[] = [
-        'commercialAt',
-        'name',
-    ];
-
     readonly kind = NodeKind.EscapedIdentifier;
 
     commercialAt: CommercialAtToken = undefined!;
     name: EscapedIdentifierNameToken | MissingToken<TokenKind.Identifier> = undefined!;
-
-    get firstToken() {
-        return this.commercialAt;
-    }
-
-    get lastToken() {
-        return this.name;
-    }
 }
 
 export type EscapedIdentifierNameToken =

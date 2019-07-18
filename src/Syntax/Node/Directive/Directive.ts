@@ -8,10 +8,6 @@ import { RemDirective } from './RemDirective';
 
 export abstract class Directive extends Node {
     numberSign: NumberSignToken = undefined!;
-
-    get firstToken() {
-        return this.numberSign;
-    }
 }
 
 export type Directives =

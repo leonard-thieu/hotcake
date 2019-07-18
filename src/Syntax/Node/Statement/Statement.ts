@@ -15,7 +15,7 @@ import { TryStatement } from './TryStatement';
 import { WhileLoop } from './WhileLoop';
 
 export abstract class Statement extends Node {
-    terminator?: NewlineToken | SemicolonToken = undefined;
+    terminator?: NewlineToken | SemicolonToken;
 }
 
 export type Statements =

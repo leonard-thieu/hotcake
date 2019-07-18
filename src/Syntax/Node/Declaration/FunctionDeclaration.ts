@@ -8,18 +8,6 @@ import { DataDeclarationSequence } from './DataDeclarationSequence';
 import { Declaration } from './Declaration';
 
 export class FunctionDeclaration extends Declaration {
-    static CHILD_NAMES: (keyof FunctionDeclaration)[] = [
-        'functionKeyword',
-        'identifier',
-        'returnType',
-        'openingParenthesis',
-        'parameters',
-        'closingParenthesis',
-        'statements',
-        'endKeyword',
-        'endFunctionKeyword',
-    ];
-
     readonly kind = NodeKind.FunctionDeclaration;
 
     functionKeyword: FunctionKeywordToken = undefined!;
@@ -31,16 +19,4 @@ export class FunctionDeclaration extends Declaration {
     statements: ParseContextElementArray<FunctionDeclaration['kind']> = undefined!;
     endKeyword: MissableToken<EndKeywordToken> = undefined!;
     endFunctionKeyword?: FunctionKeywordToken = undefined;
-
-    get firstToken() {
-        return this.functionKeyword;
-    }
-
-    get lastToken() {
-        if (this.endFunctionKeyword) {
-            return this.endFunctionKeyword;
-        }
-
-        return this.endKeyword;
-    }
 }

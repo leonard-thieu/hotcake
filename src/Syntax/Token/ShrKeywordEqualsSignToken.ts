@@ -13,11 +13,4 @@ export class ShrKeywordEqualsSignToken extends Token<TokenKind.ShrKeywordEqualsS
             shrKeyword.length + equalsSign.length,
         );
     }
-
-    toJSON(): any {
-        return Object.assign({}, this, {
-            shrKeyword: this.shrKeyword,
-            equalsSign: this.equalsSign,
-        });
-    }
 }

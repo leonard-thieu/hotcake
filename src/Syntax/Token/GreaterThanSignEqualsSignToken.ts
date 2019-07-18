@@ -13,11 +13,4 @@ export class GreaterThanSignEqualsSignToken extends Token<TokenKind.GreaterThanS
             greaterThanSign.length + equalsSign.length,
         );
     }
-
-    toJSON(): any {
-        return Object.assign({}, this, {
-            greaterThanSign: this.greaterThanSign,
-            equalsSign: this.equalsSign,
-        });
-    }
 }

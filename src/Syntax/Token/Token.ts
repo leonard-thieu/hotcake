@@ -21,10 +21,6 @@ export class Token<TTokenKind extends ErrorableTokenKinds> {
     getText(document: string): string {
         return document.slice(this.start, this.fullStart + this.length);
     }
-
-    toJSON(): any {
-        return this;
-    }
 }
 
 // #region Tokens
