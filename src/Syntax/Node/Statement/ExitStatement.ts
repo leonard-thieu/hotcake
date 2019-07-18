@@ -2,25 +2,13 @@ import { ExitKeywordToken } from '../../Token/Token';
 import { NodeKind } from '../NodeKind';
 import { Statement } from './Statement';
 
-export class ExitStatement extends Statement {
-    static CHILD_NAMES: (keyof ExitStatement)[] = [
-        'exitKeyword',
-        'terminator',
-    ];
+export const ExitStatementChildNames: ReadonlyArray<keyof ExitStatement> = [
+    'exitKeyword',
+    'terminator',
+];
 
+export class ExitStatement extends Statement {
     readonly kind = NodeKind.ExitStatement;
 
     exitKeyword: ExitKeywordToken = undefined!;
-
-    get firstToken() {
-        return this.exitKeyword;
-    }
-
-    get lastToken() {
-        if (this.terminator) {
-            return this.terminator;
-        }
-        
-        return this.exitKeyword;
-    }
 }

@@ -4,21 +4,21 @@ import { EndKeywordToken, ForKeywordToken, NextKeywordToken, StepKeywordToken, T
 import { TokenKind } from '../../Token/TokenKind';
 import { AssignmentExpression } from '../Expression/AssignmentExpression';
 import { MissableExpression } from '../Expression/Expression';
-import { isNode, Node } from '../Node';
+import { Node } from '../Node';
 import { NodeKind } from '../NodeKind';
 import { DataDeclarationSequenceStatement } from './DataDeclarationSequenceStatement';
 import { Statement } from './Statement';
 
-export class ForLoop extends Statement {
-    static CHILD_NAMES: (keyof ForLoop)[] = [
-        'forKeyword',
-        'header',
-        'statements',
-        'endKeyword',
-        'endForKeyword',
-        'terminator',
-    ];
+export const ForLoopChildNames: ReadonlyArray<keyof ForLoop> = [
+    'forKeyword',
+    'header',
+    'statements',
+    'endKeyword',
+    'endForKeyword',
+    'terminator',
+];
 
+export class ForLoop extends Statement {
     readonly kind = NodeKind.ForLoop;
 
     forKeyword: ForKeywordToken = undefined!;
@@ -26,33 +26,17 @@ export class ForLoop extends Statement {
     statements: ParseContextElementArray<ForLoop['kind']> = undefined!;
     endKeyword: MissableToken<NextKeywordToken | EndKeywordToken> = undefined!;
     endForKeyword?: ForKeywordToken = undefined;
-
-    get firstToken() {
-        return this.forKeyword;
-    }
-
-    get lastToken() {
-        if (this.terminator) {
-            return this.terminator;
-        }
-        
-        if (this.endForKeyword) {
-            return this.endForKeyword;
-        }
-
-        return this.endKeyword;
-    }
 }
 
-export class NumericForLoopHeader extends Node {
-    static CHILD_NAMES: (keyof NumericForLoopHeader)[] = [
-        'loopVariableExpression',
-        'toOrUntilKeyword',
-        'lastValueExpression',
-        'stepKeyword',
-        'stepValueExpression',
-    ];
+export const NumericForLoopHeaderChildNames: ReadonlyArray<keyof NumericForLoopHeader> = [
+    'loopVariableExpression',
+    'toOrUntilKeyword',
+    'lastValueExpression',
+    'stepKeyword',
+    'stepValueExpression',
+];
 
+export class NumericForLoopHeader extends Node {
     readonly kind = NodeKind.NumericForLoopHeader;
 
     loopVariableExpression: DataDeclarationSequenceStatement | AssignmentExpression = undefined!;
@@ -60,24 +44,4 @@ export class NumericForLoopHeader extends Node {
     lastValueExpression: MissableExpression = undefined!;
     stepKeyword?: StepKeywordToken = undefined;
     stepValueExpression?: MissableExpression = undefined;
-
-    get firstToken() {
-        return this.loopVariableExpression.firstToken;
-    }
-
-    get lastToken() {
-        if (this.stepValueExpression) {
-            if (isNode(this.stepValueExpression)) {
-                return this.stepValueExpression.lastToken;
-            }
-
-            return this.stepValueExpression;
-        }
-
-        if (isNode(this.lastValueExpression)) {
-            return this.lastValueExpression.lastToken;
-        }
-
-        return this.lastValueExpression;
-    }
 }

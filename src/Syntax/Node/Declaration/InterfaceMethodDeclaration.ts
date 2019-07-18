@@ -6,16 +6,16 @@ import { TypeAnnotation } from '../TypeAnnotation';
 import { DataDeclarationSequence } from './DataDeclarationSequence';
 import { Declaration } from './Declaration';
 
-export class InterfaceMethodDeclaration extends Declaration {
-    static CHILD_NAMES: (keyof InterfaceMethodDeclaration)[] = [
-        'methodKeyword',
-        'identifier',
-        'returnType',
-        'openingParenthesis',
-        'parameters',
-        'closingParenthesis',
-    ];
+export const InterfaceMethodDeclarationChildNames: ReadonlyArray<keyof InterfaceMethodDeclaration> = [
+    'methodKeyword',
+    'identifier',
+    'returnType',
+    'openingParenthesis',
+    'parameters',
+    'closingParenthesis',
+];
 
+export class InterfaceMethodDeclaration extends Declaration {
     readonly kind = NodeKind.InterfaceMethodDeclaration;
 
     methodKeyword: MethodKeywordToken = undefined!;
@@ -24,12 +24,4 @@ export class InterfaceMethodDeclaration extends Declaration {
     openingParenthesis: MissableToken<OpeningParenthesisToken> = undefined!;
     parameters: DataDeclarationSequence = undefined!;
     closingParenthesis: MissableToken<ClosingParenthesisToken> = undefined!;
-
-    get firstToken() {
-        return this.methodKeyword;
-    }
-
-    get lastToken() {
-        return this.closingParenthesis;
-    }
 }

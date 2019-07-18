@@ -12,10 +12,10 @@ export abstract class BoundNode {
 }
 
 export type BoundNodes =
-    BoundDeclarations |
-    BoundStatements |
-    BoundElseIfClause | BoundElseClause |
-    BoundCaseClause | BoundDefaultClause |
-    BoundCatchClause |
-    BoundExpressions
+    | BoundDeclarations
+    | BoundStatements
+    | BoundElseIfClause | BoundElseClause
+    | BoundCaseClause | BoundDefaultClause
+    | BoundCatchClause
+    | BoundExpressions
     ;

@@ -1,7 +1,7 @@
 import path = require('path');
 import { createConnection, Diagnostic, ProposedFeatures, Range, TextDocument, TextDocuments } from 'vscode-languageserver';
-import { Nodes } from '../../../src/Syntax/Node/Node';
 import { Parser } from '../../../src/Syntax/Parser';
+import { ParseTreeVisitor } from '../../../src/Syntax/ParseTreeVisitor';
 import { PreprocessorParser } from '../../../src/Syntax/PreprocessorParser';
 import { PreprocessorTokenizer } from '../../../src/Syntax/PreprocessorTokenizer';
 import { Tokenizer } from '../../../src/Syntax/Tokenizer';
@@ -84,16 +84,9 @@ connection.onHover((params) => {
     });
     const moduleDeclaration = parser.parse(preprocessorModuleDeclaration, tokens);
 
-    let containingNode: Nodes = moduleDeclaration;
-    while (true) {
-        const node: Nodes | undefined = containingNode.getChildNodeAt(offset);
-        if (!node) {
-            break;
-        }
-        containingNode = node;
-    }
-
-    const containingToken = containingNode.getChildTokenAt(offset)!;
+    const parseTreeVisitor = new ParseTreeVisitor();
+    const containingNode = parseTreeVisitor.getNodeAt(moduleDeclaration, offset);
+    const containingToken = parseTreeVisitor.getChildTokenAt(containingNode, offset)!;
 
     const lineage: string[] = [containingNode.kind, containingToken.kind];
     let parent = containingNode.parent;

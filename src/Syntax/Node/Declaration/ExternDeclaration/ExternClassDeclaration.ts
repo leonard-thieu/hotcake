@@ -6,20 +6,20 @@ import { NodeKind } from '../../NodeKind';
 import { MissableTypeReference } from '../../TypeReference';
 import { ExternDeclaration } from './ExternDeclaration';
 
-export class ExternClassDeclaration extends ExternDeclaration {
-    static CHILD_NAMES: (keyof ExternClassDeclaration)[] = [
-        'classKeyword',
-        'identifier',
-        'extendsKeyword',
-        'baseType',
-        'attribute',
-        'equalsSign',
-        'nativeSymbol',
-        'members',
-        'endKeyword',
-        'endClassKeyword',
-    ];
+export const ExternClassDeclarationChildNames: ReadonlyArray<keyof ExternClassDeclaration> = [
+    'classKeyword',
+    'identifier',
+    'extendsKeyword',
+    'baseType',
+    'attribute',
+    'equalsSign',
+    'nativeSymbol',
+    'members',
+    'endKeyword',
+    'endClassKeyword',
+];
 
+export class ExternClassDeclaration extends ExternDeclaration {
     readonly kind = NodeKind.ExternClassDeclaration;
 
     classKeyword: ClassKeywordToken = undefined!;
@@ -34,16 +34,4 @@ export class ExternClassDeclaration extends ExternDeclaration {
     members: ParseContextElementArray<ExternClassDeclaration['kind']> = undefined!;
     endKeyword: MissableToken<EndKeywordToken> = undefined!;
     endClassKeyword?: ClassKeywordToken = undefined;
-
-    get firstToken() {
-        return this.classKeyword;
-    }
-
-    get lastToken() {
-        if (this.endClassKeyword) {
-            return this.endClassKeyword;
-        }
-
-        return this.endKeyword;
-    }
 }

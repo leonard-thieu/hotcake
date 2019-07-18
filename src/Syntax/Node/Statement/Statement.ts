@@ -15,21 +15,21 @@ import { TryStatement } from './TryStatement';
 import { WhileLoop } from './WhileLoop';
 
 export abstract class Statement extends Node {
-    terminator?: NewlineToken | SemicolonToken = undefined;
+    terminator?: NewlineToken | SemicolonToken;
 }
 
 export type Statements =
-    ContinueStatement |
-    DataDeclarationSequenceStatement |
-    EmptyStatement |
-    ExitStatement |
-    ExpressionStatement |
-    ForLoop |
-    IfStatement |
-    RepeatLoop |
-    ReturnStatement |
-    SelectStatement |
-    ThrowStatement |
-    TryStatement |
-    WhileLoop
+    | ContinueStatement
+    | DataDeclarationSequenceStatement
+    | EmptyStatement
+    | ExitStatement
+    | ExpressionStatement
+    | ForLoop
+    | IfStatement
+    | RepeatLoop
+    | ReturnStatement
+    | SelectStatement
+    | ThrowStatement
+    | TryStatement
+    | WhileLoop
     ;

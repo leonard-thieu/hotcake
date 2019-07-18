@@ -17,6 +17,6 @@ export class BoundInterfaceDeclaration extends BoundNode {
 }
 
 export type BoundInterfaceDeclarationMember =
-    BoundDataDeclaration |
-    BoundInterfaceMethodDeclaration
+    | BoundDataDeclaration
+    | BoundInterfaceMethodDeclaration
     ;

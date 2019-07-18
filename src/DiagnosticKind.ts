@@ -3,5 +3,5 @@ export enum DiagnosticKind {
 }
 
 export type DiagnosticKinds =
-    DiagnosticKind.Error
+    | DiagnosticKind.Error
     ;

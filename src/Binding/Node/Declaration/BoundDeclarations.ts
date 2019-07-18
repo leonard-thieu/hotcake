@@ -10,14 +10,14 @@ import { BoundModuleDeclaration } from './BoundModuleDeclaration';
 import { BoundExternDeclarations } from './Extern/BoundExternDeclarations';
 
 export type BoundDeclarations =
-    BoundDirectory |
-    BoundModuleDeclaration |
-    BoundImportStatement |
-    BoundExternDeclarations |
-    BoundDataDeclaration |
-    BoundFunctionDeclaration |
-    BoundInterfaceDeclaration |
-    BoundInterfaceMethodDeclaration |
-    BoundClassDeclaration |
-    BoundClassMethodDeclaration
+    | BoundDirectory
+    | BoundModuleDeclaration
+    | BoundImportStatement
+    | BoundExternDeclarations
+    | BoundDataDeclaration
+    | BoundFunctionDeclaration
+    | BoundInterfaceDeclaration
+    | BoundInterfaceMethodDeclaration
+    | BoundClassDeclaration
+    | BoundClassMethodDeclaration
     ;

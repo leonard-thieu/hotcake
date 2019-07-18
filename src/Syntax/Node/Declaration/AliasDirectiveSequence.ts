@@ -3,45 +3,32 @@ import { MissableToken, MissingToken } from '../../Token/MissingToken';
 import { AliasKeywordToken, EqualsSignToken, FloatKeywordToken, IdentifierToken, IntKeywordToken, PeriodToken, StringKeywordToken } from '../../Token/Token';
 import { TokenKind } from '../../Token/TokenKind';
 import { EscapedIdentifier, Identifier } from '../Identifier';
-import { isNode } from '../Node';
 import { NodeKind } from '../NodeKind';
 import { Declaration } from './Declaration';
 
-export class AliasDirectiveSequence extends Declaration {
-    static CHILD_NAMES: (keyof AliasDirectiveSequence)[] = [
-        'aliasKeyword',
-        'children',
-    ];
+export const AliasDirectiveSequenceChildNames: ReadonlyArray<keyof AliasDirectiveSequence> = [
+    'aliasKeyword',
+    'children',
+];
 
+export class AliasDirectiveSequence extends Declaration {
     readonly kind = NodeKind.AliasDirectiveSequence;
 
     aliasKeyword: AliasKeywordToken = undefined!;
     children: ParseContextElementDelimitedSequence<AliasDirectiveSequence['kind']> = undefined!;
-
-    get firstToken() {
-        return this.aliasKeyword;
-    }
-
-    get lastToken() {
-        if (this.children.length !== 0) {
-            return this.children[this.children.length - 1].lastToken;
-        }
-
-        return this.aliasKeyword;
-    }
 }
 
-export class AliasDirective extends Declaration {
-    static CHILD_NAMES: (keyof AliasDirective)[] = [
-        'identifier',
-        'equalsSign',
-        'moduleIdentifier',
-        'moduleScopeMemberAccessOperator',
-        'typeIdentifier',
-        'typeScopeMemberAccessOperator',
-        'target',
-    ];
+export const AliasDirectiveChildNames: ReadonlyArray<keyof AliasDirective> = [
+    'identifier',
+    'equalsSign',
+    'moduleIdentifier',
+    'moduleScopeMemberAccessOperator',
+    'typeIdentifier',
+    'typeScopeMemberAccessOperator',
+    'target',
+];
 
+export class AliasDirective extends Declaration {
     readonly kind = NodeKind.AliasDirective;
 
     identifier: Identifier = undefined!;
@@ -54,30 +41,17 @@ export class AliasDirective extends Declaration {
     typeScopeMemberAccessOperator?: PeriodToken = undefined;
 
     target: MissableDeclarationReferenceIdentifier = undefined!;
-
-    get firstToken() {
-        if (isNode(this.identifier)) {
-            return this.identifier.firstToken;
-        }
-
-        return this.identifier;
-    }
-
-    get lastToken() {
-        if (isNode(this.target)) {
-            return this.target.lastToken;
-        }
-
-        return this.target;
-    }
 }
 
 // NOTE: Does not include BoolKeywordToken.
 export type DeclarationReferenceIdentifier =
-    Identifier |
-    IntKeywordToken |
-    FloatKeywordToken |
-    StringKeywordToken
+    | Identifier
+    | IntKeywordToken
+    | FloatKeywordToken
+    | StringKeywordToken
     ;
 
-export type MissableDeclarationReferenceIdentifier = DeclarationReferenceIdentifier | MissingToken<TokenKind.Identifier>;
+export type MissableDeclarationReferenceIdentifier =
+    | DeclarationReferenceIdentifier
+    | MissingToken<TokenKind.Identifier>
+    ;

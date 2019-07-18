@@ -124,6 +124,16 @@ export function executePreprocessorParserTestCases(name: string, casesPath: stri
                 const outputPath = path.resolve(__dirname, 'cases', name, sourceRelativePath) + '.tree.json';
                 executeBaselineTestCase(outputPath, () => {
                     return getPreprocessorParseTree(sourceRelativePath, contents);
+                }, function (key, value) {
+                    switch (key) {
+                        case 'filePath':
+                        case 'document':
+                        case 'parent': {
+                            return undefined;
+                        }
+                    }
+
+                    return value;
                 });
             });
         },
@@ -158,6 +168,16 @@ export function executeParserTestCases(name: string, casesPath: string): void {
                 const outputPath = path.resolve(__dirname, 'cases', name, sourceRelativePath) + '.tree.json';
                 executeBaselineTestCase(outputPath, () => {
                     return getParseTree(sourceRelativePath, contents);
+                }, function (key, value) {
+                    switch (key) {
+                        case 'preprocessorModuleDeclaration':
+                        case 'parent':
+                        case 'parseDiagnostics': {
+                            return undefined;
+                        }
+                    }
+
+                    return value;
                 });
             });
         },

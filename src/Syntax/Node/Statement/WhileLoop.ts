@@ -5,16 +5,16 @@ import { MissableExpression } from '../Expression/Expression';
 import { NodeKind } from '../NodeKind';
 import { Statement } from './Statement';
 
-export class WhileLoop extends Statement {
-    static CHILD_NAMES: (keyof WhileLoop)[] = [
-        'whileKeyword',
-        'expression',
-        'statements',
-        'endKeyword',
-        'endWhileKeyword',
-        'terminator',
-    ];
+export const WhileLoopChildNames: ReadonlyArray<keyof WhileLoop> = [
+    'whileKeyword',
+    'expression',
+    'statements',
+    'endKeyword',
+    'endWhileKeyword',
+    'terminator',
+];
 
+export class WhileLoop extends Statement {
     readonly kind = NodeKind.WhileLoop;
 
     whileKeyword: WhileKeywordToken = undefined!;
@@ -22,20 +22,4 @@ export class WhileLoop extends Statement {
     statements: ParseContextElementArray<WhileLoop['kind']> = undefined!;
     endKeyword: MissableToken<WendKeywordToken | EndKeywordToken> = undefined!;
     endWhileKeyword?: WhileKeywordToken = undefined;
-
-    get firstToken() {
-        return this.whileKeyword;
-    }
-
-    get lastToken() {
-        if (this.terminator) {
-            return this.terminator;
-        }
-        
-        if (this.endWhileKeyword) {
-            return this.endWhileKeyword;
-        }
-
-        return this.endKeyword;
-    }
 }

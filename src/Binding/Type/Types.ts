@@ -7,11 +7,11 @@ import { StringType } from './StringType';
 import { VoidType } from './VoidType';
 
 export type Types =
-    ArrayType |
-    BoolType |
-    FloatType |
-    IntType |
-    ObjectType |
-    StringType |
-    VoidType
+    | ArrayType
+    | BoolType
+    | FloatType
+    | IntType
+    | ObjectType
+    | StringType
+    | VoidType
     ;

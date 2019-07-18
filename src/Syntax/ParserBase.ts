@@ -23,7 +23,7 @@ import { MissableStringLiteralExpression, StringLiteralExpression } from './Node
 import { SuperExpression } from './Node/Expression/SuperExpression';
 import { UnaryExpression, UnaryOperatorToken } from './Node/Expression/UnaryExpression';
 import { EscapedIdentifier, MissableIdentifier } from './Node/Identifier';
-import { isNode, Nodes } from './Node/Node';
+import { Nodes } from './Node/Node';
 import { NodeKind } from './Node/NodeKind';
 import { MissableTypeReference, TypeReference, TypeReferenceIdentifierStartToken } from './Node/TypeReference';
 import { GreaterThanSignEqualsSignToken } from './Token/GreaterThanSignEqualsSignToken';
@@ -678,7 +678,7 @@ export abstract class ParserBase {
         indexExpression.indexableExpression = expression;
         indexExpression.openingSquareBracket = openingSquareBracket;
         indexExpression.indexExpressionExpression = indexExpressionExpression;
-        if (isNode(indexExpression.indexExpressionExpression)) {
+        if (indexExpression.indexExpressionExpression.kind !== TokenKind.Missing) {
             indexExpression.indexExpressionExpression.parent = indexExpression;
         }
         indexExpression.closingSquareBracket = this.eatMissable(TokenKind.ClosingSquareBracket);

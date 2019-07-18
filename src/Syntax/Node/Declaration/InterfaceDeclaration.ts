@@ -5,17 +5,17 @@ import { MissableIdentifier } from '../Identifier';
 import { NodeKind } from '../NodeKind';
 import { Declaration } from './Declaration';
 
-export class InterfaceDeclaration extends Declaration {
-    static CHILD_NAMES: (keyof InterfaceDeclaration)[] = [
-        'interfaceKeyword',
-        'identifier',
-        'extendsKeyword',
-        'baseTypes',
-        'members',
-        'endKeyword',
-        'endInterfaceKeyword',
-    ];
+export const InterfaceDeclarationChildNames: ReadonlyArray<keyof InterfaceDeclaration> = [
+    'interfaceKeyword',
+    'identifier',
+    'extendsKeyword',
+    'baseTypes',
+    'members',
+    'endKeyword',
+    'endInterfaceKeyword',
+];
 
+export class InterfaceDeclaration extends Declaration {
     readonly kind = NodeKind.InterfaceDeclaration;
 
     interfaceKeyword: InterfaceKeywordToken = undefined!;
@@ -25,16 +25,4 @@ export class InterfaceDeclaration extends Declaration {
     members: ParseContextElementArray<InterfaceDeclaration['kind']> = undefined!;
     endKeyword: MissableToken<EndKeywordToken> = undefined!;
     endInterfaceKeyword?: InterfaceKeywordToken = undefined;
-
-    get firstToken() {
-        return this.interfaceKeyword;
-    }
-
-    get lastToken() {
-        if (this.endInterfaceKeyword) {
-            return this.endInterfaceKeyword;
-        }
-
-        return this.endKeyword;
-    }
 }

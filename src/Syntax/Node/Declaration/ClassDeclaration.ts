@@ -6,23 +6,23 @@ import { NodeKind } from '../NodeKind';
 import { MissableTypeReference } from '../TypeReference';
 import { Declaration } from './Declaration';
 
-export class ClassDeclaration extends Declaration {
-    static CHILD_NAMES: (keyof ClassDeclaration)[] = [
-        'classKeyword',
-        'identifier',
-        'lessThanSign',
-        'typeParameters',
-        'greaterThanSign',
-        'extendsKeyword',
-        'baseType',
-        'implementsKeyword',
-        'implementedTypes',
-        'attribute',
-        'members',
-        'endKeyword',
-        'endClassKeyword',
-    ];
+export const ClassDeclarationChildNames: ReadonlyArray<keyof ClassDeclaration> = [
+    'classKeyword',
+    'identifier',
+    'lessThanSign',
+    'typeParameters',
+    'greaterThanSign',
+    'extendsKeyword',
+    'baseType',
+    'implementsKeyword',
+    'implementedTypes',
+    'attribute',
+    'members',
+    'endKeyword',
+    'endClassKeyword',
+];
 
+export class ClassDeclaration extends Declaration {
     readonly kind = NodeKind.ClassDeclaration;
 
     classKeyword: ClassKeywordToken = undefined!;
@@ -46,16 +46,4 @@ export class ClassDeclaration extends Declaration {
     members: ParseContextElementArray<ClassDeclaration['kind']> = undefined!;
     endKeyword: MissableToken<EndKeywordToken> = undefined!;
     endClassKeyword?: ClassKeywordToken = undefined;
-
-    get firstToken() {
-        return this.classKeyword;
-    }
-
-    get lastToken() {
-        if (this.endClassKeyword) {
-            return this.endClassKeyword;
-        }
-
-        return this.endKeyword;
-    }
 }

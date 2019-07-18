@@ -12,8 +12,8 @@ export abstract class ExternDeclaration extends Declaration {
 }
 
 export type ExternDeclarations =
-    ExternClassDeclaration |
-    ExternClassMethodDeclaration |
-    ExternFunctionDeclaration |
-    ExternDataDeclaration
+    | ExternClassDeclaration
+    | ExternClassMethodDeclaration
+    | ExternFunctionDeclaration
+    | ExternDataDeclaration
     ;

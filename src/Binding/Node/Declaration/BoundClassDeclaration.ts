@@ -20,7 +20,7 @@ export class BoundClassDeclaration extends BoundNode {
 }
 
 export type BoundClassDeclarationMember =
-    BoundDataDeclaration |
-    BoundFunctionDeclaration |
-    BoundClassMethodDeclaration
+    | BoundDataDeclaration
+    | BoundFunctionDeclaration
+    | BoundClassMethodDeclaration
     ;

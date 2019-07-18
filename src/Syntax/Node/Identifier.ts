@@ -5,114 +5,109 @@ import { Node } from './Node';
 import { NodeKind } from './NodeKind';
 
 export type Identifier =
-    EscapedIdentifier |
-    EscapeOptionalIdentifierNameToken
+    | EscapedIdentifier
+    | EscapeOptionalIdentifierNameToken
     ;
 
-export type MissableIdentifier = Identifier | MissingToken<TokenKind.Identifier>;
+export type MissableIdentifier =
+    | Identifier
+    | MissingToken<TokenKind.Identifier>
+    ;
 
 export type IdentifierStartToken =
-    EscapeOptionalIdentifierNameToken |
-    CommercialAtToken
+    | EscapeOptionalIdentifierNameToken
+    | CommercialAtToken
     ;
 
-export class EscapedIdentifier extends Node {
-    static CHILD_NAMES: (keyof EscapedIdentifier)[] = [
-        'commercialAt',
-        'name',
-    ];
+export const EscapedIdentifierChildNames: ReadonlyArray<keyof EscapedIdentifier> = [
+    'commercialAt',
+    'name',
+];
 
+export class EscapedIdentifier extends Node {
     readonly kind = NodeKind.EscapedIdentifier;
 
     commercialAt: CommercialAtToken = undefined!;
     name: EscapedIdentifierNameToken | MissingToken<TokenKind.Identifier> = undefined!;
-
-    get firstToken() {
-        return this.commercialAt;
-    }
-
-    get lastToken() {
-        return this.name;
-    }
 }
 
 export type EscapedIdentifierNameToken =
-    EscapeOptionalIdentifierNameToken |
-    EscapeRequiredIdentifierNameToken
+    | EscapeOptionalIdentifierNameToken
+    | EscapeRequiredIdentifierNameToken
     ;
 
 export type EscapeOptionalIdentifierNameToken =
-    IdentifierToken |
-    ObjectKeywordToken |
-    ThrowableKeywordToken
+    | IdentifierToken
+    | ObjectKeywordToken
+    | ThrowableKeywordToken
     ;
 
 export type EscapeRequiredIdentifierNameToken =
-    VoidKeywordToken |
-    StrictKeywordToken |
-    PublicKeywordToken |
-    PrivateKeywordToken |
-    ProtectedKeywordToken |
-    FriendKeywordToken |
-    PropertyKeywordToken |
-    BoolKeywordToken |
-    IntKeywordToken |
-    FloatKeywordToken |
-    StringKeywordToken |
-    ArrayKeywordToken |
-    ModKeywordToken |
-    ContinueKeywordToken |
-    ExitKeywordToken |
-    IncludeKeywordToken |
-    ImportKeywordToken |
-    ModuleKeywordToken |
-    ExternKeywordToken |
-    NewKeywordToken |
-    SelfKeywordToken |
-    SuperKeywordToken |
-    EachInKeywordToken |
-    TrueKeywordToken |
-    FalseKeywordToken |
-    NullKeywordToken |
-    NotKeywordToken |
-    ExtendsKeywordToken |
-    AbstractKeywordToken |
-    FinalKeywordToken |
-    SelectKeywordToken |
-    CaseKeywordToken |
-    DefaultKeywordToken |
-    ConstKeywordToken |
-    LocalKeywordToken |
-    GlobalKeywordToken |
-    FieldKeywordToken |
-    MethodKeywordToken |
-    FunctionKeywordToken |
-    ClassKeywordToken |
-    AndKeywordToken |
-    OrKeywordToken |
-    ShlKeywordToken |
-    ShrKeywordToken |
-    EndKeywordToken |
-    IfKeywordToken |
-    ThenKeywordToken |
-    ElseKeywordToken |
-    ElseIfKeywordToken |
-    EndIfKeywordToken |
-    WhileKeywordToken |
-    WendKeywordToken |
-    RepeatKeywordToken |
-    UntilKeywordToken |
-    ForeverKeywordToken |
-    ForKeywordToken |
-    ToKeywordToken |
-    StepKeywordToken |
-    NextKeywordToken |
-    ReturnKeywordToken |
-    InterfaceKeywordToken |
-    ImplementsKeywordToken |
-    InlineKeywordToken |
-    AliasKeywordToken |
-    TryKeywordToken |
-    CatchKeywordToken |
-    ThrowKeywordToken
+    | VoidKeywordToken
+    | StrictKeywordToken
+    | PublicKeywordToken
+    | PrivateKeywordToken
+    | ProtectedKeywordToken
+    | FriendKeywordToken
+    | PropertyKeywordToken
+    | BoolKeywordToken
+    | IntKeywordToken
+    | FloatKeywordToken
+    | StringKeywordToken
+    | ArrayKeywordToken
+    | ModKeywordToken
+    | ContinueKeywordToken
+    | ExitKeywordToken
+    | IncludeKeywordToken
+    | ImportKeywordToken
+    | ModuleKeywordToken
+    | ExternKeywordToken
+    | NewKeywordToken
+    | SelfKeywordToken
+    | SuperKeywordToken
+    | EachInKeywordToken
+    | TrueKeywordToken
+    | FalseKeywordToken
+    | NullKeywordToken
+    | NotKeywordToken
+    | ExtendsKeywordToken
+    | AbstractKeywordToken
+    | FinalKeywordToken
+    | SelectKeywordToken
+    | CaseKeywordToken
+    | DefaultKeywordToken
+    | ConstKeywordToken
+    | LocalKeywordToken
+    | GlobalKeywordToken
+    | FieldKeywordToken
+    | MethodKeywordToken
+    | FunctionKeywordToken
+    | ClassKeywordToken
+    | AndKeywordToken
+    | OrKeywordToken
+    | ShlKeywordToken
+    | ShrKeywordToken
+    | EndKeywordToken
+    | IfKeywordToken
+    | ThenKeywordToken
+    | ElseKeywordToken
+    | ElseIfKeywordToken
+    | EndIfKeywordToken
+    | WhileKeywordToken
+    | WendKeywordToken
+    | RepeatKeywordToken
+    | UntilKeywordToken
+    | ForeverKeywordToken
+    | ForKeywordToken
+    | ToKeywordToken
+    | StepKeywordToken
+    | NextKeywordToken
+    | ReturnKeywordToken
+    | InterfaceKeywordToken
+    | ImplementsKeywordToken
+    | InlineKeywordToken
+    | AliasKeywordToken
+    | TryKeywordToken
+    | CatchKeywordToken
+    | ThrowKeywordToken
     ;
