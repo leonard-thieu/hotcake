@@ -267,6 +267,8 @@ export abstract class ParserBase {
         return binaryExpression;
     }
 
+    // #endregion
+
     // #region Unary expressions
 
     protected parseUnaryExpressionOrHigher(parent: Nodes): MissableExpression {
@@ -312,6 +314,8 @@ export abstract class ParserBase {
 
         return unaryExpression;
     }
+
+    // #endregion
 
     // #region Primary expressions
 
@@ -609,6 +613,8 @@ export abstract class ParserBase {
         return groupingExpression;
     }
 
+    // #endregion
+
     // #region Postfix expressions
 
     protected parsePostfixExpression(expression: MissableExpression) {
@@ -728,12 +734,6 @@ export abstract class ParserBase {
 
         return invokeExpression;
     }
-
-    // #endregion
-
-    // #endregion
-
-    // #endregion
 
     // #endregion
 
