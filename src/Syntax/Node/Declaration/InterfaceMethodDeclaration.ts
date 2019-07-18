@@ -6,6 +6,15 @@ import { TypeAnnotation } from '../TypeAnnotation';
 import { DataDeclarationSequence } from './DataDeclarationSequence';
 import { Declaration } from './Declaration';
 
+export const InterfaceMethodDeclarationChildNames: ReadonlyArray<keyof InterfaceMethodDeclaration> = [
+    'methodKeyword',
+    'identifier',
+    'returnType',
+    'openingParenthesis',
+    'parameters',
+    'closingParenthesis',
+];
+
 export class InterfaceMethodDeclaration extends Declaration {
     readonly kind = NodeKind.InterfaceMethodDeclaration;
 

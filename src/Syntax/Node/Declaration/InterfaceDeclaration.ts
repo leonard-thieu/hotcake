@@ -5,6 +5,16 @@ import { MissableIdentifier } from '../Identifier';
 import { NodeKind } from '../NodeKind';
 import { Declaration } from './Declaration';
 
+export const InterfaceDeclarationChildNames: ReadonlyArray<keyof InterfaceDeclaration> = [
+    'interfaceKeyword',
+    'identifier',
+    'extendsKeyword',
+    'baseTypes',
+    'members',
+    'endKeyword',
+    'endInterfaceKeyword',
+];
+
 export class InterfaceDeclaration extends Declaration {
     readonly kind = NodeKind.InterfaceDeclaration;
 

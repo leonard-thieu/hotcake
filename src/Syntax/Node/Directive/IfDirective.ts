@@ -5,6 +5,18 @@ import { MissableExpression } from '../Expression/Expression';
 import { NodeKind } from '../NodeKind';
 import { Directive } from './Directive';
 
+export const IfDirectiveChildNames: ReadonlyArray<keyof IfDirective> = [
+    'numberSign',
+    'ifDirectiveKeyword',
+    'expression',
+    'members',
+    'elseIfDirectives',
+    'elseDirective',
+    'endDirectiveNumberSign',
+    'endDirectiveKeyword',
+    'endIfDirectiveKeyword',
+];
+
 export class IfDirective extends Directive {
     readonly kind = NodeKind.IfDirective;
 
@@ -18,6 +30,14 @@ export class IfDirective extends Directive {
     endIfDirectiveKeyword?: IfDirectiveKeywordToken = undefined;
 }
 
+export const ElseIfDirectiveChildNames: ReadonlyArray<keyof ElseIfDirective> = [
+    'numberSign',
+    'elseIfDirectiveKeyword',
+    'ifDirectiveKeyword',
+    'expression',
+    'members',
+];
+
 export class ElseIfDirective extends Directive {
     readonly kind = NodeKind.ElseIfDirective;
 
@@ -26,6 +46,12 @@ export class ElseIfDirective extends Directive {
     expression: MissableExpression = undefined!;
     members: ParseContextElementSequence<ElseIfDirective['kind']> = undefined!;
 }
+
+export const ElseDirectiveChildNames: ReadonlyArray<keyof ElseDirective> = [
+    'numberSign',
+    'elseDirectiveKeyword',
+    'members',
+];
 
 export class ElseDirective extends Directive {
     readonly kind = NodeKind.ElseDirective;

@@ -2,6 +2,11 @@ import { SuperKeywordToken } from '../../Token/Token';
 import { NodeKind } from '../NodeKind';
 import { Expression } from './Expression';
 
+export const SuperExpressionChildNames: ReadonlyArray<keyof SuperExpression> = [
+    'newlines',
+    'superKeyword',
+];
+
 export class SuperExpression extends Expression {
     readonly kind = NodeKind.SuperExpression;
 

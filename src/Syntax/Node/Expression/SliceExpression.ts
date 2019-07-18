@@ -3,6 +3,16 @@ import { ClosingSquareBracketToken, OpeningSquareBracketToken, PeriodPeriodToken
 import { NodeKind } from '../NodeKind';
 import { Expression, Expressions } from './Expression';
 
+export const SliceExpressionChildNames: ReadonlyArray<keyof SliceExpression> = [
+    'newlines',
+    'sliceableExpression',
+    'openingSquareBracket',
+    'startExpression',
+    'sliceOperator',
+    'endExpression',
+    'closingSquareBracket',
+];
+
 export class SliceExpression extends Expression {
     readonly kind = NodeKind.SliceExpression;
 

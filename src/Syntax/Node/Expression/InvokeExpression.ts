@@ -4,6 +4,15 @@ import { ClosingParenthesisToken, OpeningParenthesisToken } from '../../Token/To
 import { NodeKind } from '../NodeKind';
 import { Expression, Expressions } from './Expression';
 
+export const InvokeExpressionChildNames: ReadonlyArray<keyof InvokeExpression> = [
+    'newlines',
+    'invokableExpression',
+    'openingParenthesis',
+    'leadingNewlines',
+    'arguments',
+    'closingParenthesis',
+];
+
 export class InvokeExpression extends Expression {
     readonly kind = NodeKind.InvokeExpression;
 

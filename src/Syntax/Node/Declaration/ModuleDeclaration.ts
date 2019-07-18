@@ -6,6 +6,14 @@ import { Declaration } from './Declaration';
 import { PreprocessorModuleDeclaration } from './PreprocessorModuleDeclaration';
 import { StrictDirective } from './StrictDirective';
 
+export const ModuleDeclarationChildNames: ReadonlyArray<keyof ModuleDeclaration> = [
+    'strictNewlines',
+    'strictDirective',
+    'headerMembers',
+    'members',
+    'eofToken',
+];
+
 export class ModuleDeclaration extends Declaration {
     preprocessorModuleDeclaration: PreprocessorModuleDeclaration = undefined!;
 

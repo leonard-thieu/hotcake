@@ -7,6 +7,18 @@ import { TypeAnnotation } from '../../TypeAnnotation';
 import { DataDeclarationSequence } from '../DataDeclarationSequence';
 import { ExternDeclaration } from './ExternDeclaration';
 
+export const ExternClassMethodDeclarationChildNames: ReadonlyArray<keyof ExternClassMethodDeclaration> = [
+    'methodKeyword',
+    'identifier',
+    'returnType',
+    'openingParenthesis',
+    'parameters',
+    'closingParenthesis',
+    'attributes',
+    'equalsSign',
+    'nativeSymbol',
+];
+
 export class ExternClassMethodDeclaration extends ExternDeclaration {
     readonly kind = NodeKind.ExternClassMethodDeclaration;
 

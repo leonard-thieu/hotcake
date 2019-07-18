@@ -2,6 +2,14 @@ import { AmpersandEqualsSignToken, AsteriskEqualsSignToken, EachInKeywordToken, 
 import { NodeKind } from '../NodeKind';
 import { Expression, MissableExpression } from './Expression';
 
+export const AssignmentExpressionChildNames: ReadonlyArray<keyof AssignmentExpression> = [
+    'newlines',
+    'leftOperand',
+    'operator',
+    'eachInKeyword',
+    'rightOperand',
+];
+
 export class AssignmentExpression extends Expression {
     readonly kind = NodeKind.AssignmentExpression;
 

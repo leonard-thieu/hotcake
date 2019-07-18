@@ -9,6 +9,11 @@ export type TypeAnnotation =
     | LonghandTypeAnnotation
     ;
 
+export const ShorthandTypeAnnotationChildNames: ReadonlyArray<keyof ShorthandTypeAnnotation> = [
+    'shorthandType',
+    'arrayTypeAnnotations',
+];
+
 export class ShorthandTypeAnnotation extends Node {
     readonly kind = NodeKind.ShorthandTypeAnnotation;
 
@@ -22,6 +27,11 @@ export type ShorthandTypeToken =
     | NumberSignToken
     | DollarSignToken
     ;
+
+export const LonghandTypeAnnotationChildNames: ReadonlyArray<keyof LonghandTypeAnnotation> = [
+    'colon',
+    'typeReference',
+];
 
 export class LonghandTypeAnnotation extends Node {
     readonly kind = NodeKind.LonghandTypeAnnotation;

@@ -7,6 +7,18 @@ import { TypeAnnotation } from '../TypeAnnotation';
 import { DataDeclarationSequence } from './DataDeclarationSequence';
 import { Declaration } from './Declaration';
 
+export const FunctionDeclarationChildNames: ReadonlyArray<keyof FunctionDeclaration> = [
+    'functionKeyword',
+    'identifier',
+    'returnType',
+    'openingParenthesis',
+    'parameters',
+    'closingParenthesis',
+    'statements',
+    'endKeyword',
+    'endFunctionKeyword',
+];
+
 export class FunctionDeclaration extends Declaration {
     readonly kind = NodeKind.FunctionDeclaration;
 

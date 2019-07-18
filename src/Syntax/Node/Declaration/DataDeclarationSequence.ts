@@ -7,6 +7,11 @@ import { NodeKind } from '../NodeKind';
 import { TypeAnnotation } from '../TypeAnnotation';
 import { Declaration } from './Declaration';
 
+export const DataDeclarationSequenceChildNames: ReadonlyArray<keyof DataDeclarationSequence> = [
+    'dataDeclarationKeyword',
+    'children',
+];
+
 export class DataDeclarationSequence extends Declaration {
     readonly kind = NodeKind.DataDeclarationSequence;
 
@@ -20,6 +25,14 @@ export type DataDeclarationKeywordToken =
     | FieldKeywordToken
     | LocalKeywordToken
     ;
+
+export const DataDeclarationChildNames: ReadonlyArray<keyof DataDeclaration> = [
+    'identifier',
+    'type',
+    'equalsSign',
+    'eachInKeyword',
+    'expression',
+];
 
 /**
  * Explicit type (shorthand)

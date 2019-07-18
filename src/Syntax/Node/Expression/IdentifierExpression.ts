@@ -4,6 +4,14 @@ import { EscapeOptionalIdentifierNameToken, Identifier } from '../Identifier';
 import { NodeKind } from '../NodeKind';
 import { Expression } from './Expression';
 
+export const IdentifierExpressionChildNames: ReadonlyArray<keyof IdentifierExpression> = [
+    'newlines',
+    'identifier',
+    'lessThanSign',
+    'typeArguments',
+    'greaterThanSign',
+];
+
 export class IdentifierExpression extends Expression {
     readonly kind = NodeKind.IdentifierExpression;
 

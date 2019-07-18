@@ -6,6 +6,18 @@ import { Node } from '../Node';
 import { NodeKind } from '../NodeKind';
 import { Statement } from './Statement';
 
+export const IfStatementChildNames: ReadonlyArray<keyof IfStatement> = [
+    'ifKeyword',
+    'expression',
+    'thenKeyword',
+    'statements',
+    'elseIfClauses',
+    'elseClause',
+    'endKeyword',
+    'endIfKeyword',
+    'terminator',
+];
+
 export class IfStatement extends Statement {
     readonly kind = NodeKind.IfStatement;
 
@@ -20,6 +32,14 @@ export class IfStatement extends Statement {
     endIfKeyword?: IfKeywordToken = undefined;
 }
 
+export const ElseIfClauseChildNames: ReadonlyArray<keyof ElseIfClause> = [
+    'elseIfKeyword',
+    'ifKeyword',
+    'expression',
+    'thenKeyword',
+    'statements',
+];
+
 export class ElseIfClause extends Node {
     readonly kind = NodeKind.ElseIfClause;
 
@@ -29,6 +49,11 @@ export class ElseIfClause extends Node {
     thenKeyword?: ThenKeywordToken = undefined;
     statements: ParseContextElementArray<ElseIfClause['kind']> = undefined!;
 }
+
+export const ElseClauseChildNames: ReadonlyArray<keyof ElseClause> = [
+    'elseKeyword',
+    'statements',
+];
 
 export class ElseClause extends Node {
     readonly kind = NodeKind.ElseClause;

@@ -7,6 +7,19 @@ import { TypeAnnotation } from '../TypeAnnotation';
 import { DataDeclarationSequence } from './DataDeclarationSequence';
 import { Declaration } from './Declaration';
 
+export const ClassMethodDeclarationChildNames: ReadonlyArray<keyof ClassMethodDeclaration> = [
+    'methodKeyword',
+    'identifier',
+    'returnType',
+    'openingParenthesis',
+    'parameters',
+    'closingParenthesis',
+    'attributes',
+    'statements',
+    'endKeyword',
+    'endMethodKeyword',
+];
+
 export class ClassMethodDeclaration extends Declaration {
     readonly kind = NodeKind.ClassMethodDeclaration;
 

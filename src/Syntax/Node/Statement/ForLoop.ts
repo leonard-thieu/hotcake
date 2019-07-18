@@ -9,6 +9,15 @@ import { NodeKind } from '../NodeKind';
 import { DataDeclarationSequenceStatement } from './DataDeclarationSequenceStatement';
 import { Statement } from './Statement';
 
+export const ForLoopChildNames: ReadonlyArray<keyof ForLoop> = [
+    'forKeyword',
+    'header',
+    'statements',
+    'endKeyword',
+    'endForKeyword',
+    'terminator',
+];
+
 export class ForLoop extends Statement {
     readonly kind = NodeKind.ForLoop;
 
@@ -18,6 +27,14 @@ export class ForLoop extends Statement {
     endKeyword: MissableToken<NextKeywordToken | EndKeywordToken> = undefined!;
     endForKeyword?: ForKeywordToken = undefined;
 }
+
+export const NumericForLoopHeaderChildNames: ReadonlyArray<keyof NumericForLoopHeader> = [
+    'loopVariableExpression',
+    'toOrUntilKeyword',
+    'lastValueExpression',
+    'stepKeyword',
+    'stepValueExpression',
+];
 
 export class NumericForLoopHeader extends Node {
     readonly kind = NodeKind.NumericForLoopHeader;

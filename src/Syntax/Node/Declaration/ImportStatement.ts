@@ -6,6 +6,11 @@ import { ModulePath } from '../ModulePath';
 import { NodeKind } from '../NodeKind';
 import { Declaration } from './Declaration';
 
+export const ImportStatementChildNames: ReadonlyArray<keyof ImportStatement> = [
+    'importKeyword',
+    'path',
+];
+
 export class ImportStatement extends Declaration {
     readonly kind = NodeKind.ImportStatement;
 

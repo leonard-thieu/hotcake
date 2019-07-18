@@ -6,6 +6,19 @@ import { NodeKind } from '../../NodeKind';
 import { MissableTypeReference } from '../../TypeReference';
 import { ExternDeclaration } from './ExternDeclaration';
 
+export const ExternClassDeclarationChildNames: ReadonlyArray<keyof ExternClassDeclaration> = [
+    'classKeyword',
+    'identifier',
+    'extendsKeyword',
+    'baseType',
+    'attribute',
+    'equalsSign',
+    'nativeSymbol',
+    'members',
+    'endKeyword',
+    'endClassKeyword',
+];
+
 export class ExternClassDeclaration extends ExternDeclaration {
     readonly kind = NodeKind.ExternClassDeclaration;
 

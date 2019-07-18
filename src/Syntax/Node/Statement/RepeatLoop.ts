@@ -5,6 +5,14 @@ import { MissableExpression } from '../Expression/Expression';
 import { NodeKind } from '../NodeKind';
 import { Statement } from './Statement';
 
+export const RepeatLoopChildNames: ReadonlyArray<keyof RepeatLoop> = [
+    'repeatKeyword',
+    'statements',
+    'foreverOrUntilKeyword',
+    'untilExpression',
+    'terminator',
+];
+
 export class RepeatLoop extends Statement {
     readonly kind = NodeKind.RepeatLoop;
 

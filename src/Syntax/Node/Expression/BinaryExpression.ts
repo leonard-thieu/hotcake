@@ -2,6 +2,13 @@ import { AmpersandToken, AndKeywordToken, AsteriskToken, EqualsSignToken, Greate
 import { NodeKind } from '../NodeKind';
 import { Expression, MissableExpression } from './Expression';
 
+export const BinaryExpressionChildNames: ReadonlyArray<keyof BinaryExpression> = [
+    'newlines',
+    'leftOperand',
+    'operator',
+    'rightOperand',
+];
+
 export class BinaryExpression extends Expression {
     readonly kind = NodeKind.BinaryExpression;
 

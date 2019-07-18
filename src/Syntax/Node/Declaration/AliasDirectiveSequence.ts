@@ -6,12 +6,27 @@ import { EscapedIdentifier, Identifier } from '../Identifier';
 import { NodeKind } from '../NodeKind';
 import { Declaration } from './Declaration';
 
+export const AliasDirectiveSequenceChildNames: ReadonlyArray<keyof AliasDirectiveSequence> = [
+    'aliasKeyword',
+    'children',
+];
+
 export class AliasDirectiveSequence extends Declaration {
     readonly kind = NodeKind.AliasDirectiveSequence;
 
     aliasKeyword: AliasKeywordToken = undefined!;
     children: ParseContextElementDelimitedSequence<AliasDirectiveSequence['kind']> = undefined!;
 }
+
+export const AliasDirectiveChildNames: ReadonlyArray<keyof AliasDirective> = [
+    'identifier',
+    'equalsSign',
+    'moduleIdentifier',
+    'moduleScopeMemberAccessOperator',
+    'typeIdentifier',
+    'typeScopeMemberAccessOperator',
+    'target',
+];
 
 export class AliasDirective extends Declaration {
     readonly kind = NodeKind.AliasDirective;

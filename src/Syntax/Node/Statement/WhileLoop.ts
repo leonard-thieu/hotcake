@@ -5,6 +5,15 @@ import { MissableExpression } from '../Expression/Expression';
 import { NodeKind } from '../NodeKind';
 import { Statement } from './Statement';
 
+export const WhileLoopChildNames: ReadonlyArray<keyof WhileLoop> = [
+    'whileKeyword',
+    'expression',
+    'statements',
+    'endKeyword',
+    'endWhileKeyword',
+    'terminator',
+];
+
 export class WhileLoop extends Statement {
     readonly kind = NodeKind.WhileLoop;
 

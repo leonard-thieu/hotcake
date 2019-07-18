@@ -3,6 +3,14 @@ import { ClosingSquareBracketToken, OpeningSquareBracketToken } from '../../Toke
 import { NodeKind } from '../NodeKind';
 import { Expression, Expressions, MissableExpression } from './Expression';
 
+export const IndexExpressionChildNames: ReadonlyArray<keyof IndexExpression> = [
+    'newlines',
+    'indexableExpression',
+    'openingSquareBracket',
+    'indexExpressionExpression',
+    'closingSquareBracket',
+];
+
 export class IndexExpression extends Expression {
     readonly kind = NodeKind.IndexExpression;
 

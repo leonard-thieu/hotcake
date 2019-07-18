@@ -6,6 +6,15 @@ import { Node } from '../Node';
 import { NodeKind } from '../NodeKind';
 import { Statement } from './Statement';
 
+export const TryStatementChildNames: ReadonlyArray<keyof TryStatement> = [
+    'tryKeyword',
+    'statements',
+    'catchClauses',
+    'endKeyword',
+    'endTryKeyword',
+    'terminator',
+];
+
 export class TryStatement extends Statement {
     readonly kind = NodeKind.TryStatement;
 
@@ -15,6 +24,12 @@ export class TryStatement extends Statement {
     endKeyword: MissableToken<EndKeywordToken> = undefined!;
     endTryKeyword?: TryKeywordToken = undefined;
 }
+
+export const CatchClauseChildNames: ReadonlyArray<keyof CatchClause> = [
+    'catchKeyword',
+    'parameter',
+    'statements',
+];
 
 export class CatchClause extends Node {
     readonly kind = NodeKind.CatchClause;

@@ -5,6 +5,16 @@ import { Identifier, IdentifierStartToken } from './Identifier';
 import { Node } from './Node';
 import { NodeKind } from './NodeKind';
 
+export const TypeReferenceChildNames: ReadonlyArray<keyof TypeReference> = [
+    'moduleIdentifier',
+    'scopeMemberAccessOperator',
+    'identifier',
+    'lessThanSign',
+    'typeArguments',
+    'greaterThanSign',
+    'arrayTypeAnnotations',
+];
+
 export class TypeReference extends Node {
     readonly kind = NodeKind.TypeReference;
 

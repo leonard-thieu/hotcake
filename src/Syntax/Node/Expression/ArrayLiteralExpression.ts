@@ -4,6 +4,14 @@ import { ClosingSquareBracketToken, OpeningSquareBracketToken } from '../../Toke
 import { NodeKind } from '../NodeKind';
 import { Expression } from './Expression';
 
+export const ArrayLiteralExpressionChildNames: ReadonlyArray<keyof ArrayLiteralExpression> = [
+    'newlines',
+    'openingSquareBracket',
+    'leadingNewlines',
+    'expressions',
+    'closingSquareBracket',
+];
+
 export class ArrayLiteralExpression extends Expression {
     readonly kind = NodeKind.ArrayLiteralExpression;
 

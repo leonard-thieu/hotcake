@@ -3,6 +3,11 @@ import { ModulePath } from '../ModulePath';
 import { NodeKind } from '../NodeKind';
 import { Declaration } from './Declaration';
 
+export const FriendDirectiveChildNames: ReadonlyArray<keyof FriendDirective> = [
+    'friendKeyword',
+    'modulePath',
+];
+
 export class FriendDirective extends Declaration {
     readonly kind = NodeKind.FriendDirective;
 

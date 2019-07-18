@@ -19,6 +19,11 @@ export type IdentifierStartToken =
     | CommercialAtToken
     ;
 
+export const EscapedIdentifierChildNames: ReadonlyArray<keyof EscapedIdentifier> = [
+    'commercialAt',
+    'name',
+];
+
 export class EscapedIdentifier extends Node {
     readonly kind = NodeKind.EscapedIdentifier;
 

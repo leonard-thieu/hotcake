@@ -3,6 +3,13 @@ import { ClosingParenthesisToken, OpeningParenthesisToken } from '../../Token/To
 import { NodeKind } from '../NodeKind';
 import { Expression, MissableExpression } from './Expression';
 
+export const GroupingExpressionChildNames: ReadonlyArray<keyof GroupingExpression> = [
+    'newlines',
+    'openingParenthesis',
+    'expression',
+    'closingParenthesis',
+];
+
 export class GroupingExpression extends Expression {
     readonly kind = NodeKind.GroupingExpression;
 

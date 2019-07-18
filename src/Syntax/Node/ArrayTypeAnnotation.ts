@@ -4,6 +4,12 @@ import { MissableExpression } from './Expression/Expression';
 import { Node } from './Node';
 import { NodeKind } from './NodeKind';
 
+export const ArrayTypeAnnotationChildNames: ReadonlyArray<keyof ArrayTypeAnnotation> = [
+    'openingSquareBracket',
+    'expression',
+    'closingSquareBracket',
+];
+
 export class ArrayTypeAnnotation extends Node {
     readonly kind = NodeKind.ArrayTypeAnnotation;
 

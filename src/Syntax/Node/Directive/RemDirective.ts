@@ -4,6 +4,15 @@ import { EndDirectiveKeywordToken, IfDirectiveKeywordToken, NumberSignToken, Rem
 import { NodeKind } from '../NodeKind';
 import { Directive } from './Directive';
 
+export const RemDirectiveChildNames: ReadonlyArray<keyof RemDirective> = [
+    'numberSign',
+    'remDirectiveKeyword',
+    'children',
+    'endDirectiveNumberSign',
+    'endDirectiveKeyword',
+    'endIfDirectiveKeyword',
+];
+
 export class RemDirective extends Directive {
     readonly kind = NodeKind.RemDirective;
 

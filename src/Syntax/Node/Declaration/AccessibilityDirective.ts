@@ -2,6 +2,11 @@ import { ExternKeywordToken, PrivateKeywordToken, ProtectedKeywordToken, PublicK
 import { NodeKind } from '../NodeKind';
 import { Declaration } from './Declaration';
 
+export const AccessibilityDirectiveChildNames: ReadonlyArray<keyof AccessibilityDirective> = [
+    'accessibilityKeyword',
+    'externPrivateKeyword',
+];
+
 export class AccessibilityDirective extends Declaration {
     readonly kind = NodeKind.AccessibilityDirective;
 
