@@ -272,7 +272,7 @@ export abstract class ParserBase {
     // #region Unary expressions
 
     protected parseUnaryExpressionOrHigher(parent: Nodes): MissableExpression {
-        const newlines = this.parseList(ParseContextKind.NewlineList);
+        const newlines = this.parseList(ParseContextKind.NewlineList, /*parent*/ null!, /*delimiter*/ null);
 
         let expression: MissableExpression;
 

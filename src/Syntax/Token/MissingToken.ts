@@ -1,5 +1,5 @@
 import { NodeKind } from '../Node/NodeKind';
-import { ParseContextElementArray, ParseContextKind } from '../ParserBase';
+import { ParseContextElementSequence, ParseContextKind } from '../ParserBase';
 import { Token, TokenKinds, TokenKindTokenMap, Tokens } from './Token';
 import { TokenKind } from './TokenKind';
 
@@ -16,7 +16,7 @@ export class MissingToken extends Token<TokenKind.Missing> {
         );
     }
 
-    newlines: ParseContextElementArray<ParseContextKind.NewlineList> = undefined!;
+    newlines: ParseContextElementSequence<ParseContextKind.NewlineList> = undefined!;
 }
 
 export type MissingTokenKinds =
