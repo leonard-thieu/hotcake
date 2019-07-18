@@ -290,12 +290,16 @@ export abstract class ParserBase {
             default: {
                 expression = this.parsePrimaryExpression(parent);
 
-                while (true) {
-                    const postfixExpression = this.parsePostfixExpression(expression);
-                    if (postfixExpression === expression) {
-                        break;
+                if (expression.kind !== TokenKind.Missing) {
+                    while (true) {
+                        const postfixExpression = this.parsePostfixExpression(expression);
+
+                        if (!postfixExpression) {
+                            break;
+                        }
+
+                        expression = postfixExpression;
                     }
-                    expression = postfixExpression;
                 }
                 break;
             }
@@ -396,12 +400,7 @@ export abstract class ParserBase {
 
                 return this.parseGroupingExpression(parent, token);
             }
-            case TokenKind.EOF: {
-                return this.createMissingToken(token.fullStart, TokenKind.Expression);
-            }
         }
-
-        console.error(`${JSON.stringify(token.kind)} not implemented.`);
 
         return this.createMissingToken(token.fullStart, TokenKind.Expression);
     }
@@ -617,11 +616,7 @@ export abstract class ParserBase {
 
     // #region Postfix expressions
 
-    protected parsePostfixExpression(expression: MissableExpression) {
-        if (expression.kind === TokenKind.Missing) {
-            return expression;
-        }
-
+    protected parsePostfixExpression(expression: Expressions) {
         const token = this.getToken();
         switch (token.kind) {
             case TokenKind.Period: {
@@ -639,8 +634,6 @@ export abstract class ParserBase {
         if (this.isInvokeExpressionStart(token, expression)) {
             return this.parseInvokeExpression(expression);
         }
-
-        return expression;
     }
 
     protected parseScopeMemberAccessExpression(expression: Expressions, scopeMemberAccessOperator: PeriodToken): ScopeMemberAccessExpression {
