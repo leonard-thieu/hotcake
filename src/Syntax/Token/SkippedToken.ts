@@ -1,17 +1,13 @@
-import { Token, TokenKinds } from './Token';
+import { Token, Tokens } from './Token';
 import { TokenKind } from './TokenKind';
 
-export class SkippedToken<TTokenKind extends TokenKinds> extends Token<TokenKind.Skipped> {
-    constructor(token: Token<TTokenKind>) {
+export class SkippedToken extends Token<TokenKind.Skipped> {
+    constructor(readonly originalToken: Tokens) {
         super(
             TokenKind.Skipped,
-            token.fullStart,
-            token.start,
-            token.length,
+            originalToken.fullStart,
+            originalToken.start,
+            originalToken.length,
         );
-
-        this.originalKind = token.kind;
     }
-
-    originalKind: TTokenKind;
 }

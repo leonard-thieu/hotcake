@@ -32,7 +32,7 @@ import { ModKeywordEqualsSignToken } from './Token/ModKeywordEqualsSignToken';
 import { ShlKeywordEqualsSignToken } from './Token/ShlKeywordEqualsSignToken';
 import { ShrKeywordEqualsSignToken } from './Token/ShrKeywordEqualsSignToken';
 import { SkippedToken } from './Token/SkippedToken';
-import { CommaToken, CommercialAtToken, ConfigurationTagStartToken, FloatLiteralToken, IntegerLiteralToken, NewKeywordToken, NullKeywordToken, OpeningParenthesisToken, OpeningSquareBracketToken, PeriodPeriodToken, PeriodToken, QuotationMarkToken, SelfKeywordToken, SuperKeywordToken, Token, TokenKinds, TokenKindTokenMap, Tokens } from './Token/Token';
+import { CommaToken, CommercialAtToken, ConfigurationTagStartToken, FloatLiteralToken, IntegerLiteralToken, NewKeywordToken, NullKeywordToken, OpeningParenthesisToken, OpeningSquareBracketToken, PeriodPeriodToken, PeriodToken, QuotationMarkToken, SelfKeywordToken, SuperKeywordToken, TokenKinds, TokenKindTokenMap, Tokens } from './Token/Token';
 import { TokenKind } from './Token/TokenKind';
 
 export abstract class ParserBase {
@@ -1234,7 +1234,7 @@ export abstract class ParserBase {
         return new MissingToken(fullStart, originalKind);
     }
 
-    protected createSkippedToken<TTokenKind extends TokenKinds>(token: Token<TTokenKind>): SkippedToken<TTokenKind> {
+    protected createSkippedToken(token: Tokens): SkippedToken {
         return new SkippedToken(token);
     }
 
@@ -1408,8 +1408,8 @@ export interface ParseContextElementMap extends ParseContextElementMapBase { }
 
 export type ParseContext = keyof ParseContextElementMap;
 
-type ParseContextElementArrayBase<TParseContext extends ParseContext> = Array<ParseContextElementMap[TParseContext] | SkippedToken<TokenKinds>>;
-export type ParseContextElementArray<TParseContext extends ParseContext> = Array<ParseContextElementMap[TParseContext] | SkippedToken<TokenKinds>> & { _arrayBrand: never; };
+type ParseContextElementArrayBase<TParseContext extends ParseContext> = Array<ParseContextElementMap[TParseContext] | SkippedToken>;
+export type ParseContextElementArray<TParseContext extends ParseContext> = Array<ParseContextElementMap[TParseContext] | SkippedToken> & { _arrayBrand: never; };
 export type ParseContextElementSequence<TParseContext extends ParseContext> = Array<ParseContextElementMap[TParseContext]> & { _sequenceBrand: never; };
 export type ParseContextElementDelimitedSequence<TParseContext extends ParseContext> = Array<ParseContextElementMap[TParseContext]> & { _delimitedSequenceBrand: never; };
 

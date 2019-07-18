@@ -2045,10 +2045,10 @@ export class Parser extends ParserBase {
         return super.createMissingToken(fullStart, originalKind);
     }
 
-    protected createSkippedToken<TTokenKind extends TokenKinds>(token: Token<TTokenKind>): SkippedToken<TTokenKind> {
+    protected createSkippedToken(token: Tokens): SkippedToken {
         this.addDiagnostic(
             DiagnosticKind.Error,
-            `Skipped token: ${JSON.stringify(token.kind)}.`,
+            `Skipped token: '${token.kind}'.`,
             token.fullStart,
             token.length,
         );

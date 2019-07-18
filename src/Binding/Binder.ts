@@ -45,7 +45,7 @@ import { WhileLoop } from '../Syntax/Node/Statement/WhileLoop';
 import { ShorthandTypeToken, TypeAnnotation } from '../Syntax/Node/TypeAnnotation';
 import { MissableTypeReference, TypeReference } from '../Syntax/Node/TypeReference';
 import { SkippedToken } from '../Syntax/Token/SkippedToken';
-import { TokenKinds, Tokens } from '../Syntax/Token/Token';
+import { Tokens } from '../Syntax/Token/Token';
 import { TokenKind } from '../Syntax/Token/TokenKind';
 import { BoundSymbol, BoundSymbolTable } from './BoundSymbol';
 import { ModuleReference } from './ModuleReference';
@@ -831,7 +831,7 @@ export class Binder {
     // #region Statements
 
     private bindStatements(
-        statements: (Statements | SkippedToken<TokenKinds>)[],
+        statements: (Statements | SkippedToken)[],
         parent: BoundNodes,
     ): BoundStatements[] {
         const boundStatements: BoundStatements[] = [];

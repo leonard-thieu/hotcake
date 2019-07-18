@@ -4,10 +4,10 @@ import { TokenKind } from './TokenKind';
 
 export class Token<TTokenKind extends ErrorableTokenKinds> {
     constructor(
-        public kind: TTokenKind,
-        public fullStart: number,
-        public start: number,
-        public length: number,
+        readonly kind: TTokenKind,
+        readonly fullStart: number,
+        readonly start: number,
+        readonly length: number,
     ) { }
 
     get end(): number {
@@ -311,5 +311,5 @@ export type ErrorableTokenKinds =
 export type ErrorableToken =
     | Tokens
     | MissingToken<MissableTokenKinds>
-    | SkippedToken<TokenKinds>
+    | SkippedToken
     ;
