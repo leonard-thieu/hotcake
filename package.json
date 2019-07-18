@@ -30,7 +30,7 @@
     "js-yaml": "3.13.1",
     "mkdirp": "0.5.1",
     "mocha": "5.2.0",
-    "natural-orderby": "1.0.2",
+    "natural-orderby": "2.0.3",
     "source-map-support": "0.5.9",
     "ts-loader": "6.0.4",
     "typescript": "3.4.5",
