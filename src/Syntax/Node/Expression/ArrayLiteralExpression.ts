@@ -1,8 +1,8 @@
-import { ParseContextElementDelimitedSequence, ParseContextElementSequence, ParseContextKind } from '../../ParserBase';
 import { MissableToken } from '../../Token/MissingToken';
-import { ClosingSquareBracketToken, OpeningSquareBracketToken } from '../../Token/Token';
+import { ClosingSquareBracketToken, NewlineToken, OpeningSquareBracketToken } from '../../Token/Token';
+import { CommaSeparator } from '../CommaSeparator';
 import { NodeKind } from '../NodeKind';
-import { Expression } from './Expression';
+import { Expression, MissableExpression } from './Expression';
 
 export const ArrayLiteralExpressionChildNames: ReadonlyArray<keyof ArrayLiteralExpression> = [
     'newlines',
@@ -16,7 +16,7 @@ export class ArrayLiteralExpression extends Expression {
     readonly kind = NodeKind.ArrayLiteralExpression;
 
     openingSquareBracket: OpeningSquareBracketToken = undefined!;
-    leadingNewlines: ParseContextElementSequence<ParseContextKind.NewlineList> = undefined!;
-    expressions: ParseContextElementDelimitedSequence<ParseContextKind.ExpressionSequence> = undefined!;
+    leadingNewlines: NewlineToken[] = undefined!;
+    expressions: (MissableExpression | CommaSeparator)[] = undefined!;
     closingSquareBracket: MissableToken<ClosingSquareBracketToken> = undefined!;
 }

@@ -1,10 +1,10 @@
-import { ParseContextElementArray, ParseContextElementSequence, ParseContextKind } from '../../ParserBase';
 import { MissableToken } from '../../Token/MissingToken';
+import { SkippedToken } from '../../Token/SkippedToken';
 import { ElseIfKeywordToken, ElseKeywordToken, EndIfKeywordToken, EndKeywordToken, IfKeywordToken, ThenKeywordToken } from '../../Token/Token';
 import { MissableExpression } from '../Expression/Expression';
 import { Node } from '../Node';
 import { NodeKind } from '../NodeKind';
-import { Statement } from './Statement';
+import { Statement, Statements } from './Statement';
 
 export const IfStatementChildNames: ReadonlyArray<keyof IfStatement> = [
     'ifKeyword',
@@ -25,8 +25,8 @@ export class IfStatement extends Statement {
     expression: MissableExpression = undefined!;
     thenKeyword?: ThenKeywordToken = undefined;
     isSingleLine: boolean = false;
-    statements: ParseContextElementArray<IfStatement['kind']> = undefined!;
-    elseIfClauses?: ParseContextElementSequence<ParseContextKind.ElseIfClauseList> = undefined;
+    statements: (Statements | SkippedToken)[] = undefined!;
+    elseIfClauses?: ElseIfClause[] = undefined;
     elseClause?: ElseClause = undefined;
     endKeyword?: MissableToken<EndIfKeywordToken | EndKeywordToken> = undefined;
     endIfKeyword?: IfKeywordToken = undefined;
@@ -47,7 +47,7 @@ export class ElseIfClause extends Node {
     ifKeyword?: IfKeywordToken = undefined;
     expression: MissableExpression = undefined!;
     thenKeyword?: ThenKeywordToken = undefined;
-    statements: ParseContextElementArray<ElseIfClause['kind']> = undefined!;
+    statements: (Statements | SkippedToken)[] = undefined!;
 }
 
 export const ElseClauseChildNames: ReadonlyArray<keyof ElseClause> = [
@@ -59,10 +59,12 @@ export class ElseClause extends Node {
     readonly kind = NodeKind.ElseClause;
 
     elseKeyword: ElseKeywordToken = undefined!;
-    statements: ParseContextElementArray<ElseClause['kind']> = undefined!;
+    statements: (Statements | SkippedToken)[] = undefined!;
 
     get isSingleLine() {
-        if (this.parent && this.parent.kind === NodeKind.IfStatement) {
+        if (this.parent &&
+            this.parent.kind === NodeKind.IfStatement
+        ) {
             return this.parent.isSingleLine;
         }
 

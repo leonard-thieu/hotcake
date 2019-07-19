@@ -1,9 +1,13 @@
-import { ParseContextElementArray, ParseContextElementDelimitedSequence, ParseContextKind } from '../../ParserBase';
 import { MissableToken } from '../../Token/MissingToken';
-import { EndKeywordToken, ExtendsKeywordToken, InterfaceKeywordToken } from '../../Token/Token';
+import { SkippedToken } from '../../Token/SkippedToken';
+import { EndKeywordToken, ExtendsKeywordToken, InterfaceKeywordToken, NewlineToken } from '../../Token/Token';
+import { CommaSeparator } from '../CommaSeparator';
 import { MissableIdentifier } from '../Identifier';
 import { NodeKind } from '../NodeKind';
+import { TypeReference } from '../TypeReference';
+import { DataDeclarationSequence } from './DataDeclarationSequence';
 import { Declaration } from './Declaration';
+import { InterfaceMethodDeclaration } from './InterfaceMethodDeclaration';
 
 export const InterfaceDeclarationChildNames: ReadonlyArray<keyof InterfaceDeclaration> = [
     'interfaceKeyword',
@@ -21,8 +25,15 @@ export class InterfaceDeclaration extends Declaration {
     interfaceKeyword: InterfaceKeywordToken = undefined!;
     identifier: MissableIdentifier = undefined!;
     extendsKeyword?: ExtendsKeywordToken = undefined;
-    baseTypes?: ParseContextElementDelimitedSequence<ParseContextKind.TypeReferenceSequence> = undefined;
-    members: ParseContextElementArray<InterfaceDeclaration['kind']> = undefined!;
+    baseTypes?: (TypeReference | CommaSeparator)[] = undefined;
+    members: InterfaceDeclarationMember[] = undefined!;
     endKeyword: MissableToken<EndKeywordToken> = undefined!;
     endInterfaceKeyword?: InterfaceKeywordToken = undefined;
 }
+
+export type InterfaceDeclarationMember =
+    | DataDeclarationSequence
+    | InterfaceMethodDeclaration
+    | NewlineToken
+    | SkippedToken
+    ;

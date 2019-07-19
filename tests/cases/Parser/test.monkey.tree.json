@@ -5158,15 +5158,24 @@
                                 "fullStart": 5677,
                                 "start": 5678,
                                 "length": 7
+                            },
+                            "expression": {
+                                "kind": "Missing",
+                                "fullStart": 5686,
+                                "start": 5686,
+                                "length": 0,
+                                "originalKind": "Expression",
+                                "newlines": [
+                                    {
+                                        "kind": "Newline",
+                                        "fullStart": 5684,
+                                        "start": 5685,
+                                        "length": 2
+                                    }
+                                ]
                             }
                         }
-                    ],
-                    "terminator": {
-                        "kind": "Newline",
-                        "fullStart": 5684,
-                        "start": 5685,
-                        "length": 2
-                    }
+                    ]
                 },
                 {
                     "kind": "IfStatement",
@@ -5221,15 +5230,24 @@
                                 "fullStart": 5702,
                                 "start": 5703,
                                 "length": 7
+                            },
+                            "expression": {
+                                "kind": "Missing",
+                                "fullStart": 5711,
+                                "start": 5711,
+                                "length": 0,
+                                "originalKind": "Expression",
+                                "newlines": [
+                                    {
+                                        "kind": "Newline",
+                                        "fullStart": 5709,
+                                        "start": 5710,
+                                        "length": 2
+                                    }
+                                ]
                             }
                         }
-                    ],
-                    "terminator": {
-                        "kind": "Newline",
-                        "fullStart": 5709,
-                        "start": 5710,
-                        "length": 2
-                    }
+                    ]
                 }
             ],
             "endKeyword": {
@@ -5305,11 +5323,20 @@
                         "start": 5755,
                         "length": 6
                     },
-                    "terminator": {
-                        "kind": "Newline",
-                        "fullStart": 5761,
-                        "start": 5787,
-                        "length": 27
+                    "expression": {
+                        "kind": "Missing",
+                        "fullStart": 5788,
+                        "start": 5788,
+                        "length": 0,
+                        "originalKind": "Expression",
+                        "newlines": [
+                            {
+                                "kind": "Newline",
+                                "fullStart": 5761,
+                                "start": 5787,
+                                "length": 27
+                            }
+                        ]
                     }
                 },
                 {
@@ -5320,15 +5347,21 @@
                         "start": 5792,
                         "length": 10
                     },
-                    "terminator": {
-                        "kind": "Newline",
-                        "fullStart": 5798,
-                        "start": 5814,
-                        "length": 17
-                    }
-                },
-                {
-                    "kind": "EmptyStatement",
+                    "expression": {
+                        "kind": "Missing",
+                        "fullStart": 5815,
+                        "start": 5815,
+                        "length": 0,
+                        "originalKind": "Expression",
+                        "newlines": [
+                            {
+                                "kind": "Newline",
+                                "fullStart": 5798,
+                                "start": 5814,
+                                "length": 17
+                            }
+                        ]
+                    },
                     "terminator": {
                         "kind": "Semicolon",
                         "fullStart": 5815,
@@ -5344,11 +5377,20 @@
                         "start": 5820,
                         "length": 6
                     },
-                    "terminator": {
-                        "kind": "Newline",
-                        "fullStart": 5826,
-                        "start": 5845,
-                        "length": 20
+                    "expression": {
+                        "kind": "Missing",
+                        "fullStart": 5846,
+                        "start": 5846,
+                        "length": 0,
+                        "originalKind": "Expression",
+                        "newlines": [
+                            {
+                                "kind": "Newline",
+                                "fullStart": 5826,
+                                "start": 5845,
+                                "length": 20
+                            }
+                        ]
                     }
                 },
                 {
@@ -5358,6 +5400,14 @@
                         "fullStart": 5846,
                         "start": 5850,
                         "length": 10
+                    },
+                    "expression": {
+                        "kind": "Missing",
+                        "fullStart": 5856,
+                        "start": 5856,
+                        "length": 0,
+                        "originalKind": "Expression",
+                        "newlines": []
                     },
                     "terminator": {
                         "kind": "Semicolon",
@@ -6063,11 +6113,20 @@
                                                 "start": 6680,
                                                 "length": 26
                                             },
-                                            "terminator": {
-                                                "kind": "Newline",
-                                                "fullStart": 6686,
-                                                "start": 6687,
-                                                "length": 2
+                                            "expression": {
+                                                "kind": "Missing",
+                                                "fullStart": 6688,
+                                                "start": 6688,
+                                                "length": 0,
+                                                "originalKind": "Expression",
+                                                "newlines": [
+                                                    {
+                                                        "kind": "Newline",
+                                                        "fullStart": 6686,
+                                                        "start": 6687,
+                                                        "length": 2
+                                                    }
+                                                ]
                                             }
                                         }
                                     ]

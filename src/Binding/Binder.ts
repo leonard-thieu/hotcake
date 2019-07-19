@@ -45,7 +45,7 @@ import { WhileLoop } from '../Syntax/Node/Statement/WhileLoop';
 import { ShorthandTypeToken, TypeAnnotation } from '../Syntax/Node/TypeAnnotation';
 import { MissableTypeReference, TypeReference } from '../Syntax/Node/TypeReference';
 import { SkippedToken } from '../Syntax/Token/SkippedToken';
-import { TokenKinds, Tokens } from '../Syntax/Token/Token';
+import { Tokens } from '../Syntax/Token/Token';
 import { TokenKind } from '../Syntax/Token/TokenKind';
 import { BoundSymbol, BoundSymbolTable } from './BoundSymbol';
 import { ModuleReference } from './ModuleReference';
@@ -300,7 +300,7 @@ export class Binder {
                 if (!boundTargetModuleDirectory) {
                     const pathComponents = [
                         ...modulePathComponents,
-                        moduleIdentifier
+                        moduleIdentifier,
                     ];
 
                     throw new Error(`Could not resolve '${pathComponents.join('.')}'.`);
@@ -503,7 +503,9 @@ export class Binder {
                     break;
                 }
                 case TokenKind.NullKeyword:
-                case TokenKind.Missing: { break; }
+                case TokenKind.Missing: {
+                    break;
+                }
                 default: {
                     assertNever(baseType);
                     break;
@@ -752,7 +754,8 @@ export class Binder {
         boundClassDeclaration.type = new ObjectType(boundClassDeclaration);
         boundClassDeclaration.locals = new BoundSymbolTable();
         if (classDeclaration.baseType &&
-            classDeclaration.baseType.kind === NodeKind.TypeReference) {
+            classDeclaration.baseType.kind === NodeKind.TypeReference
+        ) {
             boundClassDeclaration.baseType = this.bindTypeReference(classDeclaration.baseType);
         }
         if (classDeclaration.implementedTypes) {
@@ -831,7 +834,7 @@ export class Binder {
     // #region Statements
 
     private bindStatements(
-        statements: (Statements | SkippedToken<TokenKinds>)[],
+        statements: (Statements | SkippedToken)[],
         parent: BoundNodes,
     ): BoundStatements[] {
         const boundStatements: BoundStatements[] = [];
@@ -969,10 +972,10 @@ export class Binder {
             boundReturnStatement.type = VoidType.type;
         }
 
-        const functionOrMethod = this.getNearestAncestor(boundReturnStatement, [
+        const functionOrMethod = this.getNearestAncestor(boundReturnStatement,
             BoundNodeKind.FunctionDeclaration,
-            BoundNodeKind.ClassMethodDeclaration
-        ]) as BoundFunctionDeclaration | BoundClassMethodDeclaration;
+            BoundNodeKind.ClassMethodDeclaration,
+        ) as BoundFunctionDeclaration | BoundClassMethodDeclaration;
 
         if (!boundReturnStatement.type.isConvertibleTo(functionOrMethod.returnType)) {
             throw new Error(`'${boundReturnStatement.type}' is not convertible to '${functionOrMethod.returnType}'.`);
@@ -1284,8 +1287,7 @@ export class Binder {
 
         if (catchClause.parameter.kind === TokenKind.Missing) {
             throw new Error('Catch clause must declare a parameter.');
-        }
-        else {
+        } else {
             boundCatchClause.parameter = this.bindDataDeclaration(catchClause.parameter, boundCatchClause);
         }
 
@@ -1577,7 +1579,8 @@ export class Binder {
         rightOperand: BoundExpressions,
     ) {
         if (!leftOperand.type.isConvertibleTo(IntType.type) ||
-            !rightOperand.type.isConvertibleTo(IntType.type)) {
+            !rightOperand.type.isConvertibleTo(IntType.type)
+        ) {
             throw new Error(`'${operatorKind}' is not valid for '${leftOperand.kind}' and '${rightOperand.kind}'.`);
         }
 
@@ -1602,7 +1605,8 @@ export class Binder {
             case TypeKind.Bool:
             case TypeKind.Object: {
                 if (operatorKind !== TokenKind.EqualsSign &&
-                    operatorKind !== TokenKind.LessThanSignGreaterThanSign) {
+                    operatorKind !== TokenKind.LessThanSignGreaterThanSign
+                ) {
                     throw new Error(`'${operatorKind}' is not valid for '${leftOperand.kind}' and '${rightOperand.kind}'.`);
                 }
                 break;
@@ -1717,7 +1721,7 @@ export class Binder {
         const boundSelfExpression = new BoundSelfExpression();
         boundSelfExpression.parent = parent;
 
-        const ancestor = this.getNearestAncestor(boundSelfExpression, [BoundNodeKind.ClassDeclaration]) as BoundClassDeclaration;
+        const ancestor = this.getNearestAncestor(boundSelfExpression, BoundNodeKind.ClassDeclaration) as BoundClassDeclaration;
         boundSelfExpression.type = ancestor.type;
 
         return boundSelfExpression;
@@ -1733,7 +1737,7 @@ export class Binder {
         const boundSuperExpression = new BoundSuperExpression();
         boundSuperExpression.parent = parent;
 
-        const ancestor = this.getNearestAncestor(boundSuperExpression, [BoundNodeKind.ClassDeclaration]) as BoundClassDeclaration;
+        const ancestor = this.getNearestAncestor(boundSuperExpression, BoundNodeKind.ClassDeclaration) as BoundClassDeclaration;
         if (!ancestor.baseType) {
             throw new Error(`'${ancestor.identifier.name}' does not extend a base class.`);
         }
@@ -2322,17 +2326,20 @@ export class Binder {
 
     private getBalancedType(leftOperandType: Types, rightOperandType: Types) {
         if (leftOperandType === StringType.type ||
-            rightOperandType === StringType.type) {
+            rightOperandType === StringType.type
+        ) {
             return StringType.type;
         }
 
         if (leftOperandType === FloatType.type ||
-            rightOperandType === FloatType.type) {
+            rightOperandType === FloatType.type
+        ) {
             return FloatType.type;
         }
 
         if (leftOperandType === IntType.type ||
-            rightOperandType === IntType.type) {
+            rightOperandType === IntType.type
+        ) {
             return IntType.type;
         }
 
@@ -2440,18 +2447,20 @@ export class Binder {
         throw new Error(`Unexpected declaration: ${JSON.stringify(declaration.kind)}`);
     }
 
-    private getNearestAncestor(node: BoundNodes, kinds: BoundNodeKind[]): BoundNodes {
-        let ancestor: BoundNodes | undefined = node;
+    private getNearestAncestor(node: BoundNodes, kind: BoundNodeKind, ...kinds: BoundNodeKind[]): BoundNodes {
+        let ancestor = node.parent;
 
-        do {
-            ancestor = ancestor.parent;
-
-            if (!ancestor) {
-                throw new Error(`Could not find a matching ancestor.`);
+        while (ancestor) {
+            if (ancestor.kind === kind ||
+                kinds.includes(ancestor.kind)
+            ) {
+                return ancestor;
             }
-        } while (!kinds.includes(ancestor.kind));
 
-        return ancestor;
+            ancestor = ancestor.parent;
+        }
+
+        throw new Error(`Could not find a matching ancestor.`);
     }
 
     // #endregion

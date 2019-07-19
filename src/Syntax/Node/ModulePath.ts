@@ -1,6 +1,5 @@
-import { ParseContextElementDelimitedSequence, ParseContextKind } from '../ParserBase';
 import { MissableToken } from '../Token/MissingToken';
-import { IdentifierToken } from '../Token/Token';
+import { IdentifierToken, PeriodToken } from '../Token/Token';
 import { Node } from './Node';
 import { NodeKind } from './NodeKind';
 
@@ -12,6 +11,6 @@ export const ModulePathChildNames: ReadonlyArray<keyof ModulePath> = [
 export class ModulePath extends Node {
     readonly kind = NodeKind.ModulePath;
 
-    children: ParseContextElementDelimitedSequence<ParseContextKind.ModulePathSequence> = undefined!;
+    children: (IdentifierToken | PeriodToken)[] = undefined!;
     moduleIdentifier: MissableToken<IdentifierToken> = undefined!;
 }

@@ -1,7 +1,6 @@
-import { ParseContextElementDelimitedSequence } from '../../ParserBase';
 import { MissableToken, MissingToken } from '../../Token/MissingToken';
 import { AliasKeywordToken, EqualsSignToken, FloatKeywordToken, IdentifierToken, IntKeywordToken, PeriodToken, StringKeywordToken } from '../../Token/Token';
-import { TokenKind } from '../../Token/TokenKind';
+import { CommaSeparator } from '../CommaSeparator';
 import { EscapedIdentifier, Identifier } from '../Identifier';
 import { NodeKind } from '../NodeKind';
 import { Declaration } from './Declaration';
@@ -15,7 +14,7 @@ export class AliasDirectiveSequence extends Declaration {
     readonly kind = NodeKind.AliasDirectiveSequence;
 
     aliasKeyword: AliasKeywordToken = undefined!;
-    children: ParseContextElementDelimitedSequence<AliasDirectiveSequence['kind']> = undefined!;
+    children: (AliasDirective | CommaSeparator)[] = undefined!;
 }
 
 export const AliasDirectiveChildNames: ReadonlyArray<keyof AliasDirective> = [
@@ -53,5 +52,5 @@ export type DeclarationReferenceIdentifier =
 
 export type MissableDeclarationReferenceIdentifier =
     | DeclarationReferenceIdentifier
-    | MissingToken<TokenKind.Identifier>
+    | MissingToken
     ;

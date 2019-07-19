@@ -84,9 +84,8 @@ connection.onHover((params) => {
     });
     const moduleDeclaration = parser.parse(preprocessorModuleDeclaration, tokens);
 
-    const parseTreeVisitor = new ParseTreeVisitor();
-    const containingNode = parseTreeVisitor.getNodeAt(moduleDeclaration, offset);
-    const containingToken = parseTreeVisitor.getChildTokenAt(containingNode, offset)!;
+    const containingNode = ParseTreeVisitor.getNodeAt(moduleDeclaration, offset);
+    const containingToken = ParseTreeVisitor.getChildTokenAt(containingNode, offset)!;
 
     const lineage: string[] = [containingNode.kind, containingToken.kind];
     let parent = containingNode.parent;

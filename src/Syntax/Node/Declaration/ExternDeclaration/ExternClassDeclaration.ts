@@ -1,10 +1,14 @@
-import { ParseContextElementArray } from '../../../ParserBase';
 import { MissableToken } from '../../../Token/MissingToken';
-import { AbstractKeywordToken, ClassKeywordToken, EndKeywordToken, ExtendsKeywordToken, FinalKeywordToken, NullKeywordToken } from '../../../Token/Token';
+import { SkippedToken } from '../../../Token/SkippedToken';
+import { AbstractKeywordToken, ClassKeywordToken, EndKeywordToken, ExtendsKeywordToken, FinalKeywordToken, NewlineToken, NullKeywordToken } from '../../../Token/Token';
 import { MissableIdentifier } from '../../Identifier';
 import { NodeKind } from '../../NodeKind';
 import { MissableTypeReference } from '../../TypeReference';
+import { AccessibilityDirective } from '../AccessibilityDirective';
+import { ExternClassMethodDeclaration } from './ExternClassMethodDeclaration';
+import { ExternDataDeclarationSequence } from './ExternDataDeclarationSequence';
 import { ExternDeclaration } from './ExternDeclaration';
+import { ExternFunctionDeclaration } from './ExternFunctionDeclaration';
 
 export const ExternClassDeclarationChildNames: ReadonlyArray<keyof ExternClassDeclaration> = [
     'classKeyword',
@@ -31,7 +35,15 @@ export class ExternClassDeclaration extends ExternDeclaration {
 
     attribute?: AbstractKeywordToken | FinalKeywordToken = undefined;
 
-    members: ParseContextElementArray<ExternClassDeclaration['kind']> = undefined!;
+    members: (ExternClassDeclarationMember | SkippedToken)[] = undefined!;
     endKeyword: MissableToken<EndKeywordToken> = undefined!;
     endClassKeyword?: ClassKeywordToken = undefined;
 }
+
+export type ExternClassDeclarationMember =
+    | AccessibilityDirective
+    | ExternDataDeclarationSequence
+    | ExternFunctionDeclaration
+    | ExternClassMethodDeclaration
+    | NewlineToken
+    ;

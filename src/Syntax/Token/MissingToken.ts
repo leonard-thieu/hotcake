@@ -1,12 +1,11 @@
 import { NodeKind } from '../Node/NodeKind';
-import { ParseContextElementArray, ParseContextKind } from '../ParserBase';
-import { Token, TokenKinds, TokenKindTokenMap, Tokens } from './Token';
+import { NewlineToken, Token, TokenKinds, TokenKindTokenMap, Tokens } from './Token';
 import { TokenKind } from './TokenKind';
 
-export class MissingToken<TTokenKind extends MissableTokenKinds> extends Token<TokenKind.Missing> {
+export class MissingToken extends Token<TokenKind.Missing> {
     constructor(
         fullStart: number,
-        public originalKind: TTokenKind,
+        readonly originalKind: MissingTokenKinds,
     ) {
         super(
             TokenKind.Missing,
@@ -16,10 +15,10 @@ export class MissingToken<TTokenKind extends MissableTokenKinds> extends Token<T
         );
     }
 
-    newlines: ParseContextElementArray<ParseContextKind.NewlineList> = undefined!;
+    newlines: NewlineToken[] = undefined!;
 }
 
-export type MissableTokenKinds =
+export type MissingTokenKinds =
     | TokenKinds
     | TokenKind.Expression
     | TokenKind.ForLoopHeader
@@ -31,5 +30,5 @@ export type MissableTokenKinds =
 
 export type MissableToken<TToken extends Tokens> =
     | TokenKindTokenMap[TToken['kind']]
-    | MissingToken<TToken['kind']>
+    | MissingToken
     ;

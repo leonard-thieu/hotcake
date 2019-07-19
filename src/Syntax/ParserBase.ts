@@ -27,12 +27,12 @@ import { Nodes } from './Node/Node';
 import { NodeKind } from './Node/NodeKind';
 import { MissableTypeReference, TypeReference, TypeReferenceIdentifierStartToken } from './Node/TypeReference';
 import { GreaterThanSignEqualsSignToken } from './Token/GreaterThanSignEqualsSignToken';
-import { MissableTokenKinds, MissingToken } from './Token/MissingToken';
+import { MissingToken, MissingTokenKinds } from './Token/MissingToken';
 import { ModKeywordEqualsSignToken } from './Token/ModKeywordEqualsSignToken';
 import { ShlKeywordEqualsSignToken } from './Token/ShlKeywordEqualsSignToken';
 import { ShrKeywordEqualsSignToken } from './Token/ShrKeywordEqualsSignToken';
 import { SkippedToken } from './Token/SkippedToken';
-import { CommaToken, CommercialAtToken, ConfigurationTagStartToken, FloatLiteralToken, IntegerLiteralToken, NewKeywordToken, NullKeywordToken, OpeningParenthesisToken, OpeningSquareBracketToken, PeriodPeriodToken, PeriodToken, QuotationMarkToken, SelfKeywordToken, SuperKeywordToken, Token, TokenKinds, TokenKindTokenMap, Tokens } from './Token/Token';
+import { CommaToken, CommercialAtToken, ConfigurationTagStartToken, FloatLiteralToken, IntegerLiteralToken, NewKeywordToken, NullKeywordToken, OpeningParenthesisToken, OpeningSquareBracketToken, PeriodPeriodToken, PeriodToken, QuotationMarkToken, SelfKeywordToken, SuperKeywordToken, TokenKinds, TokenKindTokenMap, Tokens } from './Token/Token';
 import { TokenKind } from './Token/TokenKind';
 
 export abstract class ParserBase {
@@ -151,7 +151,8 @@ export abstract class ParserBase {
             const [newPrecedence, associativity] = getBinaryOperatorPrecedenceAndAssociativity(token, parent);
 
             if (prevAssociativity === Associativity.None &&
-                prevNewPrecedence === newPrecedence) {
+                prevNewPrecedence === newPrecedence
+            ) {
                 break;
             }
 
@@ -212,7 +213,8 @@ export abstract class ParserBase {
                 case TokenKind.EqualsSign: {
                     if (parent) {
                         if (parent.kind === NodeKind.ExpressionStatement ||
-                            parent.kind === NodeKind.ForLoop) {
+                            parent.kind === NodeKind.ForLoop
+                        ) {
                             expression = this.parseAssignmentExpression(parent, expression, token, newPrecedence);
                             break;
                         }
@@ -267,10 +269,12 @@ export abstract class ParserBase {
         return binaryExpression;
     }
 
+    // #endregion
+
     // #region Unary expressions
 
     protected parseUnaryExpressionOrHigher(parent: Nodes): MissableExpression {
-        const newlines = this.parseList(ParseContextKind.NewlineList);
+        const newlines = this.parseList(ParseContextKind.NewlineList, parent);
 
         let expression: MissableExpression;
 
@@ -288,12 +292,16 @@ export abstract class ParserBase {
             default: {
                 expression = this.parsePrimaryExpression(parent);
 
-                while (true) {
-                    const postfixExpression = this.parsePostfixExpression(expression);
-                    if (postfixExpression === expression) {
-                        break;
+                if (expression.kind !== TokenKind.Missing) {
+                    while (true) {
+                        const postfixExpression = this.parsePostfixExpression(expression);
+
+                        if (!postfixExpression) {
+                            break;
+                        }
+
+                        expression = postfixExpression;
                     }
-                    expression = postfixExpression;
                 }
                 break;
             }
@@ -312,6 +320,8 @@ export abstract class ParserBase {
 
         return unaryExpression;
     }
+
+    // #endregion
 
     // #region Primary expressions
 
@@ -392,12 +402,7 @@ export abstract class ParserBase {
 
                 return this.parseGroupingExpression(parent, token);
             }
-            case TokenKind.EOF: {
-                return this.createMissingToken(token.fullStart, TokenKind.Expression);
-            }
         }
-
-        console.error(`${JSON.stringify(token.kind)} not implemented.`);
 
         return this.createMissingToken(token.fullStart, TokenKind.Expression);
     }
@@ -462,7 +467,7 @@ export abstract class ParserBase {
         const stringLiteralExpression = new StringLiteralExpression();
         stringLiteralExpression.parent = parent;
         stringLiteralExpression.startQuotationMark = startQuotationMark;
-        stringLiteralExpression.children = this.parseList(stringLiteralExpression.kind, stringLiteralExpression);
+        stringLiteralExpression.children = this.parseListWithSkippedTokens(ParseContextKind.StringLiteralExpression, stringLiteralExpression);
         stringLiteralExpression.endQuotationMark = this.eatMissable(TokenKind.QuotationMark);
 
         return stringLiteralExpression;
@@ -560,7 +565,7 @@ export abstract class ParserBase {
         const arrayLiteralExpression = new ArrayLiteralExpression();
         arrayLiteralExpression.parent = parent;
         arrayLiteralExpression.openingSquareBracket = openingSquareBracket;
-        arrayLiteralExpression.leadingNewlines = this.parseList(ParseContextKind.NewlineList, arrayLiteralExpression, /*delimiter*/ null);
+        arrayLiteralExpression.leadingNewlines = this.parseList(ParseContextKind.NewlineList, arrayLiteralExpression);
         arrayLiteralExpression.expressions = this.parseList(ParseContextKind.ExpressionSequence, arrayLiteralExpression, TokenKind.Comma);
         arrayLiteralExpression.closingSquareBracket = this.eatMissable(TokenKind.ClosingSquareBracket);
 
@@ -609,13 +614,11 @@ export abstract class ParserBase {
         return groupingExpression;
     }
 
+    // #endregion
+
     // #region Postfix expressions
 
-    protected parsePostfixExpression(expression: MissableExpression) {
-        if (expression.kind === TokenKind.Missing) {
-            return expression;
-        }
-
+    protected parsePostfixExpression(expression: Expressions) {
         const token = this.getToken();
         switch (token.kind) {
             case TokenKind.Period: {
@@ -633,8 +636,6 @@ export abstract class ParserBase {
         if (this.isInvokeExpressionStart(token, expression)) {
             return this.parseInvokeExpression(expression);
         }
-
-        return expression;
     }
 
     protected parseScopeMemberAccessExpression(expression: Expressions, scopeMemberAccessOperator: PeriodToken): ScopeMemberAccessExpression {
@@ -719,7 +720,7 @@ export abstract class ParserBase {
         invokeExpression.invokableExpression = expression;
         invokeExpression.openingParenthesis = this.eatOptional(TokenKind.OpeningParenthesis);
         if (invokeExpression.openingParenthesis) {
-            invokeExpression.leadingNewlines = this.parseList(ParseContextKind.NewlineList, invokeExpression, /*delimiter*/ null);
+            invokeExpression.leadingNewlines = this.parseList(ParseContextKind.NewlineList, invokeExpression);
         }
         invokeExpression.arguments = this.parseList(ParseContextKind.ExpressionSequence, invokeExpression, TokenKind.Comma, /*allowEmpty*/ true);
         if (invokeExpression.openingParenthesis) {
@@ -728,12 +729,6 @@ export abstract class ParserBase {
 
         return invokeExpression;
     }
-
-    // #endregion
-
-    // #endregion
-
-    // #endregion
 
     // #endregion
 
@@ -777,8 +772,13 @@ export abstract class ParserBase {
     }
 
     private isTypeReferenceSequenceMemberStart(token: Tokens): boolean {
-        return token.kind === TokenKind.Comma ||
-            this.isTypeReferenceStart(token);
+        if (token.kind === TokenKind.Comma ||
+            this.isTypeReferenceStart(token)
+        ) {
+            return true;
+        }
+
+        return false;
     }
 
     private parseTypeReferenceSequenceMember(parent: Nodes) {
@@ -886,7 +886,7 @@ export abstract class ParserBase {
             }
         }
 
-        typeReference.arrayTypeAnnotations = this.parseList(ParseContextKind.ArrayTypeAnnotationList, typeReference, /*delimiter*/ null);
+        typeReference.arrayTypeAnnotations = this.parseList(ParseContextKind.ArrayTypeAnnotationList, typeReference);
 
         return typeReference;
     }
@@ -946,7 +946,7 @@ export abstract class ParserBase {
         const commaSeparator = new CommaSeparator();
         commaSeparator.parent = parent;
         commaSeparator.separator = separator;
-        commaSeparator.newlines = this.parseList(ParseContextKind.NewlineList, commaSeparator, /*delimiter*/ null);
+        commaSeparator.newlines = this.parseList(ParseContextKind.NewlineList, commaSeparator);
 
         return commaSeparator;
     }
@@ -983,11 +983,11 @@ export abstract class ParserBase {
         parent: Nodes,
         identifierStart: CommercialAtToken | TIdentifier,
     ): EscapedIdentifier | TIdentifier {
-        if (identifierStart.kind !== TokenKind.CommercialAt) {
-            return identifierStart;
+        if (identifierStart.kind === TokenKind.CommercialAt) {
+            return this.parseEscapedIdentifier(parent, identifierStart);
         }
 
-        return this.parseEscapedIdentifier(parent, identifierStart);
+        return identifierStart;
     }
 
     private parseEscapedIdentifier(parent: Nodes, commercialAt: CommercialAtToken): EscapedIdentifier {
@@ -1078,17 +1078,37 @@ export abstract class ParserBase {
 
     protected parseContexts: ParseContext[] = undefined!;
 
-    protected parseList<TParseContext extends ParseContext>(parseContext: TParseContext, parent?: Nodes): ParseContextElementArray<TParseContext>;
-    protected parseList<TParseContext extends ParseContext>(parseContext: TParseContext, parent: Nodes, delimiter: null): ParseContextElementSequence<TParseContext>;
-    protected parseList<TParseContext extends ParseContext>(parseContext: TParseContext, parent: Nodes, delimiter: TokenKinds, allowEmpty?: boolean): ParseContextElementDelimitedSequence<TParseContext>;
-    protected parseList<TParseContext extends ParseContext>(parseContext: TParseContext, parent: Nodes, delimiter?: TokenKinds | null, allowEmpty?: boolean) {
+    protected parseList<TParseContext extends ParseContext>(
+        parseContext: TParseContext,
+        parent: Nodes,
+        delimiter?: TokenKinds,
+        allowEmpty?: boolean,
+    ) {
+        const list = this.parseListCore(parseContext, parent, delimiter, allowEmpty);
+
+        return list as Exclude<typeof list[0], SkippedToken>[];
+    }
+
+    protected parseListWithSkippedTokens<TParseContext extends ParseContext>(
+        parseContext: TParseContext,
+        parent: Nodes,
+    ) {
+        return this.parseListCore(parseContext, parent);
+    }
+
+    private parseListCore<TParseContext extends ParseContext>(
+        parseContext: TParseContext,
+        parent: Nodes,
+        delimiter?: TokenKinds,
+        allowEmpty?: boolean,
+    ) {
         if (typeof parseContext === 'undefined') {
             throw new Error('parseContext is undefined.');
         }
 
         this.parseContexts.push(parseContext);
 
-        const nodes: ParseContextElementArrayBase<TParseContext> = [];
+        const nodes: (ParseContextElementMap[TParseContext] | SkippedToken)[] = [];
         let isLastNodeDelimiter: boolean = false;
         while (true) {
             const token = this.getToken();
@@ -1101,9 +1121,10 @@ export abstract class ParserBase {
                 if (delimiter) {
                     const isCurrentNodeDelimiter = token.kind === delimiter;
                     if (nodes.length === 0 ||
-                        !isCurrentNodeDelimiter && isLastNodeDelimiter ||
+                        (!isCurrentNodeDelimiter && isLastNodeDelimiter) ||
                         allowEmpty ||
-                        isCurrentNodeDelimiter && !isLastNodeDelimiter) {
+                        (isCurrentNodeDelimiter && !isLastNodeDelimiter)
+                    ) {
                         isLastNodeDelimiter = isCurrentNodeDelimiter;
                     } else {
                         break;
@@ -1112,7 +1133,6 @@ export abstract class ParserBase {
 
                 const node = this.parseListElement(parseContext, parent);
                 nodes.push(node);
-
                 continue;
             }
 
@@ -1138,7 +1158,7 @@ export abstract class ParserBase {
         }
 
         switch (parseContext) {
-            case NodeKind.StringLiteralExpression: {
+            case ParseContextKind.StringLiteralExpression: {
                 return this.isStringLiteralExpressionChildListTerminator(token);
             }
             case ParseContextKind.NewlineList: {
@@ -1162,7 +1182,7 @@ export abstract class ParserBase {
 
     protected isValidListElementCore(parseContext: ParseContextBase, token: Tokens): boolean {
         switch (parseContext) {
-            case NodeKind.StringLiteralExpression: {
+            case ParseContextKind.StringLiteralExpression: {
                 return this.isStringLiteralExpressionChildStart(token);
             }
             case ParseContextKind.NewlineList: {
@@ -1186,7 +1206,7 @@ export abstract class ParserBase {
 
     protected parseListElementCore(parseContext: ParseContextBase, parent: Nodes) {
         switch (parseContext) {
-            case NodeKind.StringLiteralExpression: {
+            case ParseContextKind.StringLiteralExpression: {
                 return this.parseStringLiteralExpressionChild(parent);
             }
             case ParseContextKind.NewlineList: {
@@ -1210,7 +1230,8 @@ export abstract class ParserBase {
         for (let i = this.parseContexts.length - 2; i >= 0; i--) {
             const parseContext = this.parseContexts[i];
             if (this.isValidListElement(parseContext, token) ||
-                this.isListTerminator(parseContext, token)) {
+                this.isListTerminator(parseContext, token)
+            ) {
                 return true;
             }
         }
@@ -1230,28 +1251,29 @@ export abstract class ParserBase {
 
     // #region Tokens
 
-    protected createMissingToken<TTokenKind extends MissableTokenKinds>(fullStart: number, originalKind: TTokenKind): MissingToken<TTokenKind> {
+    protected createMissingToken(fullStart: number, originalKind: MissingTokenKinds): MissingToken {
         return new MissingToken(fullStart, originalKind);
     }
 
-    protected createSkippedToken<TTokenKind extends TokenKinds>(token: Token<TTokenKind>): SkippedToken<TTokenKind> {
+    protected createSkippedToken(token: Tokens): SkippedToken {
         return new SkippedToken(token);
     }
 
     protected eatMissable<TMissableKind extends TokenKinds>(
         kind: TMissableKind,
-    ): TokenKindTokenMap[TMissableKind] | MissingToken<TMissableKind>;
+    ): TokenKindTokenMap[TMissableKind] | MissingToken;
     protected eatMissable<TMissableKind extends TokenKinds, TTokenKind extends TokenKinds>(
         kind: TMissableKind,
         ...kinds: TTokenKind[]
-    ): TokenKindTokenMap[TMissableKind | TTokenKind] | MissingToken<TMissableKind>;
+    ): TokenKindTokenMap[TMissableKind | TTokenKind] | MissingToken;
     protected eatMissable<TMissableKind extends TokenKinds, TTokenKind extends TokenKinds>(
         kind: TMissableKind,
         ...kinds: TTokenKind[]
-    ): TokenKindTokenMap[TMissableKind | TTokenKind] | MissingToken<TMissableKind> {
+    ): TokenKindTokenMap[TMissableKind | TTokenKind] | MissingToken {
         const token = this.getToken();
         if (kind === token.kind ||
-            kinds.includes(token.kind as TTokenKind)) {
+            kinds.includes(token.kind as TTokenKind)
+        ) {
             this.advanceToken();
 
             return token;
@@ -1374,9 +1396,13 @@ const OperatorPrecedenceAndAssociativityMap: PrecedenceAndAssociativityMap = {
 
 function getBinaryOperatorPrecedenceAndAssociativity(token: Tokens, parent: Nodes | undefined): PrecedenceAndAssociativity {
     if (token.kind === TokenKind.EqualsSign) {
-        return parent && parent.kind === NodeKind.ExpressionStatement ?
-            AssignmentPrecedenceAndAssociativity :
-            EqualityRelationalPrecedenceAndAssociativity;
+        if (parent &&
+            parent.kind === NodeKind.ExpressionStatement
+        ) {
+            return AssignmentPrecedenceAndAssociativity;
+        }
+
+        return EqualityRelationalPrecedenceAndAssociativity;
     }
 
     return OperatorPrecedenceAndAssociativityMap[token.kind] ||
@@ -1388,6 +1414,7 @@ function getBinaryOperatorPrecedenceAndAssociativity(token: Tokens, parent: Node
 // #region Parse contexts
 
 export enum ParseContextKind {
+    StringLiteralExpression = 'StringLiteralExpression',
     NewlineList = 'NewlineList',
     ArrayTypeAnnotationList = 'ArrayTypeAnnotationList',
     TypeReferenceSequence = 'TypeReferenceSequence',
@@ -1395,7 +1422,7 @@ export enum ParseContextKind {
 }
 
 export interface ParseContextElementMapBase {
-    [NodeKind.StringLiteralExpression]: ReturnType<ParserBase['parseStringLiteralExpressionChild']>;
+    [ParseContextKind.StringLiteralExpression]: ReturnType<ParserBase['parseStringLiteralExpressionChild']>;
     [ParseContextKind.NewlineList]: ReturnType<ParserBase['parseNewlineListMember']>;
     [ParseContextKind.ArrayTypeAnnotationList]: ReturnType<ParserBase['parseArrayTypeAnnotationListMember']>;
     [ParseContextKind.TypeReferenceSequence]: ReturnType<ParserBase['parseTypeReferenceSequenceMember']>;
@@ -1406,11 +1433,6 @@ type ParseContextBase = keyof ParseContextElementMapBase;
 
 export interface ParseContextElementMap extends ParseContextElementMapBase { }
 
-export type ParseContext = keyof ParseContextElementMap;
-
-type ParseContextElementArrayBase<TParseContext extends ParseContext> = Array<ParseContextElementMap[TParseContext] | SkippedToken<TokenKinds>>;
-export type ParseContextElementArray<TParseContext extends ParseContext> = Array<ParseContextElementMap[TParseContext] | SkippedToken<TokenKinds>> & { _arrayBrand: never; };
-export type ParseContextElementSequence<TParseContext extends ParseContext> = Array<ParseContextElementMap[TParseContext]> & { _sequenceBrand: never; };
-export type ParseContextElementDelimitedSequence<TParseContext extends ParseContext> = Array<ParseContextElementMap[TParseContext]> & { _delimitedSequenceBrand: never; };
+type ParseContext = keyof ParseContextElementMap;
 
 // #endregion

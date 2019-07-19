@@ -3,6 +3,7 @@ import { CommaSeparator } from './CommaSeparator';
 import { ConfigurationTag } from './ConfigurationTag';
 import { Declarations } from './Declaration/Declaration';
 import { Directives } from './Directive/Directive';
+import { ElseDirective, ElseIfDirective } from './Directive/IfDirective';
 import { Expressions } from './Expression/Expression';
 import { EscapedIdentifier } from './Identifier';
 import { ModulePath } from './ModulePath';
@@ -23,6 +24,7 @@ export abstract class Node {
 export type Nodes =
     | Declarations
     | Directives
+    | ElseIfDirective | ElseDirective
     | Expressions
     | Statements
     | ConfigurationTag

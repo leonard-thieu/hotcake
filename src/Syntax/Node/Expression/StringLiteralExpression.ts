@@ -1,6 +1,7 @@
-import { ParseContextElementArray } from '../../ParserBase';
 import { MissableToken, MissingToken } from '../../Token/MissingToken';
-import { QuotationMarkToken } from '../../Token/Token';
+import { SkippedToken } from '../../Token/SkippedToken';
+import { EscapeCarriageReturnCrToken, EscapeCharacterTabulationToken, EscapeLineFeedLfToken, EscapeNullToken, EscapeQuotationMarkToken, EscapeTildeToken, EscapeUnicodeHexValueToken, InvalidEscapeSequenceToken, QuotationMarkToken, StringLiteralTextToken } from '../../Token/Token';
+import { ConfigurationTag } from '../ConfigurationTag';
 import { NodeKind } from '../NodeKind';
 import { Expression } from './Expression';
 
@@ -15,11 +16,24 @@ export class StringLiteralExpression extends Expression {
     readonly kind = NodeKind.StringLiteralExpression;
 
     startQuotationMark: QuotationMarkToken = undefined!;
-    children: ParseContextElementArray<StringLiteralExpression['kind']> = undefined!;
+    children: (StringLiteralExpressionChild | SkippedToken)[] = undefined!;
     endQuotationMark: MissableToken<QuotationMarkToken> = undefined!;
 }
 
+export type StringLiteralExpressionChild =
+    | StringLiteralTextToken
+    | EscapeNullToken
+    | EscapeCharacterTabulationToken
+    | EscapeLineFeedLfToken
+    | EscapeCarriageReturnCrToken
+    | EscapeQuotationMarkToken
+    | EscapeTildeToken
+    | EscapeUnicodeHexValueToken
+    | InvalidEscapeSequenceToken
+    | ConfigurationTag
+    ;
+
 export type MissableStringLiteralExpression =
     | StringLiteralExpression
-    | MissingToken<StringLiteralExpression['kind']>
+    | MissingToken
     ;

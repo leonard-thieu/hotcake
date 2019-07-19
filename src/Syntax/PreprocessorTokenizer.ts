@@ -225,7 +225,8 @@ export class PreprocessorTokenizer {
                     if (this.getChar(1) === '{') {
                         const configurationTagTerminatorIndex = this.document.indexOf('}', this.position + 2);
                         if (configurationTagTerminatorIndex !== -1 &&
-                            configurationTagTerminatorIndex < this.stringLiteralTerminatorIndex) {
+                            configurationTagTerminatorIndex < this.stringLiteralTerminatorIndex
+                        ) {
                             kind = TokenKind.ConfigurationTagStart;
                             this.position += 2;
 
@@ -469,7 +470,8 @@ export class PreprocessorTokenizer {
                         }
                         case TokenKind.Unknown: {
                             if (isDecimal(this.getChar()) ||
-                                (this.getChar() === '.' && isDecimal(this.getChar(1)))) {
+                                (this.getChar() === '.' && isDecimal(this.getChar(1)))
+                            ) {
                                 kind = this.getChar() === '.' ?
                                     TokenKind.FloatLiteral :
                                     TokenKind.IntegerLiteral;
@@ -481,7 +483,8 @@ export class PreprocessorTokenizer {
 
                                 if (kind === TokenKind.IntegerLiteral &&
                                     this.getChar() === '.' &&
-                                    isDecimal(this.getChar(1))) {
+                                    isDecimal(this.getChar(1))
+                                ) {
                                     kind = TokenKind.FloatLiteral;
                                     this.position += 2;
 

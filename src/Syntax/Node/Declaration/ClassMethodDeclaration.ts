@@ -1,8 +1,9 @@
-import { ParseContextElementArray, ParseContextElementSequence, ParseContextKind } from '../../ParserBase';
 import { MissableToken } from '../../Token/MissingToken';
-import { ClosingParenthesisToken, EndKeywordToken, MethodKeywordToken, NewKeywordToken, OpeningParenthesisToken } from '../../Token/Token';
+import { SkippedToken } from '../../Token/SkippedToken';
+import { AbstractKeywordToken, ClosingParenthesisToken, EndKeywordToken, FinalKeywordToken, MethodKeywordToken, NewKeywordToken, OpeningParenthesisToken, PropertyKeywordToken } from '../../Token/Token';
 import { MissableIdentifier } from '../Identifier';
 import { NodeKind } from '../NodeKind';
+import { Statements } from '../Statement/Statement';
 import { TypeAnnotation } from '../TypeAnnotation';
 import { DataDeclarationSequence } from './DataDeclarationSequence';
 import { Declaration } from './Declaration';
@@ -29,8 +30,8 @@ export class ClassMethodDeclaration extends Declaration {
     openingParenthesis: MissableToken<OpeningParenthesisToken> = undefined!;
     parameters: DataDeclarationSequence = undefined!;
     closingParenthesis: MissableToken<ClosingParenthesisToken> = undefined!;
-    attributes: ParseContextElementSequence<ParseContextKind.ClassMethodAttributes> = undefined!;
-    statements?: ParseContextElementArray<ClassMethodDeclaration['kind']> = undefined;
+    attributes: (AbstractKeywordToken | FinalKeywordToken | PropertyKeywordToken)[] = undefined!;
+    statements?: (Statements | SkippedToken)[] = undefined;
     endKeyword?: MissableToken<EndKeywordToken> = undefined;
     endMethodKeyword?: MethodKeywordToken = undefined;
 }

@@ -1,13 +1,12 @@
-import { ParseContextElementArray } from '../../ParserBase';
 import { MissableToken, MissingToken } from '../../Token/MissingToken';
+import { SkippedToken } from '../../Token/SkippedToken';
 import { EndKeywordToken, ForKeywordToken, NextKeywordToken, StepKeywordToken, ToKeywordToken, UntilKeywordToken } from '../../Token/Token';
-import { TokenKind } from '../../Token/TokenKind';
 import { AssignmentExpression } from '../Expression/AssignmentExpression';
 import { MissableExpression } from '../Expression/Expression';
 import { Node } from '../Node';
 import { NodeKind } from '../NodeKind';
 import { DataDeclarationSequenceStatement } from './DataDeclarationSequenceStatement';
-import { Statement } from './Statement';
+import { Statement, Statements } from './Statement';
 
 export const ForLoopChildNames: ReadonlyArray<keyof ForLoop> = [
     'forKeyword',
@@ -22,8 +21,8 @@ export class ForLoop extends Statement {
     readonly kind = NodeKind.ForLoop;
 
     forKeyword: ForKeywordToken = undefined!;
-    header: NumericForLoopHeader | DataDeclarationSequenceStatement | AssignmentExpression | MissingToken<TokenKind.ForLoopHeader> = undefined!;
-    statements: ParseContextElementArray<ForLoop['kind']> = undefined!;
+    header: NumericForLoopHeader | DataDeclarationSequenceStatement | AssignmentExpression | MissingToken = undefined!;
+    statements: (Statements | SkippedToken)[] = undefined!;
     endKeyword: MissableToken<NextKeywordToken | EndKeywordToken> = undefined!;
     endForKeyword?: ForKeywordToken = undefined;
 }
