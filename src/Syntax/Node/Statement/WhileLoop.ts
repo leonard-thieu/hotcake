@@ -1,4 +1,4 @@
-import { ParseContextElementArray } from '../../ParserBase';
+import { ParseContextElementArray, ParseContextKind } from '../../ParserBase';
 import { MissableToken } from '../../Token/MissingToken';
 import { EndKeywordToken, WendKeywordToken, WhileKeywordToken } from '../../Token/Token';
 import { MissableExpression } from '../Expression/Expression';
@@ -19,7 +19,7 @@ export class WhileLoop extends Statement {
 
     whileKeyword: WhileKeywordToken = undefined!;
     expression: MissableExpression = undefined!;
-    statements: ParseContextElementArray<WhileLoop['kind']> = undefined!;
+    statements: ParseContextElementArray<ParseContextKind.WhileLoop> = undefined!;
     endKeyword: MissableToken<WendKeywordToken | EndKeywordToken> = undefined!;
     endWhileKeyword?: WhileKeywordToken = undefined;
 }

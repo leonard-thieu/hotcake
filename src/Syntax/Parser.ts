@@ -78,7 +78,7 @@ export class Parser extends ParserBase {
             moduleDeclaration.strictDirective = this.parseStrictDirective(moduleDeclaration, strictKeyword);
         }
         moduleDeclaration.headerMembers = this.parseList(ParseContextKind.ModuleDeclarationHeader, moduleDeclaration);
-        moduleDeclaration.members = this.parseList(moduleDeclaration.kind, moduleDeclaration);
+        moduleDeclaration.members = this.parseList(ParseContextKind.ModuleDeclaration, moduleDeclaration);
         moduleDeclaration.eofToken = this.eat(TokenKind.EOF);
 
         return moduleDeclaration;
@@ -346,7 +346,7 @@ export class Parser extends ParserBase {
         const aliasDirectiveSequence = new AliasDirectiveSequence();
         aliasDirectiveSequence.parent = parent;
         aliasDirectiveSequence.aliasKeyword = aliasKeyword;
-        aliasDirectiveSequence.children = this.parseList(aliasDirectiveSequence.kind, aliasDirectiveSequence, TokenKind.Comma);
+        aliasDirectiveSequence.children = this.parseList(ParseContextKind.AliasDirectiveSequence, aliasDirectiveSequence, TokenKind.Comma);
 
         return aliasDirectiveSequence;
     }
@@ -553,7 +553,7 @@ export class Parser extends ParserBase {
         const externDataDeclarationSequence = new ExternDataDeclarationSequence();
         externDataDeclarationSequence.parent = parent;
         externDataDeclarationSequence.dataDeclarationKeyword = dataDeclarationKeyword;
-        externDataDeclarationSequence.children = this.parseList(externDataDeclarationSequence.kind, externDataDeclarationSequence, TokenKind.Comma);
+        externDataDeclarationSequence.children = this.parseList(ParseContextKind.ExternDataDeclarationSequence, externDataDeclarationSequence, TokenKind.Comma);
 
         return externDataDeclarationSequence;
     }
@@ -631,7 +631,7 @@ export class Parser extends ParserBase {
         functionDeclaration.openingParenthesis = this.eatMissable(TokenKind.OpeningParenthesis);
         functionDeclaration.parameters = this.parseDataDeclarationSequence(functionDeclaration);
         functionDeclaration.closingParenthesis = this.eatMissable(TokenKind.ClosingParenthesis);
-        functionDeclaration.statements = this.parseList(functionDeclaration.kind, functionDeclaration);
+        functionDeclaration.statements = this.parseList(ParseContextKind.FunctionDeclaration, functionDeclaration);
         functionDeclaration.endKeyword = this.eatMissable(TokenKind.EndKeyword);
         if (functionDeclaration.endKeyword.kind === TokenKind.EndKeyword) {
             functionDeclaration.endFunctionKeyword = this.eatOptional(TokenKind.FunctionKeyword);
@@ -674,7 +674,7 @@ export class Parser extends ParserBase {
         if (interfaceDeclaration.extendsKeyword) {
             interfaceDeclaration.baseTypes = this.parseList(ParseContextKind.TypeReferenceSequence, interfaceDeclaration, TokenKind.Comma);
         }
-        interfaceDeclaration.members = this.parseList(interfaceDeclaration.kind, interfaceDeclaration);
+        interfaceDeclaration.members = this.parseList(ParseContextKind.InterfaceDeclaration, interfaceDeclaration);
         interfaceDeclaration.endKeyword = this.eatMissable(TokenKind.EndKeyword);
         if (interfaceDeclaration.endKeyword.kind === TokenKind.EndKeyword) {
             interfaceDeclaration.endInterfaceKeyword = this.eatOptional(TokenKind.InterfaceKeyword);
@@ -771,7 +771,7 @@ export class Parser extends ParserBase {
         }
 
         classDeclaration.attribute = this.eatOptional(TokenKind.AbstractKeyword, TokenKind.FinalKeyword);
-        classDeclaration.members = this.parseList(classDeclaration.kind, classDeclaration);
+        classDeclaration.members = this.parseList(ParseContextKind.ClassDeclaration, classDeclaration);
         classDeclaration.endKeyword = this.eatMissable(TokenKind.EndKeyword);
         if (classDeclaration.endKeyword.kind === TokenKind.EndKeyword) {
             classDeclaration.endClassKeyword = this.eatOptional(TokenKind.ClassKeyword);
@@ -922,7 +922,7 @@ export class Parser extends ParserBase {
 
         classMethodDeclaration.attributes = this.parseList(ParseContextKind.ClassMethodAttributes, classMethodDeclaration, /*delimiter*/ null);
         if (classMethodDeclaration.attributes.findIndex(attribute => attribute.kind === TokenKind.AbstractKeyword) === -1) {
-            classMethodDeclaration.statements = this.parseList(classMethodDeclaration.kind, classMethodDeclaration);
+            classMethodDeclaration.statements = this.parseList(ParseContextKind.ClassMethodDeclaration, classMethodDeclaration);
             classMethodDeclaration.endKeyword = this.eatMissable(TokenKind.EndKeyword);
             if (classMethodDeclaration.endKeyword.kind === TokenKind.EndKeyword) {
                 classMethodDeclaration.endMethodKeyword = this.eatOptional(TokenKind.MethodKeyword);
@@ -957,7 +957,7 @@ export class Parser extends ParserBase {
         if (externClassDeclaration.equalsSign) {
             externClassDeclaration.nativeSymbol = this.parseMissableStringLiteralExpression(externClassDeclaration);
         }
-        externClassDeclaration.members = this.parseList(externClassDeclaration.kind, externClassDeclaration);
+        externClassDeclaration.members = this.parseList(ParseContextKind.ExternClassDeclaration, externClassDeclaration);
         externClassDeclaration.endKeyword = this.eatMissable(TokenKind.EndKeyword);
         if (externClassDeclaration.endKeyword.kind === TokenKind.EndKeyword) {
             externClassDeclaration.endClassKeyword = this.eatOptional(TokenKind.ClassKeyword);
@@ -1299,7 +1299,7 @@ export class Parser extends ParserBase {
         ifStatement.thenKeyword = this.eatOptional(TokenKind.ThenKeyword);
 
         if (this.getToken().kind === TokenKind.Newline) {
-            ifStatement.statements = this.parseList(ifStatement.kind, ifStatement);
+            ifStatement.statements = this.parseList(ParseContextKind.IfStatement, ifStatement);
             ifStatement.elseIfClauses = this.parseList(ParseContextKind.ElseIfClauseList, ifStatement, /*delimiter*/ null);
 
             const elseKeyword = this.getToken();
@@ -1391,7 +1391,7 @@ export class Parser extends ParserBase {
         elseIfClause.ifKeyword = ifKeyword;
         elseIfClause.expression = this.parseExpression(elseIfClause);
         elseIfClause.thenKeyword = this.eatOptional(TokenKind.ThenKeyword);
-        elseIfClause.statements = this.parseList(elseIfClause.kind, elseIfClause);
+        elseIfClause.statements = this.parseList(ParseContextKind.ElseIfClause, elseIfClause);
 
         return elseIfClause;
     }
@@ -1404,7 +1404,7 @@ export class Parser extends ParserBase {
         elseClause.elseKeyword = elseKeyword;
 
         if (!elseClause.isSingleLine) {
-            elseClause.statements = this.parseList(elseClause.kind, elseClause);
+            elseClause.statements = this.parseList(ParseContextKind.ElseClause, elseClause);
         } else {
             elseClause.statements = [this.parseStatementListMember(elseClause)] as typeof elseClause.statements;
         }
@@ -1487,7 +1487,7 @@ export class Parser extends ParserBase {
         caseClause.parent = parent;
         caseClause.caseKeyword = caseKeyword;
         caseClause.expressions = this.parseList(ParseContextKind.ExpressionSequence, caseClause, TokenKind.Comma);
-        caseClause.statements = this.parseList(caseClause.kind, caseClause);
+        caseClause.statements = this.parseList(ParseContextKind.CaseClause, caseClause);
 
         return caseClause;
     }
@@ -1498,7 +1498,7 @@ export class Parser extends ParserBase {
         const defaultClause = new DefaultClause();
         defaultClause.parent = parent;
         defaultClause.defaultKeyword = defaultKeyword;
-        defaultClause.statements = this.parseList(defaultClause.kind, defaultClause);
+        defaultClause.statements = this.parseList(ParseContextKind.DefaultClause, defaultClause);
 
         return defaultClause;
     }
@@ -1526,7 +1526,7 @@ export class Parser extends ParserBase {
         whileLoop.parent = parent;
         whileLoop.whileKeyword = whileKeyword;
         whileLoop.expression = this.parseExpression(whileLoop);
-        whileLoop.statements = this.parseList(whileLoop.kind, whileLoop);
+        whileLoop.statements = this.parseList(ParseContextKind.WhileLoop, whileLoop);
         whileLoop.endKeyword = this.eatMissable(TokenKind.WendKeyword, TokenKind.EndKeyword);
         if (whileLoop.endKeyword.kind === TokenKind.EndKeyword) {
             whileLoop.endWhileKeyword = this.eatOptional(TokenKind.WhileKeyword);
@@ -1555,7 +1555,7 @@ export class Parser extends ParserBase {
         const repeatLoop = new RepeatLoop();
         repeatLoop.parent = parent;
         repeatLoop.repeatKeyword = repeatKeyword;
-        repeatLoop.statements = this.parseList(repeatLoop.kind, repeatLoop);
+        repeatLoop.statements = this.parseList(ParseContextKind.RepeatLoop, repeatLoop);
         repeatLoop.foreverOrUntilKeyword = this.eatMissable(TokenKind.ForeverKeyword, TokenKind.UntilKeyword);
         if (repeatLoop.foreverOrUntilKeyword.kind === TokenKind.UntilKeyword) {
             repeatLoop.untilExpression = this.parseExpression(repeatLoop);
@@ -1585,7 +1585,7 @@ export class Parser extends ParserBase {
         forLoop.parent = parent;
         forLoop.forKeyword = forKeyword;
         forLoop.header = this.parseForLoopHeader(forLoop);
-        forLoop.statements = this.parseList(forLoop.kind, forLoop);
+        forLoop.statements = this.parseList(ParseContextKind.ForLoop, forLoop);
         forLoop.endKeyword = this.eatMissable(TokenKind.NextKeyword, TokenKind.EndKeyword);
         if (forLoop.endKeyword.kind === TokenKind.EndKeyword) {
             forLoop.endForKeyword = this.eatOptional(TokenKind.ForKeyword);
@@ -1701,7 +1701,7 @@ export class Parser extends ParserBase {
         const tryStatement = new TryStatement();
         tryStatement.parent = parent;
         tryStatement.tryKeyword = tryKeyword;
-        tryStatement.statements = this.parseList(tryStatement.kind, tryStatement);
+        tryStatement.statements = this.parseList(ParseContextKind.TryStatement, tryStatement);
         tryStatement.catchClauses = this.parseList(ParseContextKind.CatchClauseList, tryStatement, /*delimiter*/ null);
         tryStatement.endKeyword = this.eatMissable(TokenKind.EndKeyword);
         if (tryStatement.endKeyword.kind === TokenKind.EndKeyword) {
@@ -1757,7 +1757,7 @@ export class Parser extends ParserBase {
         catchClause.parent = parent;
         catchClause.catchKeyword = catchKeyword;
         catchClause.parameter = this.parseMissableDataDeclaration(catchClause);
-        catchClause.statements = this.parseList(catchClause.kind, catchClause);
+        catchClause.statements = this.parseList(ParseContextKind.CatchClause, catchClause);
 
         return catchClause;
     }
@@ -1803,48 +1803,48 @@ export class Parser extends ParserBase {
         }
 
         switch (parseContext) {
-            case NodeKind.ModuleDeclaration: {
+            case ParseContextKind.ModuleDeclaration: {
                 return this.isModuleDeclarationMembersListTerminator();
             }
-            case NodeKind.ExternDataDeclarationSequence: {
+            case ParseContextKind.ExternDataDeclarationSequence: {
                 return this.isExternDataDeclarationSequenceTerminator(token);
             }
-            case NodeKind.ExternClassDeclaration: {
+            case ParseContextKind.ExternClassDeclaration: {
                 return this.isExternClassDeclarationMembersListTerminator(token);
             }
-            case NodeKind.InterfaceDeclaration: {
+            case ParseContextKind.InterfaceDeclaration: {
                 return this.isInterfaceDeclarationMembersListTerminator(token);
             }
-            case NodeKind.ClassDeclaration: {
+            case ParseContextKind.ClassDeclaration: {
                 return this.isClassDeclarationMembersListTerminator(token);
             }
-            case NodeKind.FunctionDeclaration:
-            case NodeKind.ClassMethodDeclaration: {
+            case ParseContextKind.FunctionDeclaration:
+            case ParseContextKind.ClassMethodDeclaration: {
                 return this.isFunctionLikeStatementsListTerminator(token);
             }
-            case NodeKind.IfStatement:
-            case NodeKind.ElseIfClause:
-            case NodeKind.ElseClause: {
+            case ParseContextKind.IfStatement:
+            case ParseContextKind.ElseIfClause:
+            case ParseContextKind.ElseClause: {
                 return this.isIfStatementLikeStatementsListTerminator(token);
             }
-            case NodeKind.CaseClause:
-            case NodeKind.DefaultClause: {
+            case ParseContextKind.CaseClause:
+            case ParseContextKind.DefaultClause: {
                 return this.isCaseOrDefaultClauseStatementsListTerminator(token);
             }
-            case NodeKind.WhileLoop: {
+            case ParseContextKind.WhileLoop: {
                 return this.isWhileLoopStatementsListTerminator(token);
             }
-            case NodeKind.RepeatLoop: {
+            case ParseContextKind.RepeatLoop: {
                 return this.isRepeatLoopStatementsListTerminator(token);
             }
-            case NodeKind.ForLoop: {
+            case ParseContextKind.ForLoop: {
                 return this.isForLoopStatementsListTerminator(token);
             }
-            case NodeKind.TryStatement:
-            case NodeKind.CatchClause: {
+            case ParseContextKind.TryStatement:
+            case ParseContextKind.CatchClause: {
                 return this.isTryStatementStatementsListTerminator(token);
             }
-            case NodeKind.AliasDirectiveSequence: {
+            case ParseContextKind.AliasDirectiveSequence: {
                 return this.isAliasDirectiveSequenceTerminator(token);
             }
             case ParseContextKind.ModuleDeclarationHeader: {
@@ -1878,39 +1878,39 @@ export class Parser extends ParserBase {
 
     protected isValidListElement(parseContext: ParserParseContext, token: Tokens): boolean {
         switch (parseContext) {
-            case NodeKind.ModuleDeclaration: {
+            case ParseContextKind.ModuleDeclaration: {
                 return this.isModuleDeclarationMemberStart(token);
             }
-            case NodeKind.ExternDataDeclarationSequence: {
+            case ParseContextKind.ExternDataDeclarationSequence: {
                 return this.isExternDataDeclarationSequenceMemberStart(token);
             }
-            case NodeKind.ExternClassDeclaration: {
+            case ParseContextKind.ExternClassDeclaration: {
                 return this.isExternClassDeclarationMemberStart(token);
             }
-            case NodeKind.InterfaceDeclaration: {
+            case ParseContextKind.InterfaceDeclaration: {
                 return this.isInterfaceDeclarationMemberStart(token);
             }
-            case NodeKind.ClassDeclaration: {
+            case ParseContextKind.ClassDeclaration: {
                 return this.isClassDeclarationMemberStart(token);
             }
-            case NodeKind.FunctionDeclaration:
-            case NodeKind.ClassMethodDeclaration:
-            case NodeKind.IfStatement:
-            case NodeKind.ElseIfClause:
-            case NodeKind.ElseClause:
-            case NodeKind.CaseClause:
-            case NodeKind.DefaultClause:
-            case NodeKind.WhileLoop:
-            case NodeKind.RepeatLoop:
-            case NodeKind.ForLoop:
-            case NodeKind.TryStatement:
-            case NodeKind.CatchClause: {
+            case ParseContextKind.FunctionDeclaration:
+            case ParseContextKind.ClassMethodDeclaration:
+            case ParseContextKind.IfStatement:
+            case ParseContextKind.ElseIfClause:
+            case ParseContextKind.ElseClause:
+            case ParseContextKind.CaseClause:
+            case ParseContextKind.DefaultClause:
+            case ParseContextKind.WhileLoop:
+            case ParseContextKind.RepeatLoop:
+            case ParseContextKind.ForLoop:
+            case ParseContextKind.TryStatement:
+            case ParseContextKind.CatchClause: {
                 return this.isStatementListMemberStart(token);
             }
             case ParseContextKind.ModuleDeclarationHeader: {
                 return this.isModuleDeclarationHeaderMemberStart(token);
             }
-            case NodeKind.AliasDirectiveSequence: {
+            case ParseContextKind.AliasDirectiveSequence: {
                 return this.isAliasDirectiveSequenceMemberStart(token);
             }
             case ParseContextKind.ModulePathSequence: {
@@ -1941,36 +1941,36 @@ export class Parser extends ParserBase {
 
     protected parseListElement(parseContext: ParserParseContext, parent: Nodes) {
         switch (parseContext) {
-            case NodeKind.ModuleDeclaration: {
+            case ParseContextKind.ModuleDeclaration: {
                 return this.parseModuleDeclarationMember(parent);
             }
-            case NodeKind.ExternDataDeclarationSequence: {
+            case ParseContextKind.ExternDataDeclarationSequence: {
                 return this.parseExternDataDeclarationSequenceMember(parent);
             }
-            case NodeKind.ExternClassDeclaration: {
+            case ParseContextKind.ExternClassDeclaration: {
                 return this.parseExternClassDeclarationMember(parent);
             }
-            case NodeKind.InterfaceDeclaration: {
+            case ParseContextKind.InterfaceDeclaration: {
                 return this.parseInterfaceDeclarationMember(parent);
             }
-            case NodeKind.ClassDeclaration: {
+            case ParseContextKind.ClassDeclaration: {
                 return this.parseClassDeclarationMember(parent);
             }
-            case NodeKind.FunctionDeclaration:
-            case NodeKind.ClassMethodDeclaration:
-            case NodeKind.IfStatement:
-            case NodeKind.ElseIfClause:
-            case NodeKind.ElseClause:
-            case NodeKind.CaseClause:
-            case NodeKind.DefaultClause:
-            case NodeKind.WhileLoop:
-            case NodeKind.RepeatLoop:
-            case NodeKind.ForLoop:
-            case NodeKind.TryStatement:
-            case NodeKind.CatchClause: {
+            case ParseContextKind.FunctionDeclaration:
+            case ParseContextKind.ClassMethodDeclaration:
+            case ParseContextKind.IfStatement:
+            case ParseContextKind.ElseIfClause:
+            case ParseContextKind.ElseClause:
+            case ParseContextKind.CaseClause:
+            case ParseContextKind.DefaultClause:
+            case ParseContextKind.WhileLoop:
+            case ParseContextKind.RepeatLoop:
+            case ParseContextKind.ForLoop:
+            case ParseContextKind.TryStatement:
+            case ParseContextKind.CatchClause: {
                 return this.parseStatementListMember(parent);
             }
-            case NodeKind.AliasDirectiveSequence: {
+            case ParseContextKind.AliasDirectiveSequence: {
                 return this.parseAliasDirectiveSequenceMember(parent);
             }
             case ParseContextKind.ModuleDeclarationHeader: {
@@ -2074,7 +2074,7 @@ export class Parser extends ParserBase {
                 // Checks if this statement is the header.
                 const currentParseContext = this.parseContexts[this.parseContexts.length - 1];
 
-                return currentParseContext !== NodeKind.ForLoop;
+                return currentParseContext !== ParseContextKind.ForLoop;
             }
             case NodeKind.NumericForLoopHeader: {
                 return true;
@@ -2125,56 +2125,92 @@ export class Parser extends ParserBase {
 // #region Parse contexts
 
 interface ParserParseContextElementMap extends ParseContextElementMapBase {
-    [NodeKind.ModuleDeclaration]: ReturnType<Parser['parseModuleDeclarationMember']>;
+    [ParseContextKind.ModuleDeclaration]: ReturnType<Parser['parseModuleDeclarationMember']>;
     [ParseContextKind.ModuleDeclarationHeader]: ReturnType<Parser['parseModuleDeclarationHeaderMember']>;
     [ParseContextKind.ModulePathSequence]: ReturnType<Parser['parseModulePathSequenceMember']>;
     [ParseContextKind.DataDeclarationSequence]: ReturnType<Parser['parseDataDeclarationSequenceMember']>;
-    [NodeKind.ExternDataDeclarationSequence]: ReturnType<Parser['parseExternDataDeclarationSequenceMember']>;
-    [NodeKind.FunctionDeclaration]: ReturnType<Parser['parseStatementListMember']>;
-    [NodeKind.InterfaceDeclaration]: ReturnType<Parser['parseInterfaceDeclarationMember']>;
-    [NodeKind.ClassDeclaration]: ReturnType<Parser['parseClassDeclarationMember']>;
+    [ParseContextKind.ExternDataDeclarationSequence]: ReturnType<Parser['parseExternDataDeclarationSequenceMember']>;
+    [ParseContextKind.FunctionDeclaration]: ReturnType<Parser['parseStatementListMember']>;
+    [ParseContextKind.InterfaceDeclaration]: ReturnType<Parser['parseInterfaceDeclarationMember']>;
+    [ParseContextKind.ClassDeclaration]: ReturnType<Parser['parseClassDeclarationMember']>;
     [ParseContextKind.TypeParameterSequence]: ReturnType<Parser['parseTypeParameterSequenceMember']>;
-    [NodeKind.ClassMethodDeclaration]: ReturnType<Parser['parseStatementListMember']>;
-    [NodeKind.ExternClassDeclaration]: ReturnType<Parser['parseExternClassDeclarationMember']>;
+    [ParseContextKind.ClassMethodDeclaration]: ReturnType<Parser['parseStatementListMember']>;
+    [ParseContextKind.ExternClassDeclaration]: ReturnType<Parser['parseExternClassDeclarationMember']>;
     [ParseContextKind.ClassMethodAttributes]: ReturnType<Parser['parseClassMethodAttribute']>;
-    [NodeKind.IfStatement]: ReturnType<Parser['parseStatementListMember']>;
+    [ParseContextKind.IfStatement]: ReturnType<Parser['parseStatementListMember']>;
     [ParseContextKind.ElseIfClauseList]: ReturnType<Parser['parseElseIfClauseListMember']>;
-    [NodeKind.ElseIfClause]: ReturnType<Parser['parseStatementListMember']>;
-    [NodeKind.ElseClause]: ReturnType<Parser['parseStatementListMember']>;
+    [ParseContextKind.ElseIfClause]: ReturnType<Parser['parseStatementListMember']>;
+    [ParseContextKind.ElseClause]: ReturnType<Parser['parseStatementListMember']>;
     [ParseContextKind.CaseClauseList]: ReturnType<Parser['parseCaseClauseListMember']>;
-    [NodeKind.CaseClause]: ReturnType<Parser['parseStatementListMember']>;
-    [NodeKind.DefaultClause]: ReturnType<Parser['parseStatementListMember']>;
-    [NodeKind.WhileLoop]: ReturnType<Parser['parseStatementListMember']>;
-    [NodeKind.RepeatLoop]: ReturnType<Parser['parseStatementListMember']>;
-    [NodeKind.ForLoop]: ReturnType<Parser['parseStatementListMember']>;
-    [NodeKind.TryStatement]: ReturnType<Parser['parseStatementListMember']>;
+    [ParseContextKind.CaseClause]: ReturnType<Parser['parseStatementListMember']>;
+    [ParseContextKind.DefaultClause]: ReturnType<Parser['parseStatementListMember']>;
+    [ParseContextKind.WhileLoop]: ReturnType<Parser['parseStatementListMember']>;
+    [ParseContextKind.RepeatLoop]: ReturnType<Parser['parseStatementListMember']>;
+    [ParseContextKind.ForLoop]: ReturnType<Parser['parseStatementListMember']>;
+    [ParseContextKind.TryStatement]: ReturnType<Parser['parseStatementListMember']>;
     [ParseContextKind.CatchClauseList]: ReturnType<Parser['parseCatchClauseListMember']>;
-    [NodeKind.CatchClause]: ReturnType<Parser['parseStatementListMember']>;
-    [NodeKind.AliasDirectiveSequence]: ReturnType<Parser['parseAliasDirectiveSequenceMember']>;
+    [ParseContextKind.CatchClause]: ReturnType<Parser['parseStatementListMember']>;
+    [ParseContextKind.AliasDirectiveSequence]: ReturnType<Parser['parseAliasDirectiveSequenceMember']>;
 }
 
 type ParserParseContext = keyof ParserParseContextElementMap;
 
 const _ParseContextKind: { -readonly [P in keyof typeof ParseContextKind]: typeof ParseContextKind[P]; } = ParseContextKind;
+_ParseContextKind.ModuleDeclaration = 'ModuleDeclaration' as ParseContextKind.ModuleDeclaration;
 _ParseContextKind.ModuleDeclarationHeader = 'ModuleDeclarationHeader' as ParseContextKind.ModuleDeclarationHeader;
 _ParseContextKind.ModulePathSequence = 'ModulePathSequence' as ParseContextKind.ModulePathSequence;
 _ParseContextKind.DataDeclarationSequence = 'DataDeclarationSequence' as ParseContextKind.DataDeclarationSequence;
+_ParseContextKind.ExternDataDeclarationSequence = 'ExternDataDeclarationSequence' as ParseContextKind.ExternDataDeclarationSequence;
+_ParseContextKind.FunctionDeclaration = 'FunctionDeclaration' as ParseContextKind.FunctionDeclaration;
+_ParseContextKind.InterfaceDeclaration = 'InterfaceDeclaration' as ParseContextKind.InterfaceDeclaration;
+_ParseContextKind.ClassDeclaration = 'ClassDeclaration' as ParseContextKind.ClassDeclaration;
 _ParseContextKind.TypeParameterSequence = 'TypeParameterSequence' as ParseContextKind.TypeParameterSequence;
+_ParseContextKind.ClassMethodDeclaration = 'ClassMethodDeclaration' as ParseContextKind.ClassMethodDeclaration;
+_ParseContextKind.ExternClassDeclaration = 'ExternClassDeclaration' as ParseContextKind.ExternClassDeclaration;
 _ParseContextKind.ClassMethodAttributes = 'ClassMethodAttributes' as ParseContextKind.ClassMethodAttributes;
+_ParseContextKind.IfStatement = 'IfStatement' as ParseContextKind.IfStatement;
 _ParseContextKind.ElseIfClauseList = 'ElseIfClauseList' as ParseContextKind.ElseIfClauseList;
+_ParseContextKind.ElseIfClause = 'ElseIfClause' as ParseContextKind.ElseIfClause;
+_ParseContextKind.ElseClause = 'ElseClause' as ParseContextKind.ElseClause;
 _ParseContextKind.CaseClauseList = 'CaseClauseList' as ParseContextKind.CaseClauseList;
+_ParseContextKind.CaseClause = 'CaseClause' as ParseContextKind.CaseClause;
+_ParseContextKind.DefaultClause = 'DefaultClause' as ParseContextKind.DefaultClause;
+_ParseContextKind.WhileLoop = 'WhileLoop' as ParseContextKind.WhileLoop;
+_ParseContextKind.RepeatLoop = 'RepeatLoop' as ParseContextKind.RepeatLoop;
+_ParseContextKind.ForLoop = 'ForLoop' as ParseContextKind.ForLoop;
+_ParseContextKind.TryStatement = 'TryStatement' as ParseContextKind.TryStatement;
 _ParseContextKind.CatchClauseList = 'CatchClauseList' as ParseContextKind.CatchClauseList;
+_ParseContextKind.CatchClause = 'CatchClause' as ParseContextKind.CatchClause;
+_ParseContextKind.AliasDirectiveSequence = 'AliasDirectiveSequence' as ParseContextKind.AliasDirectiveSequence;
 
 declare module './ParserBase' {
     enum ParseContextKind {
+        ModuleDeclaration = 'ModuleDeclaration',
         ModuleDeclarationHeader = 'ModuleDeclarationHeader',
         ModulePathSequence = 'ModulePathSequence',
         DataDeclarationSequence = 'DataDeclarationSequence',
+        ExternDataDeclarationSequence = 'ExternDataDeclarationSequence',
+        FunctionDeclaration = 'FunctionDeclaration',
+        InterfaceDeclaration = 'InterfaceDeclaration',
+        ClassDeclaration = 'ClassDeclaration',
         TypeParameterSequence = 'TypeParameterSequence',
+        ClassMethodDeclaration = 'ClassMethodDeclaration',
+        ExternClassDeclaration = 'ExternClassDeclaration',
         ClassMethodAttributes = 'ClassMethodAttributes',
+        IfStatement = 'IfStatement',
         ElseIfClauseList = 'ElseIfClauseList',
+        ElseIfClause = 'ElseIfClause',
+        ElseClause = 'ElseClause',
         CaseClauseList = 'CaseClauseList',
+        CaseClause = 'CaseClause',
+        DefaultClause = 'DefaultClause',
+        WhileLoop = 'WhileLoop',
+        RepeatLoop = 'RepeatLoop',
+        ForLoop = 'ForLoop',
+        TryStatement = 'TryStatement',
         CatchClauseList = 'CatchClauseList',
+        CatchClause = 'CatchClause',
+        AliasDirectiveSequence = 'AliasDirectiveSequence',
     }
 
     interface ParseContextElementMap extends ParserParseContextElementMap { }

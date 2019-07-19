@@ -19,7 +19,7 @@ export class TryStatement extends Statement {
     readonly kind = NodeKind.TryStatement;
 
     tryKeyword: TryKeywordToken = undefined!;
-    statements: ParseContextElementArray<TryStatement['kind']> = undefined!;
+    statements: ParseContextElementArray<ParseContextKind.TryStatement> = undefined!;
     catchClauses: ParseContextElementSequence<ParseContextKind.CatchClauseList> = undefined!;
     endKeyword: MissableToken<EndKeywordToken> = undefined!;
     endTryKeyword?: TryKeywordToken = undefined;
@@ -36,5 +36,5 @@ export class CatchClause extends Node {
 
     catchKeyword: CatchKeywordToken = undefined!;
     parameter: MissableDataDeclaration = undefined!;
-    statements: ParseContextElementArray<CatchClause['kind']> = undefined!;
+    statements: ParseContextElementArray<ParseContextKind.CatchClause> = undefined!;
 }

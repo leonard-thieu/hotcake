@@ -22,7 +22,7 @@ export class InterfaceDeclaration extends Declaration {
     identifier: MissableIdentifier = undefined!;
     extendsKeyword?: ExtendsKeywordToken = undefined;
     baseTypes?: ParseContextElementDelimitedSequence<ParseContextKind.TypeReferenceSequence> = undefined;
-    members: ParseContextElementArray<InterfaceDeclaration['kind']> = undefined!;
+    members: ParseContextElementArray<ParseContextKind.InterfaceDeclaration> = undefined!;
     endKeyword: MissableToken<EndKeywordToken> = undefined!;
     endInterfaceKeyword?: InterfaceKeywordToken = undefined;
 }

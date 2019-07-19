@@ -25,7 +25,7 @@ export class IfStatement extends Statement {
     expression: MissableExpression = undefined!;
     thenKeyword?: ThenKeywordToken = undefined;
     isSingleLine: boolean = false;
-    statements: ParseContextElementArray<IfStatement['kind']> = undefined!;
+    statements: ParseContextElementArray<ParseContextKind.IfStatement> = undefined!;
     elseIfClauses?: ParseContextElementSequence<ParseContextKind.ElseIfClauseList> = undefined;
     elseClause?: ElseClause = undefined;
     endKeyword?: MissableToken<EndIfKeywordToken | EndKeywordToken> = undefined;
@@ -47,7 +47,7 @@ export class ElseIfClause extends Node {
     ifKeyword?: IfKeywordToken = undefined;
     expression: MissableExpression = undefined!;
     thenKeyword?: ThenKeywordToken = undefined;
-    statements: ParseContextElementArray<ElseIfClause['kind']> = undefined!;
+    statements: ParseContextElementArray<ParseContextKind.ElseIfClause> = undefined!;
 }
 
 export const ElseClauseChildNames: ReadonlyArray<keyof ElseClause> = [
@@ -59,7 +59,7 @@ export class ElseClause extends Node {
     readonly kind = NodeKind.ElseClause;
 
     elseKeyword: ElseKeywordToken = undefined!;
-    statements: ParseContextElementArray<ElseClause['kind']> = undefined!;
+    statements: ParseContextElementArray<ParseContextKind.ElseClause> = undefined!;
 
     get isSingleLine() {
         if (this.parent && this.parent.kind === NodeKind.IfStatement) {

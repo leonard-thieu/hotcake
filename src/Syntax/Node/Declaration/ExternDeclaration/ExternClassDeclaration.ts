@@ -1,4 +1,4 @@
-import { ParseContextElementArray } from '../../../ParserBase';
+import { ParseContextElementArray, ParseContextKind } from '../../../ParserBase';
 import { MissableToken } from '../../../Token/MissingToken';
 import { AbstractKeywordToken, ClassKeywordToken, EndKeywordToken, ExtendsKeywordToken, FinalKeywordToken, NullKeywordToken } from '../../../Token/Token';
 import { MissableIdentifier } from '../../Identifier';
@@ -31,7 +31,7 @@ export class ExternClassDeclaration extends ExternDeclaration {
 
     attribute?: AbstractKeywordToken | FinalKeywordToken = undefined;
 
-    members: ParseContextElementArray<ExternClassDeclaration['kind']> = undefined!;
+    members: ParseContextElementArray<ParseContextKind.ExternClassDeclaration> = undefined!;
     endKeyword: MissableToken<EndKeywordToken> = undefined!;
     endClassKeyword?: ClassKeywordToken = undefined;
 }

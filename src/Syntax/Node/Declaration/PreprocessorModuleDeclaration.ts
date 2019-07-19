@@ -1,4 +1,4 @@
-import { ParseContextElementSequence } from '../../ParserBase';
+import { ParseContextElementSequence, ParseContextKind } from '../../ParserBase';
 import { EOFToken } from '../../Token/Token';
 import { NodeKind } from '../NodeKind';
 import { Declaration } from './Declaration';
@@ -14,6 +14,6 @@ export class PreprocessorModuleDeclaration extends Declaration {
 
     readonly kind = NodeKind.PreprocessorModuleDeclaration;
 
-    members: ParseContextElementSequence<PreprocessorModuleDeclaration['kind']> = undefined!;
+    members: ParseContextElementSequence<ParseContextKind.PreprocessorModuleDeclaration> = undefined!;
     eofToken: EOFToken = undefined!;
 }

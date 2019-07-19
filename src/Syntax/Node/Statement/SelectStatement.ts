@@ -40,7 +40,7 @@ export class CaseClause extends Node {
 
     caseKeyword: CaseKeywordToken = undefined!;
     expressions: ParseContextElementDelimitedSequence<ParseContextKind.ExpressionSequence> = undefined!;
-    statements: ParseContextElementArray<CaseClause['kind']> = undefined!;
+    statements: ParseContextElementArray<ParseContextKind.CaseClause> = undefined!;
 }
 
 export const DefaultClauseChildNames: ReadonlyArray<keyof DefaultClause> = [
@@ -52,5 +52,5 @@ export class DefaultClause extends Node {
     readonly kind = NodeKind.DefaultClause;
 
     defaultKeyword: DefaultKeywordToken = undefined!;
-    statements: ParseContextElementArray<DefaultClause['kind']> = undefined!;
+    statements: ParseContextElementArray<ParseContextKind.DefaultClause> = undefined!;
 }

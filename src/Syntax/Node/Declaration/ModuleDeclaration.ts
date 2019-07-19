@@ -30,7 +30,7 @@ export class ModuleDeclaration extends Declaration {
     strictNewlines: ParseContextElementSequence<ParseContextKind.NewlineList> = undefined!;
     strictDirective?: StrictDirective = undefined;
     headerMembers: ParseContextElementArray<ParseContextKind.ModuleDeclarationHeader> = undefined!;
-    members: ParseContextElementArray<ModuleDeclaration['kind']> = undefined!;
+    members: ParseContextElementArray<ParseContextKind.ModuleDeclaration> = undefined!;
     eofToken: EOFToken = undefined!;
 
     parseDiagnostics?: Diagnostic[];

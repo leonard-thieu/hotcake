@@ -465,7 +465,7 @@ export abstract class ParserBase {
         const stringLiteralExpression = new StringLiteralExpression();
         stringLiteralExpression.parent = parent;
         stringLiteralExpression.startQuotationMark = startQuotationMark;
-        stringLiteralExpression.children = this.parseList(stringLiteralExpression.kind, stringLiteralExpression);
+        stringLiteralExpression.children = this.parseList(ParseContextKind.StringLiteralExpression, stringLiteralExpression);
         stringLiteralExpression.endQuotationMark = this.eatMissable(TokenKind.QuotationMark);
 
         return stringLiteralExpression;
@@ -1096,7 +1096,8 @@ export abstract class ParserBase {
                     if (nodes.length === 0 ||
                         !isCurrentNodeDelimiter && isLastNodeDelimiter ||
                         allowEmpty ||
-                        isCurrentNodeDelimiter && !isLastNodeDelimiter) {
+                        isCurrentNodeDelimiter && !isLastNodeDelimiter
+                    ) {
                         isLastNodeDelimiter = isCurrentNodeDelimiter;
                     } else {
                         break;
@@ -1131,7 +1132,7 @@ export abstract class ParserBase {
         }
 
         switch (parseContext) {
-            case NodeKind.StringLiteralExpression: {
+            case ParseContextKind.StringLiteralExpression: {
                 return this.isStringLiteralExpressionChildListTerminator(token);
             }
             case ParseContextKind.NewlineList: {
@@ -1155,7 +1156,7 @@ export abstract class ParserBase {
 
     protected isValidListElementCore(parseContext: ParseContextBase, token: Tokens): boolean {
         switch (parseContext) {
-            case NodeKind.StringLiteralExpression: {
+            case ParseContextKind.StringLiteralExpression: {
                 return this.isStringLiteralExpressionChildStart(token);
             }
             case ParseContextKind.NewlineList: {
@@ -1179,7 +1180,7 @@ export abstract class ParserBase {
 
     protected parseListElementCore(parseContext: ParseContextBase, parent: Nodes) {
         switch (parseContext) {
-            case NodeKind.StringLiteralExpression: {
+            case ParseContextKind.StringLiteralExpression: {
                 return this.parseStringLiteralExpressionChild(parent);
             }
             case ParseContextKind.NewlineList: {
@@ -1381,6 +1382,7 @@ function getBinaryOperatorPrecedenceAndAssociativity(token: Tokens, parent: Node
 // #region Parse contexts
 
 export enum ParseContextKind {
+    StringLiteralExpression = 'StringLiteralExpression',
     NewlineList = 'NewlineList',
     ArrayTypeAnnotationList = 'ArrayTypeAnnotationList',
     TypeReferenceSequence = 'TypeReferenceSequence',
@@ -1388,7 +1390,7 @@ export enum ParseContextKind {
 }
 
 export interface ParseContextElementMapBase {
-    [NodeKind.StringLiteralExpression]: ReturnType<ParserBase['parseStringLiteralExpressionChild']>;
+    [ParseContextKind.StringLiteralExpression]: ReturnType<ParserBase['parseStringLiteralExpressionChild']>;
     [ParseContextKind.NewlineList]: ReturnType<ParserBase['parseNewlineListMember']>;
     [ParseContextKind.ArrayTypeAnnotationList]: ReturnType<ParserBase['parseArrayTypeAnnotationListMember']>;
     [ParseContextKind.TypeReferenceSequence]: ReturnType<ParserBase['parseTypeReferenceSequenceMember']>;

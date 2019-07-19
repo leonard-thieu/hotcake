@@ -30,7 +30,7 @@ export class ClassMethodDeclaration extends Declaration {
     parameters: DataDeclarationSequence = undefined!;
     closingParenthesis: MissableToken<ClosingParenthesisToken> = undefined!;
     attributes: ParseContextElementSequence<ParseContextKind.ClassMethodAttributes> = undefined!;
-    statements?: ParseContextElementArray<ClassMethodDeclaration['kind']> = undefined;
+    statements?: ParseContextElementArray<ParseContextKind.ClassMethodDeclaration> = undefined;
     endKeyword?: MissableToken<EndKeywordToken> = undefined;
     endMethodKeyword?: MethodKeywordToken = undefined;
 }

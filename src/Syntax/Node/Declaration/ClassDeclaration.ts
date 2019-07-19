@@ -43,7 +43,7 @@ export class ClassDeclaration extends Declaration {
 
     attribute?: AbstractKeywordToken | FinalKeywordToken = undefined;
 
-    members: ParseContextElementArray<ClassDeclaration['kind']> = undefined!;
+    members: ParseContextElementArray<ParseContextKind.ClassDeclaration> = undefined!;
     endKeyword: MissableToken<EndKeywordToken> = undefined!;
     endClassKeyword?: ClassKeywordToken = undefined;
 }
