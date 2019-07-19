@@ -1084,9 +1084,7 @@ export abstract class ParserBase {
         delimiter?: TokenKinds,
         allowEmpty?: boolean,
     ) {
-        const list = this.parseListCore(parseContext, parent, delimiter, allowEmpty);
-
-        return list as Exclude<typeof list[0], SkippedToken>[];
+        return this.parseListCore(parseContext, parent, delimiter, allowEmpty) as ParseContextElementMap[TParseContext][];
     }
 
     protected parseListWithSkippedTokens<TParseContext extends ParseContext>(
@@ -1259,20 +1257,20 @@ export abstract class ParserBase {
         return new SkippedToken(token);
     }
 
-    protected eatMissable<TMissableKind extends TokenKinds>(
-        kind: TMissableKind,
-    ): TokenKindTokenMap[TMissableKind] | MissingToken;
-    protected eatMissable<TMissableKind extends TokenKinds, TTokenKind extends TokenKinds>(
-        kind: TMissableKind,
-        ...kinds: TTokenKind[]
-    ): TokenKindTokenMap[TMissableKind | TTokenKind] | MissingToken;
-    protected eatMissable<TMissableKind extends TokenKinds, TTokenKind extends TokenKinds>(
-        kind: TMissableKind,
-        ...kinds: TTokenKind[]
-    ): TokenKindTokenMap[TMissableKind | TTokenKind] | MissingToken {
+    protected eatMissable<TTokenKind extends TokenKinds>(
+        kind: TTokenKind,
+    ): TokenKindTokenMap[TTokenKind] | MissingToken;
+    protected eatMissable<TTokenKind extends TokenKinds, TTokenKinds extends TokenKinds>(
+        kind: TTokenKind,
+        ...kinds: TTokenKinds[]
+    ): TokenKindTokenMap[TTokenKind | TTokenKinds] | MissingToken;
+    protected eatMissable<TTokenKind extends TokenKinds, TTokenKinds extends TokenKinds>(
+        kind: TTokenKind,
+        ...kinds: TTokenKinds[]
+    ): TokenKindTokenMap[TTokenKind | TTokenKinds] | MissingToken {
         const token = this.getToken();
         if (kind === token.kind ||
-            kinds.includes(token.kind as TTokenKind)
+            kinds.includes(token.kind as TTokenKinds)
         ) {
             this.advanceToken();
 
