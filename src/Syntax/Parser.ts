@@ -1,3 +1,4 @@
+import { assertNever } from '../assertNever';
 import { Diagnostic } from '../Diagnostic';
 import { DiagnosticKind, DiagnosticKinds } from '../DiagnosticKind';
 import { AccessibilityDirective, AccessibilityKeywordToken } from './Node/Declaration/AccessibilityDirective';
@@ -2004,6 +2005,38 @@ export class Parser extends ParserBase {
     // #endregion
 
     protected isInvokeExpressionStart(token: Tokens, expression: Expressions): boolean {
+        switch (expression.kind) {
+            case NodeKind.NullExpression:
+            case NodeKind.BooleanLiteralExpression:
+            case NodeKind.SelfExpression:
+            case NodeKind.SuperExpression:
+            case NodeKind.IntegerLiteralExpression:
+            case NodeKind.FloatLiteralExpression:
+            case NodeKind.StringLiteralExpression:
+            case NodeKind.ArrayLiteralExpression:
+            case NodeKind.InvokeExpression:
+            case NodeKind.IndexExpression:
+            case NodeKind.SliceExpression:
+            case NodeKind.GroupingExpression:
+            case NodeKind.UnaryExpression:
+            case NodeKind.BinaryExpression:
+            case NodeKind.AssignmentExpression:
+            case NodeKind.GlobalScopeExpression: {
+                return false;
+            }
+
+            case NodeKind.NewExpression:
+            case NodeKind.IdentifierExpression:
+            case NodeKind.ScopeMemberAccessExpression: {
+                break;
+            }
+
+            default: {
+                assertNever(expression);
+                break;
+            }
+        }
+
         switch (token.kind) {
             case TokenKind.OpeningParenthesis: {
                 return true;
@@ -2011,8 +2044,10 @@ export class Parser extends ParserBase {
         }
 
         // Parentheses-less invocations are only valid in expression statements.
-        const parent = expression.parent;
-        if (parent && parent.kind === NodeKind.ExpressionStatement) {
+        const { parent } = expression;
+        if (parent &&
+            parent.kind === NodeKind.ExpressionStatement
+        ) {
             return this.isExpressionSequenceMemberStart(token);
         }
 

@@ -1,0 +1,126 @@
+{
+    "kind": "ModuleDeclaration",
+    "strictNewlines": [],
+    "headerMembers": [],
+    "members": [
+        {
+            "kind": "FunctionDeclaration",
+            "functionKeyword": {
+                "kind": "FunctionKeyword",
+                "fullStart": 0,
+                "start": 0,
+                "length": 8
+            },
+            "identifier": {
+                "kind": "Identifier",
+                "fullStart": 8,
+                "start": 9,
+                "length": 5
+            },
+            "openingParenthesis": {
+                "kind": "OpeningParenthesis",
+                "fullStart": 13,
+                "start": 13,
+                "length": 1
+            },
+            "parameters": {
+                "kind": "DataDeclarationSequence",
+                "children": []
+            },
+            "closingParenthesis": {
+                "kind": "ClosingParenthesis",
+                "fullStart": 14,
+                "start": 14,
+                "length": 1
+            },
+            "statements": [
+                {
+                    "kind": "EmptyStatement",
+                    "terminator": {
+                        "kind": "Newline",
+                        "fullStart": 15,
+                        "start": 16,
+                        "length": 2
+                    }
+                },
+                {
+                    "kind": "EmptyStatement",
+                    "terminator": {
+                        "kind": "Newline",
+                        "fullStart": 17,
+                        "start": 70,
+                        "length": 54
+                    }
+                },
+                {
+                    "kind": "EmptyStatement",
+                    "terminator": {
+                        "kind": "Newline",
+                        "fullStart": 71,
+                        "start": 146,
+                        "length": 76
+                    }
+                },
+                {
+                    "kind": "EmptyStatement",
+                    "terminator": {
+                        "kind": "Newline",
+                        "fullStart": 147,
+                        "start": 186,
+                        "length": 40
+                    }
+                },
+                {
+                    "kind": "ExpressionStatement",
+                    "expression": {
+                        "kind": "BinaryExpression",
+                        "leftOperand": {
+                            "kind": "IntegerLiteralExpression",
+                            "newlines": [],
+                            "value": {
+                                "kind": "IntegerLiteral",
+                                "fullStart": 187,
+                                "start": 191,
+                                "length": 5
+                            }
+                        },
+                        "operator": {
+                            "kind": "PlusSign",
+                            "fullStart": 192,
+                            "start": 193,
+                            "length": 2
+                        },
+                        "rightOperand": {
+                            "kind": "IntegerLiteralExpression",
+                            "newlines": [],
+                            "value": {
+                                "kind": "IntegerLiteral",
+                                "fullStart": 194,
+                                "start": 195,
+                                "length": 2
+                            }
+                        }
+                    },
+                    "terminator": {
+                        "kind": "Newline",
+                        "fullStart": 196,
+                        "start": 197,
+                        "length": 2
+                    }
+                }
+            ],
+            "endKeyword": {
+                "kind": "EndKeyword",
+                "fullStart": 198,
+                "start": 198,
+                "length": 3
+            }
+        }
+    ],
+    "eofToken": {
+        "kind": "EOF",
+        "fullStart": 201,
+        "start": 201,
+        "length": 0
+    }
+}
