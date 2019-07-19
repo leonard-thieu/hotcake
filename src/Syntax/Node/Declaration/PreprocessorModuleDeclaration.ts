@@ -1,5 +1,9 @@
-import { ParseContextElementSequence, ParseContextKind } from '../../ParserBase';
-import { EOFToken } from '../../Token/Token';
+import { EOFToken, Tokens } from '../../Token/Token';
+import { AssignmentDirective } from '../Directive/AssignmentDirective';
+import { ErrorDirective } from '../Directive/ErrorDirective';
+import { IfDirective } from '../Directive/IfDirective';
+import { PrintDirective } from '../Directive/PrintDirective';
+import { RemDirective } from '../Directive/RemDirective';
 import { NodeKind } from '../NodeKind';
 import { Declaration } from './Declaration';
 
@@ -14,6 +18,15 @@ export class PreprocessorModuleDeclaration extends Declaration {
 
     readonly kind = NodeKind.PreprocessorModuleDeclaration;
 
-    members: ParseContextElementSequence<ParseContextKind.PreprocessorModuleDeclaration> = undefined!;
+    members: PreprocessorModuleDeclarationMember[] = undefined!;
     eofToken: EOFToken = undefined!;
 }
+
+export type PreprocessorModuleDeclarationMember =
+    | AssignmentDirective
+    | ErrorDirective
+    | IfDirective
+    | PrintDirective
+    | RemDirective
+    | Tokens
+    ;

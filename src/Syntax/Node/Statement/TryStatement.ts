@@ -1,10 +1,10 @@
-import { ParseContextElementArray, ParseContextElementSequence, ParseContextKind } from '../../ParserBase';
 import { MissableToken } from '../../Token/MissingToken';
+import { SkippedToken } from '../../Token/SkippedToken';
 import { CatchKeywordToken, EndKeywordToken, TryKeywordToken } from '../../Token/Token';
 import { MissableDataDeclaration } from '../Declaration/DataDeclarationSequence';
 import { Node } from '../Node';
 import { NodeKind } from '../NodeKind';
-import { Statement } from './Statement';
+import { Statement, Statements } from './Statement';
 
 export const TryStatementChildNames: ReadonlyArray<keyof TryStatement> = [
     'tryKeyword',
@@ -19,8 +19,8 @@ export class TryStatement extends Statement {
     readonly kind = NodeKind.TryStatement;
 
     tryKeyword: TryKeywordToken = undefined!;
-    statements: ParseContextElementArray<ParseContextKind.TryStatement> = undefined!;
-    catchClauses: ParseContextElementSequence<ParseContextKind.CatchClauseList> = undefined!;
+    statements: (Statements | SkippedToken)[] = undefined!;
+    catchClauses: CatchClause[] = undefined!;
     endKeyword: MissableToken<EndKeywordToken> = undefined!;
     endTryKeyword?: TryKeywordToken = undefined;
 }
@@ -36,5 +36,5 @@ export class CatchClause extends Node {
 
     catchKeyword: CatchKeywordToken = undefined!;
     parameter: MissableDataDeclaration = undefined!;
-    statements: ParseContextElementArray<ParseContextKind.CatchClause> = undefined!;
+    statements: (Statements | SkippedToken)[] = undefined!;
 }

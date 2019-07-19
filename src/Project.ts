@@ -7,9 +7,9 @@ import { BoundNodeKind } from './Binding/Node/BoundNodeKind';
 import { BoundDirectory } from './Binding/Node/Declaration/BoundDirectory';
 import { BoundModuleDeclaration } from './Binding/Node/Declaration/BoundModuleDeclaration';
 import { Parser } from './Syntax/Parser';
-import { ParseContextElementDelimitedSequence, ParseContextKind } from './Syntax/ParserBase';
 import { PreprocessorParser } from './Syntax/PreprocessorParser';
 import { PreprocessorTokenizer } from './Syntax/PreprocessorTokenizer';
+import { IdentifierToken, PeriodToken } from './Syntax/Token/Token';
 import { TokenKind } from './Syntax/Token/TokenKind';
 import { Tokenizer } from './Syntax/Tokenizer';
 
@@ -61,7 +61,7 @@ export class Project {
     }
 
     getModulePathComponents(
-        modulePathChildren: ParseContextElementDelimitedSequence<ParseContextKind.ModulePathSequence>,
+        modulePathChildren: (IdentifierToken | PeriodToken)[],
         document: string,
     ): string[] {
         const modulePathComponents: string[] = [];

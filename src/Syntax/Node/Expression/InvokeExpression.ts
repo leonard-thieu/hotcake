@@ -1,8 +1,8 @@
-import { ParseContextElementDelimitedSequence, ParseContextElementSequence, ParseContextKind } from '../../ParserBase';
 import { MissableToken } from '../../Token/MissingToken';
-import { ClosingParenthesisToken, OpeningParenthesisToken } from '../../Token/Token';
+import { ClosingParenthesisToken, NewlineToken, OpeningParenthesisToken } from '../../Token/Token';
+import { CommaSeparator } from '../CommaSeparator';
 import { NodeKind } from '../NodeKind';
-import { Expression, Expressions } from './Expression';
+import { Expression, Expressions, MissableExpression } from './Expression';
 
 export const InvokeExpressionChildNames: ReadonlyArray<keyof InvokeExpression> = [
     'newlines',
@@ -18,7 +18,7 @@ export class InvokeExpression extends Expression {
 
     invokableExpression: Expressions = undefined!;
     openingParenthesis?: OpeningParenthesisToken = undefined;
-    leadingNewlines?: ParseContextElementSequence<ParseContextKind.NewlineList> = undefined;
-    arguments: ParseContextElementDelimitedSequence<ParseContextKind.ExpressionSequence> = undefined!;
+    leadingNewlines?: NewlineToken[] = undefined;
+    arguments: (MissableExpression | CommaSeparator)[] = undefined!;
     closingParenthesis?: MissableToken<ClosingParenthesisToken> = undefined;
 }

@@ -272,7 +272,7 @@ export abstract class ParserBase {
     // #region Unary expressions
 
     protected parseUnaryExpressionOrHigher(parent: Nodes): MissableExpression {
-        const newlines = this.parseList(ParseContextKind.NewlineList, /*parent*/ null!, /*delimiter*/ null);
+        const newlines = this.parseList(ParseContextKind.NewlineList, parent);
 
         let expression: MissableExpression;
 
@@ -465,7 +465,7 @@ export abstract class ParserBase {
         const stringLiteralExpression = new StringLiteralExpression();
         stringLiteralExpression.parent = parent;
         stringLiteralExpression.startQuotationMark = startQuotationMark;
-        stringLiteralExpression.children = this.parseList(ParseContextKind.StringLiteralExpression, stringLiteralExpression);
+        stringLiteralExpression.children = this.parseListWithSkippedTokens(ParseContextKind.StringLiteralExpression, stringLiteralExpression);
         stringLiteralExpression.endQuotationMark = this.eatMissable(TokenKind.QuotationMark);
 
         return stringLiteralExpression;
@@ -563,7 +563,7 @@ export abstract class ParserBase {
         const arrayLiteralExpression = new ArrayLiteralExpression();
         arrayLiteralExpression.parent = parent;
         arrayLiteralExpression.openingSquareBracket = openingSquareBracket;
-        arrayLiteralExpression.leadingNewlines = this.parseList(ParseContextKind.NewlineList, arrayLiteralExpression, /*delimiter*/ null);
+        arrayLiteralExpression.leadingNewlines = this.parseList(ParseContextKind.NewlineList, arrayLiteralExpression);
         arrayLiteralExpression.expressions = this.parseList(ParseContextKind.ExpressionSequence, arrayLiteralExpression, TokenKind.Comma);
         arrayLiteralExpression.closingSquareBracket = this.eatMissable(TokenKind.ClosingSquareBracket);
 
@@ -718,7 +718,7 @@ export abstract class ParserBase {
         invokeExpression.invokableExpression = expression;
         invokeExpression.openingParenthesis = this.eatOptional(TokenKind.OpeningParenthesis);
         if (invokeExpression.openingParenthesis) {
-            invokeExpression.leadingNewlines = this.parseList(ParseContextKind.NewlineList, invokeExpression, /*delimiter*/ null);
+            invokeExpression.leadingNewlines = this.parseList(ParseContextKind.NewlineList, invokeExpression);
         }
         invokeExpression.arguments = this.parseList(ParseContextKind.ExpressionSequence, invokeExpression, TokenKind.Comma, /*allowEmpty*/ true);
         if (invokeExpression.openingParenthesis) {
@@ -879,7 +879,7 @@ export abstract class ParserBase {
             }
         }
 
-        typeReference.arrayTypeAnnotations = this.parseList(ParseContextKind.ArrayTypeAnnotationList, typeReference, /*delimiter*/ null);
+        typeReference.arrayTypeAnnotations = this.parseList(ParseContextKind.ArrayTypeAnnotationList, typeReference);
 
         return typeReference;
     }
@@ -939,7 +939,7 @@ export abstract class ParserBase {
         const commaSeparator = new CommaSeparator();
         commaSeparator.parent = parent;
         commaSeparator.separator = separator;
-        commaSeparator.newlines = this.parseList(ParseContextKind.NewlineList, commaSeparator, /*delimiter*/ null);
+        commaSeparator.newlines = this.parseList(ParseContextKind.NewlineList, commaSeparator);
 
         return commaSeparator;
     }
@@ -1071,17 +1071,37 @@ export abstract class ParserBase {
 
     protected parseContexts: ParseContext[] = undefined!;
 
-    protected parseList<TParseContext extends ParseContext>(parseContext: TParseContext, parent?: Nodes): ParseContextElementArray<TParseContext>;
-    protected parseList<TParseContext extends ParseContext>(parseContext: TParseContext, parent: Nodes, delimiter: null): ParseContextElementSequence<TParseContext>;
-    protected parseList<TParseContext extends ParseContext>(parseContext: TParseContext, parent: Nodes, delimiter: TokenKinds, allowEmpty?: boolean): ParseContextElementDelimitedSequence<TParseContext>;
-    protected parseList<TParseContext extends ParseContext>(parseContext: TParseContext, parent: Nodes, delimiter?: TokenKinds | null, allowEmpty?: boolean) {
+    protected parseList<TParseContext extends ParseContext>(
+        parseContext: TParseContext,
+        parent: Nodes,
+        delimiter?: TokenKinds,
+        allowEmpty?: boolean,
+    ) {
+        const list = this.parseListCore(parseContext, parent, delimiter, allowEmpty);
+
+        return list as Exclude<typeof list[0], SkippedToken>[];
+    }
+
+    protected parseListWithSkippedTokens<TParseContext extends ParseContext>(
+        parseContext: TParseContext,
+        parent: Nodes,
+    ) {
+        return this.parseListCore(parseContext, parent);
+    }
+
+    private parseListCore<TParseContext extends ParseContext>(
+        parseContext: TParseContext,
+        parent: Nodes,
+        delimiter?: TokenKinds,
+        allowEmpty?: boolean,
+    ) {
         if (typeof parseContext === 'undefined') {
             throw new Error('parseContext is undefined.');
         }
 
         this.parseContexts.push(parseContext);
 
-        const nodes: ParseContextElementArrayBase<TParseContext> = [];
+        const nodes: (ParseContextElementMap[TParseContext] | SkippedToken)[] = [];
         let isLastNodeDelimiter: boolean = false;
         while (true) {
             const token = this.getToken();
@@ -1106,7 +1126,6 @@ export abstract class ParserBase {
 
                 const node = this.parseListElement(parseContext, parent);
                 nodes.push(node);
-
                 continue;
             }
 
@@ -1401,11 +1420,6 @@ type ParseContextBase = keyof ParseContextElementMapBase;
 
 export interface ParseContextElementMap extends ParseContextElementMapBase { }
 
-export type ParseContext = keyof ParseContextElementMap;
-
-type ParseContextElementArrayBase<TParseContext extends ParseContext> = Array<ParseContextElementMap[TParseContext] | SkippedToken>;
-export type ParseContextElementArray<TParseContext extends ParseContext> = Array<ParseContextElementMap[TParseContext] | SkippedToken> & { _arrayBrand: never; };
-export type ParseContextElementSequence<TParseContext extends ParseContext> = Array<ParseContextElementMap[TParseContext]> & { _sequenceBrand: never; };
-export type ParseContextElementDelimitedSequence<TParseContext extends ParseContext> = Array<ParseContextElementMap[TParseContext]> & { _delimitedSequenceBrand: never; };
+type ParseContext = keyof ParseContextElementMap;
 
 // #endregion

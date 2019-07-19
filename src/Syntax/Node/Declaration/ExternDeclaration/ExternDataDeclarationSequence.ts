@@ -1,5 +1,5 @@
-import { ParseContextElementDelimitedSequence, ParseContextKind } from '../../../ParserBase';
 import { FieldKeywordToken, GlobalKeywordToken } from '../../../Token/Token';
+import { CommaSeparator } from '../../CommaSeparator';
 import { Identifier } from '../../Identifier';
 import { NodeKind } from '../../NodeKind';
 import { TypeAnnotation } from '../../TypeAnnotation';
@@ -15,7 +15,7 @@ export class ExternDataDeclarationSequence extends Declaration {
     readonly kind = NodeKind.ExternDataDeclarationSequence;
 
     dataDeclarationKeyword: ExternDataDeclarationKeywordToken = undefined!;
-    children: ParseContextElementDelimitedSequence<ParseContextKind.ExternDataDeclarationSequence> = undefined!;
+    children: (ExternDataDeclaration | CommaSeparator)[] = undefined!;
 }
 
 export type ExternDataDeclarationKeywordToken =

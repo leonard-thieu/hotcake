@@ -70,15 +70,15 @@ export class Parser extends ParserBase {
         this.moduleDeclaration = moduleDeclaration;
         moduleDeclaration.preprocessorModuleDeclaration = preprocessorModuleDeclaration;
 
-        moduleDeclaration.strictNewlines = this.parseList(ParseContextKind.NewlineList, moduleDeclaration, /*delimiter*/ null);
+        moduleDeclaration.strictNewlines = this.parseList(ParseContextKind.NewlineList, moduleDeclaration);
         const strictKeyword = this.getToken();
         if (strictKeyword.kind === TokenKind.StrictKeyword) {
             this.advanceToken();
 
             moduleDeclaration.strictDirective = this.parseStrictDirective(moduleDeclaration, strictKeyword);
         }
-        moduleDeclaration.headerMembers = this.parseList(ParseContextKind.ModuleDeclarationHeader, moduleDeclaration);
-        moduleDeclaration.members = this.parseList(ParseContextKind.ModuleDeclaration, moduleDeclaration);
+        moduleDeclaration.headerMembers = this.parseListWithSkippedTokens(ParseContextKind.ModuleDeclarationHeader, moduleDeclaration);
+        moduleDeclaration.members = this.parseListWithSkippedTokens(ParseContextKind.ModuleDeclaration, moduleDeclaration);
         moduleDeclaration.eofToken = this.eat(TokenKind.EOF);
 
         return moduleDeclaration;
@@ -631,7 +631,7 @@ export class Parser extends ParserBase {
         functionDeclaration.openingParenthesis = this.eatMissable(TokenKind.OpeningParenthesis);
         functionDeclaration.parameters = this.parseDataDeclarationSequence(functionDeclaration);
         functionDeclaration.closingParenthesis = this.eatMissable(TokenKind.ClosingParenthesis);
-        functionDeclaration.statements = this.parseList(ParseContextKind.FunctionDeclaration, functionDeclaration);
+        functionDeclaration.statements = this.parseListWithSkippedTokens(ParseContextKind.FunctionDeclaration, functionDeclaration);
         functionDeclaration.endKeyword = this.eatMissable(TokenKind.EndKeyword);
         if (functionDeclaration.endKeyword.kind === TokenKind.EndKeyword) {
             functionDeclaration.endFunctionKeyword = this.eatOptional(TokenKind.FunctionKeyword);
@@ -674,7 +674,7 @@ export class Parser extends ParserBase {
         if (interfaceDeclaration.extendsKeyword) {
             interfaceDeclaration.baseTypes = this.parseList(ParseContextKind.TypeReferenceSequence, interfaceDeclaration, TokenKind.Comma);
         }
-        interfaceDeclaration.members = this.parseList(ParseContextKind.InterfaceDeclaration, interfaceDeclaration);
+        interfaceDeclaration.members = this.parseListWithSkippedTokens(ParseContextKind.InterfaceDeclaration, interfaceDeclaration);
         interfaceDeclaration.endKeyword = this.eatMissable(TokenKind.EndKeyword);
         if (interfaceDeclaration.endKeyword.kind === TokenKind.EndKeyword) {
             interfaceDeclaration.endInterfaceKeyword = this.eatOptional(TokenKind.InterfaceKeyword);
@@ -771,7 +771,7 @@ export class Parser extends ParserBase {
         }
 
         classDeclaration.attribute = this.eatOptional(TokenKind.AbstractKeyword, TokenKind.FinalKeyword);
-        classDeclaration.members = this.parseList(ParseContextKind.ClassDeclaration, classDeclaration);
+        classDeclaration.members = this.parseListWithSkippedTokens(ParseContextKind.ClassDeclaration, classDeclaration);
         classDeclaration.endKeyword = this.eatMissable(TokenKind.EndKeyword);
         if (classDeclaration.endKeyword.kind === TokenKind.EndKeyword) {
             classDeclaration.endClassKeyword = this.eatOptional(TokenKind.ClassKeyword);
@@ -920,9 +920,9 @@ export class Parser extends ParserBase {
         classMethodDeclaration.parameters = this.parseDataDeclarationSequence(classMethodDeclaration);
         classMethodDeclaration.closingParenthesis = this.eatMissable(TokenKind.ClosingParenthesis);
 
-        classMethodDeclaration.attributes = this.parseList(ParseContextKind.ClassMethodAttributes, classMethodDeclaration, /*delimiter*/ null);
+        classMethodDeclaration.attributes = this.parseList(ParseContextKind.ClassMethodAttributes, classMethodDeclaration);
         if (classMethodDeclaration.attributes.findIndex(attribute => attribute.kind === TokenKind.AbstractKeyword) === -1) {
-            classMethodDeclaration.statements = this.parseList(ParseContextKind.ClassMethodDeclaration, classMethodDeclaration);
+            classMethodDeclaration.statements = this.parseListWithSkippedTokens(ParseContextKind.ClassMethodDeclaration, classMethodDeclaration);
             classMethodDeclaration.endKeyword = this.eatMissable(TokenKind.EndKeyword);
             if (classMethodDeclaration.endKeyword.kind === TokenKind.EndKeyword) {
                 classMethodDeclaration.endMethodKeyword = this.eatOptional(TokenKind.MethodKeyword);
@@ -957,7 +957,7 @@ export class Parser extends ParserBase {
         if (externClassDeclaration.equalsSign) {
             externClassDeclaration.nativeSymbol = this.parseMissableStringLiteralExpression(externClassDeclaration);
         }
-        externClassDeclaration.members = this.parseList(ParseContextKind.ExternClassDeclaration, externClassDeclaration);
+        externClassDeclaration.members = this.parseListWithSkippedTokens(ParseContextKind.ExternClassDeclaration, externClassDeclaration);
         externClassDeclaration.endKeyword = this.eatMissable(TokenKind.EndKeyword);
         if (externClassDeclaration.endKeyword.kind === TokenKind.EndKeyword) {
             externClassDeclaration.endClassKeyword = this.eatOptional(TokenKind.ClassKeyword);
@@ -1039,7 +1039,7 @@ export class Parser extends ParserBase {
         externClassMethodDeclaration.openingParenthesis = this.eatMissable(TokenKind.OpeningParenthesis);
         externClassMethodDeclaration.parameters = this.parseDataDeclarationSequence(externClassMethodDeclaration);
         externClassMethodDeclaration.closingParenthesis = this.eatMissable(TokenKind.ClosingParenthesis);
-        externClassMethodDeclaration.attributes = this.parseList(ParseContextKind.ClassMethodAttributes, externClassMethodDeclaration, /*delimiter*/ null);
+        externClassMethodDeclaration.attributes = this.parseList(ParseContextKind.ClassMethodAttributes, externClassMethodDeclaration);
         externClassMethodDeclaration.equalsSign = this.eatOptional(TokenKind.EqualsSign);
         if (externClassMethodDeclaration.equalsSign) {
             externClassMethodDeclaration.nativeSymbol = this.parseMissableStringLiteralExpression(externClassMethodDeclaration);
@@ -1117,7 +1117,7 @@ export class Parser extends ParserBase {
         const shorthandTypeAnnotation = new ShorthandTypeAnnotation();
         shorthandTypeAnnotation.parent = parent;
         shorthandTypeAnnotation.shorthandType = shorthandType;
-        shorthandTypeAnnotation.arrayTypeAnnotations = this.parseList(ParseContextKind.ArrayTypeAnnotationList, shorthandTypeAnnotation, /*delimiter*/ null);
+        shorthandTypeAnnotation.arrayTypeAnnotations = this.parseList(ParseContextKind.ArrayTypeAnnotationList, shorthandTypeAnnotation);
 
         return shorthandTypeAnnotation;
     }
@@ -1299,8 +1299,8 @@ export class Parser extends ParserBase {
         ifStatement.thenKeyword = this.eatOptional(TokenKind.ThenKeyword);
 
         if (this.getToken().kind === TokenKind.Newline) {
-            ifStatement.statements = this.parseList(ParseContextKind.IfStatement, ifStatement);
-            ifStatement.elseIfClauses = this.parseList(ParseContextKind.ElseIfClauseList, ifStatement, /*delimiter*/ null);
+            ifStatement.statements = this.parseListWithSkippedTokens(ParseContextKind.IfStatement, ifStatement);
+            ifStatement.elseIfClauses = this.parseList(ParseContextKind.ElseIfClauseList, ifStatement);
 
             const elseKeyword = this.getToken();
             if (elseKeyword.kind === TokenKind.ElseKeyword) {
@@ -1391,7 +1391,7 @@ export class Parser extends ParserBase {
         elseIfClause.ifKeyword = ifKeyword;
         elseIfClause.expression = this.parseExpression(elseIfClause);
         elseIfClause.thenKeyword = this.eatOptional(TokenKind.ThenKeyword);
-        elseIfClause.statements = this.parseList(ParseContextKind.ElseIfClause, elseIfClause);
+        elseIfClause.statements = this.parseListWithSkippedTokens(ParseContextKind.ElseIfClause, elseIfClause);
 
         return elseIfClause;
     }
@@ -1404,7 +1404,7 @@ export class Parser extends ParserBase {
         elseClause.elseKeyword = elseKeyword;
 
         if (!elseClause.isSingleLine) {
-            elseClause.statements = this.parseList(ParseContextKind.ElseClause, elseClause);
+            elseClause.statements = this.parseListWithSkippedTokens(ParseContextKind.ElseClause, elseClause);
         } else {
             elseClause.statements = [this.parseStatementListMember(elseClause)] as typeof elseClause.statements;
         }
@@ -1434,8 +1434,8 @@ export class Parser extends ParserBase {
         selectStatement.parent = parent;
         selectStatement.selectKeyword = selectKeyword;
         selectStatement.expression = this.parseExpression(selectStatement);
-        selectStatement.newlines = this.parseList(ParseContextKind.NewlineList, selectStatement, /*delimiter*/ null);
-        selectStatement.caseClauses = this.parseList(ParseContextKind.CaseClauseList, selectStatement, /*delimiter*/ null);
+        selectStatement.newlines = this.parseList(ParseContextKind.NewlineList, selectStatement);
+        selectStatement.caseClauses = this.parseList(ParseContextKind.CaseClauseList, selectStatement);
 
         const defaultKeyword = this.getToken();
         if (defaultKeyword.kind === TokenKind.DefaultKeyword) {
@@ -1487,7 +1487,7 @@ export class Parser extends ParserBase {
         caseClause.parent = parent;
         caseClause.caseKeyword = caseKeyword;
         caseClause.expressions = this.parseList(ParseContextKind.ExpressionSequence, caseClause, TokenKind.Comma);
-        caseClause.statements = this.parseList(ParseContextKind.CaseClause, caseClause);
+        caseClause.statements = this.parseListWithSkippedTokens(ParseContextKind.CaseClause, caseClause);
 
         return caseClause;
     }
@@ -1498,7 +1498,7 @@ export class Parser extends ParserBase {
         const defaultClause = new DefaultClause();
         defaultClause.parent = parent;
         defaultClause.defaultKeyword = defaultKeyword;
-        defaultClause.statements = this.parseList(ParseContextKind.DefaultClause, defaultClause);
+        defaultClause.statements = this.parseListWithSkippedTokens(ParseContextKind.DefaultClause, defaultClause);
 
         return defaultClause;
     }
@@ -1526,7 +1526,7 @@ export class Parser extends ParserBase {
         whileLoop.parent = parent;
         whileLoop.whileKeyword = whileKeyword;
         whileLoop.expression = this.parseExpression(whileLoop);
-        whileLoop.statements = this.parseList(ParseContextKind.WhileLoop, whileLoop);
+        whileLoop.statements = this.parseListWithSkippedTokens(ParseContextKind.WhileLoop, whileLoop);
         whileLoop.endKeyword = this.eatMissable(TokenKind.WendKeyword, TokenKind.EndKeyword);
         if (whileLoop.endKeyword.kind === TokenKind.EndKeyword) {
             whileLoop.endWhileKeyword = this.eatOptional(TokenKind.WhileKeyword);
@@ -1555,7 +1555,7 @@ export class Parser extends ParserBase {
         const repeatLoop = new RepeatLoop();
         repeatLoop.parent = parent;
         repeatLoop.repeatKeyword = repeatKeyword;
-        repeatLoop.statements = this.parseList(ParseContextKind.RepeatLoop, repeatLoop);
+        repeatLoop.statements = this.parseListWithSkippedTokens(ParseContextKind.RepeatLoop, repeatLoop);
         repeatLoop.foreverOrUntilKeyword = this.eatMissable(TokenKind.ForeverKeyword, TokenKind.UntilKeyword);
         if (repeatLoop.foreverOrUntilKeyword.kind === TokenKind.UntilKeyword) {
             repeatLoop.untilExpression = this.parseExpression(repeatLoop);
@@ -1585,7 +1585,7 @@ export class Parser extends ParserBase {
         forLoop.parent = parent;
         forLoop.forKeyword = forKeyword;
         forLoop.header = this.parseForLoopHeader(forLoop);
-        forLoop.statements = this.parseList(ParseContextKind.ForLoop, forLoop);
+        forLoop.statements = this.parseListWithSkippedTokens(ParseContextKind.ForLoop, forLoop);
         forLoop.endKeyword = this.eatMissable(TokenKind.NextKeyword, TokenKind.EndKeyword);
         if (forLoop.endKeyword.kind === TokenKind.EndKeyword) {
             forLoop.endForKeyword = this.eatOptional(TokenKind.ForKeyword);
@@ -1701,8 +1701,8 @@ export class Parser extends ParserBase {
         const tryStatement = new TryStatement();
         tryStatement.parent = parent;
         tryStatement.tryKeyword = tryKeyword;
-        tryStatement.statements = this.parseList(ParseContextKind.TryStatement, tryStatement);
-        tryStatement.catchClauses = this.parseList(ParseContextKind.CatchClauseList, tryStatement, /*delimiter*/ null);
+        tryStatement.statements = this.parseListWithSkippedTokens(ParseContextKind.TryStatement, tryStatement);
+        tryStatement.catchClauses = this.parseList(ParseContextKind.CatchClauseList, tryStatement);
         tryStatement.endKeyword = this.eatMissable(TokenKind.EndKeyword);
         if (tryStatement.endKeyword.kind === TokenKind.EndKeyword) {
             tryStatement.endTryKeyword = this.eatOptional(TokenKind.TryKeyword);
@@ -1757,7 +1757,7 @@ export class Parser extends ParserBase {
         catchClause.parent = parent;
         catchClause.catchKeyword = catchKeyword;
         catchClause.parameter = this.parseMissableDataDeclaration(catchClause);
-        catchClause.statements = this.parseList(ParseContextKind.CatchClause, catchClause);
+        catchClause.statements = this.parseListWithSkippedTokens(ParseContextKind.CatchClause, catchClause);
 
         return catchClause;
     }

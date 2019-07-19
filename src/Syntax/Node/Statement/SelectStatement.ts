@@ -1,10 +1,11 @@
-import { ParseContextElementArray, ParseContextElementDelimitedSequence, ParseContextElementSequence, ParseContextKind } from '../../ParserBase';
 import { MissableToken } from '../../Token/MissingToken';
-import { CaseKeywordToken, DefaultKeywordToken, EndKeywordToken, SelectKeywordToken } from '../../Token/Token';
+import { SkippedToken } from '../../Token/SkippedToken';
+import { CaseKeywordToken, DefaultKeywordToken, EndKeywordToken, NewlineToken, SelectKeywordToken } from '../../Token/Token';
+import { CommaSeparator } from '../CommaSeparator';
 import { MissableExpression } from '../Expression/Expression';
 import { Node } from '../Node';
 import { NodeKind } from '../NodeKind';
-import { Statement } from './Statement';
+import { Statement, Statements } from './Statement';
 
 export const SelectStatementChildNames: ReadonlyArray<keyof SelectStatement> = [
     'selectKeyword',
@@ -22,8 +23,8 @@ export class SelectStatement extends Statement {
 
     selectKeyword: SelectKeywordToken = undefined!;
     expression: MissableExpression = undefined!;
-    newlines: ParseContextElementSequence<ParseContextKind.NewlineList> = undefined!;
-    caseClauses: ParseContextElementSequence<ParseContextKind.CaseClauseList> = undefined!;
+    newlines: NewlineToken[] = undefined!;
+    caseClauses: CaseClause[] = undefined!;
     defaultClause?: DefaultClause = undefined;
     endKeyword: MissableToken<EndKeywordToken> = undefined!;
     endSelectKeyword?: SelectKeywordToken = undefined;
@@ -39,8 +40,8 @@ export class CaseClause extends Node {
     readonly kind = NodeKind.CaseClause;
 
     caseKeyword: CaseKeywordToken = undefined!;
-    expressions: ParseContextElementDelimitedSequence<ParseContextKind.ExpressionSequence> = undefined!;
-    statements: ParseContextElementArray<ParseContextKind.CaseClause> = undefined!;
+    expressions: (MissableExpression | CommaSeparator)[] = undefined!;
+    statements: (Statements | SkippedToken)[] = undefined!;
 }
 
 export const DefaultClauseChildNames: ReadonlyArray<keyof DefaultClause> = [
@@ -52,5 +53,5 @@ export class DefaultClause extends Node {
     readonly kind = NodeKind.DefaultClause;
 
     defaultKeyword: DefaultKeywordToken = undefined!;
-    statements: ParseContextElementArray<ParseContextKind.DefaultClause> = undefined!;
+    statements: (Statements | SkippedToken)[] = undefined!;
 }

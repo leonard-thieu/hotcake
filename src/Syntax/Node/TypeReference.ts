@@ -1,6 +1,7 @@
-import { ParseContextElementDelimitedSequence, ParseContextElementSequence, ParseContextKind } from '../ParserBase';
 import { MissableToken, MissingToken } from '../Token/MissingToken';
 import { BoolKeywordToken, FloatKeywordToken, GreaterThanSignToken, IdentifierToken, IntKeywordToken, LessThanSignToken, PeriodToken, StringKeywordToken, VoidKeywordToken } from '../Token/Token';
+import { ArrayTypeAnnotation } from './ArrayTypeAnnotation';
+import { CommaSeparator } from './CommaSeparator';
 import { Identifier, IdentifierStartToken } from './Identifier';
 import { Node } from './Node';
 import { NodeKind } from './NodeKind';
@@ -24,10 +25,10 @@ export class TypeReference extends Node {
 
     // Generic type arguments
     lessThanSign?: LessThanSignToken = undefined;
-    typeArguments?: ParseContextElementDelimitedSequence<ParseContextKind.TypeReferenceSequence> = undefined;
+    typeArguments?: (TypeReference | CommaSeparator)[] = undefined;
     greaterThanSign?: MissableToken<GreaterThanSignToken> = undefined;
 
-    arrayTypeAnnotations: ParseContextElementSequence<ParseContextKind.ArrayTypeAnnotationList> = undefined!;
+    arrayTypeAnnotations: ArrayTypeAnnotation[] = undefined!;
 }
 
 export type TypeReferenceIdentifier =

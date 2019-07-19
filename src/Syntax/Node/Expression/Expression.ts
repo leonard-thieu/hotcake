@@ -1,5 +1,5 @@
-import { ParseContextElementSequence, ParseContextKind } from '../../ParserBase';
 import { MissingToken } from '../../Token/MissingToken';
+import { NewlineToken } from '../../Token/Token';
 import { Node } from '../Node';
 import { ArrayLiteralExpression } from './ArrayLiteralExpression';
 import { AssignmentExpression } from './AssignmentExpression';
@@ -22,7 +22,7 @@ import { SuperExpression } from './SuperExpression';
 import { UnaryExpression } from './UnaryExpression';
 
 export abstract class Expression extends Node {
-    newlines?: ParseContextElementSequence<ParseContextKind.NewlineList> = undefined;
+    newlines?: NewlineToken[] = undefined;
 }
 
 export type Expressions =

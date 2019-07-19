@@ -1,6 +1,5 @@
-import { ParseContextElementSequence, ParseContextKind } from '../../../ParserBase';
 import { MissableToken } from '../../../Token/MissingToken';
-import { ClosingParenthesisToken, MethodKeywordToken, OpeningParenthesisToken } from '../../../Token/Token';
+import { AbstractKeywordToken, ClosingParenthesisToken, FinalKeywordToken, MethodKeywordToken, OpeningParenthesisToken, PropertyKeywordToken } from '../../../Token/Token';
 import { MissableIdentifier } from '../../Identifier';
 import { NodeKind } from '../../NodeKind';
 import { TypeAnnotation } from '../../TypeAnnotation';
@@ -28,5 +27,5 @@ export class ExternClassMethodDeclaration extends ExternDeclaration {
     openingParenthesis: MissableToken<OpeningParenthesisToken> = undefined!;
     parameters: DataDeclarationSequence = undefined!;
     closingParenthesis: MissableToken<ClosingParenthesisToken> = undefined!;
-    attributes: ParseContextElementSequence<ParseContextKind.ClassMethodAttributes> = undefined!;
+    attributes: (AbstractKeywordToken | FinalKeywordToken | PropertyKeywordToken)[] = undefined!;
 }

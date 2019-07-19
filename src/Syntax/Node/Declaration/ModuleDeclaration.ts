@@ -1,8 +1,19 @@
 import { Diagnostic } from '../../../Diagnostic';
-import { ParseContextElementArray, ParseContextElementSequence, ParseContextKind } from '../../ParserBase';
-import { EOFToken } from '../../Token/Token';
+import { SkippedToken } from '../../Token/SkippedToken';
+import { EOFToken, NewlineToken } from '../../Token/Token';
 import { NodeKind } from '../NodeKind';
+import { AccessibilityDirective } from './AccessibilityDirective';
+import { AliasDirectiveSequence } from './AliasDirectiveSequence';
+import { ClassDeclaration } from './ClassDeclaration';
+import { DataDeclarationSequence } from './DataDeclarationSequence';
 import { Declaration } from './Declaration';
+import { ExternClassDeclaration } from './ExternDeclaration/ExternClassDeclaration';
+import { ExternDataDeclarationSequence } from './ExternDeclaration/ExternDataDeclarationSequence';
+import { ExternFunctionDeclaration } from './ExternDeclaration/ExternFunctionDeclaration';
+import { FriendDirective } from './FriendDirective';
+import { FunctionDeclaration } from './FunctionDeclaration';
+import { ImportStatement } from './ImportStatement';
+import { InterfaceDeclaration } from './InterfaceDeclaration';
 import { PreprocessorModuleDeclaration } from './PreprocessorModuleDeclaration';
 import { StrictDirective } from './StrictDirective';
 
@@ -27,11 +38,31 @@ export class ModuleDeclaration extends Declaration {
 
     readonly kind = NodeKind.ModuleDeclaration;
 
-    strictNewlines: ParseContextElementSequence<ParseContextKind.NewlineList> = undefined!;
+    strictNewlines: NewlineToken[] = undefined!;
     strictDirective?: StrictDirective = undefined;
-    headerMembers: ParseContextElementArray<ParseContextKind.ModuleDeclarationHeader> = undefined!;
-    members: ParseContextElementArray<ParseContextKind.ModuleDeclaration> = undefined!;
+    headerMembers: (ModuleDeclarationHeaderMember | SkippedToken)[] = undefined!;
+    members: (ModuleDeclarationMember | SkippedToken)[] = undefined!;
     eofToken: EOFToken = undefined!;
 
     parseDiagnostics?: Diagnostic[];
 }
+
+export type ModuleDeclarationHeaderMember =
+    | ImportStatement
+    | FriendDirective
+    | AliasDirectiveSequence
+    | AccessibilityDirective
+    | NewlineToken
+    ;
+
+export type ModuleDeclarationMember =
+    | AccessibilityDirective
+    | DataDeclarationSequence
+    | ExternDataDeclarationSequence
+    | FunctionDeclaration
+    | ExternFunctionDeclaration
+    | InterfaceDeclaration
+    | ClassDeclaration
+    | ExternClassDeclaration
+    | NewlineToken
+    ;
