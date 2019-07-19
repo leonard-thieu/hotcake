@@ -2,11 +2,7 @@ import { MissableToken } from '../../Token/MissingToken';
 import { ElseDirectiveKeywordToken, ElseIfDirectiveKeywordToken, EndDirectiveKeywordToken, IfDirectiveKeywordToken, NumberSignToken, Tokens } from '../../Token/Token';
 import { MissableExpression } from '../Expression/Expression';
 import { NodeKind } from '../NodeKind';
-import { AssignmentDirective } from './AssignmentDirective';
-import { Directive } from './Directive';
-import { ErrorDirective } from './ErrorDirective';
-import { PrintDirective } from './PrintDirective';
-import { RemDirective } from './RemDirective';
+import { Directive, Directives } from './Directive';
 
 export const IfDirectiveChildNames: ReadonlyArray<keyof IfDirective> = [
     'numberSign',
@@ -25,7 +21,7 @@ export class IfDirective extends Directive {
 
     ifDirectiveKeyword: IfDirectiveKeywordToken = undefined!;
     expression: MissableExpression = undefined!;
-    members: IfDirectiveMember[] = undefined!;
+    members: (Directives | Tokens)[] = undefined!;
     elseIfDirectives: ElseIfDirective[] = undefined!;
     elseDirective?: ElseDirective = undefined;
     endDirectiveNumberSign: MissableToken<NumberSignToken> = undefined!;
@@ -47,7 +43,7 @@ export class ElseIfDirective extends Directive {
     elseIfDirectiveKeyword: ElseIfDirectiveKeywordToken | ElseDirectiveKeywordToken = undefined!;
     ifDirectiveKeyword?: IfDirectiveKeywordToken = undefined;
     expression: MissableExpression = undefined!;
-    members: IfDirectiveMember[] = undefined!;
+    members: (Directives | Tokens)[] = undefined!;
 }
 
 export const ElseDirectiveChildNames: ReadonlyArray<keyof ElseDirective> = [
@@ -60,14 +56,5 @@ export class ElseDirective extends Directive {
     readonly kind = NodeKind.ElseDirective;
 
     elseDirectiveKeyword: ElseDirectiveKeywordToken = undefined!;
-    members: IfDirectiveMember[] = undefined!;
+    members: (Directives | Tokens)[] = undefined!;
 }
-
-export type IfDirectiveMember =
-    | AssignmentDirective
-    | ErrorDirective
-    | IfDirective
-    | PrintDirective
-    | RemDirective
-    | Tokens
-    ;

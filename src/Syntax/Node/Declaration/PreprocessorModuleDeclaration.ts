@@ -1,9 +1,5 @@
 import { EOFToken, Tokens } from '../../Token/Token';
-import { AssignmentDirective } from '../Directive/AssignmentDirective';
-import { ErrorDirective } from '../Directive/ErrorDirective';
-import { IfDirective } from '../Directive/IfDirective';
-import { PrintDirective } from '../Directive/PrintDirective';
-import { RemDirective } from '../Directive/RemDirective';
+import { Directives } from '../Directive/Directive';
 import { NodeKind } from '../NodeKind';
 import { Declaration } from './Declaration';
 
@@ -18,15 +14,6 @@ export class PreprocessorModuleDeclaration extends Declaration {
 
     readonly kind = NodeKind.PreprocessorModuleDeclaration;
 
-    members: PreprocessorModuleDeclarationMember[] = undefined!;
+    members: (Directives | Tokens)[] = undefined!;
     eofToken: EOFToken = undefined!;
 }
-
-export type PreprocessorModuleDeclarationMember =
-    | AssignmentDirective
-    | ErrorDirective
-    | IfDirective
-    | PrintDirective
-    | RemDirective
-    | Tokens
-    ;

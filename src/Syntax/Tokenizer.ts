@@ -1,6 +1,6 @@
 import { assertNever } from '../assertNever';
-import { PreprocessorModuleDeclaration, PreprocessorModuleDeclarationMember } from './Node/Declaration/PreprocessorModuleDeclaration';
-import { IfDirectiveMember } from './Node/Directive/IfDirective';
+import { PreprocessorModuleDeclaration } from './Node/Declaration/PreprocessorModuleDeclaration';
+import { Directives } from './Node/Directive/Directive';
 import { MissableExpression } from './Node/Expression/Expression';
 import { NodeKind } from './Node/NodeKind';
 import { Tokens } from './Token/Token';
@@ -26,11 +26,11 @@ export class Tokenizer {
     }
 
     // TODO: Ensure operator semantics and implicit type conversions match Monkey X behavior.
-    private readMembers(members: PreprocessorModuleDeclarationMember[]): void {
+    private readMembers(members: (Directives | Tokens)[]): void {
         for (const member of members) {
             switch (member.kind) {
                 case NodeKind.IfDirective: {
-                    let branchMembers: IfDirectiveMember[] | undefined;
+                    let branchMembers: (Directives | Tokens)[] | undefined;
 
                     if (this.eval(member.expression)) {
                         branchMembers = member.members;
