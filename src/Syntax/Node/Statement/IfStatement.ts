@@ -62,7 +62,9 @@ export class ElseClause extends Node {
     statements: (Statements | SkippedToken)[] = undefined!;
 
     get isSingleLine() {
-        if (this.parent && this.parent.kind === NodeKind.IfStatement) {
+        if (this.parent &&
+            this.parent.kind === NodeKind.IfStatement
+        ) {
             return this.parent.isSingleLine;
         }
 

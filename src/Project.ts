@@ -93,7 +93,8 @@ export class Project {
 
         const relativePathComponents = path.relative(this.boundProjectDirectory.fullPath, currentDirectory).split(path.sep);
         if (relativePathComponents.length === 1 &&
-            relativePathComponents[0] === '') {
+            relativePathComponents[0] === ''
+        ) {
             relativePathComponents.pop();
         }
         const pathComponents = [

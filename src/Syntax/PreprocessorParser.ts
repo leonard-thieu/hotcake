@@ -106,7 +106,8 @@ export class PreprocessorParser extends ParserBase {
         const elseDirectiveNumberSign = this.getToken();
         const elseDirectiveKeyword = this.getToken(1);
         if (elseDirectiveNumberSign.kind === TokenKind.NumberSign &&
-            elseDirectiveKeyword.kind === TokenKind.ElseDirectiveKeyword) {
+            elseDirectiveKeyword.kind === TokenKind.ElseDirectiveKeyword
+        ) {
             this.advanceToken();
             this.advanceToken();
 

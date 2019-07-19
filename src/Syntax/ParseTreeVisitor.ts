@@ -11,7 +11,8 @@ export namespace ParseTreeVisitor {
 
         while (ancestor) {
             if (ancestor.kind === kind ||
-                kinds.includes(ancestor.kind)) {
+                kinds.includes(ancestor.kind)
+            ) {
                 return ancestor;
             }
 

@@ -151,7 +151,8 @@ export abstract class ParserBase {
             const [newPrecedence, associativity] = getBinaryOperatorPrecedenceAndAssociativity(token, parent);
 
             if (prevAssociativity === Associativity.None &&
-                prevNewPrecedence === newPrecedence) {
+                prevNewPrecedence === newPrecedence
+            ) {
                 break;
             }
 
@@ -212,7 +213,8 @@ export abstract class ParserBase {
                 case TokenKind.EqualsSign: {
                     if (parent) {
                         if (parent.kind === NodeKind.ExpressionStatement ||
-                            parent.kind === NodeKind.ForLoop) {
+                            parent.kind === NodeKind.ForLoop
+                        ) {
                             expression = this.parseAssignmentExpression(parent, expression, token, newPrecedence);
                             break;
                         }
@@ -770,8 +772,13 @@ export abstract class ParserBase {
     }
 
     private isTypeReferenceSequenceMemberStart(token: Tokens): boolean {
-        return token.kind === TokenKind.Comma ||
-            this.isTypeReferenceStart(token);
+        if (token.kind === TokenKind.Comma ||
+            this.isTypeReferenceStart(token)
+        ) {
+            return true;
+        }
+
+        return false;
     }
 
     private parseTypeReferenceSequenceMember(parent: Nodes) {
@@ -1114,9 +1121,9 @@ export abstract class ParserBase {
                 if (delimiter) {
                     const isCurrentNodeDelimiter = token.kind === delimiter;
                     if (nodes.length === 0 ||
-                        !isCurrentNodeDelimiter && isLastNodeDelimiter ||
+                        (!isCurrentNodeDelimiter && isLastNodeDelimiter) ||
                         allowEmpty ||
-                        isCurrentNodeDelimiter && !isLastNodeDelimiter
+                        (isCurrentNodeDelimiter && !isLastNodeDelimiter)
                     ) {
                         isLastNodeDelimiter = isCurrentNodeDelimiter;
                     } else {
@@ -1223,7 +1230,8 @@ export abstract class ParserBase {
         for (let i = this.parseContexts.length - 2; i >= 0; i--) {
             const parseContext = this.parseContexts[i];
             if (this.isValidListElement(parseContext, token) ||
-                this.isListTerminator(parseContext, token)) {
+                this.isListTerminator(parseContext, token)
+            ) {
                 return true;
             }
         }
@@ -1264,7 +1272,8 @@ export abstract class ParserBase {
     ): TokenKindTokenMap[TMissableKind | TTokenKind] | MissingToken {
         const token = this.getToken();
         if (kind === token.kind ||
-            kinds.includes(token.kind as TTokenKind)) {
+            kinds.includes(token.kind as TTokenKind)
+        ) {
             this.advanceToken();
 
             return token;
@@ -1387,9 +1396,13 @@ const OperatorPrecedenceAndAssociativityMap: PrecedenceAndAssociativityMap = {
 
 function getBinaryOperatorPrecedenceAndAssociativity(token: Tokens, parent: Nodes | undefined): PrecedenceAndAssociativity {
     if (token.kind === TokenKind.EqualsSign) {
-        return parent && parent.kind === NodeKind.ExpressionStatement ?
-            AssignmentPrecedenceAndAssociativity :
-            EqualityRelationalPrecedenceAndAssociativity;
+        if (parent &&
+            parent.kind === NodeKind.ExpressionStatement
+        ) {
+            return AssignmentPrecedenceAndAssociativity;
+        }
+
+        return EqualityRelationalPrecedenceAndAssociativity;
     }
 
     return OperatorPrecedenceAndAssociativityMap[token.kind] ||

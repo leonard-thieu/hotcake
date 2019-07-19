@@ -294,7 +294,8 @@ export class Parser extends ParserBase {
         const { children } = modulePath;
         const lastChild = children.pop();
         if (lastChild &&
-            lastChild.kind === TokenKind.Identifier) {
+            lastChild.kind === TokenKind.Identifier
+        ) {
             modulePath.moduleIdentifier = lastChild;
         } else {
             if (lastChild) {
@@ -405,7 +406,8 @@ export class Parser extends ParserBase {
         // Parse module identifier
         const identifierStartToken1 = this.getToken();
         if (identifierStartToken1.kind === TokenKind.Identifier &&
-            this.moduleIdentifiers.includes(identifierStartToken1.getText(this.document))) {
+            this.moduleIdentifiers.includes(identifierStartToken1.getText(this.document))
+        ) {
             this.advanceToken();
             aliasDirective.moduleIdentifier = identifierStartToken1;
             aliasDirective.moduleScopeMemberAccessOperator = this.eatMissable(TokenKind.Period);
@@ -413,8 +415,9 @@ export class Parser extends ParserBase {
 
         // Parse type identifier
         const identifierStartToken2 = this.getToken();
-        if (identifierStartToken2.kind === TokenKind.CommercialAt && this.getToken(2).kind === TokenKind.Period ||
-            identifierStartToken2.kind === TokenKind.Identifier && this.getToken(1).kind === TokenKind.Period) {
+        if ((identifierStartToken2.kind === TokenKind.CommercialAt && this.getToken(2).kind === TokenKind.Period) ||
+            (identifierStartToken2.kind === TokenKind.Identifier && this.getToken(1).kind === TokenKind.Period)
+        ) {
             this.advanceToken();
             aliasDirective.typeIdentifier = this.parseIdentifier(aliasDirective, identifierStartToken2);
             aliasDirective.typeScopeMemberAccessOperator = this.eat(TokenKind.Period);
@@ -1273,7 +1276,7 @@ export class Parser extends ParserBase {
     private isReturnStatementExpressionRequired(returnStatement: ReturnStatement) {
         const functionOrMethod = ParseTreeVisitor.getAncestor(returnStatement,
             NodeKind.FunctionDeclaration,
-            NodeKind.ClassMethodDeclaration
+            NodeKind.ClassMethodDeclaration,
         ) as FunctionDeclaration | ClassMethodDeclaration;
 
         if (functionOrMethod.returnType &&
@@ -1315,7 +1318,7 @@ export class Parser extends ParserBase {
             }
         } else {
             ifStatement.isSingleLine = true;
-            ifStatement.statements = [this.parseStatementListMember(ifStatement)] as typeof ifStatement.statements;
+            ifStatement.statements = [this.parseStatementListMember(ifStatement)];
 
             const elseKeyword = this.getToken();
             if (elseKeyword.kind === TokenKind.ElseKeyword) {
@@ -1406,7 +1409,7 @@ export class Parser extends ParserBase {
         if (!elseClause.isSingleLine) {
             elseClause.statements = this.parseListWithSkippedTokens(ParseContextKind.ElseClause, elseClause);
         } else {
-            elseClause.statements = [this.parseStatementListMember(elseClause)] as typeof elseClause.statements;
+            elseClause.statements = [this.parseStatementListMember(elseClause)];
         }
 
         return elseClause;
@@ -1605,7 +1608,8 @@ export class Parser extends ParserBase {
             const declaration = loopVariableExpression.dataDeclarationSequence.children[0];
             if (declaration &&
                 declaration.kind === NodeKind.DataDeclaration &&
-                declaration.eachInKeyword) {
+                declaration.eachInKeyword
+            ) {
                 return loopVariableExpression;
             }
         } else {
