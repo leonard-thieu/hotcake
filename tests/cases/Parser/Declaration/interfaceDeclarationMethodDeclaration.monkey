@@ -1,3 +1,3 @@
 Interface Moveable
     Method Move()
-End 
+End

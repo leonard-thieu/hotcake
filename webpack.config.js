@@ -19,7 +19,7 @@ const config = {
         path: __dirname,
         filename: (chunkData) => {
             const entryPath = config.entry[chunkData.chunk.name];
-            
+
             return path.join(path.dirname(entryPath), path.basename(entryPath, '.ts') + '.js');
         },
         libraryTarget: 'commonjs2',

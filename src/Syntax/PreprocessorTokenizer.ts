@@ -279,7 +279,7 @@ export class PreprocessorTokenizer {
                     this.position++;
 
                     // Search for the string literal terminator. If it can't be found, don't switch to string literal
-                    // tokenizing mode. This allows the parser to handle it as an incomplete string literal without 
+                    // tokenizing mode. This allows the parser to handle it as an incomplete string literal without
                     // consuming the entire rest of the document.
                     this.stringLiteralTerminatorIndex = this.document.indexOf('"', this.position);
                     break;
@@ -760,7 +760,7 @@ export class PreprocessorTokenizer {
 
     // Preprocessor directives must start on their own line and may be preceded by whitespace.
     private isPreprocessorDirectiveAllowed(): boolean {
-        // Search for whitespace until we hit a `#`, then search for whitespace until we hit the 
+        // Search for whitespace until we hit a `#`, then search for whitespace until we hit the
         // beginning of the line.
         for (let i = this.position - 1; i >= this.lineStart; i--) {
             if (this.document[i] === '#') {

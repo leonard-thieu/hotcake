@@ -1,6 +1,6 @@
 Class Driver
 End
 
-Extern 
- 
+Extern
+
 Global ActiveDriver:Driver="xyzActiveDriver"  'Native name of this global is xyzActiveDriver

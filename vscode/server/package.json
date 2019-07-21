@@ -1,11 +1,11 @@
 {
-	"name": "hotcake-server",
-	"version": "0.0.1",
-	"author": "Leonard Thieu",
-	"engines": {
-		"node": "*"
-	},
-	"dependencies": {
-		"vscode-languageserver": "5.2.1"
-	}
+    "name": "hotcake-server",
+    "version": "0.0.1",
+    "author": "Leonard Thieu",
+    "engines": {
+        "node": "*"
+    },
+    "dependencies": {
+        "vscode-languageserver": "5.2.1"
+    }
 }
