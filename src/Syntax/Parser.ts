@@ -2199,14 +2199,6 @@ export class Parser extends ParserBase {
             }
         }
 
-        // Parentheses-less invocations are only valid in expression statements.
-        const { parent } = expression;
-        if (parent &&
-            parent.kind === NodeKind.ExpressionStatement
-        ) {
-            return this.isExpressionSequenceMemberStart(token);
-        }
-
         return false;
     }
 
