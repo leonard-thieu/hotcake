@@ -287,7 +287,6 @@ export class Tokenizer {
             case NodeKind.SliceExpression:
             case NodeKind.SelfExpression:
             case NodeKind.SuperExpression:
-            case NodeKind.AssignmentExpression:
             case NodeKind.GlobalScopeExpression: {
                 throw new Error(`Unexpected expression: ${JSON.stringify(expression.kind)}`);
             }

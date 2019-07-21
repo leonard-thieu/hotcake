@@ -95,71 +95,67 @@
                     "isSingleLine": true,
                     "statements": [
                         {
-                            "kind": "ExpressionStatement",
-                            "expression": {
-                                "kind": "AssignmentExpression",
+                            "kind": "AssignmentStatement",
+                            "leftOperand": {
+                                "kind": "IdentifierExpression",
+                                "identifier": {
+                                    "kind": "Identifier",
+                                    "fullStart": 29,
+                                    "start": 30,
+                                    "length": 3
+                                }
+                            },
+                            "operator": {
+                                "kind": "EqualsSign",
+                                "fullStart": 32,
+                                "start": 32,
+                                "length": 1
+                            },
+                            "rightOperand": {
+                                "kind": "BinaryExpression",
                                 "leftOperand": {
-                                    "kind": "IdentifierExpression",
-                                    "newlines": [],
-                                    "identifier": {
-                                        "kind": "Identifier",
-                                        "fullStart": 29,
-                                        "start": 30,
-                                        "length": 3
-                                    }
-                                },
-                                "operator": {
-                                    "kind": "EqualsSign",
-                                    "fullStart": 32,
-                                    "start": 32,
-                                    "length": 1
-                                },
-                                "rightOperand": {
                                     "kind": "BinaryExpression",
                                     "leftOperand": {
-                                        "kind": "BinaryExpression",
-                                        "leftOperand": {
-                                            "kind": "IdentifierExpression",
-                                            "newlines": [],
-                                            "identifier": {
-                                                "kind": "Identifier",
-                                                "fullStart": 33,
-                                                "start": 33,
-                                                "length": 2
-                                            }
-                                        },
-                                        "operator": {
-                                            "kind": "ModKeyword",
-                                            "fullStart": 35,
-                                            "start": 36,
-                                            "length": 4
-                                        },
-                                        "rightOperand": {
-                                            "kind": "IdentifierExpression",
-                                            "newlines": [],
-                                            "identifier": {
-                                                "kind": "Identifier",
-                                                "fullStart": 39,
-                                                "start": 40,
-                                                "length": 2
-                                            }
+                                        "kind": "IdentifierExpression",
+                                        "newlines": [],
+                                        "identifier": {
+                                            "kind": "Identifier",
+                                            "fullStart": 33,
+                                            "start": 33,
+                                            "length": 2
                                         }
                                     },
                                     "operator": {
-                                        "kind": "PlusSign",
-                                        "fullStart": 41,
-                                        "start": 42,
-                                        "length": 2
+                                        "kind": "ModKeyword",
+                                        "fullStart": 35,
+                                        "start": 36,
+                                        "length": 4
                                     },
                                     "rightOperand": {
                                         "kind": "IdentifierExpression",
                                         "newlines": [],
                                         "identifier": {
                                             "kind": "Identifier",
-                                            "fullStart": 43,
-                                            "start": 44,
-                                            "length": 3
+                                            "fullStart": 39,
+                                            "start": 40,
+                                            "length": 2
                                         }
+                                    }
+                                },
+                                "operator": {
+                                    "kind": "PlusSign",
+                                    "fullStart": 41,
+                                    "start": 42,
+                                    "length": 2
+                                },
+                                "rightOperand": {
+                                    "kind": "IdentifierExpression",
+                                    "newlines": [],
+                                    "identifier": {
+                                        "kind": "Identifier",
+                                        "fullStart": 43,
+                                        "start": 44,
+                                        "length": 3
                                     }
                                 }
                             }
@@ -175,100 +171,96 @@
                         },
                         "statements": [
                             {
-                                "kind": "ExpressionStatement",
-                                "expression": {
-                                    "kind": "AssignmentExpression",
+                                "kind": "AssignmentStatement",
+                                "leftOperand": {
+                                    "kind": "IdentifierExpression",
+                                    "identifier": {
+                                        "kind": "Identifier",
+                                        "fullStart": 51,
+                                        "start": 52,
+                                        "length": 3
+                                    }
+                                },
+                                "operator": {
+                                    "kind": "EqualsSign",
+                                    "fullStart": 54,
+                                    "start": 55,
+                                    "length": 2
+                                },
+                                "rightOperand": {
+                                    "kind": "BinaryExpression",
                                     "leftOperand": {
-                                        "kind": "IdentifierExpression",
-                                        "newlines": [],
-                                        "identifier": {
-                                            "kind": "Identifier",
-                                            "fullStart": 51,
-                                            "start": 52,
-                                            "length": 3
-                                        }
-                                    },
-                                    "operator": {
-                                        "kind": "EqualsSign",
-                                        "fullStart": 54,
-                                        "start": 55,
-                                        "length": 2
-                                    },
-                                    "rightOperand": {
                                         "kind": "BinaryExpression",
                                         "leftOperand": {
-                                            "kind": "BinaryExpression",
-                                            "leftOperand": {
-                                                "kind": "IdentifierExpression",
-                                                "newlines": [],
-                                                "identifier": {
-                                                    "kind": "Identifier",
-                                                    "fullStart": 56,
-                                                    "start": 57,
-                                                    "length": 2
-                                                }
-                                            },
-                                            "operator": {
-                                                "kind": "HyphenMinus",
-                                                "fullStart": 58,
-                                                "start": 59,
-                                                "length": 2
-                                            },
-                                            "rightOperand": {
-                                                "kind": "BinaryExpression",
-                                                "leftOperand": {
-                                                    "kind": "UnaryExpression",
-                                                    "newlines": [],
-                                                    "operator": {
-                                                        "kind": "HyphenMinus",
-                                                        "fullStart": 60,
-                                                        "start": 61,
-                                                        "length": 2
-                                                    },
-                                                    "operand": {
-                                                        "kind": "IdentifierExpression",
-                                                        "newlines": [],
-                                                        "identifier": {
-                                                            "kind": "Identifier",
-                                                            "fullStart": 62,
-                                                            "start": 62,
-                                                            "length": 2
-                                                        }
-                                                    }
-                                                },
-                                                "operator": {
-                                                    "kind": "ModKeyword",
-                                                    "fullStart": 64,
-                                                    "start": 65,
-                                                    "length": 4
-                                                },
-                                                "rightOperand": {
-                                                    "kind": "IdentifierExpression",
-                                                    "newlines": [],
-                                                    "identifier": {
-                                                        "kind": "Identifier",
-                                                        "fullStart": 68,
-                                                        "start": 69,
-                                                        "length": 2
-                                                    }
-                                                }
-                                            }
-                                        },
-                                        "operator": {
-                                            "kind": "PlusSign",
-                                            "fullStart": 70,
-                                            "start": 71,
-                                            "length": 2
-                                        },
-                                        "rightOperand": {
                                             "kind": "IdentifierExpression",
                                             "newlines": [],
                                             "identifier": {
                                                 "kind": "Identifier",
-                                                "fullStart": 72,
-                                                "start": 73,
-                                                "length": 3
+                                                "fullStart": 56,
+                                                "start": 57,
+                                                "length": 2
                                             }
+                                        },
+                                        "operator": {
+                                            "kind": "HyphenMinus",
+                                            "fullStart": 58,
+                                            "start": 59,
+                                            "length": 2
+                                        },
+                                        "rightOperand": {
+                                            "kind": "BinaryExpression",
+                                            "leftOperand": {
+                                                "kind": "UnaryExpression",
+                                                "newlines": [],
+                                                "operator": {
+                                                    "kind": "HyphenMinus",
+                                                    "fullStart": 60,
+                                                    "start": 61,
+                                                    "length": 2
+                                                },
+                                                "operand": {
+                                                    "kind": "IdentifierExpression",
+                                                    "newlines": [],
+                                                    "identifier": {
+                                                        "kind": "Identifier",
+                                                        "fullStart": 62,
+                                                        "start": 62,
+                                                        "length": 2
+                                                    }
+                                                }
+                                            },
+                                            "operator": {
+                                                "kind": "ModKeyword",
+                                                "fullStart": 64,
+                                                "start": 65,
+                                                "length": 4
+                                            },
+                                            "rightOperand": {
+                                                "kind": "IdentifierExpression",
+                                                "newlines": [],
+                                                "identifier": {
+                                                    "kind": "Identifier",
+                                                    "fullStart": 68,
+                                                    "start": 69,
+                                                    "length": 2
+                                                }
+                                            }
+                                        }
+                                    },
+                                    "operator": {
+                                        "kind": "PlusSign",
+                                        "fullStart": 70,
+                                        "start": 71,
+                                        "length": 2
+                                    },
+                                    "rightOperand": {
+                                        "kind": "IdentifierExpression",
+                                        "newlines": [],
+                                        "identifier": {
+                                            "kind": "Identifier",
+                                            "fullStart": 72,
+                                            "start": 73,
+                                            "length": 3
                                         }
                                     }
                                 }

@@ -52,10 +52,9 @@
                         "length": 7
                     },
                     "header": {
-                        "kind": "AssignmentExpression",
+                        "kind": "AssignmentStatement",
                         "leftOperand": {
                             "kind": "IdentifierExpression",
-                            "newlines": [],
                             "identifier": {
                                 "kind": "Identifier",
                                 "fullStart": 24,

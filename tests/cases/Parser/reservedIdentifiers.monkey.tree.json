@@ -2858,33 +2858,37 @@
                 {
                     "kind": "ExpressionStatement",
                     "expression": {
-                        "kind": "NewExpression",
+                        "kind": "InvokeExpression",
                         "newlines": [],
-                        "newKeyword": {
-                            "kind": "NewKeyword",
-                            "fullStart": 1388,
-                            "start": 1392,
-                            "length": 7
-                        },
-                        "type": {
-                            "kind": "TypeReference",
-                            "identifier": {
-                                "kind": "EscapedIdentifier",
-                                "commercialAt": {
-                                    "kind": "CommercialAt",
-                                    "fullStart": 1395,
-                                    "start": 1396,
-                                    "length": 2
-                                },
-                                "name": {
-                                    "kind": "ObjectKeyword",
-                                    "fullStart": 1397,
-                                    "start": 1397,
-                                    "length": 6
-                                }
+                        "invokableExpression": {
+                            "kind": "NewExpression",
+                            "newKeyword": {
+                                "kind": "NewKeyword",
+                                "fullStart": 1388,
+                                "start": 1392,
+                                "length": 7
                             },
-                            "arrayTypeAnnotations": []
-                        }
+                            "type": {
+                                "kind": "TypeReference",
+                                "identifier": {
+                                    "kind": "EscapedIdentifier",
+                                    "commercialAt": {
+                                        "kind": "CommercialAt",
+                                        "fullStart": 1395,
+                                        "start": 1396,
+                                        "length": 2
+                                    },
+                                    "name": {
+                                        "kind": "ObjectKeyword",
+                                        "fullStart": 1397,
+                                        "start": 1397,
+                                        "length": 6
+                                    }
+                                },
+                                "arrayTypeAnnotations": []
+                            }
+                        },
+                        "arguments": []
                     },
                     "terminator": {
                         "kind": "Newline",
@@ -3317,42 +3321,46 @@
                 {
                     "kind": "ExpressionStatement",
                     "expression": {
-                        "kind": "ScopeMemberAccessExpression",
+                        "kind": "InvokeExpression",
                         "newlines": [],
-                        "scopableExpression": {
-                            "kind": "IdentifierExpression",
-                            "identifier": {
-                                "kind": "Identifier",
-                                "fullStart": 1681,
-                                "start": 1685,
-                                "length": 9
-                            }
-                        },
-                        "scopeMemberAccessOperator": {
-                            "kind": "Period",
-                            "fullStart": 1690,
-                            "start": 1690,
-                            "length": 1
-                        },
-                        "member": {
-                            "kind": "IdentifierExpression",
-                            "newlines": [],
-                            "identifier": {
-                                "kind": "EscapedIdentifier",
-                                "commercialAt": {
-                                    "kind": "CommercialAt",
-                                    "fullStart": 1691,
-                                    "start": 1691,
-                                    "length": 1
-                                },
-                                "name": {
-                                    "kind": "ObjectKeyword",
-                                    "fullStart": 1692,
-                                    "start": 1692,
-                                    "length": 6
+                        "invokableExpression": {
+                            "kind": "ScopeMemberAccessExpression",
+                            "scopableExpression": {
+                                "kind": "IdentifierExpression",
+                                "identifier": {
+                                    "kind": "Identifier",
+                                    "fullStart": 1681,
+                                    "start": 1685,
+                                    "length": 9
+                                }
+                            },
+                            "scopeMemberAccessOperator": {
+                                "kind": "Period",
+                                "fullStart": 1690,
+                                "start": 1690,
+                                "length": 1
+                            },
+                            "member": {
+                                "kind": "IdentifierExpression",
+                                "newlines": [],
+                                "identifier": {
+                                    "kind": "EscapedIdentifier",
+                                    "commercialAt": {
+                                        "kind": "CommercialAt",
+                                        "fullStart": 1691,
+                                        "start": 1691,
+                                        "length": 1
+                                    },
+                                    "name": {
+                                        "kind": "ObjectKeyword",
+                                        "fullStart": 1692,
+                                        "start": 1692,
+                                        "length": 6
+                                    }
                                 }
                             }
-                        }
+                        },
+                        "arguments": []
                     },
                     "terminator": {
                         "kind": "Newline",
@@ -3815,61 +3823,65 @@
                 {
                     "kind": "ExpressionStatement",
                     "expression": {
-                        "kind": "ScopeMemberAccessExpression",
+                        "kind": "InvokeExpression",
                         "newlines": [],
-                        "scopableExpression": {
-                            "kind": "IdentifierExpression",
-                            "identifier": {
-                                "kind": "Identifier",
-                                "fullStart": 2008,
-                                "start": 2012,
-                                "length": 31
-                            }
-                        },
-                        "scopeMemberAccessOperator": {
-                            "kind": "Period",
-                            "fullStart": 2039,
-                            "start": 2039,
-                            "length": 1
-                        },
-                        "member": {
+                        "invokableExpression": {
                             "kind": "ScopeMemberAccessExpression",
-                            "newlines": [],
                             "scopableExpression": {
                                 "kind": "IdentifierExpression",
                                 "identifier": {
-                                    "kind": "EscapedIdentifier",
-                                    "commercialAt": {
-                                        "kind": "CommercialAt",
-                                        "fullStart": 2040,
-                                        "start": 2040,
-                                        "length": 1
-                                    },
-                                    "name": {
-                                        "kind": "ArrayKeyword",
-                                        "fullStart": 2041,
-                                        "start": 2041,
-                                        "length": 5
-                                    }
+                                    "kind": "Identifier",
+                                    "fullStart": 2008,
+                                    "start": 2012,
+                                    "length": 31
                                 }
                             },
                             "scopeMemberAccessOperator": {
                                 "kind": "Period",
-                                "fullStart": 2046,
-                                "start": 2046,
+                                "fullStart": 2039,
+                                "start": 2039,
                                 "length": 1
                             },
                             "member": {
-                                "kind": "IdentifierExpression",
+                                "kind": "ScopeMemberAccessExpression",
                                 "newlines": [],
-                                "identifier": {
-                                    "kind": "Identifier",
-                                    "fullStart": 2047,
-                                    "start": 2047,
-                                    "length": 33
+                                "scopableExpression": {
+                                    "kind": "IdentifierExpression",
+                                    "identifier": {
+                                        "kind": "EscapedIdentifier",
+                                        "commercialAt": {
+                                            "kind": "CommercialAt",
+                                            "fullStart": 2040,
+                                            "start": 2040,
+                                            "length": 1
+                                        },
+                                        "name": {
+                                            "kind": "ArrayKeyword",
+                                            "fullStart": 2041,
+                                            "start": 2041,
+                                            "length": 5
+                                        }
+                                    }
+                                },
+                                "scopeMemberAccessOperator": {
+                                    "kind": "Period",
+                                    "fullStart": 2046,
+                                    "start": 2046,
+                                    "length": 1
+                                },
+                                "member": {
+                                    "kind": "IdentifierExpression",
+                                    "newlines": [],
+                                    "identifier": {
+                                        "kind": "Identifier",
+                                        "fullStart": 2047,
+                                        "start": 2047,
+                                        "length": 33
+                                    }
                                 }
                             }
-                        }
+                        },
+                        "arguments": []
                     },
                     "terminator": {
                         "kind": "Newline",

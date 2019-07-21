@@ -93,32 +93,29 @@
                     "kind": "ForLoop",
                     "locals": [],
                     "statement": {
-                        "kind": "ExpressionStatement",
-                        "expression": {
-                            "kind": "AssignmentExpression",
-                            "leftOperand": {
-                                "kind": "IdentifierExpression",
-                                "type": "Int[]",
-                                "identifier": "val"
-                            },
-                            "rightOperand": {
-                                "kind": "ArrayLiteralExpression",
-                                "type": "Int[]",
-                                "expressions": [
-                                    {
-                                        "kind": "IntegerLiteralExpression",
-                                        "type": "Int"
-                                    },
-                                    {
-                                        "kind": "IntegerLiteralExpression",
-                                        "type": "Int"
-                                    },
-                                    {
-                                        "kind": "IntegerLiteralExpression",
-                                        "type": "Int"
-                                    }
-                                ]
-                            }
+                        "kind": "AssignmentStatement",
+                        "leftOperand": {
+                            "kind": "IdentifierExpression",
+                            "type": "Int[]",
+                            "identifier": "val"
+                        },
+                        "rightOperand": {
+                            "kind": "ArrayLiteralExpression",
+                            "type": "Int[]",
+                            "expressions": [
+                                {
+                                    "kind": "IntegerLiteralExpression",
+                                    "type": "Int"
+                                },
+                                {
+                                    "kind": "IntegerLiteralExpression",
+                                    "type": "Int"
+                                },
+                                {
+                                    "kind": "IntegerLiteralExpression",
+                                    "type": "Int"
+                                }
+                            ]
                         }
                     },
                     "statements": []

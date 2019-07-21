@@ -92,34 +92,30 @@
                     }
                 },
                 {
-                    "kind": "ExpressionStatement",
-                    "expression": {
-                        "kind": "AssignmentExpression",
-                        "leftOperand": {
-                            "kind": "IdentifierExpression",
-                            "newlines": [],
-                            "identifier": {
-                                "kind": "Identifier",
-                                "fullStart": 35,
-                                "start": 39,
-                                "length": 5
-                            }
-                        },
-                        "operator": {
-                            "kind": "EqualsSign",
-                            "fullStart": 40,
-                            "start": 41,
+                    "kind": "AssignmentStatement",
+                    "leftOperand": {
+                        "kind": "IdentifierExpression",
+                        "identifier": {
+                            "kind": "Identifier",
+                            "fullStart": 35,
+                            "start": 39,
+                            "length": 5
+                        }
+                    },
+                    "operator": {
+                        "kind": "EqualsSign",
+                        "fullStart": 40,
+                        "start": 41,
+                        "length": 2
+                    },
+                    "rightOperand": {
+                        "kind": "IntegerLiteralExpression",
+                        "newlines": [],
+                        "value": {
+                            "kind": "IntegerLiteral",
+                            "fullStart": 42,
+                            "start": 43,
                             "length": 2
-                        },
-                        "rightOperand": {
-                            "kind": "IntegerLiteralExpression",
-                            "newlines": [],
-                            "value": {
-                                "kind": "IntegerLiteral",
-                                "fullStart": 42,
-                                "start": 43,
-                                "length": 2
-                            }
                         }
                     },
                     "terminator": {

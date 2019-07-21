@@ -35,25 +35,22 @@
                     "parameters": [],
                     "statements": [
                         {
-                            "kind": "ExpressionStatement",
-                            "expression": {
-                                "kind": "AssignmentExpression",
-                                "leftOperand": {
-                                    "kind": "ScopeMemberAccessExpression",
-                                    "type": "Int",
-                                    "scopableExpression": {
-                                        "kind": "GlobalScopeExpression"
-                                    },
-                                    "member": {
-                                        "kind": "IdentifierExpression",
-                                        "type": "Int",
-                                        "identifier": "T"
-                                    }
+                            "kind": "AssignmentStatement",
+                            "leftOperand": {
+                                "kind": "ScopeMemberAccessExpression",
+                                "type": "Int",
+                                "scopableExpression": {
+                                    "kind": "GlobalScopeExpression"
                                 },
-                                "rightOperand": {
-                                    "kind": "IntegerLiteralExpression",
-                                    "type": "Int"
+                                "member": {
+                                    "kind": "IdentifierExpression",
+                                    "type": "Int",
+                                    "identifier": "T"
                                 }
+                            },
+                            "rightOperand": {
+                                "kind": "IntegerLiteralExpression",
+                                "type": "Int"
                             }
                         }
                     ]
