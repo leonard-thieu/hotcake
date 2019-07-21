@@ -137,52 +137,48 @@
                     }
                 },
                 {
-                    "kind": "ExpressionStatement",
-                    "expression": {
-                        "kind": "AssignmentExpression",
+                    "kind": "AssignmentStatement",
+                    "leftOperand": {
+                        "kind": "IdentifierExpression",
+                        "identifier": {
+                            "kind": "Identifier",
+                            "fullStart": 53,
+                            "start": 57,
+                            "length": 5
+                        }
+                    },
+                    "operator": {
+                        "kind": "EqualsSign",
+                        "fullStart": 58,
+                        "start": 59,
+                        "length": 2
+                    },
+                    "rightOperand": {
+                        "kind": "BinaryExpression",
                         "leftOperand": {
-                            "kind": "IdentifierExpression",
+                            "kind": "IntegerLiteralExpression",
                             "newlines": [],
-                            "identifier": {
-                                "kind": "Identifier",
-                                "fullStart": 53,
-                                "start": 57,
-                                "length": 5
+                            "value": {
+                                "kind": "IntegerLiteral",
+                                "fullStart": 60,
+                                "start": 61,
+                                "length": 2
                             }
                         },
                         "operator": {
                             "kind": "EqualsSign",
-                            "fullStart": 58,
-                            "start": 59,
+                            "fullStart": 62,
+                            "start": 63,
                             "length": 2
                         },
                         "rightOperand": {
-                            "kind": "BinaryExpression",
-                            "leftOperand": {
-                                "kind": "IntegerLiteralExpression",
-                                "newlines": [],
-                                "value": {
-                                    "kind": "IntegerLiteral",
-                                    "fullStart": 60,
-                                    "start": 61,
-                                    "length": 2
-                                }
-                            },
-                            "operator": {
-                                "kind": "EqualsSign",
-                                "fullStart": 62,
-                                "start": 63,
+                            "kind": "IdentifierExpression",
+                            "newlines": [],
+                            "identifier": {
+                                "kind": "Identifier",
+                                "fullStart": 64,
+                                "start": 65,
                                 "length": 2
-                            },
-                            "rightOperand": {
-                                "kind": "IdentifierExpression",
-                                "newlines": [],
-                                "identifier": {
-                                    "kind": "Identifier",
-                                    "fullStart": 64,
-                                    "start": 65,
-                                    "length": 2
-                                }
                             }
                         }
                     },

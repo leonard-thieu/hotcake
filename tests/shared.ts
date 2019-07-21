@@ -48,6 +48,11 @@ export function executeTestCases(options: TestCaseOptions): void {
         skippedCases = [];
     }
 
+    for (let i = 0; i < skippedCases.length; i++) {
+        const skippedCase = skippedCases[i];
+        skippedCases[i] = path.normalize(skippedCase);
+    }
+
     describe(name, function () {
         if (beforeCallback) {
             before(beforeCallback);

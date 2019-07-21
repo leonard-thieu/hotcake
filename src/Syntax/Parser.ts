@@ -24,6 +24,7 @@ import { IdentifierStartToken } from './Node/Identifier';
 import { ModulePath } from './Node/ModulePath';
 import { Nodes } from './Node/Node';
 import { NodeKind } from './Node/NodeKind';
+import { AssignableExpression, AssignmentOperatorToken, AssignmentStatement } from './Node/Statement/AssignmentStatement';
 import { ContinueStatement } from './Node/Statement/ContinueStatement';
 import { DataDeclarationSequenceStatement } from './Node/Statement/DataDeclarationSequenceStatement';
 import { EmptyStatement } from './Node/Statement/EmptyStatement';
@@ -42,6 +43,9 @@ import { LonghandTypeAnnotation, ShorthandTypeAnnotation, ShorthandTypeToken } f
 import { ParseContextElementMapBase, ParseContextKind, ParserBase } from './ParserBase';
 import { ParseTreeVisitor } from './ParseTreeVisitor';
 import { MissingToken, MissingTokenKinds } from './Token/MissingToken';
+import { ModKeywordEqualsSignToken } from './Token/ModKeywordEqualsSignToken';
+import { ShlKeywordEqualsSignToken } from './Token/ShlKeywordEqualsSignToken';
+import { ShrKeywordEqualsSignToken } from './Token/ShrKeywordEqualsSignToken';
 import { SkippedToken } from './Token/SkippedToken';
 import { AliasKeywordToken, CaseKeywordToken, CatchKeywordToken, ClassKeywordToken, ColonToken, ConstKeywordToken, ContinueKeywordToken, DefaultKeywordToken, ElseIfKeywordToken, ElseKeywordToken, ExitKeywordToken, ForKeywordToken, FriendKeywordToken, FunctionKeywordToken, IfKeywordToken, ImportKeywordToken, InterfaceKeywordToken, LocalKeywordToken, MethodKeywordToken, RepeatKeywordToken, ReturnKeywordToken, SelectKeywordToken, StrictKeywordToken, ThrowKeywordToken, Tokens, TryKeywordToken, WhileKeywordToken } from './Token/Token';
 import { TokenKind } from './Token/TokenKind';
@@ -1165,12 +1169,19 @@ export class Parser extends ParserBase {
             case TokenKind.ThrowKeyword:
             case TokenKind.TryKeyword:
             case TokenKind.Semicolon:
-            case TokenKind.Newline: {
+            case TokenKind.Newline:
+
+            // Expression statement start
+            case TokenKind.NewKeyword:
+            case TokenKind.SelfKeyword:
+            case TokenKind.SuperKeyword:
+            case TokenKind.Period:
+            case TokenKind.Identifier: {
                 return true;
             }
         }
 
-        return this.isExpressionStart(token);
+        return false;
     }
 
     private parseStatementListMember(parent: Nodes) {
@@ -1238,7 +1249,35 @@ export class Parser extends ParserBase {
             }
         }
 
-        return this.parseExpressionStatement(parent);
+        const assignmentStatement = this.tryParseAssignmentStatement(parent);
+        if (assignmentStatement) {
+            return assignmentStatement;
+        }
+
+        const newlines = this.parseList(ParseContextKind.NewlineList, parent);
+        let expression = this.parsePrimaryExpression(parent);
+
+        switch (expression.kind) {
+            case NodeKind.NewExpression:
+            case NodeKind.IdentifierExpression:
+            case NodeKind.ScopeMemberAccessExpression: {
+                expression = this.parseInvokeExpression(expression);
+                break;
+            }
+        }
+
+        expression.newlines = newlines;
+
+        switch (expression.kind) {
+            case NodeKind.SuperExpression:
+            case NodeKind.InvokeExpression: {
+                return this.parseExpressionStatement(parent, expression);
+            }
+        }
+
+        console.warn(`Expression cannot be used as a statement.`);
+
+        return this.parseExpressionStatement(parent, expression);
     }
 
     // #endregion
@@ -1599,47 +1638,42 @@ export class Parser extends ParserBase {
     }
 
     private parseForLoopHeader(parent: ForLoop) {
-        let loopVariableExpression: DataDeclarationSequenceStatement | MissableExpression;
+        let loopVariableStatement: DataDeclarationSequenceStatement | AssignmentStatement;
         const token = this.getToken();
         if (token.kind === TokenKind.LocalKeyword) {
             this.advanceToken();
 
-            loopVariableExpression = this.parseDataDeclarationSequenceStatement(parent, token);
-            const declaration = loopVariableExpression.dataDeclarationSequence.children[0];
+            loopVariableStatement = this.parseDataDeclarationSequenceStatement(parent, token);
+            const declaration = loopVariableStatement.dataDeclarationSequence.children[0];
             if (declaration &&
                 declaration.kind === NodeKind.DataDeclaration &&
                 declaration.eachInKeyword
             ) {
-                return loopVariableExpression;
+                return loopVariableStatement;
             }
         } else {
-            const position = this.position;
-            loopVariableExpression = this.parseExpression(parent);
-            switch (loopVariableExpression.kind) {
-                case NodeKind.AssignmentExpression: {
-                    if (loopVariableExpression.eachInKeyword) {
-                        return loopVariableExpression;
-                    }
-                    break;
-                }
-                default: {
-                    // TODO: Implement better error handling for incomplete For loop header.
-                    //       Returning a MissingToken causes the expression to be parsed as part of the For loop body.
-                    //       Possible solutions:
-                    //       * Refactor expression parsing to force an (incomplete) AssignmentExpression to be returned.
-                    //       * Construct an (incomplete) AssignmentExpression from the expression returned.
-                    //       * Return a SkippedToken covering the range of the expression.
-                    //         * Requires being able to calculate the length of the expression.
-                    this.position = position;
+            // TODO: Implement better error handling for incomplete For loop header.
+            //       Returning a MissingToken causes the statement to be parsed as part of the For loop body.
+            //       Possible solutions:
+            //       * Refactor statement parsing to force an (incomplete) AssignmentStatement to be returned.
+            //       * Construct an (incomplete) AssignmentStatement from the statement returned.
+            //       * Return a SkippedToken covering the range of the statement.
+            //         * Requires being able to calculate the length of the statement.
 
-                    return this.createMissingToken(token.fullStart, TokenKind.ForLoopHeader);
-                }
+            const assignmentStatement = this.tryParseAssignmentStatement(parent);
+            if (!assignmentStatement) {
+                return this.createMissingToken(token.fullStart, TokenKind.ForLoopHeader);
+            }
+
+            loopVariableStatement = assignmentStatement;
+            if (loopVariableStatement.eachInKeyword) {
+                return loopVariableStatement;
             }
         }
 
         const numericForLoopHeader = new NumericForLoopHeader();
         numericForLoopHeader.parent = parent;
-        numericForLoopHeader.loopVariableExpression = loopVariableExpression;
+        numericForLoopHeader.loopVariableStatement = loopVariableStatement;
 
         numericForLoopHeader.toOrUntilKeyword = this.eatMissable(TokenKind.ToKeyword, TokenKind.UntilKeyword);
         numericForLoopHeader.lastValueExpression = this.parseExpression(numericForLoopHeader);
@@ -1770,12 +1804,104 @@ export class Parser extends ParserBase {
 
     // #endregion
 
+    // #region Assignment statement
+
+    private tryParseAssignmentStatement(parent: Nodes): AssignmentStatement | undefined {
+        const { position } = this;
+        const expression = this.parsePrimaryExpression(parent);
+        let token = this.getToken();
+
+        switch (token.kind) {
+            case TokenKind.ShlKeyword: {
+                const nextToken = this.getToken(1);
+                if (nextToken.kind === TokenKind.EqualsSign) {
+                    token = new ShlKeywordEqualsSignToken(token, nextToken);
+                }
+                break;
+            }
+            case TokenKind.ShrKeyword: {
+                const nextToken = this.getToken(1);
+                if (nextToken.kind === TokenKind.EqualsSign) {
+                    token = new ShrKeywordEqualsSignToken(token, nextToken);
+                }
+                break;
+            }
+            case TokenKind.ModKeyword: {
+                const nextToken = this.getToken(1);
+                if (nextToken.kind === TokenKind.EqualsSign) {
+                    token = new ModKeywordEqualsSignToken(token, nextToken);
+                }
+                break;
+            }
+        }
+
+        switch (token.kind) {
+            case TokenKind.VerticalBarEqualsSign:
+            case TokenKind.TildeEqualsSign:
+            case TokenKind.AmpersandEqualsSign:
+            case TokenKind.HyphenMinusEqualsSign:
+            case TokenKind.PlusSignEqualsSign:
+            case TokenKind.ShrKeywordEqualsSign:
+            case TokenKind.ShlKeywordEqualsSign:
+            case TokenKind.ModKeywordEqualsSign:
+            case TokenKind.SlashEqualsSign:
+            case TokenKind.AsteriskEqualsSign:
+            case TokenKind.EqualsSign: {
+                switch (expression.kind) {
+                    case NodeKind.IdentifierExpression:
+                    case NodeKind.ScopeMemberAccessExpression:
+                    case NodeKind.IndexExpression:
+                    case NodeKind.GlobalScopeExpression: {
+                        this.advanceToken();
+                        switch (token.kind) {
+                            case TokenKind.ShlKeywordEqualsSign:
+                            case TokenKind.ShrKeywordEqualsSign:
+                            case TokenKind.ModKeywordEqualsSign: {
+                                this.advanceToken();
+                                break;
+                            }
+                        }
+
+                        return this.parseAssignmentStatement(parent, expression, token);
+                    }
+                    default: {
+                        throw new Error(`'${expression.kind}' cannot be assigned to.`);
+                    }
+                }
+            }
+        }
+
+        this.position = position;
+    }
+
+    private parseAssignmentStatement(
+        parent: Nodes,
+        leftOperand: AssignableExpression,
+        token: AssignmentOperatorToken,
+    ): AssignmentStatement {
+        const assignmentStatement = new AssignmentStatement();
+        assignmentStatement.parent = parent;
+        assignmentStatement.leftOperand = leftOperand;
+        leftOperand.parent = assignmentStatement;
+        assignmentStatement.operator = token;
+        assignmentStatement.eachInKeyword = this.eatOptional(TokenKind.EachInKeyword);
+        assignmentStatement.rightOperand = this.parseExpression(assignmentStatement);
+        assignmentStatement.terminator = this.eatStatementTerminator(assignmentStatement);
+
+        return assignmentStatement;
+    }
+
+    // #endregion
+
     // #region Expression statement
 
-    private parseExpressionStatement(parent: Nodes): ExpressionStatement {
+    private parseExpressionStatement(
+        parent: Nodes,
+        expression: MissableExpression,
+    ): ExpressionStatement {
         const expressionStatement = new ExpressionStatement();
         expressionStatement.parent = parent;
-        expressionStatement.expression = this.parseExpression(expressionStatement);
+        expressionStatement.expression = expression;
         expressionStatement.terminator = this.eatStatementTerminator(expressionStatement);
 
         return expressionStatement;
@@ -2024,7 +2150,6 @@ export class Parser extends ParserBase {
             case NodeKind.GroupingExpression:
             case NodeKind.UnaryExpression:
             case NodeKind.BinaryExpression:
-            case NodeKind.AssignmentExpression:
             case NodeKind.GlobalScopeExpression: {
                 return false;
             }

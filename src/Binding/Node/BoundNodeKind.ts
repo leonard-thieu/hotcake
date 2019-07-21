@@ -36,9 +36,9 @@ export enum BoundNodeKind {
     ThrowStatement = 'ThrowStatement',
     TryStatement = 'TryStatement',
     CatchClause = 'CatchClause',
+    AssignmentStatement = 'AssignmentStatement',
     ExpressionStatement = 'ExpressionStatement',
 
-    AssignmentExpression = 'AssignmentExpression',
     BinaryExpression = 'BinaryExpression',
     UnaryExpression = 'UnaryExpression',
     NewExpression = 'NewExpression',

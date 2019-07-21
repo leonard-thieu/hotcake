@@ -3,7 +3,6 @@ import { ArrayTypeAnnotation } from './Node/ArrayTypeAnnotation';
 import { CommaSeparator } from './Node/CommaSeparator';
 import { ConfigurationTag } from './Node/ConfigurationTag';
 import { ArrayLiteralExpression } from './Node/Expression/ArrayLiteralExpression';
-import { AssignmentExpression, AssignmentOperatorToken } from './Node/Expression/AssignmentExpression';
 import { BinaryExpression, BinaryExpressionOperatorToken } from './Node/Expression/BinaryExpression';
 import { BooleanLiteralExpression, BooleanLiteralExpressionValueToken } from './Node/Expression/BooleanLiteralExpression';
 import { Expressions, MissableExpression } from './Node/Expression/Expression';
@@ -28,9 +27,6 @@ import { NodeKind } from './Node/NodeKind';
 import { MissableTypeReference, TypeReference, TypeReferenceIdentifierStartToken } from './Node/TypeReference';
 import { GreaterThanSignEqualsSignToken } from './Token/GreaterThanSignEqualsSignToken';
 import { MissingToken, MissingTokenKinds } from './Token/MissingToken';
-import { ModKeywordEqualsSignToken } from './Token/ModKeywordEqualsSignToken';
-import { ShlKeywordEqualsSignToken } from './Token/ShlKeywordEqualsSignToken';
-import { ShrKeywordEqualsSignToken } from './Token/ShrKeywordEqualsSignToken';
 import { SkippedToken } from './Token/SkippedToken';
 import { CommaToken, CommercialAtToken, ConfigurationTagStartToken, FloatLiteralToken, IntegerLiteralToken, NewKeywordToken, NullKeywordToken, OpeningParenthesisToken, OpeningSquareBracketToken, PeriodPeriodToken, PeriodToken, QuotationMarkToken, SelfKeywordToken, SuperKeywordToken, TokenKinds, TokenKindTokenMap, Tokens } from './Token/Token';
 import { TokenKind } from './Token/TokenKind';
@@ -110,8 +106,8 @@ export abstract class ParserBase {
 
     // #region Binary expressions
 
-    protected parseBinaryExpressionOrHigher(precedence: Precedence, parent: Nodes) {
-        let expression = this.parseUnaryExpressionOrHigher(parent);
+    private parseBinaryExpressionOrHigher(precedence: Precedence, parent: Nodes) {
+        let expression: MissableExpression = this.parseUnaryExpressionOrHigher(parent);
         let [prevNewPrecedence, prevAssociativity] = UnknownPrecedenceAndAssociativity;
 
         while (true) {
@@ -125,30 +121,9 @@ export abstract class ParserBase {
                     }
                     break;
                 }
-                case TokenKind.ShlKeyword: {
-                    const nextToken = this.getToken(1);
-                    if (nextToken.kind === TokenKind.EqualsSign) {
-                        token = new ShlKeywordEqualsSignToken(token, nextToken);
-                    }
-                    break;
-                }
-                case TokenKind.ShrKeyword: {
-                    const nextToken = this.getToken(1);
-                    if (nextToken.kind === TokenKind.EqualsSign) {
-                        token = new ShrKeywordEqualsSignToken(token, nextToken);
-                    }
-                    break;
-                }
-                case TokenKind.ModKeyword: {
-                    const nextToken = this.getToken(1);
-                    if (nextToken.kind === TokenKind.EqualsSign) {
-                        token = new ModKeywordEqualsSignToken(token, nextToken);
-                    }
-                    break;
-                }
             }
 
-            const [newPrecedence, associativity] = getBinaryOperatorPrecedenceAndAssociativity(token, parent);
+            const [newPrecedence, associativity] = getBinaryOperatorPrecedenceAndAssociativity(token.kind);
 
             if (prevAssociativity === Associativity.None &&
                 prevNewPrecedence === newPrecedence
@@ -156,40 +131,19 @@ export abstract class ParserBase {
                 break;
             }
 
-            const shouldConsumeCurrentOperator =
-                associativity === Associativity.Right ?
-                    newPrecedence >= precedence :
-                    newPrecedence > precedence;
-
-            if (!shouldConsumeCurrentOperator) {
+            if (newPrecedence <= precedence) {
                 break;
             }
 
             this.advanceToken();
             switch (token.kind) {
-                case TokenKind.GreaterThanSignEqualsSign:
-                case TokenKind.ShlKeywordEqualsSign:
-                case TokenKind.ShrKeywordEqualsSign:
-                case TokenKind.ModKeywordEqualsSign: {
+                case TokenKind.GreaterThanSignEqualsSign: {
                     this.advanceToken();
                     break;
                 }
             }
 
             switch (token.kind) {
-                case TokenKind.VerticalBarEqualsSign:
-                case TokenKind.TildeEqualsSign:
-                case TokenKind.AmpersandEqualsSign:
-                case TokenKind.HyphenMinusEqualsSign:
-                case TokenKind.PlusSignEqualsSign:
-                case TokenKind.ShrKeywordEqualsSign:
-                case TokenKind.ShlKeywordEqualsSign:
-                case TokenKind.ModKeywordEqualsSign:
-                case TokenKind.SlashEqualsSign:
-                case TokenKind.AsteriskEqualsSign: {
-                    expression = this.parseAssignmentExpression(parent, expression, token, newPrecedence);
-                    break;
-                }
                 case TokenKind.OrKeyword:
                 case TokenKind.AndKeyword:
                 case TokenKind.LessThanSignGreaterThanSign:
@@ -206,22 +160,13 @@ export abstract class ParserBase {
                 case TokenKind.ShlKeyword:
                 case TokenKind.ModKeyword:
                 case TokenKind.Slash:
-                case TokenKind.Asterisk: {
+                case TokenKind.Asterisk:
+                case TokenKind.EqualsSign: {
                     expression = this.parseBinaryExpression(parent, expression, token, newPrecedence);
                     break;
                 }
-                case TokenKind.EqualsSign: {
-                    if (parent) {
-                        if (parent.kind === NodeKind.ExpressionStatement ||
-                            parent.kind === NodeKind.ForLoop
-                        ) {
-                            expression = this.parseAssignmentExpression(parent, expression, token, newPrecedence);
-                            break;
-                        }
-                    }
-
-                    expression = this.parseBinaryExpression(parent, expression, token, newPrecedence);
-                    break;
+                default: {
+                    throw new Error(`'${token.kind}' is not a valid binary operator.`);
                 }
             }
 
@@ -230,25 +175,6 @@ export abstract class ParserBase {
         }
 
         return expression;
-    }
-
-    private parseAssignmentExpression(
-        parent: Nodes,
-        leftOperand: MissableExpression,
-        operator: AssignmentOperatorToken,
-        newPrecedence: Precedence,
-    ): AssignmentExpression {
-        const assignmentExpression = new AssignmentExpression();
-        assignmentExpression.parent = parent;
-        assignmentExpression.leftOperand = leftOperand;
-        if (leftOperand.kind !== TokenKind.Missing) {
-            leftOperand.parent = assignmentExpression;
-        }
-        assignmentExpression.operator = operator;
-        assignmentExpression.eachInKeyword = this.eatOptional(TokenKind.EachInKeyword);
-        assignmentExpression.rightOperand = this.parseBinaryExpressionOrHigher(newPrecedence, assignmentExpression);
-
-        return assignmentExpression;
     }
 
     private parseBinaryExpression(
@@ -273,10 +199,8 @@ export abstract class ParserBase {
 
     // #region Unary expressions
 
-    protected parseUnaryExpressionOrHigher(parent: Nodes): MissableExpression {
+    private parseUnaryExpressionOrHigher(parent: Nodes) {
         const newlines = this.parseList(ParseContextKind.NewlineList, parent);
-
-        let expression: MissableExpression;
 
         const token = this.getToken();
         switch (token.kind) {
@@ -286,33 +210,21 @@ export abstract class ParserBase {
             case TokenKind.NotKeyword: {
                 this.advanceToken();
 
-                expression = this.parseUnaryExpression(parent, token);
-                break;
+                const expression = this.parseUnaryExpression(parent, token);
+                expression.newlines = newlines;
+
+                return expression;
             }
             default: {
-                expression = this.parsePrimaryExpression(parent);
+                const expression = this.parsePrimaryExpression(parent);
+                expression.newlines = newlines;
 
-                if (expression.kind !== TokenKind.Missing) {
-                    while (true) {
-                        const postfixExpression = this.parsePostfixExpression(expression);
-
-                        if (!postfixExpression) {
-                            break;
-                        }
-
-                        expression = postfixExpression;
-                    }
-                }
-                break;
+                return expression;
             }
         }
-
-        expression.newlines = newlines;
-
-        return expression;
     }
 
-    protected parseUnaryExpression(parent: Nodes, operator: UnaryOperatorToken): UnaryExpression {
+    private parseUnaryExpression(parent: Nodes, operator: UnaryOperatorToken): UnaryExpression {
         const unaryExpression = new UnaryExpression();
         unaryExpression.parent = parent;
         unaryExpression.operator = operator;
@@ -326,6 +238,29 @@ export abstract class ParserBase {
     // #region Primary expressions
 
     protected parsePrimaryExpression(parent: Nodes) {
+        type PrimaryExpression =
+            | ReturnType<ParserBase['parsePrimaryExpressionCore']>
+            | ReturnType<ParserBase['parsePostfixExpression']>
+            ;
+
+        let expression: PrimaryExpression = this.parsePrimaryExpressionCore(parent);
+
+        if (expression.kind !== TokenKind.Missing) {
+            while (true) {
+                const postfixExpression = this.parsePostfixExpression(expression);
+
+                if (!postfixExpression) {
+                    break;
+                }
+
+                expression = postfixExpression;
+            }
+        }
+
+        return expression;
+    }
+
+    private parsePrimaryExpressionCore(parent: Nodes) {
         const token = this.getToken();
         switch (token.kind) {
             case TokenKind.NewKeyword: {
@@ -1324,19 +1259,17 @@ enum Precedence {
     Initial = 0,
     LogicalOr = 1,
     LogicalAnd = 2,
-    Assignment = 3,
-    EqualityRelational = 4,
-    BitwiseOr = 5,
-    BitwiseXorBitwiseAnd = 6,
-    Additive = 7,
-    ShiftMultiplicative = 8,
+    EqualityRelational = 3,
+    BitwiseOr = 4,
+    BitwiseXorBitwiseAnd = 5,
+    Additive = 6,
+    ShiftMultiplicative = 7,
 }
 
 enum Associativity {
     Unknown = -1,
     None = 0,
     Left = 1,
-    Right = 2,
 }
 
 type PrecedenceAndAssociativity = [Precedence, Associativity];
@@ -1347,7 +1280,6 @@ type PrecedenceAndAssociativityMap = {
 
 const LogicalOrPrecedenceAndAssociativity: PrecedenceAndAssociativity = [Precedence.LogicalOr, Associativity.Left];
 const LogicalAndPrecedenceAndAssociativity: PrecedenceAndAssociativity = [Precedence.LogicalAnd, Associativity.Left];
-const AssignmentPrecedenceAndAssociativity: PrecedenceAndAssociativity = [Precedence.Assignment, Associativity.Right];
 const EqualityRelationalPrecedenceAndAssociativity: PrecedenceAndAssociativity = [Precedence.EqualityRelational, Associativity.None];
 const BitwiseOrPrecedenceAndAssociativity: PrecedenceAndAssociativity = [Precedence.BitwiseOr, Associativity.Left];
 const BitwiseXorBitwiseAndPrecedenceAndAssociativity: PrecedenceAndAssociativity = [Precedence.BitwiseXorBitwiseAnd, Associativity.Left];
@@ -1360,22 +1292,12 @@ const OperatorPrecedenceAndAssociativityMap: PrecedenceAndAssociativityMap = {
 
     [TokenKind.AndKeyword]: LogicalAndPrecedenceAndAssociativity,
 
-    [TokenKind.VerticalBarEqualsSign]: AssignmentPrecedenceAndAssociativity,
-    [TokenKind.TildeEqualsSign]: AssignmentPrecedenceAndAssociativity,
-    [TokenKind.AmpersandEqualsSign]: AssignmentPrecedenceAndAssociativity,
-    [TokenKind.HyphenMinusEqualsSign]: AssignmentPrecedenceAndAssociativity,
-    [TokenKind.PlusSignEqualsSign]: AssignmentPrecedenceAndAssociativity,
-    [TokenKind.ModKeywordEqualsSign]: AssignmentPrecedenceAndAssociativity,
-    [TokenKind.ShrKeywordEqualsSign]: AssignmentPrecedenceAndAssociativity,
-    [TokenKind.ShlKeywordEqualsSign]: AssignmentPrecedenceAndAssociativity,
-    [TokenKind.SlashEqualsSign]: AssignmentPrecedenceAndAssociativity,
-    [TokenKind.AsteriskEqualsSign]: AssignmentPrecedenceAndAssociativity,
-
     [TokenKind.LessThanSignGreaterThanSign]: EqualityRelationalPrecedenceAndAssociativity,
     [TokenKind.GreaterThanSignEqualsSign]: EqualityRelationalPrecedenceAndAssociativity,
     [TokenKind.LessThanSignEqualsSign]: EqualityRelationalPrecedenceAndAssociativity,
     [TokenKind.GreaterThanSign]: EqualityRelationalPrecedenceAndAssociativity,
     [TokenKind.LessThanSign]: EqualityRelationalPrecedenceAndAssociativity,
+    [TokenKind.EqualsSign]: EqualityRelationalPrecedenceAndAssociativity,
 
     [TokenKind.VerticalBar]: BitwiseOrPrecedenceAndAssociativity,
 
@@ -1392,18 +1314,8 @@ const OperatorPrecedenceAndAssociativityMap: PrecedenceAndAssociativityMap = {
     [TokenKind.Asterisk]: ShiftMultiplicativePrecedenceAndAssociativity,
 };
 
-function getBinaryOperatorPrecedenceAndAssociativity(token: Tokens, parent: Nodes | undefined): PrecedenceAndAssociativity {
-    if (token.kind === TokenKind.EqualsSign) {
-        if (parent &&
-            parent.kind === NodeKind.ExpressionStatement
-        ) {
-            return AssignmentPrecedenceAndAssociativity;
-        }
-
-        return EqualityRelationalPrecedenceAndAssociativity;
-    }
-
-    return OperatorPrecedenceAndAssociativityMap[token.kind] ||
+function getBinaryOperatorPrecedenceAndAssociativity(kind: TokenKinds): PrecedenceAndAssociativity {
+    return OperatorPrecedenceAndAssociativityMap[kind] ||
         UnknownPrecedenceAndAssociativity;
 }
 

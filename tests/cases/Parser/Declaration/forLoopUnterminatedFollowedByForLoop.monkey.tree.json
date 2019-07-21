@@ -52,10 +52,9 @@
                         "length": 7
                     },
                     "header": {
-                        "kind": "AssignmentExpression",
+                        "kind": "AssignmentStatement",
                         "leftOperand": {
                             "kind": "IdentifierExpression",
-                            "newlines": [],
                             "identifier": {
                                 "kind": "Identifier",
                                 "fullStart": 21,
@@ -114,10 +113,9 @@
                                 "length": 7
                             },
                             "header": {
-                                "kind": "AssignmentExpression",
+                                "kind": "AssignmentStatement",
                                 "leftOperand": {
                                     "kind": "IdentifierExpression",
-                                    "newlines": [],
                                     "identifier": {
                                         "kind": "Identifier",
                                         "fullStart": 45,
@@ -146,19 +144,15 @@
                                         "start": 57,
                                         "length": 2
                                     }
+                                },
+                                "terminator": {
+                                    "kind": "Newline",
+                                    "fullStart": 58,
+                                    "start": 59,
+                                    "length": 2
                                 }
                             },
-                            "statements": [
-                                {
-                                    "kind": "EmptyStatement",
-                                    "terminator": {
-                                        "kind": "Newline",
-                                        "fullStart": 58,
-                                        "start": 59,
-                                        "length": 2
-                                    }
-                                }
-                            ],
+                            "statements": [],
                             "endKeyword": {
                                 "kind": "EndKeyword",
                                 "fullStart": 60,

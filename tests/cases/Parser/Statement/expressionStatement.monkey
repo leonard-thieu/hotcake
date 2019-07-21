@@ -1,6 +1,26 @@
 Function Main()
-	' Error : Expression cannot be used as a statement.
-    ' This also tests for a bug where non-invokable expressions were being
-    ' parsed as invokable expressions.
+    ' TestUnary(+2)
+    TestUnary + 2
+    
+    ' TestUnary() + 2
+    Local val := TestUnary + 2
+
+    ' Shadow the function with a local variable
+    Local TestUnary
+
+    ' TestUnary + 2
+    Local val2 := TestUnary + 2
+
+    ' Error : Identifier 'TestUnary' not found.
+    'TestUnary + 2
+End
+
+Function TestUnary()
+End
+
+Function TestUnary(val1)
+End
+
+Function BinaryExpressionStatementsShouldFail()
     1 + 2
 End

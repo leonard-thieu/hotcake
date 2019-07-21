@@ -21,41 +21,35 @@
             ],
             "statements": [
                 {
-                    "kind": "ExpressionStatement",
-                    "expression": {
-                        "kind": "AssignmentExpression",
-                        "leftOperand": {
-                            "kind": "IdentifierExpression",
-                            "type": "String",
-                            "identifier": "val"
-                        },
-                        "rightOperand": {
-                            "kind": "StringLiteralExpression",
-                            "type": "String"
-                        }
+                    "kind": "AssignmentStatement",
+                    "leftOperand": {
+                        "kind": "IdentifierExpression",
+                        "type": "String",
+                        "identifier": "val"
+                    },
+                    "rightOperand": {
+                        "kind": "StringLiteralExpression",
+                        "type": "String"
                     }
                 },
                 {
-                    "kind": "ExpressionStatement",
-                    "expression": {
-                        "kind": "AssignmentExpression",
+                    "kind": "AssignmentStatement",
+                    "leftOperand": {
+                        "kind": "IdentifierExpression",
+                        "type": "String",
+                        "identifier": "val"
+                    },
+                    "rightOperand": {
+                        "kind": "BinaryExpression",
+                        "type": "String",
                         "leftOperand": {
                             "kind": "IdentifierExpression",
                             "type": "String",
                             "identifier": "val"
                         },
                         "rightOperand": {
-                            "kind": "BinaryExpression",
-                            "type": "String",
-                            "leftOperand": {
-                                "kind": "IdentifierExpression",
-                                "type": "String",
-                                "identifier": "val"
-                            },
-                            "rightOperand": {
-                                "kind": "IntegerLiteralExpression",
-                                "type": "Int"
-                            }
+                            "kind": "IntegerLiteralExpression",
+                            "type": "Int"
                         }
                     }
                 }

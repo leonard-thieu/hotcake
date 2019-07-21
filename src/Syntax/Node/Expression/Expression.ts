@@ -2,7 +2,6 @@ import { MissingToken } from '../../Token/MissingToken';
 import { NewlineToken } from '../../Token/Token';
 import { Node } from '../Node';
 import { ArrayLiteralExpression } from './ArrayLiteralExpression';
-import { AssignmentExpression } from './AssignmentExpression';
 import { BinaryExpression } from './BinaryExpression';
 import { BooleanLiteralExpression } from './BooleanLiteralExpression';
 import { FloatLiteralExpression } from './FloatLiteralExpression';
@@ -43,7 +42,6 @@ export type Expressions =
     | GroupingExpression
     | UnaryExpression
     | BinaryExpression
-    | AssignmentExpression
     | GlobalScopeExpression
     ;
 

@@ -46,24 +46,28 @@
                 {
                     "kind": "ExpressionStatement",
                     "expression": {
-                        "kind": "NewExpression",
+                        "kind": "InvokeExpression",
                         "newlines": [],
-                        "newKeyword": {
-                            "kind": "NewKeyword",
-                            "fullStart": 17,
-                            "start": 21,
-                            "length": 7
-                        },
-                        "type": {
-                            "kind": "TypeReference",
-                            "identifier": {
-                                "kind": "Identifier",
-                                "fullStart": 24,
-                                "start": 25,
-                                "length": 6
+                        "invokableExpression": {
+                            "kind": "NewExpression",
+                            "newKeyword": {
+                                "kind": "NewKeyword",
+                                "fullStart": 17,
+                                "start": 21,
+                                "length": 7
                             },
-                            "arrayTypeAnnotations": []
-                        }
+                            "type": {
+                                "kind": "TypeReference",
+                                "identifier": {
+                                    "kind": "Identifier",
+                                    "fullStart": 24,
+                                    "start": 25,
+                                    "length": 6
+                                },
+                                "arrayTypeAnnotations": []
+                            }
+                        },
+                        "arguments": []
                     },
                     "terminator": {
                         "kind": "Newline",

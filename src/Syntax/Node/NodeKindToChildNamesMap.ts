@@ -25,7 +25,6 @@ import { ElseDirectiveChildNames, ElseIfDirectiveChildNames, IfDirectiveChildNam
 import { PrintDirectiveChildNames } from './Directive/PrintDirective';
 import { RemDirectiveChildNames } from './Directive/RemDirective';
 import { ArrayLiteralExpressionChildNames } from './Expression/ArrayLiteralExpression';
-import { AssignmentExpressionChildNames } from './Expression/AssignmentExpression';
 import { BinaryExpressionChildNames } from './Expression/BinaryExpression';
 import { BooleanLiteralExpressionChildNames } from './Expression/BooleanLiteralExpression';
 import { FloatLiteralExpressionChildNames } from './Expression/FloatLiteralExpression';
@@ -46,6 +45,7 @@ import { UnaryExpressionChildNames } from './Expression/UnaryExpression';
 import { EscapedIdentifierChildNames } from './Identifier';
 import { ModulePathChildNames } from './ModulePath';
 import { NodeKind } from './NodeKind';
+import { AssignmentStatementChildNames } from './Statement/AssignmentStatement';
 import { ContinueStatementChildNames } from './Statement/ContinueStatement';
 import { DataDeclarationSequenceStatementChildNames } from './Statement/DataDeclarationSequenceStatement';
 import { EmptyStatementChildNames } from './Statement/EmptyStatement';
@@ -66,6 +66,7 @@ export const NodeKindToChildNamesMap: {
     [kind: string]: ReadonlyArray<string>;
 } = {
     [NodeKind.PreprocessorModuleDeclaration]: PreprocessorModuleDeclarationChildNames,
+
     [NodeKind.IfDirective]: IfDirectiveChildNames,
     [NodeKind.ElseIfDirective]: ElseIfDirectiveChildNames,
     [NodeKind.ElseDirective]: ElseDirectiveChildNames,
@@ -73,12 +74,15 @@ export const NodeKindToChildNamesMap: {
     [NodeKind.PrintDirective]: PrintDirectiveChildNames,
     [NodeKind.ErrorDirective]: ErrorDirectiveChildNames,
     [NodeKind.AssignmentDirective]: AssignmentDirectiveChildNames,
+
     [NodeKind.ModuleDeclaration]: ModuleDeclarationChildNames,
+
     [NodeKind.ExternDataDeclarationSequence]: ExternDataDeclarationSequenceChildNames,
     [NodeKind.ExternDataDeclaration]: ExternDataDeclarationChildNames,
     [NodeKind.ExternFunctionDeclaration]: ExternFunctionDeclarationChildNames,
     [NodeKind.ExternClassDeclaration]: ExternClassDeclarationChildNames,
     [NodeKind.ExternClassMethodDeclaration]: ExternClassMethodDeclarationChildNames,
+
     [NodeKind.StrictDirective]: StrictDirectiveChildNames,
     [NodeKind.ImportStatement]: ImportStatementChildNames,
     [NodeKind.FriendDirective]: FriendDirectiveChildNames,
@@ -92,6 +96,7 @@ export const NodeKindToChildNamesMap: {
     [NodeKind.InterfaceMethodDeclaration]: InterfaceMethodDeclarationChildNames,
     [NodeKind.ClassDeclaration]: ClassDeclarationChildNames,
     [NodeKind.ClassMethodDeclaration]: ClassMethodDeclarationChildNames,
+
     [NodeKind.DataDeclarationSequenceStatement]: DataDeclarationSequenceStatementChildNames,
     [NodeKind.ReturnStatement]: ReturnStatementChildNames,
     [NodeKind.IfStatement]: IfStatementChildNames,
@@ -109,8 +114,10 @@ export const NodeKindToChildNamesMap: {
     [NodeKind.ThrowStatement]: ThrowStatementChildNames,
     [NodeKind.TryStatement]: TryStatementChildNames,
     [NodeKind.CatchClause]: CatchClauseChildNames,
+    [NodeKind.AssignmentStatement]: AssignmentStatementChildNames,
     [NodeKind.ExpressionStatement]: ExpressionStatementChildNames,
     [NodeKind.EmptyStatement]: EmptyStatementChildNames,
+
     [NodeKind.NewExpression]: NewExpressionChildNames,
     [NodeKind.NullExpression]: NullExpressionChildNames,
     [NodeKind.BooleanLiteralExpression]: BooleanLiteralExpressionChildNames,
@@ -129,8 +136,8 @@ export const NodeKindToChildNamesMap: {
     [NodeKind.GroupingExpression]: GroupingExpressionChildNames,
     [NodeKind.UnaryExpression]: UnaryExpressionChildNames,
     [NodeKind.BinaryExpression]: BinaryExpressionChildNames,
-    [NodeKind.AssignmentExpression]: AssignmentExpressionChildNames,
     [NodeKind.GlobalScopeExpression]: GlobalScopeExpressionChildNames,
+
     [NodeKind.ModulePath]: ModulePathChildNames,
     [NodeKind.ArrayTypeAnnotation]: ArrayTypeAnnotationChildNames,
     [NodeKind.ShorthandTypeAnnotation]: ShorthandTypeAnnotationChildNames,

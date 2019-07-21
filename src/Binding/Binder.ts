@@ -18,7 +18,6 @@ import { InterfaceDeclaration } from '../Syntax/Node/Declaration/InterfaceDeclar
 import { InterfaceMethodDeclaration } from '../Syntax/Node/Declaration/InterfaceMethodDeclaration';
 import { ModuleDeclaration } from '../Syntax/Node/Declaration/ModuleDeclaration';
 import { ArrayLiteralExpression } from '../Syntax/Node/Expression/ArrayLiteralExpression';
-import { AssignmentExpression } from '../Syntax/Node/Expression/AssignmentExpression';
 import { BinaryExpression } from '../Syntax/Node/Expression/BinaryExpression';
 import { MissableExpression } from '../Syntax/Node/Expression/Expression';
 import { GroupingExpression } from '../Syntax/Node/Expression/GroupingExpression';
@@ -31,6 +30,7 @@ import { SliceExpression } from '../Syntax/Node/Expression/SliceExpression';
 import { UnaryExpression } from '../Syntax/Node/Expression/UnaryExpression';
 import { ModulePath } from '../Syntax/Node/ModulePath';
 import { NodeKind } from '../Syntax/Node/NodeKind';
+import { AssignmentStatement } from '../Syntax/Node/Statement/AssignmentStatement';
 import { DataDeclarationSequenceStatement } from '../Syntax/Node/Statement/DataDeclarationSequenceStatement';
 import { ExpressionStatement } from '../Syntax/Node/Statement/ExpressionStatement';
 import { ForLoop } from '../Syntax/Node/Statement/ForLoop';
@@ -68,7 +68,6 @@ import { BoundExternClassMethodDeclaration } from './Node/Declaration/Extern/Bou
 import { BoundExternDataDeclaration } from './Node/Declaration/Extern/BoundExternDataDeclaration';
 import { BoundExternFunctionDeclaration } from './Node/Declaration/Extern/BoundExternFunctionDeclaration';
 import { BoundArrayLiteralExpression } from './Node/Expression/BoundArrayLiteralExpression';
-import { BoundAssignmentExpression } from './Node/Expression/BoundAssignmentExpression';
 import { BoundBinaryExpression } from './Node/Expression/BoundBinaryExpression';
 import { BoundBooleanLiteralExpression } from './Node/Expression/BoundBooleanLiteralExpression';
 import { BoundExpressions } from './Node/Expression/BoundExpressions';
@@ -87,6 +86,7 @@ import { BoundSliceExpression } from './Node/Expression/BoundSliceExpression';
 import { BoundStringLiteralExpression } from './Node/Expression/BoundStringLiteralExpression';
 import { BoundSuperExpression } from './Node/Expression/BoundSuperExpression';
 import { BoundUnaryExpression } from './Node/Expression/BoundUnaryExpression';
+import { BoundAssignmentStatement } from './Node/Statement/BoundAssignmentStatement';
 import { BoundContinueStatement } from './Node/Statement/BoundContinueStatement';
 import { BoundDataDeclarationStatement } from './Node/Statement/BoundDataDeclarationStatement';
 import { BoundExitStatement } from './Node/Statement/BoundExitStatement';
@@ -896,6 +896,11 @@ export class Binder {
                     boundStatements.push(boundTryStatement);
                     break;
                 }
+                case NodeKind.AssignmentStatement: {
+                    const boundAssignmentStatement = this.bindAssignmentStatement(statement, parent);
+                    boundStatements.push(boundAssignmentStatement);
+                    break;
+                }
                 case NodeKind.ExpressionStatement: {
                     const boundExpressionStatement = this.bindExpressionStatement(statement, parent);
                     boundStatements.push(boundExpressionStatement);
@@ -1158,18 +1163,18 @@ export class Binder {
         const { header } = forLoop;
         switch (header.kind) {
             case NodeKind.NumericForLoopHeader: {
-                const { loopVariableExpression } = header;
-                switch (loopVariableExpression.kind) {
+                const { loopVariableStatement } = header;
+                switch (loopVariableStatement.kind) {
                     case NodeKind.DataDeclarationSequenceStatement: {
-                        boundForLoop.statement = this.bindDataDeclarationSequenceStatement(loopVariableExpression, boundForLoop)[0];
+                        boundForLoop.statement = this.bindDataDeclarationSequenceStatement(loopVariableStatement, boundForLoop)[0];
                         break;
                     }
-                    case NodeKind.AssignmentExpression: {
-                        boundForLoop.statement = this.bindAssignmentExpressionStatement(loopVariableExpression, boundForLoop);
+                    case NodeKind.AssignmentStatement: {
+                        boundForLoop.statement = this.bindAssignmentStatement(loopVariableStatement, boundForLoop);
                         break;
                     }
                     default: {
-                        assertNever(loopVariableExpression);
+                        assertNever(loopVariableStatement);
                         break;
                     }
                 }
@@ -1184,8 +1189,8 @@ export class Binder {
                 boundForLoop.statement = this.bindDataDeclarationSequenceStatement(header, boundForLoop)[0];
                 break;
             }
-            case NodeKind.AssignmentExpression: {
-                boundForLoop.statement = this.bindAssignmentExpressionStatement(header, boundForLoop);
+            case NodeKind.AssignmentStatement: {
+                boundForLoop.statement = this.bindAssignmentStatement(header, boundForLoop);
                 break;
             }
             case TokenKind.Missing: { break; }
@@ -1198,17 +1203,6 @@ export class Binder {
         boundForLoop.statements = this.bindStatements(forLoop.statements, boundForLoop);
 
         return boundForLoop;
-    }
-
-    private bindAssignmentExpressionStatement(
-        assignmentExpression: AssignmentExpression,
-        parent: BoundForLoop,
-    ): BoundExpressionStatement {
-        const boundAssignmentExpressionStatement = new BoundExpressionStatement();
-        boundAssignmentExpressionStatement.parent = parent;
-        boundAssignmentExpressionStatement.expression = this.bindAssignmentExpression(assignmentExpression, boundAssignmentExpressionStatement);
-
-        return boundAssignmentExpressionStatement;
     }
 
     // #endregion
@@ -1298,6 +1292,101 @@ export class Binder {
 
     // #endregion
 
+    // #region Assignment statement
+
+    private bindAssignmentStatement(
+        assignmentStatement: AssignmentStatement,
+        parent: BoundNodes,
+    ): BoundAssignmentStatement {
+        const boundAssignmentStatement = new BoundAssignmentStatement();
+        boundAssignmentStatement.parent = parent;
+        boundAssignmentStatement.leftOperand = this.bindExpression(assignmentStatement.leftOperand, boundAssignmentStatement);
+        boundAssignmentStatement.rightOperand = this.bindExpression(assignmentStatement.rightOperand, boundAssignmentStatement);
+
+        const { leftOperand, rightOperand } = boundAssignmentStatement;
+
+        // Lower update assignments to an assignment of a binary expression
+        const operatorKind = assignmentStatement.operator.kind;
+        if (operatorKind !== TokenKind.EqualsSign) {
+            const boundBinaryExpression = new BoundBinaryExpression();
+            boundBinaryExpression.parent = boundAssignmentStatement;
+            boundBinaryExpression.leftOperand = leftOperand;
+            boundBinaryExpression.rightOperand = rightOperand;
+
+            switch (operatorKind) {
+                // Binary arithmetic operations
+                case TokenKind.AsteriskEqualsSign: {
+                    boundBinaryExpression.type = this.bindBinaryArithmeticOperationType(leftOperand, TokenKind.Asterisk, rightOperand);
+                    break;
+                }
+                case TokenKind.SlashEqualsSign: {
+                    boundBinaryExpression.type = this.bindBinaryArithmeticOperationType(leftOperand, TokenKind.Slash, rightOperand);
+                    break;
+                }
+                case TokenKind.ModKeywordEqualsSign: {
+                    boundBinaryExpression.type = this.bindBinaryArithmeticOperationType(leftOperand, TokenKind.ModKeyword, rightOperand);
+                    break;
+                }
+                case TokenKind.PlusSignEqualsSign: {
+                    boundBinaryExpression.type = this.bindBinaryArithmeticOperationType(leftOperand, TokenKind.PlusSign, rightOperand);
+                    break;
+                }
+                case TokenKind.HyphenMinusEqualsSign: {
+                    boundBinaryExpression.type = this.bindBinaryArithmeticOperationType(leftOperand, TokenKind.HyphenMinus, rightOperand);
+                    break;
+                }
+
+                // Bitwise operations
+                case TokenKind.ShlKeywordEqualsSign: {
+                    boundBinaryExpression.type = this.bindBitwiseOperationType(leftOperand, TokenKind.ShlKeyword, rightOperand);
+                    break;
+                }
+                case TokenKind.ShrKeywordEqualsSign: {
+                    boundBinaryExpression.type = this.bindBitwiseOperationType(leftOperand, TokenKind.ShrKeyword, rightOperand);
+                    break;
+                }
+                case TokenKind.AmpersandEqualsSign: {
+                    boundBinaryExpression.type = this.bindBitwiseOperationType(leftOperand, TokenKind.Ampersand, rightOperand);
+                    break;
+                }
+                case TokenKind.TildeEqualsSign: {
+                    boundBinaryExpression.type = this.bindBitwiseOperationType(leftOperand, TokenKind.Tilde, rightOperand);
+                    break;
+                }
+                case TokenKind.VerticalBarEqualsSign: {
+                    boundBinaryExpression.type = this.bindBitwiseOperationType(leftOperand, TokenKind.VerticalBar, rightOperand);
+                    break;
+                }
+
+                default: {
+                    assertNever(operatorKind);
+                    break;
+                }
+            }
+
+            boundAssignmentStatement.rightOperand = boundBinaryExpression;
+        }
+
+        switch (leftOperand.kind) {
+            case BoundNodeKind.IdentifierExpression:
+            case BoundNodeKind.ScopeMemberAccessExpression:
+            case BoundNodeKind.IndexExpression: {
+                break;
+            }
+            default: {
+                throw new Error(`'${leftOperand.kind}' cannot be assigned to.`);
+            }
+        }
+
+        if (!rightOperand.type.isConvertibleTo(leftOperand.type)) {
+            throw new Error(`'${rightOperand.type}' cannot be converted to '${leftOperand.type}'.`);
+        }
+
+        return boundAssignmentStatement;
+    }
+
+    // #endregion
+
     // #region Expression statement
 
     private bindExpressionStatement(
@@ -1322,9 +1411,6 @@ export class Binder {
         parent: BoundNodes,
     ) {
         switch (expression.kind) {
-            case NodeKind.AssignmentExpression: {
-                return this.bindAssignmentExpression(expression, parent);
-            }
             case NodeKind.BinaryExpression: {
                 return this.bindBinaryExpression(expression, parent);
             }
@@ -1387,101 +1473,6 @@ export class Binder {
             }
         }
     }
-
-    // #region Assignment expression
-
-    private bindAssignmentExpression(
-        assignmentExpression: AssignmentExpression,
-        parent: BoundNodes,
-    ): BoundAssignmentExpression {
-        const boundAssignmentExpression = new BoundAssignmentExpression();
-        boundAssignmentExpression.parent = parent;
-        boundAssignmentExpression.leftOperand = this.bindExpression(assignmentExpression.leftOperand, boundAssignmentExpression);
-        boundAssignmentExpression.rightOperand = this.bindExpression(assignmentExpression.rightOperand, boundAssignmentExpression);
-
-        const { leftOperand, rightOperand } = boundAssignmentExpression;
-
-        // Lower update assignments to an assignment of a binary expression
-        const operatorKind = assignmentExpression.operator.kind;
-        if (operatorKind !== TokenKind.EqualsSign) {
-            const boundBinaryExpression = new BoundBinaryExpression();
-            boundBinaryExpression.parent = boundAssignmentExpression;
-            boundBinaryExpression.leftOperand = leftOperand;
-            boundBinaryExpression.rightOperand = rightOperand;
-
-            switch (operatorKind) {
-                // Binary arithmetic operations
-                case TokenKind.AsteriskEqualsSign: {
-                    boundBinaryExpression.type = this.bindBinaryArithmeticOperationType(leftOperand, TokenKind.Asterisk, rightOperand);
-                    break;
-                }
-                case TokenKind.SlashEqualsSign: {
-                    boundBinaryExpression.type = this.bindBinaryArithmeticOperationType(leftOperand, TokenKind.Slash, rightOperand);
-                    break;
-                }
-                case TokenKind.ModKeywordEqualsSign: {
-                    boundBinaryExpression.type = this.bindBinaryArithmeticOperationType(leftOperand, TokenKind.ModKeyword, rightOperand);
-                    break;
-                }
-                case TokenKind.PlusSignEqualsSign: {
-                    boundBinaryExpression.type = this.bindBinaryArithmeticOperationType(leftOperand, TokenKind.PlusSign, rightOperand);
-                    break;
-                }
-                case TokenKind.HyphenMinusEqualsSign: {
-                    boundBinaryExpression.type = this.bindBinaryArithmeticOperationType(leftOperand, TokenKind.HyphenMinus, rightOperand);
-                    break;
-                }
-
-                // Bitwise operations
-                case TokenKind.ShlKeywordEqualsSign: {
-                    boundBinaryExpression.type = this.bindBitwiseOperationType(leftOperand, TokenKind.ShlKeyword, rightOperand);
-                    break;
-                }
-                case TokenKind.ShrKeywordEqualsSign: {
-                    boundBinaryExpression.type = this.bindBitwiseOperationType(leftOperand, TokenKind.ShrKeyword, rightOperand);
-                    break;
-                }
-                case TokenKind.AmpersandEqualsSign: {
-                    boundBinaryExpression.type = this.bindBitwiseOperationType(leftOperand, TokenKind.Ampersand, rightOperand);
-                    break;
-                }
-                case TokenKind.TildeEqualsSign: {
-                    boundBinaryExpression.type = this.bindBitwiseOperationType(leftOperand, TokenKind.Tilde, rightOperand);
-                    break;
-                }
-                case TokenKind.VerticalBarEqualsSign: {
-                    boundBinaryExpression.type = this.bindBitwiseOperationType(leftOperand, TokenKind.VerticalBar, rightOperand);
-                    break;
-                }
-
-                default: {
-                    assertNever(operatorKind);
-                    break;
-                }
-            }
-
-            boundAssignmentExpression.rightOperand = boundBinaryExpression;
-        }
-
-        switch (leftOperand.kind) {
-            case BoundNodeKind.IndexExpression:
-            case BoundNodeKind.IdentifierExpression:
-            case BoundNodeKind.ScopeMemberAccessExpression: {
-                break;
-            }
-            default: {
-                throw new Error(`'${leftOperand.kind}' cannot be assigned to.`);
-            }
-        }
-
-        if (!rightOperand.type.isConvertibleTo(leftOperand.type)) {
-            throw new Error(`'${rightOperand.type}' cannot be converted to '${leftOperand.type}'.`);
-        }
-
-        return boundAssignmentExpression;
-    }
-
-    // #endregion
 
     // #region Binary expression
 
@@ -2114,7 +2105,6 @@ export class Binder {
                 case NodeKind.GroupingExpression:
                 case NodeKind.UnaryExpression:
                 case NodeKind.BinaryExpression:
-                case NodeKind.AssignmentExpression:
                 case NodeKind.GlobalScopeExpression: {
                     const boundExpression = this.bindExpression(expression, parent);
                     boundExpressions.push(boundExpression);

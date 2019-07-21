@@ -53,7 +53,7 @@
                     },
                     "header": {
                         "kind": "NumericForLoopHeader",
-                        "loopVariableExpression": {
+                        "loopVariableStatement": {
                             "kind": "DataDeclarationSequenceStatement",
                             "dataDeclarationSequence": {
                                 "kind": "DataDeclarationSequence",

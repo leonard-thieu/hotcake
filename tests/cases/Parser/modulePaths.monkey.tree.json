@@ -1267,14 +1267,18 @@
                 {
                     "kind": "ExpressionStatement",
                     "expression": {
-                        "kind": "IdentifierExpression",
+                        "kind": "InvokeExpression",
                         "newlines": [],
-                        "identifier": {
-                            "kind": "Identifier",
-                            "fullStart": 1781,
-                            "start": 1785,
-                            "length": 6
-                        }
+                        "invokableExpression": {
+                            "kind": "IdentifierExpression",
+                            "identifier": {
+                                "kind": "Identifier",
+                                "fullStart": 1781,
+                                "start": 1785,
+                                "length": 6
+                            }
+                        },
+                        "arguments": []
                     },
                     "terminator": {
                         "kind": "Newline",
@@ -1295,61 +1299,65 @@
                 {
                     "kind": "ExpressionStatement",
                     "expression": {
-                        "kind": "ScopeMemberAccessExpression",
+                        "kind": "InvokeExpression",
                         "newlines": [],
-                        "scopableExpression": {
-                            "kind": "IdentifierExpression",
-                            "identifier": {
-                                "kind": "Identifier",
-                                "fullStart": 1856,
-                                "start": 1860,
-                                "length": 23
-                            }
-                        },
-                        "scopeMemberAccessOperator": {
-                            "kind": "Period",
-                            "fullStart": 1879,
-                            "start": 1879,
-                            "length": 1
-                        },
-                        "member": {
+                        "invokableExpression": {
                             "kind": "ScopeMemberAccessExpression",
-                            "newlines": [],
                             "scopableExpression": {
                                 "kind": "IdentifierExpression",
                                 "identifier": {
-                                    "kind": "EscapedIdentifier",
-                                    "commercialAt": {
-                                        "kind": "CommercialAt",
-                                        "fullStart": 1880,
-                                        "start": 1880,
-                                        "length": 1
-                                    },
-                                    "name": {
-                                        "kind": "InlineKeyword",
-                                        "fullStart": 1881,
-                                        "start": 1881,
-                                        "length": 6
-                                    }
+                                    "kind": "Identifier",
+                                    "fullStart": 1856,
+                                    "start": 1860,
+                                    "length": 23
                                 }
                             },
                             "scopeMemberAccessOperator": {
                                 "kind": "Period",
-                                "fullStart": 1887,
-                                "start": 1887,
+                                "fullStart": 1879,
+                                "start": 1879,
                                 "length": 1
                             },
                             "member": {
-                                "kind": "IdentifierExpression",
+                                "kind": "ScopeMemberAccessExpression",
                                 "newlines": [],
-                                "identifier": {
-                                    "kind": "Identifier",
-                                    "fullStart": 1888,
-                                    "start": 1888,
-                                    "length": 4
+                                "scopableExpression": {
+                                    "kind": "IdentifierExpression",
+                                    "identifier": {
+                                        "kind": "EscapedIdentifier",
+                                        "commercialAt": {
+                                            "kind": "CommercialAt",
+                                            "fullStart": 1880,
+                                            "start": 1880,
+                                            "length": 1
+                                        },
+                                        "name": {
+                                            "kind": "InlineKeyword",
+                                            "fullStart": 1881,
+                                            "start": 1881,
+                                            "length": 6
+                                        }
+                                    }
+                                },
+                                "scopeMemberAccessOperator": {
+                                    "kind": "Period",
+                                    "fullStart": 1887,
+                                    "start": 1887,
+                                    "length": 1
+                                },
+                                "member": {
+                                    "kind": "IdentifierExpression",
+                                    "newlines": [],
+                                    "identifier": {
+                                        "kind": "Identifier",
+                                        "fullStart": 1888,
+                                        "start": 1888,
+                                        "length": 4
+                                    }
                                 }
                             }
-                        }
+                        },
+                        "arguments": []
                     },
                     "terminator": {
                         "kind": "Newline",
@@ -1379,55 +1387,59 @@
                 {
                     "kind": "ExpressionStatement",
                     "expression": {
-                        "kind": "ScopeMemberAccessExpression",
+                        "kind": "InvokeExpression",
                         "newlines": [],
-                        "scopableExpression": {
-                            "kind": "GlobalScopeExpression"
-                        },
-                        "scopeMemberAccessOperator": {
-                            "kind": "Period",
-                            "fullStart": 1954,
-                            "start": 1958,
-                            "length": 5
-                        },
-                        "member": {
+                        "invokableExpression": {
                             "kind": "ScopeMemberAccessExpression",
-                            "newlines": [],
                             "scopableExpression": {
-                                "kind": "IdentifierExpression",
-                                "identifier": {
-                                    "kind": "EscapedIdentifier",
-                                    "commercialAt": {
-                                        "kind": "CommercialAt",
-                                        "fullStart": 1959,
-                                        "start": 1959,
-                                        "length": 1
-                                    },
-                                    "name": {
-                                        "kind": "InlineKeyword",
-                                        "fullStart": 1960,
-                                        "start": 1960,
-                                        "length": 6
-                                    }
-                                }
+                                "kind": "GlobalScopeExpression"
                             },
                             "scopeMemberAccessOperator": {
                                 "kind": "Period",
-                                "fullStart": 1966,
-                                "start": 1966,
-                                "length": 1
+                                "fullStart": 1954,
+                                "start": 1958,
+                                "length": 5
                             },
                             "member": {
-                                "kind": "IdentifierExpression",
+                                "kind": "ScopeMemberAccessExpression",
                                 "newlines": [],
-                                "identifier": {
-                                    "kind": "Identifier",
-                                    "fullStart": 1967,
-                                    "start": 1967,
-                                    "length": 4
+                                "scopableExpression": {
+                                    "kind": "IdentifierExpression",
+                                    "identifier": {
+                                        "kind": "EscapedIdentifier",
+                                        "commercialAt": {
+                                            "kind": "CommercialAt",
+                                            "fullStart": 1959,
+                                            "start": 1959,
+                                            "length": 1
+                                        },
+                                        "name": {
+                                            "kind": "InlineKeyword",
+                                            "fullStart": 1960,
+                                            "start": 1960,
+                                            "length": 6
+                                        }
+                                    }
+                                },
+                                "scopeMemberAccessOperator": {
+                                    "kind": "Period",
+                                    "fullStart": 1966,
+                                    "start": 1966,
+                                    "length": 1
+                                },
+                                "member": {
+                                    "kind": "IdentifierExpression",
+                                    "newlines": [],
+                                    "identifier": {
+                                        "kind": "Identifier",
+                                        "fullStart": 1967,
+                                        "start": 1967,
+                                        "length": 4
+                                    }
                                 }
                             }
-                        }
+                        },
+                        "arguments": []
                     },
                     "terminator": {
                         "kind": "Newline",
@@ -1908,14 +1920,18 @@
                 {
                     "kind": "ExpressionStatement",
                     "expression": {
-                        "kind": "IdentifierExpression",
+                        "kind": "InvokeExpression",
                         "newlines": [],
-                        "identifier": {
-                            "kind": "Identifier",
-                            "fullStart": 2260,
-                            "start": 2264,
-                            "length": 6
-                        }
+                        "invokableExpression": {
+                            "kind": "IdentifierExpression",
+                            "identifier": {
+                                "kind": "Identifier",
+                                "fullStart": 2260,
+                                "start": 2264,
+                                "length": 6
+                            }
+                        },
+                        "arguments": []
                     },
                     "terminator": {
                         "kind": "Newline",
@@ -1927,33 +1943,37 @@
                 {
                     "kind": "ExpressionStatement",
                     "expression": {
-                        "kind": "ScopeMemberAccessExpression",
+                        "kind": "InvokeExpression",
                         "newlines": [],
-                        "scopableExpression": {
-                            "kind": "IdentifierExpression",
-                            "identifier": {
-                                "kind": "Identifier",
-                                "fullStart": 2268,
-                                "start": 2272,
-                                "length": 23
+                        "invokableExpression": {
+                            "kind": "ScopeMemberAccessExpression",
+                            "scopableExpression": {
+                                "kind": "IdentifierExpression",
+                                "identifier": {
+                                    "kind": "Identifier",
+                                    "fullStart": 2268,
+                                    "start": 2272,
+                                    "length": 23
+                                }
+                            },
+                            "scopeMemberAccessOperator": {
+                                "kind": "Period",
+                                "fullStart": 2291,
+                                "start": 2291,
+                                "length": 1
+                            },
+                            "member": {
+                                "kind": "IdentifierExpression",
+                                "newlines": [],
+                                "identifier": {
+                                    "kind": "ObjectKeyword",
+                                    "fullStart": 2292,
+                                    "start": 2292,
+                                    "length": 6
+                                }
                             }
                         },
-                        "scopeMemberAccessOperator": {
-                            "kind": "Period",
-                            "fullStart": 2291,
-                            "start": 2291,
-                            "length": 1
-                        },
-                        "member": {
-                            "kind": "IdentifierExpression",
-                            "newlines": [],
-                            "identifier": {
-                                "kind": "ObjectKeyword",
-                                "fullStart": 2292,
-                                "start": 2292,
-                                "length": 6
-                            }
-                        }
+                        "arguments": []
                     },
                     "terminator": {
                         "kind": "Newline",
@@ -2270,48 +2290,52 @@
                 {
                     "kind": "ExpressionStatement",
                     "expression": {
-                        "kind": "NewExpression",
+                        "kind": "InvokeExpression",
                         "newlines": [],
-                        "newKeyword": {
-                            "kind": "NewKeyword",
-                            "fullStart": 2601,
-                            "start": 2605,
-                            "length": 7
+                        "invokableExpression": {
+                            "kind": "NewExpression",
+                            "newKeyword": {
+                                "kind": "NewKeyword",
+                                "fullStart": 2601,
+                                "start": 2605,
+                                "length": 7
+                            },
+                            "type": {
+                                "kind": "TypeReference",
+                                "identifier": {
+                                    "kind": "Identifier",
+                                    "fullStart": 2608,
+                                    "start": 2609,
+                                    "length": 3
+                                },
+                                "lessThanSign": {
+                                    "kind": "LessThanSign",
+                                    "fullStart": 2611,
+                                    "start": 2611,
+                                    "length": 1
+                                },
+                                "typeArguments": [
+                                    {
+                                        "kind": "TypeReference",
+                                        "identifier": {
+                                            "kind": "IntKeyword",
+                                            "fullStart": 2612,
+                                            "start": 2612,
+                                            "length": 3
+                                        },
+                                        "arrayTypeAnnotations": []
+                                    }
+                                ],
+                                "greaterThanSign": {
+                                    "kind": "GreaterThanSign",
+                                    "fullStart": 2615,
+                                    "start": 2615,
+                                    "length": 1
+                                },
+                                "arrayTypeAnnotations": []
+                            }
                         },
-                        "type": {
-                            "kind": "TypeReference",
-                            "identifier": {
-                                "kind": "Identifier",
-                                "fullStart": 2608,
-                                "start": 2609,
-                                "length": 3
-                            },
-                            "lessThanSign": {
-                                "kind": "LessThanSign",
-                                "fullStart": 2611,
-                                "start": 2611,
-                                "length": 1
-                            },
-                            "typeArguments": [
-                                {
-                                    "kind": "TypeReference",
-                                    "identifier": {
-                                        "kind": "IntKeyword",
-                                        "fullStart": 2612,
-                                        "start": 2612,
-                                        "length": 3
-                                    },
-                                    "arrayTypeAnnotations": []
-                                }
-                            ],
-                            "greaterThanSign": {
-                                "kind": "GreaterThanSign",
-                                "fullStart": 2615,
-                                "start": 2615,
-                                "length": 1
-                            },
-                            "arrayTypeAnnotations": []
-                        }
+                        "arguments": []
                     },
                     "terminator": {
                         "kind": "Newline",
@@ -2556,24 +2580,28 @@
                 {
                     "kind": "ExpressionStatement",
                     "expression": {
-                        "kind": "NewExpression",
+                        "kind": "InvokeExpression",
                         "newlines": [],
-                        "newKeyword": {
-                            "kind": "NewKeyword",
-                            "fullStart": 2767,
-                            "start": 2771,
-                            "length": 7
-                        },
-                        "type": {
-                            "kind": "TypeReference",
-                            "identifier": {
-                                "kind": "Identifier",
-                                "fullStart": 2774,
-                                "start": 2775,
-                                "length": 4
+                        "invokableExpression": {
+                            "kind": "NewExpression",
+                            "newKeyword": {
+                                "kind": "NewKeyword",
+                                "fullStart": 2767,
+                                "start": 2771,
+                                "length": 7
                             },
-                            "arrayTypeAnnotations": []
-                        }
+                            "type": {
+                                "kind": "TypeReference",
+                                "identifier": {
+                                    "kind": "Identifier",
+                                    "fullStart": 2774,
+                                    "start": 2775,
+                                    "length": 4
+                                },
+                                "arrayTypeAnnotations": []
+                            }
+                        },
+                        "arguments": []
                     },
                     "terminator": {
                         "kind": "Newline",

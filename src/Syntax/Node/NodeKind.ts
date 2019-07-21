@@ -48,6 +48,7 @@ export enum NodeKind {
     ThrowStatement = 'ThrowStatement',
     TryStatement = 'TryStatement',
     CatchClause = 'CatchClause',
+    AssignmentStatement = 'AssignmentStatement',
     ExpressionStatement = 'ExpressionStatement',
     EmptyStatement = 'EmptyStatement',
 
@@ -69,7 +70,6 @@ export enum NodeKind {
     GroupingExpression = 'GroupingExpression',
     UnaryExpression = 'UnaryExpression',
     BinaryExpression = 'BinaryExpression',
-    AssignmentExpression = 'AssignmentExpression',
     GlobalScopeExpression = 'GlobalScopeExpression',
 
     ModulePath = 'ModulePath',

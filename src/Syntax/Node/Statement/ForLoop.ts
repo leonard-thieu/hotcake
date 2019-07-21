@@ -1,10 +1,10 @@
 import { MissableToken, MissingToken } from '../../Token/MissingToken';
 import { SkippedToken } from '../../Token/SkippedToken';
 import { EndKeywordToken, ForKeywordToken, NextKeywordToken, StepKeywordToken, ToKeywordToken, UntilKeywordToken } from '../../Token/Token';
-import { AssignmentExpression } from '../Expression/AssignmentExpression';
 import { MissableExpression } from '../Expression/Expression';
 import { Node } from '../Node';
 import { NodeKind } from '../NodeKind';
+import { AssignmentStatement } from './AssignmentStatement';
 import { DataDeclarationSequenceStatement } from './DataDeclarationSequenceStatement';
 import { Statement, Statements } from './Statement';
 
@@ -21,14 +21,14 @@ export class ForLoop extends Statement {
     readonly kind = NodeKind.ForLoop;
 
     forKeyword: ForKeywordToken = undefined!;
-    header: NumericForLoopHeader | DataDeclarationSequenceStatement | AssignmentExpression | MissingToken = undefined!;
+    header: NumericForLoopHeader | DataDeclarationSequenceStatement | AssignmentStatement | MissingToken = undefined!;
     statements: (Statements | SkippedToken)[] = undefined!;
     endKeyword: MissableToken<NextKeywordToken | EndKeywordToken> = undefined!;
     endForKeyword?: ForKeywordToken = undefined;
 }
 
 export const NumericForLoopHeaderChildNames: ReadonlyArray<keyof NumericForLoopHeader> = [
-    'loopVariableExpression',
+    'loopVariableStatement',
     'toOrUntilKeyword',
     'lastValueExpression',
     'stepKeyword',
@@ -38,7 +38,7 @@ export const NumericForLoopHeaderChildNames: ReadonlyArray<keyof NumericForLoopH
 export class NumericForLoopHeader extends Node {
     readonly kind = NodeKind.NumericForLoopHeader;
 
-    loopVariableExpression: DataDeclarationSequenceStatement | AssignmentExpression = undefined!;
+    loopVariableStatement: DataDeclarationSequenceStatement | AssignmentStatement = undefined!;
     toOrUntilKeyword: MissableToken<ToKeywordToken | UntilKeywordToken> = undefined!;
     lastValueExpression: MissableExpression = undefined!;
     stepKeyword?: StepKeywordToken = undefined;

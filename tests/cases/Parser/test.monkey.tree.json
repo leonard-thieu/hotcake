@@ -6283,34 +6283,30 @@
                     }
                 },
                 {
-                    "kind": "ExpressionStatement",
-                    "expression": {
-                        "kind": "AssignmentExpression",
-                        "leftOperand": {
-                            "kind": "IdentifierExpression",
-                            "newlines": [],
-                            "identifier": {
-                                "kind": "Identifier",
-                                "fullStart": 6811,
-                                "start": 6815,
-                                "length": 5
-                            }
-                        },
-                        "operator": {
-                            "kind": "EqualsSign",
-                            "fullStart": 6816,
-                            "start": 6817,
-                            "length": 2
-                        },
-                        "rightOperand": {
-                            "kind": "FloatLiteralExpression",
-                            "newlines": [],
-                            "value": {
-                                "kind": "FloatLiteral",
-                                "fullStart": 6818,
-                                "start": 6819,
-                                "length": 8
-                            }
+                    "kind": "AssignmentStatement",
+                    "leftOperand": {
+                        "kind": "IdentifierExpression",
+                        "identifier": {
+                            "kind": "Identifier",
+                            "fullStart": 6811,
+                            "start": 6815,
+                            "length": 5
+                        }
+                    },
+                    "operator": {
+                        "kind": "EqualsSign",
+                        "fullStart": 6816,
+                        "start": 6817,
+                        "length": 2
+                    },
+                    "rightOperand": {
+                        "kind": "FloatLiteralExpression",
+                        "newlines": [],
+                        "value": {
+                            "kind": "FloatLiteral",
+                            "fullStart": 6818,
+                            "start": 6819,
+                            "length": 8
                         }
                     },
                     "terminator": {
@@ -6321,34 +6317,30 @@
                     }
                 },
                 {
-                    "kind": "ExpressionStatement",
-                    "expression": {
-                        "kind": "AssignmentExpression",
-                        "leftOperand": {
-                            "kind": "IdentifierExpression",
-                            "newlines": [],
-                            "identifier": {
-                                "kind": "Identifier",
-                                "fullStart": 6828,
-                                "start": 6832,
-                                "length": 5
-                            }
-                        },
-                        "operator": {
-                            "kind": "EqualsSign",
-                            "fullStart": 6833,
-                            "start": 6834,
-                            "length": 2
-                        },
-                        "rightOperand": {
-                            "kind": "FloatLiteralExpression",
-                            "newlines": [],
-                            "value": {
-                                "kind": "FloatLiteral",
-                                "fullStart": 6835,
-                                "start": 6836,
-                                "length": 6
-                            }
+                    "kind": "AssignmentStatement",
+                    "leftOperand": {
+                        "kind": "IdentifierExpression",
+                        "identifier": {
+                            "kind": "Identifier",
+                            "fullStart": 6828,
+                            "start": 6832,
+                            "length": 5
+                        }
+                    },
+                    "operator": {
+                        "kind": "EqualsSign",
+                        "fullStart": 6833,
+                        "start": 6834,
+                        "length": 2
+                    },
+                    "rightOperand": {
+                        "kind": "FloatLiteralExpression",
+                        "newlines": [],
+                        "value": {
+                            "kind": "FloatLiteral",
+                            "fullStart": 6835,
+                            "start": 6836,
+                            "length": 6
                         }
                     },
                     "terminator": {
@@ -6359,34 +6351,30 @@
                     }
                 },
                 {
-                    "kind": "ExpressionStatement",
-                    "expression": {
-                        "kind": "AssignmentExpression",
-                        "leftOperand": {
-                            "kind": "IdentifierExpression",
-                            "newlines": [],
-                            "identifier": {
-                                "kind": "Identifier",
-                                "fullStart": 6843,
-                                "start": 6847,
-                                "length": 5
-                            }
-                        },
-                        "operator": {
-                            "kind": "EqualsSign",
-                            "fullStart": 6848,
-                            "start": 6849,
-                            "length": 2
-                        },
-                        "rightOperand": {
-                            "kind": "FloatLiteralExpression",
-                            "newlines": [],
-                            "value": {
-                                "kind": "FloatLiteral",
-                                "fullStart": 6850,
-                                "start": 6851,
-                                "length": 5
-                            }
+                    "kind": "AssignmentStatement",
+                    "leftOperand": {
+                        "kind": "IdentifierExpression",
+                        "identifier": {
+                            "kind": "Identifier",
+                            "fullStart": 6843,
+                            "start": 6847,
+                            "length": 5
+                        }
+                    },
+                    "operator": {
+                        "kind": "EqualsSign",
+                        "fullStart": 6848,
+                        "start": 6849,
+                        "length": 2
+                    },
+                    "rightOperand": {
+                        "kind": "FloatLiteralExpression",
+                        "newlines": [],
+                        "value": {
+                            "kind": "FloatLiteral",
+                            "fullStart": 6850,
+                            "start": 6851,
+                            "length": 5
                         }
                     },
                     "terminator": {
@@ -6397,34 +6385,30 @@
                     }
                 },
                 {
-                    "kind": "ExpressionStatement",
-                    "expression": {
-                        "kind": "AssignmentExpression",
-                        "leftOperand": {
-                            "kind": "IdentifierExpression",
-                            "newlines": [],
-                            "identifier": {
-                                "kind": "Identifier",
-                                "fullStart": 6857,
-                                "start": 6861,
-                                "length": 5
-                            }
-                        },
-                        "operator": {
-                            "kind": "EqualsSign",
-                            "fullStart": 6862,
-                            "start": 6863,
-                            "length": 2
-                        },
-                        "rightOperand": {
-                            "kind": "FloatLiteralExpression",
-                            "newlines": [],
-                            "value": {
-                                "kind": "FloatLiteral",
-                                "fullStart": 6864,
-                                "start": 6865,
-                                "length": 6
-                            }
+                    "kind": "AssignmentStatement",
+                    "leftOperand": {
+                        "kind": "IdentifierExpression",
+                        "identifier": {
+                            "kind": "Identifier",
+                            "fullStart": 6857,
+                            "start": 6861,
+                            "length": 5
+                        }
+                    },
+                    "operator": {
+                        "kind": "EqualsSign",
+                        "fullStart": 6862,
+                        "start": 6863,
+                        "length": 2
+                    },
+                    "rightOperand": {
+                        "kind": "FloatLiteralExpression",
+                        "newlines": [],
+                        "value": {
+                            "kind": "FloatLiteral",
+                            "fullStart": 6864,
+                            "start": 6865,
+                            "length": 6
                         }
                     },
                     "terminator": {
@@ -6435,34 +6419,30 @@
                     }
                 },
                 {
-                    "kind": "ExpressionStatement",
-                    "expression": {
-                        "kind": "AssignmentExpression",
-                        "leftOperand": {
-                            "kind": "IdentifierExpression",
-                            "newlines": [],
-                            "identifier": {
-                                "kind": "Identifier",
-                                "fullStart": 6872,
-                                "start": 6876,
-                                "length": 5
-                            }
-                        },
-                        "operator": {
-                            "kind": "EqualsSign",
-                            "fullStart": 6877,
-                            "start": 6878,
-                            "length": 2
-                        },
-                        "rightOperand": {
-                            "kind": "FloatLiteralExpression",
-                            "newlines": [],
-                            "value": {
-                                "kind": "FloatLiteral",
-                                "fullStart": 6879,
-                                "start": 6880,
-                                "length": 7
-                            }
+                    "kind": "AssignmentStatement",
+                    "leftOperand": {
+                        "kind": "IdentifierExpression",
+                        "identifier": {
+                            "kind": "Identifier",
+                            "fullStart": 6872,
+                            "start": 6876,
+                            "length": 5
+                        }
+                    },
+                    "operator": {
+                        "kind": "EqualsSign",
+                        "fullStart": 6877,
+                        "start": 6878,
+                        "length": 2
+                    },
+                    "rightOperand": {
+                        "kind": "FloatLiteralExpression",
+                        "newlines": [],
+                        "value": {
+                            "kind": "FloatLiteral",
+                            "fullStart": 6879,
+                            "start": 6880,
+                            "length": 7
                         }
                     },
                     "terminator": {

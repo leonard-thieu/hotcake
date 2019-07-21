@@ -206,6 +206,7 @@ export namespace ParseTreeVisitor {
             case NodeKind.ThrowStatement:
             case NodeKind.TryStatement:
             case NodeKind.CatchClause:
+            case NodeKind.AssignmentStatement:
             case NodeKind.ExpressionStatement:
             case NodeKind.EmptyStatement:
             case NodeKind.NewExpression:
@@ -226,7 +227,6 @@ export namespace ParseTreeVisitor {
             case NodeKind.GroupingExpression:
             case NodeKind.UnaryExpression:
             case NodeKind.BinaryExpression:
-            case NodeKind.AssignmentExpression:
             case NodeKind.GlobalScopeExpression:
             case NodeKind.ModulePath:
             case NodeKind.ArrayTypeAnnotation:

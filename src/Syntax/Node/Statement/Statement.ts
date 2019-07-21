@@ -1,5 +1,6 @@
 import { NewlineToken, SemicolonToken } from '../../Token/Token';
 import { Node } from '../Node';
+import { AssignmentStatement } from './AssignmentStatement';
 import { ContinueStatement } from './ContinueStatement';
 import { DataDeclarationSequenceStatement } from './DataDeclarationSequenceStatement';
 import { EmptyStatement } from './EmptyStatement';
@@ -19,17 +20,18 @@ export abstract class Statement extends Node {
 }
 
 export type Statements =
-    | ContinueStatement
     | DataDeclarationSequenceStatement
-    | EmptyStatement
-    | ExitStatement
-    | ExpressionStatement
-    | ForLoop
-    | IfStatement
-    | RepeatLoop
     | ReturnStatement
+    | IfStatement
     | SelectStatement
+    | WhileLoop
+    | RepeatLoop
+    | ForLoop
+    | ContinueStatement
+    | ExitStatement
     | ThrowStatement
     | TryStatement
-    | WhileLoop
+    | AssignmentStatement
+    | ExpressionStatement
+    | EmptyStatement
     ;

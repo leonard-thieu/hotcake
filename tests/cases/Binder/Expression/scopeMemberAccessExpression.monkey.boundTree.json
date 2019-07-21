@@ -30,27 +30,24 @@
             "parameters": [],
             "statements": [
                 {
-                    "kind": "ExpressionStatement",
-                    "expression": {
-                        "kind": "AssignmentExpression",
-                        "leftOperand": {
-                            "kind": "ScopeMemberAccessExpression",
-                            "type": "Int",
-                            "scopableExpression": {
-                                "kind": "IdentifierExpression",
-                                "type": "C",
-                                "identifier": "C"
-                            },
-                            "member": {
-                                "kind": "IdentifierExpression",
-                                "type": "Int",
-                                "identifier": "T"
-                            }
+                    "kind": "AssignmentStatement",
+                    "leftOperand": {
+                        "kind": "ScopeMemberAccessExpression",
+                        "type": "Int",
+                        "scopableExpression": {
+                            "kind": "IdentifierExpression",
+                            "type": "C",
+                            "identifier": "C"
                         },
-                        "rightOperand": {
-                            "kind": "IntegerLiteralExpression",
-                            "type": "Int"
+                        "member": {
+                            "kind": "IdentifierExpression",
+                            "type": "Int",
+                            "identifier": "T"
                         }
+                    },
+                    "rightOperand": {
+                        "kind": "IntegerLiteralExpression",
+                        "type": "Int"
                     }
                 }
             ]

@@ -62,14 +62,18 @@
                         {
                             "kind": "ExpressionStatement",
                             "expression": {
-                                "kind": "IdentifierExpression",
+                                "kind": "InvokeExpression",
                                 "newlines": [],
-                                "identifier": {
-                                    "kind": "Identifier",
-                                    "fullStart": 24,
-                                    "start": 25,
-                                    "length": 2
-                                }
+                                "invokableExpression": {
+                                    "kind": "IdentifierExpression",
+                                    "identifier": {
+                                        "kind": "Identifier",
+                                        "fullStart": 24,
+                                        "start": 25,
+                                        "length": 2
+                                    }
+                                },
+                                "arguments": []
                             },
                             "terminator": {
                                 "kind": "Newline",

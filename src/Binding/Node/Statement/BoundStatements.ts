@@ -1,3 +1,4 @@
+import { BoundAssignmentStatement } from './BoundAssignmentStatement';
 import { BoundContinueStatement } from './BoundContinueStatement';
 import { BoundDataDeclarationStatement } from './BoundDataDeclarationStatement';
 import { BoundExitStatement } from './BoundExitStatement';
@@ -23,5 +24,6 @@ export type BoundStatements =
     | BoundExitStatement
     | BoundThrowStatement
     | BoundTryStatement
+    | BoundAssignmentStatement
     | BoundExpressionStatement
     ;
