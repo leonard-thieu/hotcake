@@ -92,7 +92,6 @@
                             }
                         }
                     },
-                    "isSingleLine": true,
                     "statements": [
                         {
                             "kind": "AssignmentStatement",

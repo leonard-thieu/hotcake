@@ -24,7 +24,6 @@ export class IfStatement extends Statement {
     ifKeyword: IfKeywordToken = undefined!;
     expression: MissableExpression = undefined!;
     thenKeyword?: ThenKeywordToken = undefined;
-    isSingleLine: boolean = false;
     statements: (Statements | SkippedToken)[] = undefined!;
     elseIfClauses?: ElseIfClause[] = undefined;
     elseClause?: ElseClause = undefined;
@@ -60,14 +59,4 @@ export class ElseClause extends Node {
 
     elseKeyword: ElseKeywordToken = undefined!;
     statements: (Statements | SkippedToken)[] = undefined!;
-
-    get isSingleLine() {
-        if (this.parent &&
-            this.parent.kind === NodeKind.IfStatement
-        ) {
-            return this.parent.isSingleLine;
-        }
-
-        return false;
-    }
 }

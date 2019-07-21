@@ -304,7 +304,6 @@
                                             "length": 1
                                         }
                                     },
-                                    "isSingleLine": true,
                                     "statements": [
                                         {
                                             "kind": "ThrowStatement",

@@ -4249,7 +4249,6 @@
                             }
                         }
                     },
-                    "isSingleLine": false,
                     "statements": [
                         {
                             "kind": "EmptyStatement",
@@ -4350,7 +4349,6 @@
                             }
                         }
                     },
-                    "isSingleLine": false,
                     "statements": [
                         {
                             "kind": "EmptyStatement",
@@ -4480,7 +4478,6 @@
                             }
                         }
                     },
-                    "isSingleLine": false,
                     "statements": [
                         {
                             "kind": "EmptyStatement",
@@ -4653,7 +4650,6 @@
                             }
                         }
                     },
-                    "isSingleLine": false,
                     "statements": [
                         {
                             "kind": "EmptyStatement",
@@ -4855,7 +4851,6 @@
                         "start": 5431,
                         "length": 5
                     },
-                    "isSingleLine": false,
                     "statements": [
                         {
                             "kind": "EmptyStatement",
@@ -5149,7 +5144,6 @@
                         "start": 5673,
                         "length": 5
                     },
-                    "isSingleLine": true,
                     "statements": [
                         {
                             "kind": "ReturnStatement",
@@ -5221,7 +5215,6 @@
                             }
                         }
                     },
-                    "isSingleLine": true,
                     "statements": [
                         {
                             "kind": "ReturnStatement",

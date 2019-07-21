@@ -35,13 +35,12 @@ import { ElseClause, ElseIfClause, IfStatement } from './Node/Statement/IfStatem
 import { RepeatLoop } from './Node/Statement/RepeatLoop';
 import { ReturnStatement } from './Node/Statement/ReturnStatement';
 import { CaseClause, DefaultClause, SelectStatement } from './Node/Statement/SelectStatement';
-import { Statement } from './Node/Statement/Statement';
+import { Statements } from './Node/Statement/Statement';
 import { ThrowStatement } from './Node/Statement/ThrowStatement';
 import { CatchClause, TryStatement } from './Node/Statement/TryStatement';
 import { WhileLoop } from './Node/Statement/WhileLoop';
-import { LonghandTypeAnnotation, ShorthandTypeAnnotation, ShorthandTypeToken } from './Node/TypeAnnotation';
+import { LonghandTypeAnnotation, ShorthandTypeAnnotation, ShorthandTypeToken, TypeAnnotation } from './Node/TypeAnnotation';
 import { ParseContextElementMapBase, ParseContextKind, ParserBase } from './ParserBase';
-import { ParseTreeVisitor } from './ParseTreeVisitor';
 import { MissingToken, MissingTokenKinds } from './Token/MissingToken';
 import { ModKeywordEqualsSignToken } from './Token/ModKeywordEqualsSignToken';
 import { ShlKeywordEqualsSignToken } from './Token/ShlKeywordEqualsSignToken';
@@ -419,8 +418,8 @@ export class Parser extends ParserBase {
 
         // Parse type identifier
         const identifierStartToken2 = this.getToken();
-        if ((identifierStartToken2.kind === TokenKind.CommercialAt && this.getToken(2).kind === TokenKind.Period) ||
-            (identifierStartToken2.kind === TokenKind.Identifier && this.getToken(1).kind === TokenKind.Period)
+        if ((identifierStartToken2.kind === TokenKind.CommercialAt && this.getToken(/*offset*/ 2).kind === TokenKind.Period) ||
+            (identifierStartToken2.kind === TokenKind.Identifier && this.getToken(/*offset*/ 1).kind === TokenKind.Period)
         ) {
             this.advanceToken();
             aliasDirective.typeIdentifier = this.parseIdentifier(aliasDirective, identifierStartToken2);
@@ -634,7 +633,10 @@ export class Parser extends ParserBase {
         functionDeclaration.parent = parent;
         functionDeclaration.functionKeyword = functionKeyword;
         functionDeclaration.identifier = this.parseMissableIdentifier(functionDeclaration);
+
         functionDeclaration.returnType = this.parseTypeAnnotation(functionDeclaration);
+        this.isReturnStatementExpressionRequired = this.isReturnTypeVoid(functionDeclaration.returnType);
+
         functionDeclaration.openingParenthesis = this.eatMissable(TokenKind.OpeningParenthesis);
         functionDeclaration.parameters = this.parseDataDeclarationSequence(functionDeclaration);
         functionDeclaration.closingParenthesis = this.eatMissable(TokenKind.ClosingParenthesis);
@@ -916,12 +918,15 @@ export class Parser extends ParserBase {
         const classMethodDeclaration = new ClassMethodDeclaration();
         classMethodDeclaration.parent = parent;
         classMethodDeclaration.methodKeyword = methodKeyword;
+        // TODO: Constructors should probably be a separate type.
         const newKeyword = this.eatOptional(TokenKind.NewKeyword);
         if (newKeyword) {
             classMethodDeclaration.identifier = newKeyword;
         } else {
             classMethodDeclaration.identifier = this.parseMissableIdentifier(classMethodDeclaration);
+
             classMethodDeclaration.returnType = this.parseTypeAnnotation(classMethodDeclaration);
+            this.isReturnStatementExpressionRequired = this.isReturnTypeVoid(classMethodDeclaration.returnType);
         }
         classMethodDeclaration.openingParenthesis = this.eatMissable(TokenKind.OpeningParenthesis);
         classMethodDeclaration.parameters = this.parseDataDeclarationSequence(classMethodDeclaration);
@@ -1291,7 +1296,7 @@ export class Parser extends ParserBase {
         const dataDeclarationSequenceStatement = new DataDeclarationSequenceStatement();
         dataDeclarationSequenceStatement.parent = parent;
         dataDeclarationSequenceStatement.dataDeclarationSequence = this.parseDataDeclarationSequence(dataDeclarationSequenceStatement, dataDeclarationKeyword);
-        dataDeclarationSequenceStatement.terminator = this.eatStatementTerminator(dataDeclarationSequenceStatement);
+        dataDeclarationSequenceStatement.terminator = this.eatStatementTerminator();
 
         return dataDeclarationSequenceStatement;
     }
@@ -1304,24 +1309,21 @@ export class Parser extends ParserBase {
         const returnStatement = new ReturnStatement();
         returnStatement.parent = parent;
         returnStatement.returnKeyword = returnKeyword;
-        if (this.isReturnStatementExpressionRequired(returnStatement)) {
+        if (this.isReturnStatementExpressionRequired) {
             returnStatement.expression = this.parseExpression(returnStatement);
         }
-        returnStatement.terminator = this.eatStatementTerminator(returnStatement);
+        returnStatement.terminator = this.eatStatementTerminator();
 
         return returnStatement;
     }
 
-    private isReturnStatementExpressionRequired(returnStatement: ReturnStatement) {
-        const functionOrMethod = ParseTreeVisitor.getAncestor(returnStatement,
-            NodeKind.FunctionDeclaration,
-            NodeKind.ClassMethodDeclaration,
-        ) as FunctionDeclaration | ClassMethodDeclaration;
+    private isReturnStatementExpressionRequired: boolean = false;
 
-        if (functionOrMethod.returnType &&
-            functionOrMethod.returnType.kind === NodeKind.LonghandTypeAnnotation &&
-            functionOrMethod.returnType.typeReference.kind !== TokenKind.Missing &&
-            functionOrMethod.returnType.typeReference.identifier.kind === TokenKind.VoidKeyword
+    private isReturnTypeVoid(returnType: TypeAnnotation | undefined): boolean {
+        if (returnType &&
+            returnType.kind === NodeKind.LonghandTypeAnnotation &&
+            returnType.typeReference.kind !== TokenKind.Missing &&
+            returnType.typeReference.identifier.kind === TokenKind.VoidKeyword
         ) {
             return false;
         }
@@ -1356,18 +1358,19 @@ export class Parser extends ParserBase {
                 ifStatement.endIfKeyword = this.eatOptional(TokenKind.IfKeyword);
             }
         } else {
-            ifStatement.isSingleLine = true;
-            ifStatement.statements = [this.parseStatementListMember(ifStatement)];
+            const statement = this.parseStatementListMember(ifStatement);
+            this.uneatStatementTerminator(statement);
+            ifStatement.statements = [statement];
 
             const elseKeyword = this.getToken();
             if (elseKeyword.kind === TokenKind.ElseKeyword) {
                 this.advanceToken();
 
-                ifStatement.elseClause = this.parseElseClause(ifStatement, elseKeyword);
+                ifStatement.elseClause = this.parseElseClause(ifStatement, elseKeyword, /*isSingleLine*/ true);
             }
         }
 
-        ifStatement.terminator = this.eatStatementTerminator(ifStatement);
+        ifStatement.terminator = this.eatStatementTerminator();
 
         return ifStatement;
     }
@@ -1384,7 +1387,7 @@ export class Parser extends ParserBase {
                 return true;
             }
             case TokenKind.ElseKeyword: {
-                const nextToken = this.getToken(1);
+                const nextToken = this.getToken(/*offset*/ 1);
                 switch (nextToken.kind) {
                     case TokenKind.IfKeyword: {
                         return true;
@@ -1406,7 +1409,7 @@ export class Parser extends ParserBase {
                 return this.parseElseIfClause(parent, token);
             }
             case TokenKind.ElseKeyword: {
-                const nextToken = this.getToken(1);
+                const nextToken = this.getToken(/*offset*/ 1);
                 switch (nextToken.kind) {
                     case TokenKind.IfKeyword: {
                         this.advanceToken();
@@ -1440,15 +1443,17 @@ export class Parser extends ParserBase {
 
     // #endregion
 
-    private parseElseClause(parent: IfStatement, elseKeyword: ElseKeywordToken): ElseClause {
+    private parseElseClause(parent: IfStatement, elseKeyword: ElseKeywordToken, isSingleLine?: true): ElseClause {
         const elseClause = new ElseClause();
         elseClause.parent = parent;
         elseClause.elseKeyword = elseKeyword;
 
-        if (!elseClause.isSingleLine) {
+        if (!isSingleLine) {
             elseClause.statements = this.parseListWithSkippedTokens(ParseContextKind.ElseClause, elseClause);
         } else {
-            elseClause.statements = [this.parseStatementListMember(elseClause)];
+            const statement = this.parseStatementListMember(elseClause);
+            this.uneatStatementTerminator(statement);
+            elseClause.statements = [statement];
         }
 
         return elseClause;
@@ -1490,7 +1495,7 @@ export class Parser extends ParserBase {
         if (selectStatement.endKeyword.kind === TokenKind.EndKeyword) {
             selectStatement.endSelectKeyword = this.eatOptional(TokenKind.SelectKeyword);
         }
-        selectStatement.terminator = this.eatStatementTerminator(selectStatement);
+        selectStatement.terminator = this.eatStatementTerminator();
 
         return selectStatement;
     }
@@ -1573,7 +1578,7 @@ export class Parser extends ParserBase {
         if (whileLoop.endKeyword.kind === TokenKind.EndKeyword) {
             whileLoop.endWhileKeyword = this.eatOptional(TokenKind.WhileKeyword);
         }
-        whileLoop.terminator = this.eatStatementTerminator(whileLoop);
+        whileLoop.terminator = this.eatStatementTerminator();
 
         return whileLoop;
     }
@@ -1602,7 +1607,7 @@ export class Parser extends ParserBase {
         if (repeatLoop.foreverOrUntilKeyword.kind === TokenKind.UntilKeyword) {
             repeatLoop.untilExpression = this.parseExpression(repeatLoop);
         }
-        repeatLoop.terminator = this.eatStatementTerminator(repeatLoop);
+        repeatLoop.terminator = this.eatStatementTerminator();
 
         return repeatLoop;
     }
@@ -1632,24 +1637,45 @@ export class Parser extends ParserBase {
         if (forLoop.endKeyword.kind === TokenKind.EndKeyword) {
             forLoop.endForKeyword = this.eatOptional(TokenKind.ForKeyword);
         }
-        forLoop.terminator = this.eatStatementTerminator(forLoop);
+        forLoop.terminator = this.eatStatementTerminator();
 
         return forLoop;
     }
 
     private parseForLoopHeader(parent: ForLoop) {
-        let loopVariableStatement: DataDeclarationSequenceStatement | AssignmentStatement;
+        let loopVariableStatement: DataDeclarationSequenceStatement | AssignmentStatement | undefined;
+
         const token = this.getToken();
         if (token.kind === TokenKind.LocalKeyword) {
-            this.advanceToken();
+            loopVariableStatement = new DataDeclarationSequenceStatement();
+            loopVariableStatement.parent = parent;
 
-            loopVariableStatement = this.parseDataDeclarationSequenceStatement(parent, token);
-            const declaration = loopVariableStatement.dataDeclarationSequence.children[0];
-            if (declaration &&
-                declaration.kind === NodeKind.DataDeclaration &&
-                declaration.eachInKeyword
-            ) {
-                return loopVariableStatement;
+            const dataDeclarationSequence = new DataDeclarationSequence();
+            dataDeclarationSequence.parent = loopVariableStatement;
+            dataDeclarationSequence.dataDeclarationKeyword = token;
+
+            const identifierStart = this.getToken(/*offset*/ 1);
+            switch (identifierStart.kind) {
+                case TokenKind.Identifier:
+                case TokenKind.ObjectKeyword:
+                case TokenKind.ThrowableKeyword:
+                case TokenKind.CommercialAt: {
+                    this.advanceToken();
+                    this.advanceToken();
+
+                    const dataDeclaration = this.parseDataDeclaration(parent, identifierStart);
+                    dataDeclarationSequence.children = [dataDeclaration];
+
+                    loopVariableStatement.dataDeclarationSequence = dataDeclarationSequence;
+
+                    if (dataDeclaration.eachInKeyword) {
+                        return loopVariableStatement;
+                    }
+                    break;
+                }
+                default: {
+                    return this.createMissingToken(token.fullStart, TokenKind.ForLoopHeader);
+                }
             }
         } else {
             // TODO: Implement better error handling for incomplete For loop header.
@@ -1660,12 +1686,13 @@ export class Parser extends ParserBase {
             //       * Return a SkippedToken covering the range of the statement.
             //         * Requires being able to calculate the length of the statement.
 
-            const assignmentStatement = this.tryParseAssignmentStatement(parent);
-            if (!assignmentStatement) {
+            loopVariableStatement = this.tryParseAssignmentStatement(parent);
+            if (!loopVariableStatement) {
                 return this.createMissingToken(token.fullStart, TokenKind.ForLoopHeader);
             }
 
-            loopVariableStatement = assignmentStatement;
+            this.uneatStatementTerminator(loopVariableStatement);
+
             if (loopVariableStatement.eachInKeyword) {
                 return loopVariableStatement;
             }
@@ -1703,7 +1730,7 @@ export class Parser extends ParserBase {
         const continueStatement = new ContinueStatement();
         continueStatement.parent = parent;
         continueStatement.continueKeyword = continueKeyword;
-        continueStatement.terminator = this.eatStatementTerminator(continueStatement);
+        continueStatement.terminator = this.eatStatementTerminator();
 
         return continueStatement;
     }
@@ -1712,7 +1739,7 @@ export class Parser extends ParserBase {
         const exitStatement = new ExitStatement();
         exitStatement.parent = parent;
         exitStatement.exitKeyword = exitKeyword;
-        exitStatement.terminator = this.eatStatementTerminator(exitStatement);
+        exitStatement.terminator = this.eatStatementTerminator();
 
         return exitStatement;
     }
@@ -1726,7 +1753,7 @@ export class Parser extends ParserBase {
         throwStatement.parent = parent;
         throwStatement.throwKeyword = throwKeyword;
         throwStatement.expression = this.parseExpression(throwStatement);
-        throwStatement.terminator = this.eatStatementTerminator(throwStatement);
+        throwStatement.terminator = this.eatStatementTerminator();
 
         return throwStatement;
     }
@@ -1745,7 +1772,7 @@ export class Parser extends ParserBase {
         if (tryStatement.endKeyword.kind === TokenKind.EndKeyword) {
             tryStatement.endTryKeyword = this.eatOptional(TokenKind.TryKeyword);
         }
-        tryStatement.terminator = this.eatStatementTerminator(tryStatement);
+        tryStatement.terminator = this.eatStatementTerminator();
 
         return tryStatement;
     }
@@ -1813,21 +1840,21 @@ export class Parser extends ParserBase {
 
         switch (token.kind) {
             case TokenKind.ShlKeyword: {
-                const nextToken = this.getToken(1);
+                const nextToken = this.getToken(/*offset*/ 1);
                 if (nextToken.kind === TokenKind.EqualsSign) {
                     token = new ShlKeywordEqualsSignToken(token, nextToken);
                 }
                 break;
             }
             case TokenKind.ShrKeyword: {
-                const nextToken = this.getToken(1);
+                const nextToken = this.getToken(/*offset*/ 1);
                 if (nextToken.kind === TokenKind.EqualsSign) {
                     token = new ShrKeywordEqualsSignToken(token, nextToken);
                 }
                 break;
             }
             case TokenKind.ModKeyword: {
-                const nextToken = this.getToken(1);
+                const nextToken = this.getToken(/*offset*/ 1);
                 if (nextToken.kind === TokenKind.EqualsSign) {
                     token = new ModKeywordEqualsSignToken(token, nextToken);
                 }
@@ -1886,7 +1913,7 @@ export class Parser extends ParserBase {
         assignmentStatement.operator = token;
         assignmentStatement.eachInKeyword = this.eatOptional(TokenKind.EachInKeyword);
         assignmentStatement.rightOperand = this.parseExpression(assignmentStatement);
-        assignmentStatement.terminator = this.eatStatementTerminator(assignmentStatement);
+        assignmentStatement.terminator = this.eatStatementTerminator();
 
         return assignmentStatement;
     }
@@ -1902,7 +1929,7 @@ export class Parser extends ParserBase {
         const expressionStatement = new ExpressionStatement();
         expressionStatement.parent = parent;
         expressionStatement.expression = expression;
-        expressionStatement.terminator = this.eatStatementTerminator(expressionStatement);
+        expressionStatement.terminator = this.eatStatementTerminator();
 
         return expressionStatement;
     }
@@ -1914,7 +1941,7 @@ export class Parser extends ParserBase {
     private parseEmptyStatement(parent: Nodes): EmptyStatement {
         const emptyStatement = new EmptyStatement();
         emptyStatement.parent = parent;
-        emptyStatement.terminator = this.eatStatementTerminator(emptyStatement);
+        emptyStatement.terminator = this.eatStatementTerminator();
 
         return emptyStatement;
     }
@@ -2172,45 +2199,18 @@ export class Parser extends ParserBase {
             }
         }
 
-        // Parentheses-less invocations are only valid in expression statements.
-        const { parent } = expression;
-        if (parent &&
-            parent.kind === NodeKind.ExpressionStatement
-        ) {
-            return this.isExpressionSequenceMemberStart(token);
-        }
-
         return false;
     }
 
-    private eatStatementTerminator(statement: Statement) {
-        if (!this.isInlineStatement(statement)) {
-            return this.eatOptional(TokenKind.Newline, TokenKind.Semicolon);
-        }
-
-        return undefined;
+    private eatStatementTerminator() {
+        return this.eatOptional(TokenKind.Newline, TokenKind.Semicolon);
     }
 
-    private isInlineStatement(statement: Statement): boolean {
-        const parent = statement.parent!;
-
-        switch (parent.kind) {
-            case NodeKind.IfStatement:
-            case NodeKind.ElseClause: {
-                return parent.isSingleLine;
-            }
-            case NodeKind.ForLoop: {
-                // Checks if this statement is the header.
-                const currentParseContext = this.parseContexts[this.parseContexts.length - 1];
-
-                return currentParseContext !== ParseContextKind.ForLoop;
-            }
-            case NodeKind.NumericForLoopHeader: {
-                return true;
-            }
+    private uneatStatementTerminator(statement: Statements): void {
+        if (statement.terminator) {
+            statement.terminator = undefined;
+            this.position--;
         }
-
-        return false;
     }
 
     // #region Tokens
@@ -2220,7 +2220,7 @@ export class Parser extends ParserBase {
             DiagnosticKind.Error,
             `Missing token: '${originalKind}'.`,
             fullStart,
-            0,
+            /*length*/ 0,
         );
 
         return super.createMissingToken(fullStart, originalKind);

@@ -80,7 +80,6 @@
                             }
                         }
                     },
-                    "isSingleLine": false,
                     "statements": [
                         {
                             "kind": "EmptyStatement",

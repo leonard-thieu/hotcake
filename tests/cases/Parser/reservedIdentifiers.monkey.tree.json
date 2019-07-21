@@ -2983,7 +2983,6 @@
                             }
                         }
                     },
-                    "isSingleLine": false,
                     "statements": [
                         {
                             "kind": "EmptyStatement",
@@ -3077,7 +3076,6 @@
                             }
                         }
                     },
-                    "isSingleLine": false,
                     "statements": [
                         {
                             "kind": "EmptyStatement",
@@ -3162,7 +3160,6 @@
                             }
                         }
                     },
-                    "isSingleLine": false,
                     "statements": [
                         {
                             "kind": "EmptyStatement",
@@ -3256,7 +3253,6 @@
                             }
                         }
                     },
-                    "isSingleLine": false,
                     "statements": [
                         {
                             "kind": "EmptyStatement",

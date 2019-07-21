@@ -115,7 +115,7 @@ export abstract class ParserBase {
 
             switch (token.kind) {
                 case TokenKind.GreaterThanSign: {
-                    const nextToken = this.getToken(1);
+                    const nextToken = this.getToken(/*offset*/ 1);
                     if (nextToken.kind === TokenKind.EqualsSign) {
                         token = new GreaterThanSignEqualsSignToken(token, nextToken);
                     }
@@ -507,7 +507,7 @@ export abstract class ParserBase {
         return arrayLiteralExpression;
     }
 
-    protected parseIdentifierExpression(parent: Nodes, identifierStart: IdentifierExpressionToken | CommercialAtToken): IdentifierExpression {
+    protected parseIdentifierExpression(parent: Nodes, identifierStart: CommercialAtToken | IdentifierExpressionToken): IdentifierExpression {
         const identifierExpression = new IdentifierExpression();
         identifierExpression.parent = parent;
         identifierExpression.identifier = this.parseIdentifier(identifierExpression, identifierStart);
@@ -576,8 +576,8 @@ export abstract class ParserBase {
     protected parseScopeMemberAccessExpression(expression: Expressions, scopeMemberAccessOperator: PeriodToken): ScopeMemberAccessExpression {
         const scopeMemberAccessExpression = new ScopeMemberAccessExpression();
         scopeMemberAccessExpression.parent = expression.parent;
-        expression.parent = scopeMemberAccessExpression;
         scopeMemberAccessExpression.scopableExpression = expression;
+        scopeMemberAccessExpression.scopableExpression.parent = scopeMemberAccessExpression;
         scopeMemberAccessExpression.scopeMemberAccessOperator = scopeMemberAccessOperator;
         scopeMemberAccessExpression.member = this.parseUnaryExpressionOrHigher(scopeMemberAccessExpression);
 
@@ -610,8 +610,8 @@ export abstract class ParserBase {
     ): IndexExpression {
         const indexExpression = new IndexExpression();
         indexExpression.parent = expression.parent;
-        expression.parent = indexExpression;
         indexExpression.indexableExpression = expression;
+        indexExpression.indexableExpression.parent = indexExpression;
         indexExpression.openingSquareBracket = openingSquareBracket;
         indexExpression.indexExpressionExpression = indexExpressionExpression;
         if (indexExpression.indexExpressionExpression.kind !== TokenKind.Missing) {
@@ -630,8 +630,8 @@ export abstract class ParserBase {
     ): SliceExpression {
         const sliceExpression = new SliceExpression();
         sliceExpression.parent = expression.parent;
-        expression.parent = sliceExpression;
         sliceExpression.sliceableExpression = expression;
+        sliceExpression.sliceableExpression.parent = sliceExpression;
         sliceExpression.openingSquareBracket = openingSquareBracket;
         sliceExpression.startExpression = startExpression;
         if (sliceExpression.startExpression) {
@@ -651,8 +651,8 @@ export abstract class ParserBase {
     protected parseInvokeExpression(expression: Expressions): InvokeExpression {
         const invokeExpression = new InvokeExpression();
         invokeExpression.parent = expression.parent;
-        expression.parent = invokeExpression;
         invokeExpression.invokableExpression = expression;
+        invokeExpression.invokableExpression.parent = invokeExpression;
         invokeExpression.openingParenthesis = this.eatOptional(TokenKind.OpeningParenthesis);
         if (invokeExpression.openingParenthesis) {
             invokeExpression.leadingNewlines = this.parseList(ParseContextKind.NewlineList, invokeExpression);
