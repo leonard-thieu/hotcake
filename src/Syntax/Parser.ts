@@ -39,9 +39,8 @@ import { Statements } from './Node/Statement/Statement';
 import { ThrowStatement } from './Node/Statement/ThrowStatement';
 import { CatchClause, TryStatement } from './Node/Statement/TryStatement';
 import { WhileLoop } from './Node/Statement/WhileLoop';
-import { LonghandTypeAnnotation, ShorthandTypeAnnotation, ShorthandTypeToken } from './Node/TypeAnnotation';
+import { LonghandTypeAnnotation, ShorthandTypeAnnotation, ShorthandTypeToken, TypeAnnotation } from './Node/TypeAnnotation';
 import { ParseContextElementMapBase, ParseContextKind, ParserBase } from './ParserBase';
-import { ParseTreeVisitor } from './ParseTreeVisitor';
 import { MissingToken, MissingTokenKinds } from './Token/MissingToken';
 import { ModKeywordEqualsSignToken } from './Token/ModKeywordEqualsSignToken';
 import { ShlKeywordEqualsSignToken } from './Token/ShlKeywordEqualsSignToken';
@@ -634,7 +633,10 @@ export class Parser extends ParserBase {
         functionDeclaration.parent = parent;
         functionDeclaration.functionKeyword = functionKeyword;
         functionDeclaration.identifier = this.parseMissableIdentifier(functionDeclaration);
+
         functionDeclaration.returnType = this.parseTypeAnnotation(functionDeclaration);
+        this.isReturnStatementExpressionRequired = this.isReturnTypeVoid(functionDeclaration.returnType);
+
         functionDeclaration.openingParenthesis = this.eatMissable(TokenKind.OpeningParenthesis);
         functionDeclaration.parameters = this.parseDataDeclarationSequence(functionDeclaration);
         functionDeclaration.closingParenthesis = this.eatMissable(TokenKind.ClosingParenthesis);
@@ -916,12 +918,15 @@ export class Parser extends ParserBase {
         const classMethodDeclaration = new ClassMethodDeclaration();
         classMethodDeclaration.parent = parent;
         classMethodDeclaration.methodKeyword = methodKeyword;
+        // TODO: Constructors should probably be a separate type.
         const newKeyword = this.eatOptional(TokenKind.NewKeyword);
         if (newKeyword) {
             classMethodDeclaration.identifier = newKeyword;
         } else {
             classMethodDeclaration.identifier = this.parseMissableIdentifier(classMethodDeclaration);
+
             classMethodDeclaration.returnType = this.parseTypeAnnotation(classMethodDeclaration);
+            this.isReturnStatementExpressionRequired = this.isReturnTypeVoid(classMethodDeclaration.returnType);
         }
         classMethodDeclaration.openingParenthesis = this.eatMissable(TokenKind.OpeningParenthesis);
         classMethodDeclaration.parameters = this.parseDataDeclarationSequence(classMethodDeclaration);
@@ -1304,7 +1309,7 @@ export class Parser extends ParserBase {
         const returnStatement = new ReturnStatement();
         returnStatement.parent = parent;
         returnStatement.returnKeyword = returnKeyword;
-        if (this.isReturnStatementExpressionRequired(returnStatement)) {
+        if (this.isReturnStatementExpressionRequired) {
             returnStatement.expression = this.parseExpression(returnStatement);
         }
         returnStatement.terminator = this.eatStatementTerminator();
@@ -1312,16 +1317,13 @@ export class Parser extends ParserBase {
         return returnStatement;
     }
 
-    private isReturnStatementExpressionRequired(returnStatement: ReturnStatement) {
-        const functionOrMethod = ParseTreeVisitor.getAncestor(returnStatement,
-            NodeKind.FunctionDeclaration,
-            NodeKind.ClassMethodDeclaration,
-        ) as FunctionDeclaration | ClassMethodDeclaration;
+    private isReturnStatementExpressionRequired: boolean = false;
 
-        if (functionOrMethod.returnType &&
-            functionOrMethod.returnType.kind === NodeKind.LonghandTypeAnnotation &&
-            functionOrMethod.returnType.typeReference.kind !== TokenKind.Missing &&
-            functionOrMethod.returnType.typeReference.identifier.kind === TokenKind.VoidKeyword
+    private isReturnTypeVoid(returnType: TypeAnnotation | undefined): boolean {
+        if (returnType &&
+            returnType.kind === NodeKind.LonghandTypeAnnotation &&
+            returnType.typeReference.kind !== TokenKind.Missing &&
+            returnType.typeReference.identifier.kind === TokenKind.VoidKeyword
         ) {
             return false;
         }
