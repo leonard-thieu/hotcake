@@ -144,15 +144,19 @@
                                         "start": 57,
                                         "length": 2
                                     }
-                                },
-                                "terminator": {
-                                    "kind": "Newline",
-                                    "fullStart": 58,
-                                    "start": 59,
-                                    "length": 2
                                 }
                             },
-                            "statements": [],
+                            "statements": [
+                                {
+                                    "kind": "EmptyStatement",
+                                    "terminator": {
+                                        "kind": "Newline",
+                                        "fullStart": 58,
+                                        "start": 59,
+                                        "length": 2
+                                    }
+                                }
+                            ],
                             "endKeyword": {
                                 "kind": "EndKeyword",
                                 "fullStart": 60,

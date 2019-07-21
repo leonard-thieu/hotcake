@@ -1291,7 +1291,7 @@ export class Parser extends ParserBase {
         const dataDeclarationSequenceStatement = new DataDeclarationSequenceStatement();
         dataDeclarationSequenceStatement.parent = parent;
         dataDeclarationSequenceStatement.dataDeclarationSequence = this.parseDataDeclarationSequence(dataDeclarationSequenceStatement, dataDeclarationKeyword);
-        dataDeclarationSequenceStatement.terminator = this.eatStatementTerminator(dataDeclarationSequenceStatement);
+        dataDeclarationSequenceStatement.terminator = this.eatStatementTerminator();
 
         return dataDeclarationSequenceStatement;
     }
@@ -1307,7 +1307,7 @@ export class Parser extends ParserBase {
         if (this.isReturnStatementExpressionRequired(returnStatement)) {
             returnStatement.expression = this.parseExpression(returnStatement);
         }
-        returnStatement.terminator = this.eatStatementTerminator(returnStatement);
+        returnStatement.terminator = this.eatStatementTerminator();
 
         return returnStatement;
     }
@@ -1368,7 +1368,7 @@ export class Parser extends ParserBase {
             }
         }
 
-        ifStatement.terminator = this.eatStatementTerminator(ifStatement);
+        ifStatement.terminator = this.eatStatementTerminator();
 
         return ifStatement;
     }
@@ -1493,7 +1493,7 @@ export class Parser extends ParserBase {
         if (selectStatement.endKeyword.kind === TokenKind.EndKeyword) {
             selectStatement.endSelectKeyword = this.eatOptional(TokenKind.SelectKeyword);
         }
-        selectStatement.terminator = this.eatStatementTerminator(selectStatement);
+        selectStatement.terminator = this.eatStatementTerminator();
 
         return selectStatement;
     }
@@ -1576,7 +1576,7 @@ export class Parser extends ParserBase {
         if (whileLoop.endKeyword.kind === TokenKind.EndKeyword) {
             whileLoop.endWhileKeyword = this.eatOptional(TokenKind.WhileKeyword);
         }
-        whileLoop.terminator = this.eatStatementTerminator(whileLoop);
+        whileLoop.terminator = this.eatStatementTerminator();
 
         return whileLoop;
     }
@@ -1605,7 +1605,7 @@ export class Parser extends ParserBase {
         if (repeatLoop.foreverOrUntilKeyword.kind === TokenKind.UntilKeyword) {
             repeatLoop.untilExpression = this.parseExpression(repeatLoop);
         }
-        repeatLoop.terminator = this.eatStatementTerminator(repeatLoop);
+        repeatLoop.terminator = this.eatStatementTerminator();
 
         return repeatLoop;
     }
@@ -1635,24 +1635,45 @@ export class Parser extends ParserBase {
         if (forLoop.endKeyword.kind === TokenKind.EndKeyword) {
             forLoop.endForKeyword = this.eatOptional(TokenKind.ForKeyword);
         }
-        forLoop.terminator = this.eatStatementTerminator(forLoop);
+        forLoop.terminator = this.eatStatementTerminator();
 
         return forLoop;
     }
 
     private parseForLoopHeader(parent: ForLoop) {
-        let loopVariableStatement: DataDeclarationSequenceStatement | AssignmentStatement;
+        let loopVariableStatement: DataDeclarationSequenceStatement | AssignmentStatement | undefined;
+
         const token = this.getToken();
         if (token.kind === TokenKind.LocalKeyword) {
-            this.advanceToken();
+            loopVariableStatement = new DataDeclarationSequenceStatement();
+            loopVariableStatement.parent = parent;
 
-            loopVariableStatement = this.parseDataDeclarationSequenceStatement(parent, token);
-            const declaration = loopVariableStatement.dataDeclarationSequence.children[0];
-            if (declaration &&
-                declaration.kind === NodeKind.DataDeclaration &&
-                declaration.eachInKeyword
-            ) {
-                return loopVariableStatement;
+            const dataDeclarationSequence = new DataDeclarationSequence();
+            dataDeclarationSequence.parent = loopVariableStatement;
+            dataDeclarationSequence.dataDeclarationKeyword = token;
+
+            const identifierStart = this.getToken(/*offset*/ 1);
+            switch (identifierStart.kind) {
+                case TokenKind.Identifier:
+                case TokenKind.ObjectKeyword:
+                case TokenKind.ThrowableKeyword:
+                case TokenKind.CommercialAt: {
+                    this.advanceToken();
+                    this.advanceToken();
+
+                    const dataDeclaration = this.parseDataDeclaration(parent, identifierStart);
+                    dataDeclarationSequence.children = [dataDeclaration];
+
+                    loopVariableStatement.dataDeclarationSequence = dataDeclarationSequence;
+
+                    if (dataDeclaration.eachInKeyword) {
+                        return loopVariableStatement;
+                    }
+                    break;
+                }
+                default: {
+                    return this.createMissingToken(token.fullStart, TokenKind.ForLoopHeader);
+                }
             }
         } else {
             // TODO: Implement better error handling for incomplete For loop header.
@@ -1663,12 +1684,13 @@ export class Parser extends ParserBase {
             //       * Return a SkippedToken covering the range of the statement.
             //         * Requires being able to calculate the length of the statement.
 
-            const assignmentStatement = this.tryParseAssignmentStatement(parent);
-            if (!assignmentStatement) {
+            loopVariableStatement = this.tryParseAssignmentStatement(parent);
+            if (!loopVariableStatement) {
                 return this.createMissingToken(token.fullStart, TokenKind.ForLoopHeader);
             }
 
-            loopVariableStatement = assignmentStatement;
+            this.uneatStatementTerminator(loopVariableStatement);
+
             if (loopVariableStatement.eachInKeyword) {
                 return loopVariableStatement;
             }
@@ -1706,7 +1728,7 @@ export class Parser extends ParserBase {
         const continueStatement = new ContinueStatement();
         continueStatement.parent = parent;
         continueStatement.continueKeyword = continueKeyword;
-        continueStatement.terminator = this.eatStatementTerminator(continueStatement);
+        continueStatement.terminator = this.eatStatementTerminator();
 
         return continueStatement;
     }
@@ -1715,7 +1737,7 @@ export class Parser extends ParserBase {
         const exitStatement = new ExitStatement();
         exitStatement.parent = parent;
         exitStatement.exitKeyword = exitKeyword;
-        exitStatement.terminator = this.eatStatementTerminator(exitStatement);
+        exitStatement.terminator = this.eatStatementTerminator();
 
         return exitStatement;
     }
@@ -1729,7 +1751,7 @@ export class Parser extends ParserBase {
         throwStatement.parent = parent;
         throwStatement.throwKeyword = throwKeyword;
         throwStatement.expression = this.parseExpression(throwStatement);
-        throwStatement.terminator = this.eatStatementTerminator(throwStatement);
+        throwStatement.terminator = this.eatStatementTerminator();
 
         return throwStatement;
     }
@@ -1748,7 +1770,7 @@ export class Parser extends ParserBase {
         if (tryStatement.endKeyword.kind === TokenKind.EndKeyword) {
             tryStatement.endTryKeyword = this.eatOptional(TokenKind.TryKeyword);
         }
-        tryStatement.terminator = this.eatStatementTerminator(tryStatement);
+        tryStatement.terminator = this.eatStatementTerminator();
 
         return tryStatement;
     }
@@ -1889,7 +1911,7 @@ export class Parser extends ParserBase {
         assignmentStatement.operator = token;
         assignmentStatement.eachInKeyword = this.eatOptional(TokenKind.EachInKeyword);
         assignmentStatement.rightOperand = this.parseExpression(assignmentStatement);
-        assignmentStatement.terminator = this.eatStatementTerminator(assignmentStatement);
+        assignmentStatement.terminator = this.eatStatementTerminator();
 
         return assignmentStatement;
     }
@@ -1905,7 +1927,7 @@ export class Parser extends ParserBase {
         const expressionStatement = new ExpressionStatement();
         expressionStatement.parent = parent;
         expressionStatement.expression = expression;
-        expressionStatement.terminator = this.eatStatementTerminator(expressionStatement);
+        expressionStatement.terminator = this.eatStatementTerminator();
 
         return expressionStatement;
     }
@@ -1917,7 +1939,7 @@ export class Parser extends ParserBase {
     private parseEmptyStatement(parent: Nodes): EmptyStatement {
         const emptyStatement = new EmptyStatement();
         emptyStatement.parent = parent;
-        emptyStatement.terminator = this.eatStatementTerminator(emptyStatement);
+        emptyStatement.terminator = this.eatStatementTerminator();
 
         return emptyStatement;
     }
@@ -2186,37 +2208,15 @@ export class Parser extends ParserBase {
         return false;
     }
 
-    private eatStatementTerminator(statement: Statements) {
-        if (!this.isInlineStatement(statement)) {
-            return this.eatOptional(TokenKind.Newline, TokenKind.Semicolon);
-        }
-
-        return undefined;
+    private eatStatementTerminator() {
+        return this.eatOptional(TokenKind.Newline, TokenKind.Semicolon);
     }
 
-    private uneatStatementTerminator(statement: Statements) {
+    private uneatStatementTerminator(statement: Statements): void {
         if (statement.terminator) {
             statement.terminator = undefined;
             this.position--;
         }
-    }
-
-    private isInlineStatement(statement: Statements): boolean {
-        const parent = statement.parent!;
-
-        switch (parent.kind) {
-            case NodeKind.ForLoop: {
-                // Checks if this statement is the header.
-                const currentParseContext = this.parseContexts[this.parseContexts.length - 1];
-
-                return currentParseContext !== ParseContextKind.ForLoop;
-            }
-            case NodeKind.NumericForLoopHeader: {
-                return true;
-            }
-        }
-
-        return false;
     }
 
     // #region Tokens
