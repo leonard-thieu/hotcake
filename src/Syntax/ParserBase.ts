@@ -507,7 +507,7 @@ export abstract class ParserBase {
         return arrayLiteralExpression;
     }
 
-    protected parseIdentifierExpression(parent: Nodes, identifierStart: IdentifierExpressionToken | CommercialAtToken): IdentifierExpression {
+    protected parseIdentifierExpression(parent: Nodes, identifierStart: CommercialAtToken | IdentifierExpressionToken): IdentifierExpression {
         const identifierExpression = new IdentifierExpression();
         identifierExpression.parent = parent;
         identifierExpression.identifier = this.parseIdentifier(identifierExpression, identifierStart);
