@@ -1,13 +1,13 @@
 {
-  "compilerOptions": {
-    "target": "es2018",
-    "module": "commonjs",
-    "lib": [
-      "es2018"
-    ],
-    "strict": true,
-    "esModuleInterop": true,
-    "inlineSourceMap": true,
-    "inlineSources": true
-  }
+    "compilerOptions": {
+        "target": "es2018",
+        "module": "commonjs",
+        "lib": [
+            "es2018"
+        ],
+        "strict": true,
+        "esModuleInterop": true,
+        "inlineSourceMap": true,
+        "inlineSources": true
+    }
 }

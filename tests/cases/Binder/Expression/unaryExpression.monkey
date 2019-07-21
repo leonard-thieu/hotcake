@@ -10,7 +10,7 @@ End
 Function Main()
     BoxInt(+4)
     BoxFloat(+13.85)
-    
+
     BoxInt(-2)
     BoxFloat(-1.67)
 

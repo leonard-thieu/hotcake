@@ -6,4 +6,4 @@ Class Driver="xyzDriver"   'The native name of this class is 'xyzDriver'.
 
     Method Method2()       'native name is Method2
 
-End 
+End

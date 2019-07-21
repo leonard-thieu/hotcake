@@ -1,20 +1,20 @@
 {
-	"name": "hotcake-vscode-client",
-	"version": "0.0.1",
-	"author": "Leonard Thieu",
-	"publisher": "leonard-thieu",
-	"engines": {
-		"vscode": "^1.23.0"
-	},
-	"scripts": {
-		"update-vscode": "node ./node_modules/vscode/bin/install",
-		"postinstall": "node ./node_modules/vscode/bin/install"
-	},
-	"dependencies": {
-		"vscode": "1.1.35",
-		"vscode-languageclient": "5.2.1"
-	},
-	"devDependencies": {
-		"@types/vscode": "1.35.0"
-	}
+    "name": "hotcake-vscode-client",
+    "version": "0.0.1",
+    "author": "Leonard Thieu",
+    "publisher": "leonard-thieu",
+    "engines": {
+        "vscode": "^1.23.0"
+    },
+    "scripts": {
+        "update-vscode": "node ./node_modules/vscode/bin/install",
+        "postinstall": "node ./node_modules/vscode/bin/install"
+    },
+    "dependencies": {
+        "vscode": "1.1.35",
+        "vscode-languageclient": "5.2.1"
+    },
+    "devDependencies": {
+        "@types/vscode": "1.35.0"
+    }
 }

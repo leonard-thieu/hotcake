@@ -1,7 +1,7 @@
 Function Main()
     ' TestUnary(+2)
     TestUnary + 2
-    
+
     ' TestUnary() + 2
     Local val := TestUnary + 2
 
