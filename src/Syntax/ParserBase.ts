@@ -115,7 +115,7 @@ export abstract class ParserBase {
 
             switch (token.kind) {
                 case TokenKind.GreaterThanSign: {
-                    const nextToken = this.getToken(1);
+                    const nextToken = this.getToken(/*offset*/ 1);
                     if (nextToken.kind === TokenKind.EqualsSign) {
                         token = new GreaterThanSignEqualsSignToken(token, nextToken);
                     }

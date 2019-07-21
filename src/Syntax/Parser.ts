@@ -419,8 +419,8 @@ export class Parser extends ParserBase {
 
         // Parse type identifier
         const identifierStartToken2 = this.getToken();
-        if ((identifierStartToken2.kind === TokenKind.CommercialAt && this.getToken(2).kind === TokenKind.Period) ||
-            (identifierStartToken2.kind === TokenKind.Identifier && this.getToken(1).kind === TokenKind.Period)
+        if ((identifierStartToken2.kind === TokenKind.CommercialAt && this.getToken(/*offset*/ 2).kind === TokenKind.Period) ||
+            (identifierStartToken2.kind === TokenKind.Identifier && this.getToken(/*offset*/ 1).kind === TokenKind.Period)
         ) {
             this.advanceToken();
             aliasDirective.typeIdentifier = this.parseIdentifier(aliasDirective, identifierStartToken2);
@@ -1385,7 +1385,7 @@ export class Parser extends ParserBase {
                 return true;
             }
             case TokenKind.ElseKeyword: {
-                const nextToken = this.getToken(1);
+                const nextToken = this.getToken(/*offset*/ 1);
                 switch (nextToken.kind) {
                     case TokenKind.IfKeyword: {
                         return true;
@@ -1407,7 +1407,7 @@ export class Parser extends ParserBase {
                 return this.parseElseIfClause(parent, token);
             }
             case TokenKind.ElseKeyword: {
-                const nextToken = this.getToken(1);
+                const nextToken = this.getToken(/*offset*/ 1);
                 switch (nextToken.kind) {
                     case TokenKind.IfKeyword: {
                         this.advanceToken();
@@ -1838,21 +1838,21 @@ export class Parser extends ParserBase {
 
         switch (token.kind) {
             case TokenKind.ShlKeyword: {
-                const nextToken = this.getToken(1);
+                const nextToken = this.getToken(/*offset*/ 1);
                 if (nextToken.kind === TokenKind.EqualsSign) {
                     token = new ShlKeywordEqualsSignToken(token, nextToken);
                 }
                 break;
             }
             case TokenKind.ShrKeyword: {
-                const nextToken = this.getToken(1);
+                const nextToken = this.getToken(/*offset*/ 1);
                 if (nextToken.kind === TokenKind.EqualsSign) {
                     token = new ShrKeywordEqualsSignToken(token, nextToken);
                 }
                 break;
             }
             case TokenKind.ModKeyword: {
-                const nextToken = this.getToken(1);
+                const nextToken = this.getToken(/*offset*/ 1);
                 if (nextToken.kind === TokenKind.EqualsSign) {
                     token = new ModKeywordEqualsSignToken(token, nextToken);
                 }
@@ -2226,7 +2226,7 @@ export class Parser extends ParserBase {
             DiagnosticKind.Error,
             `Missing token: '${originalKind}'.`,
             fullStart,
-            0,
+            /*length*/ 0,
         );
 
         return super.createMissingToken(fullStart, originalKind);

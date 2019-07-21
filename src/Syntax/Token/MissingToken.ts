@@ -11,7 +11,7 @@ export class MissingToken extends Token<TokenKind.Missing> {
             TokenKind.Missing,
             fullStart,
             fullStart,
-            0,
+            /*length*/ 0,
         );
     }
 

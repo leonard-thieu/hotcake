@@ -97,7 +97,7 @@ export function executeBaselineTestCase(outputPath: string, testCallback: () => 
 
     const result = testCallback();
 
-    const json = JSON.stringify(result, replacer, 4);
+    const json = JSON.stringify(result, replacer, /*space*/ 4);
     fs.writeFileSync(outputPath, json);
 }
 

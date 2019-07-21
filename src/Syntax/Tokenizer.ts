@@ -222,7 +222,7 @@ export class Tokenizer {
                         case TokenKind.EscapeTilde: { value += '~'; break; }
                         case TokenKind.EscapeUnicodeHexValue: {
                             const text = child.getText(this.document);
-                            value += JSON.parse(`"\\${text.slice(1)}"`);
+                            value += JSON.parse(`"\\${text.slice(/*start*/ 1)}"`);
                             break;
                         }
                         case NodeKind.ConfigurationTag: {

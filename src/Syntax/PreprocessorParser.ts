@@ -46,7 +46,7 @@ export class PreprocessorParser extends ParserBase {
         const token = this.getToken();
         switch (token.kind) {
             case TokenKind.NumberSign: {
-                const nextToken = this.getToken(1);
+                const nextToken = this.getToken(/*offset*/ 1);
                 switch (nextToken.kind) {
                     case TokenKind.IfDirectiveKeyword: {
                         this.advanceToken();
@@ -104,7 +104,7 @@ export class PreprocessorParser extends ParserBase {
         ifDirective.elseIfDirectives = this.parseList(ParseContextKind.ElseIfDirectiveList, ifDirective);
 
         const elseDirectiveNumberSign = this.getToken();
-        const elseDirectiveKeyword = this.getToken(1);
+        const elseDirectiveKeyword = this.getToken(/*offset*/ 1);
         if (elseDirectiveNumberSign.kind === TokenKind.NumberSign &&
             elseDirectiveKeyword.kind === TokenKind.ElseDirectiveKeyword
         ) {
@@ -132,13 +132,13 @@ export class PreprocessorParser extends ParserBase {
     private isElseIfDirectiveListMemberStart(token: Tokens): boolean {
         switch (token.kind) {
             case TokenKind.NumberSign: {
-                const nextToken = this.getToken(1);
+                const nextToken = this.getToken(/*offset*/ 1);
                 switch (nextToken.kind) {
                     case TokenKind.ElseIfDirectiveKeyword: {
                         return true;
                     }
                     case TokenKind.ElseDirectiveKeyword: {
-                        const nextNextToken = this.getToken(2);
+                        const nextNextToken = this.getToken(/*offset*/ 2);
                         switch (nextNextToken.kind) {
                             case TokenKind.IfDirectiveKeyword: {
                                 return true;
@@ -158,7 +158,7 @@ export class PreprocessorParser extends ParserBase {
         const token = this.getToken();
         switch (token.kind) {
             case TokenKind.NumberSign: {
-                const nextToken = this.getToken(1);
+                const nextToken = this.getToken(/*offset*/ 1);
                 switch (nextToken.kind) {
                     case TokenKind.ElseIfDirectiveKeyword: {
                         this.advanceToken();
@@ -167,7 +167,7 @@ export class PreprocessorParser extends ParserBase {
                         return this.parseElseIfDirective(parent, token, nextToken);
                     }
                     case TokenKind.ElseDirectiveKeyword: {
-                        const nextNextToken = this.getToken(2);
+                        const nextNextToken = this.getToken(/*offset*/ 2);
                         switch (nextNextToken.kind) {
                             case TokenKind.IfDirectiveKeyword: {
                                 this.advanceToken();
@@ -219,7 +219,7 @@ export class PreprocessorParser extends ParserBase {
     private isIfOrElseIfOrElseDirectiveMembersListTerminator(token: Tokens): boolean {
         switch (token.kind) {
             case TokenKind.NumberSign: {
-                const nextToken = this.getToken(1);
+                const nextToken = this.getToken(/*offset*/ 1);
                 switch (nextToken.kind) {
                     case TokenKind.ElseIfDirectiveKeyword:
                     case TokenKind.ElseDirectiveKeyword:
@@ -258,7 +258,7 @@ export class PreprocessorParser extends ParserBase {
     private isRemDirectiveMembersListTerminator(token: Tokens): boolean {
         switch (token.kind) {
             case TokenKind.NumberSign: {
-                const nextToken = this.getToken(1);
+                const nextToken = this.getToken(/*offset*/ 1);
                 switch (nextToken.kind) {
                     case TokenKind.EndDirectiveKeyword: {
                         return true;
@@ -274,7 +274,7 @@ export class PreprocessorParser extends ParserBase {
     private isRemDirectiveMemberStart(token: Tokens): boolean {
         switch (token.kind) {
             case TokenKind.NumberSign: {
-                const nextToken = this.getToken(1);
+                const nextToken = this.getToken(/*offset*/ 1);
                 switch (nextToken.kind) {
                     case TokenKind.IfDirectiveKeyword:
                     case TokenKind.RemDirectiveKeyword: {
@@ -295,7 +295,7 @@ export class PreprocessorParser extends ParserBase {
         const token = this.getToken();
         switch (token.kind) {
             case TokenKind.NumberSign: {
-                const nextToken = this.getToken(1);
+                const nextToken = this.getToken(/*offset*/ 1);
                 switch (nextToken.kind) {
                     case TokenKind.IfDirectiveKeyword: {
                         this.advanceToken();
