@@ -61,7 +61,6 @@
                             "length": 5
                         }
                     },
-                    "isSingleLine": false,
                     "statements": [
                         {
                             "kind": "EmptyStatement",

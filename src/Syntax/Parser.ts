@@ -35,7 +35,7 @@ import { ElseClause, ElseIfClause, IfStatement } from './Node/Statement/IfStatem
 import { RepeatLoop } from './Node/Statement/RepeatLoop';
 import { ReturnStatement } from './Node/Statement/ReturnStatement';
 import { CaseClause, DefaultClause, SelectStatement } from './Node/Statement/SelectStatement';
-import { Statement } from './Node/Statement/Statement';
+import { Statements } from './Node/Statement/Statement';
 import { ThrowStatement } from './Node/Statement/ThrowStatement';
 import { CatchClause, TryStatement } from './Node/Statement/TryStatement';
 import { WhileLoop } from './Node/Statement/WhileLoop';
@@ -1356,14 +1356,15 @@ export class Parser extends ParserBase {
                 ifStatement.endIfKeyword = this.eatOptional(TokenKind.IfKeyword);
             }
         } else {
-            ifStatement.isSingleLine = true;
-            ifStatement.statements = [this.parseStatementListMember(ifStatement)];
+            const statement = this.parseStatementListMember(ifStatement);
+            this.uneatStatementTerminator(statement);
+            ifStatement.statements = [statement];
 
             const elseKeyword = this.getToken();
             if (elseKeyword.kind === TokenKind.ElseKeyword) {
                 this.advanceToken();
 
-                ifStatement.elseClause = this.parseElseClause(ifStatement, elseKeyword);
+                ifStatement.elseClause = this.parseElseClause(ifStatement, elseKeyword, /*isSingleLine*/ true);
             }
         }
 
@@ -1440,15 +1441,17 @@ export class Parser extends ParserBase {
 
     // #endregion
 
-    private parseElseClause(parent: IfStatement, elseKeyword: ElseKeywordToken): ElseClause {
+    private parseElseClause(parent: IfStatement, elseKeyword: ElseKeywordToken, isSingleLine?: true): ElseClause {
         const elseClause = new ElseClause();
         elseClause.parent = parent;
         elseClause.elseKeyword = elseKeyword;
 
-        if (!elseClause.isSingleLine) {
+        if (!isSingleLine) {
             elseClause.statements = this.parseListWithSkippedTokens(ParseContextKind.ElseClause, elseClause);
         } else {
-            elseClause.statements = [this.parseStatementListMember(elseClause)];
+            const statement = this.parseStatementListMember(elseClause);
+            this.uneatStatementTerminator(statement);
+            elseClause.statements = [statement];
         }
 
         return elseClause;
@@ -2183,7 +2186,7 @@ export class Parser extends ParserBase {
         return false;
     }
 
-    private eatStatementTerminator(statement: Statement) {
+    private eatStatementTerminator(statement: Statements) {
         if (!this.isInlineStatement(statement)) {
             return this.eatOptional(TokenKind.Newline, TokenKind.Semicolon);
         }
@@ -2191,14 +2194,17 @@ export class Parser extends ParserBase {
         return undefined;
     }
 
-    private isInlineStatement(statement: Statement): boolean {
+    private uneatStatementTerminator(statement: Statements) {
+        if (statement.terminator) {
+            statement.terminator = undefined;
+            this.position--;
+        }
+    }
+
+    private isInlineStatement(statement: Statements): boolean {
         const parent = statement.parent!;
 
         switch (parent.kind) {
-            case NodeKind.IfStatement:
-            case NodeKind.ElseClause: {
-                return parent.isSingleLine;
-            }
             case NodeKind.ForLoop: {
                 // Checks if this statement is the header.
                 const currentParseContext = this.parseContexts[this.parseContexts.length - 1];

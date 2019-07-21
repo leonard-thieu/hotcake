@@ -86,7 +86,6 @@
                             "length": 1
                         }
                     },
-                    "isSingleLine": false,
                     "statements": [
                         {
                             "kind": "EmptyStatement",
