@@ -11,23 +11,23 @@
     "members": [
         {
             "kind": "ClassDeclaration",
-            "identifier": "Throwable",
             "locals": [],
+            "identifier": "Throwable",
             "type": "Throwable",
             "members": []
         },
         {
             "kind": "ClassDeclaration",
-            "identifier": "Ex1",
             "locals": [],
+            "identifier": "Ex1",
             "type": "Ex1",
             "baseType": "Throwable",
             "members": []
         },
         {
             "kind": "ClassDeclaration",
-            "identifier": "Ex2",
             "locals": [],
+            "identifier": "Ex2",
             "type": "Ex2",
             "baseType": "Throwable",
             "members": []

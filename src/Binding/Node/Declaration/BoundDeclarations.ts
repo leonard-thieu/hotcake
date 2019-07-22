@@ -7,6 +7,7 @@ import { BoundImportStatement } from './BoundImportStatement';
 import { BoundInterfaceDeclaration } from './BoundInterfaceDeclaration';
 import { BoundInterfaceMethodDeclaration } from './BoundInterfaceMethodDeclaration';
 import { BoundModuleDeclaration } from './BoundModuleDeclaration';
+import { BoundTypeParameter } from './BoundTypeParameter';
 import { BoundExternDeclarations } from './Extern/BoundExternDeclarations';
 
 export type BoundDeclarations =
@@ -20,4 +21,5 @@ export type BoundDeclarations =
     | BoundInterfaceMethodDeclaration
     | BoundClassDeclaration
     | BoundClassMethodDeclaration
+    | BoundTypeParameter
     ;

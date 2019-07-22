@@ -8,8 +8,8 @@
     "members": [
         {
             "kind": "ClassDeclaration",
-            "identifier": "MyClass",
             "locals": [],
+            "identifier": "MyClass",
             "type": "MyClass",
             "members": []
         },

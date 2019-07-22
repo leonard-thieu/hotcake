@@ -14,11 +14,11 @@
         },
         {
             "kind": "ClassDeclaration",
-            "identifier": "Actor",
             "locals": [
                 "T",
                 "Act"
             ],
+            "identifier": "Actor",
             "type": "Actor",
             "members": [
                 {

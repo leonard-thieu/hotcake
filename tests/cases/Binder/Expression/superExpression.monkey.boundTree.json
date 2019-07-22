@@ -8,17 +8,17 @@
     "members": [
         {
             "kind": "ClassDeclaration",
-            "identifier": "MyBaseClass",
             "locals": [],
+            "identifier": "MyBaseClass",
             "type": "MyBaseClass",
             "members": []
         },
         {
             "kind": "ClassDeclaration",
-            "identifier": "MyClass",
             "locals": [
                 "GetBaseClass"
             ],
+            "identifier": "MyClass",
             "type": "MyClass",
             "baseType": "MyBaseClass",
             "members": [

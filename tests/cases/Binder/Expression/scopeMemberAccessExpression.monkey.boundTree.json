@@ -8,10 +8,10 @@
     "members": [
         {
             "kind": "ClassDeclaration",
-            "identifier": "C",
             "locals": [
                 "T"
             ],
+            "identifier": "C",
             "type": "C",
             "members": [
                 {

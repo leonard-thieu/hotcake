@@ -7,10 +7,10 @@
     "members": [
         {
             "kind": "ClassDeclaration",
-            "identifier": "MyClass",
             "locals": [
                 "GetInstance"
             ],
+            "identifier": "MyClass",
             "type": "MyClass",
             "members": [
                 {

@@ -44,8 +44,8 @@
         },
         {
             "kind": "ClassDeclaration",
-            "identifier": "Entity",
             "locals": [],
+            "identifier": "Entity",
             "type": "Entity",
             "implementedTypes": [
                 "Moveable"
@@ -54,8 +54,8 @@
         },
         {
             "kind": "ClassDeclaration",
-            "identifier": "Actor",
             "locals": [],
+            "identifier": "Actor",
             "type": "Actor",
             "baseType": "Entity",
             "implementedTypes": [

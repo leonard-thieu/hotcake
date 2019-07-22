@@ -8,8 +8,8 @@
     "members": [
         {
             "kind": "ClassDeclaration",
-            "identifier": "Throwable",
             "locals": [],
+            "identifier": "Throwable",
             "type": "Throwable",
             "members": []
         },

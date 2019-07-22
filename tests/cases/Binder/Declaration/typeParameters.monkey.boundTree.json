@@ -1,0 +1,91 @@
+{
+    "kind": "ModuleDeclaration",
+    "identifier": "typeParameters",
+    "locals": [
+        "ArrayObject"
+    ],
+    "members": [
+        {
+            "kind": "ClassDeclaration",
+            "locals": [
+                "T",
+                "value",
+                "New",
+                "ToArray"
+            ],
+            "identifier": "ArrayObject",
+            "type": "ArrayObject",
+            "typeParameters": [
+                {
+                    "kind": "TypeParameter",
+                    "identifier": "T",
+                    "type": "Generic"
+                }
+            ],
+            "members": [
+                {
+                    "kind": "DataDeclaration",
+                    "declarationKind": "FieldKeyword",
+                    "identifier": "value",
+                    "type": "Generic[]"
+                },
+                {
+                    "kind": "ClassMethodDeclaration",
+                    "identifier": "New",
+                    "locals": [
+                        "value"
+                    ],
+                    "returnType": "Int",
+                    "parameters": [
+                        {
+                            "kind": "DataDeclaration",
+                            "identifier": "value",
+                            "type": "Generic[]"
+                        }
+                    ],
+                    "statements": [
+                        {
+                            "kind": "AssignmentStatement",
+                            "leftOperand": {
+                                "kind": "ScopeMemberAccessExpression",
+                                "type": "Generic[]",
+                                "scopableExpression": {
+                                    "kind": "SelfExpression",
+                                    "type": "ArrayObject"
+                                },
+                                "member": {
+                                    "kind": "IdentifierExpression",
+                                    "type": "Generic[]",
+                                    "identifier": "value"
+                                }
+                            },
+                            "rightOperand": {
+                                "kind": "IdentifierExpression",
+                                "type": "Generic[]",
+                                "identifier": "value"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "kind": "ClassMethodDeclaration",
+                    "identifier": "ToArray",
+                    "locals": [],
+                    "returnType": "Generic[]",
+                    "parameters": [],
+                    "statements": [
+                        {
+                            "kind": "ReturnStatement",
+                            "type": "Generic[]",
+                            "expression": {
+                                "kind": "IdentifierExpression",
+                                "type": "Generic[]",
+                                "identifier": "value"
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

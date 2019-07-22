@@ -6,16 +6,18 @@ import { BoundNodeKind } from '../BoundNodeKind';
 import { BoundClassMethodDeclaration } from './BoundClassMethodDeclaration';
 import { BoundDataDeclaration } from './BoundDataDeclaration';
 import { BoundFunctionDeclaration } from './BoundFunctionDeclaration';
+import { BoundTypeParameter } from './BoundTypeParameter';
 
 export class BoundClassDeclaration extends BoundNode {
     readonly kind = BoundNodeKind.ClassDeclaration;
 
     declaration: ClassDeclaration = undefined!;
 
-    identifier: BoundSymbol = undefined!;
     locals: BoundSymbolTable = undefined!;
+    identifier: BoundSymbol = undefined!;
     type: Types = undefined!;
 
+    typeParameters?: BoundTypeParameter[] = undefined;
     baseType?: Types = undefined;
     implementedTypes?: Types[] = undefined;
 
