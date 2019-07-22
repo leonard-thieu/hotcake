@@ -1,3 +1,4 @@
+import { InterfaceDeclaration } from '../../../Syntax/Node/Declaration/InterfaceDeclaration';
 import { BoundSymbol, BoundSymbolTable } from '../../BoundSymbol';
 import { Types } from '../../Type/Types';
 import { BoundNode } from '../BoundNode';
@@ -7,6 +8,8 @@ import { BoundInterfaceMethodDeclaration } from './BoundInterfaceMethodDeclarati
 
 export class BoundInterfaceDeclaration extends BoundNode {
     readonly kind = BoundNodeKind.InterfaceDeclaration;
+
+    declaration: InterfaceDeclaration = undefined!;
 
     identifier: BoundSymbol = undefined!;
     locals: BoundSymbolTable = undefined!;

@@ -1,3 +1,4 @@
+import { BoundSymbolTable } from '../../../Binding/BoundSymbol';
 import { MissableToken } from '../../Token/MissingToken';
 import { SkippedToken } from '../../Token/SkippedToken';
 import { ForeverKeywordToken, RepeatKeywordToken, UntilKeywordToken } from '../../Token/Token';
@@ -20,4 +21,6 @@ export class RepeatLoop extends Statement {
     statements: (Statements | SkippedToken)[] = undefined!;
     foreverOrUntilKeyword: MissableToken<ForeverKeywordToken | UntilKeywordToken> = undefined!;
     untilExpression?: MissableExpression = undefined;
+
+    locals = new BoundSymbolTable();
 }

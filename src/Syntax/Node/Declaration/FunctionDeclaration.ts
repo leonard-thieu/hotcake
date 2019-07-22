@@ -1,3 +1,4 @@
+import { BoundSymbolTable } from '../../../Binding/BoundSymbol';
 import { MissableToken } from '../../Token/MissingToken';
 import { SkippedToken } from '../../Token/SkippedToken';
 import { ClosingParenthesisToken, EndKeywordToken, FunctionKeywordToken, OpeningParenthesisToken } from '../../Token/Token';
@@ -32,4 +33,6 @@ export class FunctionDeclaration extends Declaration {
     statements: (Statements | SkippedToken)[] = undefined!;
     endKeyword: MissableToken<EndKeywordToken> = undefined!;
     endFunctionKeyword?: FunctionKeywordToken = undefined;
+
+    locals = new BoundSymbolTable();
 }

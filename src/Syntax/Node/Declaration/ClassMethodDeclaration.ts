@@ -1,3 +1,4 @@
+import { BoundSymbolTable } from '../../../Binding/BoundSymbol';
 import { MissableToken } from '../../Token/MissingToken';
 import { SkippedToken } from '../../Token/SkippedToken';
 import { AbstractKeywordToken, ClosingParenthesisToken, EndKeywordToken, FinalKeywordToken, MethodKeywordToken, NewKeywordToken, OpeningParenthesisToken, PropertyKeywordToken } from '../../Token/Token';
@@ -34,4 +35,6 @@ export class ClassMethodDeclaration extends Declaration {
     statements?: (Statements | SkippedToken)[] = undefined;
     endKeyword?: MissableToken<EndKeywordToken> = undefined;
     endMethodKeyword?: MethodKeywordToken = undefined;
+
+    locals = new BoundSymbolTable();
 }

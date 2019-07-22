@@ -177,7 +177,8 @@ export function executeParserTestCases(name: string, casesPath: string): void {
                     switch (key) {
                         case 'preprocessorModuleDeclaration':
                         case 'parent':
-                        case 'parseDiagnostics': {
+                        case 'parseDiagnostics':
+                        case 'locals': {
                             return undefined;
                         }
                     }
@@ -209,7 +210,10 @@ export function executeBinderTestCases(name: string, casesPath: string): void {
                         }
                         case 'declaration': {
                             if (this.kind !== BoundNodeKind.DataDeclarationStatement) {
-                                if (value.kind === BoundNodeKind.ModuleDeclaration) {
+                                if (value &&
+                                    value.kind === BoundNodeKind.ModuleDeclaration &&
+                                    value.identifier
+                                ) {
                                     return value.identifier.name;
                                 }
 

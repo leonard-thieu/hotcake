@@ -1,3 +1,4 @@
+import { BoundSymbolTable } from '../../../../Binding/BoundSymbol';
 import { MissableToken } from '../../../Token/MissingToken';
 import { AbstractKeywordToken, ClosingParenthesisToken, FinalKeywordToken, MethodKeywordToken, OpeningParenthesisToken, PropertyKeywordToken } from '../../../Token/Token';
 import { MissableIdentifier } from '../../Identifier';
@@ -28,4 +29,6 @@ export class ExternClassMethodDeclaration extends ExternDeclaration {
     parameters: DataDeclarationSequence = undefined!;
     closingParenthesis: MissableToken<ClosingParenthesisToken> = undefined!;
     attributes: (AbstractKeywordToken | FinalKeywordToken | PropertyKeywordToken)[] = undefined!;
+
+    locals = new BoundSymbolTable();
 }
