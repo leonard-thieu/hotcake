@@ -87,8 +87,8 @@
                                         {
                                             "kind": "Newline",
                                             "fullStart": 37,
-                                            "start": 46,
-                                            "length": 10
+                                            "start": 38,
+                                            "length": 2
                                         }
                                     ],
                                     "expressions": [
@@ -97,8 +97,8 @@
                                             "newlines": [],
                                             "value": {
                                                 "kind": "IntegerLiteral",
-                                                "fullStart": 47,
-                                                "start": 55,
+                                                "fullStart": 39,
+                                                "start": 47,
                                                 "length": 9
                                             }
                                         },
@@ -106,67 +106,67 @@
                                             "kind": "CommaSeparator",
                                             "separator": {
                                                 "kind": "Comma",
-                                                "fullStart": 56,
+                                                "fullStart": 48,
+                                                "start": 48,
+                                                "length": 1
+                                            },
+                                            "newlines": []
+                                        },
+                                        {
+                                            "kind": "IntegerLiteralExpression",
+                                            "newlines": [],
+                                            "value": {
+                                                "kind": "IntegerLiteral",
+                                                "fullStart": 49,
+                                                "start": 50,
+                                                "length": 2
+                                            }
+                                        },
+                                        {
+                                            "kind": "CommaSeparator",
+                                            "separator": {
+                                                "kind": "Comma",
+                                                "fullStart": 51,
+                                                "start": 51,
+                                                "length": 1
+                                            },
+                                            "newlines": []
+                                        },
+                                        {
+                                            "kind": "IntegerLiteralExpression",
+                                            "newlines": [],
+                                            "value": {
+                                                "kind": "IntegerLiteral",
+                                                "fullStart": 52,
+                                                "start": 53,
+                                                "length": 2
+                                            }
+                                        },
+                                        {
+                                            "kind": "CommaSeparator",
+                                            "separator": {
+                                                "kind": "Comma",
+                                                "fullStart": 54,
+                                                "start": 54,
+                                                "length": 1
+                                            },
+                                            "newlines": []
+                                        },
+                                        {
+                                            "kind": "IntegerLiteralExpression",
+                                            "newlines": [],
+                                            "value": {
+                                                "kind": "IntegerLiteral",
+                                                "fullStart": 55,
                                                 "start": 56,
-                                                "length": 1
-                                            },
-                                            "newlines": []
-                                        },
-                                        {
-                                            "kind": "IntegerLiteralExpression",
-                                            "newlines": [],
-                                            "value": {
-                                                "kind": "IntegerLiteral",
-                                                "fullStart": 57,
-                                                "start": 58,
-                                                "length": 2
-                                            }
-                                        },
-                                        {
-                                            "kind": "CommaSeparator",
-                                            "separator": {
-                                                "kind": "Comma",
-                                                "fullStart": 59,
-                                                "start": 59,
-                                                "length": 1
-                                            },
-                                            "newlines": []
-                                        },
-                                        {
-                                            "kind": "IntegerLiteralExpression",
-                                            "newlines": [],
-                                            "value": {
-                                                "kind": "IntegerLiteral",
-                                                "fullStart": 60,
-                                                "start": 61,
-                                                "length": 2
-                                            }
-                                        },
-                                        {
-                                            "kind": "CommaSeparator",
-                                            "separator": {
-                                                "kind": "Comma",
-                                                "fullStart": 62,
-                                                "start": 62,
-                                                "length": 1
-                                            },
-                                            "newlines": []
-                                        },
-                                        {
-                                            "kind": "IntegerLiteralExpression",
-                                            "newlines": [],
-                                            "value": {
-                                                "kind": "IntegerLiteral",
-                                                "fullStart": 63,
-                                                "start": 64,
                                                 "length": 2
                                             }
                                         }
                                     ],
                                     "closingSquareBracket": {
                                         "kind": "ClosingSquareBracket",
-                                        "fullStart": 65,
-                                        "start": 65,
+                                        "fullStart": 57,
+                                        "start": 57,
                                         "length": 1
                                     }
                                 }
@@ -175,24 +175,24 @@
                     },
                     "terminator": {
                         "kind": "Newline",
-                        "fullStart": 66,
-                        "start": 67,
+                        "fullStart": 58,
+                        "start": 59,
                         "length": 2
                     }
                 }
             ],
             "endKeyword": {
                 "kind": "EndKeyword",
-                "fullStart": 68,
-                "start": 68,
+                "fullStart": 60,
+                "start": 60,
                 "length": 3
             }
         }
     ],
     "eofToken": {
         "kind": "EOF",
-        "fullStart": 71,
-        "start": 71,
+        "fullStart": 63,
+        "start": 63,
         "length": 0
     }
 }

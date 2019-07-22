@@ -83,8 +83,8 @@
                             {
                                 "kind": "Newline",
                                 "fullStart": 33,
-                                "start": 42,
-                                "length": 10
+                                "start": 34,
+                                "length": 2
                             }
                         ],
                         "arguments": [
@@ -93,8 +93,8 @@
                                 "newlines": [],
                                 "openingSquareBracket": {
                                     "kind": "OpeningSquareBracket",
-                                    "fullStart": 43,
-                                    "start": 51,
+                                    "fullStart": 35,
+                                    "start": 43,
                                     "length": 9
                                 },
                                 "leadingNewlines": [],
@@ -104,107 +104,107 @@
                                         "newlines": [],
                                         "value": {
                                             "kind": "IntegerLiteral",
+                                            "fullStart": 44,
+                                            "start": 44,
+                                            "length": 1
+                                        }
+                                    },
+                                    {
+                                        "kind": "CommaSeparator",
+                                        "separator": {
+                                            "kind": "Comma",
+                                            "fullStart": 45,
+                                            "start": 45,
+                                            "length": 1
+                                        },
+                                        "newlines": []
+                                    },
+                                    {
+                                        "kind": "IntegerLiteralExpression",
+                                        "newlines": [],
+                                        "value": {
+                                            "kind": "IntegerLiteral",
+                                            "fullStart": 46,
+                                            "start": 47,
+                                            "length": 2
+                                        }
+                                    },
+                                    {
+                                        "kind": "CommaSeparator",
+                                        "separator": {
+                                            "kind": "Comma",
+                                            "fullStart": 48,
+                                            "start": 48,
+                                            "length": 1
+                                        },
+                                        "newlines": []
+                                    },
+                                    {
+                                        "kind": "IntegerLiteralExpression",
+                                        "newlines": [],
+                                        "value": {
+                                            "kind": "IntegerLiteral",
+                                            "fullStart": 49,
+                                            "start": 50,
+                                            "length": 2
+                                        }
+                                    },
+                                    {
+                                        "kind": "CommaSeparator",
+                                        "separator": {
+                                            "kind": "Comma",
+                                            "fullStart": 51,
+                                            "start": 51,
+                                            "length": 1
+                                        },
+                                        "newlines": []
+                                    },
+                                    {
+                                        "kind": "IntegerLiteralExpression",
+                                        "newlines": [],
+                                        "value": {
+                                            "kind": "IntegerLiteral",
                                             "fullStart": 52,
-                                            "start": 52,
-                                            "length": 1
-                                        }
-                                    },
-                                    {
-                                        "kind": "CommaSeparator",
-                                        "separator": {
-                                            "kind": "Comma",
-                                            "fullStart": 53,
                                             "start": 53,
-                                            "length": 1
-                                        },
-                                        "newlines": []
-                                    },
-                                    {
-                                        "kind": "IntegerLiteralExpression",
-                                        "newlines": [],
-                                        "value": {
-                                            "kind": "IntegerLiteral",
-                                            "fullStart": 54,
-                                            "start": 55,
-                                            "length": 2
-                                        }
-                                    },
-                                    {
-                                        "kind": "CommaSeparator",
-                                        "separator": {
-                                            "kind": "Comma",
-                                            "fullStart": 56,
-                                            "start": 56,
-                                            "length": 1
-                                        },
-                                        "newlines": []
-                                    },
-                                    {
-                                        "kind": "IntegerLiteralExpression",
-                                        "newlines": [],
-                                        "value": {
-                                            "kind": "IntegerLiteral",
-                                            "fullStart": 57,
-                                            "start": 58,
-                                            "length": 2
-                                        }
-                                    },
-                                    {
-                                        "kind": "CommaSeparator",
-                                        "separator": {
-                                            "kind": "Comma",
-                                            "fullStart": 59,
-                                            "start": 59,
-                                            "length": 1
-                                        },
-                                        "newlines": []
-                                    },
-                                    {
-                                        "kind": "IntegerLiteralExpression",
-                                        "newlines": [],
-                                        "value": {
-                                            "kind": "IntegerLiteral",
-                                            "fullStart": 60,
-                                            "start": 61,
                                             "length": 2
                                         }
                                     }
                                 ],
                                 "closingSquareBracket": {
                                     "kind": "ClosingSquareBracket",
-                                    "fullStart": 62,
-                                    "start": 62,
+                                    "fullStart": 54,
+                                    "start": 54,
                                     "length": 1
                                 }
                             }
                         ],
                         "closingParenthesis": {
                             "kind": "ClosingParenthesis",
-                            "fullStart": 63,
-                            "start": 63,
+                            "fullStart": 55,
+                            "start": 55,
                             "length": 1
                         }
                     },
                     "terminator": {
                         "kind": "Newline",
-                        "fullStart": 64,
-                        "start": 65,
+                        "fullStart": 56,
+                        "start": 57,
                         "length": 2
                     }
                 }
             ],
             "endKeyword": {
                 "kind": "EndKeyword",
-                "fullStart": 66,
-                "start": 66,
+                "fullStart": 58,
+                "start": 58,
                 "length": 3
             }
         }
     ],
     "eofToken": {
         "kind": "EOF",
-        "fullStart": 69,
-        "start": 69,
+        "fullStart": 61,
+        "start": 61,
         "length": 0
     }
 }
