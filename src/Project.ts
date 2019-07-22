@@ -17,7 +17,6 @@ const preprocessorTokenizer = new PreprocessorTokenizer();
 const preprocessorParser = new PreprocessorParser();
 const tokenizer = new Tokenizer();
 const parser = new Parser();
-const binder = new Binder();
 
 export const FILE_EXTENSION = '.monkey';
 
@@ -55,6 +54,7 @@ export class Project {
 
         const moduleIdentifier = path.basename(modulePath, FILE_EXTENSION);
         const boundModuleDirectory = this.resolveModuleDirectory(currentDirectory, [], moduleIdentifier);
+        const binder = new Binder();
         const boundModuleDeclaration = binder.bind(moduleDeclaration, this, boundModuleDirectory, moduleIdentifier);
 
         return boundModuleDeclaration;
