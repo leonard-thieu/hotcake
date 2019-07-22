@@ -8,8 +8,8 @@
     "members": [
         {
             "kind": "ClassDeclaration",
-            "identifier": "Driver",
             "locals": [],
+            "identifier": "Driver",
             "type": "Driver",
             "members": []
         },

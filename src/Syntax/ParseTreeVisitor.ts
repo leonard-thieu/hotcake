@@ -6,6 +6,20 @@ import { ErrorableToken } from './Token/Token';
 import { TokenKind } from './Token/TokenKind';
 
 export namespace ParseTreeVisitor {
+    export function getNearestAncestor(node: Nodes, kind: NodeKind, ...kinds: NodeKind[]) {
+        let ancestor = node.parent;
+
+        while (ancestor) {
+            if (ancestor.kind === kind ||
+                kinds.includes(ancestor.kind)
+            ) {
+                return ancestor;
+            }
+
+            ancestor = ancestor.parent;
+        }
+    }
+
     // #region Nodes
 
     export function getNodeAt(node: Nodes, offset: number) {

@@ -17,6 +17,7 @@ import { ImportStatement } from '../Syntax/Node/Declaration/ImportStatement';
 import { InterfaceDeclaration } from '../Syntax/Node/Declaration/InterfaceDeclaration';
 import { InterfaceMethodDeclaration } from '../Syntax/Node/Declaration/InterfaceMethodDeclaration';
 import { ModuleDeclaration } from '../Syntax/Node/Declaration/ModuleDeclaration';
+import { TypeParameter } from '../Syntax/Node/Declaration/TypeParameter';
 import { ArrayLiteralExpression } from '../Syntax/Node/Expression/ArrayLiteralExpression';
 import { BinaryExpression } from '../Syntax/Node/Expression/BinaryExpression';
 import { MissableExpression } from '../Syntax/Node/Expression/Expression';
@@ -45,6 +46,7 @@ import { CatchClause, TryStatement } from '../Syntax/Node/Statement/TryStatement
 import { WhileLoop } from '../Syntax/Node/Statement/WhileLoop';
 import { ShorthandTypeToken, TypeAnnotation } from '../Syntax/Node/TypeAnnotation';
 import { MissableTypeReference, TypeReference } from '../Syntax/Node/TypeReference';
+import { ParseTreeVisitor } from '../Syntax/ParseTreeVisitor';
 import { SkippedToken } from '../Syntax/Token/SkippedToken';
 import { Tokens } from '../Syntax/Token/Token';
 import { TokenKind } from '../Syntax/Token/TokenKind';
@@ -64,6 +66,7 @@ import { BoundImportStatement } from './Node/Declaration/BoundImportStatement';
 import { BoundInterfaceDeclaration, BoundInterfaceDeclarationMember } from './Node/Declaration/BoundInterfaceDeclaration';
 import { BoundInterfaceMethodDeclaration } from './Node/Declaration/BoundInterfaceMethodDeclaration';
 import { BoundModuleDeclaration, BoundModuleDeclarationMember } from './Node/Declaration/BoundModuleDeclaration';
+import { BoundTypeParameter } from './Node/Declaration/BoundTypeParameter';
 import { BoundExternClassDeclaration, BoundExternClassDeclarationMember } from './Node/Declaration/Extern/BoundExternClassDeclaration';
 import { BoundExternClassMethodDeclaration } from './Node/Declaration/Extern/BoundExternClassMethodDeclaration';
 import { BoundExternDataDeclaration } from './Node/Declaration/Extern/BoundExternDataDeclaration';
@@ -104,6 +107,7 @@ import { BoundWhileLoop } from './Node/Statement/BoundWhileLoop';
 import { ArrayType } from './Type/ArrayType';
 import { BoolType } from './Type/BoolType';
 import { FloatType } from './Type/FloatType';
+import { GenericType } from './Type/GenericType';
 import { IntType } from './Type/IntType';
 import { ObjectType } from './Type/ObjectType';
 import { StringType } from './Type/StringType';
@@ -783,6 +787,9 @@ export class Binder {
         boundClassDeclaration.locals = classDeclaration.locals;
         boundClassDeclaration.identifier = this.declareSymbolInScope(classDeclaration, boundClassDeclaration);
         boundClassDeclaration.type = new ObjectType(boundClassDeclaration);
+        if (classDeclaration.typeParameters) {
+            boundClassDeclaration.typeParameters = this.bindTypeParameters(classDeclaration.typeParameters, boundClassDeclaration);
+        }
         if (classDeclaration.baseType &&
             classDeclaration.baseType.kind === NodeKind.TypeReference
         ) {
@@ -795,6 +802,46 @@ export class Binder {
 
         return boundClassDeclaration;
     }
+
+    // #region Type parameters
+
+    private bindTypeParameters(
+        typeParameters: (TypeParameter | CommaSeparator)[],
+        parent: BoundNodes,
+    ): BoundTypeParameter[] {
+        const boundTypeParameters: BoundTypeParameter[] = [];
+
+        for (const typeParameter of typeParameters) {
+            switch (typeParameter.kind) {
+                case NodeKind.TypeParameter: {
+                    const boundTypeParameter = this.bindTypeParameter(typeParameter, parent);
+                    boundTypeParameters.push(boundTypeParameter);
+                    break;
+                }
+                case NodeKind.CommaSeparator: { break; }
+                default: {
+                    assertNever(typeParameter);
+                    break;
+                }
+            }
+        }
+
+        return boundTypeParameters;
+    }
+
+    private bindTypeParameter(
+        typeParameter: TypeParameter,
+        parent: BoundNodes,
+    ): BoundTypeParameter {
+        const boundTypeParameter = new BoundTypeParameter();
+        boundTypeParameter.parent = parent;
+        boundTypeParameter.identifier = this.declareSymbolInScope(typeParameter, boundTypeParameter);
+        boundTypeParameter.type = new GenericType(boundTypeParameter);
+
+        return boundTypeParameter;
+    }
+
+    // #endregion
 
     private bindClassDeclarationMembers(
         classDeclaration: ClassDeclaration,
@@ -1906,6 +1953,10 @@ export class Binder {
                         break;
                     }
 
+                    case BoundNodeKind.TypeParameter: {
+                        break;
+                    }
+
                     case BoundNodeKind.Directory:
                     case BoundNodeKind.ModuleDeclaration:
                     case BoundNodeKind.ImportStatement:
@@ -2212,7 +2263,8 @@ export class Binder {
             case NodeKind.InterfaceDeclaration:
             case NodeKind.InterfaceMethodDeclaration:
             case NodeKind.ClassDeclaration:
-            case NodeKind.ClassMethodDeclaration: {
+            case NodeKind.ClassMethodDeclaration:
+            case NodeKind.TypeParameter: {
                 switch (declaration.identifier.kind) {
                     case TokenKind.Missing: { break; }
                     case NodeKind.EscapedIdentifier: {
@@ -2367,6 +2419,24 @@ export class Binder {
                     }
                 } else {
                     const identifierText = identifier.getText(this.document);
+
+                    const classDeclaration = ParseTreeVisitor.getNearestAncestor(typeReference,
+                        NodeKind.ClassDeclaration,
+                    ) as ClassDeclaration | undefined;
+                    if (classDeclaration) {
+                        const typeParameterSymbol = classDeclaration.locals.get(identifierText);
+                        if (typeParameterSymbol) {
+                            switch (typeParameterSymbol.declaration.kind) {
+                                case BoundNodeKind.TypeParameter: {
+                                    return typeParameterSymbol.declaration.type;
+                                }
+                                default: {
+                                    throw new Error(`'${typeParameterSymbol.name}' is not a type parameter.`);
+                                }
+                            }
+                        }
+                    }
+
                     const type = this.bindTypeReferenceFromModule(identifierText, this.module);
                     if (!type) {
                         for (const [, node] of this.module.locals) {

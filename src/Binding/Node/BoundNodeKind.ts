@@ -19,6 +19,7 @@ export enum BoundNodeKind {
     InterfaceMethodDeclaration = 'InterfaceMethodDeclaration',
     ClassDeclaration = 'ClassDeclaration',
     ClassMethodDeclaration = 'ClassMethodDeclaration',
+    TypeParameter = 'TypeParameter',
 
     DataDeclarationStatement = 'DataDeclarationStatement',
     ReturnStatement = 'ReturnStatement',
