@@ -1,3 +1,4 @@
+import { BoundSymbolTable } from '../../../Binding/BoundSymbol';
 import { MissableToken } from '../../Token/MissingToken';
 import { SkippedToken } from '../../Token/SkippedToken';
 import { EndKeywordToken, WendKeywordToken, WhileKeywordToken } from '../../Token/Token';
@@ -22,4 +23,6 @@ export class WhileLoop extends Statement {
     statements: (Statements | SkippedToken)[] = undefined!;
     endKeyword: MissableToken<WendKeywordToken | EndKeywordToken> = undefined!;
     endWhileKeyword?: WhileKeywordToken = undefined;
+
+    locals = new BoundSymbolTable();
 }

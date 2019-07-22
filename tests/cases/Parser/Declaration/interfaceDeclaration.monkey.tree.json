@@ -36,7 +36,7 @@
     "eofToken": {
         "kind": "EOF",
         "fullStart": 23,
-        "start": 24,
-        "length": 1
+        "start": 23,
+        "length": 0
     }
 }

@@ -1,3 +1,4 @@
+import { BoundSymbolTable } from '../../../../Binding/BoundSymbol';
 import { MissableToken } from '../../../Token/MissingToken';
 import { ClosingParenthesisToken, FunctionKeywordToken, OpeningParenthesisToken } from '../../../Token/Token';
 import { MissableIdentifier } from '../../Identifier';
@@ -26,4 +27,6 @@ export class ExternFunctionDeclaration extends ExternDeclaration {
     openingParenthesis: MissableToken<OpeningParenthesisToken> = undefined!;
     parameters: DataDeclarationSequence = undefined!;
     closingParenthesis: MissableToken<ClosingParenthesisToken> = undefined!;
+
+    locals = new BoundSymbolTable();
 }

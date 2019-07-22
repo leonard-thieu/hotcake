@@ -101,16 +101,16 @@
                     "terminator": {
                         "kind": "Newline",
                         "fullStart": 57,
-                        "start": 62,
-                        "length": 6
+                        "start": 58,
+                        "length": 2
                     }
                 },
                 {
                     "kind": "EmptyStatement",
                     "terminator": {
                         "kind": "Newline",
-                        "fullStart": 63,
-                        "start": 85,
+                        "fullStart": 59,
+                        "start": 81,
                         "length": 23
                     }
                 },
@@ -120,8 +120,8 @@
                         "kind": "DataDeclarationSequence",
                         "dataDeclarationKeyword": {
                             "kind": "LocalKeyword",
-                            "fullStart": 86,
-                            "start": 90,
+                            "fullStart": 82,
+                            "start": 86,
                             "length": 9
                         },
                         "children": [
@@ -129,14 +129,14 @@
                                 "kind": "DataDeclaration",
                                 "identifier": {
                                     "kind": "Identifier",
-                                    "fullStart": 95,
-                                    "start": 96,
+                                    "fullStart": 91,
+                                    "start": 92,
                                     "length": 4
                                 },
                                 "equalsSign": {
                                     "kind": "ColonEqualsSign",
-                                    "fullStart": 99,
-                                    "start": 100,
+                                    "fullStart": 95,
+                                    "start": 96,
                                     "length": 3
                                 },
                                 "expression": {
@@ -146,15 +146,15 @@
                                         "newlines": [],
                                         "identifier": {
                                             "kind": "Identifier",
-                                            "fullStart": 102,
-                                            "start": 103,
+                                            "fullStart": 98,
+                                            "start": 99,
                                             "length": 10
                                         }
                                     },
                                     "operator": {
                                         "kind": "PlusSign",
-                                        "fullStart": 112,
-                                        "start": 113,
+                                        "fullStart": 108,
+                                        "start": 109,
                                         "length": 2
                                     },
                                     "rightOperand": {
@@ -162,8 +162,8 @@
                                         "newlines": [],
                                         "value": {
                                             "kind": "IntegerLiteral",
-                                            "fullStart": 114,
-                                            "start": 115,
+                                            "fullStart": 110,
+                                            "start": 111,
                                             "length": 2
                                         }
                                     }
@@ -173,26 +173,26 @@
                     },
                     "terminator": {
                         "kind": "Newline",
+                        "fullStart": 112,
+                        "start": 113,
+                        "length": 2
+                    }
+                },
+                {
+                    "kind": "EmptyStatement",
+                    "terminator": {
+                        "kind": "Newline",
+                        "fullStart": 114,
+                        "start": 115,
+                        "length": 2
+                    }
+                },
+                {
+                    "kind": "EmptyStatement",
+                    "terminator": {
+                        "kind": "Newline",
                         "fullStart": 116,
-                        "start": 117,
-                        "length": 2
-                    }
-                },
-                {
-                    "kind": "EmptyStatement",
-                    "terminator": {
-                        "kind": "Newline",
-                        "fullStart": 118,
-                        "start": 119,
-                        "length": 2
-                    }
-                },
-                {
-                    "kind": "EmptyStatement",
-                    "terminator": {
-                        "kind": "Newline",
-                        "fullStart": 120,
-                        "start": 168,
+                        "start": 164,
                         "length": 49
                     }
                 },
@@ -202,8 +202,8 @@
                         "kind": "DataDeclarationSequence",
                         "dataDeclarationKeyword": {
                             "kind": "LocalKeyword",
-                            "fullStart": 169,
-                            "start": 173,
+                            "fullStart": 165,
+                            "start": 169,
                             "length": 9
                         },
                         "children": [
@@ -211,8 +211,8 @@
                                 "kind": "DataDeclaration",
                                 "identifier": {
                                     "kind": "Identifier",
-                                    "fullStart": 178,
-                                    "start": 179,
+                                    "fullStart": 174,
+                                    "start": 175,
                                     "length": 10
                                 }
                             }
@@ -220,26 +220,26 @@
                     },
                     "terminator": {
                         "kind": "Newline",
+                        "fullStart": 184,
+                        "start": 185,
+                        "length": 2
+                    }
+                },
+                {
+                    "kind": "EmptyStatement",
+                    "terminator": {
+                        "kind": "Newline",
+                        "fullStart": 186,
+                        "start": 187,
+                        "length": 2
+                    }
+                },
+                {
+                    "kind": "EmptyStatement",
+                    "terminator": {
+                        "kind": "Newline",
                         "fullStart": 188,
-                        "start": 189,
-                        "length": 2
-                    }
-                },
-                {
-                    "kind": "EmptyStatement",
-                    "terminator": {
-                        "kind": "Newline",
-                        "fullStart": 190,
-                        "start": 191,
-                        "length": 2
-                    }
-                },
-                {
-                    "kind": "EmptyStatement",
-                    "terminator": {
-                        "kind": "Newline",
-                        "fullStart": 192,
-                        "start": 212,
+                        "start": 208,
                         "length": 21
                     }
                 },
@@ -249,8 +249,8 @@
                         "kind": "DataDeclarationSequence",
                         "dataDeclarationKeyword": {
                             "kind": "LocalKeyword",
-                            "fullStart": 213,
-                            "start": 217,
+                            "fullStart": 209,
+                            "start": 213,
                             "length": 9
                         },
                         "children": [
@@ -258,14 +258,14 @@
                                 "kind": "DataDeclaration",
                                 "identifier": {
                                     "kind": "Identifier",
-                                    "fullStart": 222,
-                                    "start": 223,
+                                    "fullStart": 218,
+                                    "start": 219,
                                     "length": 5
                                 },
                                 "equalsSign": {
                                     "kind": "ColonEqualsSign",
-                                    "fullStart": 227,
-                                    "start": 228,
+                                    "fullStart": 223,
+                                    "start": 224,
                                     "length": 3
                                 },
                                 "expression": {
@@ -275,15 +275,15 @@
                                         "newlines": [],
                                         "identifier": {
                                             "kind": "Identifier",
-                                            "fullStart": 230,
-                                            "start": 231,
+                                            "fullStart": 226,
+                                            "start": 227,
                                             "length": 10
                                         }
                                     },
                                     "operator": {
                                         "kind": "PlusSign",
-                                        "fullStart": 240,
-                                        "start": 241,
+                                        "fullStart": 236,
+                                        "start": 237,
                                         "length": 2
                                     },
                                     "rightOperand": {
@@ -291,8 +291,8 @@
                                         "newlines": [],
                                         "value": {
                                             "kind": "IntegerLiteral",
-                                            "fullStart": 242,
-                                            "start": 243,
+                                            "fullStart": 238,
+                                            "start": 239,
                                             "length": 2
                                         }
                                     }
@@ -302,26 +302,26 @@
                     },
                     "terminator": {
                         "kind": "Newline",
+                        "fullStart": 240,
+                        "start": 241,
+                        "length": 2
+                    }
+                },
+                {
+                    "kind": "EmptyStatement",
+                    "terminator": {
+                        "kind": "Newline",
+                        "fullStart": 242,
+                        "start": 243,
+                        "length": 2
+                    }
+                },
+                {
+                    "kind": "EmptyStatement",
+                    "terminator": {
+                        "kind": "Newline",
                         "fullStart": 244,
-                        "start": 245,
-                        "length": 2
-                    }
-                },
-                {
-                    "kind": "EmptyStatement",
-                    "terminator": {
-                        "kind": "Newline",
-                        "fullStart": 246,
-                        "start": 247,
-                        "length": 2
-                    }
-                },
-                {
-                    "kind": "EmptyStatement",
-                    "terminator": {
-                        "kind": "Newline",
-                        "fullStart": 248,
-                        "start": 296,
+                        "start": 292,
                         "length": 49
                     }
                 },
@@ -329,49 +329,49 @@
                     "kind": "EmptyStatement",
                     "terminator": {
                         "kind": "Newline",
-                        "fullStart": 297,
-                        "start": 316,
+                        "fullStart": 293,
+                        "start": 312,
                         "length": 20
                     }
                 }
             ],
             "endKeyword": {
                 "kind": "EndKeyword",
-                "fullStart": 317,
-                "start": 317,
+                "fullStart": 313,
+                "start": 313,
                 "length": 3
             }
         },
         {
             "kind": "Newline",
-            "fullStart": 320,
-            "start": 321,
+            "fullStart": 316,
+            "start": 317,
             "length": 2
         },
         {
             "kind": "Newline",
-            "fullStart": 322,
-            "start": 323,
+            "fullStart": 318,
+            "start": 319,
             "length": 2
         },
         {
             "kind": "FunctionDeclaration",
             "functionKeyword": {
                 "kind": "FunctionKeyword",
-                "fullStart": 324,
-                "start": 324,
+                "fullStart": 320,
+                "start": 320,
                 "length": 8
             },
             "identifier": {
                 "kind": "Identifier",
-                "fullStart": 332,
-                "start": 333,
+                "fullStart": 328,
+                "start": 329,
                 "length": 10
             },
             "openingParenthesis": {
                 "kind": "OpeningParenthesis",
-                "fullStart": 342,
-                "start": 342,
+                "fullStart": 338,
+                "start": 338,
                 "length": 1
             },
             "parameters": {
@@ -380,8 +380,8 @@
             },
             "closingParenthesis": {
                 "kind": "ClosingParenthesis",
-                "fullStart": 343,
-                "start": 343,
+                "fullStart": 339,
+                "start": 339,
                 "length": 1
             },
             "statements": [
@@ -389,49 +389,49 @@
                     "kind": "EmptyStatement",
                     "terminator": {
                         "kind": "Newline",
-                        "fullStart": 344,
-                        "start": 345,
+                        "fullStart": 340,
+                        "start": 341,
                         "length": 2
                     }
                 }
             ],
             "endKeyword": {
                 "kind": "EndKeyword",
-                "fullStart": 346,
-                "start": 346,
+                "fullStart": 342,
+                "start": 342,
                 "length": 3
             }
         },
         {
             "kind": "Newline",
-            "fullStart": 349,
-            "start": 350,
+            "fullStart": 345,
+            "start": 346,
             "length": 2
         },
         {
             "kind": "Newline",
-            "fullStart": 351,
-            "start": 352,
+            "fullStart": 347,
+            "start": 348,
             "length": 2
         },
         {
             "kind": "FunctionDeclaration",
             "functionKeyword": {
                 "kind": "FunctionKeyword",
-                "fullStart": 353,
-                "start": 353,
+                "fullStart": 349,
+                "start": 349,
                 "length": 8
             },
             "identifier": {
                 "kind": "Identifier",
-                "fullStart": 361,
-                "start": 362,
+                "fullStart": 357,
+                "start": 358,
                 "length": 10
             },
             "openingParenthesis": {
                 "kind": "OpeningParenthesis",
-                "fullStart": 371,
-                "start": 371,
+                "fullStart": 367,
+                "start": 367,
                 "length": 1
             },
             "parameters": {
@@ -441,8 +441,8 @@
                         "kind": "DataDeclaration",
                         "identifier": {
                             "kind": "Identifier",
-                            "fullStart": 372,
-                            "start": 372,
+                            "fullStart": 368,
+                            "start": 368,
                             "length": 4
                         }
                     }
@@ -450,8 +450,8 @@
             },
             "closingParenthesis": {
                 "kind": "ClosingParenthesis",
-                "fullStart": 376,
-                "start": 376,
+                "fullStart": 372,
+                "start": 372,
                 "length": 1
             },
             "statements": [
@@ -459,49 +459,49 @@
                     "kind": "EmptyStatement",
                     "terminator": {
                         "kind": "Newline",
-                        "fullStart": 377,
-                        "start": 378,
+                        "fullStart": 373,
+                        "start": 374,
                         "length": 2
                     }
                 }
             ],
             "endKeyword": {
                 "kind": "EndKeyword",
-                "fullStart": 379,
-                "start": 379,
+                "fullStart": 375,
+                "start": 375,
                 "length": 3
             }
         },
         {
             "kind": "Newline",
-            "fullStart": 382,
-            "start": 383,
+            "fullStart": 378,
+            "start": 379,
             "length": 2
         },
         {
             "kind": "Newline",
-            "fullStart": 384,
-            "start": 385,
+            "fullStart": 380,
+            "start": 381,
             "length": 2
         },
         {
             "kind": "FunctionDeclaration",
             "functionKeyword": {
                 "kind": "FunctionKeyword",
-                "fullStart": 386,
-                "start": 386,
+                "fullStart": 382,
+                "start": 382,
                 "length": 8
             },
             "identifier": {
                 "kind": "Identifier",
-                "fullStart": 394,
-                "start": 395,
+                "fullStart": 390,
+                "start": 391,
                 "length": 37
             },
             "openingParenthesis": {
                 "kind": "OpeningParenthesis",
-                "fullStart": 431,
-                "start": 431,
+                "fullStart": 427,
+                "start": 427,
                 "length": 1
             },
             "parameters": {
@@ -510,8 +510,8 @@
             },
             "closingParenthesis": {
                 "kind": "ClosingParenthesis",
-                "fullStart": 432,
-                "start": 432,
+                "fullStart": 428,
+                "start": 428,
                 "length": 1
             },
             "statements": [
@@ -519,44 +519,44 @@
                     "kind": "EmptyStatement",
                     "terminator": {
                         "kind": "Newline",
-                        "fullStart": 433,
-                        "start": 434,
+                        "fullStart": 429,
+                        "start": 430,
                         "length": 2
                     }
                 },
                 {
                     "kind": "Skipped",
-                    "fullStart": 435,
-                    "start": 439,
+                    "fullStart": 431,
+                    "start": 435,
                     "length": 5,
                     "originalToken": {
                         "kind": "IntegerLiteral",
-                        "fullStart": 435,
-                        "start": 439,
+                        "fullStart": 431,
+                        "start": 435,
                         "length": 5
                     }
                 },
                 {
                     "kind": "Skipped",
-                    "fullStart": 440,
-                    "start": 441,
+                    "fullStart": 436,
+                    "start": 437,
                     "length": 2,
                     "originalToken": {
                         "kind": "PlusSign",
-                        "fullStart": 440,
-                        "start": 441,
+                        "fullStart": 436,
+                        "start": 437,
                         "length": 2
                     }
                 },
                 {
                     "kind": "Skipped",
-                    "fullStart": 442,
-                    "start": 443,
+                    "fullStart": 438,
+                    "start": 439,
                     "length": 2,
                     "originalToken": {
                         "kind": "IntegerLiteral",
-                        "fullStart": 442,
-                        "start": 443,
+                        "fullStart": 438,
+                        "start": 439,
                         "length": 2
                     }
                 },
@@ -564,24 +564,24 @@
                     "kind": "EmptyStatement",
                     "terminator": {
                         "kind": "Newline",
-                        "fullStart": 444,
-                        "start": 445,
+                        "fullStart": 440,
+                        "start": 441,
                         "length": 2
                     }
                 }
             ],
             "endKeyword": {
                 "kind": "EndKeyword",
-                "fullStart": 446,
-                "start": 446,
+                "fullStart": 442,
+                "start": 442,
                 "length": 3
             }
         }
     ],
     "eofToken": {
         "kind": "EOF",
-        "fullStart": 449,
-        "start": 449,
+        "fullStart": 445,
+        "start": 445,
         "length": 0
     }
 }

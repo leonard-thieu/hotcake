@@ -1,3 +1,4 @@
+import { ExternClassDeclaration } from '../../../../Syntax/Node/Declaration/ExternDeclaration/ExternClassDeclaration';
 import { BoundSymbol, BoundSymbolTable } from '../../../BoundSymbol';
 import { Types } from '../../../Type/Types';
 import { BoundNode } from '../../BoundNode';
@@ -9,6 +10,8 @@ import { BoundExternFunctionDeclaration } from './BoundExternFunctionDeclaration
 
 export class BoundExternClassDeclaration extends BoundNode {
     readonly kind = BoundNodeKind.ExternClassDeclaration;
+
+    declaration: ExternClassDeclaration = undefined!;
 
     identifier: BoundSymbol = undefined!;
     locals: BoundSymbolTable = undefined!;

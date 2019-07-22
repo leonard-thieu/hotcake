@@ -1,3 +1,4 @@
+import { BoundSymbolTable } from '../../../Binding/BoundSymbol';
 import { MissableToken } from '../../Token/MissingToken';
 import { SkippedToken } from '../../Token/SkippedToken';
 import { AbstractKeywordToken, ClassKeywordToken, EndKeywordToken, ExtendsKeywordToken, FinalKeywordToken, GreaterThanSignToken, ImplementsKeywordToken, LessThanSignToken, NewlineToken } from '../../Token/Token';
@@ -52,6 +53,8 @@ export class ClassDeclaration extends Declaration {
     members: (ClassDeclarationMember | SkippedToken)[] = undefined!;
     endKeyword: MissableToken<EndKeywordToken> = undefined!;
     endClassKeyword?: ClassKeywordToken = undefined;
+
+    locals = new BoundSymbolTable();
 }
 
 export type ClassDeclarationMember =

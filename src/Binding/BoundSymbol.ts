@@ -4,7 +4,7 @@ import { BoundDeclarations } from './Node/Declaration/BoundDeclarations';
 export class BoundSymbol {
     constructor(
         public name: string,
-        public declaration: BoundDeclarations,
+        readonly declaration: BoundDeclarations,
     ) { }
 
     readonly references: BoundNodes[] = [];

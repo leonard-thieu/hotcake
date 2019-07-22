@@ -1,3 +1,4 @@
+import { BoundSymbolTable } from '../../../Binding/BoundSymbol';
 import { MissableToken } from '../../Token/MissingToken';
 import { SkippedToken } from '../../Token/SkippedToken';
 import { ElseIfKeywordToken, ElseKeywordToken, EndIfKeywordToken, EndKeywordToken, IfKeywordToken, ThenKeywordToken } from '../../Token/Token';
@@ -29,6 +30,8 @@ export class IfStatement extends Statement {
     elseClause?: ElseClause = undefined;
     endKeyword?: MissableToken<EndIfKeywordToken | EndKeywordToken> = undefined;
     endIfKeyword?: IfKeywordToken = undefined;
+
+    locals = new BoundSymbolTable();
 }
 
 export const ElseIfClauseChildNames: ReadonlyArray<keyof ElseIfClause> = [
@@ -47,6 +50,8 @@ export class ElseIfClause extends Node {
     expression: MissableExpression = undefined!;
     thenKeyword?: ThenKeywordToken = undefined;
     statements: (Statements | SkippedToken)[] = undefined!;
+
+    locals = new BoundSymbolTable();
 }
 
 export const ElseClauseChildNames: ReadonlyArray<keyof ElseClause> = [
@@ -59,4 +64,6 @@ export class ElseClause extends Node {
 
     elseKeyword: ElseKeywordToken = undefined!;
     statements: (Statements | SkippedToken)[] = undefined!;
+
+    locals = new BoundSymbolTable();
 }
