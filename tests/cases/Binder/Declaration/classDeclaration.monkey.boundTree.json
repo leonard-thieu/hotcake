@@ -44,24 +44,45 @@
         },
         {
             "kind": "ClassDeclaration",
-            "locals": [],
+            "locals": [
+                "New"
+            ],
             "identifier": "Entity",
             "type": "Entity",
+            "baseType": "Object",
             "implementedTypes": [
                 "Moveable"
             ],
-            "members": []
+            "members": [
+                {
+                    "kind": "ClassMethodDeclaration",
+                    "identifier": "New",
+                    "locals": [],
+                    "returnType": "Entity",
+                    "parameters": []
+                }
+            ]
         },
         {
             "kind": "ClassDeclaration",
-            "locals": [],
+            "locals": [
+                "New"
+            ],
             "identifier": "Actor",
             "type": "Actor",
             "baseType": "Entity",
             "implementedTypes": [
                 "Drawable"
             ],
-            "members": []
+            "members": [
+                {
+                    "kind": "ClassMethodDeclaration",
+                    "identifier": "New",
+                    "locals": [],
+                    "returnType": "Actor",
+                    "parameters": []
+                }
+            ]
         }
     ]
 }

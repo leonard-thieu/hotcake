@@ -9,16 +9,25 @@
         {
             "kind": "ClassDeclaration",
             "locals": [
-                "T"
+                "T",
+                "New"
             ],
             "identifier": "C",
             "type": "C",
+            "baseType": "Object",
             "members": [
                 {
                     "kind": "DataDeclaration",
                     "declarationKind": "GlobalKeyword",
                     "identifier": "T",
                     "type": "Int"
+                },
+                {
+                    "kind": "ClassMethodDeclaration",
+                    "identifier": "New",
+                    "locals": [],
+                    "returnType": "C",
+                    "parameters": []
                 }
             ]
         },

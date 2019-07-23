@@ -8,10 +8,21 @@
     "members": [
         {
             "kind": "ClassDeclaration",
-            "locals": [],
+            "locals": [
+                "New"
+            ],
             "identifier": "Driver",
             "type": "Driver",
-            "members": []
+            "baseType": "Object",
+            "members": [
+                {
+                    "kind": "ClassMethodDeclaration",
+                    "identifier": "New",
+                    "locals": [],
+                    "returnType": "Driver",
+                    "parameters": []
+                }
+            ]
         },
         {
             "kind": "ExternDataDeclaration",

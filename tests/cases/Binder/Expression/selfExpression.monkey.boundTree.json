@@ -8,10 +8,12 @@
         {
             "kind": "ClassDeclaration",
             "locals": [
-                "GetInstance"
+                "GetInstance",
+                "New"
             ],
             "identifier": "MyClass",
             "type": "MyClass",
+            "baseType": "Object",
             "members": [
                 {
                     "kind": "ClassMethodDeclaration",
@@ -29,6 +31,13 @@
                             }
                         }
                     ]
+                },
+                {
+                    "kind": "ClassMethodDeclaration",
+                    "identifier": "New",
+                    "locals": [],
+                    "returnType": "MyClass",
+                    "parameters": []
                 }
             ]
         }

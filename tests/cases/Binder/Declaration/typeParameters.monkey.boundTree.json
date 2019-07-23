@@ -22,6 +22,7 @@
                     "type": "Generic"
                 }
             ],
+            "baseType": "Object",
             "members": [
                 {
                     "kind": "DataDeclaration",
@@ -35,7 +36,7 @@
                     "locals": [
                         "value"
                     ],
-                    "returnType": "Int",
+                    "returnType": "ArrayObject",
                     "parameters": [
                         {
                             "kind": "DataDeclaration",
@@ -84,6 +85,13 @@
                             }
                         }
                     ]
+                },
+                {
+                    "kind": "ClassMethodDeclaration",
+                    "identifier": "New",
+                    "locals": [],
+                    "returnType": "ArrayObject",
+                    "parameters": []
                 }
             ]
         }

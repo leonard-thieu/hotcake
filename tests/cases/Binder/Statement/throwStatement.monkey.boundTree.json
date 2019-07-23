@@ -8,10 +8,21 @@
     "members": [
         {
             "kind": "ClassDeclaration",
-            "locals": [],
+            "locals": [
+                "New"
+            ],
             "identifier": "Throwable",
             "type": "Throwable",
-            "members": []
+            "baseType": "Object",
+            "members": [
+                {
+                    "kind": "ClassMethodDeclaration",
+                    "identifier": "New",
+                    "locals": [],
+                    "returnType": "Throwable",
+                    "parameters": []
+                }
+            ]
         },
         {
             "kind": "FunctionDeclaration",
@@ -27,7 +38,7 @@
                         "type": "Throwable",
                         "invokableExpression": {
                             "kind": "NewExpression",
-                            "type": "Throwable"
+                            "type": "(): Throwable"
                         },
                         "arguments": []
                     }

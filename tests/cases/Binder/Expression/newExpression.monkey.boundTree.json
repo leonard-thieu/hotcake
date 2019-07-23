@@ -8,10 +8,21 @@
     "members": [
         {
             "kind": "ClassDeclaration",
-            "locals": [],
+            "locals": [
+                "New"
+            ],
             "identifier": "MyClass",
             "type": "MyClass",
-            "members": []
+            "baseType": "Object",
+            "members": [
+                {
+                    "kind": "ClassMethodDeclaration",
+                    "identifier": "New",
+                    "locals": [],
+                    "returnType": "MyClass",
+                    "parameters": []
+                }
+            ]
         },
         {
             "kind": "FunctionDeclaration",
@@ -27,7 +38,7 @@
                         "type": "MyClass",
                         "invokableExpression": {
                             "kind": "NewExpression",
-                            "type": "MyClass"
+                            "type": "(): MyClass"
                         },
                         "arguments": []
                     }

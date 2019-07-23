@@ -1,3 +1,4 @@
+import { BoundNodeKind } from '../Node/BoundNodeKind';
 import { BoundClassDeclaration } from '../Node/Declaration/BoundClassDeclaration';
 import { BoundInterfaceDeclaration } from '../Node/Declaration/BoundInterfaceDeclaration';
 import { BoundExternClassDeclaration } from '../Node/Declaration/Extern/BoundExternClassDeclaration';
@@ -20,7 +21,27 @@ export class ObjectType extends Type {
         if (target === this) { return true; }
 
         // TODO: Implements `target`
-        // TODO: `target` is super type
+
+        if (this.declaration) {
+            switch (this.declaration.kind) {
+                case BoundNodeKind.ClassDeclaration: {
+                    let superType = this.declaration.baseType as ObjectType | undefined;
+                    while (superType) {
+                        if (target === superType) {
+                            return true;
+                        }
+
+                        if (!superType.declaration) {
+                            break;
+                        }
+
+                        superType = (superType.declaration as BoundClassDeclaration).baseType as ObjectType | undefined;
+                    }
+                    break;
+                }
+            }
+        }
+
         // TODO: Unboxing conversions
 
         return false;

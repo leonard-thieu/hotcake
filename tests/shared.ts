@@ -202,10 +202,17 @@ export function executeBinderTestCases(name: string, casesPath: string): void {
                 executeBaselineTestCase(outputPath, () => {
                     return getBoundTree(path.resolve(casesPath, sourceRelativePath), contents);
                 }, function (this: any, key, value) {
-                    if (this.kind === BoundNodeKind.ModuleDeclaration) {
-                        switch (key) {
-                            case 'type': {
-                                return undefined;
+                    switch (this.kind) {
+                        case BoundNodeKind.ModuleDeclaration:
+                        case BoundNodeKind.ExternFunctionDeclaration:
+                        case BoundNodeKind.ExternClassMethodDeclaration:
+                        case BoundNodeKind.FunctionDeclaration:
+                        case BoundNodeKind.InterfaceMethodDeclaration:
+                        case BoundNodeKind.ClassMethodDeclaration: {
+                            switch (key) {
+                                case 'type': {
+                                    return undefined;
+                                }
                             }
                         }
                     }
