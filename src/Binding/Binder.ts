@@ -2245,6 +2245,10 @@ export class Binder {
                 boundInvokeExpression.type = type.declaration.returnType;
                 break;
             }
+            case TypeKind.Object: {
+                boundInvokeExpression.type = type;
+                break;
+            }
             default: {
                 throw new Error(`Cannot invoke an expression of type '${type.kind}'.`);
             }

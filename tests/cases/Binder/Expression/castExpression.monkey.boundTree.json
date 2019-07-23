@@ -1,0 +1,65 @@
+{
+    "kind": "ModuleDeclaration",
+    "identifier": "castExpression",
+    "locals": [
+        "MyClass"
+    ],
+    "members": [
+        {
+            "kind": "ClassDeclaration",
+            "locals": [
+                "Cast",
+                "New"
+            ],
+            "identifier": "MyClass",
+            "type": "MyClass",
+            "baseType": "Object",
+            "members": [
+                {
+                    "kind": "ClassMethodDeclaration",
+                    "identifier": "Cast",
+                    "locals": [
+                        "obj"
+                    ],
+                    "returnType": "MyClass",
+                    "parameters": [
+                        {
+                            "kind": "DataDeclaration",
+                            "identifier": "obj",
+                            "type": "Object"
+                        }
+                    ],
+                    "statements": [
+                        {
+                            "kind": "ReturnStatement",
+                            "type": "MyClass",
+                            "expression": {
+                                "kind": "InvokeExpression",
+                                "type": "MyClass",
+                                "invokableExpression": {
+                                    "kind": "IdentifierExpression",
+                                    "type": "MyClass",
+                                    "identifier": "MyClass"
+                                },
+                                "arguments": [
+                                    {
+                                        "kind": "IdentifierExpression",
+                                        "type": "Object",
+                                        "identifier": "obj"
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                },
+                {
+                    "kind": "ClassMethodDeclaration",
+                    "identifier": "New",
+                    "locals": [],
+                    "returnType": "MyClass",
+                    "parameters": []
+                }
+            ]
+        }
+    ]
+}
