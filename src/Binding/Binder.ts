@@ -2140,7 +2140,6 @@ export class Binder {
             if (!boundSliceExpression.startExpression.type.isConvertibleTo(IntType.type)) {
                 throw new Error(`Start index expression is '${boundSliceExpression.startExpression.type}' but must be '${IntType.type}'.`)
             }
-
         }
 
         if (sliceExpression.endExpression) {
