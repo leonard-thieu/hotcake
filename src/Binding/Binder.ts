@@ -1494,6 +1494,7 @@ export class Binder {
     private bindExpression(
         expression: MissableExpression,
         parent: BoundNodes,
+        scope?: ContainerScope,
     ) {
         switch (expression.kind) {
             case NodeKind.BinaryExpression: {
@@ -1533,7 +1534,7 @@ export class Binder {
                 return this.bindGlobalScopeExpression(parent);
             }
             case NodeKind.IdentifierExpression: {
-                return this.bindIdentifierExpression(expression, parent);
+                return this.bindIdentifierExpression(expression, parent, scope);
             }
             case NodeKind.GroupingExpression: {
                 return this.bindGroupingExpression(expression, parent);
@@ -1755,8 +1756,8 @@ export class Binder {
         parent: BoundNodes,
     ): BoundNewExpression {
         const boundNewExpression = new BoundNewExpression();
-        boundNewExpression.type = this.bindTypeReference(newExpression.type);
         boundNewExpression.parent = parent;
+        boundNewExpression.type = this.bindTypeReference(newExpression.type);
 
         return boundNewExpression;
     }
@@ -1911,6 +1912,7 @@ export class Binder {
     private bindIdentifierExpression(
         identifierExpression: IdentifierExpression,
         parent: BoundNodes,
+        scope?: ContainerScope,
     ): BoundIdentifierExpression {
         const boundIdentifierExpression = new BoundIdentifierExpression();
         boundIdentifierExpression.parent = parent;
@@ -1920,32 +1922,11 @@ export class Binder {
             case TokenKind.Identifier:
             case TokenKind.ObjectKeyword:
             case TokenKind.ThrowableKeyword: {
-                switch (parent.kind) {
-                    case BoundNodeKind.ScopeMemberAccessExpression: {
-                        const { scopableExpression } = parent;
-                        // Binding `scopableExpression`
-                        if (!scopableExpression) {
-                            boundIdentifierExpression.identifier = this.getSymbol(identifier, identifierExpression);
-                        }
-                        // Binding `member`
-                        else {
-                            switch (scopableExpression.type.kind) {
-                                case TypeKind.Module:
-                                case TypeKind.Object: {
-                                    boundIdentifierExpression.identifier = this.getSymbolInScope(identifier, scopableExpression.type.declaration!);
-                                    break;
-                                }
-                                default: {
-                                    throw new Error('Method not implemented.');
-                                }
-                            }
-                        }
-                        break;
-                    }
-                    default: {
-                        boundIdentifierExpression.identifier = this.getSymbol(identifier, identifierExpression);
-                        break;
-                    }
+                // Called when binding `member` on `ScopeMemberAccessExpression`.
+                if (scope) {
+                    boundIdentifierExpression.identifier = this.getSymbolInScope(identifier, scope);
+                } else {
+                    boundIdentifierExpression.identifier = this.getSymbol(identifier, identifierExpression);
                 }
 
                 const { declaration } = boundIdentifierExpression.identifier;
@@ -2073,8 +2054,23 @@ export class Binder {
         const boundScopeMemberAccessExpression = new BoundScopeMemberAccessExpression();
         boundScopeMemberAccessExpression.parent = parent;
         boundScopeMemberAccessExpression.scopableExpression = this.bindExpression(scopeMemberAccessExpression.scopableExpression, boundScopeMemberAccessExpression);
-        boundScopeMemberAccessExpression.member = this.bindExpression(scopeMemberAccessExpression.member, boundScopeMemberAccessExpression);
-        boundScopeMemberAccessExpression.type = boundScopeMemberAccessExpression.member.type;
+
+        const scopableExpressionType = boundScopeMemberAccessExpression.scopableExpression.type;
+        switch (scopableExpressionType.kind) {
+            case TypeKind.Module:
+            case TypeKind.Object: {
+                boundScopeMemberAccessExpression.member = this.bindExpression(
+                    scopeMemberAccessExpression.member,
+                    boundScopeMemberAccessExpression,
+                    scopableExpressionType.declaration,
+                );
+                boundScopeMemberAccessExpression.type = boundScopeMemberAccessExpression.member.type;
+                break;
+            }
+            default: {
+                throw new Error(`Binding scope member access on '${scopableExpressionType.kind}' is not implemented.`);
+            }
+        }
 
         return boundScopeMemberAccessExpression;
     }
