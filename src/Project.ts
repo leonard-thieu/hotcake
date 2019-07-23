@@ -6,6 +6,8 @@ import { BoundSymbol, BoundSymbolTable } from './Binding/BoundSymbol';
 import { BoundNodeKind } from './Binding/Node/BoundNodeKind';
 import { BoundDirectory } from './Binding/Node/Declaration/BoundDirectory';
 import { BoundModuleDeclaration } from './Binding/Node/Declaration/BoundModuleDeclaration';
+import { ArrayType } from './Binding/Type/ArrayType';
+import { Types } from './Binding/Type/Types';
 import { Parser } from './Syntax/Parser';
 import { PreprocessorParser } from './Syntax/PreprocessorParser';
 import { PreprocessorTokenizer } from './Syntax/PreprocessorTokenizer';
@@ -59,6 +61,8 @@ export class Project {
 
         return boundModuleDeclaration;
     }
+
+    // #region Module path
 
     getModulePathComponents(
         modulePathChildren: (IdentifierToken | PeriodToken)[],
@@ -182,6 +186,8 @@ export class Project {
         return exists;
     }
 
+    // #endregion
+
     private bindDirectory(
         fullPath: string,
         scope?: {
@@ -219,4 +225,23 @@ export class Project {
 
         return boundDirectory;
     }
+
+    // #region Array types
+
+    private readonly arrayTypes = new Map<Types, ArrayType>();
+
+    /**
+     * Ensures only a single type is created for each unique array type.
+     */
+    getArrayType(type: Types): ArrayType {
+        let arrayType = this.arrayTypes.get(type);
+        if (!arrayType) {
+            arrayType = new ArrayType(type);
+            this.arrayTypes.set(type, arrayType);
+        }
+
+        return arrayType;
+    }
+
+    // #endregion
 }

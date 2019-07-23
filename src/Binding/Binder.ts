@@ -104,7 +104,6 @@ import { BoundStatements } from './Node/Statement/BoundStatements';
 import { BoundThrowStatement } from './Node/Statement/BoundThrowStatement';
 import { BoundCatchClause, BoundTryStatement } from './Node/Statement/BoundTryStatement';
 import { BoundWhileLoop } from './Node/Statement/BoundWhileLoop';
-import { ArrayType } from './Type/ArrayType';
 import { BoolType } from './Type/BoolType';
 import { FloatType } from './Type/FloatType';
 import { GenericType } from './Type/GenericType';
@@ -1796,7 +1795,9 @@ export class Binder {
         const boundSelfExpression = new BoundSelfExpression();
         boundSelfExpression.parent = parent;
 
-        const ancestor = this.getNearestAncestor(boundSelfExpression, BoundNodeKind.ClassDeclaration) as BoundClassDeclaration;
+        const ancestor = this.getNearestAncestor(boundSelfExpression,
+            BoundNodeKind.ClassDeclaration,
+        ) as BoundClassDeclaration;
         boundSelfExpression.type = ancestor.type;
 
         return boundSelfExpression;
@@ -1812,7 +1813,9 @@ export class Binder {
         const boundSuperExpression = new BoundSuperExpression();
         boundSuperExpression.parent = parent;
 
-        const ancestor = this.getNearestAncestor(boundSuperExpression, BoundNodeKind.ClassDeclaration) as BoundClassDeclaration;
+        const ancestor = this.getNearestAncestor(boundSuperExpression,
+            BoundNodeKind.ClassDeclaration,
+        ) as BoundClassDeclaration;
         if (!ancestor.baseType) {
             throw new Error(`'${ancestor.identifier.name}' does not extend a base class.`);
         }
@@ -1880,7 +1883,7 @@ export class Binder {
             }
             type = balancedType;
         }
-        boundArrayLiteralExpression.type = new ArrayType(type);
+        boundArrayLiteralExpression.type = this.module.project.getArrayType(type);
 
         return boundArrayLiteralExpression;
     }
@@ -2319,7 +2322,7 @@ export class Binder {
                 }
 
                 for (const { } of arrayTypeAnnotations) {
-                    type = new ArrayType(type);
+                    type = this.module.project.getArrayType(type);
                 }
 
                 return type;
@@ -2358,7 +2361,7 @@ export class Binder {
             case NodeKind.TypeReference: {
                 let type = this.getElementType(typeReference);
                 for (const { } of typeReference.arrayTypeAnnotations) {
-                    type = new ArrayType(type);
+                    type = this.module.project.getArrayType(type);
                 }
 
                 return type;
