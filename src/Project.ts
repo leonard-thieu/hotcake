@@ -7,6 +7,7 @@ import { BoundNodeKind } from './Binding/Node/BoundNodeKind';
 import { BoundDirectory } from './Binding/Node/Declaration/BoundDirectory';
 import { BoundModuleDeclaration } from './Binding/Node/Declaration/BoundModuleDeclaration';
 import { ArrayType } from './Binding/Type/ArrayType';
+import { StringType } from './Binding/Type/StringType';
 import { Types } from './Binding/Type/Types';
 import { Parser } from './Syntax/Parser';
 import { PreprocessorParser } from './Syntax/PreprocessorParser';
@@ -37,6 +38,8 @@ export class Project {
 
     readonly boundFrameworkModulesDirectory: BoundDirectory;
     readonly boundProjectDirectory: BoundDirectory;
+
+    readonly stringType = new StringType();
 
     importModule(modulePath: string): BoundModuleDeclaration {
         const document = fs.readFileSync(modulePath, 'utf8');

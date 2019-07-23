@@ -110,13 +110,13 @@ import { GenericType } from './Type/GenericType';
 import { IntType } from './Type/IntType';
 import { ModuleType } from './Type/ModuleType';
 import { ObjectType } from './Type/ObjectType';
-import { StringType } from './Type/StringType';
 import { TypeKind } from './Type/TypeKind';
 import { Types } from './Type/Types';
 import { VoidType } from './Type/VoidType';
 
 export class Binder {
     private document: string = undefined!;
+    private project: Project = undefined!;
     private module: BoundModuleDeclaration = undefined!;
     private phase2Nodes: [Nodes, BoundNodes][] = undefined!;
 
@@ -127,6 +127,7 @@ export class Binder {
         moduleIdentifier: string,
     ): BoundModuleDeclaration {
         this.document = moduleDeclaration.document;
+        this.project = project;
         this.phase2Nodes = [];
 
         const boundModuleDeclaration = this.bindModuleDeclaration(moduleDeclaration, project, boundDirectory, moduleIdentifier);
@@ -516,7 +517,14 @@ export class Binder {
         boundExternClassDeclaration.parent = parent;
         boundExternClassDeclaration.locals = externClassDeclaration.locals;
         boundExternClassDeclaration.identifier = this.declareSymbolInScope(externClassDeclaration, boundExternClassDeclaration);
-        boundExternClassDeclaration.type = new ObjectType(boundExternClassDeclaration);
+
+        if (boundExternClassDeclaration.identifier.name === 'String') {
+            const { stringType } = this.project;
+            stringType.declaration = boundExternClassDeclaration;
+            boundExternClassDeclaration.type = stringType;
+        } else {
+            boundExternClassDeclaration.type = new ObjectType(boundExternClassDeclaration);
+        }
 
         const { baseType } = externClassDeclaration;
         if (!baseType) {
@@ -1632,7 +1640,7 @@ export class Binder {
             case null: {
                 throw new Error(`'${operatorKind}' is not valid for '${leftOperand.kind}' and '${rightOperand.kind}'.`);
             }
-            case StringType.type: {
+            case this.project.stringType: {
                 if (operatorKind !== TokenKind.PlusSign) {
                     throw new Error(`'${operatorKind}' is not valid for '${leftOperand.kind}' and '${rightOperand.kind}'.`);
                 }
@@ -1836,6 +1844,7 @@ export class Binder {
     ): BoundStringLiteralExpression {
         const boundStringLiteralExpression = new BoundStringLiteralExpression();
         boundStringLiteralExpression.parent = parent;
+        boundStringLiteralExpression.type = this.project.stringType;
 
         return boundStringLiteralExpression;
     }
@@ -1886,7 +1895,7 @@ export class Binder {
             }
             type = balancedType;
         }
-        boundArrayLiteralExpression.type = this.module.project.getArrayType(type);
+        boundArrayLiteralExpression.type = this.project.getArrayType(type);
 
         return boundArrayLiteralExpression;
     }
@@ -1975,7 +1984,7 @@ export class Binder {
                 break;
             }
             case TokenKind.StringKeyword: {
-                boundIdentifierExpression.type = StringType.type;
+                boundIdentifierExpression.type = this.project.stringType;
                 break;
             }
             case TokenKind.NewKeyword:
@@ -2058,7 +2067,8 @@ export class Binder {
         const scopableExpressionType = boundScopeMemberAccessExpression.scopableExpression.type;
         switch (scopableExpressionType.kind) {
             case TypeKind.Module:
-            case TypeKind.Object: {
+            case TypeKind.Object:
+            case TypeKind.String: {
                 boundScopeMemberAccessExpression.member = this.bindExpression(
                     scopeMemberAccessExpression.member,
                     boundScopeMemberAccessExpression,
@@ -2320,7 +2330,7 @@ export class Binder {
                 }
 
                 for (const { } of arrayTypeAnnotations) {
-                    type = this.module.project.getArrayType(type);
+                    type = this.project.getArrayType(type);
                 }
 
                 return type;
@@ -2346,7 +2356,7 @@ export class Binder {
                 return FloatType.type;
             }
             case TokenKind.DollarSign: {
-                return StringType.type;
+                return this.project.stringType;
             }
             default: {
                 return assertNever(shorthandType);
@@ -2359,7 +2369,7 @@ export class Binder {
             case NodeKind.TypeReference: {
                 let type = this.getElementType(typeReference);
                 for (const { } of typeReference.arrayTypeAnnotations) {
-                    type = this.module.project.getArrayType(type);
+                    type = this.project.getArrayType(type);
                 }
 
                 return type;
@@ -2386,7 +2396,7 @@ export class Binder {
                 return FloatType.type;
             }
             case TokenKind.StringKeyword: {
-                return StringType.type;
+                return this.project.stringType;
             }
             case TokenKind.ObjectKeyword: {
                 return ObjectType.type;
@@ -2485,10 +2495,10 @@ export class Binder {
     }
 
     private getBalancedType(leftOperandType: Types, rightOperandType: Types) {
-        if (leftOperandType === StringType.type ||
-            rightOperandType === StringType.type
+        if (leftOperandType === this.project.stringType ||
+            rightOperandType === this.project.stringType
         ) {
-            return StringType.type;
+            return this.project.stringType;
         }
 
         if (leftOperandType === FloatType.type ||
