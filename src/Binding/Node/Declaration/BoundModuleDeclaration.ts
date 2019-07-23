@@ -1,6 +1,7 @@
 import { Project } from '../../../Project';
 import { ModuleDeclaration } from '../../../Syntax/Node/Declaration/ModuleDeclaration';
 import { BoundSymbol, BoundSymbolTable } from '../../BoundSymbol';
+import { ModuleType } from '../../Type/ModuleType';
 import { BoundNode } from '../BoundNode';
 import { BoundNodeKind } from '../BoundNodeKind';
 import { BoundAliasDirective } from './BoundAliasDirective';
@@ -24,6 +25,7 @@ export class BoundModuleDeclaration extends BoundNode {
 
     identifier: BoundSymbol = undefined!;
     locals: BoundSymbolTable = undefined!;
+    type: ModuleType = undefined!;
 
     members: BoundModuleDeclarationMember[] = undefined!;
 }

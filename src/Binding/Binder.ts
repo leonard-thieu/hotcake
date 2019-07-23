@@ -108,6 +108,7 @@ import { BoolType } from './Type/BoolType';
 import { FloatType } from './Type/FloatType';
 import { GenericType } from './Type/GenericType';
 import { IntType } from './Type/IntType';
+import { ModuleType } from './Type/ModuleType';
 import { ObjectType } from './Type/ObjectType';
 import { StringType } from './Type/StringType';
 import { TypeKind } from './Type/TypeKind';
@@ -167,6 +168,7 @@ export class Binder {
         boundModuleDeclaration.identifier = boundSymbol;
 
         boundModuleDeclaration.locals = moduleDeclaration.locals;
+        boundModuleDeclaration.type = new ModuleType(boundModuleDeclaration);
         boundModuleDeclaration.members = this.bindModuleDeclarationHeaderMembers(moduleDeclaration, boundModuleDeclaration);
         boundModuleDeclaration.members.push(...this.bindModuleDeclarationMembers(moduleDeclaration, boundModuleDeclaration));
 
@@ -1897,6 +1899,7 @@ export class Binder {
     ): BoundGlobalScopeExpression {
         const boundGlobalScopeExpression = new BoundGlobalScopeExpression();
         boundGlobalScopeExpression.parent = parent;
+        boundGlobalScopeExpression.type = this.module.type;
 
         return boundGlobalScopeExpression;
     }
@@ -1919,21 +1922,21 @@ export class Binder {
             case TokenKind.ThrowableKeyword: {
                 switch (parent.kind) {
                     case BoundNodeKind.ScopeMemberAccessExpression: {
-                        if (!parent.scopableExpression) {
+                        const { scopableExpression } = parent;
+                        // Binding `scopableExpression`
+                        if (!scopableExpression) {
                             boundIdentifierExpression.identifier = this.getSymbol(identifier, identifierExpression);
-                        } else {
-                            const { type } = parent.scopableExpression;
-                            if (!type) {
-                                boundIdentifierExpression.identifier = this.getSymbolInScope(identifier, this.module);
-                            } else {
-                                switch (type.kind) {
-                                    case TypeKind.Object: {
-                                        boundIdentifierExpression.identifier = this.getSymbolInScope(identifier, type.declaration!);
-                                        break;
-                                    }
-                                    default: {
-                                        throw new Error('Method not implemented.');
-                                    }
+                        }
+                        // Binding `member`
+                        else {
+                            switch (scopableExpression.type.kind) {
+                                case TypeKind.Module:
+                                case TypeKind.Object: {
+                                    boundIdentifierExpression.identifier = this.getSymbolInScope(identifier, scopableExpression.type.declaration!);
+                                    break;
+                                }
+                                default: {
+                                    throw new Error('Method not implemented.');
                                 }
                             }
                         }
@@ -2030,7 +2033,7 @@ export class Binder {
 
     private getSymbolInScope(
         identifier: Tokens,
-        scope: BoundModuleDeclaration | BoundExternClassDeclaration | BoundInterfaceDeclaration | BoundClassDeclaration,
+        scope: ContainerScope,
     ): BoundSymbol {
         const identifierText = identifier.getText(this.document);
         const identifierSymbol = scope.locals.get(identifierText);
@@ -2570,3 +2573,10 @@ export class Binder {
 
     // #endregion
 }
+
+type ContainerScope =
+    | BoundModuleDeclaration
+    | BoundExternClassDeclaration
+    | BoundInterfaceDeclaration
+    | BoundClassDeclaration
+    ;

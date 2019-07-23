@@ -40,7 +40,8 @@
                                 "kind": "ScopeMemberAccessExpression",
                                 "type": "Int",
                                 "scopableExpression": {
-                                    "kind": "GlobalScopeExpression"
+                                    "kind": "GlobalScopeExpression",
+                                    "type": "Module"
                                 },
                                 "member": {
                                     "kind": "IdentifierExpression",

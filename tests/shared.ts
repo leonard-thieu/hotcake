@@ -202,6 +202,14 @@ export function executeBinderTestCases(name: string, casesPath: string): void {
                 executeBaselineTestCase(outputPath, () => {
                     return getBoundTree(path.resolve(casesPath, sourceRelativePath), contents);
                 }, function (this: any, key, value) {
+                    if (this.kind === BoundNodeKind.ModuleDeclaration) {
+                        switch (key) {
+                            case 'type': {
+                                return undefined;
+                            }
+                        }
+                    }
+
                     switch (key) {
                         case 'project':
                         case 'directory':

@@ -4,6 +4,7 @@ export enum TypeKind {
     Float = 'Float',
     Generic = 'Generic',
     Int = 'Int',
+    Module = 'Module',
     String = 'String',
     Object = 'Object',
     Void = 'Void',
