@@ -237,7 +237,10 @@ export function executeBinderTestCases(name: string, casesPath: string): void {
                             break;
                         }
                         case 'identifier': {
-                            return value.name;
+                            if (value) {
+                                return value.name;
+                            }
+                            break;
                         }
                         case 'locals': {
                             const names: any[] = [];

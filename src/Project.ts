@@ -7,7 +7,11 @@ import { BoundNodeKind } from './Binding/Node/BoundNodeKind';
 import { BoundDirectory } from './Binding/Node/Declaration/BoundDirectory';
 import { BoundModuleDeclaration } from './Binding/Node/Declaration/BoundModuleDeclaration';
 import { ArrayType } from './Binding/Type/ArrayType';
+import { FunctionType } from './Binding/Type/FunctionType';
+import { ObjectType } from './Binding/Type/ObjectType';
 import { StringType } from './Binding/Type/StringType';
+import { TypeKind } from './Binding/Type/TypeKind';
+import { TypeParameterType } from './Binding/Type/TypeParameterType';
 import { Types } from './Binding/Type/Types';
 import { Parser } from './Syntax/Parser';
 import { PreprocessorParser } from './Syntax/PreprocessorParser';
@@ -247,4 +251,139 @@ export class Project {
     }
 
     // #endregion
+
+    // #region Generic types
+
+    private readonly closedTypes = new Map<Types, ClosedTypeInfo[]>();
+
+    closeType(openType: Types, typeMap: Map<TypeParameterType, Types>): Types {
+        // Breaks infinite loops when a type references itself
+        const closedTypeInfos = this.closedTypes.get(openType);
+        if (closedTypeInfos) {
+            const closedTypeInfo = this.getClosedTypeInfo(closedTypeInfos, Array.from(typeMap.values()));
+            if (closedTypeInfo) {
+                return closedTypeInfo.closedType;
+            }
+        }
+
+        switch (openType.kind) {
+            case TypeKind.Bool:
+            case TypeKind.Int:
+            case TypeKind.Float:
+            case TypeKind.String: {
+                return openType;
+            }
+            case TypeKind.TypeParameter: {
+                return typeMap.get(openType)!;
+            }
+            case TypeKind.Object: {
+                return this.closeObjectType(openType, typeMap);
+            }
+            case TypeKind.Array: {
+                return this.getArrayType(this.closeType(openType.elementType, typeMap));
+            }
+            case TypeKind.Function: {
+                return this.closeFunctionType(openType, typeMap);
+            }
+            case TypeKind.Module:
+            case TypeKind.Void: {
+                throw new Error(`Cannot close '${openType.kind}' type.`);
+            }
+            default: {
+                return assertNever(openType);
+            }
+        }
+    }
+
+    private getClosedTypeInfo(
+        closedTypeInfos: ClosedTypeInfo[],
+        typeArguments: Types[],
+    ): ClosedTypeInfo | undefined {
+        for (const closedTypeInfo of closedTypeInfos) {
+            let isCached = true;
+
+            for (let i = 0; i < closedTypeInfo.typeArguments.length; i++) {
+                if (closedTypeInfo.typeArguments[i] !== typeArguments[i]) {
+                    isCached = false;
+                    break;
+                }
+            }
+
+            if (isCached) {
+                return closedTypeInfo;
+            }
+        }
+    }
+
+    private setClosedTypeInfo(
+        openType: Types,
+        typeArguments: Types[],
+        closedType: Types,
+    ): void {
+        let closedTypeInfos = this.closedTypes.get(openType);
+
+        if (!closedTypeInfos) {
+            closedTypeInfos = [];
+            this.closedTypes.set(openType, closedTypeInfos);
+        }
+
+        closedTypeInfos.push({
+            typeArguments,
+            closedType,
+        });
+    }
+
+    private closeObjectType(openType: ObjectType, typeMap: Map<TypeParameterType, Types>): ObjectType {
+        const closedType = new ObjectType();
+        this.setClosedTypeInfo(openType, Array.from(typeMap.values()), closedType);
+        closedType.declaration = openType.declaration;
+        closedType.identifier = openType.identifier;
+
+        // TODO: Close super type?
+        // TODO: Close implemented types?
+        // TODO: Assert matching number of type parameters/arguments?
+
+        if (openType.typeParameters) {
+            const typeParameters: TypeParameterType[] = [];
+
+            for (const typeParameter of openType.typeParameters) {
+                const typeArgument = typeMap.get(typeParameter)!;
+                if (typeArgument.kind === TypeKind.TypeParameter) {
+                    typeParameters.push(typeArgument);
+                }
+            }
+
+            closedType.typeParameters = typeParameters;
+        }
+
+        for (const [name, member] of openType.members) {
+            const closedMember = this.closeType(member, typeMap);
+            closedType.members.set(name, closedMember);
+        }
+
+        return closedType;
+    }
+
+    private closeFunctionType(openType: FunctionType, typeMap: Map<TypeParameterType, Types>): FunctionType {
+        const closedType = new FunctionType();
+        this.setClosedTypeInfo(openType, Array.from(typeMap.values()), closedType);
+        closedType.returnType = this.closeType(openType.returnType, typeMap);
+
+        const parameters: Types[] = [];
+
+        for (const parameter of openType.parameters) {
+            parameters.push(this.closeType(parameter, typeMap));
+        }
+
+        closedType.parameters = parameters;
+
+        return closedType;
+    }
+
+    // #endregion
+}
+
+interface ClosedTypeInfo {
+    typeArguments: Types[];
+    closedType: Types;
 }

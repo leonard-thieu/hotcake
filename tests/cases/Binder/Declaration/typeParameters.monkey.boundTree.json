@@ -14,12 +14,12 @@
                 "ToArray"
             ],
             "identifier": "ArrayObject",
-            "type": "ArrayObject",
+            "type": "ArrayObject<T>",
             "typeParameters": [
                 {
                     "kind": "TypeParameter",
                     "identifier": "T",
-                    "type": "Generic"
+                    "type": "ArrayObject:T"
                 }
             ],
             "baseType": "Object",
@@ -28,7 +28,7 @@
                     "kind": "DataDeclaration",
                     "declarationKind": "FieldKeyword",
                     "identifier": "value",
-                    "type": "Generic[]"
+                    "type": "ArrayObject:T[]"
                 },
                 {
                     "kind": "ClassMethodDeclaration",
@@ -36,12 +36,12 @@
                     "locals": [
                         "value"
                     ],
-                    "returnType": "ArrayObject",
+                    "returnType": "ArrayObject<T>",
                     "parameters": [
                         {
                             "kind": "DataDeclaration",
                             "identifier": "value",
-                            "type": "Generic[]"
+                            "type": "ArrayObject:T[]"
                         }
                     ],
                     "statements": [
@@ -49,20 +49,20 @@
                             "kind": "AssignmentStatement",
                             "leftOperand": {
                                 "kind": "ScopeMemberAccessExpression",
-                                "type": "Generic[]",
+                                "type": "ArrayObject:T[]",
                                 "scopableExpression": {
                                     "kind": "SelfExpression",
-                                    "type": "ArrayObject"
+                                    "type": "ArrayObject<T>"
                                 },
                                 "member": {
                                     "kind": "IdentifierExpression",
-                                    "type": "Generic[]",
+                                    "type": "ArrayObject:T[]",
                                     "identifier": "value"
                                 }
                             },
                             "rightOperand": {
                                 "kind": "IdentifierExpression",
-                                "type": "Generic[]",
+                                "type": "ArrayObject:T[]",
                                 "identifier": "value"
                             }
                         }
@@ -72,15 +72,15 @@
                     "kind": "ClassMethodDeclaration",
                     "identifier": "ToArray",
                     "locals": [],
-                    "returnType": "Generic[]",
+                    "returnType": "ArrayObject:T[]",
                     "parameters": [],
                     "statements": [
                         {
                             "kind": "ReturnStatement",
-                            "type": "Generic[]",
+                            "type": "ArrayObject:T[]",
                             "expression": {
                                 "kind": "IdentifierExpression",
-                                "type": "Generic[]",
+                                "type": "ArrayObject:T[]",
                                 "identifier": "value"
                             }
                         }
@@ -90,7 +90,7 @@
                     "kind": "ClassMethodDeclaration",
                     "identifier": "New",
                     "locals": [],
-                    "returnType": "ArrayObject",
+                    "returnType": "ArrayObject<T>",
                     "parameters": []
                 }
             ]

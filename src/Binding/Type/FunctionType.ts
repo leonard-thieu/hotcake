@@ -8,11 +8,11 @@ import { TypeKind } from './TypeKind';
 import { Types } from './Types';
 
 export class FunctionType extends Type {
-    constructor(readonly declaration: BoundFunctionDeclarations) {
-        super();
-    }
-
     readonly kind = TypeKind.Function;
+
+    declaration: BoundFunctionDeclarations = undefined!;
+    returnType: Types = undefined!;
+    parameters: Types[] = undefined!;
 
     isConvertibleTo(target: Types): boolean {
         throw new Error('Method not implemented.');
@@ -22,14 +22,10 @@ export class FunctionType extends Type {
         let str = '';
 
         str += '(';
-        const parameterTypes: Types[] = [];
-        for (const parameter of this.declaration.parameters) {
-            parameterTypes.push(parameter.type);
-        }
-        str += parameterTypes.join(',');
+        str += this.parameters.join(',');
         str += ')';
 
-        str += `: ${this.declaration.returnType}`;
+        str += `: ${this.returnType}`;
 
         return str;
     }

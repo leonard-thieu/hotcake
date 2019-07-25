@@ -3,10 +3,10 @@ export enum TypeKind {
     Bool = 'Bool',
     Float = 'Float',
     Function = 'Function',
-    Generic = 'Generic',
     Int = 'Int',
     Module = 'Module',
     String = 'String',
     Object = 'Object',
+    TypeParameter = 'TypeParameter',
     Void = 'Void',
 }
