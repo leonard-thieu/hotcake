@@ -752,16 +752,43 @@ export class Binder {
             boundDataDeclaration.expression = this.bindExpression(dataDeclaration.expression, boundDataDeclaration);
         }
 
-        if (dataDeclaration.equalsSign &&
-            dataDeclaration.equalsSign.kind === TokenKind.ColonEqualsSign) {
-            if (boundDataDeclaration.expression) {
-                boundDataDeclaration.type = boundDataDeclaration.expression.type;
+        if (dataDeclaration.eachInKeyword) {
+            if (dataDeclaration.equalsSign &&
+                dataDeclaration.equalsSign.kind === TokenKind.ColonEqualsSign
+            ) {
+                if (!boundDataDeclaration.expression) {
+                    // No expression to infer type from, default to Int
+                    boundDataDeclaration.type = IntType.type;
+                } else {
+                    boundDataDeclaration.type = this.getCollectionElementType(boundDataDeclaration.expression.type);
+                }
+            } else {
+                boundDataDeclaration.type = this.bindTypeAnnotation(dataDeclaration.type);
+
+                if (boundDataDeclaration.expression) {
+                    const collectionElementType = this.getCollectionElementType(boundDataDeclaration.expression.type);
+                    if (!collectionElementType.isConvertibleTo(boundDataDeclaration.type)) {
+                        throw new Error(`'${collectionElementType}' is not convertible to '${boundDataDeclaration.type}'.`);
+                    }
+                }
             }
         } else {
-            boundDataDeclaration.type = this.bindTypeAnnotation(dataDeclaration.type);
-            if (boundDataDeclaration.expression) {
-                if (!boundDataDeclaration.expression.type.isConvertibleTo(boundDataDeclaration.type)) {
-                    throw new Error(`'${boundDataDeclaration.expression.type}' is not convertible to '${boundDataDeclaration.type}'.`);
+            if (dataDeclaration.equalsSign &&
+                dataDeclaration.equalsSign.kind === TokenKind.ColonEqualsSign
+            ) {
+                if (!boundDataDeclaration.expression) {
+                    // No expression to infer type from, default to Int
+                    boundDataDeclaration.type = IntType.type;
+                } else {
+                    boundDataDeclaration.type = boundDataDeclaration.expression.type;
+                }
+            } else {
+                boundDataDeclaration.type = this.bindTypeAnnotation(dataDeclaration.type);
+
+                if (boundDataDeclaration.expression) {
+                    if (!boundDataDeclaration.expression.type.isConvertibleTo(boundDataDeclaration.type)) {
+                        throw new Error(`'${boundDataDeclaration.expression.type}' is not convertible to '${boundDataDeclaration.type}'.`);
+                    }
                 }
             }
         }
@@ -2544,7 +2571,7 @@ export class Binder {
         }
     }
 
-    getDeclarationName(declaration: Declarations, document: string): string {
+    private getDeclarationName(declaration: Declarations, document: string): string {
         switch (declaration.kind) {
             case NodeKind.AliasDirective:
             case NodeKind.ExternDataDeclaration:
@@ -2856,6 +2883,63 @@ export class Binder {
         }
 
         throw new Error(`Could not find a matching ancestor.`);
+    }
+
+    private getCollectionElementType(collectionType: Types) {
+        switch (collectionType.kind) {
+            case TypeKind.Array: {
+                return collectionType.elementType;
+            }
+            case TypeKind.String: {
+                return IntType.type;
+            }
+            case TypeKind.Object: {
+                const objectEnumeratorMethod = this.getMethod(collectionType, 'ObjectEnumerator', [], ObjectType.type);
+                if (!objectEnumeratorMethod) {
+                    throw new Error(`'${collectionType.identifier!.name}' does not have a 'ObjectEnumerator: TObjectEnumerator()' method.`);
+                }
+
+                const enumeratorType = objectEnumeratorMethod.returnType as ObjectType;
+
+                const hasNextMethod = this.getMethod(enumeratorType, 'HasNext', [], BoolType.type);
+                if (!hasNextMethod) {
+                    throw new Error(`'${enumeratorType.identifier!.name}' does not have a 'HasNext: Bool()' method.`);
+                }
+
+                const nextObjectMethod = this.getMethod(enumeratorType, 'NextObject', []);
+                if (!nextObjectMethod) {
+                    throw new Error(`'${enumeratorType.identifier!.name}' does not have a 'NextObject: TObject()' method.`);
+                }
+
+                return nextObjectMethod.returnType;
+            }
+            default: {
+                throw new Error(`'${collectionType.kind}' is not a valid collection type.`);
+            }
+        }
+    }
+
+    private getMethod(type: ObjectType, name: string, parameters: Types[], returnType?: Types) {
+        const method = type.members.get(name);
+        if (method &&
+            method.kind === TypeKind.Function
+        ) {
+            if (returnType &&
+                !method.returnType.isConvertibleTo(returnType)
+            ) {
+                return undefined;
+            }
+
+            if (method.parameters.length === parameters.length) {
+                for (let i = 0; i < method.parameters.length; i++) {
+                    if (method.parameters[i] !== parameters[i]) {
+                        return undefined;
+                    }
+                }
+
+                return method;
+            }
+        }
     }
 
     // #endregion

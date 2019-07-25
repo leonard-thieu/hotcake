@@ -12,7 +12,7 @@ export class TypeParameterType extends Type {
     identifier: BoundSymbol = undefined!;
 
     isConvertibleTo(target: Types): boolean {
-        throw new Error('Method not implemented.');
+        return target === this;
     }
 
     toString(): string {
