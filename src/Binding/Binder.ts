@@ -121,6 +121,7 @@ export class Binder {
     private project: Project = undefined!;
     private module: BoundModuleDeclaration = undefined!;
     private phase2Nodes: [Nodes, BoundNodes][] = undefined!;
+    private phase3Nodes: [Nodes, BoundNodes][] = undefined!;
 
     bind(
         moduleDeclaration: ModuleDeclaration,
@@ -131,18 +132,42 @@ export class Binder {
         this.document = moduleDeclaration.document;
         this.project = project;
         this.phase2Nodes = [];
+        this.phase3Nodes = [];
 
         const boundModuleDeclaration = this.bindModuleDeclaration(moduleDeclaration, project, boundDirectory, moduleIdentifier);
 
         for (const [node, boundNode] of this.phase2Nodes) {
             switch (node.kind) {
+                case NodeKind.ExternClassDeclaration: {
+                    this.bindExternClassDeclaration2(node, boundNode as BoundExternClassDeclaration);
+                    break;
+                }
+                case NodeKind.InterfaceDeclaration: {
+                    this.bindInterfaceDeclaration2(node, boundNode as BoundInterfaceDeclaration);
+                    break;
+                }
+                case NodeKind.ClassDeclaration: {
+                    this.bindClassDeclaration2(node, boundNode as BoundClassDeclaration);
+                    break;
+                }
+                default: {
+                    throw new Error(`Unexpected phase 2 node: '${node.kind}'`);
+                }
+            }
+        }
+
+        for (const [node, boundNode] of this.phase3Nodes) {
+            switch (node.kind) {
                 case NodeKind.FunctionDeclaration: {
-                    this.bindFunctionDeclaration2(node, boundNode as BoundFunctionDeclaration);
+                    this.bindFunctionDeclaration3(node, boundNode as BoundFunctionDeclaration);
                     break;
                 }
                 case NodeKind.ClassMethodDeclaration: {
-                    this.bindClassMethodDeclaration2(node, boundNode as BoundClassMethodDeclaration);
+                    this.bindClassMethodDeclaration3(node, boundNode as BoundClassMethodDeclaration);
                     break;
+                }
+                default: {
+                    throw new Error(`Unexpected phase 3 node: '${node.kind}'`);
                 }
             }
         }
@@ -565,6 +590,21 @@ export class Binder {
         boundExternClassDeclaration.identifier = this.declareSymbolInScope(externClassDeclaration, boundExternClassDeclaration);
         type.identifier = boundExternClassDeclaration.identifier;
 
+        if (externClassDeclaration.nativeSymbol) {
+            boundExternClassDeclaration.nativeSymbol = this.bindStringLiteralExpression(boundExternClassDeclaration);
+        }
+
+        this.phase2Nodes.push([externClassDeclaration, boundExternClassDeclaration]);
+
+        return boundExternClassDeclaration;
+    }
+
+    private bindExternClassDeclaration2(
+        externClassDeclaration: ExternClassDeclaration,
+        boundExternClassDeclaration: BoundExternClassDeclaration,
+    ): void {
+        const type = boundExternClassDeclaration.type as ObjectType;
+
         const { baseType } = externClassDeclaration;
         if (!baseType) {
             boundExternClassDeclaration.baseType = ObjectType.type;
@@ -586,16 +626,10 @@ export class Binder {
         }
         type.superType = boundExternClassDeclaration.baseType as ObjectType | undefined;
 
-        if (externClassDeclaration.nativeSymbol) {
-            boundExternClassDeclaration.nativeSymbol = this.bindStringLiteralExpression(boundExternClassDeclaration);
-        }
-
         boundExternClassDeclaration.members = this.bindExternClassDeclarationMembers(externClassDeclaration, boundExternClassDeclaration);
         for (const member of boundExternClassDeclaration.members) {
             type.members.set(member.identifier.name, member.type);
         }
-
-        return boundExternClassDeclaration;
     }
 
     private bindExternClassDeclarationMembers(
@@ -767,12 +801,12 @@ export class Binder {
         }
         type.parameters = parameters;
 
-        this.phase2Nodes.push([functionDeclaration, boundFunctionDeclaration]);
+        this.phase3Nodes.push([functionDeclaration, boundFunctionDeclaration]);
 
         return boundFunctionDeclaration;
     }
 
-    private bindFunctionDeclaration2(
+    private bindFunctionDeclaration3(
         functionDeclaration: FunctionDeclaration,
         boundFunctionDeclaration: BoundFunctionDeclaration,
     ): void {
@@ -798,6 +832,17 @@ export class Binder {
         boundInterfaceDeclaration.identifier = this.declareSymbolInScope(interfaceDeclaration, boundInterfaceDeclaration);
         type.identifier = boundInterfaceDeclaration.identifier;
 
+        this.phase2Nodes.push([interfaceDeclaration, boundInterfaceDeclaration]);
+
+        return boundInterfaceDeclaration;
+    }
+
+    private bindInterfaceDeclaration2(
+        interfaceDeclaration: InterfaceDeclaration,
+        boundInterfaceDeclaration: BoundInterfaceDeclaration,
+    ): void {
+        const type = boundInterfaceDeclaration.type as ObjectType;
+
         if (interfaceDeclaration.baseTypes) {
             boundInterfaceDeclaration.baseTypes = this.bindTypeReferenceSequence(interfaceDeclaration.baseTypes);
         }
@@ -806,8 +851,6 @@ export class Binder {
         for (const member of boundInterfaceDeclaration.members) {
             type.members.set(member.identifier.name, member.type);
         }
-
-        return boundInterfaceDeclaration;
     }
 
     private bindInterfaceDeclarationMembers(
@@ -902,6 +945,17 @@ export class Binder {
             type.typeParameters = typeParameters;
         }
 
+        this.phase2Nodes.push([classDeclaration, boundClassDeclaration]);
+
+        return boundClassDeclaration;
+    }
+
+    private bindClassDeclaration2(
+        classDeclaration: ClassDeclaration,
+        boundClassDeclaration: BoundClassDeclaration,
+    ): void {
+        const type = boundClassDeclaration.type as ObjectType;
+
         if (classDeclaration.baseType) {
             if (classDeclaration.baseType.kind === NodeKind.TypeReference) {
                 boundClassDeclaration.baseType = this.bindTypeReference(classDeclaration.baseType);
@@ -925,46 +979,6 @@ export class Binder {
         for (const member of boundClassDeclaration.members) {
             type.members.set(member.identifier.name, member.type);
         }
-
-        return boundClassDeclaration;
-    }
-
-    private hasParameterlessConstructor(boundClassDeclaration: BoundClassDeclaration): boolean {
-        for (const member of boundClassDeclaration.members) {
-            if (member.kind === BoundNodeKind.ClassMethodDeclaration &&
-                member.identifier.name.toLowerCase() === 'new' &&
-                member.parameters.length === 0
-            ) {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    private createParameterlessConstructor(
-        classDeclaration: ClassDeclaration,
-        parent: BoundClassDeclaration,
-    ): BoundClassMethodDeclaration {
-        const boundClassMethodDeclaration = new BoundClassMethodDeclaration();
-        boundClassMethodDeclaration.parent = parent;
-        boundClassMethodDeclaration.locals = new BoundSymbolTable();
-
-        const identifier = new BoundSymbol('New', boundClassMethodDeclaration);
-        this.setSymbolInScope(identifier, classDeclaration, NodeKind.ClassMethodDeclaration);
-        boundClassMethodDeclaration.identifier = identifier;
-
-        boundClassMethodDeclaration.type = new FunctionType();
-        const { type } = boundClassMethodDeclaration;
-        type.declaration = boundClassMethodDeclaration;
-
-        boundClassMethodDeclaration.returnType = parent.type;
-        type.returnType = boundClassMethodDeclaration.returnType;
-
-        boundClassMethodDeclaration.parameters = [];
-        type.parameters = [];
-
-        return boundClassMethodDeclaration;
     }
 
     // #region Type parameters
@@ -1052,6 +1066,48 @@ export class Binder {
         return boundClassDeclarationMembers;
     }
 
+    // #region Default constructor
+
+    private hasParameterlessConstructor(boundClassDeclaration: BoundClassDeclaration): boolean {
+        for (const member of boundClassDeclaration.members) {
+            if (member.kind === BoundNodeKind.ClassMethodDeclaration &&
+                member.identifier.name.toLowerCase() === 'new' &&
+                member.parameters.length === 0
+            ) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    private createParameterlessConstructor(
+        classDeclaration: ClassDeclaration,
+        parent: BoundClassDeclaration,
+    ): BoundClassMethodDeclaration {
+        const boundClassMethodDeclaration = new BoundClassMethodDeclaration();
+        boundClassMethodDeclaration.parent = parent;
+        boundClassMethodDeclaration.locals = new BoundSymbolTable();
+
+        const identifier = new BoundSymbol('New', boundClassMethodDeclaration);
+        this.setSymbolInScope(identifier, classDeclaration, NodeKind.ClassMethodDeclaration);
+        boundClassMethodDeclaration.identifier = identifier;
+
+        boundClassMethodDeclaration.type = new FunctionType();
+        const { type } = boundClassMethodDeclaration;
+        type.declaration = boundClassMethodDeclaration;
+
+        boundClassMethodDeclaration.returnType = parent.type;
+        type.returnType = boundClassMethodDeclaration.returnType;
+
+        boundClassMethodDeclaration.parameters = [];
+        type.parameters = [];
+
+        return boundClassMethodDeclaration;
+    }
+
+    // #endregion
+
     // #region Class method declaration
 
     private bindClassMethodDeclaration(
@@ -1083,13 +1139,13 @@ export class Binder {
         type.parameters = parameters;
 
         if (classMethodDeclaration.statements) {
-            this.phase2Nodes.push([classMethodDeclaration, boundClassMethodDeclaration]);
+            this.phase3Nodes.push([classMethodDeclaration, boundClassMethodDeclaration]);
         }
 
         return boundClassMethodDeclaration;
     }
 
-    private bindClassMethodDeclaration2(
+    private bindClassMethodDeclaration3(
         classMethodDeclaration: ClassMethodDeclaration,
         boundClassMethodDeclaration: BoundClassMethodDeclaration,
     ): void {

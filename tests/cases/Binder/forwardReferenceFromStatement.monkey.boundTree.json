@@ -1,6 +1,6 @@
 {
     "kind": "ModuleDeclaration",
-    "identifier": "forwardReference",
+    "identifier": "forwardReferenceFromStatement",
     "locals": [
         "Main",
         "Test"

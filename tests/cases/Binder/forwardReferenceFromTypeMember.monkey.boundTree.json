@@ -1,0 +1,53 @@
+{
+    "kind": "ModuleDeclaration",
+    "identifier": "forwardReferenceFromTypeMember",
+    "locals": [
+        "List",
+        "Node"
+    ],
+    "members": [
+        {
+            "kind": "ClassDeclaration",
+            "locals": [
+                "node",
+                "New"
+            ],
+            "identifier": "List",
+            "type": "List",
+            "baseType": "Object",
+            "members": [
+                {
+                    "kind": "DataDeclaration",
+                    "declarationKind": "FieldKeyword",
+                    "identifier": "node",
+                    "type": "Node"
+                },
+                {
+                    "kind": "ClassMethodDeclaration",
+                    "identifier": "New",
+                    "locals": [],
+                    "returnType": "List",
+                    "parameters": []
+                }
+            ]
+        },
+        {
+            "kind": "ClassDeclaration",
+            "locals": [
+                "New"
+            ],
+            "identifier": "Node",
+            "type": "Node",
+            "baseType": "Object",
+            "members": [
+                {
+                    "kind": "ClassMethodDeclaration",
+                    "identifier": "New",
+                    "locals": [],
+                    "returnType": "Node",
+                    "parameters": []
+                }
+            ]
+        }
+    ]
+}
