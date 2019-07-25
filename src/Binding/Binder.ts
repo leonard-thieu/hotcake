@@ -120,8 +120,8 @@ export class Binder {
     private document: string = undefined!;
     private project: Project = undefined!;
     private module: BoundModuleDeclaration = undefined!;
-    private phase2Nodes: [Nodes, BoundNodes][] = undefined!;
-    private phase3Nodes: [Nodes, BoundNodes][] = undefined!;
+    private phase2Nodes: (() => void)[] = undefined!;
+    private phase3Nodes: (() => void)[] = undefined!;
 
     bind(
         moduleDeclaration: ModuleDeclaration,
@@ -136,40 +136,12 @@ export class Binder {
 
         const boundModuleDeclaration = this.bindModuleDeclaration(moduleDeclaration, project, boundDirectory, moduleIdentifier);
 
-        for (const [node, boundNode] of this.phase2Nodes) {
-            switch (node.kind) {
-                case NodeKind.ExternClassDeclaration: {
-                    this.bindExternClassDeclaration2(node, boundNode as BoundExternClassDeclaration);
-                    break;
-                }
-                case NodeKind.InterfaceDeclaration: {
-                    this.bindInterfaceDeclaration2(node, boundNode as BoundInterfaceDeclaration);
-                    break;
-                }
-                case NodeKind.ClassDeclaration: {
-                    this.bindClassDeclaration2(node, boundNode as BoundClassDeclaration);
-                    break;
-                }
-                default: {
-                    throw new Error(`Unexpected phase 2 node: '${node.kind}'`);
-                }
-            }
+        for (const bindNodeInPhase2 of this.phase2Nodes) {
+            bindNodeInPhase2();
         }
 
-        for (const [node, boundNode] of this.phase3Nodes) {
-            switch (node.kind) {
-                case NodeKind.FunctionDeclaration: {
-                    this.bindFunctionDeclaration3(node, boundNode as BoundFunctionDeclaration);
-                    break;
-                }
-                case NodeKind.ClassMethodDeclaration: {
-                    this.bindClassMethodDeclaration3(node, boundNode as BoundClassMethodDeclaration);
-                    break;
-                }
-                default: {
-                    throw new Error(`Unexpected phase 3 node: '${node.kind}'`);
-                }
-            }
+        for (const bindNodeInPhase3 of this.phase3Nodes) {
+            bindNodeInPhase3();
         }
 
         return boundModuleDeclaration;
@@ -467,7 +439,8 @@ export class Binder {
             case TokenKind.PrivateKeyword:
             case TokenKind.PublicKeyword:
             case TokenKind.ProtectedKeyword: {
-                throw new Error('Method not implemented.');
+                console.warn(`'${accessibilityKeyword.kind}' directive is not implemented.`);
+                break;
             }
             case TokenKind.ExternKeyword: {
                 // Extern is handled by the parser but is it also implicitly public?
@@ -594,7 +567,7 @@ export class Binder {
             boundExternClassDeclaration.nativeSymbol = this.bindStringLiteralExpression(boundExternClassDeclaration);
         }
 
-        this.phase2Nodes.push([externClassDeclaration, boundExternClassDeclaration]);
+        this.phase2Nodes.push(() => this.bindExternClassDeclaration2(externClassDeclaration, boundExternClassDeclaration));
 
         return boundExternClassDeclaration;
     }
@@ -750,6 +723,30 @@ export class Binder {
 
         boundDataDeclaration.identifier = this.declareSymbolInScope(dataDeclaration, boundDataDeclaration);
 
+        switch (parent.kind) {
+            case BoundNodeKind.ExternClassDeclaration:
+            case BoundNodeKind.InterfaceDeclaration:
+            case BoundNodeKind.ClassDeclaration: {
+                this.phase2Nodes.push(() => {
+                    this.bindDataDeclaration2(dataDeclaration, boundDataDeclaration);
+                    const type = parent.type as ObjectType;
+                    type.members.set(boundDataDeclaration.identifier.name, boundDataDeclaration.type);
+                });
+                break;
+            }
+            default: {
+                this.bindDataDeclaration2(dataDeclaration, boundDataDeclaration);
+                break;
+            }
+        }
+
+        return boundDataDeclaration;
+    }
+
+    private bindDataDeclaration2(
+        dataDeclaration: DataDeclaration,
+        boundDataDeclaration: BoundDataDeclaration,
+    ): void {
         // TODO: Should this be lowered to an assignment expression?
         if (dataDeclaration.expression) {
             boundDataDeclaration.expression = this.bindExpression(dataDeclaration.expression, boundDataDeclaration);
@@ -768,8 +765,6 @@ export class Binder {
                 }
             }
         }
-
-        return boundDataDeclaration;
     }
 
     // #endregion
@@ -801,7 +796,7 @@ export class Binder {
         }
         type.parameters = parameters;
 
-        this.phase3Nodes.push([functionDeclaration, boundFunctionDeclaration]);
+        this.phase3Nodes.push(() => this.bindFunctionDeclaration3(functionDeclaration, boundFunctionDeclaration));
 
         return boundFunctionDeclaration;
     }
@@ -832,7 +827,7 @@ export class Binder {
         boundInterfaceDeclaration.identifier = this.declareSymbolInScope(interfaceDeclaration, boundInterfaceDeclaration);
         type.identifier = boundInterfaceDeclaration.identifier;
 
-        this.phase2Nodes.push([interfaceDeclaration, boundInterfaceDeclaration]);
+        this.phase2Nodes.push(() => this.bindInterfaceDeclaration2(interfaceDeclaration, boundInterfaceDeclaration));
 
         return boundInterfaceDeclaration;
     }
@@ -945,7 +940,7 @@ export class Binder {
             type.typeParameters = typeParameters;
         }
 
-        this.phase2Nodes.push([classDeclaration, boundClassDeclaration]);
+        this.phase2Nodes.push(() => this.bindClassDeclaration2(classDeclaration, boundClassDeclaration));
 
         return boundClassDeclaration;
     }
@@ -1035,7 +1030,8 @@ export class Binder {
         for (const classDeclarationMember of classDeclaration.members) {
             switch (classDeclarationMember.kind) {
                 case NodeKind.AccessibilityDirective: {
-                    throw new Error('Method not implemented.');
+                    console.warn(`'${classDeclarationMember.accessibilityKeyword.kind}' directive is not implemented.`);
+                    break;
                 }
                 case NodeKind.DataDeclarationSequence: {
                     const boundDataDeclarationSequence = this.bindDataDeclarationSequence(classDeclarationMember, parent);
@@ -1139,7 +1135,7 @@ export class Binder {
         type.parameters = parameters;
 
         if (classMethodDeclaration.statements) {
-            this.phase3Nodes.push([classMethodDeclaration, boundClassMethodDeclaration]);
+            this.phase3Nodes.push(() => this.bindClassMethodDeclaration3(classMethodDeclaration, boundClassMethodDeclaration));
         }
 
         return boundClassMethodDeclaration;

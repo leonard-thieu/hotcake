@@ -3,7 +3,8 @@
     "identifier": "newExpression",
     "locals": [
         "MyClass",
-        "Main"
+        "Main",
+        "MyClass2"
     ],
     "members": [
         {
@@ -42,6 +43,40 @@
                         },
                         "arguments": []
                     }
+                }
+            ]
+        },
+        {
+            "kind": "ClassDeclaration",
+            "locals": [
+                "sibling",
+                "New"
+            ],
+            "identifier": "MyClass2",
+            "type": "MyClass2",
+            "baseType": "Object",
+            "members": [
+                {
+                    "kind": "DataDeclaration",
+                    "declarationKind": "FieldKeyword",
+                    "identifier": "sibling",
+                    "type": "MyClass",
+                    "expression": {
+                        "kind": "InvokeExpression",
+                        "type": "MyClass",
+                        "invokableExpression": {
+                            "kind": "NewExpression",
+                            "type": "(): MyClass"
+                        },
+                        "arguments": []
+                    }
+                },
+                {
+                    "kind": "ClassMethodDeclaration",
+                    "identifier": "New",
+                    "locals": [],
+                    "returnType": "MyClass2",
+                    "parameters": []
                 }
             ]
         }

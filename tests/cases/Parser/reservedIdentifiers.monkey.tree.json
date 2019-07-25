@@ -3491,24 +3491,28 @@
                                     "length": 3
                                 },
                                 "expression": {
-                                    "kind": "NewExpression",
+                                    "kind": "InvokeExpression",
                                     "newlines": [],
-                                    "newKeyword": {
-                                        "kind": "NewKeyword",
-                                        "fullStart": 1743,
-                                        "start": 1744,
-                                        "length": 4
-                                    },
-                                    "type": {
-                                        "kind": "TypeReference",
-                                        "identifier": {
-                                            "kind": "Identifier",
-                                            "fullStart": 1747,
-                                            "start": 1748,
-                                            "length": 6
+                                    "invokableExpression": {
+                                        "kind": "NewExpression",
+                                        "newKeyword": {
+                                            "kind": "NewKeyword",
+                                            "fullStart": 1743,
+                                            "start": 1744,
+                                            "length": 4
                                         },
-                                        "arrayTypeAnnotations": []
-                                    }
+                                        "type": {
+                                            "kind": "TypeReference",
+                                            "identifier": {
+                                                "kind": "Identifier",
+                                                "fullStart": 1747,
+                                                "start": 1748,
+                                                "length": 6
+                                            },
+                                            "arrayTypeAnnotations": []
+                                        }
+                                    },
+                                    "arguments": []
                                 }
                             }
                         ]

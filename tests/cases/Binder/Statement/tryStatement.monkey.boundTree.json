@@ -137,8 +137,13 @@
                                         {
                                             "kind": "ThrowStatement",
                                             "expression": {
-                                                "kind": "NewExpression",
-                                                "type": "(): Ex1"
+                                                "kind": "InvokeExpression",
+                                                "type": "Ex1",
+                                                "invokableExpression": {
+                                                    "kind": "NewExpression",
+                                                    "type": "(): Ex1"
+                                                },
+                                                "arguments": []
                                             }
                                         }
                                     ],
@@ -149,8 +154,13 @@
                                             {
                                                 "kind": "ThrowStatement",
                                                 "expression": {
-                                                    "kind": "NewExpression",
-                                                    "type": "(): Ex2"
+                                                    "kind": "InvokeExpression",
+                                                    "type": "Ex2",
+                                                    "invokableExpression": {
+                                                        "kind": "NewExpression",
+                                                        "type": "(): Ex2"
+                                                    },
+                                                    "arguments": []
                                                 }
                                             }
                                         ]

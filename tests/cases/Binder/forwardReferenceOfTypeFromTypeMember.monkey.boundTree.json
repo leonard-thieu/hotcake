@@ -1,6 +1,6 @@
 {
     "kind": "ModuleDeclaration",
-    "identifier": "forwardReferenceFromTypeMember",
+    "identifier": "forwardReferenceOfTypeFromTypeMember",
     "locals": [
         "List",
         "Node"
