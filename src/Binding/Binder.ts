@@ -1805,7 +1805,7 @@ export class Binder {
                 return this.bindGroupingExpression(expression, parent);
             }
             case NodeKind.ScopeMemberAccessExpression: {
-                return this.bindScopeMemberAccessExpression(expression, parent);
+                return this.bindScopeMemberAccessExpression(expression, parent, scope);
             }
             case NodeKind.IndexExpression: {
                 return this.bindIndexExpression(expression, parent);
@@ -2345,10 +2345,15 @@ export class Binder {
     private bindScopeMemberAccessExpression(
         scopeMemberAccessExpression: ScopeMemberAccessExpression,
         parent: BoundNodes,
+        scope?: ScopableExpressionType,
     ): BoundScopeMemberAccessExpression {
         const boundScopeMemberAccessExpression = new BoundScopeMemberAccessExpression();
         boundScopeMemberAccessExpression.parent = parent;
-        boundScopeMemberAccessExpression.scopableExpression = this.bindExpression(scopeMemberAccessExpression.scopableExpression, boundScopeMemberAccessExpression);
+        boundScopeMemberAccessExpression.scopableExpression = this.bindExpression(
+            scopeMemberAccessExpression.scopableExpression,
+            boundScopeMemberAccessExpression,
+            scope,
+        );
 
         const scopableExpressionType = boundScopeMemberAccessExpression.scopableExpression.type;
         switch (scopableExpressionType.kind) {
