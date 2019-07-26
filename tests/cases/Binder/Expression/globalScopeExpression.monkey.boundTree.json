@@ -16,10 +16,12 @@
             "kind": "ClassDeclaration",
             "locals": [
                 "T",
-                "Act"
+                "Act",
+                "New"
             ],
             "identifier": "Actor",
             "type": "Actor",
+            "baseType": "Object",
             "members": [
                 {
                     "kind": "DataDeclaration",
@@ -40,7 +42,8 @@
                                 "kind": "ScopeMemberAccessExpression",
                                 "type": "Int",
                                 "scopableExpression": {
-                                    "kind": "GlobalScopeExpression"
+                                    "kind": "GlobalScopeExpression",
+                                    "type": "Module"
                                 },
                                 "member": {
                                     "kind": "IdentifierExpression",
@@ -54,6 +57,13 @@
                             }
                         }
                     ]
+                },
+                {
+                    "kind": "ClassMethodDeclaration",
+                    "identifier": "New",
+                    "locals": [],
+                    "returnType": "Actor",
+                    "parameters": []
                 }
             ]
         }

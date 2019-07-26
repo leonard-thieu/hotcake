@@ -1,9 +1,8 @@
 {
     "kind": "ModuleDeclaration",
-    "identifier": "forwardReference",
+    "identifier": "invokeExpression",
     "locals": [
-        "Main",
-        "Test"
+        "Main"
     ],
     "members": [
         {
@@ -17,22 +16,16 @@
                     "kind": "ExpressionStatement",
                     "expression": {
                         "kind": "InvokeExpression",
+                        "type": "Int",
                         "invokableExpression": {
                             "kind": "IdentifierExpression",
-                            "identifier": "Test"
+                            "type": "(): Int",
+                            "identifier": "Main"
                         },
                         "arguments": []
                     }
                 }
             ]
-        },
-        {
-            "kind": "FunctionDeclaration",
-            "identifier": "Test",
-            "locals": [],
-            "returnType": "Int",
-            "parameters": [],
-            "statements": []
         }
     ]
 }

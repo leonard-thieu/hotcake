@@ -33,8 +33,10 @@
                     "kind": "ExpressionStatement",
                     "expression": {
                         "kind": "InvokeExpression",
+                        "type": "Void",
                         "invokableExpression": {
                             "kind": "IdentifierExpression",
+                            "type": "(String): Void",
                             "identifier": "Print"
                         },
                         "arguments": [

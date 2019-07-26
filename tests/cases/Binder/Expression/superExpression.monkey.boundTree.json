@@ -8,15 +8,27 @@
     "members": [
         {
             "kind": "ClassDeclaration",
-            "locals": [],
+            "locals": [
+                "New"
+            ],
             "identifier": "MyBaseClass",
             "type": "MyBaseClass",
-            "members": []
+            "baseType": "Object",
+            "members": [
+                {
+                    "kind": "ClassMethodDeclaration",
+                    "identifier": "New",
+                    "locals": [],
+                    "returnType": "MyBaseClass",
+                    "parameters": []
+                }
+            ]
         },
         {
             "kind": "ClassDeclaration",
             "locals": [
-                "GetBaseClass"
+                "GetBaseClass",
+                "New"
             ],
             "identifier": "MyClass",
             "type": "MyClass",
@@ -38,6 +50,13 @@
                             }
                         }
                     ]
+                },
+                {
+                    "kind": "ClassMethodDeclaration",
+                    "identifier": "New",
+                    "locals": [],
+                    "returnType": "MyClass",
+                    "parameters": []
                 }
             ]
         }

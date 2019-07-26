@@ -1,0 +1,116 @@
+{
+    "kind": "ModuleDeclaration",
+    "identifier": "genericTest",
+    "locals": [
+        "ArrayObject",
+        "ArrayBoxer"
+    ],
+    "members": [
+        {
+            "kind": "ClassDeclaration",
+            "locals": [
+                "F",
+                "value",
+                "New"
+            ],
+            "identifier": "ArrayObject",
+            "type": "ArrayObject<F>",
+            "typeParameters": [
+                {
+                    "kind": "TypeParameter",
+                    "identifier": "F",
+                    "type": "ArrayObject:F"
+                }
+            ],
+            "baseType": "Object",
+            "members": [
+                {
+                    "kind": "DataDeclaration",
+                    "declarationKind": "FieldKeyword",
+                    "identifier": "value",
+                    "type": "ArrayObject:F[]"
+                },
+                {
+                    "kind": "ClassMethodDeclaration",
+                    "identifier": "New",
+                    "locals": [],
+                    "returnType": "ArrayObject<F>",
+                    "parameters": []
+                }
+            ]
+        },
+        {
+            "kind": "ClassDeclaration",
+            "locals": [
+                "T",
+                "Unbox",
+                "New"
+            ],
+            "identifier": "ArrayBoxer",
+            "type": "ArrayBoxer<T>",
+            "typeParameters": [
+                {
+                    "kind": "TypeParameter",
+                    "identifier": "T",
+                    "type": "ArrayBoxer:T"
+                }
+            ],
+            "baseType": "Object",
+            "members": [
+                {
+                    "kind": "FunctionDeclaration",
+                    "identifier": "Unbox",
+                    "locals": [
+                        "box"
+                    ],
+                    "returnType": "ArrayBoxer:T[]",
+                    "parameters": [
+                        {
+                            "kind": "DataDeclaration",
+                            "identifier": "box",
+                            "type": "Object"
+                        }
+                    ],
+                    "statements": [
+                        {
+                            "kind": "ReturnStatement",
+                            "type": "ArrayBoxer:T[]",
+                            "expression": {
+                                "kind": "ScopeMemberAccessExpression",
+                                "type": "ArrayBoxer:T[]",
+                                "scopableExpression": {
+                                    "kind": "InvokeExpression",
+                                    "type": "ArrayObject<T>",
+                                    "invokableExpression": {
+                                        "kind": "IdentifierExpression",
+                                        "type": "ArrayObject<T>",
+                                        "identifier": "ArrayObject"
+                                    },
+                                    "arguments": [
+                                        {
+                                            "kind": "IdentifierExpression",
+                                            "type": "Object",
+                                            "identifier": "box"
+                                        }
+                                    ]
+                                },
+                                "member": {
+                                    "kind": "IdentifierExpression",
+                                    "type": "ArrayBoxer:T[]",
+                                    "identifier": "value"
+                                }
+                            }
+                        }
+                    ]
+                },
+                {
+                    "kind": "ClassMethodDeclaration",
+                    "identifier": "New",
+                    "locals": [],
+                    "returnType": "ArrayBoxer<T>",
+                    "parameters": []
+                }
+            ]
+        }
+    ]
+}

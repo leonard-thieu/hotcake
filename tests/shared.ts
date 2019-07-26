@@ -202,6 +202,21 @@ export function executeBinderTestCases(name: string, casesPath: string): void {
                 executeBaselineTestCase(outputPath, () => {
                     return getBoundTree(path.resolve(casesPath, sourceRelativePath), contents);
                 }, function (this: any, key, value) {
+                    switch (this.kind) {
+                        case BoundNodeKind.ModuleDeclaration:
+                        case BoundNodeKind.ExternFunctionDeclaration:
+                        case BoundNodeKind.ExternClassMethodDeclaration:
+                        case BoundNodeKind.FunctionDeclaration:
+                        case BoundNodeKind.InterfaceMethodDeclaration:
+                        case BoundNodeKind.ClassMethodDeclaration: {
+                            switch (key) {
+                                case 'type': {
+                                    return undefined;
+                                }
+                            }
+                        }
+                    }
+
                     switch (key) {
                         case 'project':
                         case 'directory':
@@ -222,7 +237,10 @@ export function executeBinderTestCases(name: string, casesPath: string): void {
                             break;
                         }
                         case 'identifier': {
-                            return value.name;
+                            if (value) {
+                                return value.name;
+                            }
+                            break;
                         }
                         case 'locals': {
                             const names: any[] = [];

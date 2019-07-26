@@ -49,8 +49,10 @@
                             "kind": "ExpressionStatement",
                             "expression": {
                                 "kind": "InvokeExpression",
+                                "type": "Int",
                                 "invokableExpression": {
                                     "kind": "IdentifierExpression",
+                                    "type": "(String): Int",
                                     "identifier": "Print"
                                 },
                                 "arguments": [
@@ -75,8 +77,10 @@
                                     "kind": "ExpressionStatement",
                                     "expression": {
                                         "kind": "InvokeExpression",
+                                        "type": "Int",
                                         "invokableExpression": {
                                             "kind": "IdentifierExpression",
+                                            "type": "(String): Int",
                                             "identifier": "Print"
                                         },
                                         "arguments": [
@@ -98,8 +102,10 @@
                                 "kind": "ExpressionStatement",
                                 "expression": {
                                     "kind": "InvokeExpression",
+                                    "type": "Int",
                                     "invokableExpression": {
                                         "kind": "IdentifierExpression",
+                                        "type": "(String): Int",
                                         "identifier": "Print"
                                     },
                                     "arguments": [

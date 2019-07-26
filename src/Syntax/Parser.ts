@@ -1263,7 +1263,6 @@ export class Parser extends ParserBase {
         let expression = this.parsePrimaryExpression(parent);
 
         switch (expression.kind) {
-            case NodeKind.NewExpression:
             case NodeKind.IdentifierExpression:
             case NodeKind.ScopeMemberAccessExpression: {
                 expression = this.parseInvokeExpression(expression);
@@ -1274,7 +1273,6 @@ export class Parser extends ParserBase {
         expression.newlines = newlines;
 
         switch (expression.kind) {
-            case NodeKind.SuperExpression:
             case NodeKind.InvokeExpression: {
                 return this.parseExpressionStatement(parent, expression);
             }
@@ -2181,7 +2179,10 @@ export class Parser extends ParserBase {
                 return false;
             }
 
-            case NodeKind.NewExpression:
+            case NodeKind.NewExpression: {
+                return true;
+            }
+
             case NodeKind.IdentifierExpression:
             case NodeKind.ScopeMemberAccessExpression: {
                 break;

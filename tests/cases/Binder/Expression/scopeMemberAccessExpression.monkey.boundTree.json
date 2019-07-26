@@ -3,29 +3,74 @@
     "identifier": "scopeMemberAccessExpression",
     "locals": [
         "C",
+        "HeadNode",
         "Main"
     ],
     "members": [
         {
             "kind": "ClassDeclaration",
             "locals": [
-                "T"
+                "T",
+                "New"
             ],
             "identifier": "C",
             "type": "C",
+            "baseType": "Object",
             "members": [
                 {
                     "kind": "DataDeclaration",
                     "declarationKind": "GlobalKeyword",
                     "identifier": "T",
                     "type": "Int"
+                },
+                {
+                    "kind": "ClassMethodDeclaration",
+                    "identifier": "New",
+                    "locals": [],
+                    "returnType": "C",
+                    "parameters": []
+                }
+            ]
+        },
+        {
+            "kind": "ClassDeclaration",
+            "locals": [
+                "_pred",
+                "_head",
+                "New"
+            ],
+            "identifier": "HeadNode",
+            "type": "HeadNode",
+            "baseType": "Object",
+            "members": [
+                {
+                    "kind": "DataDeclaration",
+                    "declarationKind": "FieldKeyword",
+                    "identifier": "_pred",
+                    "type": "HeadNode"
+                },
+                {
+                    "kind": "DataDeclaration",
+                    "declarationKind": "FieldKeyword",
+                    "identifier": "_head",
+                    "type": "HeadNode"
+                },
+                {
+                    "kind": "ClassMethodDeclaration",
+                    "identifier": "New",
+                    "locals": [],
+                    "returnType": "HeadNode",
+                    "parameters": []
                 }
             ]
         },
         {
             "kind": "FunctionDeclaration",
             "identifier": "Main",
-            "locals": [],
+            "locals": [
+                "headNode",
+                "chainedScopeMemberAccess"
+            ],
             "returnType": "Int",
             "parameters": [],
             "statements": [
@@ -48,6 +93,56 @@
                     "rightOperand": {
                         "kind": "IntegerLiteralExpression",
                         "type": "Int"
+                    }
+                },
+                {
+                    "kind": "DataDeclarationStatement",
+                    "declaration": {
+                        "kind": "DataDeclaration",
+                        "declarationKind": "LocalKeyword",
+                        "identifier": "headNode",
+                        "type": "HeadNode",
+                        "expression": {
+                            "kind": "InvokeExpression",
+                            "type": "HeadNode",
+                            "invokableExpression": {
+                                "kind": "NewExpression",
+                                "type": "(): HeadNode"
+                            },
+                            "arguments": []
+                        }
+                    }
+                },
+                {
+                    "kind": "DataDeclarationStatement",
+                    "declaration": {
+                        "kind": "DataDeclaration",
+                        "declarationKind": "LocalKeyword",
+                        "identifier": "chainedScopeMemberAccess",
+                        "type": "HeadNode",
+                        "expression": {
+                            "kind": "ScopeMemberAccessExpression",
+                            "type": "HeadNode",
+                            "scopableExpression": {
+                                "kind": "IdentifierExpression",
+                                "type": "HeadNode",
+                                "identifier": "headNode"
+                            },
+                            "member": {
+                                "kind": "ScopeMemberAccessExpression",
+                                "type": "HeadNode",
+                                "scopableExpression": {
+                                    "kind": "IdentifierExpression",
+                                    "type": "HeadNode",
+                                    "identifier": "_pred"
+                                },
+                                "member": {
+                                    "kind": "IdentifierExpression",
+                                    "type": "HeadNode",
+                                    "identifier": "_head"
+                                }
+                            }
+                        }
                     }
                 }
             ]

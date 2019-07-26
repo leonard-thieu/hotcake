@@ -11,26 +11,57 @@
     "members": [
         {
             "kind": "ClassDeclaration",
-            "locals": [],
+            "locals": [
+                "New"
+            ],
             "identifier": "Throwable",
             "type": "Throwable",
-            "members": []
+            "baseType": "Object",
+            "members": [
+                {
+                    "kind": "ClassMethodDeclaration",
+                    "identifier": "New",
+                    "locals": [],
+                    "returnType": "Throwable",
+                    "parameters": []
+                }
+            ]
         },
         {
             "kind": "ClassDeclaration",
-            "locals": [],
+            "locals": [
+                "New"
+            ],
             "identifier": "Ex1",
             "type": "Ex1",
             "baseType": "Throwable",
-            "members": []
+            "members": [
+                {
+                    "kind": "ClassMethodDeclaration",
+                    "identifier": "New",
+                    "locals": [],
+                    "returnType": "Ex1",
+                    "parameters": []
+                }
+            ]
         },
         {
             "kind": "ClassDeclaration",
-            "locals": [],
+            "locals": [
+                "New"
+            ],
             "identifier": "Ex2",
             "type": "Ex2",
             "baseType": "Throwable",
-            "members": []
+            "members": [
+                {
+                    "kind": "ClassMethodDeclaration",
+                    "identifier": "New",
+                    "locals": [],
+                    "returnType": "Ex2",
+                    "parameters": []
+                }
+            ]
         },
         {
             "kind": "FunctionDeclaration",
@@ -106,8 +137,13 @@
                                         {
                                             "kind": "ThrowStatement",
                                             "expression": {
-                                                "kind": "NewExpression",
-                                                "type": "Ex1"
+                                                "kind": "InvokeExpression",
+                                                "type": "Ex1",
+                                                "invokableExpression": {
+                                                    "kind": "NewExpression",
+                                                    "type": "(): Ex1"
+                                                },
+                                                "arguments": []
                                             }
                                         }
                                     ],
@@ -118,8 +154,13 @@
                                             {
                                                 "kind": "ThrowStatement",
                                                 "expression": {
-                                                    "kind": "NewExpression",
-                                                    "type": "Ex2"
+                                                    "kind": "InvokeExpression",
+                                                    "type": "Ex2",
+                                                    "invokableExpression": {
+                                                        "kind": "NewExpression",
+                                                        "type": "(): Ex2"
+                                                    },
+                                                    "arguments": []
                                                 }
                                             }
                                         ]
@@ -142,8 +183,10 @@
                                             "kind": "ExpressionStatement",
                                             "expression": {
                                                 "kind": "InvokeExpression",
+                                                "type": "Int",
                                                 "invokableExpression": {
                                                     "kind": "IdentifierExpression",
+                                                    "type": "(String): Int",
                                                     "identifier": "Print"
                                                 },
                                                 "arguments": [
@@ -171,8 +214,10 @@
                                             "kind": "ExpressionStatement",
                                             "expression": {
                                                 "kind": "InvokeExpression",
+                                                "type": "Int",
                                                 "invokableExpression": {
                                                     "kind": "IdentifierExpression",
+                                                    "type": "(String): Int",
                                                     "identifier": "Print"
                                                 },
                                                 "arguments": [

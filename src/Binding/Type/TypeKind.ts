@@ -2,9 +2,11 @@ export enum TypeKind {
     Array = 'Array',
     Bool = 'Bool',
     Float = 'Float',
-    Generic = 'Generic',
+    Function = 'Function',
     Int = 'Int',
+    Module = 'Module',
     String = 'String',
     Object = 'Object',
+    TypeParameter = 'TypeParameter',
     Void = 'Void',
 }

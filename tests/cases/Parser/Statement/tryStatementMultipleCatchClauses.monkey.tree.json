@@ -314,24 +314,28 @@
                                                 "length": 6
                                             },
                                             "expression": {
-                                                "kind": "NewExpression",
+                                                "kind": "InvokeExpression",
                                                 "newlines": [],
-                                                "newKeyword": {
-                                                    "kind": "NewKeyword",
-                                                    "fullStart": 156,
-                                                    "start": 157,
-                                                    "length": 4
-                                                },
-                                                "type": {
-                                                    "kind": "TypeReference",
-                                                    "identifier": {
-                                                        "kind": "Identifier",
-                                                        "fullStart": 160,
-                                                        "start": 161,
+                                                "invokableExpression": {
+                                                    "kind": "NewExpression",
+                                                    "newKeyword": {
+                                                        "kind": "NewKeyword",
+                                                        "fullStart": 156,
+                                                        "start": 157,
                                                         "length": 4
                                                     },
-                                                    "arrayTypeAnnotations": []
-                                                }
+                                                    "type": {
+                                                        "kind": "TypeReference",
+                                                        "identifier": {
+                                                            "kind": "Identifier",
+                                                            "fullStart": 160,
+                                                            "start": 161,
+                                                            "length": 4
+                                                        },
+                                                        "arrayTypeAnnotations": []
+                                                    }
+                                                },
+                                                "arguments": []
                                             }
                                         }
                                     ],
@@ -353,24 +357,28 @@
                                                     "length": 6
                                                 },
                                                 "expression": {
-                                                    "kind": "NewExpression",
+                                                    "kind": "InvokeExpression",
                                                     "newlines": [],
-                                                    "newKeyword": {
-                                                        "kind": "NewKeyword",
-                                                        "fullStart": 175,
-                                                        "start": 176,
-                                                        "length": 4
-                                                    },
-                                                    "type": {
-                                                        "kind": "TypeReference",
-                                                        "identifier": {
-                                                            "kind": "Identifier",
-                                                            "fullStart": 179,
-                                                            "start": 180,
+                                                    "invokableExpression": {
+                                                        "kind": "NewExpression",
+                                                        "newKeyword": {
+                                                            "kind": "NewKeyword",
+                                                            "fullStart": 175,
+                                                            "start": 176,
                                                             "length": 4
                                                         },
-                                                        "arrayTypeAnnotations": []
-                                                    }
+                                                        "type": {
+                                                            "kind": "TypeReference",
+                                                            "identifier": {
+                                                                "kind": "Identifier",
+                                                                "fullStart": 179,
+                                                                "start": 180,
+                                                                "length": 4
+                                                            },
+                                                            "arrayTypeAnnotations": []
+                                                        }
+                                                    },
+                                                    "arguments": []
                                                 }
                                             }
                                         ]

@@ -1,0 +1,40 @@
+{
+    "kind": "ModuleDeclaration",
+    "identifier": "forwardReferenceFromStatement",
+    "locals": [
+        "Main",
+        "Test"
+    ],
+    "members": [
+        {
+            "kind": "FunctionDeclaration",
+            "identifier": "Main",
+            "locals": [],
+            "returnType": "Int",
+            "parameters": [],
+            "statements": [
+                {
+                    "kind": "ExpressionStatement",
+                    "expression": {
+                        "kind": "InvokeExpression",
+                        "type": "Int",
+                        "invokableExpression": {
+                            "kind": "IdentifierExpression",
+                            "type": "(): Int",
+                            "identifier": "Test"
+                        },
+                        "arguments": []
+                    }
+                }
+            ]
+        },
+        {
+            "kind": "FunctionDeclaration",
+            "identifier": "Test",
+            "locals": [],
+            "returnType": "Int",
+            "parameters": [],
+            "statements": []
+        }
+    ]
+}
