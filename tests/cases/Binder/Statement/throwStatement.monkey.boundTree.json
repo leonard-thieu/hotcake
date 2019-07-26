@@ -36,9 +36,10 @@
                     "expression": {
                         "kind": "InvokeExpression",
                         "type": "Throwable",
+                        "invocationType": "New Throwable()",
                         "invokableExpression": {
                             "kind": "NewExpression",
-                            "type": "(): Throwable"
+                            "type": "New"
                         },
                         "arguments": []
                     }

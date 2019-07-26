@@ -1,5 +1,5 @@
 import { BoundSymbol, BoundSymbolTable } from '../../BoundSymbol';
-import { FunctionType } from '../../Type/FunctionType';
+import { FunctionLikeType } from '../../Type/FunctionLikeType';
 import { Types } from '../../Type/Types';
 import { BoundNode } from '../BoundNode';
 import { BoundNodeKind } from '../BoundNodeKind';
@@ -10,7 +10,7 @@ export class BoundInterfaceMethodDeclaration extends BoundNode {
 
     identifier: BoundSymbol = undefined!;
     locals: BoundSymbolTable = undefined!;
-    type: FunctionType = undefined!;
+    type: FunctionLikeType = undefined!;
 
     returnType: Types = undefined!;
     parameters: BoundDataDeclaration[] = undefined!;

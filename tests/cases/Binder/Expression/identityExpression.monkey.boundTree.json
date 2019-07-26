@@ -48,9 +48,10 @@
                     "expression": {
                         "kind": "InvokeExpression",
                         "type": "Void",
+                        "invocationType": "Print: Void(String)",
                         "invokableExpression": {
                             "kind": "IdentifierExpression",
-                            "type": "(String): Void",
+                            "type": "Print",
                             "identifier": "Print"
                         },
                         "arguments": [

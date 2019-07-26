@@ -1,6 +1,6 @@
-Function Print: Void(val: String)
+Function UnboxBool: Bool(box: Object)
 End
 
 Function Main()
-    Print(Null)
+    UnboxBool(Null)
 End Function

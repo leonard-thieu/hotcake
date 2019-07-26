@@ -7,7 +7,7 @@ import { BoundNodeKind } from './Binding/Node/BoundNodeKind';
 import { BoundDirectory } from './Binding/Node/Declaration/BoundDirectory';
 import { BoundModuleDeclaration } from './Binding/Node/Declaration/BoundModuleDeclaration';
 import { ArrayType } from './Binding/Type/ArrayType';
-import { FunctionType } from './Binding/Type/FunctionType';
+import { FunctionLikeType } from './Binding/Type/FunctionLikeType';
 import { ObjectType } from './Binding/Type/ObjectType';
 import { StringType } from './Binding/Type/StringType';
 import { TypeKind } from './Binding/Type/TypeKind';
@@ -282,10 +282,11 @@ export class Project {
             case TypeKind.Array: {
                 return this.getArrayType(this.closeType(openType.elementType, typeMap));
             }
-            case TypeKind.Function: {
-                return this.closeFunctionType(openType, typeMap);
+            case TypeKind.FunctionLike: {
+                return this.closeFunctionLikeType(openType, typeMap);
             }
             case TypeKind.Module:
+            case TypeKind.FunctionLikeGroup:
             case TypeKind.Void: {
                 throw new Error(`Cannot close '${openType.kind}' type.`);
             }
@@ -356,16 +357,11 @@ export class Project {
             closedType.typeParameters = typeParameters;
         }
 
-        for (const [name, member] of openType.members) {
-            const closedMember = this.closeType(member, typeMap);
-            closedType.members.set(name, closedMember);
-        }
-
         return closedType;
     }
 
-    private closeFunctionType(openType: FunctionType, typeMap: Map<TypeParameterType, Types>): FunctionType {
-        const closedType = new FunctionType();
+    private closeFunctionLikeType(openType: FunctionLikeType, typeMap: Map<TypeParameterType, Types>): FunctionLikeType {
+        const closedType = new FunctionLikeType();
         this.setClosedTypeInfo(openType, Array.from(typeMap.values()), closedType);
         closedType.returnType = this.closeType(openType.returnType, typeMap);
 

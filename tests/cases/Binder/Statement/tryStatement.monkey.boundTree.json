@@ -139,9 +139,10 @@
                                             "expression": {
                                                 "kind": "InvokeExpression",
                                                 "type": "Ex1",
+                                                "invocationType": "New Ex1()",
                                                 "invokableExpression": {
                                                     "kind": "NewExpression",
-                                                    "type": "(): Ex1"
+                                                    "type": "New"
                                                 },
                                                 "arguments": []
                                             }
@@ -156,9 +157,10 @@
                                                 "expression": {
                                                     "kind": "InvokeExpression",
                                                     "type": "Ex2",
+                                                    "invocationType": "New Ex2()",
                                                     "invokableExpression": {
                                                         "kind": "NewExpression",
-                                                        "type": "(): Ex2"
+                                                        "type": "New"
                                                     },
                                                     "arguments": []
                                                 }
@@ -184,9 +186,10 @@
                                             "expression": {
                                                 "kind": "InvokeExpression",
                                                 "type": "Int",
+                                                "invocationType": "Print: Int(String)",
                                                 "invokableExpression": {
                                                     "kind": "IdentifierExpression",
-                                                    "type": "(String): Int",
+                                                    "type": "Print",
                                                     "identifier": "Print"
                                                 },
                                                 "arguments": [
@@ -215,9 +218,10 @@
                                             "expression": {
                                                 "kind": "InvokeExpression",
                                                 "type": "Int",
+                                                "invocationType": "Print: Int(String)",
                                                 "invokableExpression": {
                                                     "kind": "IdentifierExpression",
-                                                    "type": "(String): Int",
+                                                    "type": "Print",
                                                     "identifier": "Print"
                                                 },
                                                 "arguments": [

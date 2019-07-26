@@ -62,9 +62,10 @@
                                     "expression": {
                                         "kind": "InvokeExpression",
                                         "type": "Int",
+                                        "invocationType": "Print: Int(String)",
                                         "invokableExpression": {
                                             "kind": "IdentifierExpression",
-                                            "type": "(String): Int",
+                                            "type": "Print",
                                             "identifier": "Print"
                                         },
                                         "arguments": [
@@ -96,9 +97,10 @@
                                     "expression": {
                                         "kind": "InvokeExpression",
                                         "type": "Int",
+                                        "invocationType": "Print: Int(String)",
                                         "invokableExpression": {
                                             "kind": "IdentifierExpression",
-                                            "type": "(String): Int",
+                                            "type": "Print",
                                             "identifier": "Print"
                                         },
                                         "arguments": [
@@ -122,9 +124,10 @@
                                 "expression": {
                                     "kind": "InvokeExpression",
                                     "type": "Int",
+                                    "invocationType": "Print: Int(String)",
                                     "invokableExpression": {
                                         "kind": "IdentifierExpression",
-                                        "type": "(String): Int",
+                                        "type": "Print",
                                         "identifier": "Print"
                                     },
                                     "arguments": [

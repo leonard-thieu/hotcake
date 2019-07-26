@@ -33,9 +33,10 @@
                     "expression": {
                         "kind": "InvokeExpression",
                         "type": "HeadNode<T>",
+                        "invocationType": "New HeadNode<T>()",
                         "invokableExpression": {
                             "kind": "NewExpression",
-                            "type": "(): HeadNode<T>"
+                            "type": "New"
                         },
                         "arguments": []
                     }

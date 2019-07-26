@@ -15,7 +15,7 @@ Function Main()
         CheckItem(item)
     End
 
-    Local val2: Int[]
+    Local val2: Int
     For val2 = EachIn [3, 4, 5]
         CheckInt(val2)
     End
