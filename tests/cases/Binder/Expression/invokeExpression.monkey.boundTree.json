@@ -17,9 +17,10 @@
                     "expression": {
                         "kind": "InvokeExpression",
                         "type": "Int",
+                        "invocationType": "Main: Int()",
                         "invokableExpression": {
                             "kind": "IdentifierExpression",
-                            "type": "(): Int",
+                            "type": "Main",
                             "identifier": "Main"
                         },
                         "arguments": []

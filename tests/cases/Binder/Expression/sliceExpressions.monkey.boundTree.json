@@ -24,6 +24,22 @@
         },
         {
             "kind": "FunctionDeclaration",
+            "identifier": "Print",
+            "locals": [
+                "messages"
+            ],
+            "returnType": "Int",
+            "parameters": [
+                {
+                    "kind": "DataDeclaration",
+                    "identifier": "messages",
+                    "type": "String[]"
+                }
+            ],
+            "statements": []
+        },
+        {
+            "kind": "FunctionDeclaration",
             "identifier": "Main",
             "locals": [],
             "returnType": "Int",
@@ -34,9 +50,10 @@
                     "expression": {
                         "kind": "InvokeExpression",
                         "type": "Int",
+                        "invocationType": "Print: Int(String)",
                         "invokableExpression": {
                             "kind": "IdentifierExpression",
-                            "type": "(String): Int",
+                            "type": "Print",
                             "identifier": "Print"
                         },
                         "arguments": [
@@ -64,9 +81,10 @@
                     "expression": {
                         "kind": "InvokeExpression",
                         "type": "Int",
+                        "invocationType": "Print: Int(String)",
                         "invokableExpression": {
                             "kind": "IdentifierExpression",
-                            "type": "(String): Int",
+                            "type": "Print",
                             "identifier": "Print"
                         },
                         "arguments": [
@@ -90,9 +108,10 @@
                     "expression": {
                         "kind": "InvokeExpression",
                         "type": "Int",
+                        "invocationType": "Print: Int(String)",
                         "invokableExpression": {
                             "kind": "IdentifierExpression",
-                            "type": "(String): Int",
+                            "type": "Print",
                             "identifier": "Print"
                         },
                         "arguments": [
@@ -116,9 +135,10 @@
                     "expression": {
                         "kind": "InvokeExpression",
                         "type": "Int",
+                        "invocationType": "Print: Int(String)",
                         "invokableExpression": {
                             "kind": "IdentifierExpression",
-                            "type": "(String): Int",
+                            "type": "Print",
                             "identifier": "Print"
                         },
                         "arguments": [
@@ -138,9 +158,10 @@
                     "expression": {
                         "kind": "InvokeExpression",
                         "type": "Int",
+                        "invocationType": "Print: Int(String[])",
                         "invokableExpression": {
                             "kind": "IdentifierExpression",
-                            "type": "(String): Int",
+                            "type": "Print",
                             "identifier": "Print"
                         },
                         "arguments": [
@@ -182,9 +203,10 @@
                     "expression": {
                         "kind": "InvokeExpression",
                         "type": "Int",
+                        "invocationType": "Print: Int(String[])",
                         "invokableExpression": {
                             "kind": "IdentifierExpression",
-                            "type": "(String): Int",
+                            "type": "Print",
                             "identifier": "Print"
                         },
                         "arguments": [
@@ -222,9 +244,10 @@
                     "expression": {
                         "kind": "InvokeExpression",
                         "type": "Int",
+                        "invocationType": "Print: Int(String[])",
                         "invokableExpression": {
                             "kind": "IdentifierExpression",
-                            "type": "(String): Int",
+                            "type": "Print",
                             "identifier": "Print"
                         },
                         "arguments": [
@@ -262,9 +285,10 @@
                     "expression": {
                         "kind": "InvokeExpression",
                         "type": "Int",
+                        "invocationType": "Print: Int(String[])",
                         "invokableExpression": {
                             "kind": "IdentifierExpression",
-                            "type": "(String): Int",
+                            "type": "Print",
                             "identifier": "Print"
                         },
                         "arguments": [

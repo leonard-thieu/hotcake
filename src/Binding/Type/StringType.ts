@@ -4,7 +4,6 @@ import { ObjectType } from './ObjectType';
 import { Type } from './Type';
 import { TypeKind } from './TypeKind';
 import { Types } from './Types';
-import { TypeTable } from './TypeTable';
 
 export class StringType extends Type {
     readonly kind = TypeKind.String;
@@ -12,7 +11,6 @@ export class StringType extends Type {
     declaration: BoundExternClassDeclaration = undefined!;
     identifier: BoundSymbol = undefined!;
     superType?: ObjectType = undefined;
-    readonly members = new TypeTable();
 
     isConvertibleTo(target: Types): boolean {
         // TODO: Boxing conversion

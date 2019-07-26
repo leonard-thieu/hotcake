@@ -1,7 +1,7 @@
 import { ArrayType } from './ArrayType';
 import { BoolType } from './BoolType';
 import { FloatType } from './FloatType';
-import { FunctionType } from './FunctionType';
+import { FunctionLikeGroupType, FunctionLikeType } from './FunctionLikeType';
 import { IntType } from './IntType';
 import { ModuleType } from './ModuleType';
 import { ObjectType } from './ObjectType';
@@ -13,7 +13,8 @@ export type Types =
     | ArrayType
     | BoolType
     | FloatType
-    | FunctionType
+    | FunctionLikeType
+    | FunctionLikeGroupType
     | IntType
     | ModuleType
     | ObjectType

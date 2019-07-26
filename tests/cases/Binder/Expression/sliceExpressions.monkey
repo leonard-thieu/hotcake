@@ -1,6 +1,9 @@
 Function Print(message: String)
 End
 
+Function Print(messages: String[])
+End
+
 Function Main()
     Print("My example string."[1..2])
     Print("My example string."[..2])

@@ -2,22 +2,22 @@
     "kind": "ModuleDeclaration",
     "identifier": "nullExpression",
     "locals": [
-        "Print",
+        "UnboxBool",
         "Main"
     ],
     "members": [
         {
             "kind": "FunctionDeclaration",
-            "identifier": "Print",
+            "identifier": "UnboxBool",
             "locals": [
-                "val"
+                "box"
             ],
-            "returnType": "Void",
+            "returnType": "Bool",
             "parameters": [
                 {
                     "kind": "DataDeclaration",
-                    "identifier": "val",
-                    "type": "String"
+                    "identifier": "box",
+                    "type": "Object"
                 }
             ],
             "statements": []
@@ -33,11 +33,12 @@
                     "kind": "ExpressionStatement",
                     "expression": {
                         "kind": "InvokeExpression",
-                        "type": "Void",
+                        "type": "Bool",
+                        "invocationType": "UnboxBool: Bool(Object)",
                         "invokableExpression": {
                             "kind": "IdentifierExpression",
-                            "type": "(String): Void",
-                            "identifier": "Print"
+                            "type": "UnboxBool",
+                            "identifier": "UnboxBool"
                         },
                         "arguments": [
                             {

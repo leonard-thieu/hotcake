@@ -37,9 +37,10 @@
                     "expression": {
                         "kind": "InvokeExpression",
                         "type": "MyClass",
+                        "invocationType": "New MyClass()",
                         "invokableExpression": {
                             "kind": "NewExpression",
-                            "type": "(): MyClass"
+                            "type": "New"
                         },
                         "arguments": []
                     }
@@ -64,9 +65,10 @@
                     "expression": {
                         "kind": "InvokeExpression",
                         "type": "MyClass",
+                        "invocationType": "New MyClass()",
                         "invokableExpression": {
                             "kind": "NewExpression",
-                            "type": "(): MyClass"
+                            "type": "New"
                         },
                         "arguments": []
                     }

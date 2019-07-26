@@ -1,41 +1,22 @@
 {
     "kind": "ModuleDeclaration",
-    "identifier": "literalExpression",
+    "identifier": "functionOverloading",
     "locals": [
-        "BoxBool",
-        "BoxInt",
-        "BoxFloat",
-        "BoxString",
+        "Add",
         "Main"
     ],
     "members": [
         {
             "kind": "FunctionDeclaration",
-            "identifier": "BoxBool",
+            "identifier": "Add",
             "locals": [
-                "val"
+                "value"
             ],
-            "returnType": "Object",
+            "returnType": "Int",
             "parameters": [
                 {
                     "kind": "DataDeclaration",
-                    "identifier": "val",
-                    "type": "Bool"
-                }
-            ],
-            "statements": []
-        },
-        {
-            "kind": "FunctionDeclaration",
-            "identifier": "BoxInt",
-            "locals": [
-                "val"
-            ],
-            "returnType": "Object",
-            "parameters": [
-                {
-                    "kind": "DataDeclaration",
-                    "identifier": "val",
+                    "identifier": "value",
                     "type": "Int"
                 }
             ],
@@ -43,15 +24,15 @@
         },
         {
             "kind": "FunctionDeclaration",
-            "identifier": "BoxFloat",
+            "identifier": "Add",
             "locals": [
-                "val"
+                "value"
             ],
-            "returnType": "Object",
+            "returnType": "Int",
             "parameters": [
                 {
                     "kind": "DataDeclaration",
-                    "identifier": "val",
+                    "identifier": "value",
                     "type": "Float"
                 }
             ],
@@ -59,15 +40,15 @@
         },
         {
             "kind": "FunctionDeclaration",
-            "identifier": "BoxString",
+            "identifier": "Add",
             "locals": [
-                "val"
+                "value"
             ],
-            "returnType": "Object",
+            "returnType": "Int",
             "parameters": [
                 {
                     "kind": "DataDeclaration",
-                    "identifier": "val",
+                    "identifier": "value",
                     "type": "String"
                 }
             ],
@@ -84,31 +65,12 @@
                     "kind": "ExpressionStatement",
                     "expression": {
                         "kind": "InvokeExpression",
-                        "type": "Object",
-                        "invocationType": "BoxBool: Object(Bool)",
+                        "type": "Int",
+                        "invocationType": "Add: Int(Int)",
                         "invokableExpression": {
                             "kind": "IdentifierExpression",
-                            "type": "BoxBool",
-                            "identifier": "BoxBool"
-                        },
-                        "arguments": [
-                            {
-                                "kind": "BooleanLiteralExpression",
-                                "type": "Bool"
-                            }
-                        ]
-                    }
-                },
-                {
-                    "kind": "ExpressionStatement",
-                    "expression": {
-                        "kind": "InvokeExpression",
-                        "type": "Object",
-                        "invocationType": "BoxInt: Object(Int)",
-                        "invokableExpression": {
-                            "kind": "IdentifierExpression",
-                            "type": "BoxInt",
-                            "identifier": "BoxInt"
+                            "type": "Add",
+                            "identifier": "Add"
                         },
                         "arguments": [
                             {
@@ -122,12 +84,12 @@
                     "kind": "ExpressionStatement",
                     "expression": {
                         "kind": "InvokeExpression",
-                        "type": "Object",
-                        "invocationType": "BoxFloat: Object(Float)",
+                        "type": "Int",
+                        "invocationType": "Add: Int(Float)",
                         "invokableExpression": {
                             "kind": "IdentifierExpression",
-                            "type": "BoxFloat",
-                            "identifier": "BoxFloat"
+                            "type": "Add",
+                            "identifier": "Add"
                         },
                         "arguments": [
                             {
@@ -141,12 +103,12 @@
                     "kind": "ExpressionStatement",
                     "expression": {
                         "kind": "InvokeExpression",
-                        "type": "Object",
-                        "invocationType": "BoxString: Object(String)",
+                        "type": "Int",
+                        "invocationType": "Add: Int(String)",
                         "invokableExpression": {
                             "kind": "IdentifierExpression",
-                            "type": "BoxString",
-                            "identifier": "BoxString"
+                            "type": "Add",
+                            "identifier": "Add"
                         },
                         "arguments": [
                             {

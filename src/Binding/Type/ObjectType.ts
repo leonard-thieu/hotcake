@@ -6,7 +6,6 @@ import { Type } from './Type';
 import { TypeKind } from './TypeKind';
 import { TypeParameterType } from './TypeParameterType';
 import { Types } from './Types';
-import { TypeTable } from './TypeTable';
 
 export class ObjectType extends Type {
     static readonly type = new ObjectType();
@@ -18,9 +17,14 @@ export class ObjectType extends Type {
     identifier?: BoundSymbol = undefined;
     superType?: ObjectType = undefined;
     typeParameters?: TypeParameterType[] = undefined;
-    readonly members = new TypeTable();
 
     isConvertibleTo(target: Types): boolean {
+        if (this === ObjectType.nullType &&
+            target.kind === TypeKind.Object
+        ) {
+            return true;
+        }
+
         if (target === ObjectType.nullType) { return true; }
         if (target === this) { return true; }
 

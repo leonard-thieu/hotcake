@@ -23,3 +23,16 @@ export type BoundDeclarations =
     | BoundClassMethodDeclaration
     | BoundTypeParameter
     ;
+
+export type BoundTypedDeclarations =
+    | BoundDirectory
+    | BoundModuleDeclaration
+    | BoundExternDeclarations
+    | BoundDataDeclaration
+    | BoundFunctionDeclaration
+    | BoundInterfaceDeclaration
+    | BoundInterfaceMethodDeclaration
+    | BoundClassDeclaration
+    | BoundClassMethodDeclaration
+    | BoundTypeParameter
+    ;
