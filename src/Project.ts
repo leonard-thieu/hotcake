@@ -254,15 +254,15 @@ export class Project {
 
     // #region Generic types
 
-    private readonly closedTypes = new Map<Types, ClosedTypeInfo[]>();
+    private readonly instantiatedTypes = new Map<Types, InstantiatedTypeInfo[]>();
 
-    closeType(openType: Types, typeMap: Map<TypeParameterType, Types>): Types {
+    instantiateType(openType: Types, typeMap: Map<TypeParameterType, Types>): Types {
         // Breaks infinite loops when a type references itself
-        const closedTypeInfos = this.closedTypes.get(openType);
-        if (closedTypeInfos) {
-            const closedTypeInfo = this.getClosedTypeInfo(closedTypeInfos, Array.from(typeMap.values()));
-            if (closedTypeInfo) {
-                return closedTypeInfo.closedType;
+        const instantiatedTypeInfos = this.instantiatedTypes.get(openType);
+        if (instantiatedTypeInfos) {
+            const instantiatedTypeInfo = this.getInstantiatedTypeInfo(instantiatedTypeInfos, Array.from(typeMap.values()));
+            if (instantiatedTypeInfo) {
+                return instantiatedTypeInfo.instantiatedType;
             }
         }
 
@@ -277,18 +277,18 @@ export class Project {
                 return typeMap.get(openType)!;
             }
             case TypeKind.Object: {
-                return this.closeObjectType(openType, typeMap);
+                return this.instantiateObjectType(openType, typeMap);
             }
             case TypeKind.Array: {
-                return this.getArrayType(this.closeType(openType.elementType, typeMap));
+                return this.getArrayType(this.instantiateType(openType.elementType, typeMap));
             }
             case TypeKind.FunctionLike: {
-                return this.closeFunctionLikeType(openType, typeMap);
+                return this.instantiateFunctionLikeType(openType, typeMap);
             }
             case TypeKind.Module:
             case TypeKind.FunctionLikeGroup:
             case TypeKind.Void: {
-                throw new Error(`Cannot close '${openType.kind}' type.`);
+                throw new Error(`Cannot instantiate '${openType.kind}' type.`);
             }
             default: {
                 return assertNever(openType);
@@ -296,52 +296,52 @@ export class Project {
         }
     }
 
-    private getClosedTypeInfo(
-        closedTypeInfos: ClosedTypeInfo[],
+    private getInstantiatedTypeInfo(
+        instantiatedTypeInfos: InstantiatedTypeInfo[],
         typeArguments: Types[],
-    ): ClosedTypeInfo | undefined {
-        for (const closedTypeInfo of closedTypeInfos) {
+    ): InstantiatedTypeInfo | undefined {
+        for (const instantiatedTypeInfo of instantiatedTypeInfos) {
             let isCached = true;
 
-            for (let i = 0; i < closedTypeInfo.typeArguments.length; i++) {
-                if (closedTypeInfo.typeArguments[i] !== typeArguments[i]) {
+            for (let i = 0; i < instantiatedTypeInfo.typeArguments.length; i++) {
+                if (instantiatedTypeInfo.typeArguments[i] !== typeArguments[i]) {
                     isCached = false;
                     break;
                 }
             }
 
             if (isCached) {
-                return closedTypeInfo;
+                return instantiatedTypeInfo;
             }
         }
     }
 
-    private setClosedTypeInfo(
+    private setInstantiatedTypeInfo(
         openType: Types,
         typeArguments: Types[],
-        closedType: Types,
+        instantiatedType: Types,
     ): void {
-        let closedTypeInfos = this.closedTypes.get(openType);
+        let instantiatedTypeInfos = this.instantiatedTypes.get(openType);
 
-        if (!closedTypeInfos) {
-            closedTypeInfos = [];
-            this.closedTypes.set(openType, closedTypeInfos);
+        if (!instantiatedTypeInfos) {
+            instantiatedTypeInfos = [];
+            this.instantiatedTypes.set(openType, instantiatedTypeInfos);
         }
 
-        closedTypeInfos.push({
+        instantiatedTypeInfos.push({
             typeArguments,
-            closedType,
+            instantiatedType,
         });
     }
 
-    private closeObjectType(openType: ObjectType, typeMap: Map<TypeParameterType, Types>): ObjectType {
-        const closedType = new ObjectType();
-        this.setClosedTypeInfo(openType, Array.from(typeMap.values()), closedType);
-        closedType.declaration = openType.declaration;
-        closedType.identifier = openType.identifier;
+    private instantiateObjectType(openType: ObjectType, typeMap: Map<TypeParameterType, Types>): ObjectType {
+        const instantiatedType = new ObjectType();
+        this.setInstantiatedTypeInfo(openType, Array.from(typeMap.values()), instantiatedType);
+        instantiatedType.declaration = openType.declaration;
+        instantiatedType.identifier = openType.identifier;
 
-        // TODO: Close super type?
-        // TODO: Close implemented types?
+        // TODO: Instantiate super type?
+        // TODO: Instantiate implemented types?
         // TODO: Assert matching number of type parameters/arguments?
 
         if (openType.typeParameters) {
@@ -354,32 +354,32 @@ export class Project {
                 }
             }
 
-            closedType.typeParameters = typeParameters;
+            instantiatedType.typeParameters = typeParameters;
         }
 
-        return closedType;
+        return instantiatedType;
     }
 
-    private closeFunctionLikeType(openType: FunctionLikeType, typeMap: Map<TypeParameterType, Types>): FunctionLikeType {
-        const closedType = new FunctionLikeType();
-        this.setClosedTypeInfo(openType, Array.from(typeMap.values()), closedType);
-        closedType.returnType = this.closeType(openType.returnType, typeMap);
+    private instantiateFunctionLikeType(openType: FunctionLikeType, typeMap: Map<TypeParameterType, Types>): FunctionLikeType {
+        const instantiatedType = new FunctionLikeType();
+        this.setInstantiatedTypeInfo(openType, Array.from(typeMap.values()), instantiatedType);
+        instantiatedType.returnType = this.instantiateType(openType.returnType, typeMap);
 
         const parameters: Types[] = [];
 
         for (const parameter of openType.parameters) {
-            parameters.push(this.closeType(parameter, typeMap));
+            parameters.push(this.instantiateType(parameter, typeMap));
         }
 
-        closedType.parameters = parameters;
+        instantiatedType.parameters = parameters;
 
-        return closedType;
+        return instantiatedType;
     }
 
     // #endregion
 }
 
-interface ClosedTypeInfo {
+interface InstantiatedTypeInfo {
     typeArguments: Types[];
-    closedType: Types;
+    instantiatedType: Types;
 }

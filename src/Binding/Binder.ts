@@ -2184,7 +2184,7 @@ export class Binder {
                         }
                     }
 
-                    boundIdentifierExpression.type = this.project.closeType(openType, typeMap);
+                    boundIdentifierExpression.type = this.project.instantiateType(openType, typeMap);
                 }
                 break;
             }
