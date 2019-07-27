@@ -2637,10 +2637,10 @@ export class Binder {
             case TokenKind.QuestionMark: {
                 return BoolType.type;
             }
-            case TokenKind.NumberSign: {
+            case TokenKind.PercentSign: {
                 return IntType.type;
             }
-            case TokenKind.PercentSign: {
+            case TokenKind.NumberSign: {
                 return FloatType.type;
             }
             case TokenKind.DollarSign: {

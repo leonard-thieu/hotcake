@@ -1,2 +1,2 @@
-Function Encode: Void(place#, percentile: Float)
+Function Encode: Void(place%, percentile: Float)
 End
