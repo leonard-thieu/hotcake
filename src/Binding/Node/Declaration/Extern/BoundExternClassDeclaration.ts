@@ -1,6 +1,7 @@
 import { ExternClassDeclaration } from '../../../../Syntax/Node/Declaration/ExternDeclaration/ExternClassDeclaration';
 import { BoundSymbol, BoundSymbolTable } from '../../../BoundSymbol';
-import { Types } from '../../../Type/Types';
+import { ObjectType } from '../../../Type/ObjectType';
+import { StringType } from '../../../Type/StringType';
 import { BoundNode } from '../../BoundNode';
 import { BoundNodeKind } from '../../BoundNodeKind';
 import { BoundStringLiteralExpression } from '../../Expression/BoundStringLiteralExpression';
@@ -15,9 +16,9 @@ export class BoundExternClassDeclaration extends BoundNode {
 
     identifier: BoundSymbol = undefined!;
     locals: BoundSymbolTable = undefined!;
-    type: Types = undefined!;
+    type: ObjectType | StringType = undefined!;
 
-    baseType?: Types = undefined;
+    baseType?: ObjectType = undefined;
 
     members: BoundExternClassDeclarationMember[] = undefined!;
 

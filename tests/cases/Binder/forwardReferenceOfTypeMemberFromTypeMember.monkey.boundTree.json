@@ -10,17 +10,17 @@
         {
             "kind": "ClassDeclaration",
             "locals": [
-                "T",
+                "TFromList",
                 "_head",
                 "New"
             ],
             "identifier": "List",
-            "type": "List<T>",
+            "type": "List<TFromList>",
             "typeParameters": [
                 {
                     "kind": "TypeParameter",
-                    "identifier": "T",
-                    "type": "List:T"
+                    "identifier": "TFromList",
+                    "type": "List:TFromList"
                 }
             ],
             "baseType": "Object",
@@ -29,14 +29,14 @@
                     "kind": "DataDeclaration",
                     "declarationKind": "FieldKeyword",
                     "identifier": "_head",
-                    "type": "HeadNode<T>",
+                    "type": "HeadNode<TFromList>",
                     "expression": {
                         "kind": "InvokeExpression",
-                        "type": "HeadNode<T>",
-                        "invocationType": "New HeadNode<T>()",
+                        "type": "HeadNode<TFromList>",
+                        "invocationType": "New HeadNode<TFromList>()",
                         "invokableExpression": {
                             "kind": "NewExpression",
-                            "type": "New"
+                            "type": "New HeadNode<TFromList>"
                         },
                         "arguments": []
                     }
@@ -45,7 +45,7 @@
                     "kind": "ClassMethodDeclaration",
                     "identifier": "New",
                     "locals": [],
-                    "returnType": "List<T>",
+                    "returnType": "List<TFromList>",
                     "parameters": []
                 }
             ]
@@ -53,16 +53,16 @@
         {
             "kind": "ClassDeclaration",
             "locals": [
-                "T",
+                "TFromHeadNode",
                 "New"
             ],
             "identifier": "HeadNode",
-            "type": "HeadNode<T>",
+            "type": "HeadNode<TFromHeadNode>",
             "typeParameters": [
                 {
                     "kind": "TypeParameter",
-                    "identifier": "T",
-                    "type": "HeadNode:T"
+                    "identifier": "TFromHeadNode",
+                    "type": "HeadNode:TFromHeadNode"
                 }
             ],
             "baseType": "Object",
@@ -71,7 +71,7 @@
                     "kind": "ClassMethodDeclaration",
                     "identifier": "New",
                     "locals": [],
-                    "returnType": "HeadNode<T>",
+                    "returnType": "HeadNode<TFromHeadNode>",
                     "parameters": []
                 }
             ]

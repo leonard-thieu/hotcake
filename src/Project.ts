@@ -6,13 +6,7 @@ import { BoundSymbol, BoundSymbolTable } from './Binding/BoundSymbol';
 import { BoundNodeKind } from './Binding/Node/BoundNodeKind';
 import { BoundDirectory } from './Binding/Node/Declaration/BoundDirectory';
 import { BoundModuleDeclaration } from './Binding/Node/Declaration/BoundModuleDeclaration';
-import { ArrayType } from './Binding/Type/ArrayType';
-import { FunctionLikeType } from './Binding/Type/FunctionLikeType';
-import { ObjectType } from './Binding/Type/ObjectType';
 import { StringType } from './Binding/Type/StringType';
-import { TypeKind } from './Binding/Type/TypeKind';
-import { TypeParameterType } from './Binding/Type/TypeParameterType';
-import { Types } from './Binding/Type/Types';
 import { Parser } from './Syntax/Parser';
 import { PreprocessorParser } from './Syntax/PreprocessorParser';
 import { PreprocessorTokenizer } from './Syntax/PreprocessorTokenizer';
@@ -207,7 +201,7 @@ export class Project {
         if (scope) {
             const existingSymbol = scope.locals.get(name);
             if (existingSymbol) {
-                const { declaration } = existingSymbol;
+                const declaration = existingSymbol.declaration!;
                 switch (declaration.kind) {
                     case BoundNodeKind.Directory: {
                         return declaration;
@@ -232,154 +226,4 @@ export class Project {
 
         return boundDirectory;
     }
-
-    // #region Array types
-
-    private readonly arrayTypes = new Map<Types, ArrayType>();
-
-    /**
-     * Ensures only a single type is created for each unique array type.
-     */
-    getArrayType(type: Types): ArrayType {
-        let arrayType = this.arrayTypes.get(type);
-        if (!arrayType) {
-            arrayType = new ArrayType(type);
-            this.arrayTypes.set(type, arrayType);
-        }
-
-        return arrayType;
-    }
-
-    // #endregion
-
-    // #region Generic types
-
-    private readonly instantiatedTypes = new Map<Types, InstantiatedTypeInfo[]>();
-
-    instantiateType(openType: Types, typeMap: Map<TypeParameterType, Types>): Types {
-        // Breaks infinite loops when a type references itself
-        const instantiatedTypeInfos = this.instantiatedTypes.get(openType);
-        if (instantiatedTypeInfos) {
-            const instantiatedTypeInfo = this.getInstantiatedTypeInfo(instantiatedTypeInfos, Array.from(typeMap.values()));
-            if (instantiatedTypeInfo) {
-                return instantiatedTypeInfo.instantiatedType;
-            }
-        }
-
-        switch (openType.kind) {
-            case TypeKind.Bool:
-            case TypeKind.Int:
-            case TypeKind.Float:
-            case TypeKind.String: {
-                return openType;
-            }
-            case TypeKind.TypeParameter: {
-                return typeMap.get(openType)!;
-            }
-            case TypeKind.Object: {
-                return this.instantiateObjectType(openType, typeMap);
-            }
-            case TypeKind.Array: {
-                return this.getArrayType(this.instantiateType(openType.elementType, typeMap));
-            }
-            case TypeKind.FunctionLike: {
-                return this.instantiateFunctionLikeType(openType, typeMap);
-            }
-            case TypeKind.Module:
-            case TypeKind.FunctionLikeGroup:
-            case TypeKind.Void: {
-                throw new Error(`Cannot instantiate '${openType.kind}' type.`);
-            }
-            default: {
-                return assertNever(openType);
-            }
-        }
-    }
-
-    private getInstantiatedTypeInfo(
-        instantiatedTypeInfos: InstantiatedTypeInfo[],
-        typeArguments: Types[],
-    ): InstantiatedTypeInfo | undefined {
-        for (const instantiatedTypeInfo of instantiatedTypeInfos) {
-            let isCached = true;
-
-            for (let i = 0; i < instantiatedTypeInfo.typeArguments.length; i++) {
-                if (instantiatedTypeInfo.typeArguments[i] !== typeArguments[i]) {
-                    isCached = false;
-                    break;
-                }
-            }
-
-            if (isCached) {
-                return instantiatedTypeInfo;
-            }
-        }
-    }
-
-    private setInstantiatedTypeInfo(
-        openType: Types,
-        typeArguments: Types[],
-        instantiatedType: Types,
-    ): void {
-        let instantiatedTypeInfos = this.instantiatedTypes.get(openType);
-
-        if (!instantiatedTypeInfos) {
-            instantiatedTypeInfos = [];
-            this.instantiatedTypes.set(openType, instantiatedTypeInfos);
-        }
-
-        instantiatedTypeInfos.push({
-            typeArguments,
-            instantiatedType,
-        });
-    }
-
-    private instantiateObjectType(openType: ObjectType, typeMap: Map<TypeParameterType, Types>): ObjectType {
-        const instantiatedType = new ObjectType();
-        this.setInstantiatedTypeInfo(openType, Array.from(typeMap.values()), instantiatedType);
-        instantiatedType.declaration = openType.declaration;
-        instantiatedType.identifier = openType.identifier;
-
-        // TODO: Instantiate super type?
-        // TODO: Instantiate implemented types?
-        // TODO: Assert matching number of type parameters/arguments?
-
-        if (openType.typeParameters) {
-            const typeParameters: TypeParameterType[] = [];
-
-            for (const typeParameter of openType.typeParameters) {
-                const typeArgument = typeMap.get(typeParameter)!;
-                if (typeArgument.kind === TypeKind.TypeParameter) {
-                    typeParameters.push(typeArgument);
-                }
-            }
-
-            instantiatedType.typeParameters = typeParameters;
-        }
-
-        return instantiatedType;
-    }
-
-    private instantiateFunctionLikeType(openType: FunctionLikeType, typeMap: Map<TypeParameterType, Types>): FunctionLikeType {
-        const instantiatedType = new FunctionLikeType();
-        this.setInstantiatedTypeInfo(openType, Array.from(typeMap.values()), instantiatedType);
-        instantiatedType.returnType = this.instantiateType(openType.returnType, typeMap);
-
-        const parameters: Types[] = [];
-
-        for (const parameter of openType.parameters) {
-            parameters.push(this.instantiateType(parameter, typeMap));
-        }
-
-        instantiatedType.parameters = parameters;
-
-        return instantiatedType;
-    }
-
-    // #endregion
-}
-
-interface InstantiatedTypeInfo {
-    typeArguments: Types[];
-    instantiatedType: Types;
 }

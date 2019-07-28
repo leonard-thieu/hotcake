@@ -22,3 +22,11 @@ export type Types =
     | TypeParameterType
     | VoidType
     ;
+
+export type IntrinsicType =
+    | BoolType
+    | IntType
+    | FloatType
+    | VoidType
+    | ArrayType
+    ;

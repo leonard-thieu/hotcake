@@ -1,4 +1,3 @@
-import { BoundSymbol } from '../BoundSymbol';
 import { BoundClassDeclaration } from '../Node/Declaration/BoundClassDeclaration';
 import { BoundInterfaceDeclaration } from '../Node/Declaration/BoundInterfaceDeclaration';
 import { BoundExternClassDeclaration } from '../Node/Declaration/Extern/BoundExternClassDeclaration';
@@ -6,6 +5,7 @@ import { Type } from './Type';
 import { TypeKind } from './TypeKind';
 import { TypeParameterType } from './TypeParameterType';
 import { Types } from './Types';
+import { TypeTable } from './TypeTable';
 
 export class ObjectType extends Type {
     static readonly type = new ObjectType();
@@ -13,10 +13,13 @@ export class ObjectType extends Type {
 
     readonly kind = TypeKind.Object;
 
-    declaration?: ObjectTypeDeclaration = undefined;
-    identifier?: BoundSymbol = undefined;
-    superType?: ObjectType = undefined;
     typeParameters?: TypeParameterType[] = undefined;
+    typeArguments?: Types[] = undefined;
+    superType?: ObjectType = undefined;
+    implementedTypes?: ObjectType[] = undefined;
+    readonly members = new TypeTable();
+
+    readonly instantiatedTypes: ObjectType[] = [];
 
     isConvertibleTo(target: Types): boolean {
         if (this === ObjectType.nullType &&
@@ -52,16 +55,15 @@ export class ObjectType extends Type {
         if (this.identifier) {
             let str = this.identifier.name;
 
-            if (this.typeParameters &&
-                this.typeParameters.length
-            ) {
+            const args = this.typeArguments || this.typeParameters;
+            if (args) {
                 str += '<';
 
-                const typeParameterNames: string[] = [];
-                for (const typeParameter of this.typeParameters) {
-                    typeParameterNames.push(typeParameter.identifier.name);
+                const argNames: string[] = [];
+                for (const arg of args) {
+                    argNames.push(arg.identifier.name);
                 }
-                str += typeParameterNames.join(',');
+                str += argNames.join(',');
 
                 str += '>';
             }

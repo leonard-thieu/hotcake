@@ -1,12 +1,8 @@
-import { assertNever } from '../../assertNever';
-import { BoundSymbol } from '../BoundSymbol';
 import { BoundNodes } from '../Node/BoundNode';
 import { BoundNodeKind } from '../Node/BoundNodeKind';
-import { BoundClassDeclaration } from '../Node/Declaration/BoundClassDeclaration';
 import { BoundClassMethodDeclaration } from '../Node/Declaration/BoundClassMethodDeclaration';
 import { BoundFunctionDeclaration } from '../Node/Declaration/BoundFunctionDeclaration';
 import { BoundInterfaceMethodDeclaration } from '../Node/Declaration/BoundInterfaceMethodDeclaration';
-import { BoundExternClassDeclaration } from '../Node/Declaration/Extern/BoundExternClassDeclaration';
 import { BoundExternClassMethodDeclaration } from '../Node/Declaration/Extern/BoundExternClassMethodDeclaration';
 import { BoundExternFunctionDeclaration } from '../Node/Declaration/Extern/BoundExternFunctionDeclaration';
 import { Type } from './Type';
@@ -30,27 +26,11 @@ export function isFunctionLike(node: BoundNodes): node is BoundFunctionLikeDecla
 export class FunctionLikeType extends Type {
     readonly kind = TypeKind.FunctionLike;
 
-    declaration: BoundFunctionLikeDeclaration = undefined!;
     returnType: Types = undefined!;
     parameters: Types[] = undefined!;
 
-    get isMethod() {
-        switch (this.declaration.kind) {
-            case BoundNodeKind.ExternClassMethodDeclaration:
-            case BoundNodeKind.InterfaceMethodDeclaration:
-            case BoundNodeKind.ClassMethodDeclaration: {
-                return true;
-            }
-
-            case BoundNodeKind.ExternFunctionDeclaration:
-            case BoundNodeKind.FunctionDeclaration: {
-                return false;
-            }
-
-            default: {
-                return assertNever(this.declaration);
-            }
-        }
+    get parent(): FunctionLikeGroupType {
+        return this.identifier.type as FunctionLikeGroupType;
     }
 
     isConvertibleTo(target: Types): boolean {
@@ -60,12 +40,12 @@ export class FunctionLikeType extends Type {
     toString(): string {
         let str = '';
 
-        const { name } = this.declaration.identifier;
-        if (name.toLowerCase() === 'new') {
-            const parent = this.declaration.parent! as BoundExternClassDeclaration | BoundClassDeclaration;
-            str += `New ${parent.type}`;
+        if (this.parent.isMethod &&
+            this.identifier.name.toLowerCase() === 'new'
+        ) {
+            str += `New ${this.returnType}`;
         } else {
-            str += name;
+            str += this.identifier.name;
             str += `: ${this.returnType}`;
         }
 
@@ -86,17 +66,27 @@ export type BoundFunctionLikeDeclaration =
     ;
 
 export class FunctionLikeGroupType extends Type {
-    constructor(readonly identifier: BoundSymbol) {
-        super();
-    }
-
     readonly kind = TypeKind.FunctionLikeGroup;
+
+    isMethod: boolean = false;
+    readonly members: FunctionLikeType[] = [];
+    typeArguments?: Types[] = undefined;
+
+    readonly instantiatedTypes: FunctionLikeGroupType[] = [];
 
     isConvertibleTo(target: Types): boolean {
         throw new Error('Method not implemented.');
     }
 
     toString(): string {
+        if (this.isMethod &&
+            this.identifier.name.toLowerCase() === 'new'
+        ) {
+            const returnType = this.members[0].returnType;
+
+            return `New ${returnType}`;
+        }
+
         return this.identifier.name;
     }
 }

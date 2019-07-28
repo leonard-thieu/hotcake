@@ -1,6 +1,6 @@
 import { InterfaceDeclaration } from '../../../Syntax/Node/Declaration/InterfaceDeclaration';
 import { BoundSymbol, BoundSymbolTable } from '../../BoundSymbol';
-import { Types } from '../../Type/Types';
+import { ObjectType } from '../../Type/ObjectType';
 import { BoundNode } from '../BoundNode';
 import { BoundNodeKind } from '../BoundNodeKind';
 import { BoundDataDeclaration } from './BoundDataDeclaration';
@@ -13,9 +13,9 @@ export class BoundInterfaceDeclaration extends BoundNode {
 
     identifier: BoundSymbol = undefined!;
     locals: BoundSymbolTable = undefined!;
-    type: Types = undefined!;
+    type: ObjectType = undefined!;
 
-    baseTypes?: Types[] = undefined;
+    baseTypes?: ObjectType[] = undefined;
     members: BoundInterfaceDeclarationMember[] = undefined!;
 }
 

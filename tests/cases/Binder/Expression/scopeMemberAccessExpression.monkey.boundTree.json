@@ -108,7 +108,7 @@
                             "invocationType": "New HeadNode()",
                             "invokableExpression": {
                                 "kind": "NewExpression",
-                                "type": "New"
+                                "type": "New HeadNode"
                             },
                             "arguments": []
                         }

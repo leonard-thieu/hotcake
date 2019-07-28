@@ -1,3 +1,4 @@
+import { BoundSymbol } from '../BoundSymbol';
 import { Type } from './Type';
 import { TypeKind } from './TypeKind';
 import { Types } from './Types';
@@ -7,6 +8,8 @@ export class VoidType extends Type {
 
     private constructor() {
         super();
+
+        this.identifier = new BoundSymbol('Void', this);
     }
 
     readonly kind = TypeKind.Void;

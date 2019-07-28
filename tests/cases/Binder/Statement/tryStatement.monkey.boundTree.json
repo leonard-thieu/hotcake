@@ -142,7 +142,7 @@
                                                 "invocationType": "New Ex1()",
                                                 "invokableExpression": {
                                                     "kind": "NewExpression",
-                                                    "type": "New"
+                                                    "type": "New Ex1"
                                                 },
                                                 "arguments": []
                                             }
@@ -160,7 +160,7 @@
                                                     "invocationType": "New Ex2()",
                                                     "invokableExpression": {
                                                         "kind": "NewExpression",
-                                                        "type": "New"
+                                                        "type": "New Ex2"
                                                     },
                                                     "arguments": []
                                                 }
