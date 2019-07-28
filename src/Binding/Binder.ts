@@ -3085,28 +3085,23 @@ export class Binder {
         }
 
         const typeArguments = Array.from(typeMap.values());
-        let instantiatedType = this.getCachedInstantiatedType(openType.instantiatedTypes, typeArguments);
+        let instantiatedType = this.getCachedInstantiatedType(openType.rootType.instantiatedTypes!, typeArguments);
         if (instantiatedType) {
             return instantiatedType;
         }
 
-        instantiatedType = new ObjectType();
-        openType.instantiatedTypes.push(instantiatedType);
-        instantiatedType.identifier = openType.identifier;
+        instantiatedType = new ObjectType(openType);
+        instantiatedType.typeArguments = typeArguments;
+        openType.rootType.instantiatedTypes!.push(instantiatedType);
 
-        if (openType.superType) {
-            instantiatedType.superType = this.instantiateType(openType.superType, typeMap) as ObjectType;
-        }
+        instantiatedType.identifier = openType.identifier;
+        instantiatedType.typeParameters = openType.typeParameters;
 
         // TODO: Instantiate implemented types?
         // TODO: Assert matching number of type parameters/arguments?
 
-        instantiatedType.typeParameters = openType.typeParameters;
-
-        instantiatedType.typeArguments = [];
-        for (const typeParameter of openType.typeParameters) {
-            const typeArgument = typeMap.get(typeParameter)!;
-            instantiatedType.typeArguments.push(typeArgument);
+        if (openType.superType) {
+            instantiatedType.superType = this.instantiateType(openType.superType, typeMap) as ObjectType;
         }
 
         return instantiatedType;
@@ -3126,12 +3121,15 @@ export class Binder {
 
     private instantiateFunctionLikeGroupType(openType: FunctionLikeGroupType, typeMap: Map<TypeParameterType, Types>): FunctionLikeGroupType {
         const typeArguments = Array.from(typeMap.values());
-        let instantiatedType = this.getCachedInstantiatedType(openType.instantiatedTypes, typeArguments);
+        let instantiatedType = this.getCachedInstantiatedType(openType.rootType.instantiatedTypes!, typeArguments);
         if (instantiatedType) {
             return instantiatedType;
         }
 
-        instantiatedType = new FunctionLikeGroupType();
+        instantiatedType = new FunctionLikeGroupType(openType);
+        instantiatedType.typeArguments = typeArguments;
+        openType.rootType.instantiatedTypes!.push(instantiatedType);
+
         instantiatedType.identifier = openType.identifier;
         instantiatedType.isMethod = openType.isMethod;
 

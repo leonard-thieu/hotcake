@@ -11,15 +11,27 @@ export class ObjectType extends Type {
     static readonly type = new ObjectType();
     static readonly nullType = new ObjectType();
 
+    constructor(rootType?: ObjectType) {
+        super();
+
+        if (rootType) {
+            this.rootType = rootType;
+        } else {
+            this.rootType = this;
+            this.instantiatedTypes = [];
+        }
+    }
+
     readonly kind = TypeKind.Object;
 
+    readonly rootType: ObjectType;
     typeParameters?: TypeParameterType[] = undefined;
     typeArguments?: Types[] = undefined;
     superType?: ObjectType = undefined;
     implementedTypes?: ObjectType[] = undefined;
     readonly members = new TypeTable();
 
-    readonly instantiatedTypes: ObjectType[] = [];
+    readonly instantiatedTypes?: ObjectType[];
 
     isConvertibleTo(target: Types): boolean {
         if (this === ObjectType.nullType &&

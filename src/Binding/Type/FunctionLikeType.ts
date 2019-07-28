@@ -66,13 +66,25 @@ export type BoundFunctionLikeDeclaration =
     ;
 
 export class FunctionLikeGroupType extends Type {
+    constructor(rootType?: FunctionLikeGroupType) {
+        super();
+
+        if (rootType) {
+            this.rootType = rootType;
+        } else {
+            this.rootType = this;
+            this.instantiatedTypes = [];
+        }
+    }
+
     readonly kind = TypeKind.FunctionLikeGroup;
 
+    readonly rootType: FunctionLikeGroupType;
     isMethod: boolean = false;
     readonly members: FunctionLikeType[] = [];
     typeArguments?: Types[] = undefined;
 
-    readonly instantiatedTypes: FunctionLikeGroupType[] = [];
+    readonly instantiatedTypes?: FunctionLikeGroupType[];
 
     isConvertibleTo(target: Types): boolean {
         throw new Error('Method not implemented.');
