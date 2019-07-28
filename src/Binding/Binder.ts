@@ -126,7 +126,9 @@ export class Binder {
 
     // Debugging aid
     private get filePath() {
-        return this.module.declaration.filePath;
+        const { filePath } = this.module.declaration;
+
+        return filePath.substr(0, filePath.lastIndexOf('.'));
     }
 
     bind(
@@ -978,6 +980,15 @@ export class Binder {
         if (classDeclaration.implementedTypes) {
             boundClassDeclaration.implementedTypes = this.bindTypeReferenceSequence(classDeclaration.implementedTypes) as ObjectType[];
         }
+
+        this.phase2Nodes.push(() => this.bindClassDeclaration22(classDeclaration, boundClassDeclaration));
+    }
+
+    private bindClassDeclaration22(
+        classDeclaration: ClassDeclaration,
+        boundClassDeclaration: BoundClassDeclaration,
+    ): void {
+        const { type } = boundClassDeclaration;
 
         boundClassDeclaration.members = this.bindClassDeclarationMembers(classDeclaration, boundClassDeclaration);
 
@@ -2449,9 +2460,9 @@ export class Binder {
                 let match = true;
 
                 for (let i = 0; i < args.length; i++) {
-                    const argument = args[i];
+                    const argument = args[i].type;
                     const parameter = overload.parameters[i];
-                    if (argument.type !== parameter) {
+                    if (argument !== parameter) {
                         match = false;
                         break;
                     }
@@ -2472,9 +2483,9 @@ export class Binder {
                 let match = true;
 
                 for (let i = 0; i < args.length; i++) {
-                    const argument = args[i];
+                    const argument = args[i].type;
                     const parameter = overload.parameters[i];
-                    if (!argument.type.isConvertibleTo(parameter)) {
+                    if (!argument.isConvertibleTo(parameter)) {
                         match = false;
                         break;
                     }
@@ -2942,18 +2953,18 @@ export class Binder {
             }
             case TypeKind.Object: {
                 const objectEnumeratorMethod = this.getMethod(
-                    collectionType,
+                    collectionType.rootType,
                     /*name*/ 'ObjectEnumerator',
                     (returnType) => returnType.isConvertibleTo(ObjectType.type),
                 );
                 if (!objectEnumeratorMethod) {
-                    throw new Error(`'${collectionType.identifier!.name}' does not have a 'ObjectEnumerator: TObjectEnumerator()' method.`);
+                    throw new Error(`'${collectionType.rootType}' does not have a 'ObjectEnumerator: TObjectEnumerator()' method.`);
                 }
 
                 const enumeratorType = objectEnumeratorMethod.returnType as ObjectType;
 
                 const hasNextMethod = this.getMethod(
-                    enumeratorType,
+                    enumeratorType.rootType,
                     /*name*/ 'HasNext',
                     (returnType) => returnType === BoolType.type,
                 );
@@ -2962,7 +2973,7 @@ export class Binder {
                 }
 
                 const nextObjectMethod = this.getMethod(
-                    enumeratorType,
+                    enumeratorType.rootType,
                     /*name*/ 'NextObject',
                 );
                 if (!nextObjectMethod) {
@@ -2983,24 +2994,43 @@ export class Binder {
         checkReturnType: (type: Types) => boolean = (returnType) => true,
         ...parameters: Types[]
     ) {
-        const memberType = type.members.get(name);
-        if (memberType &&
-            memberType.kind === TypeKind.FunctionLikeGroup &&
-            memberType.isMethod
-        ) {
-            for (const type of memberType.members) {
-                if (type.kind === TypeKind.FunctionLike &&
-                    checkReturnType(type.returnType)
-                ) {
-                    if (type.parameters.length === parameters.length) {
-                        for (let i = 0; i < type.parameters.length; i++) {
-                            if (type.parameters[i] !== parameters[i]) {
-                                return undefined;
-                            }
-                        }
+        let memberType = type.members.get(name);
+        if (memberType) {
+            if (memberType.kind === TypeKind.FunctionLikeGroup &&
+                memberType.isMethod
+            ) {
+                return this.getOverload(memberType.members, checkReturnType, ...parameters);
+            }
+        } else if (type.rootType !== type) {
+            memberType = this.getMethod(type.rootType, name, checkReturnType, ...parameters);
+            if (memberType) {
+                const { typeParameters, typeArguments } = type;
+                let typeMap: Map<TypeParameterType, Types> | undefined = undefined;
+                if (typeParameters && typeArguments) {
+                    typeMap = this.createTypeMap(typeParameters, typeArguments);
+                    const instantiatedMethodGroup = this.instantiateType(memberType, typeMap) as FunctionLikeGroupType;
 
-                        return type;
+                    return this.getOverload(instantiatedMethodGroup.members, checkReturnType, ...parameters)!;
+                }
+            }
+        }
+    }
+
+    private getOverload(
+        members: FunctionLikeType[],
+        checkReturnType: (type: Types) => boolean = (returnType) => true,
+        ...parameters: Types[]
+    ) {
+        for (const type of members) {
+            if (checkReturnType(type.returnType)) {
+                if (type.parameters.length === parameters.length) {
+                    for (let i = 0; i < type.parameters.length; i++) {
+                        if (type.parameters[i] !== parameters[i]) {
+                            return undefined;
+                        }
                     }
+
+                    return type;
                 }
             }
         }
