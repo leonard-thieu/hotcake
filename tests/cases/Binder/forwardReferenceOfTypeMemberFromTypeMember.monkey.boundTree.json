@@ -10,17 +10,17 @@
         {
             "kind": "ClassDeclaration",
             "locals": [
-                "TFromList",
+                "T",
                 "_head",
                 "New"
             ],
             "identifier": "List",
-            "type": "List<TFromList>",
+            "type": "List<List:T>",
             "typeParameters": [
                 {
                     "kind": "TypeParameter",
-                    "identifier": "TFromList",
-                    "type": "List:TFromList"
+                    "identifier": "T",
+                    "type": "List:T"
                 }
             ],
             "baseType": "Object",
@@ -29,14 +29,14 @@
                     "kind": "DataDeclaration",
                     "declarationKind": "FieldKeyword",
                     "identifier": "_head",
-                    "type": "HeadNode<TFromList>",
+                    "type": "HeadNode<List:T>",
                     "expression": {
                         "kind": "InvokeExpression",
-                        "type": "HeadNode<TFromList>",
-                        "invocationType": "New HeadNode<TFromList>()",
+                        "type": "HeadNode<List:T>",
+                        "invocationType": "New HeadNode<List:T>()",
                         "invokableExpression": {
                             "kind": "NewExpression",
-                            "type": "New HeadNode<TFromList>"
+                            "type": "New HeadNode<List:T>"
                         },
                         "arguments": []
                     }
@@ -45,7 +45,7 @@
                     "kind": "ClassMethodDeclaration",
                     "identifier": "New",
                     "locals": [],
-                    "returnType": "List<TFromList>",
+                    "returnType": "List<List:T>",
                     "parameters": []
                 }
             ]
@@ -53,16 +53,16 @@
         {
             "kind": "ClassDeclaration",
             "locals": [
-                "TFromHeadNode",
+                "T",
                 "New"
             ],
             "identifier": "HeadNode",
-            "type": "HeadNode<TFromHeadNode>",
+            "type": "HeadNode<HeadNode:T>",
             "typeParameters": [
                 {
                     "kind": "TypeParameter",
-                    "identifier": "TFromHeadNode",
-                    "type": "HeadNode:TFromHeadNode"
+                    "identifier": "T",
+                    "type": "HeadNode:T"
                 }
             ],
             "baseType": "Object",
@@ -71,7 +71,7 @@
                     "kind": "ClassMethodDeclaration",
                     "identifier": "New",
                     "locals": [],
-                    "returnType": "HeadNode<TFromHeadNode>",
+                    "returnType": "HeadNode<HeadNode:T>",
                     "parameters": []
                 }
             ]
@@ -84,7 +84,7 @@
                 "New"
             ],
             "identifier": "ArrayObject",
-            "type": "ArrayObject<T>",
+            "type": "ArrayObject<ArrayObject:T>",
             "typeParameters": [
                 {
                     "kind": "TypeParameter",
@@ -106,7 +106,7 @@
                     "locals": [
                         "value"
                     ],
-                    "returnType": "ArrayObject<T>",
+                    "returnType": "ArrayObject<ArrayObject:T>",
                     "parameters": [
                         {
                             "kind": "DataDeclaration",
@@ -122,7 +122,7 @@
                                 "type": "ArrayObject:T[]",
                                 "scopableExpression": {
                                     "kind": "SelfExpression",
-                                    "type": "ArrayObject<T>"
+                                    "type": "ArrayObject<ArrayObject:T>"
                                 },
                                 "member": {
                                     "kind": "IdentifierExpression",
@@ -142,7 +142,7 @@
                     "kind": "ClassMethodDeclaration",
                     "identifier": "New",
                     "locals": [],
-                    "returnType": "ArrayObject<T>",
+                    "returnType": "ArrayObject<ArrayObject:T>",
                     "parameters": []
                 }
             ]

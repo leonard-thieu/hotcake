@@ -1,15 +1,14 @@
 #Rem
     Evalulating initializers must be deferred until the end of phase 2 as all type members
     have not been bound yet. In this example, without deferring binding initializers, binding
-    `New HeadNode<TFromList>` would fail because the members of `HeadNode<TFromList>` have
-    not been bound yet.
+    `New HeadNode<T>` would fail because the members of `HeadNode<T>` have not been bound yet.
 #End
 
-Class List<TFromList>
-	Field _head:HeadNode<TFromList>=New HeadNode<TFromList>
+Class List<T>
+	Field _head:HeadNode<T>=New HeadNode<T>
 End
 
-Class HeadNode<TFromHeadNode>
+Class HeadNode<T>
 End
 
 #Rem

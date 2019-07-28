@@ -1,5 +1,5 @@
-Class ArrayObject<F>
-	Field value:F[]
+Class ArrayObject<T>
+	Field value:T[]
 End
 
 Class ArrayBoxer<T>

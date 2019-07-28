@@ -2184,32 +2184,34 @@ export class Binder {
             case TokenKind.ThrowableKeyword: {
                 // Called when binding `member` on `ScopeMemberAccessExpression`.
                 if (scope) {
-                    const identifierText = identifier.getText(this.document);
-                    const memberType = scope.members.get(identifierText);
-                    if (!memberType) {
-                        const scopeIdentifierText = scope.identifier!.name;
-
-                        throw new Error(`'${identifierText}' does not exist on '${scopeIdentifierText}'.`);
-                    }
-
                     const scopeDeclaration = scope.identifier.declaration!;
                     switch (scopeDeclaration.kind) {
                         case BoundNodeKind.ModuleDeclaration:
                         case BoundNodeKind.ExternClassDeclaration:
                         case BoundNodeKind.InterfaceDeclaration:
                         case BoundNodeKind.ClassDeclaration: {
+                            const identifierText = identifier.getText(this.document);
                             boundIdentifierExpression.identifier = scopeDeclaration.locals.get(identifierText)!;
+
+                            const { typeParameters, typeArguments } = scope as ObjectType;
+                            if (typeParameters && typeArguments) {
+                                const typeMap = this.createTypeMap(typeParameters, typeArguments);
+                                boundIdentifierExpression.type = this.instantiateType(
+                                    boundIdentifierExpression.identifier.type as ObjectType,
+                                    typeMap,
+                                );
+                            } else {
+                                boundIdentifierExpression.type = this.instantiateGenericType(
+                                    boundIdentifierExpression.identifier.type as ObjectType,
+                                    identifierExpression.typeArguments,
+                                );
+                            }
                             break;
                         }
                         default: {
                             throw new Error(`Unexpected scope: '${scopeDeclaration.kind}'`);
                         }
                     }
-
-                    boundIdentifierExpression.type = this.instantiateGenericType(
-                        memberType.identifier.type as ObjectType,
-                        identifierExpression.typeArguments,
-                    );
                 } else {
                     boundIdentifierExpression.identifier = this.getSymbol(identifier, identifierExpression);
                     boundIdentifierExpression.type = this.instantiateGenericType(
@@ -3092,7 +3094,10 @@ export class Binder {
         openType.instantiatedTypes.push(instantiatedType);
         instantiatedType.identifier = openType.identifier;
 
-        // TODO: Instantiate super type?
+        if (openType.superType) {
+            instantiatedType.superType = this.instantiateType(openType.superType, typeMap) as ObjectType;
+        }
+
         // TODO: Instantiate implemented types?
         // TODO: Assert matching number of type parameters/arguments?
 
