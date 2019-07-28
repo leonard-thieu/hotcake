@@ -145,7 +145,7 @@
                             "kind": "DataDeclaration",
                             "declarationKind": "LocalKeyword",
                             "identifier": "val",
-                            "type": "Enumerator:T",
+                            "type": "Object",
                             "expression": {
                                 "kind": "InvokeExpression",
                                 "type": "List<Object>",

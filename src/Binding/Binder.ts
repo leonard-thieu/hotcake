@@ -2953,31 +2953,31 @@ export class Binder {
             }
             case TypeKind.Object: {
                 const objectEnumeratorMethod = this.getMethod(
-                    collectionType.rootType,
+                    collectionType,
                     /*name*/ 'ObjectEnumerator',
                     (returnType) => returnType.isConvertibleTo(ObjectType.type),
                 );
                 if (!objectEnumeratorMethod) {
-                    throw new Error(`'${collectionType.rootType}' does not have a 'ObjectEnumerator: TObjectEnumerator()' method.`);
+                    throw new Error(`'${collectionType}' does not have a 'ObjectEnumerator: TObjectEnumerator()' method.`);
                 }
 
                 const enumeratorType = objectEnumeratorMethod.returnType as ObjectType;
 
                 const hasNextMethod = this.getMethod(
-                    enumeratorType.rootType,
+                    enumeratorType,
                     /*name*/ 'HasNext',
                     (returnType) => returnType === BoolType.type,
                 );
                 if (!hasNextMethod) {
-                    throw new Error(`'${enumeratorType.identifier!.name}' does not have a 'HasNext: Bool()' method.`);
+                    throw new Error(`'${enumeratorType}' does not have a 'HasNext: Bool()' method.`);
                 }
 
                 const nextObjectMethod = this.getMethod(
-                    enumeratorType.rootType,
+                    enumeratorType,
                     /*name*/ 'NextObject',
                 );
                 if (!nextObjectMethod) {
-                    throw new Error(`'${enumeratorType.identifier!.name}' does not have a 'NextObject: T()' method.`);
+                    throw new Error(`'${enumeratorType}' does not have a 'NextObject: T()' method.`);
                 }
 
                 return nextObjectMethod.returnType;
@@ -3008,7 +3008,7 @@ export class Binder {
                 let typeMap: Map<TypeParameterType, Types> | undefined = undefined;
                 if (typeParameters && typeArguments) {
                     typeMap = this.createTypeMap(typeParameters, typeArguments);
-                    const instantiatedMethodGroup = this.instantiateType(memberType, typeMap) as FunctionLikeGroupType;
+                    const instantiatedMethodGroup = this.instantiateType(memberType.parent, typeMap) as FunctionLikeGroupType;
 
                     return this.getOverload(instantiatedMethodGroup.members, checkReturnType, ...parameters)!;
                 }
