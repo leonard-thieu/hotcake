@@ -3195,17 +3195,7 @@ export class Binder {
         typeArguments: Types[],
     ): TType | undefined {
         for (const instantiatedType of instantiatedTypes) {
-            let argumentsMatch = true;
-
-            const instantiatedTypeArguments = instantiatedType.typeArguments!;
-            for (let i = 0; i < instantiatedTypeArguments.length; i++) {
-                if (instantiatedTypeArguments[i] !== typeArguments[i]) {
-                    argumentsMatch = false;
-                    break;
-                }
-            }
-
-            if (argumentsMatch) {
+            if (allElementsAreEqual(instantiatedType.typeArguments!, typeArguments)) {
                 return instantiatedType;
             }
         }
@@ -3214,6 +3204,20 @@ export class Binder {
     // #endregion
 
     // #endregion
+}
+
+function allElementsAreEqual<T>(arr1: T[], arr2: T[]) {
+    if (arr1.length === arr2.length) {
+        for (let i = 0; i < arr1.length; i++) {
+            if (arr1[i] !== arr2[i]) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    return false;
 }
 
 type Scope =
