@@ -4,12 +4,5 @@
     "locals": [
         "T"
     ],
-    "members": [
-        {
-            "kind": "DataDeclaration",
-            "declarationKind": "GlobalKeyword",
-            "identifier": "T",
-            "type": "Int"
-        }
-    ]
+    "members": {}
 }

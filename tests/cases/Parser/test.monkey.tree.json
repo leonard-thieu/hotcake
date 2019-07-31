@@ -3438,7 +3438,7 @@
                 "start": 3928,
                 "length": 8
             },
-            "baseType": {
+            "superType": {
                 "kind": "TypeReference",
                 "identifier": {
                     "kind": "Identifier",
@@ -3524,7 +3524,7 @@
                 "start": 4055,
                 "length": 8
             },
-            "baseType": {
+            "superType": {
                 "kind": "TypeReference",
                 "identifier": {
                     "kind": "Identifier",
@@ -3906,7 +3906,7 @@
                 "start": 4570,
                 "length": 8
             },
-            "baseType": {
+            "superType": {
                 "kind": "TypeReference",
                 "identifier": {
                     "kind": "Identifier",
@@ -4036,7 +4036,7 @@
                 "start": 4722,
                 "length": 8
             },
-            "baseType": {
+            "superType": {
                 "kind": "TypeReference",
                 "identifier": {
                     "kind": "Identifier",

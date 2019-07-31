@@ -4,29 +4,5 @@
     "locals": [
         "Main"
     ],
-    "members": [
-        {
-            "kind": "FunctionDeclaration",
-            "identifier": "Main",
-            "locals": [],
-            "returnType": "Int",
-            "parameters": [],
-            "statements": [
-                {
-                    "kind": "ExpressionStatement",
-                    "expression": {
-                        "kind": "InvokeExpression",
-                        "type": "Int",
-                        "invocationType": "Main: Int()",
-                        "invokableExpression": {
-                            "kind": "IdentifierExpression",
-                            "type": "Main",
-                            "identifier": "Main"
-                        },
-                        "arguments": []
-                    }
-                }
-            ]
-        }
-    ]
+    "members": {}
 }

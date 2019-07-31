@@ -4,42 +4,5 @@
     "locals": [
         "MyClass"
     ],
-    "members": [
-        {
-            "kind": "ClassDeclaration",
-            "locals": [
-                "GetInstance",
-                "New"
-            ],
-            "identifier": "MyClass",
-            "type": "MyClass",
-            "baseType": "Object",
-            "members": [
-                {
-                    "kind": "ClassMethodDeclaration",
-                    "identifier": "GetInstance",
-                    "locals": [],
-                    "returnType": "MyClass",
-                    "parameters": [],
-                    "statements": [
-                        {
-                            "kind": "ReturnStatement",
-                            "type": "MyClass",
-                            "expression": {
-                                "kind": "SelfExpression",
-                                "type": "MyClass"
-                            }
-                        }
-                    ]
-                },
-                {
-                    "kind": "ClassMethodDeclaration",
-                    "identifier": "New",
-                    "locals": [],
-                    "returnType": "MyClass",
-                    "parameters": []
-                }
-            ]
-        }
-    ]
+    "members": {}
 }

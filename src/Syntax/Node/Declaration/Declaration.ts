@@ -4,6 +4,7 @@ import { AliasDirective, AliasDirectiveSequence } from './AliasDirectiveSequence
 import { ClassDeclaration } from './ClassDeclaration';
 import { ClassMethodDeclaration } from './ClassMethodDeclaration';
 import { DataDeclaration, DataDeclarationSequence } from './DataDeclarationSequence';
+import { ExternClassDeclaration } from './ExternDeclaration/ExternClassDeclaration';
 import { ExternDataDeclarationSequence } from './ExternDeclaration/ExternDataDeclarationSequence';
 import { ExternDeclarations } from './ExternDeclaration/ExternDeclaration';
 import { FriendDirective } from './FriendDirective';
@@ -34,5 +35,12 @@ export type Declarations =
     | ModuleDeclaration
     | PreprocessorModuleDeclaration
     | StrictDirective
+    | TypeParameter
+    ;
+
+export type TypeDeclaration =
+    | ExternClassDeclaration
+    | InterfaceDeclaration
+    | ClassDeclaration
     | TypeParameter
     ;

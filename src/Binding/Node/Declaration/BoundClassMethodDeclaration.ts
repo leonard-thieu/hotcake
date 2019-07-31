@@ -1,19 +1,19 @@
 import { BoundSymbol, BoundSymbolTable } from '../../BoundSymbol';
-import { FunctionLikeType } from '../../Type/FunctionLikeType';
-import { Types } from '../../Type/Types';
+import { MethodType } from '../../Type/FunctionLikeType';
 import { BoundNode } from '../BoundNode';
 import { BoundNodeKind } from '../BoundNodeKind';
 import { BoundStatements } from '../Statement/BoundStatements';
 import { BoundDataDeclaration } from './BoundDataDeclaration';
+import { BoundTypeDeclaration } from './BoundDeclarations';
 
 export class BoundClassMethodDeclaration extends BoundNode {
     readonly kind = BoundNodeKind.ClassMethodDeclaration;
 
     identifier: BoundSymbol = undefined!;
     locals: BoundSymbolTable = undefined!;
-    type: FunctionLikeType = undefined!;
+    type: MethodType = undefined!;
 
-    returnType: Types = undefined!;
+    returnType: BoundTypeDeclaration = undefined!;
     parameters: BoundDataDeclaration[] = undefined!;
     statements?: BoundStatements[] = undefined;
 }

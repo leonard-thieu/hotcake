@@ -3,10 +3,12 @@ import { BoundSymbol, BoundSymbolTable } from '../../BoundSymbol';
 import { ObjectType } from '../../Type/ObjectType';
 import { BoundNode } from '../BoundNode';
 import { BoundNodeKind } from '../BoundNodeKind';
-import { BoundClassMethodDeclaration } from './BoundClassMethodDeclaration';
 import { BoundDataDeclaration } from './BoundDataDeclaration';
-import { BoundFunctionDeclaration } from './BoundFunctionDeclaration';
+import { BoundClassMethodGroupDeclaration, BoundFunctionGroupDeclaration } from "./BoundFunctionLikeGroupDeclaration";
+import { BoundInterfaceDeclaration } from './BoundInterfaceDeclaration';
+import { BoundTypeMembers } from './BoundTypeMembers';
 import { BoundTypeParameter } from './BoundTypeParameter';
+import { BoundExternClassDeclaration } from './Extern/BoundExternClassDeclaration';
 
 export class BoundClassDeclaration extends BoundNode {
     readonly kind = BoundNodeKind.ClassDeclaration;
@@ -18,14 +20,15 @@ export class BoundClassDeclaration extends BoundNode {
     type: ObjectType = undefined!;
 
     typeParameters?: BoundTypeParameter[] = undefined;
-    baseType?: ObjectType = undefined;
-    implementedTypes?: ObjectType[] = undefined;
+    superType?: BoundExternClassDeclaration | BoundClassDeclaration = undefined;
+    implementedTypes?: BoundInterfaceDeclaration[] = undefined;
 
-    members: BoundClassDeclarationMember[] = undefined!;
+    members: BoundTypeMembers<BoundClassDeclarationMember> = undefined!;
 }
 
 export type BoundClassDeclarationMember =
     | BoundDataDeclaration
-    | BoundFunctionDeclaration
-    | BoundClassMethodDeclaration
+    | BoundFunctionGroupDeclaration
+    | BoundClassMethodGroupDeclaration
     ;
+

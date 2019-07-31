@@ -4,16 +4,14 @@ import { BoundSymbol, BoundSymbolTable } from '../../BoundSymbol';
 import { ModuleType } from '../../Type/ModuleType';
 import { BoundNode } from '../BoundNode';
 import { BoundNodeKind } from '../BoundNodeKind';
-import { BoundAliasDirective } from './BoundAliasDirective';
 import { BoundClassDeclaration } from './BoundClassDeclaration';
 import { BoundDataDeclaration } from './BoundDataDeclaration';
 import { BoundDirectory } from './BoundDirectory';
-import { BoundFunctionDeclaration } from './BoundFunctionDeclaration';
-import { BoundImportStatement } from './BoundImportStatement';
+import { BoundExternFunctionGroupDeclaration, BoundFunctionGroupDeclaration } from './BoundFunctionLikeGroupDeclaration';
 import { BoundInterfaceDeclaration } from './BoundInterfaceDeclaration';
+import { BoundTypeMembers } from './BoundTypeMembers';
 import { BoundExternClassDeclaration } from './Extern/BoundExternClassDeclaration';
 import { BoundExternDataDeclaration } from './Extern/BoundExternDataDeclaration';
-import { BoundExternFunctionDeclaration } from './Extern/BoundExternFunctionDeclaration';
 
 export class BoundModuleDeclaration extends BoundNode {
     readonly kind = BoundNodeKind.ModuleDeclaration;
@@ -27,17 +25,15 @@ export class BoundModuleDeclaration extends BoundNode {
     locals: BoundSymbolTable = undefined!;
     type: ModuleType = undefined!;
 
-    members: BoundModuleDeclarationMember[] = undefined!;
+    members: BoundTypeMembers<BoundModuleDeclarationMember> = undefined!;
 }
 
 export type BoundModuleDeclarationMember =
-    | BoundImportStatement
-    | BoundAliasDirective
     | BoundExternDataDeclaration
-    | BoundExternFunctionDeclaration
+    | BoundExternFunctionGroupDeclaration
     | BoundExternClassDeclaration
     | BoundDataDeclaration
-    | BoundFunctionDeclaration
+    | BoundFunctionGroupDeclaration
     | BoundInterfaceDeclaration
     | BoundClassDeclaration
     ;

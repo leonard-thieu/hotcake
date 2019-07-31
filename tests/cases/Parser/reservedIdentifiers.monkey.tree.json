@@ -4555,7 +4555,7 @@
                 "start": 2408,
                 "length": 8
             },
-            "baseType": {
+            "superType": {
                 "kind": "TypeReference",
                 "identifier": {
                     "kind": "Identifier",

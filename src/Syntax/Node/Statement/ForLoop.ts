@@ -1,4 +1,3 @@
-import { BoundSymbolTable } from '../../../Binding/BoundSymbol';
 import { MissableToken, MissingToken } from '../../Token/MissingToken';
 import { SkippedToken } from '../../Token/SkippedToken';
 import { EndKeywordToken, ForKeywordToken, NextKeywordToken, StepKeywordToken, ToKeywordToken, UntilKeywordToken } from '../../Token/Token';
@@ -26,8 +25,6 @@ export class ForLoop extends Statement {
     statements: (Statements | SkippedToken)[] = undefined!;
     endKeyword: MissableToken<NextKeywordToken | EndKeywordToken> = undefined!;
     endForKeyword?: ForKeywordToken = undefined;
-
-    locals = new BoundSymbolTable();
 }
 
 export const NumericForLoopHeaderChildNames: ReadonlyArray<keyof NumericForLoopHeader> = [

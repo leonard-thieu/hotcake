@@ -4,7 +4,8 @@ import { ObjectType } from '../../Type/ObjectType';
 import { BoundNode } from '../BoundNode';
 import { BoundNodeKind } from '../BoundNodeKind';
 import { BoundDataDeclaration } from './BoundDataDeclaration';
-import { BoundInterfaceMethodDeclaration } from './BoundInterfaceMethodDeclaration';
+import { BoundInterfaceMethodGroupDeclaration } from './BoundFunctionLikeGroupDeclaration';
+import { BoundTypeMembers } from './BoundTypeMembers';
 
 export class BoundInterfaceDeclaration extends BoundNode {
     readonly kind = BoundNodeKind.InterfaceDeclaration;
@@ -15,11 +16,11 @@ export class BoundInterfaceDeclaration extends BoundNode {
     locals: BoundSymbolTable = undefined!;
     type: ObjectType = undefined!;
 
-    baseTypes?: ObjectType[] = undefined;
-    members: BoundInterfaceDeclarationMember[] = undefined!;
+    baseTypes?: BoundInterfaceDeclaration[] = undefined;
+    members: BoundTypeMembers<BoundInterfaceDeclarationMember> = undefined!;
 }
 
 export type BoundInterfaceDeclarationMember =
     | BoundDataDeclaration
-    | BoundInterfaceMethodDeclaration
+    | BoundInterfaceMethodGroupDeclaration
     ;

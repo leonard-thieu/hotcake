@@ -2,30 +2,5 @@
     "kind": "ModuleDeclaration",
     "identifier": "aliasDirective",
     "locals": [],
-    "members": [
-        {
-            "kind": "ImportStatement",
-            "path": {
-                "kind": "ModulePath",
-                "moduleIdentifier": {
-                    "declaration": "aliasDirective_file2"
-                }
-            }
-        },
-        {
-            "kind": "AliasDirective",
-            "moduleIdentifier": {
-                "kind": "Identifier",
-                "fullStart": 39,
-                "start": 39,
-                "length": 20
-            },
-            "target": {
-                "kind": "Identifier",
-                "fullStart": 60,
-                "start": 60,
-                "length": 1
-            }
-        }
-    ]
+    "members": {}
 }

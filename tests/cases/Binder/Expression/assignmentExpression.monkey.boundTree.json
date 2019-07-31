@@ -4,56 +4,5 @@
     "locals": [
         "Main"
     ],
-    "members": [
-        {
-            "kind": "FunctionDeclaration",
-            "identifier": "Main",
-            "locals": [
-                "val"
-            ],
-            "returnType": "Int",
-            "parameters": [
-                {
-                    "kind": "DataDeclaration",
-                    "identifier": "val",
-                    "type": "String"
-                }
-            ],
-            "statements": [
-                {
-                    "kind": "AssignmentStatement",
-                    "leftOperand": {
-                        "kind": "IdentifierExpression",
-                        "type": "String",
-                        "identifier": "val"
-                    },
-                    "rightOperand": {
-                        "kind": "StringLiteralExpression",
-                        "type": "String"
-                    }
-                },
-                {
-                    "kind": "AssignmentStatement",
-                    "leftOperand": {
-                        "kind": "IdentifierExpression",
-                        "type": "String",
-                        "identifier": "val"
-                    },
-                    "rightOperand": {
-                        "kind": "BinaryExpression",
-                        "type": "String",
-                        "leftOperand": {
-                            "kind": "IdentifierExpression",
-                            "type": "String",
-                            "identifier": "val"
-                        },
-                        "rightOperand": {
-                            "kind": "IntegerLiteralExpression",
-                            "type": "Int"
-                        }
-                    }
-                }
-            ]
-        }
-    ]
+    "members": {}
 }

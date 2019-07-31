@@ -1,4 +1,3 @@
-import { BoundSymbolTable } from '../../../Binding/BoundSymbol';
 import { MissableToken } from '../../Token/MissingToken';
 import { ClosingParenthesisToken, MethodKeywordToken, OpeningParenthesisToken } from '../../Token/Token';
 import { MissableIdentifier } from '../Identifier';
@@ -25,6 +24,4 @@ export class InterfaceMethodDeclaration extends Declaration {
     openingParenthesis: MissableToken<OpeningParenthesisToken> = undefined!;
     parameters: DataDeclarationSequence = undefined!;
     closingParenthesis: MissableToken<ClosingParenthesisToken> = undefined!;
-
-    locals = new BoundSymbolTable();
 }

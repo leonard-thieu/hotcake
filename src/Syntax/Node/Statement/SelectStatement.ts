@@ -1,4 +1,3 @@
-import { BoundSymbolTable } from '../../../Binding/BoundSymbol';
 import { MissableToken } from '../../Token/MissingToken';
 import { SkippedToken } from '../../Token/SkippedToken';
 import { CaseKeywordToken, DefaultKeywordToken, EndKeywordToken, NewlineToken, SelectKeywordToken } from '../../Token/Token';
@@ -43,8 +42,6 @@ export class CaseClause extends Node {
     caseKeyword: CaseKeywordToken = undefined!;
     expressions: (MissableExpression | CommaSeparator)[] = undefined!;
     statements: (Statements | SkippedToken)[] = undefined!;
-
-    locals = new BoundSymbolTable();
 }
 
 export const DefaultClauseChildNames: ReadonlyArray<keyof DefaultClause> = [
@@ -57,6 +54,4 @@ export class DefaultClause extends Node {
 
     defaultKeyword: DefaultKeywordToken = undefined!;
     statements: (Statements | SkippedToken)[] = undefined!;
-
-    locals = new BoundSymbolTable();
 }

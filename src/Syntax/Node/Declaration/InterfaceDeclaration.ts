@@ -1,4 +1,3 @@
-import { BoundSymbolTable } from '../../../Binding/BoundSymbol';
 import { MissableToken } from '../../Token/MissingToken';
 import { SkippedToken } from '../../Token/SkippedToken';
 import { EndKeywordToken, ExtendsKeywordToken, InterfaceKeywordToken, NewlineToken } from '../../Token/Token';
@@ -30,8 +29,6 @@ export class InterfaceDeclaration extends Declaration {
     members: InterfaceDeclarationMember[] = undefined!;
     endKeyword: MissableToken<EndKeywordToken> = undefined!;
     endInterfaceKeyword?: InterfaceKeywordToken = undefined;
-
-    locals = new BoundSymbolTable();
 }
 
 export type InterfaceDeclarationMember =

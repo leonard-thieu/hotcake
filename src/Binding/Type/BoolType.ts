@@ -1,15 +1,11 @@
-import { BoundSymbol } from '../BoundSymbol';
+import { BoundIntrinsicTypeDeclaration } from '../Node/Declaration/BoundIntrinsicTypeDeclaration';
 import { Type } from './Type';
 import { TypeKind } from './TypeKind';
 import { Types } from './Types';
 
 export class BoolType extends Type {
-    static readonly type = new BoolType();
-
-    private constructor() {
+    constructor(readonly declaration: BoundIntrinsicTypeDeclaration) {
         super();
-
-        this.identifier = new BoundSymbol('Bool', this);
     }
 
     readonly kind = TypeKind.Bool;

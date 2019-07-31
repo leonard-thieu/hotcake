@@ -4,36 +4,5 @@
     "locals": [
         "Driver"
     ],
-    "members": [
-        {
-            "kind": "ExternClassDeclaration",
-            "identifier": "Driver",
-            "locals": [
-                "Method1",
-                "Method2"
-            ],
-            "type": "Driver",
-            "baseType": "Object",
-            "members": [
-                {
-                    "kind": "ExternClassMethodDeclaration",
-                    "identifier": "Method1",
-                    "locals": [],
-                    "returnType": "Int",
-                    "parameters": []
-                },
-                {
-                    "kind": "ExternClassMethodDeclaration",
-                    "identifier": "Method2",
-                    "locals": [],
-                    "returnType": "Int",
-                    "parameters": []
-                }
-            ],
-            "nativeSymbol": {
-                "kind": "StringLiteralExpression",
-                "type": "String"
-            }
-        }
-    ]
+    "members": {}
 }

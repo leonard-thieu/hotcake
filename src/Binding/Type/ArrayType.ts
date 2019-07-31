@@ -1,26 +1,22 @@
-import { BoundSymbol } from '../BoundSymbol';
 import { Type } from './Type';
 import { TypeKind } from './TypeKind';
 import { Types } from './Types';
-import { VoidType } from './VoidType';
+import { BoundExternClassDeclaration } from '../Node/Declaration/Extern/BoundExternClassDeclaration';
 
 export class ArrayType extends Type {
-    static readonly type = new ArrayType(VoidType.type);
-
-    constructor(readonly elementType: Types) {
+    constructor(
+        readonly declaration: BoundExternClassDeclaration,
+        readonly elementType: Types,
+    ) {
         super();
-
-        this.identifier = new BoundSymbol('Array', this);
     }
 
     readonly kind = TypeKind.Array;
 
-    readonly instantiatedTypes: ArrayType[] = [];
-
     isConvertibleTo(target: Types): boolean {
         if (target.kind === TypeKind.Array) {
             if (target.elementType === this.elementType) { return true; }
-            if (target.elementType === VoidType.type) { return true; }
+            if (target.elementType.kind === TypeKind.Void) { return true; }
         }
 
         return false;

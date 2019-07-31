@@ -1,4 +1,3 @@
-import { BoundSymbolTable } from '../../../Binding/BoundSymbol';
 import { MissableToken } from '../../Token/MissingToken';
 import { SkippedToken } from '../../Token/SkippedToken';
 import { CatchKeywordToken, EndKeywordToken, TryKeywordToken } from '../../Token/Token';
@@ -24,8 +23,6 @@ export class TryStatement extends Statement {
     catchClauses: CatchClause[] = undefined!;
     endKeyword: MissableToken<EndKeywordToken> = undefined!;
     endTryKeyword?: TryKeywordToken = undefined;
-
-    locals = new BoundSymbolTable();
 }
 
 export const CatchClauseChildNames: ReadonlyArray<keyof CatchClause> = [
@@ -40,6 +37,4 @@ export class CatchClause extends Node {
     catchKeyword: CatchKeywordToken = undefined!;
     parameter: MissableDataDeclaration = undefined!;
     statements: (Statements | SkippedToken)[] = undefined!;
-
-    locals = new BoundSymbolTable();
 }

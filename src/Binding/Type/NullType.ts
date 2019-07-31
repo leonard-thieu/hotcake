@@ -3,24 +3,21 @@ import { Type } from './Type';
 import { TypeKind } from './TypeKind';
 import { Types } from './Types';
 
-export class FloatType extends Type {
+export class NullType extends Type {
     constructor(readonly declaration: BoundIntrinsicTypeDeclaration) {
         super();
     }
 
-    readonly kind = TypeKind.Float;
+    readonly kind = TypeKind.Null;
 
     isConvertibleTo(target: Types): boolean {
-        // TODO: Boxing conversion
-
-        switch (target.kind) {
-            case TypeKind.Int:
-            case TypeKind.Float:
-            case TypeKind.String: {
-                return true;
-            }
-        }
+        if (target.kind === TypeKind.Object) { return true; }
+        if (target === this) { return true; }
 
         return false;
+    }
+
+    toString(): string {
+        return 'Null';
     }
 }

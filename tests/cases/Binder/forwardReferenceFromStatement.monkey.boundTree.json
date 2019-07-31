@@ -5,37 +5,5 @@
         "Main",
         "Test"
     ],
-    "members": [
-        {
-            "kind": "FunctionDeclaration",
-            "identifier": "Main",
-            "locals": [],
-            "returnType": "Int",
-            "parameters": [],
-            "statements": [
-                {
-                    "kind": "ExpressionStatement",
-                    "expression": {
-                        "kind": "InvokeExpression",
-                        "type": "Int",
-                        "invocationType": "Test: Int()",
-                        "invokableExpression": {
-                            "kind": "IdentifierExpression",
-                            "type": "Test",
-                            "identifier": "Test"
-                        },
-                        "arguments": []
-                    }
-                }
-            ]
-        },
-        {
-            "kind": "FunctionDeclaration",
-            "identifier": "Test",
-            "locals": [],
-            "returnType": "Int",
-            "parameters": [],
-            "statements": []
-        }
-    ]
+    "members": {}
 }

@@ -249,6 +249,9 @@ export function executeBinderTestCases(name: string, casesPath: string): void {
                             }
                             return names;
                         }
+                        case 'baseType': {
+                            return this.type.superType.toString();
+                        }
                     }
 
                     if (value instanceof Type) {

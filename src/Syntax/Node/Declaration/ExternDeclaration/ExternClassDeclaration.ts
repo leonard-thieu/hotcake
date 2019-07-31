@@ -1,4 +1,3 @@
-import { BoundSymbolTable } from '../../../../Binding/BoundSymbol';
 import { MissableToken } from '../../../Token/MissingToken';
 import { SkippedToken } from '../../../Token/SkippedToken';
 import { AbstractKeywordToken, ClassKeywordToken, EndKeywordToken, ExtendsKeywordToken, FinalKeywordToken, NewlineToken, NullKeywordToken } from '../../../Token/Token';
@@ -15,7 +14,7 @@ export const ExternClassDeclarationChildNames: ReadonlyArray<keyof ExternClassDe
     'classKeyword',
     'identifier',
     'extendsKeyword',
-    'baseType',
+    'superType',
     'attribute',
     'equalsSign',
     'nativeSymbol',
@@ -32,15 +31,13 @@ export class ExternClassDeclaration extends ExternDeclaration {
 
     // Extends
     extendsKeyword?: ExtendsKeywordToken = undefined;
-    baseType?: MissableTypeReference | NullKeywordToken = undefined;
+    superType?: MissableTypeReference | NullKeywordToken = undefined;
 
     attribute?: AbstractKeywordToken | FinalKeywordToken = undefined;
 
     members: (ExternClassDeclarationMember | SkippedToken)[] = undefined!;
     endKeyword: MissableToken<EndKeywordToken> = undefined!;
     endClassKeyword?: ClassKeywordToken = undefined;
-
-    locals = new BoundSymbolTable();
 }
 
 export type ExternClassDeclarationMember =

@@ -771,7 +771,7 @@ export class Parser extends ParserBase {
 
         classDeclaration.extendsKeyword = this.eatOptional(TokenKind.ExtendsKeyword);
         if (classDeclaration.extendsKeyword) {
-            classDeclaration.baseType = this.parseMissableTypeReference(classDeclaration);
+            classDeclaration.superType = this.parseMissableTypeReference(classDeclaration);
         }
 
         classDeclaration.implementsKeyword = this.eatOptional(TokenKind.ImplementsKeyword);
@@ -958,9 +958,9 @@ export class Parser extends ParserBase {
 
         externClassDeclaration.extendsKeyword = this.eatOptional(TokenKind.ExtendsKeyword);
         if (externClassDeclaration.extendsKeyword) {
-            externClassDeclaration.baseType = this.eatOptional(TokenKind.NullKeyword);
-            if (!externClassDeclaration.baseType) {
-                externClassDeclaration.baseType = this.parseMissableTypeReference(externClassDeclaration);
+            externClassDeclaration.superType = this.eatOptional(TokenKind.NullKeyword);
+            if (!externClassDeclaration.superType) {
+                externClassDeclaration.superType = this.parseMissableTypeReference(externClassDeclaration);
             }
         }
 

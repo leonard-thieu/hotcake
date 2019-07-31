@@ -4,28 +4,5 @@
     "locals": [
         "Main"
     ],
-    "members": [
-        {
-            "kind": "FunctionDeclaration",
-            "identifier": "Main",
-            "locals": [],
-            "returnType": "Int",
-            "parameters": [],
-            "statements": [
-                {
-                    "kind": "WhileLoop",
-                    "locals": [],
-                    "expression": {
-                        "kind": "BooleanLiteralExpression",
-                        "type": "Bool"
-                    },
-                    "statements": [
-                        {
-                            "kind": "ExitStatement"
-                        }
-                    ]
-                }
-            ]
-        }
-    ]
+    "members": {}
 }

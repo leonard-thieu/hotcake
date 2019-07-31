@@ -1,13 +1,14 @@
+import { BoundExternClassDeclaration } from '../Node/Declaration/Extern/BoundExternClassDeclaration';
 import { Type } from './Type';
 import { TypeKind } from './TypeKind';
 import { Types } from './Types';
-import { TypeTable } from './TypeTable';
 
 export class StringType extends Type {
-    readonly kind = TypeKind.String;
+    constructor(readonly declaration: BoundExternClassDeclaration) {
+        super();
+    }
 
-    superType: undefined = undefined;
-    readonly members = new TypeTable();
+    readonly kind = TypeKind.String;
 
     isConvertibleTo(target: Types): boolean {
         // TODO: Boxing conversion

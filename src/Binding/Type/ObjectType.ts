@@ -1,57 +1,40 @@
+import { BoundNodeKind } from '../Node/BoundNodeKind';
 import { BoundClassDeclaration } from '../Node/Declaration/BoundClassDeclaration';
 import { BoundInterfaceDeclaration } from '../Node/Declaration/BoundInterfaceDeclaration';
 import { BoundExternClassDeclaration } from '../Node/Declaration/Extern/BoundExternClassDeclaration';
 import { Type } from './Type';
 import { TypeKind } from './TypeKind';
-import { TypeParameterType } from './TypeParameterType';
 import { Types } from './Types';
-import { TypeTable } from './TypeTable';
 
 export class ObjectType extends Type {
-    static readonly type = new ObjectType();
-    static readonly nullType = new ObjectType();
-
-    constructor(rootType?: ObjectType) {
+    constructor(readonly declaration: ObjectTypeDeclaration) {
         super();
-
-        if (rootType) {
-            this.rootType = rootType;
-        } else {
-            this.rootType = this;
-            this.instantiatedTypes = [];
-        }
     }
 
     readonly kind = TypeKind.Object;
 
-    readonly rootType: ObjectType;
-    typeParameters?: TypeParameterType[] = undefined;
-    typeArguments?: Types[] = undefined;
-    superType?: ObjectType = undefined;
-    implementedTypes?: ObjectType[] = undefined;
-    readonly members = new TypeTable();
-
-    readonly instantiatedTypes?: ObjectType[];
-
     isConvertibleTo(target: Types): boolean {
-        if (this === ObjectType.nullType &&
-            target.kind === TypeKind.Object
-        ) {
-            return true;
-        }
-
-        if (target === ObjectType.nullType) { return true; }
+        if (target.kind === TypeKind.Null) { return true; }
         if (target === this) { return true; }
 
         // TODO: Implements `target`
 
-        let ancestorType = this.superType;
-        while (ancestorType) {
-            if (target === ancestorType) {
-                return true;
+        switch (this.declaration.kind) {
+            case BoundNodeKind.ExternClassDeclaration:
+            case BoundNodeKind.ClassDeclaration: {
+                let ancestor = this.declaration.superType;
+                while (ancestor) {
+                    if (target === ancestor.type) {
+                        return true;
+                    }
+
+                    ancestor = ancestor.superType;
+                }
+                break;
             }
 
-            ancestorType = ancestorType.superType;
+            default:
+                break;
         }
 
         // TODO: Unboxing conversions
@@ -60,30 +43,34 @@ export class ObjectType extends Type {
     }
 
     toString(): string {
-        if (this === ObjectType.nullType) {
-            return 'Null';
-        }
+        let str = this.declaration.identifier.name;
 
-        if (this.identifier) {
-            let str = this.identifier.name;
+        if (this.declaration.kind === BoundNodeKind.ClassDeclaration) {
+            // if (this.declaration.typeArguments) {
+            //     str += '<';
 
-            const args = this.typeArguments || this.typeParameters;
-            if (args) {
+            //     const argNames: Types[] = [];
+            //     for (const arg of this.declaration.typeArguments) {
+            //         argNames.push(arg.type);
+            //     }
+            //     str += argNames.join(',');
+
+            //     str += '>';
+            // } else
+            if (this.declaration.typeParameters) {
                 str += '<';
 
-                const argNames: Types[] = [];
-                for (const arg of args) {
-                    argNames.push(arg);
+                const argNames: string[] = [];
+                for (const arg of this.declaration.typeParameters) {
+                    argNames.push(arg.identifier.name);
                 }
                 str += argNames.join(',');
 
                 str += '>';
             }
-
-            return str;
         }
 
-        return super.toString();
+        return str;
     }
 }
 

@@ -1,13 +1,15 @@
 import { ExternClassDeclaration } from '../../../../Syntax/Node/Declaration/ExternDeclaration/ExternClassDeclaration';
 import { BoundSymbol, BoundSymbolTable } from '../../../BoundSymbol';
+import { ArrayType } from '../../../Type/ArrayType';
 import { ObjectType } from '../../../Type/ObjectType';
 import { StringType } from '../../../Type/StringType';
 import { BoundNode } from '../../BoundNode';
 import { BoundNodeKind } from '../../BoundNodeKind';
 import { BoundStringLiteralExpression } from '../../Expression/BoundStringLiteralExpression';
-import { BoundExternClassMethodDeclaration } from './BoundExternClassMethodDeclaration';
+import { BoundClassDeclaration } from '../BoundClassDeclaration';
+import { BoundExternClassMethodGroupDeclaration, BoundExternFunctionGroupDeclaration } from '../BoundFunctionLikeGroupDeclaration';
+import { BoundTypeMembers } from '../BoundTypeMembers';
 import { BoundExternDataDeclaration } from './BoundExternDataDeclaration';
-import { BoundExternFunctionDeclaration } from './BoundExternFunctionDeclaration';
 
 export class BoundExternClassDeclaration extends BoundNode {
     readonly kind = BoundNodeKind.ExternClassDeclaration;
@@ -16,17 +18,16 @@ export class BoundExternClassDeclaration extends BoundNode {
 
     identifier: BoundSymbol = undefined!;
     locals: BoundSymbolTable = undefined!;
-    type: ObjectType | StringType = undefined!;
+    type: ObjectType | StringType | ArrayType = undefined!;
 
-    baseType?: ObjectType = undefined;
-
-    members: BoundExternClassDeclarationMember[] = undefined!;
-
+    superType?: BoundExternClassDeclaration | BoundClassDeclaration = undefined;
     nativeSymbol?: BoundStringLiteralExpression = undefined;
+
+    members: BoundTypeMembers<BoundExternClassDeclarationMember> = undefined!;
 }
 
 export type BoundExternClassDeclarationMember =
     | BoundExternDataDeclaration
-    | BoundExternFunctionDeclaration
-    | BoundExternClassMethodDeclaration
+    | BoundExternFunctionGroupDeclaration
+    | BoundExternClassMethodGroupDeclaration
     ;

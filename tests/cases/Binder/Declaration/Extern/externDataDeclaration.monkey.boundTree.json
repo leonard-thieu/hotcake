@@ -5,34 +5,5 @@
         "Driver",
         "ActiveDriver"
     ],
-    "members": [
-        {
-            "kind": "ClassDeclaration",
-            "locals": [
-                "New"
-            ],
-            "identifier": "Driver",
-            "type": "Driver",
-            "baseType": "Object",
-            "members": [
-                {
-                    "kind": "ClassMethodDeclaration",
-                    "identifier": "New",
-                    "locals": [],
-                    "returnType": "Driver",
-                    "parameters": []
-                }
-            ]
-        },
-        {
-            "kind": "ExternDataDeclaration",
-            "declarationKind": "GlobalKeyword",
-            "identifier": "ActiveDriver",
-            "type": "Driver",
-            "nativeSymbol": {
-                "kind": "StringLiteralExpression",
-                "type": "String"
-            }
-        }
-    ]
+    "members": {}
 }

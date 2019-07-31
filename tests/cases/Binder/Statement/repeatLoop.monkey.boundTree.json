@@ -4,53 +4,5 @@
     "locals": [
         "Main"
     ],
-    "members": [
-        {
-            "kind": "FunctionDeclaration",
-            "identifier": "Main",
-            "locals": [
-                "i"
-            ],
-            "returnType": "Int",
-            "parameters": [],
-            "statements": [
-                {
-                    "kind": "DataDeclarationStatement",
-                    "declaration": {
-                        "kind": "DataDeclaration",
-                        "declarationKind": "LocalKeyword",
-                        "identifier": "i",
-                        "type": "Int",
-                        "expression": {
-                            "kind": "IntegerLiteralExpression",
-                            "type": "Int"
-                        }
-                    }
-                },
-                {
-                    "kind": "RepeatLoop",
-                    "locals": [],
-                    "expression": {
-                        "kind": "BinaryExpression",
-                        "type": "Bool",
-                        "leftOperand": {
-                            "kind": "IdentifierExpression",
-                            "type": "Int",
-                            "identifier": "i"
-                        },
-                        "rightOperand": {
-                            "kind": "IntegerLiteralExpression",
-                            "type": "Int"
-                        }
-                    },
-                    "statements": []
-                },
-                {
-                    "kind": "RepeatLoop",
-                    "locals": [],
-                    "statements": []
-                }
-            ]
-        }
-    ]
+    "members": {}
 }

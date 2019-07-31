@@ -1,4 +1,3 @@
-import { BoundSymbolTable } from '../../../Binding/BoundSymbol';
 import { Diagnostic } from '../../../Diagnostic';
 import { SkippedToken } from '../../Token/SkippedToken';
 import { EOFToken, NewlineToken } from '../../Token/Token';
@@ -46,8 +45,6 @@ export class ModuleDeclaration extends Declaration {
     eofToken: EOFToken = undefined!;
 
     parseDiagnostics?: Diagnostic[];
-
-    locals = new BoundSymbolTable();
 }
 
 export type ModuleDeclarationHeaderMember =

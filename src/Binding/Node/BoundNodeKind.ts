@@ -1,4 +1,5 @@
 export enum BoundNodeKind {
+    IntrinsicType = 'IntrinsicType',
     Directory = 'Directory',
 
     ModuleDeclaration = 'ModuleDeclaration',
@@ -10,15 +11,20 @@ export enum BoundNodeKind {
 
     ExternDataDeclaration = 'ExternDataDeclaration',
     ExternFunctionDeclaration = 'ExternFunctionDeclaration',
+    ExternFunctionGroupDeclaration = 'ExternFunctionGroupDeclaration',
     ExternClassDeclaration = 'ExternClassDeclaration',
     ExternClassMethodDeclaration = 'ExternClassMethodDeclaration',
+    ExternClassMethodGroupDeclaration = 'ExternClassMethodGroupDeclaration',
 
     DataDeclaration = 'DataDeclaration',
     FunctionDeclaration = 'FunctionDeclaration',
+    FunctionGroupDeclaration = 'FunctionGroupDeclaration',
     InterfaceDeclaration = 'InterfaceDeclaration',
     InterfaceMethodDeclaration = 'InterfaceMethodDeclaration',
+    InterfaceMethodGroupDeclaration = 'InterfaceMethodGroupDeclaration',
     ClassDeclaration = 'ClassDeclaration',
     ClassMethodDeclaration = 'ClassMethodDeclaration',
+    ClassMethodGroupDeclaration = 'ClassMethodGroupDeclaration',
     TypeParameter = 'TypeParameter',
 
     DataDeclarationStatement = 'DataDeclarationStatement',

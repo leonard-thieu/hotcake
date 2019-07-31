@@ -5,50 +5,5 @@
         "UnboxBool",
         "Main"
     ],
-    "members": [
-        {
-            "kind": "FunctionDeclaration",
-            "identifier": "UnboxBool",
-            "locals": [
-                "box"
-            ],
-            "returnType": "Bool",
-            "parameters": [
-                {
-                    "kind": "DataDeclaration",
-                    "identifier": "box",
-                    "type": "Object"
-                }
-            ],
-            "statements": []
-        },
-        {
-            "kind": "FunctionDeclaration",
-            "identifier": "Main",
-            "locals": [],
-            "returnType": "Int",
-            "parameters": [],
-            "statements": [
-                {
-                    "kind": "ExpressionStatement",
-                    "expression": {
-                        "kind": "InvokeExpression",
-                        "type": "Bool",
-                        "invocationType": "UnboxBool: Bool(Object)",
-                        "invokableExpression": {
-                            "kind": "IdentifierExpression",
-                            "type": "UnboxBool",
-                            "identifier": "UnboxBool"
-                        },
-                        "arguments": [
-                            {
-                                "kind": "NullExpression",
-                                "type": "Null"
-                            }
-                        ]
-                    }
-                }
-            ]
-        }
-    ]
+    "members": {}
 }

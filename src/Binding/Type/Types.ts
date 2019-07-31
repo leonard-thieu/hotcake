@@ -1,9 +1,10 @@
 import { ArrayType } from './ArrayType';
 import { BoolType } from './BoolType';
 import { FloatType } from './FloatType';
-import { FunctionLikeGroupType, FunctionLikeType } from './FunctionLikeType';
+import { FunctionGroupType, FunctionType, MethodGroupType, MethodType } from './FunctionLikeType';
 import { IntType } from './IntType';
 import { ModuleType } from './ModuleType';
+import { NullType } from "./NullType";
 import { ObjectType } from './ObjectType';
 import { StringType } from './StringType';
 import { TypeParameterType } from './TypeParameterType';
@@ -13,10 +14,13 @@ export type Types =
     | ArrayType
     | BoolType
     | FloatType
-    | FunctionLikeType
-    | FunctionLikeGroupType
+    | FunctionType
+    | FunctionGroupType
     | IntType
+    | MethodType
+    | MethodGroupType
     | ModuleType
+    | NullType
     | ObjectType
     | StringType
     | TypeParameterType
@@ -24,6 +28,7 @@ export type Types =
     ;
 
 export type IntrinsicType =
+    | NullType
     | BoolType
     | IntType
     | FloatType

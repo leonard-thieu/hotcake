@@ -23,7 +23,7 @@
                 "start": 10,
                 "length": 8
             },
-            "baseType": {
+            "superType": {
                 "kind": "TypeReference",
                 "identifier": {
                     "kind": "ThrowableKeyword",
@@ -80,7 +80,7 @@
                 "start": 46,
                 "length": 8
             },
-            "baseType": {
+            "superType": {
                 "kind": "TypeReference",
                 "identifier": {
                     "kind": "ThrowableKeyword",

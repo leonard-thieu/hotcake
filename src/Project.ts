@@ -4,9 +4,16 @@ import { assertNever } from './assertNever';
 import { Binder } from './Binding/Binder';
 import { BoundSymbol, BoundSymbolTable } from './Binding/BoundSymbol';
 import { BoundNodeKind } from './Binding/Node/BoundNodeKind';
+import { BoundTypeDeclaration } from './Binding/Node/Declaration/BoundDeclarations';
 import { BoundDirectory } from './Binding/Node/Declaration/BoundDirectory';
+import { BoundIntrinsicTypeDeclaration } from './Binding/Node/Declaration/BoundIntrinsicTypeDeclaration';
 import { BoundModuleDeclaration } from './Binding/Node/Declaration/BoundModuleDeclaration';
-import { StringType } from './Binding/Type/StringType';
+import { BoundExternClassDeclaration } from './Binding/Node/Declaration/Extern/BoundExternClassDeclaration';
+import { BoolType } from './Binding/Type/BoolType';
+import { FloatType } from './Binding/Type/FloatType';
+import { IntType } from './Binding/Type/IntType';
+import { NullType } from './Binding/Type/NullType';
+import { VoidType } from './Binding/Type/VoidType';
 import { Parser } from './Syntax/Parser';
 import { PreprocessorParser } from './Syntax/PreprocessorParser';
 import { PreprocessorTokenizer } from './Syntax/PreprocessorTokenizer';
@@ -32,14 +39,63 @@ export class Project {
         this.boundFrameworkModulesDirectory = this.bindDirectory(frameworkModulesDirectory);
 
         this.boundProjectDirectory = this.bindDirectory(path.resolve(projectDirectory));
+
+        this.nullTypeDeclaration = new BoundIntrinsicTypeDeclaration();
+        this.nullTypeDeclaration.type = new NullType(this.nullTypeDeclaration);
+        this.voidTypeDeclaration = new BoundIntrinsicTypeDeclaration();
+        this.voidTypeDeclaration.type = new VoidType(this.voidTypeDeclaration);
+        this.boolTypeDeclaration = new BoundIntrinsicTypeDeclaration();
+        this.boolTypeDeclaration.type = new BoolType(this.boolTypeDeclaration);
+        this.intTypeDeclaration = new BoundIntrinsicTypeDeclaration();
+        this.intTypeDeclaration.type = new IntType(this.intTypeDeclaration);
+        this.floatTypeDeclaration = new BoundIntrinsicTypeDeclaration();
+        this.floatTypeDeclaration.type = new FloatType(this.floatTypeDeclaration);
+        this.stringTypeDeclaration = new BoundExternClassDeclaration();
+        this.arrayTypeDeclaration = new BoundExternClassDeclaration();
+        this.arrayTypeDeclaration.identifier = new BoundSymbol('Array', this.arrayTypeDeclaration);
+        this.objectTypeDeclaration = new BoundExternClassDeclaration();
+        this.throwableTypeDeclaration = new BoundExternClassDeclaration();
     }
 
     readonly boundFrameworkModulesDirectory: BoundDirectory;
     readonly boundProjectDirectory: BoundDirectory;
 
-    readonly stringType = new StringType();
+    readonly nullTypeDeclaration: BoundIntrinsicTypeDeclaration;
+    readonly voidTypeDeclaration: BoundIntrinsicTypeDeclaration;
+    readonly boolTypeDeclaration: BoundIntrinsicTypeDeclaration;
+    readonly intTypeDeclaration: BoundIntrinsicTypeDeclaration;
+    readonly floatTypeDeclaration: BoundIntrinsicTypeDeclaration;
+    readonly stringTypeDeclaration: BoundExternClassDeclaration;
+    readonly arrayTypeDeclaration: BoundExternClassDeclaration;
+    readonly objectTypeDeclaration: BoundExternClassDeclaration;
+    readonly throwableTypeDeclaration: BoundExternClassDeclaration;
+
+    private readonly moduleCache = new Map<string, BoundModuleDeclaration>();
+    readonly arrayTypeCache = new Map<BoundTypeDeclaration, BoundExternClassDeclaration>();
+
+    cacheModule(boundModuleDeclaration: BoundModuleDeclaration): void {
+        const { directory, identifier } = boundModuleDeclaration;
+        const moduleFullPath = path.resolve(directory.fullPath, identifier.name + FILE_EXTENSION);
+        this.moduleCache.set(moduleFullPath, boundModuleDeclaration);
+    }
+
+    importModuleFromSource(sourceModule: BoundModuleDeclaration, modulePathFromSource: string): BoundModuleDeclaration {
+        const currentDirectory = sourceModule.directory.fullPath;
+        const modulePathParts = modulePathFromSource.split('.');
+        const modulePathComponents = modulePathParts.slice(0, modulePathParts.length - 1);
+        const moduleIdentifier = modulePathParts[modulePathParts.length - 1];
+        const boundModuleDirectory = this.resolveModuleDirectory(currentDirectory, modulePathComponents, moduleIdentifier);
+        const modulePath = path.resolve(boundModuleDirectory.fullPath, moduleIdentifier + FILE_EXTENSION);
+
+        return this.importModule(modulePath);
+    }
 
     importModule(modulePath: string): BoundModuleDeclaration {
+        let boundModuleDeclaration = this.moduleCache.get(modulePath);
+        if (boundModuleDeclaration) {
+            return boundModuleDeclaration;
+        }
+
         const document = fs.readFileSync(modulePath, 'utf8');
         const currentDirectory = path.dirname(modulePath);
 
@@ -58,7 +114,7 @@ export class Project {
         const moduleIdentifier = path.basename(modulePath, FILE_EXTENSION);
         const boundModuleDirectory = this.resolveModuleDirectory(currentDirectory, [], moduleIdentifier);
         const binder = new Binder();
-        const boundModuleDeclaration = binder.bind(moduleDeclaration, this, boundModuleDirectory, moduleIdentifier);
+        boundModuleDeclaration = binder.bind(moduleDeclaration, this, boundModuleDirectory, moduleIdentifier);
 
         return boundModuleDeclaration;
     }

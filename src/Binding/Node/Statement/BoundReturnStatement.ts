@@ -7,6 +7,5 @@ export class BoundReturnStatement extends BoundNode {
     readonly kind = BoundNodeKind.ReturnStatement;
 
     type: Types = undefined!;
-
     expression: BoundExpressions = undefined!;
 }

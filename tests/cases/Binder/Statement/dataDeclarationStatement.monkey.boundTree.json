@@ -4,40 +4,5 @@
     "locals": [
         "Main"
     ],
-    "members": [
-        {
-            "kind": "FunctionDeclaration",
-            "identifier": "Main",
-            "locals": [
-                "val",
-                "enableLighting"
-            ],
-            "returnType": "Int",
-            "parameters": [],
-            "statements": [
-                {
-                    "kind": "DataDeclarationStatement",
-                    "declaration": {
-                        "kind": "DataDeclaration",
-                        "declarationKind": "LocalKeyword",
-                        "identifier": "val",
-                        "type": "Float",
-                        "expression": {
-                            "kind": "FloatLiteralExpression",
-                            "type": "Float"
-                        }
-                    }
-                },
-                {
-                    "kind": "DataDeclarationStatement",
-                    "declaration": {
-                        "kind": "DataDeclaration",
-                        "declarationKind": "LocalKeyword",
-                        "identifier": "enableLighting",
-                        "type": "Bool"
-                    }
-                }
-            ]
-        }
-    ]
+    "members": {}
 }
