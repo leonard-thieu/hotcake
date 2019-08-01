@@ -1,5 +1,5 @@
 import { MissableToken, MissingToken } from '../../Token/MissingToken';
-import { ColonEqualsSignToken, ConstKeywordToken, EachInKeywordToken, EqualsSignToken, FieldKeywordToken, GlobalKeywordToken, LocalKeywordToken } from '../../Token/Token';
+import { ColonEqualsSignToken, ConstKeywordToken, EqualsSignToken, FieldKeywordToken, GlobalKeywordToken, LocalKeywordToken } from '../../Token/Token';
 import { CommaSeparator } from '../CommaSeparator';
 import { MissableExpression } from '../Expression/Expression';
 import { Identifier } from '../Identifier';
@@ -28,9 +28,8 @@ export type DataDeclarationKeywordToken =
 
 export const DataDeclarationChildNames: ReadonlyArray<keyof DataDeclaration> = [
     'identifier',
-    'type',
+    'typeAnnotation',
     'equalsSign',
-    'eachInKeyword',
     'expression',
 ];
 
@@ -38,14 +37,14 @@ export const DataDeclarationChildNames: ReadonlyArray<keyof DataDeclaration> = [
  * Explicit type (shorthand)
  *   Identifier(?|%|#|$) = Expression
  *   Identifier(?|%|#|$)
- * 
+ *
  * Explicit type (longhand)
  *   Identifier: Type = Expression
  *   Identifier: Type
- * 
+ *
  * Inferred type
  *   Identifier := Expression
- * 
+ *
  * Default type
  *   Identifier = Expression
  *   Identifier
@@ -54,9 +53,8 @@ export class DataDeclaration extends Declaration {
     readonly kind = NodeKind.DataDeclaration;
 
     identifier: Identifier = undefined!;
-    type?: TypeAnnotation = undefined;
+    typeAnnotation?: TypeAnnotation = undefined;
     equalsSign?: MissableToken<EqualsSignToken | ColonEqualsSignToken> = undefined;
-    eachInKeyword?: EachInKeywordToken = undefined;
     expression?: MissableExpression = undefined;
 }
 

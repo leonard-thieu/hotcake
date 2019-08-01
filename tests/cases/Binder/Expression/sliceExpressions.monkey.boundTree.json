@@ -5,5 +5,338 @@
         "Print",
         "Main"
     ],
-    "members": {}
+    "members": [
+        {
+            "kind": "FunctionGroupDeclaration",
+            "identifier": "Print",
+            "type": "Print",
+            "overloads": [
+                {
+                    "kind": "FunctionDeclaration",
+                    "identifier": "Print",
+                    "locals": [
+                        "message"
+                    ],
+                    "type": "Print: Int(String)",
+                    "returnType": "Int",
+                    "parameters": [
+                        {
+                            "kind": "DataDeclaration",
+                            "identifier": "message",
+                            "typeAnnotation": "String",
+                            "type": "String"
+                        }
+                    ],
+                    "statements": []
+                },
+                {
+                    "kind": "FunctionDeclaration",
+                    "identifier": "Print",
+                    "locals": [
+                        "messages"
+                    ],
+                    "type": "Print: Int(String[])",
+                    "returnType": "Int",
+                    "parameters": [
+                        {
+                            "kind": "DataDeclaration",
+                            "identifier": "messages",
+                            "typeAnnotation": "String[]",
+                            "type": "String[]"
+                        }
+                    ],
+                    "statements": []
+                }
+            ]
+        },
+        {
+            "kind": "FunctionGroupDeclaration",
+            "identifier": "Main",
+            "type": "Main",
+            "overloads": [
+                {
+                    "kind": "FunctionDeclaration",
+                    "identifier": "Main",
+                    "locals": [],
+                    "type": "Main: Int()",
+                    "returnType": "Int",
+                    "parameters": [],
+                    "statements": [
+                        {
+                            "kind": "ExpressionStatement",
+                            "expression": {
+                                "kind": "InvokeExpression",
+                                "type": "Int",
+                                "invocationType": "Print: Int(String)",
+                                "invokableExpression": {
+                                    "kind": "IdentifierExpression",
+                                    "type": "Print",
+                                    "identifier": "Print"
+                                },
+                                "arguments": [
+                                    {
+                                        "kind": "SliceExpression",
+                                        "type": "String",
+                                        "sliceableExpression": {
+                                            "kind": "StringLiteralExpression",
+                                            "type": "String"
+                                        },
+                                        "startExpression": {
+                                            "kind": "IntegerLiteralExpression",
+                                            "type": "Int"
+                                        },
+                                        "endExpression": {
+                                            "kind": "IntegerLiteralExpression",
+                                            "type": "Int"
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "kind": "ExpressionStatement",
+                            "expression": {
+                                "kind": "InvokeExpression",
+                                "type": "Int",
+                                "invocationType": "Print: Int(String)",
+                                "invokableExpression": {
+                                    "kind": "IdentifierExpression",
+                                    "type": "Print",
+                                    "identifier": "Print"
+                                },
+                                "arguments": [
+                                    {
+                                        "kind": "SliceExpression",
+                                        "type": "String",
+                                        "sliceableExpression": {
+                                            "kind": "StringLiteralExpression",
+                                            "type": "String"
+                                        },
+                                        "endExpression": {
+                                            "kind": "IntegerLiteralExpression",
+                                            "type": "Int"
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "kind": "ExpressionStatement",
+                            "expression": {
+                                "kind": "InvokeExpression",
+                                "type": "Int",
+                                "invocationType": "Print: Int(String)",
+                                "invokableExpression": {
+                                    "kind": "IdentifierExpression",
+                                    "type": "Print",
+                                    "identifier": "Print"
+                                },
+                                "arguments": [
+                                    {
+                                        "kind": "SliceExpression",
+                                        "type": "String",
+                                        "sliceableExpression": {
+                                            "kind": "StringLiteralExpression",
+                                            "type": "String"
+                                        },
+                                        "startExpression": {
+                                            "kind": "IntegerLiteralExpression",
+                                            "type": "Int"
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "kind": "ExpressionStatement",
+                            "expression": {
+                                "kind": "InvokeExpression",
+                                "type": "Int",
+                                "invocationType": "Print: Int(String)",
+                                "invokableExpression": {
+                                    "kind": "IdentifierExpression",
+                                    "type": "Print",
+                                    "identifier": "Print"
+                                },
+                                "arguments": [
+                                    {
+                                        "kind": "SliceExpression",
+                                        "type": "String",
+                                        "sliceableExpression": {
+                                            "kind": "StringLiteralExpression",
+                                            "type": "String"
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "kind": "ExpressionStatement",
+                            "expression": {
+                                "kind": "InvokeExpression",
+                                "type": "Int",
+                                "invocationType": "Print: Int(String[])",
+                                "invokableExpression": {
+                                    "kind": "IdentifierExpression",
+                                    "type": "Print",
+                                    "identifier": "Print"
+                                },
+                                "arguments": [
+                                    {
+                                        "kind": "SliceExpression",
+                                        "type": "String[]",
+                                        "sliceableExpression": {
+                                            "kind": "ArrayLiteralExpression",
+                                            "type": "String[]",
+                                            "expressions": [
+                                                {
+                                                    "kind": "StringLiteralExpression",
+                                                    "type": "String"
+                                                },
+                                                {
+                                                    "kind": "StringLiteralExpression",
+                                                    "type": "String"
+                                                },
+                                                {
+                                                    "kind": "StringLiteralExpression",
+                                                    "type": "String"
+                                                }
+                                            ]
+                                        },
+                                        "startExpression": {
+                                            "kind": "IntegerLiteralExpression",
+                                            "type": "Int"
+                                        },
+                                        "endExpression": {
+                                            "kind": "IntegerLiteralExpression",
+                                            "type": "Int"
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "kind": "ExpressionStatement",
+                            "expression": {
+                                "kind": "InvokeExpression",
+                                "type": "Int",
+                                "invocationType": "Print: Int(String[])",
+                                "invokableExpression": {
+                                    "kind": "IdentifierExpression",
+                                    "type": "Print",
+                                    "identifier": "Print"
+                                },
+                                "arguments": [
+                                    {
+                                        "kind": "SliceExpression",
+                                        "type": "String[]",
+                                        "sliceableExpression": {
+                                            "kind": "ArrayLiteralExpression",
+                                            "type": "String[]",
+                                            "expressions": [
+                                                {
+                                                    "kind": "StringLiteralExpression",
+                                                    "type": "String"
+                                                },
+                                                {
+                                                    "kind": "StringLiteralExpression",
+                                                    "type": "String"
+                                                },
+                                                {
+                                                    "kind": "StringLiteralExpression",
+                                                    "type": "String"
+                                                }
+                                            ]
+                                        },
+                                        "endExpression": {
+                                            "kind": "IntegerLiteralExpression",
+                                            "type": "Int"
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "kind": "ExpressionStatement",
+                            "expression": {
+                                "kind": "InvokeExpression",
+                                "type": "Int",
+                                "invocationType": "Print: Int(String[])",
+                                "invokableExpression": {
+                                    "kind": "IdentifierExpression",
+                                    "type": "Print",
+                                    "identifier": "Print"
+                                },
+                                "arguments": [
+                                    {
+                                        "kind": "SliceExpression",
+                                        "type": "String[]",
+                                        "sliceableExpression": {
+                                            "kind": "ArrayLiteralExpression",
+                                            "type": "String[]",
+                                            "expressions": [
+                                                {
+                                                    "kind": "StringLiteralExpression",
+                                                    "type": "String"
+                                                },
+                                                {
+                                                    "kind": "StringLiteralExpression",
+                                                    "type": "String"
+                                                },
+                                                {
+                                                    "kind": "StringLiteralExpression",
+                                                    "type": "String"
+                                                }
+                                            ]
+                                        },
+                                        "startExpression": {
+                                            "kind": "IntegerLiteralExpression",
+                                            "type": "Int"
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "kind": "ExpressionStatement",
+                            "expression": {
+                                "kind": "InvokeExpression",
+                                "type": "Int",
+                                "invocationType": "Print: Int(String[])",
+                                "invokableExpression": {
+                                    "kind": "IdentifierExpression",
+                                    "type": "Print",
+                                    "identifier": "Print"
+                                },
+                                "arguments": [
+                                    {
+                                        "kind": "SliceExpression",
+                                        "type": "String[]",
+                                        "sliceableExpression": {
+                                            "kind": "ArrayLiteralExpression",
+                                            "type": "String[]",
+                                            "expressions": [
+                                                {
+                                                    "kind": "StringLiteralExpression",
+                                                    "type": "String"
+                                                },
+                                                {
+                                                    "kind": "StringLiteralExpression",
+                                                    "type": "String"
+                                                },
+                                                {
+                                                    "kind": "StringLiteralExpression",
+                                                    "type": "String"
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
 }

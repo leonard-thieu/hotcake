@@ -1,3 +1,11 @@
 [
-    "Statement/forLoop.monkey"
+    "Declaration/aliasDirective.monkey",
+    "Declaration/importStatement.monkey",
+    "Statement/forLoop.monkey",
+    "Statement/tryStatement.monkey",
+    "forwardReferenceOfTypeMemberFromTypeMember.monkey",
+    "generics.monkey",
+    "instantiateTypeAfterSuperTypeIsSet.monkey",
+    "noSameTypeDuplicates.monkey",
+    "smokeTest.monkey"
 ]

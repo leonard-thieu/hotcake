@@ -5,5 +5,67 @@
         "UnboxBool",
         "Main"
     ],
-    "members": {}
+    "members": [
+        {
+            "kind": "FunctionGroupDeclaration",
+            "identifier": "UnboxBool",
+            "type": "UnboxBool",
+            "overloads": [
+                {
+                    "kind": "FunctionDeclaration",
+                    "identifier": "UnboxBool",
+                    "locals": [
+                        "box"
+                    ],
+                    "type": "UnboxBool: Bool(Object)",
+                    "returnType": "Bool",
+                    "parameters": [
+                        {
+                            "kind": "DataDeclaration",
+                            "identifier": "box",
+                            "typeAnnotation": "Object",
+                            "type": "Object"
+                        }
+                    ],
+                    "statements": []
+                }
+            ]
+        },
+        {
+            "kind": "FunctionGroupDeclaration",
+            "identifier": "Main",
+            "type": "Main",
+            "overloads": [
+                {
+                    "kind": "FunctionDeclaration",
+                    "identifier": "Main",
+                    "locals": [],
+                    "type": "Main: Int()",
+                    "returnType": "Int",
+                    "parameters": [],
+                    "statements": [
+                        {
+                            "kind": "ExpressionStatement",
+                            "expression": {
+                                "kind": "InvokeExpression",
+                                "type": "Bool",
+                                "invocationType": "UnboxBool: Bool(Object)",
+                                "invokableExpression": {
+                                    "kind": "IdentifierExpression",
+                                    "type": "UnboxBool",
+                                    "identifier": "UnboxBool"
+                                },
+                                "arguments": [
+                                    {
+                                        "kind": "NullExpression",
+                                        "type": "Null"
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
 }

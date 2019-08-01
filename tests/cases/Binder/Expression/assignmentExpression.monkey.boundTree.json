@@ -4,5 +4,66 @@
     "locals": [
         "Main"
     ],
-    "members": {}
+    "members": [
+        {
+            "kind": "FunctionGroupDeclaration",
+            "identifier": "Main",
+            "type": "Main",
+            "overloads": [
+                {
+                    "kind": "FunctionDeclaration",
+                    "identifier": "Main",
+                    "locals": [
+                        "val"
+                    ],
+                    "type": "Main: Int(String)",
+                    "returnType": "Int",
+                    "parameters": [
+                        {
+                            "kind": "DataDeclaration",
+                            "identifier": "val",
+                            "typeAnnotation": "String",
+                            "type": "String"
+                        }
+                    ],
+                    "statements": [
+                        {
+                            "kind": "AssignmentStatement",
+                            "leftOperand": {
+                                "kind": "IdentifierExpression",
+                                "type": "String",
+                                "identifier": "val"
+                            },
+                            "rightOperand": {
+                                "kind": "StringLiteralExpression",
+                                "type": "String"
+                            }
+                        },
+                        {
+                            "kind": "AssignmentStatement",
+                            "leftOperand": {
+                                "kind": "IdentifierExpression",
+                                "type": "String",
+                                "identifier": "val"
+                            },
+                            "rightOperand": {
+                                "kind": "BinaryExpression",
+                                "type": "String",
+                                "leftOperand": {
+                                    "kind": "IdentifierExpression",
+                                    "type": "String",
+                                    "identifier": "val"
+                                },
+                                "operator": "PlusSign",
+                                "rightOperand": {
+                                    "kind": "IntegerLiteralExpression",
+                                    "type": "Int"
+                                }
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
 }

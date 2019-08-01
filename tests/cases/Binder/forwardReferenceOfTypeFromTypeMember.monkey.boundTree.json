@@ -5,5 +5,68 @@
         "List",
         "Node"
     ],
-    "members": {}
+    "members": [
+        {
+            "kind": "ClassDeclaration",
+            "locals": [
+                "node",
+                "New"
+            ],
+            "identifier": "List",
+            "type": "List",
+            "superType": "Object",
+            "members": [
+                {
+                    "kind": "DataDeclaration",
+                    "declarationKind": "FieldKeyword",
+                    "identifier": "node",
+                    "typeAnnotation": "Node",
+                    "type": "Node"
+                },
+                {
+                    "kind": "ClassMethodGroupDeclaration",
+                    "identifier": "New",
+                    "type": "New List",
+                    "overloads": [
+                        {
+                            "kind": "ClassMethodDeclaration",
+                            "identifier": "New",
+                            "locals": [],
+                            "type": "New List()",
+                            "returnType": "List",
+                            "parameters": [],
+                            "statements": []
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "kind": "ClassDeclaration",
+            "locals": [
+                "New"
+            ],
+            "identifier": "Node",
+            "type": "Node",
+            "superType": "Object",
+            "members": [
+                {
+                    "kind": "ClassMethodGroupDeclaration",
+                    "identifier": "New",
+                    "type": "New Node",
+                    "overloads": [
+                        {
+                            "kind": "ClassMethodDeclaration",
+                            "identifier": "New",
+                            "locals": [],
+                            "type": "New Node()",
+                            "returnType": "Node",
+                            "parameters": [],
+                            "statements": []
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
 }

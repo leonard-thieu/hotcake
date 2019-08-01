@@ -1,4 +1,4 @@
-import { AmpersandEqualsSignToken, AsteriskEqualsSignToken, EachInKeywordToken, EqualsSignToken, HyphenMinusEqualsSignToken, ModKeywordEqualsSignToken, PlusSignEqualsSignToken, ShlKeywordEqualsSignToken, ShrKeywordEqualsSignToken, SlashEqualsSignToken, TildeEqualsSignToken, VerticalBarEqualsSignToken } from '../../Token/Token';
+import { AmpersandEqualsSignToken, AsteriskEqualsSignToken, EqualsSignToken, HyphenMinusEqualsSignToken, ModKeywordEqualsSignToken, PlusSignEqualsSignToken, ShlKeywordEqualsSignToken, ShrKeywordEqualsSignToken, SlashEqualsSignToken, TildeEqualsSignToken, VerticalBarEqualsSignToken } from '../../Token/Token';
 import { MissableExpression } from '../Expression/Expression';
 import { GlobalScopeExpression } from '../Expression/GlobalScopeExpression';
 import { IdentifierExpression } from '../Expression/IdentifierExpression';
@@ -10,7 +10,6 @@ import { Statement } from './Statement';
 export const AssignmentStatementChildNames: ReadonlyArray<keyof AssignmentStatement> = [
     'leftOperand',
     'operator',
-    'eachInKeyword',
     'rightOperand',
     'terminator',
 ];
@@ -20,7 +19,6 @@ export class AssignmentStatement extends Statement {
 
     leftOperand: AssignableExpression = undefined!;
     operator: AssignmentOperatorToken = undefined!;
-    eachInKeyword?: EachInKeywordToken = undefined;
     rightOperand: MissableExpression = undefined!;
 }
 

@@ -1,46 +1,78 @@
-import { MissableToken, MissingToken } from '../../Token/MissingToken';
+import { MissableToken } from '../../Token/MissingToken';
 import { SkippedToken } from '../../Token/SkippedToken';
-import { EndKeywordToken, ForKeywordToken, NextKeywordToken, StepKeywordToken, ToKeywordToken, UntilKeywordToken } from '../../Token/Token';
+import { ColonEqualsSignToken, EachInKeywordToken, EndKeywordToken, EqualsSignToken, ForKeywordToken, LocalKeywordToken, NextKeywordToken, StepKeywordToken, ToKeywordToken, UntilKeywordToken } from '../../Token/Token';
 import { MissableExpression } from '../Expression/Expression';
-import { Node } from '../Node';
+import { MissableIdentifier } from '../Identifier';
 import { NodeKind } from '../NodeKind';
-import { AssignmentStatement } from './AssignmentStatement';
-import { DataDeclarationSequenceStatement } from './DataDeclarationSequenceStatement';
+import { TypeAnnotation } from '../TypeAnnotation';
+import { AssignmentOperatorToken } from './AssignmentStatement';
 import { Statement, Statements } from './Statement';
 
-export const ForLoopChildNames: ReadonlyArray<keyof ForLoop> = [
+export const NumericForLoopChildNames: ReadonlyArray<keyof NumericForLoop> = [
     'forKeyword',
-    'header',
+    'localKeyword',
+    'indexVariable',
+    'typeAnnotation',
+    'operator',
+    'firstValueExpression',
+    'toOrUntilKeyword',
+    'lastValueExpression',
+    'stepKeyword',
+    'stepValueExpression',
     'statements',
     'endKeyword',
     'endForKeyword',
     'terminator',
 ];
 
-export class ForLoop extends Statement {
-    readonly kind = NodeKind.ForLoop;
+export class NumericForLoop extends Statement {
+    readonly kind = NodeKind.NumericForLoop;
 
     forKeyword: ForKeywordToken = undefined!;
-    header: NumericForLoopHeader | DataDeclarationSequenceStatement | AssignmentStatement | MissingToken = undefined!;
+    localKeyword?: LocalKeywordToken = undefined;
+    indexVariable: MissableIdentifier = undefined!;
+    typeAnnotation?: TypeAnnotation = undefined;
+    operator: ForLoopOperatorToken = undefined!;
+    firstValueExpression: MissableExpression = undefined!;
+    toOrUntilKeyword: MissableToken<ToKeywordToken | UntilKeywordToken> = undefined!;
+    lastValueExpression: MissableExpression = undefined!;
+    stepKeyword?: StepKeywordToken = undefined;
+    stepValueExpression?: MissableExpression = undefined;
     statements: (Statements | SkippedToken)[] = undefined!;
     endKeyword: MissableToken<NextKeywordToken | EndKeywordToken> = undefined!;
     endForKeyword?: ForKeywordToken = undefined;
 }
 
-export const NumericForLoopHeaderChildNames: ReadonlyArray<keyof NumericForLoopHeader> = [
-    'loopVariableStatement',
-    'toOrUntilKeyword',
-    'lastValueExpression',
-    'stepKeyword',
-    'stepValueExpression',
+export const ForEachInLoopChildNames: ReadonlyArray<keyof ForEachInLoop> = [
+    'forKeyword',
+    'localKeyword',
+    'indexVariable',
+    'typeAnnotation',
+    'operator',
+    'eachInKeyword',
+    'collectionExpression',
+    'statements',
+    'endKeyword',
+    'endForKeyword',
+    'terminator',
 ];
 
-export class NumericForLoopHeader extends Node {
-    readonly kind = NodeKind.NumericForLoopHeader;
+export class ForEachInLoop extends Statement {
+    readonly kind = NodeKind.ForEachInLoop;
 
-    loopVariableStatement: DataDeclarationSequenceStatement | AssignmentStatement = undefined!;
-    toOrUntilKeyword: MissableToken<ToKeywordToken | UntilKeywordToken> = undefined!;
-    lastValueExpression: MissableExpression = undefined!;
-    stepKeyword?: StepKeywordToken = undefined;
-    stepValueExpression?: MissableExpression = undefined;
+    forKeyword: ForKeywordToken = undefined!;
+    localKeyword?: LocalKeywordToken = undefined;
+    indexVariable: MissableIdentifier = undefined!;
+    typeAnnotation?: TypeAnnotation = undefined;
+    operator: ForLoopOperatorToken = undefined!;
+    eachInKeyword: EachInKeywordToken = undefined!;
+    collectionExpression: MissableExpression = undefined!;
+    statements: (Statements | SkippedToken)[] = undefined!;
+    endKeyword: MissableToken<NextKeywordToken | EndKeywordToken> = undefined!;
+    endForKeyword?: ForKeywordToken = undefined;
 }
+
+export type ForLoopOperatorToken =
+    | MissableToken<EqualsSignToken | ColonEqualsSignToken>
+    | MissableToken<AssignmentOperatorToken>
+    ;

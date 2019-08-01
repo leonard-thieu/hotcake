@@ -25,7 +25,7 @@ export type ExternDataDeclarationKeywordToken =
 
 export const ExternDataDeclarationChildNames: ReadonlyArray<keyof ExternDataDeclaration> = [
     'identifier',
-    'type',
+    'typeAnnotation',
     'equalsSign',
     'nativeSymbol',
 ];
@@ -34,5 +34,5 @@ export class ExternDataDeclaration extends ExternDeclaration {
     readonly kind = NodeKind.ExternDataDeclaration;
 
     identifier: Identifier = undefined!;
-    type?: TypeAnnotation = undefined;
+    typeAnnotation?: TypeAnnotation = undefined;
 }

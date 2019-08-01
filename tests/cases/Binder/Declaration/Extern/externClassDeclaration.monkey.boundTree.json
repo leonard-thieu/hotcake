@@ -4,5 +4,68 @@
     "locals": [
         "Driver"
     ],
-    "members": {}
+    "members": [
+        {
+            "kind": "ExternClassDeclaration",
+            "identifier": "Driver",
+            "locals": [
+                "Method1",
+                "Method2",
+                "New"
+            ],
+            "type": "Driver",
+            "superType": "Object",
+            "nativeSymbol": {
+                "kind": "StringLiteralExpression",
+                "type": "String"
+            },
+            "members": [
+                {
+                    "kind": "ExternClassMethodGroupDeclaration",
+                    "identifier": "Method1",
+                    "type": "Method1",
+                    "overloads": [
+                        {
+                            "kind": "ExternClassMethodDeclaration",
+                            "identifier": "Method1",
+                            "locals": [],
+                            "type": "Method1: Int()",
+                            "returnType": "Int",
+                            "parameters": []
+                        }
+                    ]
+                },
+                {
+                    "kind": "ExternClassMethodGroupDeclaration",
+                    "identifier": "Method2",
+                    "type": "Method2",
+                    "overloads": [
+                        {
+                            "kind": "ExternClassMethodDeclaration",
+                            "identifier": "Method2",
+                            "locals": [],
+                            "type": "Method2: Int()",
+                            "returnType": "Int",
+                            "parameters": []
+                        }
+                    ]
+                },
+                {
+                    "kind": "ExternClassMethodGroupDeclaration",
+                    "identifier": "New",
+                    "type": "New Driver",
+                    "overloads": [
+                        {
+                            "kind": "ExternClassMethodDeclaration",
+                            "identifier": "New",
+                            "locals": [],
+                            "type": "New Driver()",
+                            "returnType": "Driver",
+                            "parameters": []
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
 }

@@ -1,4 +1,3 @@
-import { Types } from '../../Type/Types';
 import { BoundClassDeclaration } from './BoundClassDeclaration';
 import { BoundClassMethodDeclaration } from './BoundClassMethodDeclaration';
 import { BoundDataDeclaration } from './BoundDataDeclaration';
@@ -11,8 +10,8 @@ import { BoundInterfaceMethodDeclaration } from './BoundInterfaceMethodDeclarati
 import { BoundIntrinsicTypeDeclaration } from './BoundIntrinsicTypeDeclaration';
 import { BoundModuleDeclaration } from './BoundModuleDeclaration';
 import { BoundTypeParameter } from './BoundTypeParameter';
-import { BoundExternDeclarations } from './Extern/BoundExternDeclarations';
 import { BoundExternClassDeclaration } from './Extern/BoundExternClassDeclaration';
+import { BoundExternDeclarations } from './Extern/BoundExternDeclarations';
 
 export type BoundDeclarations =
     | BoundDirectory
@@ -31,8 +30,6 @@ export type BoundDeclarations =
     | BoundClassMethodGroupDeclaration
     | BoundTypeParameter
     ;
-
-export type BoundTypeDeclaration = Extract<BoundDeclarations, { type: Types; }>;
 
 export type BoundTypeReferenceDeclaration =
     | BoundIntrinsicTypeDeclaration

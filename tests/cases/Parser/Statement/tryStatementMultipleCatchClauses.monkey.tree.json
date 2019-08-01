@@ -158,69 +158,55 @@
                     }
                 },
                 {
-                    "kind": "ForLoop",
+                    "kind": "NumericForLoop",
                     "forKeyword": {
                         "kind": "ForKeyword",
                         "fullStart": 89,
                         "start": 93,
                         "length": 7
                     },
-                    "header": {
-                        "kind": "NumericForLoopHeader",
-                        "loopVariableStatement": {
-                            "kind": "DataDeclarationSequenceStatement",
-                            "dataDeclarationSequence": {
-                                "kind": "DataDeclarationSequence",
-                                "dataDeclarationKeyword": {
-                                    "kind": "LocalKeyword",
-                                    "fullStart": 96,
-                                    "start": 97,
-                                    "length": 6
-                                },
-                                "children": [
-                                    {
-                                        "kind": "DataDeclaration",
-                                        "identifier": {
-                                            "kind": "Identifier",
-                                            "fullStart": 102,
-                                            "start": 103,
-                                            "length": 2
-                                        },
-                                        "equalsSign": {
-                                            "kind": "ColonEqualsSign",
-                                            "fullStart": 104,
-                                            "start": 104,
-                                            "length": 2
-                                        },
-                                        "expression": {
-                                            "kind": "IntegerLiteralExpression",
-                                            "newlines": [],
-                                            "value": {
-                                                "kind": "IntegerLiteral",
-                                                "fullStart": 106,
-                                                "start": 106,
-                                                "length": 1
-                                            }
-                                        }
-                                    }
-                                ]
-                            }
-                        },
-                        "toOrUntilKeyword": {
-                            "kind": "ToKeyword",
-                            "fullStart": 107,
-                            "start": 108,
+                    "localKeyword": {
+                        "kind": "LocalKeyword",
+                        "fullStart": 96,
+                        "start": 97,
+                        "length": 6
+                    },
+                    "indexVariable": {
+                        "kind": "Identifier",
+                        "fullStart": 102,
+                        "start": 103,
+                        "length": 2
+                    },
+                    "operator": {
+                        "kind": "ColonEqualsSign",
+                        "fullStart": 104,
+                        "start": 104,
+                        "length": 2
+                    },
+                    "firstValueExpression": {
+                        "kind": "IntegerLiteralExpression",
+                        "newlines": [],
+                        "value": {
+                            "kind": "IntegerLiteral",
+                            "fullStart": 106,
+                            "start": 106,
+                            "length": 1
+                        }
+                    },
+                    "toOrUntilKeyword": {
+                        "kind": "ToKeyword",
+                        "fullStart": 107,
+                        "start": 108,
+                        "length": 3
+                    },
+                    "lastValueExpression": {
+                        "kind": "IntegerLiteralExpression",
+                        "newlines": [],
+                        "value": {
+                            "kind": "IntegerLiteral",
+                            "fullStart": 110,
+                            "start": 111,
                             "length": 3
-                        },
-                        "lastValueExpression": {
-                            "kind": "IntegerLiteralExpression",
-                            "newlines": [],
-                            "value": {
-                                "kind": "IntegerLiteral",
-                                "fullStart": 110,
-                                "start": 111,
-                                "length": 3
-                            }
                         }
                     },
                     "statements": [
@@ -408,7 +394,7 @@
                                             "start": 199,
                                             "length": 3
                                         },
-                                        "type": {
+                                        "typeAnnotation": {
                                             "kind": "LonghandTypeAnnotation",
                                             "colon": {
                                                 "kind": "Colon",
@@ -504,7 +490,7 @@
                                             "start": 257,
                                             "length": 3
                                         },
-                                        "type": {
+                                        "typeAnnotation": {
                                             "kind": "LonghandTypeAnnotation",
                                             "colon": {
                                                 "kind": "Colon",

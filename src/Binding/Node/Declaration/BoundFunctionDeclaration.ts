@@ -4,7 +4,7 @@ import { BoundNode } from '../BoundNode';
 import { BoundNodeKind } from '../BoundNodeKind';
 import { BoundStatements } from '../Statement/BoundStatements';
 import { BoundDataDeclaration } from './BoundDataDeclaration';
-import { BoundTypeDeclaration } from './BoundDeclarations';
+import { BoundTypeReferenceDeclaration } from './BoundDeclarations';
 
 export class BoundFunctionDeclaration extends BoundNode {
     readonly kind = BoundNodeKind.FunctionDeclaration;
@@ -13,7 +13,7 @@ export class BoundFunctionDeclaration extends BoundNode {
     locals: BoundSymbolTable = undefined!;
     type: FunctionType = undefined!;
 
-    returnType: BoundTypeDeclaration = undefined!;
+    returnType: BoundTypeReferenceDeclaration = undefined!;
     parameters: BoundDataDeclaration[] = undefined!;
     statements?: BoundStatements[] = undefined;
 }

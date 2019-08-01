@@ -4,7 +4,7 @@ import { assertNever } from './assertNever';
 import { Binder } from './Binding/Binder';
 import { BoundSymbol, BoundSymbolTable } from './Binding/BoundSymbol';
 import { BoundNodeKind } from './Binding/Node/BoundNodeKind';
-import { BoundTypeDeclaration } from './Binding/Node/Declaration/BoundDeclarations';
+import { BoundTypeReferenceDeclaration } from './Binding/Node/Declaration/BoundDeclarations';
 import { BoundDirectory } from './Binding/Node/Declaration/BoundDirectory';
 import { BoundIntrinsicTypeDeclaration } from './Binding/Node/Declaration/BoundIntrinsicTypeDeclaration';
 import { BoundModuleDeclaration } from './Binding/Node/Declaration/BoundModuleDeclaration';
@@ -71,7 +71,7 @@ export class Project {
     readonly throwableTypeDeclaration: BoundExternClassDeclaration;
 
     private readonly moduleCache = new Map<string, BoundModuleDeclaration>();
-    readonly arrayTypeCache = new Map<BoundTypeDeclaration, BoundExternClassDeclaration>();
+    readonly arrayTypeCache = new Map<BoundTypeReferenceDeclaration, BoundExternClassDeclaration>();
 
     cacheModule(boundModuleDeclaration: BoundModuleDeclaration): void {
         const { directory, identifier } = boundModuleDeclaration;

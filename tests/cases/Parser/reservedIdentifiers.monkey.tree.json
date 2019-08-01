@@ -3614,7 +3614,7 @@
                                     "start": 1785,
                                     "length": 11
                                 },
-                                "type": {
+                                "typeAnnotation": {
                                     "kind": "LonghandTypeAnnotation",
                                     "colon": {
                                         "kind": "Colon",

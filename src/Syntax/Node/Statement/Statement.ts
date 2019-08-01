@@ -6,7 +6,7 @@ import { DataDeclarationSequenceStatement } from './DataDeclarationSequenceState
 import { EmptyStatement } from './EmptyStatement';
 import { ExitStatement } from './ExitStatement';
 import { ExpressionStatement } from './ExpressionStatement';
-import { ForLoop } from './ForLoop';
+import { ForEachInLoop, NumericForLoop } from './ForLoop';
 import { IfStatement } from './IfStatement';
 import { RepeatLoop } from './RepeatLoop';
 import { ReturnStatement } from './ReturnStatement';
@@ -26,7 +26,8 @@ export type Statements =
     | SelectStatement
     | WhileLoop
     | RepeatLoop
-    | ForLoop
+    | NumericForLoop
+    | ForEachInLoop
     | ContinueStatement
     | ExitStatement
     | ThrowStatement

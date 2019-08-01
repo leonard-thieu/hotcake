@@ -4,7 +4,7 @@ import { BoundNode } from '../../BoundNode';
 import { BoundNodeKind } from '../../BoundNodeKind';
 import { BoundStringLiteralExpression } from '../../Expression/BoundStringLiteralExpression';
 import { BoundDataDeclaration } from '../BoundDataDeclaration';
-import { BoundTypeDeclaration } from '../BoundDeclarations';
+import { BoundTypeReferenceDeclaration } from '../BoundDeclarations';
 
 export class BoundExternClassMethodDeclaration extends BoundNode {
     readonly kind = BoundNodeKind.ExternClassMethodDeclaration;
@@ -13,7 +13,7 @@ export class BoundExternClassMethodDeclaration extends BoundNode {
     locals: BoundSymbolTable = undefined!;
     type: MethodType = undefined!;
 
-    returnType: BoundTypeDeclaration = undefined!;
+    returnType: BoundTypeReferenceDeclaration = undefined!;
     parameters: BoundDataDeclaration[] = undefined!;
 
     nativeSymbol?: BoundStringLiteralExpression = undefined;

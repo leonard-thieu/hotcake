@@ -7,5 +7,116 @@
         "Entity",
         "Actor"
     ],
-    "members": {}
+    "members": [
+        {
+            "kind": "InterfaceDeclaration",
+            "identifier": "Moveable",
+            "locals": [
+                "Move"
+            ],
+            "type": "Moveable",
+            "members": [
+                {
+                    "kind": "InterfaceMethodGroupDeclaration",
+                    "identifier": "Move",
+                    "type": "Move",
+                    "overloads": [
+                        {
+                            "kind": "InterfaceMethodDeclaration",
+                            "identifier": "Move",
+                            "locals": [],
+                            "type": "Move: Int()",
+                            "returnType": "Int",
+                            "parameters": []
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "kind": "InterfaceDeclaration",
+            "identifier": "Drawable",
+            "locals": [
+                "Draw"
+            ],
+            "type": "Drawable",
+            "members": [
+                {
+                    "kind": "InterfaceMethodGroupDeclaration",
+                    "identifier": "Draw",
+                    "type": "Draw",
+                    "overloads": [
+                        {
+                            "kind": "InterfaceMethodDeclaration",
+                            "identifier": "Draw",
+                            "locals": [],
+                            "type": "Draw: Int()",
+                            "returnType": "Int",
+                            "parameters": []
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "kind": "ClassDeclaration",
+            "locals": [
+                "New"
+            ],
+            "identifier": "Entity",
+            "type": "Entity",
+            "superType": "Object",
+            "implementedTypes": [
+                "Moveable"
+            ],
+            "members": [
+                {
+                    "kind": "ClassMethodGroupDeclaration",
+                    "identifier": "New",
+                    "type": "New Entity",
+                    "overloads": [
+                        {
+                            "kind": "ClassMethodDeclaration",
+                            "identifier": "New",
+                            "locals": [],
+                            "type": "New Entity()",
+                            "returnType": "Entity",
+                            "parameters": [],
+                            "statements": []
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "kind": "ClassDeclaration",
+            "locals": [
+                "New"
+            ],
+            "identifier": "Actor",
+            "type": "Actor",
+            "superType": "Entity",
+            "implementedTypes": [
+                "Drawable"
+            ],
+            "members": [
+                {
+                    "kind": "ClassMethodGroupDeclaration",
+                    "identifier": "New",
+                    "type": "New Actor",
+                    "overloads": [
+                        {
+                            "kind": "ClassMethodDeclaration",
+                            "identifier": "New",
+                            "locals": [],
+                            "type": "New Actor()",
+                            "returnType": "Actor",
+                            "parameters": [],
+                            "statements": []
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
 }

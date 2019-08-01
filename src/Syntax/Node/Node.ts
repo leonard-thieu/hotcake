@@ -8,7 +8,6 @@ import { Expressions } from './Expression/Expression';
 import { EscapedIdentifier } from './Identifier';
 import { ModulePath } from './ModulePath';
 import { NodeKind } from './NodeKind';
-import { NumericForLoopHeader } from './Statement/ForLoop';
 import { ElseClause, ElseIfClause } from './Statement/IfStatement';
 import { CaseClause, DefaultClause } from './Statement/SelectStatement';
 import { Statements } from './Statement/Statement';
@@ -30,7 +29,6 @@ export type Nodes =
     | ConfigurationTag
     | ElseIfClause | ElseClause
     | CaseClause | DefaultClause
-    | NumericForLoopHeader
     | CatchClause
     | ArrayTypeAnnotation
     | TypeAnnotation

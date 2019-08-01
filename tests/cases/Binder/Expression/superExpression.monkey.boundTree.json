@@ -5,5 +5,86 @@
         "MyBaseClass",
         "MyClass"
     ],
-    "members": {}
+    "members": [
+        {
+            "kind": "ClassDeclaration",
+            "locals": [
+                "New"
+            ],
+            "identifier": "MyBaseClass",
+            "type": "MyBaseClass",
+            "superType": "Object",
+            "members": [
+                {
+                    "kind": "ClassMethodGroupDeclaration",
+                    "identifier": "New",
+                    "type": "New MyBaseClass",
+                    "overloads": [
+                        {
+                            "kind": "ClassMethodDeclaration",
+                            "identifier": "New",
+                            "locals": [],
+                            "type": "New MyBaseClass()",
+                            "returnType": "MyBaseClass",
+                            "parameters": [],
+                            "statements": []
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "kind": "ClassDeclaration",
+            "locals": [
+                "GetBaseClass",
+                "New"
+            ],
+            "identifier": "MyClass",
+            "type": "MyClass",
+            "superType": "MyBaseClass",
+            "members": [
+                {
+                    "kind": "ClassMethodGroupDeclaration",
+                    "identifier": "GetBaseClass",
+                    "type": "GetBaseClass",
+                    "overloads": [
+                        {
+                            "kind": "ClassMethodDeclaration",
+                            "identifier": "GetBaseClass",
+                            "locals": [],
+                            "type": "GetBaseClass: MyBaseClass()",
+                            "returnType": "MyBaseClass",
+                            "parameters": [],
+                            "statements": [
+                                {
+                                    "kind": "ReturnStatement",
+                                    "type": "MyBaseClass",
+                                    "expression": {
+                                        "kind": "SuperExpression",
+                                        "type": "MyBaseClass"
+                                    }
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "kind": "ClassMethodGroupDeclaration",
+                    "identifier": "New",
+                    "type": "New MyClass",
+                    "overloads": [
+                        {
+                            "kind": "ClassMethodDeclaration",
+                            "identifier": "New",
+                            "locals": [],
+                            "type": "New MyClass()",
+                            "returnType": "MyClass",
+                            "parameters": [],
+                            "statements": []
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
 }

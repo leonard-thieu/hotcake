@@ -131,7 +131,7 @@
                                     "start": 67,
                                     "length": 3
                                 },
-                                "type": {
+                                "typeAnnotation": {
                                     "kind": "LonghandTypeAnnotation",
                                     "colon": {
                                         "kind": "Colon",

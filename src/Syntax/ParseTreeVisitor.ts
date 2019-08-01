@@ -1,7 +1,68 @@
 import { assertNever } from '../assertNever';
+import { ArrayTypeAnnotationChildNames } from './Node/ArrayTypeAnnotation';
+import { CommaSeparatorChildNames } from './Node/CommaSeparator';
+import { ConfigurationTagChildNames } from './Node/ConfigurationTag';
+import { AccessibilityDirectiveChildNames } from './Node/Declaration/AccessibilityDirective';
+import { AliasDirectiveChildNames, AliasDirectiveSequenceChildNames } from './Node/Declaration/AliasDirectiveSequence';
+import { ClassDeclarationChildNames } from './Node/Declaration/ClassDeclaration';
+import { ClassMethodDeclarationChildNames } from './Node/Declaration/ClassMethodDeclaration';
+import { DataDeclarationChildNames, DataDeclarationSequenceChildNames } from './Node/Declaration/DataDeclarationSequence';
+import { ExternClassDeclarationChildNames } from './Node/Declaration/ExternDeclaration/ExternClassDeclaration';
+import { ExternClassMethodDeclarationChildNames } from './Node/Declaration/ExternDeclaration/ExternClassMethodDeclaration';
+import { ExternDataDeclarationChildNames, ExternDataDeclarationSequenceChildNames } from './Node/Declaration/ExternDeclaration/ExternDataDeclarationSequence';
+import { ExternFunctionDeclarationChildNames } from './Node/Declaration/ExternDeclaration/ExternFunctionDeclaration';
+import { FriendDirectiveChildNames } from './Node/Declaration/FriendDirective';
+import { FunctionDeclarationChildNames } from './Node/Declaration/FunctionDeclaration';
+import { ImportStatementChildNames } from './Node/Declaration/ImportStatement';
+import { InterfaceDeclarationChildNames } from './Node/Declaration/InterfaceDeclaration';
+import { InterfaceMethodDeclarationChildNames } from './Node/Declaration/InterfaceMethodDeclaration';
+import { ModuleDeclarationChildNames } from './Node/Declaration/ModuleDeclaration';
+import { PreprocessorModuleDeclarationChildNames } from './Node/Declaration/PreprocessorModuleDeclaration';
+import { StrictDirectiveChildNames } from './Node/Declaration/StrictDirective';
+import { TypeParameterChildNames } from './Node/Declaration/TypeParameter';
+import { AssignmentDirectiveChildNames } from './Node/Directive/AssignmentDirective';
+import { ErrorDirectiveChildNames } from './Node/Directive/ErrorDirective';
+import { ElseDirectiveChildNames, ElseIfDirectiveChildNames, IfDirectiveChildNames } from './Node/Directive/IfDirective';
+import { PrintDirectiveChildNames } from './Node/Directive/PrintDirective';
+import { RemDirectiveChildNames } from './Node/Directive/RemDirective';
+import { ArrayLiteralExpressionChildNames } from './Node/Expression/ArrayLiteralExpression';
+import { BinaryExpressionChildNames } from './Node/Expression/BinaryExpression';
+import { BooleanLiteralExpressionChildNames } from './Node/Expression/BooleanLiteralExpression';
+import { FloatLiteralExpressionChildNames } from './Node/Expression/FloatLiteralExpression';
+import { GlobalScopeExpressionChildNames } from './Node/Expression/GlobalScopeExpression';
+import { GroupingExpressionChildNames } from './Node/Expression/GroupingExpression';
+import { IdentifierExpressionChildNames } from './Node/Expression/IdentifierExpression';
+import { IndexExpressionChildNames } from './Node/Expression/IndexExpression';
+import { IntegerLiteralExpressionChildNames } from './Node/Expression/IntegerLiteralExpression';
+import { InvokeExpressionChildNames } from './Node/Expression/InvokeExpression';
+import { NewExpressionChildNames } from './Node/Expression/NewExpression';
+import { NullExpressionChildNames } from './Node/Expression/NullExpression';
+import { ScopeMemberAccessExpressionChildNames } from './Node/Expression/ScopeMemberAccessExpression';
+import { SelfExpressionChildNames } from './Node/Expression/SelfExpression';
+import { SliceExpressionChildNames } from './Node/Expression/SliceExpression';
+import { StringLiteralExpressionChildNames } from './Node/Expression/StringLiteralExpression';
+import { SuperExpressionChildNames } from './Node/Expression/SuperExpression';
+import { UnaryExpressionChildNames } from './Node/Expression/UnaryExpression';
+import { EscapedIdentifierChildNames } from './Node/Identifier';
+import { ModulePathChildNames } from './Node/ModulePath';
 import { Nodes } from './Node/Node';
 import { NodeKind } from './Node/NodeKind';
-import { NodeKindToChildNamesMap } from './Node/NodeKindToChildNamesMap';
+import { AssignmentStatementChildNames } from './Node/Statement/AssignmentStatement';
+import { ContinueStatementChildNames } from './Node/Statement/ContinueStatement';
+import { DataDeclarationSequenceStatementChildNames } from './Node/Statement/DataDeclarationSequenceStatement';
+import { EmptyStatementChildNames } from './Node/Statement/EmptyStatement';
+import { ExitStatementChildNames } from './Node/Statement/ExitStatement';
+import { ExpressionStatementChildNames } from './Node/Statement/ExpressionStatement';
+import { ForEachInLoopChildNames, NumericForLoopChildNames } from './Node/Statement/ForLoop';
+import { ElseClauseChildNames, ElseIfClauseChildNames, IfStatementChildNames } from './Node/Statement/IfStatement';
+import { RepeatLoopChildNames } from './Node/Statement/RepeatLoop';
+import { ReturnStatementChildNames } from './Node/Statement/ReturnStatement';
+import { CaseClauseChildNames, DefaultClauseChildNames, SelectStatementChildNames } from './Node/Statement/SelectStatement';
+import { ThrowStatementChildNames } from './Node/Statement/ThrowStatement';
+import { CatchClauseChildNames, TryStatementChildNames } from './Node/Statement/TryStatement';
+import { WhileLoopChildNames } from './Node/Statement/WhileLoop';
+import { LonghandTypeAnnotationChildNames, ShorthandTypeAnnotationChildNames } from './Node/TypeAnnotation';
+import { TypeReferenceChildNames } from './Node/TypeReference';
 import { ErrorableToken } from './Token/Token';
 import { TokenKind } from './Token/TokenKind';
 
@@ -46,7 +107,7 @@ export namespace ParseTreeVisitor {
     }
 
     export function* getChildNodes(node: Nodes): IterableIterator<Nodes> {
-        const childNames = NodeKindToChildNamesMap[node.kind];
+        const childNames = getChildNames(node.kind);
         for (const childName of childNames) {
             const child = (node as any)[childName];
             if (!child) {
@@ -109,7 +170,7 @@ export namespace ParseTreeVisitor {
     }
 
     export function* getChildTokens(node: Nodes): IterableIterator<ErrorableToken> {
-        const childNames = NodeKindToChildNamesMap[node.kind];
+        const childNames = getChildNames(node.kind);
         for (const childName of childNames) {
             const child = (node as any)[childName];
             if (!child) {
@@ -132,7 +193,7 @@ export namespace ParseTreeVisitor {
     }
 
     export function* getDescendentTokens(node: Nodes): IterableIterator<ErrorableToken> {
-        const childNames = NodeKindToChildNamesMap[node.kind];
+        const childNames = getChildNames(node.kind);
         for (const childName of childNames) {
             const child = (node as any)[childName];
             if (!child) {
@@ -159,6 +220,96 @@ export namespace ParseTreeVisitor {
     }
 
     // #endregion
+
+    function getChildNames(kind: NodeKind) {
+        switch (kind) {
+            case NodeKind.PreprocessorModuleDeclaration: { return PreprocessorModuleDeclarationChildNames; }
+
+            case NodeKind.IfDirective: { return IfDirectiveChildNames; }
+            case NodeKind.ElseIfDirective: { return ElseIfDirectiveChildNames; }
+            case NodeKind.ElseDirective: { return ElseDirectiveChildNames; }
+            case NodeKind.RemDirective: { return RemDirectiveChildNames; }
+            case NodeKind.PrintDirective: { return PrintDirectiveChildNames; }
+            case NodeKind.ErrorDirective: { return ErrorDirectiveChildNames; }
+            case NodeKind.AssignmentDirective: { return AssignmentDirectiveChildNames; }
+
+            case NodeKind.ModuleDeclaration: { return ModuleDeclarationChildNames; }
+
+            case NodeKind.ExternDataDeclarationSequence: { return ExternDataDeclarationSequenceChildNames; }
+            case NodeKind.ExternDataDeclaration: { return ExternDataDeclarationChildNames; }
+            case NodeKind.ExternFunctionDeclaration: { return ExternFunctionDeclarationChildNames; }
+            case NodeKind.ExternClassDeclaration: { return ExternClassDeclarationChildNames; }
+            case NodeKind.ExternClassMethodDeclaration: { return ExternClassMethodDeclarationChildNames; }
+
+            case NodeKind.StrictDirective: { return StrictDirectiveChildNames; }
+            case NodeKind.ImportStatement: { return ImportStatementChildNames; }
+            case NodeKind.FriendDirective: { return FriendDirectiveChildNames; }
+            case NodeKind.AccessibilityDirective: { return AccessibilityDirectiveChildNames; }
+            case NodeKind.AliasDirectiveSequence: { return AliasDirectiveSequenceChildNames; }
+            case NodeKind.AliasDirective: { return AliasDirectiveChildNames; }
+            case NodeKind.DataDeclarationSequence: { return DataDeclarationSequenceChildNames; }
+            case NodeKind.DataDeclaration: { return DataDeclarationChildNames; }
+            case NodeKind.FunctionDeclaration: { return FunctionDeclarationChildNames; }
+            case NodeKind.InterfaceDeclaration: { return InterfaceDeclarationChildNames; }
+            case NodeKind.InterfaceMethodDeclaration: { return InterfaceMethodDeclarationChildNames; }
+            case NodeKind.ClassDeclaration: { return ClassDeclarationChildNames; }
+            case NodeKind.ClassMethodDeclaration: { return ClassMethodDeclarationChildNames; }
+
+            case NodeKind.DataDeclarationSequenceStatement: { return DataDeclarationSequenceStatementChildNames; }
+            case NodeKind.ReturnStatement: { return ReturnStatementChildNames; }
+            case NodeKind.IfStatement: { return IfStatementChildNames; }
+            case NodeKind.ElseIfClause: { return ElseIfClauseChildNames; }
+            case NodeKind.ElseClause: { return ElseClauseChildNames; }
+            case NodeKind.SelectStatement: { return SelectStatementChildNames; }
+            case NodeKind.CaseClause: { return CaseClauseChildNames; }
+            case NodeKind.DefaultClause: { return DefaultClauseChildNames; }
+            case NodeKind.WhileLoop: { return WhileLoopChildNames; }
+            case NodeKind.RepeatLoop: { return RepeatLoopChildNames; }
+            case NodeKind.NumericForLoop: { return NumericForLoopChildNames; }
+            case NodeKind.ForEachInLoop: { return ForEachInLoopChildNames; }
+            case NodeKind.ContinueStatement: { return ContinueStatementChildNames; }
+            case NodeKind.ExitStatement: { return ExitStatementChildNames; }
+            case NodeKind.ThrowStatement: { return ThrowStatementChildNames; }
+            case NodeKind.TryStatement: { return TryStatementChildNames; }
+            case NodeKind.CatchClause: { return CatchClauseChildNames; }
+            case NodeKind.AssignmentStatement: { return AssignmentStatementChildNames; }
+            case NodeKind.ExpressionStatement: { return ExpressionStatementChildNames; }
+            case NodeKind.EmptyStatement: { return EmptyStatementChildNames; }
+
+            case NodeKind.NewExpression: { return NewExpressionChildNames; }
+            case NodeKind.NullExpression: { return NullExpressionChildNames; }
+            case NodeKind.BooleanLiteralExpression: { return BooleanLiteralExpressionChildNames; }
+            case NodeKind.SelfExpression: { return SelfExpressionChildNames; }
+            case NodeKind.SuperExpression: { return SuperExpressionChildNames; }
+            case NodeKind.IntegerLiteralExpression: { return IntegerLiteralExpressionChildNames; }
+            case NodeKind.FloatLiteralExpression: { return FloatLiteralExpressionChildNames; }
+            case NodeKind.StringLiteralExpression: { return StringLiteralExpressionChildNames; }
+            case NodeKind.ConfigurationTag: { return ConfigurationTagChildNames; }
+            case NodeKind.ArrayLiteralExpression: { return ArrayLiteralExpressionChildNames; }
+            case NodeKind.IdentifierExpression: { return IdentifierExpressionChildNames; }
+            case NodeKind.ScopeMemberAccessExpression: { return ScopeMemberAccessExpressionChildNames; }
+            case NodeKind.InvokeExpression: { return InvokeExpressionChildNames; }
+            case NodeKind.IndexExpression: { return IndexExpressionChildNames; }
+            case NodeKind.SliceExpression: { return SliceExpressionChildNames; }
+            case NodeKind.GroupingExpression: { return GroupingExpressionChildNames; }
+            case NodeKind.UnaryExpression: { return UnaryExpressionChildNames; }
+            case NodeKind.BinaryExpression: { return BinaryExpressionChildNames; }
+            case NodeKind.GlobalScopeExpression: { return GlobalScopeExpressionChildNames; }
+
+            case NodeKind.ModulePath: { return ModulePathChildNames; }
+            case NodeKind.ArrayTypeAnnotation: { return ArrayTypeAnnotationChildNames; }
+            case NodeKind.ShorthandTypeAnnotation: { return ShorthandTypeAnnotationChildNames; }
+            case NodeKind.LonghandTypeAnnotation: { return LonghandTypeAnnotationChildNames; }
+            case NodeKind.TypeReference: { return TypeReferenceChildNames; }
+            case NodeKind.TypeParameter: { return TypeParameterChildNames; }
+            case NodeKind.EscapedIdentifier: { return EscapedIdentifierChildNames; }
+            case NodeKind.CommaSeparator: { return CommaSeparatorChildNames; }
+
+            default: {
+                return assertNever(kind);
+            }
+        }
+    }
 
     function isNode(nodeOrToken: Nodes | ErrorableToken): nodeOrToken is Nodes {
         switch (nodeOrToken.kind) {
@@ -199,8 +350,8 @@ export namespace ParseTreeVisitor {
             case NodeKind.DefaultClause:
             case NodeKind.WhileLoop:
             case NodeKind.RepeatLoop:
-            case NodeKind.ForLoop:
-            case NodeKind.NumericForLoopHeader:
+            case NodeKind.NumericForLoop:
+            case NodeKind.ForEachInLoop:
             case NodeKind.ContinueStatement:
             case NodeKind.ExitStatement:
             case NodeKind.ThrowStatement:

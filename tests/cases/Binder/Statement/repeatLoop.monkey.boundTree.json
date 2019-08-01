@@ -4,5 +4,62 @@
     "locals": [
         "Main"
     ],
-    "members": {}
+    "members": [
+        {
+            "kind": "FunctionGroupDeclaration",
+            "identifier": "Main",
+            "type": "Main",
+            "overloads": [
+                {
+                    "kind": "FunctionDeclaration",
+                    "identifier": "Main",
+                    "locals": [
+                        "i"
+                    ],
+                    "type": "Main: Int()",
+                    "returnType": "Int",
+                    "parameters": [],
+                    "statements": [
+                        {
+                            "kind": "DataDeclarationStatement",
+                            "declaration": {
+                                "kind": "DataDeclaration",
+                                "declarationKind": "LocalKeyword",
+                                "identifier": "i",
+                                "expression": {
+                                    "kind": "IntegerLiteralExpression",
+                                    "type": "Int"
+                                },
+                                "type": "Int"
+                            }
+                        },
+                        {
+                            "kind": "RepeatLoop",
+                            "locals": [],
+                            "expression": {
+                                "kind": "BinaryExpression",
+                                "type": "Bool",
+                                "leftOperand": {
+                                    "kind": "IdentifierExpression",
+                                    "type": "Int",
+                                    "identifier": "i"
+                                },
+                                "operator": "GreaterThanSign",
+                                "rightOperand": {
+                                    "kind": "IntegerLiteralExpression",
+                                    "type": "Int"
+                                }
+                            },
+                            "statements": []
+                        },
+                        {
+                            "kind": "RepeatLoop",
+                            "locals": [],
+                            "statements": []
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
 }

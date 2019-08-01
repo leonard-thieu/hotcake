@@ -60,9 +60,9 @@ export class ObjectType extends Type {
             if (this.declaration.typeParameters) {
                 str += '<';
 
-                const argNames: string[] = [];
+                const argNames: Types[] = [];
                 for (const arg of this.declaration.typeParameters) {
-                    argNames.push(arg.identifier.name);
+                    argNames.push(arg.type);
                 }
                 str += argNames.join(',');
 

@@ -44,45 +44,39 @@
                     }
                 },
                 {
-                    "kind": "ForLoop",
+                    "kind": "ForEachInLoop",
                     "forKeyword": {
                         "kind": "ForKeyword",
                         "fullStart": 14,
                         "start": 18,
                         "length": 7
                     },
-                    "header": {
-                        "kind": "AssignmentStatement",
-                        "leftOperand": {
-                            "kind": "IdentifierExpression",
-                            "identifier": {
-                                "kind": "Identifier",
-                                "fullStart": 21,
-                                "start": 22,
-                                "length": 2
-                            }
-                        },
-                        "operator": {
-                            "kind": "EqualsSign",
-                            "fullStart": 23,
-                            "start": 24,
+                    "indexVariable": {
+                        "kind": "Identifier",
+                        "fullStart": 21,
+                        "start": 22,
+                        "length": 2
+                    },
+                    "operator": {
+                        "kind": "EqualsSign",
+                        "fullStart": 23,
+                        "start": 24,
+                        "length": 2
+                    },
+                    "eachInKeyword": {
+                        "kind": "EachInKeyword",
+                        "fullStart": 25,
+                        "start": 26,
+                        "length": 7
+                    },
+                    "collectionExpression": {
+                        "kind": "IdentifierExpression",
+                        "newlines": [],
+                        "identifier": {
+                            "kind": "Identifier",
+                            "fullStart": 32,
+                            "start": 33,
                             "length": 2
-                        },
-                        "eachInKeyword": {
-                            "kind": "EachInKeyword",
-                            "fullStart": 25,
-                            "start": 26,
-                            "length": 7
-                        },
-                        "rightOperand": {
-                            "kind": "IdentifierExpression",
-                            "newlines": [],
-                            "identifier": {
-                                "kind": "Identifier",
-                                "fullStart": 32,
-                                "start": 33,
-                                "length": 2
-                            }
                         }
                     },
                     "statements": [
@@ -105,45 +99,39 @@
                             }
                         },
                         {
-                            "kind": "ForLoop",
+                            "kind": "ForEachInLoop",
                             "forKeyword": {
                                 "kind": "ForKeyword",
                                 "fullStart": 38,
                                 "start": 42,
                                 "length": 7
                             },
-                            "header": {
-                                "kind": "AssignmentStatement",
-                                "leftOperand": {
-                                    "kind": "IdentifierExpression",
-                                    "identifier": {
-                                        "kind": "Identifier",
-                                        "fullStart": 45,
-                                        "start": 46,
-                                        "length": 2
-                                    }
-                                },
-                                "operator": {
-                                    "kind": "EqualsSign",
-                                    "fullStart": 47,
-                                    "start": 48,
+                            "indexVariable": {
+                                "kind": "Identifier",
+                                "fullStart": 45,
+                                "start": 46,
+                                "length": 2
+                            },
+                            "operator": {
+                                "kind": "EqualsSign",
+                                "fullStart": 47,
+                                "start": 48,
+                                "length": 2
+                            },
+                            "eachInKeyword": {
+                                "kind": "EachInKeyword",
+                                "fullStart": 49,
+                                "start": 50,
+                                "length": 7
+                            },
+                            "collectionExpression": {
+                                "kind": "IdentifierExpression",
+                                "newlines": [],
+                                "identifier": {
+                                    "kind": "Identifier",
+                                    "fullStart": 56,
+                                    "start": 57,
                                     "length": 2
-                                },
-                                "eachInKeyword": {
-                                    "kind": "EachInKeyword",
-                                    "fullStart": 49,
-                                    "start": 50,
-                                    "length": 7
-                                },
-                                "rightOperand": {
-                                    "kind": "IdentifierExpression",
-                                    "newlines": [],
-                                    "identifier": {
-                                        "kind": "Identifier",
-                                        "fullStart": 56,
-                                        "start": 57,
-                                        "length": 2
-                                    }
                                 }
                             },
                             "statements": [

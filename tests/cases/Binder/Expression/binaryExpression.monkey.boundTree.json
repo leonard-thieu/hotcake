@@ -8,5 +8,711 @@
         "BoxString",
         "Main"
     ],
-    "members": {}
+    "members": [
+        {
+            "kind": "FunctionGroupDeclaration",
+            "identifier": "BoxBool",
+            "type": "BoxBool",
+            "overloads": [
+                {
+                    "kind": "FunctionDeclaration",
+                    "identifier": "BoxBool",
+                    "locals": [
+                        "val"
+                    ],
+                    "type": "BoxBool: Object(Bool)",
+                    "returnType": "Object",
+                    "parameters": [
+                        {
+                            "kind": "DataDeclaration",
+                            "identifier": "val",
+                            "typeAnnotation": "Bool",
+                            "type": "Bool"
+                        }
+                    ],
+                    "statements": []
+                }
+            ]
+        },
+        {
+            "kind": "FunctionGroupDeclaration",
+            "identifier": "BoxInt",
+            "type": "BoxInt",
+            "overloads": [
+                {
+                    "kind": "FunctionDeclaration",
+                    "identifier": "BoxInt",
+                    "locals": [
+                        "val"
+                    ],
+                    "type": "BoxInt: Object(Int)",
+                    "returnType": "Object",
+                    "parameters": [
+                        {
+                            "kind": "DataDeclaration",
+                            "identifier": "val",
+                            "typeAnnotation": "Int",
+                            "type": "Int"
+                        }
+                    ],
+                    "statements": []
+                }
+            ]
+        },
+        {
+            "kind": "FunctionGroupDeclaration",
+            "identifier": "BoxFloat",
+            "type": "BoxFloat",
+            "overloads": [
+                {
+                    "kind": "FunctionDeclaration",
+                    "identifier": "BoxFloat",
+                    "locals": [
+                        "val"
+                    ],
+                    "type": "BoxFloat: Object(Float)",
+                    "returnType": "Object",
+                    "parameters": [
+                        {
+                            "kind": "DataDeclaration",
+                            "identifier": "val",
+                            "typeAnnotation": "Float",
+                            "type": "Float"
+                        }
+                    ],
+                    "statements": []
+                }
+            ]
+        },
+        {
+            "kind": "FunctionGroupDeclaration",
+            "identifier": "BoxString",
+            "type": "BoxString",
+            "overloads": [
+                {
+                    "kind": "FunctionDeclaration",
+                    "identifier": "BoxString",
+                    "locals": [
+                        "val"
+                    ],
+                    "type": "BoxString: Object(String)",
+                    "returnType": "Object",
+                    "parameters": [
+                        {
+                            "kind": "DataDeclaration",
+                            "identifier": "val",
+                            "typeAnnotation": "String",
+                            "type": "String"
+                        }
+                    ],
+                    "statements": []
+                }
+            ]
+        },
+        {
+            "kind": "FunctionGroupDeclaration",
+            "identifier": "Main",
+            "type": "Main",
+            "overloads": [
+                {
+                    "kind": "FunctionDeclaration",
+                    "identifier": "Main",
+                    "locals": [],
+                    "type": "Main: Int()",
+                    "returnType": "Int",
+                    "parameters": [],
+                    "statements": [
+                        {
+                            "kind": "ExpressionStatement",
+                            "expression": {
+                                "kind": "InvokeExpression",
+                                "type": "Object",
+                                "invocationType": "BoxInt: Object(Int)",
+                                "invokableExpression": {
+                                    "kind": "IdentifierExpression",
+                                    "type": "BoxInt",
+                                    "identifier": "BoxInt"
+                                },
+                                "arguments": [
+                                    {
+                                        "kind": "BinaryExpression",
+                                        "type": "Int",
+                                        "leftOperand": {
+                                            "kind": "IntegerLiteralExpression",
+                                            "type": "Int"
+                                        },
+                                        "operator": "PlusSign",
+                                        "rightOperand": {
+                                            "kind": "IntegerLiteralExpression",
+                                            "type": "Int"
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "kind": "ExpressionStatement",
+                            "expression": {
+                                "kind": "InvokeExpression",
+                                "type": "Object",
+                                "invocationType": "BoxInt: Object(Int)",
+                                "invokableExpression": {
+                                    "kind": "IdentifierExpression",
+                                    "type": "BoxInt",
+                                    "identifier": "BoxInt"
+                                },
+                                "arguments": [
+                                    {
+                                        "kind": "BinaryExpression",
+                                        "type": "Int",
+                                        "leftOperand": {
+                                            "kind": "IntegerLiteralExpression",
+                                            "type": "Int"
+                                        },
+                                        "operator": "HyphenMinus",
+                                        "rightOperand": {
+                                            "kind": "IntegerLiteralExpression",
+                                            "type": "Int"
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "kind": "ExpressionStatement",
+                            "expression": {
+                                "kind": "InvokeExpression",
+                                "type": "Object",
+                                "invocationType": "BoxFloat: Object(Float)",
+                                "invokableExpression": {
+                                    "kind": "IdentifierExpression",
+                                    "type": "BoxFloat",
+                                    "identifier": "BoxFloat"
+                                },
+                                "arguments": [
+                                    {
+                                        "kind": "BinaryExpression",
+                                        "type": "Int",
+                                        "leftOperand": {
+                                            "kind": "IntegerLiteralExpression",
+                                            "type": "Int"
+                                        },
+                                        "operator": "ModKeyword",
+                                        "rightOperand": {
+                                            "kind": "IntegerLiteralExpression",
+                                            "type": "Int"
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "kind": "ExpressionStatement",
+                            "expression": {
+                                "kind": "InvokeExpression",
+                                "type": "Object",
+                                "invocationType": "BoxFloat: Object(Float)",
+                                "invokableExpression": {
+                                    "kind": "IdentifierExpression",
+                                    "type": "BoxFloat",
+                                    "identifier": "BoxFloat"
+                                },
+                                "arguments": [
+                                    {
+                                        "kind": "BinaryExpression",
+                                        "type": "Float",
+                                        "leftOperand": {
+                                            "kind": "IntegerLiteralExpression",
+                                            "type": "Int"
+                                        },
+                                        "operator": "Asterisk",
+                                        "rightOperand": {
+                                            "kind": "FloatLiteralExpression",
+                                            "type": "Float"
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "kind": "ExpressionStatement",
+                            "expression": {
+                                "kind": "InvokeExpression",
+                                "type": "Object",
+                                "invocationType": "BoxFloat: Object(Float)",
+                                "invokableExpression": {
+                                    "kind": "IdentifierExpression",
+                                    "type": "BoxFloat",
+                                    "identifier": "BoxFloat"
+                                },
+                                "arguments": [
+                                    {
+                                        "kind": "BinaryExpression",
+                                        "type": "Float",
+                                        "leftOperand": {
+                                            "kind": "IntegerLiteralExpression",
+                                            "type": "Int"
+                                        },
+                                        "operator": "Slash",
+                                        "rightOperand": {
+                                            "kind": "FloatLiteralExpression",
+                                            "type": "Float"
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "kind": "ExpressionStatement",
+                            "expression": {
+                                "kind": "InvokeExpression",
+                                "type": "Object",
+                                "invocationType": "BoxInt: Object(Int)",
+                                "invokableExpression": {
+                                    "kind": "IdentifierExpression",
+                                    "type": "BoxInt",
+                                    "identifier": "BoxInt"
+                                },
+                                "arguments": [
+                                    {
+                                        "kind": "BinaryExpression",
+                                        "type": "Int",
+                                        "leftOperand": {
+                                            "kind": "IntegerLiteralExpression",
+                                            "type": "Int"
+                                        },
+                                        "operator": "ShlKeyword",
+                                        "rightOperand": {
+                                            "kind": "IntegerLiteralExpression",
+                                            "type": "Int"
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "kind": "ExpressionStatement",
+                            "expression": {
+                                "kind": "InvokeExpression",
+                                "type": "Object",
+                                "invocationType": "BoxInt: Object(Int)",
+                                "invokableExpression": {
+                                    "kind": "IdentifierExpression",
+                                    "type": "BoxInt",
+                                    "identifier": "BoxInt"
+                                },
+                                "arguments": [
+                                    {
+                                        "kind": "BinaryExpression",
+                                        "type": "Int",
+                                        "leftOperand": {
+                                            "kind": "IntegerLiteralExpression",
+                                            "type": "Int"
+                                        },
+                                        "operator": "ShrKeyword",
+                                        "rightOperand": {
+                                            "kind": "IntegerLiteralExpression",
+                                            "type": "Int"
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "kind": "ExpressionStatement",
+                            "expression": {
+                                "kind": "InvokeExpression",
+                                "type": "Object",
+                                "invocationType": "BoxInt: Object(Int)",
+                                "invokableExpression": {
+                                    "kind": "IdentifierExpression",
+                                    "type": "BoxInt",
+                                    "identifier": "BoxInt"
+                                },
+                                "arguments": [
+                                    {
+                                        "kind": "BinaryExpression",
+                                        "type": "Int",
+                                        "leftOperand": {
+                                            "kind": "IntegerLiteralExpression",
+                                            "type": "Int"
+                                        },
+                                        "operator": "Ampersand",
+                                        "rightOperand": {
+                                            "kind": "IntegerLiteralExpression",
+                                            "type": "Int"
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "kind": "ExpressionStatement",
+                            "expression": {
+                                "kind": "InvokeExpression",
+                                "type": "Object",
+                                "invocationType": "BoxInt: Object(Int)",
+                                "invokableExpression": {
+                                    "kind": "IdentifierExpression",
+                                    "type": "BoxInt",
+                                    "identifier": "BoxInt"
+                                },
+                                "arguments": [
+                                    {
+                                        "kind": "BinaryExpression",
+                                        "type": "Int",
+                                        "leftOperand": {
+                                            "kind": "IntegerLiteralExpression",
+                                            "type": "Int"
+                                        },
+                                        "operator": "Tilde",
+                                        "rightOperand": {
+                                            "kind": "IntegerLiteralExpression",
+                                            "type": "Int"
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "kind": "ExpressionStatement",
+                            "expression": {
+                                "kind": "InvokeExpression",
+                                "type": "Object",
+                                "invocationType": "BoxInt: Object(Int)",
+                                "invokableExpression": {
+                                    "kind": "IdentifierExpression",
+                                    "type": "BoxInt",
+                                    "identifier": "BoxInt"
+                                },
+                                "arguments": [
+                                    {
+                                        "kind": "BinaryExpression",
+                                        "type": "Int",
+                                        "leftOperand": {
+                                            "kind": "IntegerLiteralExpression",
+                                            "type": "Int"
+                                        },
+                                        "operator": "VerticalBar",
+                                        "rightOperand": {
+                                            "kind": "IntegerLiteralExpression",
+                                            "type": "Int"
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "kind": "ExpressionStatement",
+                            "expression": {
+                                "kind": "InvokeExpression",
+                                "type": "Object",
+                                "invocationType": "BoxBool: Object(Bool)",
+                                "invokableExpression": {
+                                    "kind": "IdentifierExpression",
+                                    "type": "BoxBool",
+                                    "identifier": "BoxBool"
+                                },
+                                "arguments": [
+                                    {
+                                        "kind": "BinaryExpression",
+                                        "type": "Bool",
+                                        "leftOperand": {
+                                            "kind": "FloatLiteralExpression",
+                                            "type": "Float"
+                                        },
+                                        "operator": "EqualsSign",
+                                        "rightOperand": {
+                                            "kind": "IntegerLiteralExpression",
+                                            "type": "Int"
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "kind": "ExpressionStatement",
+                            "expression": {
+                                "kind": "InvokeExpression",
+                                "type": "Object",
+                                "invocationType": "BoxBool: Object(Bool)",
+                                "invokableExpression": {
+                                    "kind": "IdentifierExpression",
+                                    "type": "BoxBool",
+                                    "identifier": "BoxBool"
+                                },
+                                "arguments": [
+                                    {
+                                        "kind": "BinaryExpression",
+                                        "type": "Bool",
+                                        "leftOperand": {
+                                            "kind": "IntegerLiteralExpression",
+                                            "type": "Int"
+                                        },
+                                        "operator": "LessThanSign",
+                                        "rightOperand": {
+                                            "kind": "BooleanLiteralExpression",
+                                            "type": "Bool"
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "kind": "ExpressionStatement",
+                            "expression": {
+                                "kind": "InvokeExpression",
+                                "type": "Object",
+                                "invocationType": "BoxBool: Object(Bool)",
+                                "invokableExpression": {
+                                    "kind": "IdentifierExpression",
+                                    "type": "BoxBool",
+                                    "identifier": "BoxBool"
+                                },
+                                "arguments": [
+                                    {
+                                        "kind": "BinaryExpression",
+                                        "type": "Bool",
+                                        "leftOperand": {
+                                            "kind": "IntegerLiteralExpression",
+                                            "type": "Int"
+                                        },
+                                        "operator": "GreaterThanSign",
+                                        "rightOperand": {
+                                            "kind": "StringLiteralExpression",
+                                            "type": "String"
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "kind": "ExpressionStatement",
+                            "expression": {
+                                "kind": "InvokeExpression",
+                                "type": "Object",
+                                "invocationType": "BoxBool: Object(Bool)",
+                                "invokableExpression": {
+                                    "kind": "IdentifierExpression",
+                                    "type": "BoxBool",
+                                    "identifier": "BoxBool"
+                                },
+                                "arguments": [
+                                    {
+                                        "kind": "BinaryExpression",
+                                        "type": "Bool",
+                                        "leftOperand": {
+                                            "kind": "IntegerLiteralExpression",
+                                            "type": "Int"
+                                        },
+                                        "operator": "LessThanSignEqualsSign",
+                                        "rightOperand": {
+                                            "kind": "FloatLiteralExpression",
+                                            "type": "Float"
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "kind": "ExpressionStatement",
+                            "expression": {
+                                "kind": "InvokeExpression",
+                                "type": "Object",
+                                "invocationType": "BoxBool: Object(Bool)",
+                                "invokableExpression": {
+                                    "kind": "IdentifierExpression",
+                                    "type": "BoxBool",
+                                    "identifier": "BoxBool"
+                                },
+                                "arguments": [
+                                    {
+                                        "kind": "BinaryExpression",
+                                        "type": "Bool",
+                                        "leftOperand": {
+                                            "kind": "IntegerLiteralExpression",
+                                            "type": "Int"
+                                        },
+                                        "operator": "GreaterThanSignEqualsSign",
+                                        "rightOperand": {
+                                            "kind": "IntegerLiteralExpression",
+                                            "type": "Int"
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "kind": "ExpressionStatement",
+                            "expression": {
+                                "kind": "InvokeExpression",
+                                "type": "Object",
+                                "invocationType": "BoxBool: Object(Bool)",
+                                "invokableExpression": {
+                                    "kind": "IdentifierExpression",
+                                    "type": "BoxBool",
+                                    "identifier": "BoxBool"
+                                },
+                                "arguments": [
+                                    {
+                                        "kind": "BinaryExpression",
+                                        "type": "Bool",
+                                        "leftOperand": {
+                                            "kind": "BooleanLiteralExpression",
+                                            "type": "Bool"
+                                        },
+                                        "operator": "LessThanSignGreaterThanSign",
+                                        "rightOperand": {
+                                            "kind": "BooleanLiteralExpression",
+                                            "type": "Bool"
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "kind": "ExpressionStatement",
+                            "expression": {
+                                "kind": "InvokeExpression",
+                                "type": "Object",
+                                "invocationType": "BoxBool: Object(Bool)",
+                                "invokableExpression": {
+                                    "kind": "IdentifierExpression",
+                                    "type": "BoxBool",
+                                    "identifier": "BoxBool"
+                                },
+                                "arguments": [
+                                    {
+                                        "kind": "BinaryExpression",
+                                        "type": "Bool",
+                                        "leftOperand": {
+                                            "kind": "BooleanLiteralExpression",
+                                            "type": "Bool"
+                                        },
+                                        "operator": "AndKeyword",
+                                        "rightOperand": {
+                                            "kind": "BooleanLiteralExpression",
+                                            "type": "Bool"
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "kind": "ExpressionStatement",
+                            "expression": {
+                                "kind": "InvokeExpression",
+                                "type": "Object",
+                                "invocationType": "BoxBool: Object(Bool)",
+                                "invokableExpression": {
+                                    "kind": "IdentifierExpression",
+                                    "type": "BoxBool",
+                                    "identifier": "BoxBool"
+                                },
+                                "arguments": [
+                                    {
+                                        "kind": "BinaryExpression",
+                                        "type": "Bool",
+                                        "leftOperand": {
+                                            "kind": "BooleanLiteralExpression",
+                                            "type": "Bool"
+                                        },
+                                        "operator": "OrKeyword",
+                                        "rightOperand": {
+                                            "kind": "BooleanLiteralExpression",
+                                            "type": "Bool"
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "kind": "ExpressionStatement",
+                            "expression": {
+                                "kind": "InvokeExpression",
+                                "type": "Object",
+                                "invocationType": "BoxString: Object(String)",
+                                "invokableExpression": {
+                                    "kind": "IdentifierExpression",
+                                    "type": "BoxString",
+                                    "identifier": "BoxString"
+                                },
+                                "arguments": [
+                                    {
+                                        "kind": "BinaryExpression",
+                                        "type": "String",
+                                        "leftOperand": {
+                                            "kind": "IntegerLiteralExpression",
+                                            "type": "Int"
+                                        },
+                                        "operator": "PlusSign",
+                                        "rightOperand": {
+                                            "kind": "StringLiteralExpression",
+                                            "type": "String"
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "kind": "ExpressionStatement",
+                            "expression": {
+                                "kind": "InvokeExpression",
+                                "type": "Object",
+                                "invocationType": "BoxString: Object(String)",
+                                "invokableExpression": {
+                                    "kind": "IdentifierExpression",
+                                    "type": "BoxString",
+                                    "identifier": "BoxString"
+                                },
+                                "arguments": [
+                                    {
+                                        "kind": "BinaryExpression",
+                                        "type": "String",
+                                        "leftOperand": {
+                                            "kind": "FloatLiteralExpression",
+                                            "type": "Float"
+                                        },
+                                        "operator": "PlusSign",
+                                        "rightOperand": {
+                                            "kind": "StringLiteralExpression",
+                                            "type": "String"
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "kind": "ExpressionStatement",
+                            "expression": {
+                                "kind": "InvokeExpression",
+                                "type": "Object",
+                                "invocationType": "BoxString: Object(String)",
+                                "invokableExpression": {
+                                    "kind": "IdentifierExpression",
+                                    "type": "BoxString",
+                                    "identifier": "BoxString"
+                                },
+                                "arguments": [
+                                    {
+                                        "kind": "BinaryExpression",
+                                        "type": "String",
+                                        "leftOperand": {
+                                            "kind": "StringLiteralExpression",
+                                            "type": "String"
+                                        },
+                                        "operator": "PlusSign",
+                                        "rightOperand": {
+                                            "kind": "StringLiteralExpression",
+                                            "type": "String"
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
 }

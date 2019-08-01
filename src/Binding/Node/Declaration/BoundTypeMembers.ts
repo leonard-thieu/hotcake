@@ -25,4 +25,8 @@ export class BoundTypeMembers<TBoundNode extends BoundNodes> extends Map<string,
 
         return super.set(key, value);
     }
+
+    toJSON() {
+        return Array.from(this.values());
+    }
 }

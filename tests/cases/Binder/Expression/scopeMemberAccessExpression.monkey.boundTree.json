@@ -6,5 +6,177 @@
         "HeadNode",
         "Main"
     ],
-    "members": {}
+    "members": [
+        {
+            "kind": "ClassDeclaration",
+            "locals": [
+                "T",
+                "New"
+            ],
+            "identifier": "C",
+            "type": "C",
+            "superType": "Object",
+            "members": [
+                {
+                    "kind": "DataDeclaration",
+                    "declarationKind": "GlobalKeyword",
+                    "identifier": "T",
+                    "typeAnnotation": "Int",
+                    "type": "Int"
+                },
+                {
+                    "kind": "ClassMethodGroupDeclaration",
+                    "identifier": "New",
+                    "type": "New C",
+                    "overloads": [
+                        {
+                            "kind": "ClassMethodDeclaration",
+                            "identifier": "New",
+                            "locals": [],
+                            "type": "New C()",
+                            "returnType": "C",
+                            "parameters": [],
+                            "statements": []
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "kind": "ClassDeclaration",
+            "locals": [
+                "_pred",
+                "_head",
+                "New"
+            ],
+            "identifier": "HeadNode",
+            "type": "HeadNode",
+            "superType": "Object",
+            "members": [
+                {
+                    "kind": "DataDeclaration",
+                    "declarationKind": "FieldKeyword",
+                    "identifier": "_pred",
+                    "typeAnnotation": "HeadNode",
+                    "type": "HeadNode"
+                },
+                {
+                    "kind": "DataDeclaration",
+                    "declarationKind": "FieldKeyword",
+                    "identifier": "_head",
+                    "typeAnnotation": "HeadNode",
+                    "type": "HeadNode"
+                },
+                {
+                    "kind": "ClassMethodGroupDeclaration",
+                    "identifier": "New",
+                    "type": "New HeadNode",
+                    "overloads": [
+                        {
+                            "kind": "ClassMethodDeclaration",
+                            "identifier": "New",
+                            "locals": [],
+                            "type": "New HeadNode()",
+                            "returnType": "HeadNode",
+                            "parameters": [],
+                            "statements": []
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "kind": "FunctionGroupDeclaration",
+            "identifier": "Main",
+            "type": "Main",
+            "overloads": [
+                {
+                    "kind": "FunctionDeclaration",
+                    "identifier": "Main",
+                    "locals": [
+                        "headNode",
+                        "chainedScopeMemberAccess"
+                    ],
+                    "type": "Main: Int()",
+                    "returnType": "Int",
+                    "parameters": [],
+                    "statements": [
+                        {
+                            "kind": "AssignmentStatement",
+                            "leftOperand": {
+                                "kind": "ScopeMemberAccessExpression",
+                                "type": "Int",
+                                "scopableExpression": {
+                                    "kind": "IdentifierExpression",
+                                    "type": "C",
+                                    "identifier": "C"
+                                },
+                                "member": {
+                                    "kind": "IdentifierExpression",
+                                    "type": "Int",
+                                    "identifier": "T"
+                                }
+                            },
+                            "rightOperand": {
+                                "kind": "IntegerLiteralExpression",
+                                "type": "Int"
+                            }
+                        },
+                        {
+                            "kind": "DataDeclarationStatement",
+                            "declaration": {
+                                "kind": "DataDeclaration",
+                                "declarationKind": "LocalKeyword",
+                                "identifier": "headNode",
+                                "expression": {
+                                    "kind": "InvokeExpression",
+                                    "type": "HeadNode",
+                                    "invocationType": "New HeadNode()",
+                                    "invokableExpression": {
+                                        "kind": "NewExpression",
+                                        "type": "New HeadNode",
+                                        "typeReference": "HeadNode"
+                                    },
+                                    "arguments": []
+                                },
+                                "type": "HeadNode"
+                            }
+                        },
+                        {
+                            "kind": "DataDeclarationStatement",
+                            "declaration": {
+                                "kind": "DataDeclaration",
+                                "declarationKind": "LocalKeyword",
+                                "identifier": "chainedScopeMemberAccess",
+                                "expression": {
+                                    "kind": "ScopeMemberAccessExpression",
+                                    "type": "HeadNode",
+                                    "scopableExpression": {
+                                        "kind": "IdentifierExpression",
+                                        "type": "HeadNode",
+                                        "identifier": "headNode"
+                                    },
+                                    "member": {
+                                        "kind": "ScopeMemberAccessExpression",
+                                        "type": "HeadNode",
+                                        "scopableExpression": {
+                                            "kind": "IdentifierExpression",
+                                            "type": "HeadNode",
+                                            "identifier": "_pred"
+                                        },
+                                        "member": {
+                                            "kind": "IdentifierExpression",
+                                            "type": "HeadNode",
+                                            "identifier": "_head"
+                                        }
+                                    }
+                                },
+                                "type": "HeadNode"
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
 }

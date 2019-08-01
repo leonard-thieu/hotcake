@@ -4,5 +4,36 @@
     "locals": [
         "Main"
     ],
-    "members": {}
+    "members": [
+        {
+            "kind": "FunctionGroupDeclaration",
+            "identifier": "Main",
+            "type": "Main",
+            "overloads": [
+                {
+                    "kind": "FunctionDeclaration",
+                    "identifier": "Main",
+                    "locals": [],
+                    "type": "Main: Int()",
+                    "returnType": "Int",
+                    "parameters": [],
+                    "statements": [
+                        {
+                            "kind": "WhileLoop",
+                            "locals": [],
+                            "expression": {
+                                "kind": "BooleanLiteralExpression",
+                                "type": "Bool"
+                            },
+                            "statements": [
+                                {
+                                    "kind": "ContinueStatement"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
 }

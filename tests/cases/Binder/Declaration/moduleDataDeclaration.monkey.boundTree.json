@@ -5,5 +5,26 @@
         "ScaleX",
         "Version"
     ],
-    "members": {}
+    "members": [
+        {
+            "kind": "DataDeclaration",
+            "declarationKind": "GlobalKeyword",
+            "identifier": "ScaleX",
+            "expression": {
+                "kind": "IntegerLiteralExpression",
+                "type": "Int"
+            },
+            "type": "Int"
+        },
+        {
+            "kind": "DataDeclaration",
+            "declarationKind": "ConstKeyword",
+            "identifier": "Version",
+            "expression": {
+                "kind": "StringLiteralExpression",
+                "type": "String"
+            },
+            "type": "String"
+        }
+    ]
 }

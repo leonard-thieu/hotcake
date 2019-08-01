@@ -5,5 +5,58 @@
         "ReadFile",
         "WriteFile"
     ],
-    "members": {}
+    "members": [
+        {
+            "kind": "ExternFunctionGroupDeclaration",
+            "identifier": "ReadFile",
+            "type": "ReadFile",
+            "overloads": [
+                {
+                    "kind": "ExternFunctionDeclaration",
+                    "identifier": "ReadFile",
+                    "locals": [
+                        "filePath"
+                    ],
+                    "type": "ReadFile: Int[](String)",
+                    "returnType": "Int[]",
+                    "parameters": [
+                        {
+                            "kind": "DataDeclaration",
+                            "identifier": "filePath",
+                            "typeAnnotation": "String",
+                            "type": "String"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "kind": "ExternFunctionGroupDeclaration",
+            "identifier": "WriteFile",
+            "type": "WriteFile",
+            "overloads": [
+                {
+                    "kind": "ExternFunctionDeclaration",
+                    "identifier": "WriteFile",
+                    "locals": [
+                        "filePath"
+                    ],
+                    "type": "WriteFile: Void(String)",
+                    "returnType": "Void",
+                    "parameters": [
+                        {
+                            "kind": "DataDeclaration",
+                            "identifier": "filePath",
+                            "typeAnnotation": "String",
+                            "type": "String"
+                        }
+                    ],
+                    "nativeSymbol": {
+                        "kind": "StringLiteralExpression",
+                        "type": "String"
+                    }
+                }
+            ]
+        }
+    ]
 }

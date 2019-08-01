@@ -5,5 +5,44 @@
         "Driver",
         "ActiveDriver"
     ],
-    "members": {}
+    "members": [
+        {
+            "kind": "ClassDeclaration",
+            "locals": [
+                "New"
+            ],
+            "identifier": "Driver",
+            "type": "Driver",
+            "superType": "Object",
+            "members": [
+                {
+                    "kind": "ClassMethodGroupDeclaration",
+                    "identifier": "New",
+                    "type": "New Driver",
+                    "overloads": [
+                        {
+                            "kind": "ClassMethodDeclaration",
+                            "identifier": "New",
+                            "locals": [],
+                            "type": "New Driver()",
+                            "returnType": "Driver",
+                            "parameters": [],
+                            "statements": []
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "kind": "ExternDataDeclaration",
+            "declarationKind": "GlobalKeyword",
+            "identifier": "ActiveDriver",
+            "typeAnnotation": "Driver",
+            "type": "Driver",
+            "nativeSymbol": {
+                "kind": "StringLiteralExpression",
+                "type": "String"
+            }
+        }
+    ]
 }

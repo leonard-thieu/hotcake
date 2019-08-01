@@ -62,7 +62,7 @@
                                     "start": 27,
                                     "length": 2
                                 },
-                                "type": {
+                                "typeAnnotation": {
                                     "kind": "LonghandTypeAnnotation",
                                     "colon": {
                                         "kind": "Colon",

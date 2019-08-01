@@ -203,12 +203,7 @@ export function executeBinderTestCases(name: string, casesPath: string): void {
                     return getBoundTree(path.resolve(casesPath, sourceRelativePath), contents);
                 }, function (this: any, key, value) {
                     switch (this.kind) {
-                        case BoundNodeKind.ModuleDeclaration:
-                        case BoundNodeKind.ExternFunctionDeclaration:
-                        case BoundNodeKind.ExternClassMethodDeclaration:
-                        case BoundNodeKind.FunctionDeclaration:
-                        case BoundNodeKind.InterfaceMethodDeclaration:
-                        case BoundNodeKind.ClassMethodDeclaration: {
+                        case BoundNodeKind.ModuleDeclaration: {
                             switch (key) {
                                 case 'type': {
                                     return undefined;
@@ -249,13 +244,28 @@ export function executeBinderTestCases(name: string, casesPath: string): void {
                             }
                             return names;
                         }
-                        case 'baseType': {
-                            return this.type.superType.toString();
+                        case 'superType':
+                        case 'returnType':
+                        case 'typeAnnotation':
+                        case 'typeReference': {
+                            if (value) {
+                                return value.type.toString();
+                            }
+                        }
+                        case 'implementedTypes':
+                        case 'baseTypes': {
+                            if (value) {
+                                return value.map((v: any) => v.type.toString());
+                            }
                         }
                     }
 
                     if (value instanceof Type) {
                         return value.toString();
+                    }
+
+                    if (value instanceof Set) {
+                        return Array.from(value.values());
                     }
 
                     return value;

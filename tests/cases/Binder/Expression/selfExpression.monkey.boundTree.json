@@ -4,5 +4,59 @@
     "locals": [
         "MyClass"
     ],
-    "members": {}
+    "members": [
+        {
+            "kind": "ClassDeclaration",
+            "locals": [
+                "GetInstance",
+                "New"
+            ],
+            "identifier": "MyClass",
+            "type": "MyClass",
+            "superType": "Object",
+            "members": [
+                {
+                    "kind": "ClassMethodGroupDeclaration",
+                    "identifier": "GetInstance",
+                    "type": "GetInstance",
+                    "overloads": [
+                        {
+                            "kind": "ClassMethodDeclaration",
+                            "identifier": "GetInstance",
+                            "locals": [],
+                            "type": "GetInstance: MyClass()",
+                            "returnType": "MyClass",
+                            "parameters": [],
+                            "statements": [
+                                {
+                                    "kind": "ReturnStatement",
+                                    "type": "MyClass",
+                                    "expression": {
+                                        "kind": "SelfExpression",
+                                        "type": "MyClass"
+                                    }
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "kind": "ClassMethodGroupDeclaration",
+                    "identifier": "New",
+                    "type": "New MyClass",
+                    "overloads": [
+                        {
+                            "kind": "ClassMethodDeclaration",
+                            "identifier": "New",
+                            "locals": [],
+                            "type": "New MyClass()",
+                            "returnType": "MyClass",
+                            "parameters": [],
+                            "statements": []
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
 }

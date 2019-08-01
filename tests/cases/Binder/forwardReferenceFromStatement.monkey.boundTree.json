@@ -5,5 +5,53 @@
         "Main",
         "Test"
     ],
-    "members": {}
+    "members": [
+        {
+            "kind": "FunctionGroupDeclaration",
+            "identifier": "Test",
+            "type": "Test",
+            "overloads": [
+                {
+                    "kind": "FunctionDeclaration",
+                    "identifier": "Test",
+                    "locals": [],
+                    "type": "Test: Int()",
+                    "returnType": "Int",
+                    "parameters": [],
+                    "statements": []
+                }
+            ]
+        },
+        {
+            "kind": "FunctionGroupDeclaration",
+            "identifier": "Main",
+            "type": "Main",
+            "overloads": [
+                {
+                    "kind": "FunctionDeclaration",
+                    "identifier": "Main",
+                    "locals": [],
+                    "type": "Main: Int()",
+                    "returnType": "Int",
+                    "parameters": [],
+                    "statements": [
+                        {
+                            "kind": "ExpressionStatement",
+                            "expression": {
+                                "kind": "InvokeExpression",
+                                "type": "Int",
+                                "invocationType": "Test: Int()",
+                                "invokableExpression": {
+                                    "kind": "IdentifierExpression",
+                                    "type": "Test",
+                                    "identifier": "Test"
+                                },
+                                "arguments": []
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
 }

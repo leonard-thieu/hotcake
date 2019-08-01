@@ -41,7 +41,7 @@
                                 "start": 23,
                                 "length": 13
                             },
-                            "type": {
+                            "typeAnnotation": {
                                 "kind": "ShorthandTypeAnnotation",
                                 "shorthandType": {
                                     "kind": "DollarSign",

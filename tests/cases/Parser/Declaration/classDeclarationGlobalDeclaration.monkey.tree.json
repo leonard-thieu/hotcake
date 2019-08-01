@@ -41,7 +41,7 @@
                                 "start": 24,
                                 "length": 10
                             },
-                            "type": {
+                            "typeAnnotation": {
                                 "kind": "ShorthandTypeAnnotation",
                                 "shorthandType": {
                                     "kind": "PercentSign",

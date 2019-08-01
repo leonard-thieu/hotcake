@@ -4,5 +4,189 @@
     "locals": [
         "Main"
     ],
-    "members": {}
+    "members": [
+        {
+            "kind": "FunctionGroupDeclaration",
+            "identifier": "Main",
+            "type": "Main",
+            "overloads": [
+                {
+                    "kind": "FunctionDeclaration",
+                    "identifier": "Main",
+                    "locals": [
+                        "d0",
+                        "s0",
+                        "s1",
+                        "s2",
+                        "s3",
+                        "sa0",
+                        "sa1",
+                        "sa2",
+                        "l0",
+                        "l1",
+                        "l2",
+                        "l3",
+                        "l4",
+                        "la0",
+                        "la1"
+                    ],
+                    "type": "Main: Int()",
+                    "returnType": "Int",
+                    "parameters": [],
+                    "statements": [
+                        {
+                            "kind": "DataDeclarationStatement",
+                            "declaration": {
+                                "kind": "DataDeclaration",
+                                "declarationKind": "LocalKeyword",
+                                "identifier": "d0",
+                                "typeAnnotation": "Int",
+                                "type": "Int"
+                            }
+                        },
+                        {
+                            "kind": "DataDeclarationStatement",
+                            "declaration": {
+                                "kind": "DataDeclaration",
+                                "declarationKind": "LocalKeyword",
+                                "identifier": "s0",
+                                "typeAnnotation": "Bool",
+                                "type": "Bool"
+                            }
+                        },
+                        {
+                            "kind": "DataDeclarationStatement",
+                            "declaration": {
+                                "kind": "DataDeclaration",
+                                "declarationKind": "LocalKeyword",
+                                "identifier": "s1",
+                                "typeAnnotation": "Int",
+                                "type": "Int"
+                            }
+                        },
+                        {
+                            "kind": "DataDeclarationStatement",
+                            "declaration": {
+                                "kind": "DataDeclaration",
+                                "declarationKind": "LocalKeyword",
+                                "identifier": "s2",
+                                "typeAnnotation": "Float",
+                                "type": "Float"
+                            }
+                        },
+                        {
+                            "kind": "DataDeclarationStatement",
+                            "declaration": {
+                                "kind": "DataDeclaration",
+                                "declarationKind": "LocalKeyword",
+                                "identifier": "s3",
+                                "typeAnnotation": "String",
+                                "type": "String"
+                            }
+                        },
+                        {
+                            "kind": "DataDeclarationStatement",
+                            "declaration": {
+                                "kind": "DataDeclaration",
+                                "declarationKind": "LocalKeyword",
+                                "identifier": "sa0",
+                                "typeAnnotation": "Int[]",
+                                "type": "Int[]"
+                            }
+                        },
+                        {
+                            "kind": "DataDeclarationStatement",
+                            "declaration": {
+                                "kind": "DataDeclaration",
+                                "declarationKind": "LocalKeyword",
+                                "identifier": "sa1",
+                                "typeAnnotation": "Float[]",
+                                "type": "Float[]"
+                            }
+                        },
+                        {
+                            "kind": "DataDeclarationStatement",
+                            "declaration": {
+                                "kind": "DataDeclaration",
+                                "declarationKind": "LocalKeyword",
+                                "identifier": "sa2",
+                                "typeAnnotation": "Float[][]",
+                                "type": "Float[][]"
+                            }
+                        },
+                        {
+                            "kind": "DataDeclarationStatement",
+                            "declaration": {
+                                "kind": "DataDeclaration",
+                                "declarationKind": "LocalKeyword",
+                                "identifier": "l0",
+                                "typeAnnotation": "Bool",
+                                "type": "Bool"
+                            }
+                        },
+                        {
+                            "kind": "DataDeclarationStatement",
+                            "declaration": {
+                                "kind": "DataDeclaration",
+                                "declarationKind": "LocalKeyword",
+                                "identifier": "l1",
+                                "typeAnnotation": "Int",
+                                "type": "Int"
+                            }
+                        },
+                        {
+                            "kind": "DataDeclarationStatement",
+                            "declaration": {
+                                "kind": "DataDeclaration",
+                                "declarationKind": "LocalKeyword",
+                                "identifier": "l2",
+                                "typeAnnotation": "Float",
+                                "type": "Float"
+                            }
+                        },
+                        {
+                            "kind": "DataDeclarationStatement",
+                            "declaration": {
+                                "kind": "DataDeclaration",
+                                "declarationKind": "LocalKeyword",
+                                "identifier": "l3",
+                                "typeAnnotation": "String",
+                                "type": "String"
+                            }
+                        },
+                        {
+                            "kind": "DataDeclarationStatement",
+                            "declaration": {
+                                "kind": "DataDeclaration",
+                                "declarationKind": "LocalKeyword",
+                                "identifier": "l4",
+                                "typeAnnotation": "Object",
+                                "type": "Object"
+                            }
+                        },
+                        {
+                            "kind": "DataDeclarationStatement",
+                            "declaration": {
+                                "kind": "DataDeclaration",
+                                "declarationKind": "LocalKeyword",
+                                "identifier": "la0",
+                                "typeAnnotation": "Bool[]",
+                                "type": "Bool[]"
+                            }
+                        },
+                        {
+                            "kind": "DataDeclarationStatement",
+                            "declaration": {
+                                "kind": "DataDeclaration",
+                                "declarationKind": "LocalKeyword",
+                                "identifier": "la1",
+                                "typeAnnotation": "Bool[][]",
+                                "type": "Bool[][]"
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
 }

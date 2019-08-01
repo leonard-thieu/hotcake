@@ -394,7 +394,7 @@
                         "start": 1060,
                         "length": 4
                     },
-                    "type": {
+                    "typeAnnotation": {
                         "kind": "LonghandTypeAnnotation",
                         "colon": {
                             "kind": "Colon",
@@ -455,7 +455,7 @@
                         "start": 1116,
                         "length": 4
                     },
-                    "type": {
+                    "typeAnnotation": {
                         "kind": "ShorthandTypeAnnotation",
                         "shorthandType": {
                             "kind": "DollarSign",
@@ -688,7 +688,7 @@
                         "start": 1315,
                         "length": 4
                     },
-                    "type": {
+                    "typeAnnotation": {
                         "kind": "LonghandTypeAnnotation",
                         "colon": {
                             "kind": "Colon",
@@ -749,7 +749,7 @@
                         "start": 1371,
                         "length": 4
                     },
-                    "type": {
+                    "typeAnnotation": {
                         "kind": "ShorthandTypeAnnotation",
                         "shorthandType": {
                             "kind": "DollarSign",
@@ -976,7 +976,7 @@
                         "start": 1567,
                         "length": 4
                     },
-                    "type": {
+                    "typeAnnotation": {
                         "kind": "LonghandTypeAnnotation",
                         "colon": {
                             "kind": "Colon",
@@ -1053,7 +1053,7 @@
                         "start": 1699,
                         "length": 13
                     },
-                    "type": {
+                    "typeAnnotation": {
                         "kind": "LonghandTypeAnnotation",
                         "colon": {
                             "kind": "Colon",
@@ -1167,7 +1167,7 @@
                             "start": 1769,
                             "length": 7
                         },
-                        "type": {
+                        "typeAnnotation": {
                             "kind": "LonghandTypeAnnotation",
                             "colon": {
                                 "kind": "Colon",
@@ -1265,7 +1265,7 @@
                             "start": 1852,
                             "length": 7
                         },
-                        "type": {
+                        "typeAnnotation": {
                             "kind": "LonghandTypeAnnotation",
                             "colon": {
                                 "kind": "Colon",
@@ -1303,7 +1303,7 @@
                             "start": 1864,
                             "length": 6
                         },
-                        "type": {
+                        "typeAnnotation": {
                             "kind": "ShorthandTypeAnnotation",
                             "shorthandType": {
                                 "kind": "QuestionMark",
@@ -1717,7 +1717,7 @@
                                     "start": 2281,
                                     "length": 8
                                 },
-                                "type": {
+                                "typeAnnotation": {
                                     "kind": "ShorthandTypeAnnotation",
                                     "shorthandType": {
                                         "kind": "QuestionMark",
@@ -1746,7 +1746,7 @@
                                     "start": 2290,
                                     "length": 5
                                 },
-                                "type": {
+                                "typeAnnotation": {
                                     "kind": "LonghandTypeAnnotation",
                                     "colon": {
                                         "kind": "Colon",
@@ -2202,7 +2202,7 @@
                                     "start": 2741,
                                     "length": 8
                                 },
-                                "type": {
+                                "typeAnnotation": {
                                     "kind": "ShorthandTypeAnnotation",
                                     "shorthandType": {
                                         "kind": "QuestionMark",
@@ -2231,7 +2231,7 @@
                                     "start": 2750,
                                     "length": 5
                                 },
-                                "type": {
+                                "typeAnnotation": {
                                     "kind": "LonghandTypeAnnotation",
                                     "colon": {
                                         "kind": "Colon",
@@ -2451,7 +2451,7 @@
                                 "start": 2972,
                                 "length": 2
                             },
-                            "type": {
+                            "typeAnnotation": {
                                 "kind": "LonghandTypeAnnotation",
                                 "colon": {
                                     "kind": "Colon",
@@ -2496,7 +2496,7 @@
                                 "start": 3020,
                                 "length": 2
                             },
-                            "type": {
+                            "typeAnnotation": {
                                 "kind": "ShorthandTypeAnnotation",
                                 "shorthandType": {
                                     "kind": "DollarSign",
@@ -3027,7 +3027,7 @@
                                     "start": 3652,
                                     "length": 5
                                 },
-                                "type": {
+                                "typeAnnotation": {
                                     "kind": "LonghandTypeAnnotation",
                                     "colon": {
                                         "kind": "Colon",
@@ -3207,7 +3207,7 @@
                                 "start": 3767,
                                 "length": 6
                             },
-                            "type": {
+                            "typeAnnotation": {
                                 "kind": "LonghandTypeAnnotation",
                                 "colon": {
                                     "kind": "Colon",
@@ -4160,7 +4160,7 @@
                             "start": 4888,
                             "length": 3
                         },
-                        "type": {
+                        "typeAnnotation": {
                             "kind": "LonghandTypeAnnotation",
                             "colon": {
                                 "kind": "Colon",
@@ -5049,7 +5049,7 @@
                             "start": 5637,
                             "length": 3
                         },
-                        "type": {
+                        "typeAnnotation": {
                             "kind": "LonghandTypeAnnotation",
                             "colon": {
                                 "kind": "Colon",
@@ -6246,7 +6246,7 @@
                                     "start": 6801,
                                     "length": 2
                                 },
-                                "type": {
+                                "typeAnnotation": {
                                     "kind": "LonghandTypeAnnotation",
                                     "colon": {
                                         "kind": "Colon",

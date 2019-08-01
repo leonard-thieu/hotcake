@@ -4,5 +4,38 @@
     "locals": [
         "Encode"
     ],
-    "members": {}
+    "members": [
+        {
+            "kind": "FunctionGroupDeclaration",
+            "identifier": "Encode",
+            "type": "Encode",
+            "overloads": [
+                {
+                    "kind": "FunctionDeclaration",
+                    "identifier": "Encode",
+                    "locals": [
+                        "place",
+                        "percentile"
+                    ],
+                    "type": "Encode: Void(Int,Float)",
+                    "returnType": "Void",
+                    "parameters": [
+                        {
+                            "kind": "DataDeclaration",
+                            "identifier": "place",
+                            "typeAnnotation": "Int",
+                            "type": "Int"
+                        },
+                        {
+                            "kind": "DataDeclaration",
+                            "identifier": "percentile",
+                            "typeAnnotation": "Float",
+                            "type": "Float"
+                        }
+                    ],
+                    "statements": []
+                }
+            ]
+        }
+    ]
 }

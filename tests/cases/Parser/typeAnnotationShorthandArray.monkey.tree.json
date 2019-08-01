@@ -62,7 +62,7 @@
                                     "start": 27,
                                     "length": 4
                                 },
-                                "type": {
+                                "typeAnnotation": {
                                     "kind": "ShorthandTypeAnnotation",
                                     "arrayTypeAnnotations": [
                                         {

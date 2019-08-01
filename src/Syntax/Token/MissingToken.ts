@@ -21,7 +21,6 @@ export class MissingToken extends Token<TokenKind.Missing> {
 export type MissingTokenKinds =
     | TokenKinds
     | TokenKind.Expression
-    | TokenKind.ForLoopHeader
     | TokenKind.ImportStatementPath
     | NodeKind.DataDeclaration
     | NodeKind.StringLiteralExpression
