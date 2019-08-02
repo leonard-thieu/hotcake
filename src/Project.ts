@@ -41,19 +41,32 @@ export class Project {
         this.boundProjectDirectory = this.bindDirectory(path.resolve(projectDirectory));
 
         this.nullTypeDeclaration = new BoundIntrinsicTypeDeclaration();
+        this.nullTypeDeclaration.identifier = new BoundSymbol('Null', this.nullTypeDeclaration);
         this.nullTypeDeclaration.type = new NullType(this.nullTypeDeclaration);
+
         this.voidTypeDeclaration = new BoundIntrinsicTypeDeclaration();
+        this.voidTypeDeclaration.identifier = new BoundSymbol('Void', this.voidTypeDeclaration);
         this.voidTypeDeclaration.type = new VoidType(this.voidTypeDeclaration);
+
         this.boolTypeDeclaration = new BoundIntrinsicTypeDeclaration();
+        this.boolTypeDeclaration.identifier = new BoundSymbol('Bool', this.boolTypeDeclaration);
         this.boolTypeDeclaration.type = new BoolType(this.boolTypeDeclaration);
+
         this.intTypeDeclaration = new BoundIntrinsicTypeDeclaration();
+        this.intTypeDeclaration.identifier = new BoundSymbol('Int', this.intTypeDeclaration);
         this.intTypeDeclaration.type = new IntType(this.intTypeDeclaration);
+
         this.floatTypeDeclaration = new BoundIntrinsicTypeDeclaration();
+        this.floatTypeDeclaration.identifier = new BoundSymbol('Float', this.floatTypeDeclaration);
         this.floatTypeDeclaration.type = new FloatType(this.floatTypeDeclaration);
+
         this.stringTypeDeclaration = new BoundExternClassDeclaration();
+
         this.arrayTypeDeclaration = new BoundExternClassDeclaration();
         this.arrayTypeDeclaration.identifier = new BoundSymbol('Array', this.arrayTypeDeclaration);
+
         this.objectTypeDeclaration = new BoundExternClassDeclaration();
+
         this.throwableTypeDeclaration = new BoundExternClassDeclaration();
     }
 
@@ -270,7 +283,6 @@ export class Project {
         }
 
         const boundDirectory = new BoundDirectory();
-        boundDirectory.locals = new BoundSymbolTable();
 
         const identifier = new BoundSymbol(name, boundDirectory);
         if (scope) {

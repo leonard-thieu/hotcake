@@ -15,7 +15,7 @@ export class BoundClassDeclaration extends BoundNode {
 
     declaration: ClassDeclaration = undefined!;
 
-    locals: BoundSymbolTable = undefined!;
+    readonly locals = new BoundSymbolTable();
     identifier: BoundSymbol = undefined!;
     type: ObjectType = undefined!;
 

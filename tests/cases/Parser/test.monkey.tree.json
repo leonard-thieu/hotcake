@@ -413,7 +413,7 @@
                             "arrayTypeAnnotations": []
                         }
                     },
-                    "equalsSign": {
+                    "operator": {
                         "kind": "EqualsSign",
                         "fullStart": 1068,
                         "start": 1069,
@@ -465,7 +465,7 @@
                         },
                         "arrayTypeAnnotations": []
                     },
-                    "equalsSign": {
+                    "operator": {
                         "kind": "EqualsSign",
                         "fullStart": 1120,
                         "start": 1121,
@@ -521,7 +521,7 @@
                         "start": 1173,
                         "length": 4
                     },
-                    "equalsSign": {
+                    "operator": {
                         "kind": "ColonEqualsSign",
                         "fullStart": 1176,
                         "start": 1177,
@@ -563,7 +563,7 @@
                         "start": 1215,
                         "length": 4
                     },
-                    "equalsSign": {
+                    "operator": {
                         "kind": "EqualsSign",
                         "fullStart": 1218,
                         "start": 1219,
@@ -605,7 +605,7 @@
                         "start": 1259,
                         "length": 4
                     },
-                    "equalsSign": {
+                    "operator": {
                         "kind": "EqualsSign",
                         "fullStart": 1262,
                         "start": 1262,
@@ -640,7 +640,7 @@
                         "start": 1265,
                         "length": 3
                     },
-                    "equalsSign": {
+                    "operator": {
                         "kind": "ColonEqualsSign",
                         "fullStart": 1268,
                         "start": 1268,
@@ -707,7 +707,7 @@
                             "arrayTypeAnnotations": []
                         }
                     },
-                    "equalsSign": {
+                    "operator": {
                         "kind": "EqualsSign",
                         "fullStart": 1323,
                         "start": 1324,
@@ -759,7 +759,7 @@
                         },
                         "arrayTypeAnnotations": []
                     },
-                    "equalsSign": {
+                    "operator": {
                         "kind": "EqualsSign",
                         "fullStart": 1375,
                         "start": 1376,
@@ -815,7 +815,7 @@
                         "start": 1428,
                         "length": 4
                     },
-                    "equalsSign": {
+                    "operator": {
                         "kind": "ColonEqualsSign",
                         "fullStart": 1431,
                         "start": 1432,
@@ -857,7 +857,7 @@
                         "start": 1470,
                         "length": 4
                     },
-                    "equalsSign": {
+                    "operator": {
                         "kind": "EqualsSign",
                         "fullStart": 1473,
                         "start": 1474,
@@ -899,7 +899,7 @@
                         "start": 1514,
                         "length": 4
                     },
-                    "equalsSign": {
+                    "operator": {
                         "kind": "EqualsSign",
                         "fullStart": 1517,
                         "start": 1517,
@@ -934,7 +934,7 @@
                         "start": 1520,
                         "length": 3
                     },
-                    "equalsSign": {
+                    "operator": {
                         "kind": "ColonEqualsSign",
                         "fullStart": 1523,
                         "start": 1523,
@@ -994,7 +994,8 @@
                             },
                             "arrayTypeAnnotations": []
                         }
-                    }
+                    },
+                    "operator": null
                 }
             ]
         },
@@ -1020,7 +1021,8 @@
                         "fullStart": 1637,
                         "start": 1638,
                         "length": 2
-                    }
+                    },
+                    "operator": null
                 }
             ]
         },
@@ -1072,7 +1074,7 @@
                             "arrayTypeAnnotations": []
                         }
                     },
-                    "equalsSign": {
+                    "operator": {
                         "kind": "EqualsSign",
                         "fullStart": 1718,
                         "start": 1718,
@@ -1158,6 +1160,7 @@
             },
             "parameters": {
                 "kind": "DataDeclarationSequence",
+                "dataDeclarationKeyword": null,
                 "children": [
                     {
                         "kind": "DataDeclaration",
@@ -1185,7 +1188,8 @@
                                 },
                                 "arrayTypeAnnotations": []
                             }
-                        }
+                        },
+                        "operator": null
                     }
                 ]
             },
@@ -1256,6 +1260,7 @@
             },
             "parameters": {
                 "kind": "DataDeclarationSequence",
+                "dataDeclarationKeyword": null,
                 "children": [
                     {
                         "kind": "DataDeclaration",
@@ -1283,7 +1288,8 @@
                                 },
                                 "arrayTypeAnnotations": []
                             }
-                        }
+                        },
+                        "operator": null
                     },
                     {
                         "kind": "CommaSeparator",
@@ -1312,7 +1318,8 @@
                                 "length": 1
                             },
                             "arrayTypeAnnotations": []
-                        }
+                        },
+                        "operator": null
                     }
                 ]
             },
@@ -1383,6 +1390,7 @@
             },
             "parameters": {
                 "kind": "DataDeclarationSequence",
+                "dataDeclarationKeyword": null,
                 "children": []
             },
             "closingParenthesis": {
@@ -1452,6 +1460,7 @@
             },
             "parameters": {
                 "kind": "DataDeclarationSequence",
+                "dataDeclarationKeyword": null,
                 "children": []
             },
             "closingParenthesis": {
@@ -1708,6 +1717,7 @@
                     },
                     "parameters": {
                         "kind": "DataDeclarationSequence",
+                        "dataDeclarationKeyword": null,
                         "children": [
                             {
                                 "kind": "DataDeclaration",
@@ -1726,7 +1736,8 @@
                                         "length": 1
                                     },
                                     "arrayTypeAnnotations": []
-                                }
+                                },
+                                "operator": null
                             },
                             {
                                 "kind": "CommaSeparator",
@@ -1765,7 +1776,7 @@
                                         "arrayTypeAnnotations": []
                                     }
                                 },
-                                "equalsSign": {
+                                "operator": {
                                     "kind": "EqualsSign",
                                     "fullStart": 2300,
                                     "start": 2300,
@@ -1860,6 +1871,7 @@
                     },
                     "parameters": {
                         "kind": "DataDeclarationSequence",
+                        "dataDeclarationKeyword": null,
                         "children": []
                     },
                     "closingParenthesis": {
@@ -1951,7 +1963,7 @@
                                 "start": 2479,
                                 "length": 4
                             },
-                            "equalsSign": {
+                            "operator": {
                                 "kind": "ColonEqualsSign",
                                 "fullStart": 2482,
                                 "start": 2483,
@@ -2004,6 +2016,7 @@
                     },
                     "parameters": {
                         "kind": "DataDeclarationSequence",
+                        "dataDeclarationKeyword": null,
                         "children": []
                     },
                     "closingParenthesis": {
@@ -2121,7 +2134,7 @@
                                 "start": 2652,
                                 "length": 4
                             },
-                            "equalsSign": {
+                            "operator": {
                                 "kind": "ColonEqualsSign",
                                 "fullStart": 2655,
                                 "start": 2656,
@@ -2193,6 +2206,7 @@
                     },
                     "parameters": {
                         "kind": "DataDeclarationSequence",
+                        "dataDeclarationKeyword": null,
                         "children": [
                             {
                                 "kind": "DataDeclaration",
@@ -2211,7 +2225,8 @@
                                         "length": 1
                                     },
                                     "arrayTypeAnnotations": []
-                                }
+                                },
+                                "operator": null
                             },
                             {
                                 "kind": "CommaSeparator",
@@ -2250,7 +2265,7 @@
                                         "arrayTypeAnnotations": []
                                     }
                                 },
-                                "equalsSign": {
+                                "operator": {
                                     "kind": "EqualsSign",
                                     "fullStart": 2760,
                                     "start": 2760,
@@ -2304,6 +2319,7 @@
                     },
                     "parameters": {
                         "kind": "DataDeclarationSequence",
+                        "dataDeclarationKeyword": null,
                         "children": []
                     },
                     "closingParenthesis": {
@@ -2382,7 +2398,8 @@
                                 "fullStart": 2873,
                                 "start": 2874,
                                 "length": 2
-                            }
+                            },
+                            "operator": null
                         }
                     ]
                 },
@@ -2409,7 +2426,7 @@
                                 "start": 2916,
                                 "length": 2
                             },
-                            "equalsSign": {
+                            "operator": {
                                 "kind": "ColonEqualsSign",
                                 "fullStart": 2917,
                                 "start": 2918,
@@ -2469,7 +2486,8 @@
                                     },
                                     "arrayTypeAnnotations": []
                                 }
-                            }
+                            },
+                            "operator": null
                         }
                     ]
                 },
@@ -2506,7 +2524,7 @@
                                 },
                                 "arrayTypeAnnotations": []
                             },
-                            "equalsSign": {
+                            "operator": {
                                 "kind": "EqualsSign",
                                 "fullStart": 3022,
                                 "start": 3023,
@@ -2583,7 +2601,7 @@
                                 "start": 3122,
                                 "length": 2
                             },
-                            "equalsSign": {
+                            "operator": {
                                 "kind": "EqualsSign",
                                 "fullStart": 3123,
                                 "start": 3124,
@@ -2645,7 +2663,8 @@
                                 "fullStart": 3215,
                                 "start": 3216,
                                 "length": 2
-                            }
+                            },
+                            "operator": null
                         },
                         {
                             "kind": "CommaSeparator",
@@ -2664,7 +2683,8 @@
                                 "fullStart": 3218,
                                 "start": 3218,
                                 "length": 1
-                            }
+                            },
+                            "operator": null
                         },
                         {
                             "kind": "CommaSeparator",
@@ -2683,7 +2703,8 @@
                                 "fullStart": 3220,
                                 "start": 3220,
                                 "length": 1
-                            }
+                            },
+                            "operator": null
                         }
                     ]
                 },
@@ -2730,7 +2751,8 @@
                                 "fullStart": 3317,
                                 "start": 3318,
                                 "length": 2
-                            }
+                            },
+                            "operator": null
                         },
                         {
                             "kind": "CommaSeparator",
@@ -2749,7 +2771,8 @@
                                 "fullStart": 3320,
                                 "start": 3320,
                                 "length": 1
-                            }
+                            },
+                            "operator": null
                         },
                         {
                             "kind": "CommaSeparator",
@@ -2768,7 +2791,8 @@
                                 "fullStart": 3322,
                                 "start": 3322,
                                 "length": 1
-                            }
+                            },
+                            "operator": null
                         }
                     ]
                 },
@@ -2853,6 +2877,7 @@
                     },
                     "parameters": {
                         "kind": "DataDeclarationSequence",
+                        "dataDeclarationKeyword": null,
                         "children": []
                     },
                     "closingParenthesis": {
@@ -2904,6 +2929,7 @@
                     },
                     "parameters": {
                         "kind": "DataDeclarationSequence",
+                        "dataDeclarationKeyword": null,
                         "children": []
                     },
                     "closingParenthesis": {
@@ -2961,6 +2987,7 @@
                     },
                     "parameters": {
                         "kind": "DataDeclarationSequence",
+                        "dataDeclarationKeyword": null,
                         "children": []
                     },
                     "closingParenthesis": {
@@ -3018,6 +3045,7 @@
                     },
                     "parameters": {
                         "kind": "DataDeclarationSequence",
+                        "dataDeclarationKeyword": null,
                         "children": [
                             {
                                 "kind": "DataDeclaration",
@@ -3045,7 +3073,8 @@
                                         },
                                         "arrayTypeAnnotations": []
                                     }
-                                }
+                                },
+                                "operator": null
                             }
                         ]
                     },
@@ -3142,6 +3171,7 @@
                     },
                     "parameters": {
                         "kind": "DataDeclarationSequence",
+                        "dataDeclarationKeyword": null,
                         "children": []
                     },
                     "closingParenthesis": {
@@ -3225,7 +3255,8 @@
                                     },
                                     "arrayTypeAnnotations": []
                                 }
-                            }
+                            },
+                            "operator": null
                         }
                     ]
                 },
@@ -3263,6 +3294,7 @@
                     },
                     "parameters": {
                         "kind": "DataDeclarationSequence",
+                        "dataDeclarationKeyword": null,
                         "children": []
                     },
                     "closingParenthesis": {
@@ -3327,6 +3359,7 @@
                     },
                     "parameters": {
                         "kind": "DataDeclarationSequence",
+                        "dataDeclarationKeyword": null,
                         "children": []
                     },
                     "closingParenthesis": {
@@ -4151,6 +4184,7 @@
             },
             "parameters": {
                 "kind": "DataDeclarationSequence",
+                "dataDeclarationKeyword": null,
                 "children": [
                     {
                         "kind": "DataDeclaration",
@@ -4178,7 +4212,8 @@
                                 },
                                 "arrayTypeAnnotations": []
                             }
-                        }
+                        },
+                        "operator": null
                     }
                 ]
             },
@@ -5040,6 +5075,7 @@
             },
             "parameters": {
                 "kind": "DataDeclarationSequence",
+                "dataDeclarationKeyword": null,
                 "children": [
                     {
                         "kind": "DataDeclaration",
@@ -5067,7 +5103,8 @@
                                 },
                                 "arrayTypeAnnotations": []
                             }
-                        }
+                        },
+                        "operator": null
                     }
                 ]
             },
@@ -5290,6 +5327,7 @@
             },
             "parameters": {
                 "kind": "DataDeclarationSequence",
+                "dataDeclarationKeyword": null,
                 "children": []
             },
             "closingParenthesis": {
@@ -5691,6 +5729,7 @@
             },
             "parameters": {
                 "kind": "DataDeclarationSequence",
+                "dataDeclarationKeyword": null,
                 "children": []
             },
             "closingParenthesis": {
@@ -6209,6 +6248,7 @@
             },
             "parameters": {
                 "kind": "DataDeclarationSequence",
+                "dataDeclarationKeyword": null,
                 "children": []
             },
             "closingParenthesis": {
@@ -6264,7 +6304,8 @@
                                         },
                                         "arrayTypeAnnotations": []
                                     }
-                                }
+                                },
+                                "operator": null
                             }
                         ]
                     },

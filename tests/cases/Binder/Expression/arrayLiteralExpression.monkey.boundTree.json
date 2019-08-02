@@ -27,11 +27,13 @@
                                 "expressions": [
                                     {
                                         "kind": "FloatLiteralExpression",
-                                        "type": "Float"
+                                        "type": "Float",
+                                        "value": "127.4"
                                     },
                                     {
                                         "kind": "IntegerLiteralExpression",
-                                        "type": "Int"
+                                        "type": "Int",
+                                        "value": "16"
                                     }
                                 ]
                             }

@@ -51,7 +51,7 @@
                                 },
                                 "arrayTypeAnnotations": []
                             },
-                            "equalsSign": {
+                            "operator": {
                                 "kind": "EqualsSign",
                                 "fullStart": 34,
                                 "start": 35,

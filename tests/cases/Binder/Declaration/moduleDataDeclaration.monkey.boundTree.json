@@ -12,7 +12,8 @@
             "identifier": "ScaleX",
             "expression": {
                 "kind": "IntegerLiteralExpression",
-                "type": "Int"
+                "type": "Int",
+                "value": "24"
             },
             "type": "Int"
         },
@@ -22,7 +23,8 @@
             "identifier": "Version",
             "expression": {
                 "kind": "StringLiteralExpression",
-                "type": "String"
+                "type": "String",
+                "value": "1.0.4"
             },
             "type": "String"
         }

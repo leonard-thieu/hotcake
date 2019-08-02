@@ -22,6 +22,7 @@
                     "parameters": [
                         {
                             "kind": "DataDeclaration",
+                            "declarationKind": null,
                             "identifier": "message",
                             "typeAnnotation": "String",
                             "type": "String"
@@ -40,6 +41,7 @@
                     "parameters": [
                         {
                             "kind": "DataDeclaration",
+                            "declarationKind": null,
                             "identifier": "messages",
                             "typeAnnotation": "String[]",
                             "type": "String[]"
@@ -79,15 +81,18 @@
                                         "type": "String",
                                         "sliceableExpression": {
                                             "kind": "StringLiteralExpression",
-                                            "type": "String"
+                                            "type": "String",
+                                            "value": "My example string."
                                         },
                                         "startExpression": {
                                             "kind": "IntegerLiteralExpression",
-                                            "type": "Int"
+                                            "type": "Int",
+                                            "value": "1"
                                         },
                                         "endExpression": {
                                             "kind": "IntegerLiteralExpression",
-                                            "type": "Int"
+                                            "type": "Int",
+                                            "value": "2"
                                         }
                                     }
                                 ]
@@ -110,11 +115,13 @@
                                         "type": "String",
                                         "sliceableExpression": {
                                             "kind": "StringLiteralExpression",
-                                            "type": "String"
+                                            "type": "String",
+                                            "value": "My example string."
                                         },
                                         "endExpression": {
                                             "kind": "IntegerLiteralExpression",
-                                            "type": "Int"
+                                            "type": "Int",
+                                            "value": "2"
                                         }
                                     }
                                 ]
@@ -137,11 +144,13 @@
                                         "type": "String",
                                         "sliceableExpression": {
                                             "kind": "StringLiteralExpression",
-                                            "type": "String"
+                                            "type": "String",
+                                            "value": "My example string."
                                         },
                                         "startExpression": {
                                             "kind": "IntegerLiteralExpression",
-                                            "type": "Int"
+                                            "type": "Int",
+                                            "value": "1"
                                         }
                                     }
                                 ]
@@ -164,7 +173,8 @@
                                         "type": "String",
                                         "sliceableExpression": {
                                             "kind": "StringLiteralExpression",
-                                            "type": "String"
+                                            "type": "String",
+                                            "value": "My example string."
                                         }
                                     }
                                 ]
@@ -191,25 +201,30 @@
                                             "expressions": [
                                                 {
                                                     "kind": "StringLiteralExpression",
-                                                    "type": "String"
+                                                    "type": "String",
+                                                    "value": "My"
                                                 },
                                                 {
                                                     "kind": "StringLiteralExpression",
-                                                    "type": "String"
+                                                    "type": "String",
+                                                    "value": "example"
                                                 },
                                                 {
                                                     "kind": "StringLiteralExpression",
-                                                    "type": "String"
+                                                    "type": "String",
+                                                    "value": "string"
                                                 }
                                             ]
                                         },
                                         "startExpression": {
                                             "kind": "IntegerLiteralExpression",
-                                            "type": "Int"
+                                            "type": "Int",
+                                            "value": "3"
                                         },
                                         "endExpression": {
                                             "kind": "IntegerLiteralExpression",
-                                            "type": "Int"
+                                            "type": "Int",
+                                            "value": "4"
                                         }
                                     }
                                 ]
@@ -236,21 +251,25 @@
                                             "expressions": [
                                                 {
                                                     "kind": "StringLiteralExpression",
-                                                    "type": "String"
+                                                    "type": "String",
+                                                    "value": "My"
                                                 },
                                                 {
                                                     "kind": "StringLiteralExpression",
-                                                    "type": "String"
+                                                    "type": "String",
+                                                    "value": "example"
                                                 },
                                                 {
                                                     "kind": "StringLiteralExpression",
-                                                    "type": "String"
+                                                    "type": "String",
+                                                    "value": "string"
                                                 }
                                             ]
                                         },
                                         "endExpression": {
                                             "kind": "IntegerLiteralExpression",
-                                            "type": "Int"
+                                            "type": "Int",
+                                            "value": "4"
                                         }
                                     }
                                 ]
@@ -277,21 +296,25 @@
                                             "expressions": [
                                                 {
                                                     "kind": "StringLiteralExpression",
-                                                    "type": "String"
+                                                    "type": "String",
+                                                    "value": "My"
                                                 },
                                                 {
                                                     "kind": "StringLiteralExpression",
-                                                    "type": "String"
+                                                    "type": "String",
+                                                    "value": "example"
                                                 },
                                                 {
                                                     "kind": "StringLiteralExpression",
-                                                    "type": "String"
+                                                    "type": "String",
+                                                    "value": "string"
                                                 }
                                             ]
                                         },
                                         "startExpression": {
                                             "kind": "IntegerLiteralExpression",
-                                            "type": "Int"
+                                            "type": "Int",
+                                            "value": "3"
                                         }
                                     }
                                 ]
@@ -318,15 +341,18 @@
                                             "expressions": [
                                                 {
                                                     "kind": "StringLiteralExpression",
-                                                    "type": "String"
+                                                    "type": "String",
+                                                    "value": "My"
                                                 },
                                                 {
                                                     "kind": "StringLiteralExpression",
-                                                    "type": "String"
+                                                    "type": "String",
+                                                    "value": "example"
                                                 },
                                                 {
                                                     "kind": "StringLiteralExpression",
-                                                    "type": "String"
+                                                    "type": "String",
+                                                    "value": "string"
                                                 }
                                             ]
                                         }

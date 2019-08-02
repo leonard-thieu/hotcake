@@ -22,6 +22,7 @@
                     "parameters": [
                         {
                             "kind": "DataDeclaration",
+                            "declarationKind": null,
                             "identifier": "filePath",
                             "typeAnnotation": "String",
                             "type": "String"
@@ -46,6 +47,7 @@
                     "parameters": [
                         {
                             "kind": "DataDeclaration",
+                            "declarationKind": null,
                             "identifier": "filePath",
                             "typeAnnotation": "String",
                             "type": "String"
@@ -53,7 +55,8 @@
                     ],
                     "nativeSymbol": {
                         "kind": "StringLiteralExpression",
-                        "type": "String"
+                        "type": "String",
+                        "value": "WriteFile"
                     }
                 }
             ]

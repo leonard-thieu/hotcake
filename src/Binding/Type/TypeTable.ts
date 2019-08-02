@@ -1,10 +1,9 @@
+import { normalizeIdentifier } from '../BoundSymbol';
 import { Types } from './Types';
 
 export class TypeTable extends Map<string, Types> {
     get(key: string): Types | undefined {
-        if (isReservedIdentifier(key)) {
-            return super.get(key.toLowerCase());
-        }
+        key = normalizeIdentifier(key);
 
         return super.get(key);
     }
@@ -14,20 +13,8 @@ export class TypeTable extends Map<string, Types> {
             console.error(`A member named '${key}' has already been added.`);
         }
 
-        if (isReservedIdentifier(key)) {
-            return super.set(key.toLowerCase(), value);
-        }
+        key = normalizeIdentifier(key);
 
         return super.set(key, value);
     }
-}
-
-function isReservedIdentifier(key: string) {
-    switch (key.toLowerCase()) {
-        case 'new': {
-            return true;
-        }
-    }
-
-    return false;
 }

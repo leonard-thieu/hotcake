@@ -457,7 +457,7 @@ export class Parser extends ParserBase {
 
     // #region Data declaration sequence
 
-    private parseDataDeclarationSequence(parent: Nodes, dataDeclarationKeyword?: DataDeclarationKeywordToken): DataDeclarationSequence {
+    private parseDataDeclarationSequence(parent: Nodes, dataDeclarationKeyword: DataDeclarationKeywordToken | null = null): DataDeclarationSequence {
         const dataDeclarationSequence = new DataDeclarationSequence();
         dataDeclarationSequence.parent = parent;
         dataDeclarationSequence.dataDeclarationKeyword = dataDeclarationKeyword;
@@ -536,11 +536,11 @@ export class Parser extends ParserBase {
             parent.dataDeclarationKeyword &&
             parent.dataDeclarationKeyword.kind === TokenKind.ConstKeyword
         ) {
-            dataDeclaration.equalsSign = this.eatMissable(TokenKind.EqualsSign, TokenKind.ColonEqualsSign);
+            dataDeclaration.operator = this.eatMissable(TokenKind.EqualsSign, TokenKind.ColonEqualsSign);
             dataDeclaration.expression = this.parseExpression(dataDeclaration);
         } else {
-            dataDeclaration.equalsSign = this.eatOptional(TokenKind.EqualsSign, TokenKind.ColonEqualsSign);
-            if (dataDeclaration.equalsSign) {
+            dataDeclaration.operator = this.eatOptional(TokenKind.EqualsSign, TokenKind.ColonEqualsSign) || null;
+            if (dataDeclaration.operator) {
                 dataDeclaration.expression = this.parseExpression(dataDeclaration);
             }
         }

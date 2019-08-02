@@ -76,7 +76,8 @@
                     "typeAnnotation": "String",
                     "expression": {
                         "kind": "StringLiteralExpression",
-                        "type": "String"
+                        "type": "String",
+                        "value": "Actor's Name"
                     },
                     "type": "String"
                 }

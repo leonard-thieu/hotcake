@@ -23,20 +23,21 @@
                     "statements": [
                         {
                             "kind": "DataDeclarationStatement",
-                            "declaration": {
+                            "dataDeclaration": {
                                 "kind": "DataDeclaration",
                                 "declarationKind": "LocalKeyword",
                                 "identifier": "val",
                                 "expression": {
                                     "kind": "FloatLiteralExpression",
-                                    "type": "Float"
+                                    "type": "Float",
+                                    "value": "24.2"
                                 },
                                 "type": "Float"
                             }
                         },
                         {
                             "kind": "DataDeclarationStatement",
-                            "declaration": {
+                            "dataDeclaration": {
                                 "kind": "DataDeclaration",
                                 "declarationKind": "LocalKeyword",
                                 "identifier": "enableLighting",

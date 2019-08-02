@@ -22,7 +22,7 @@ export class BoundModuleDeclaration extends BoundNode {
     directory: BoundDirectory = undefined!;
 
     identifier: BoundSymbol = undefined!;
-    locals: BoundSymbolTable = undefined!;
+    readonly locals = new BoundSymbolTable()
     type: ModuleType = undefined!;
 
     members: BoundTypeMembers<BoundModuleDeclarationMember> = undefined!;

@@ -9,7 +9,7 @@ export class BoundInterfaceMethodDeclaration extends BoundNode {
     readonly kind = BoundNodeKind.InterfaceMethodDeclaration;
 
     identifier: BoundSymbol = undefined!;
-    locals: BoundSymbolTable = undefined!;
+    readonly locals = new BoundSymbolTable();
     type: MethodType = undefined!;
 
     returnType: BoundTypeReferenceDeclaration = undefined!;

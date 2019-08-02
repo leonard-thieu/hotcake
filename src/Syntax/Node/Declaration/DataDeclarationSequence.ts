@@ -15,7 +15,8 @@ export const DataDeclarationSequenceChildNames: ReadonlyArray<keyof DataDeclarat
 export class DataDeclarationSequence extends Declaration {
     readonly kind = NodeKind.DataDeclarationSequence;
 
-    dataDeclarationKeyword?: DataDeclarationKeywordToken = undefined;
+    // If this represents a parameter sequence, `dataDeclarationKeyword` will be `null`.
+    dataDeclarationKeyword: DataDeclarationKeywordToken | null = undefined!;
     children: (DataDeclaration | CommaSeparator)[] = undefined!;
 }
 
@@ -29,11 +30,15 @@ export type DataDeclarationKeywordToken =
 export const DataDeclarationChildNames: ReadonlyArray<keyof DataDeclaration> = [
     'identifier',
     'typeAnnotation',
-    'equalsSign',
+    'operator',
     'expression',
 ];
 
 /**
+ * Default type (Int)
+ *   Identifier = Expression
+ *   Identifier
+ *
  * Explicit type (shorthand)
  *   Identifier(?|%|#|$) = Expression
  *   Identifier(?|%|#|$)
@@ -44,17 +49,15 @@ export const DataDeclarationChildNames: ReadonlyArray<keyof DataDeclaration> = [
  *
  * Inferred type
  *   Identifier := Expression
- *
- * Default type
- *   Identifier = Expression
- *   Identifier
  */
 export class DataDeclaration extends Declaration {
     readonly kind = NodeKind.DataDeclaration;
 
     identifier: Identifier = undefined!;
     typeAnnotation?: TypeAnnotation = undefined;
-    equalsSign?: MissableToken<EqualsSignToken | ColonEqualsSignToken> = undefined;
+    // Can be missable if this declaration is Const.
+    // If the operator is omitted (declaration without assignment), `operator` will be `null`.
+    operator: null | EqualsSignToken | ColonEqualsSignToken | MissingToken = undefined!;
     expression?: MissableExpression = undefined;
 }
 

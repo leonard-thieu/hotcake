@@ -10,7 +10,7 @@ export class BoundExternFunctionDeclaration extends BoundNode {
     readonly kind = BoundNodeKind.ExternFunctionDeclaration;
 
     identifier: BoundSymbol = undefined!;
-    locals: BoundSymbolTable = undefined!;
+    readonly locals = new BoundSymbolTable();
     type: FunctionType = undefined!;
 
     returnType: BoundTypeReferenceDeclaration = undefined!;

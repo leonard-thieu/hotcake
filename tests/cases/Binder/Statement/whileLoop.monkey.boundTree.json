@@ -23,7 +23,8 @@
                             "locals": [],
                             "expression": {
                                 "kind": "BooleanLiteralExpression",
-                                "type": "Bool"
+                                "type": "Bool",
+                                "value": "True"
                             },
                             "statements": []
                         }

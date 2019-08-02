@@ -22,12 +22,14 @@
                     "parameters": [
                         {
                             "kind": "DataDeclaration",
+                            "declarationKind": null,
                             "identifier": "place",
                             "typeAnnotation": "Int",
                             "type": "Int"
                         },
                         {
                             "kind": "DataDeclaration",
+                            "declarationKind": null,
                             "identifier": "percentile",
                             "typeAnnotation": "Float",
                             "type": "Float"

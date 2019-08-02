@@ -22,13 +22,14 @@
                     "statements": [
                         {
                             "kind": "DataDeclarationStatement",
-                            "declaration": {
+                            "dataDeclaration": {
                                 "kind": "DataDeclaration",
                                 "declarationKind": "LocalKeyword",
                                 "identifier": "i",
                                 "expression": {
                                     "kind": "IntegerLiteralExpression",
-                                    "type": "Int"
+                                    "type": "Int",
+                                    "value": "0"
                                 },
                                 "type": "Int"
                             }
@@ -47,7 +48,8 @@
                                 "operator": "GreaterThanSign",
                                 "rightOperand": {
                                     "kind": "IntegerLiteralExpression",
-                                    "type": "Int"
+                                    "type": "Int",
+                                    "value": "5"
                                 }
                             },
                             "statements": []

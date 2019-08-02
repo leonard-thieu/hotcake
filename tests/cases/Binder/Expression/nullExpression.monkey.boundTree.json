@@ -22,6 +22,7 @@
                     "parameters": [
                         {
                             "kind": "DataDeclaration",
+                            "declarationKind": null,
                             "identifier": "box",
                             "typeAnnotation": "Object",
                             "type": "Object"

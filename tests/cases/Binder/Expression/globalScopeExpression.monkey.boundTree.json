@@ -61,7 +61,8 @@
                                     },
                                     "rightOperand": {
                                         "kind": "IntegerLiteralExpression",
-                                        "type": "Int"
+                                        "type": "Int",
+                                        "value": "10"
                                     }
                                 }
                             ]

@@ -7,7 +7,7 @@ import { BoundStatements } from './BoundStatements';
 export class BoundIfStatement extends BoundNode {
     readonly kind = BoundNodeKind.IfStatement;
 
-    locals: BoundSymbolTable = undefined!;
+    readonly locals = new BoundSymbolTable();
 
     expression: BoundExpressions = undefined!;
     statements: BoundStatements[] = undefined!;
@@ -18,7 +18,7 @@ export class BoundIfStatement extends BoundNode {
 export class BoundElseIfClause extends BoundNode {
     readonly kind = BoundNodeKind.ElseIfClause;
 
-    locals: BoundSymbolTable = undefined!;
+    readonly locals = new BoundSymbolTable();
 
     expression: BoundExpressions = undefined!;
     statements: BoundStatements[] = undefined!;
@@ -27,7 +27,7 @@ export class BoundElseIfClause extends BoundNode {
 export class BoundElseClause extends BoundNode {
     readonly kind = BoundNodeKind.ElseClause;
 
-    locals: BoundSymbolTable = undefined!;
+    readonly locals = new BoundSymbolTable();
 
     statements: BoundStatements[] = undefined!;
 }

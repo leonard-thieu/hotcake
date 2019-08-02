@@ -13,7 +13,7 @@ export class BoundInterfaceDeclaration extends BoundNode {
     declaration: InterfaceDeclaration = undefined!;
 
     identifier: BoundSymbol = undefined!;
-    locals: BoundSymbolTable = undefined!;
+    readonly locals = new BoundSymbolTable();
     type: ObjectType = undefined!;
 
     baseTypes?: BoundInterfaceDeclaration[] = undefined;

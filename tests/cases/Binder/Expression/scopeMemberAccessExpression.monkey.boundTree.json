@@ -119,12 +119,13 @@
                             },
                             "rightOperand": {
                                 "kind": "IntegerLiteralExpression",
-                                "type": "Int"
+                                "type": "Int",
+                                "value": "10"
                             }
                         },
                         {
                             "kind": "DataDeclarationStatement",
-                            "declaration": {
+                            "dataDeclaration": {
                                 "kind": "DataDeclaration",
                                 "declarationKind": "LocalKeyword",
                                 "identifier": "headNode",
@@ -144,7 +145,7 @@
                         },
                         {
                             "kind": "DataDeclarationStatement",
-                            "declaration": {
+                            "dataDeclaration": {
                                 "kind": "DataDeclaration",
                                 "declarationKind": "LocalKeyword",
                                 "identifier": "chainedScopeMemberAccess",

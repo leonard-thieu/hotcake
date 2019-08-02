@@ -10,7 +10,7 @@ export class BoundExternClassMethodDeclaration extends BoundNode {
     readonly kind = BoundNodeKind.ExternClassMethodDeclaration;
 
     identifier: BoundSymbol = undefined!;
-    locals: BoundSymbolTable = undefined!;
+    readonly locals = new BoundSymbolTable();
     type: MethodType = undefined!;
 
     returnType: BoundTypeReferenceDeclaration = undefined!;

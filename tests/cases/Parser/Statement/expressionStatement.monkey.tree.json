@@ -25,6 +25,7 @@
             },
             "parameters": {
                 "kind": "DataDeclarationSequence",
+                "dataDeclarationKeyword": null,
                 "children": []
             },
             "closingParenthesis": {
@@ -133,7 +134,7 @@
                                     "start": 92,
                                     "length": 4
                                 },
-                                "equalsSign": {
+                                "operator": {
                                     "kind": "ColonEqualsSign",
                                     "fullStart": 95,
                                     "start": 96,
@@ -214,7 +215,8 @@
                                     "fullStart": 174,
                                     "start": 175,
                                     "length": 10
-                                }
+                                },
+                                "operator": null
                             }
                         ]
                     },
@@ -262,7 +264,7 @@
                                     "start": 219,
                                     "length": 5
                                 },
-                                "equalsSign": {
+                                "operator": {
                                     "kind": "ColonEqualsSign",
                                     "fullStart": 223,
                                     "start": 224,
@@ -376,6 +378,7 @@
             },
             "parameters": {
                 "kind": "DataDeclarationSequence",
+                "dataDeclarationKeyword": null,
                 "children": []
             },
             "closingParenthesis": {
@@ -436,6 +439,7 @@
             },
             "parameters": {
                 "kind": "DataDeclarationSequence",
+                "dataDeclarationKeyword": null,
                 "children": [
                     {
                         "kind": "DataDeclaration",
@@ -444,7 +448,8 @@
                             "fullStart": 368,
                             "start": 368,
                             "length": 4
-                        }
+                        },
+                        "operator": null
                     }
                 ]
             },
@@ -506,6 +511,7 @@
             },
             "parameters": {
                 "kind": "DataDeclarationSequence",
+                "dataDeclarationKeyword": null,
                 "children": []
             },
             "closingParenthesis": {

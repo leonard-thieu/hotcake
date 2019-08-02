@@ -20,7 +20,7 @@
                         "start": 6,
                         "length": 2
                     },
-                    "equalsSign": {
+                    "operator": {
                         "kind": "Missing",
                         "fullStart": 7,
                         "start": 7,

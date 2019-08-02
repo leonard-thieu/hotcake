@@ -3,4 +3,6 @@ import { BoundExpression } from './BoundExpression';
 
 export class BoundFloatLiteralExpression extends BoundExpression {
     readonly kind = BoundNodeKind.FloatLiteralExpression;
+
+    value: string = undefined!;
 }

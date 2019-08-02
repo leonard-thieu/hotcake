@@ -22,6 +22,7 @@
                     "parameters": [
                         {
                             "kind": "DataDeclaration",
+                            "declarationKind": null,
                             "identifier": "val",
                             "typeAnnotation": "String",
                             "type": "String"
@@ -48,12 +49,14 @@
                     "parameters": [
                         {
                             "kind": "DataDeclaration",
+                            "declarationKind": null,
                             "identifier": "place",
                             "typeAnnotation": "Int",
                             "type": "Int"
                         },
                         {
                             "kind": "DataDeclaration",
+                            "declarationKind": null,
                             "identifier": "percentile",
                             "typeAnnotation": "Float",
                             "type": "Float"
@@ -89,7 +92,8 @@
                                                 "operator": "PlusSign",
                                                 "rightOperand": {
                                                     "kind": "StringLiteralExpression",
-                                                    "type": "String"
+                                                    "type": "String",
+                                                    "value": "th "
                                                 }
                                             },
                                             "operator": "PlusSign",
@@ -102,7 +106,8 @@
                                         "operator": "PlusSign",
                                         "rightOperand": {
                                             "kind": "StringLiteralExpression",
-                                            "type": "String"
+                                            "type": "String",
+                                            "value": "%"
                                         }
                                     }
                                 ]

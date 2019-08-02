@@ -9,7 +9,8 @@ import { BoundTypeReferenceDeclaration } from './BoundDeclarations';
 export class BoundDataDeclaration extends BoundNode {
     readonly kind = BoundNodeKind.DataDeclaration;
 
-    declarationKind?: DataDeclarationKeywordToken['kind'] = undefined;
+    // If this represents a parameter, `declarationKind` will be `null`.
+    declarationKind: DataDeclarationKeywordToken['kind'] | null = undefined!;
     identifier: BoundSymbol = undefined!;
     typeAnnotation?: BoundTypeReferenceDeclaration = undefined;
     expression?: BoundExpressions = undefined;

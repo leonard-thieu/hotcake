@@ -1,3 +1,4 @@
+import { normalizeIdentifier } from '../BoundSymbol';
 import { BoundNodes } from '../Node/BoundNode';
 import { BoundNodeKind } from '../Node/BoundNodeKind';
 import { BoundClassMethodDeclaration } from '../Node/Declaration/BoundClassMethodDeclaration';
@@ -127,7 +128,7 @@ export class MethodType extends FunctionLikeType {
     readonly kind = TypeKind.Method;
 
     toString(): string {
-        if (this.declaration.identifier.name.toLowerCase() === 'new') {
+        if (normalizeIdentifier(this.declaration.identifier.name) === 'New') {
             let str = '';
 
             str += `New ${this.declaration.returnType.type}`;
@@ -157,7 +158,7 @@ export class MethodGroupType extends Type {
         for (const overload of this.declaration.overloads) {
             const name = overload.identifier.name;
 
-            if (name.toLowerCase() === 'new') {
+            if (normalizeIdentifier(name) === 'New') {
                 return `New ${overload.returnType.type}`;
             }
 

@@ -25,6 +25,7 @@
                     "parameters": [
                         {
                             "kind": "DataDeclaration",
+                            "declarationKind": null,
                             "identifier": "val",
                             "typeAnnotation": "Bool",
                             "type": "Bool"
@@ -50,6 +51,7 @@
                     "parameters": [
                         {
                             "kind": "DataDeclaration",
+                            "declarationKind": null,
                             "identifier": "val",
                             "typeAnnotation": "Int",
                             "type": "Int"
@@ -75,6 +77,7 @@
                     "parameters": [
                         {
                             "kind": "DataDeclaration",
+                            "declarationKind": null,
                             "identifier": "val",
                             "typeAnnotation": "Float",
                             "type": "Float"
@@ -100,6 +103,7 @@
                     "parameters": [
                         {
                             "kind": "DataDeclaration",
+                            "declarationKind": null,
                             "identifier": "val",
                             "typeAnnotation": "String",
                             "type": "String"
@@ -139,12 +143,14 @@
                                         "type": "Int",
                                         "leftOperand": {
                                             "kind": "IntegerLiteralExpression",
-                                            "type": "Int"
+                                            "type": "Int",
+                                            "value": "1"
                                         },
                                         "operator": "PlusSign",
                                         "rightOperand": {
                                             "kind": "IntegerLiteralExpression",
-                                            "type": "Int"
+                                            "type": "Int",
+                                            "value": "2"
                                         }
                                     }
                                 ]
@@ -167,12 +173,14 @@
                                         "type": "Int",
                                         "leftOperand": {
                                             "kind": "IntegerLiteralExpression",
-                                            "type": "Int"
+                                            "type": "Int",
+                                            "value": "4"
                                         },
                                         "operator": "HyphenMinus",
                                         "rightOperand": {
                                             "kind": "IntegerLiteralExpression",
-                                            "type": "Int"
+                                            "type": "Int",
+                                            "value": "3"
                                         }
                                     }
                                 ]
@@ -195,12 +203,14 @@
                                         "type": "Int",
                                         "leftOperand": {
                                             "kind": "IntegerLiteralExpression",
-                                            "type": "Int"
+                                            "type": "Int",
+                                            "value": "23"
                                         },
                                         "operator": "ModKeyword",
                                         "rightOperand": {
                                             "kind": "IntegerLiteralExpression",
-                                            "type": "Int"
+                                            "type": "Int",
+                                            "value": "4"
                                         }
                                     }
                                 ]
@@ -223,12 +233,14 @@
                                         "type": "Float",
                                         "leftOperand": {
                                             "kind": "IntegerLiteralExpression",
-                                            "type": "Int"
+                                            "type": "Int",
+                                            "value": "3"
                                         },
                                         "operator": "Asterisk",
                                         "rightOperand": {
                                             "kind": "FloatLiteralExpression",
-                                            "type": "Float"
+                                            "type": "Float",
+                                            "value": "4.2"
                                         }
                                     }
                                 ]
@@ -251,12 +263,14 @@
                                         "type": "Float",
                                         "leftOperand": {
                                             "kind": "IntegerLiteralExpression",
-                                            "type": "Int"
+                                            "type": "Int",
+                                            "value": "12"
                                         },
                                         "operator": "Slash",
                                         "rightOperand": {
                                             "kind": "FloatLiteralExpression",
-                                            "type": "Float"
+                                            "type": "Float",
+                                            "value": "0.44"
                                         }
                                     }
                                 ]
@@ -279,12 +293,14 @@
                                         "type": "Int",
                                         "leftOperand": {
                                             "kind": "IntegerLiteralExpression",
-                                            "type": "Int"
+                                            "type": "Int",
+                                            "value": "12"
                                         },
                                         "operator": "ShlKeyword",
                                         "rightOperand": {
                                             "kind": "IntegerLiteralExpression",
-                                            "type": "Int"
+                                            "type": "Int",
+                                            "value": "3"
                                         }
                                     }
                                 ]
@@ -307,12 +323,14 @@
                                         "type": "Int",
                                         "leftOperand": {
                                             "kind": "IntegerLiteralExpression",
-                                            "type": "Int"
+                                            "type": "Int",
+                                            "value": "127"
                                         },
                                         "operator": "ShrKeyword",
                                         "rightOperand": {
                                             "kind": "IntegerLiteralExpression",
-                                            "type": "Int"
+                                            "type": "Int",
+                                            "value": "4"
                                         }
                                     }
                                 ]
@@ -335,12 +353,14 @@
                                         "type": "Int",
                                         "leftOperand": {
                                             "kind": "IntegerLiteralExpression",
-                                            "type": "Int"
+                                            "type": "Int",
+                                            "value": "242"
                                         },
                                         "operator": "Ampersand",
                                         "rightOperand": {
                                             "kind": "IntegerLiteralExpression",
-                                            "type": "Int"
+                                            "type": "Int",
+                                            "value": "16"
                                         }
                                     }
                                 ]
@@ -363,12 +383,14 @@
                                         "type": "Int",
                                         "leftOperand": {
                                             "kind": "IntegerLiteralExpression",
-                                            "type": "Int"
+                                            "type": "Int",
+                                            "value": "966"
                                         },
                                         "operator": "Tilde",
                                         "rightOperand": {
                                             "kind": "IntegerLiteralExpression",
-                                            "type": "Int"
+                                            "type": "Int",
+                                            "value": "24"
                                         }
                                     }
                                 ]
@@ -391,12 +413,14 @@
                                         "type": "Int",
                                         "leftOperand": {
                                             "kind": "IntegerLiteralExpression",
-                                            "type": "Int"
+                                            "type": "Int",
+                                            "value": "549"
                                         },
                                         "operator": "VerticalBar",
                                         "rightOperand": {
                                             "kind": "IntegerLiteralExpression",
-                                            "type": "Int"
+                                            "type": "Int",
+                                            "value": "45"
                                         }
                                     }
                                 ]
@@ -419,12 +443,14 @@
                                         "type": "Bool",
                                         "leftOperand": {
                                             "kind": "FloatLiteralExpression",
-                                            "type": "Float"
+                                            "type": "Float",
+                                            "value": "24.2"
                                         },
                                         "operator": "EqualsSign",
                                         "rightOperand": {
                                             "kind": "IntegerLiteralExpression",
-                                            "type": "Int"
+                                            "type": "Int",
+                                            "value": "24"
                                         }
                                     }
                                 ]
@@ -447,12 +473,14 @@
                                         "type": "Bool",
                                         "leftOperand": {
                                             "kind": "IntegerLiteralExpression",
-                                            "type": "Int"
+                                            "type": "Int",
+                                            "value": "17"
                                         },
                                         "operator": "LessThanSign",
                                         "rightOperand": {
                                             "kind": "BooleanLiteralExpression",
-                                            "type": "Bool"
+                                            "type": "Bool",
+                                            "value": "False"
                                         }
                                     }
                                 ]
@@ -475,12 +503,14 @@
                                         "type": "Bool",
                                         "leftOperand": {
                                             "kind": "IntegerLiteralExpression",
-                                            "type": "Int"
+                                            "type": "Int",
+                                            "value": "42"
                                         },
                                         "operator": "GreaterThanSign",
                                         "rightOperand": {
                                             "kind": "StringLiteralExpression",
-                                            "type": "String"
+                                            "type": "String",
+                                            "value": "43"
                                         }
                                     }
                                 ]
@@ -503,12 +533,14 @@
                                         "type": "Bool",
                                         "leftOperand": {
                                             "kind": "IntegerLiteralExpression",
-                                            "type": "Int"
+                                            "type": "Int",
+                                            "value": "24"
                                         },
                                         "operator": "LessThanSignEqualsSign",
                                         "rightOperand": {
                                             "kind": "FloatLiteralExpression",
-                                            "type": "Float"
+                                            "type": "Float",
+                                            "value": "15.5"
                                         }
                                     }
                                 ]
@@ -531,12 +563,14 @@
                                         "type": "Bool",
                                         "leftOperand": {
                                             "kind": "IntegerLiteralExpression",
-                                            "type": "Int"
+                                            "type": "Int",
+                                            "value": "64"
                                         },
                                         "operator": "GreaterThanSignEqualsSign",
                                         "rightOperand": {
                                             "kind": "IntegerLiteralExpression",
-                                            "type": "Int"
+                                            "type": "Int",
+                                            "value": "5"
                                         }
                                     }
                                 ]
@@ -559,12 +593,14 @@
                                         "type": "Bool",
                                         "leftOperand": {
                                             "kind": "BooleanLiteralExpression",
-                                            "type": "Bool"
+                                            "type": "Bool",
+                                            "value": "True"
                                         },
                                         "operator": "LessThanSignGreaterThanSign",
                                         "rightOperand": {
                                             "kind": "BooleanLiteralExpression",
-                                            "type": "Bool"
+                                            "type": "Bool",
+                                            "value": "False"
                                         }
                                     }
                                 ]
@@ -587,12 +623,14 @@
                                         "type": "Bool",
                                         "leftOperand": {
                                             "kind": "BooleanLiteralExpression",
-                                            "type": "Bool"
+                                            "type": "Bool",
+                                            "value": "True"
                                         },
                                         "operator": "AndKeyword",
                                         "rightOperand": {
                                             "kind": "BooleanLiteralExpression",
-                                            "type": "Bool"
+                                            "type": "Bool",
+                                            "value": "False"
                                         }
                                     }
                                 ]
@@ -615,12 +653,14 @@
                                         "type": "Bool",
                                         "leftOperand": {
                                             "kind": "BooleanLiteralExpression",
-                                            "type": "Bool"
+                                            "type": "Bool",
+                                            "value": "False"
                                         },
                                         "operator": "OrKeyword",
                                         "rightOperand": {
                                             "kind": "BooleanLiteralExpression",
-                                            "type": "Bool"
+                                            "type": "Bool",
+                                            "value": "True"
                                         }
                                     }
                                 ]
@@ -643,12 +683,14 @@
                                         "type": "String",
                                         "leftOperand": {
                                             "kind": "IntegerLiteralExpression",
-                                            "type": "Int"
+                                            "type": "Int",
+                                            "value": "10"
                                         },
                                         "operator": "PlusSign",
                                         "rightOperand": {
                                             "kind": "StringLiteralExpression",
-                                            "type": "String"
+                                            "type": "String",
+                                            "value": " mm"
                                         }
                                     }
                                 ]
@@ -671,12 +713,14 @@
                                         "type": "String",
                                         "leftOperand": {
                                             "kind": "FloatLiteralExpression",
-                                            "type": "Float"
+                                            "type": "Float",
+                                            "value": "12.4"
                                         },
                                         "operator": "PlusSign",
                                         "rightOperand": {
                                             "kind": "StringLiteralExpression",
-                                            "type": "String"
+                                            "type": "String",
+                                            "value": " miles"
                                         }
                                     }
                                 ]
@@ -699,12 +743,14 @@
                                         "type": "String",
                                         "leftOperand": {
                                             "kind": "StringLiteralExpression",
-                                            "type": "String"
+                                            "type": "String",
+                                            "value": "full"
                                         },
                                         "operator": "PlusSign",
                                         "rightOperand": {
                                             "kind": "StringLiteralExpression",
-                                            "type": "String"
+                                            "type": "String",
+                                            "value": " power"
                                         }
                                     }
                                 ]

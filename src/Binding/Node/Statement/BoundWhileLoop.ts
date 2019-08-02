@@ -7,7 +7,7 @@ import { BoundStatements } from './BoundStatements';
 export class BoundWhileLoop extends BoundNode {
     readonly kind = BoundNodeKind.WhileLoop;
 
-    locals: BoundSymbolTable = undefined!;
+    readonly locals = new BoundSymbolTable();
 
     expression: BoundExpressions = undefined!;
     statements: BoundStatements[] = undefined!;

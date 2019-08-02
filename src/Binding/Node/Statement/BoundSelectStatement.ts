@@ -15,7 +15,7 @@ export class BoundSelectStatement extends BoundNode {
 export class BoundCaseClause extends BoundNode {
     readonly kind = BoundNodeKind.CaseClause;
 
-    locals: BoundSymbolTable = undefined!;
+    readonly locals = new BoundSymbolTable();
 
     expressions: BoundExpression[] = undefined!;
     statements: BoundStatements[] = undefined!;
@@ -24,7 +24,7 @@ export class BoundCaseClause extends BoundNode {
 export class BoundDefaultClause extends BoundNode {
     readonly kind = BoundNodeKind.DefaultClause;
 
-    locals: BoundSymbolTable = undefined!;
+    readonly locals = new BoundSymbolTable();
 
     statements: BoundStatements[] = undefined!;
 }

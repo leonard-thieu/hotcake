@@ -106,6 +106,7 @@
                     "parameters": [
                         {
                             "kind": "DataDeclaration",
+                            "declarationKind": null,
                             "identifier": "message",
                             "typeAnnotation": "String",
                             "type": "String"
@@ -133,22 +134,57 @@
                             "locals": [
                                 "i"
                             ],
-                            "statement": {
+                            "firstValueStatement": {
                                 "kind": "DataDeclarationStatement",
-                                "declaration": {
+                                "dataDeclaration": {
                                     "kind": "DataDeclaration",
                                     "declarationKind": "LocalKeyword",
                                     "identifier": "i",
-                                    "type": "Int",
                                     "expression": {
                                         "kind": "IntegerLiteralExpression",
-                                        "type": "Int"
-                                    }
+                                        "type": "Int",
+                                        "value": "1"
+                                    },
+                                    "type": "Int"
                                 }
                             },
                             "lastValueExpression": {
-                                "kind": "IntegerLiteralExpression",
-                                "type": "Int"
+                                "kind": "BinaryExpression",
+                                "type": "Bool",
+                                "leftOperand": {
+                                    "kind": "IdentifierExpression",
+                                    "type": "Int",
+                                    "identifier": "i"
+                                },
+                                "operator": "LessThanSignEqualsSign",
+                                "rightOperand": {
+                                    "kind": "IntegerLiteralExpression",
+                                    "type": "Int",
+                                    "value": "10"
+                                }
+                            },
+                            "stepValueClause": {
+                                "kind": "AssignmentStatement",
+                                "leftOperand": {
+                                    "kind": "IdentifierExpression",
+                                    "type": "Int",
+                                    "identifier": "i"
+                                },
+                                "rightOperand": {
+                                    "kind": "BinaryExpression",
+                                    "type": "Int",
+                                    "leftOperand": {
+                                        "kind": "IdentifierExpression",
+                                        "type": "Int",
+                                        "identifier": "i"
+                                    },
+                                    "operator": "PlusSign",
+                                    "rightOperand": {
+                                        "kind": "IntegerLiteralExpression",
+                                        "type": "Int",
+                                        "value": "1"
+                                    }
+                                }
                             },
                             "statements": [
                                 {
@@ -169,9 +205,11 @@
                                                         "type": "Int",
                                                         "identifier": "i"
                                                     },
+                                                    "operator": "Ampersand",
                                                     "rightOperand": {
                                                         "kind": "IntegerLiteralExpression",
-                                                        "type": "Int"
+                                                        "type": "Int",
+                                                        "value": "1"
                                                     }
                                                 }
                                             },
@@ -184,7 +222,8 @@
                                                         "invocationType": "New Ex1()",
                                                         "invokableExpression": {
                                                             "kind": "NewExpression",
-                                                            "type": "New Ex1"
+                                                            "type": "New Ex1",
+                                                            "typeReference": "Ex1"
                                                         },
                                                         "arguments": []
                                                     }
@@ -202,7 +241,8 @@
                                                             "invocationType": "New Ex2()",
                                                             "invokableExpression": {
                                                                 "kind": "NewExpression",
-                                                                "type": "New Ex2"
+                                                                "type": "New Ex2",
+                                                                "typeReference": "Ex2"
                                                             },
                                                             "arguments": []
                                                         }
@@ -219,6 +259,7 @@
                                             ],
                                             "parameter": {
                                                 "kind": "DataDeclaration",
+                                                "declarationKind": null,
                                                 "identifier": "ex",
                                                 "typeAnnotation": "Ex1",
                                                 "type": "Ex1"
@@ -238,7 +279,8 @@
                                                         "arguments": [
                                                             {
                                                                 "kind": "StringLiteralExpression",
-                                                                "type": "String"
+                                                                "type": "String",
+                                                                "value": "Caught an ex1!"
                                                             }
                                                         ]
                                                     }
@@ -252,6 +294,7 @@
                                             ],
                                             "parameter": {
                                                 "kind": "DataDeclaration",
+                                                "declarationKind": null,
                                                 "identifier": "ex",
                                                 "typeAnnotation": "Ex2",
                                                 "type": "Ex2"
@@ -271,7 +314,8 @@
                                                         "arguments": [
                                                             {
                                                                 "kind": "StringLiteralExpression",
-                                                                "type": "String"
+                                                                "type": "String",
+                                                                "value": "Caught an ex2!"
                                                             }
                                                         ]
                                                     }

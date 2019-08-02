@@ -17,7 +17,8 @@
             "superType": "Object",
             "nativeSymbol": {
                 "kind": "StringLiteralExpression",
-                "type": "String"
+                "type": "String",
+                "value": "xyzDriver"
             },
             "members": [
                 {

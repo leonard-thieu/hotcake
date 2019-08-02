@@ -31,6 +31,7 @@
                             "parameters": [
                                 {
                                     "kind": "DataDeclaration",
+                                    "declarationKind": null,
                                     "identifier": "obj",
                                     "typeAnnotation": "Object",
                                     "type": "Object"

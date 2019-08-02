@@ -22,6 +22,7 @@
                     "parameters": [
                         {
                             "kind": "DataDeclaration",
+                            "declarationKind": null,
                             "identifier": "message",
                             "typeAnnotation": "String",
                             "type": "String"
@@ -67,19 +68,22 @@
                                                 "type": "String",
                                                 "leftOperand": {
                                                     "kind": "StringLiteralExpression",
-                                                    "type": "String"
+                                                    "type": "String",
+                                                    "value": "My "
                                                 },
                                                 "operator": "PlusSign",
                                                 "rightOperand": {
                                                     "kind": "StringLiteralExpression",
-                                                    "type": "String"
+                                                    "type": "String",
+                                                    "value": "example "
                                                 }
                                             }
                                         },
                                         "operator": "PlusSign",
                                         "rightOperand": {
                                             "kind": "StringLiteralExpression",
-                                            "type": "String"
+                                            "type": "String",
+                                            "value": "string"
                                         }
                                     }
                                 ]

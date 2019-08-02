@@ -21,6 +21,7 @@
                     "parameters": [
                         {
                             "kind": "DataDeclaration",
+                            "declarationKind": null,
                             "identifier": "val",
                             "typeAnnotation": "String",
                             "type": "String"
@@ -36,7 +37,8 @@
                             },
                             "rightOperand": {
                                 "kind": "StringLiteralExpression",
-                                "type": "String"
+                                "type": "String",
+                                "value": "My example string."
                             }
                         },
                         {
@@ -57,7 +59,8 @@
                                 "operator": "PlusSign",
                                 "rightOperand": {
                                     "kind": "IntegerLiteralExpression",
-                                    "type": "Int"
+                                    "type": "Int",
+                                    "value": "2"
                                 }
                             }
                         }

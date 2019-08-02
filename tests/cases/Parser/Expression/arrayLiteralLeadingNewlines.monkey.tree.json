@@ -25,6 +25,7 @@
             },
             "parameters": {
                 "kind": "DataDeclarationSequence",
+                "dataDeclarationKeyword": null,
                 "children": []
             },
             "closingParenthesis": {
@@ -62,7 +63,7 @@
                                     "start": 27,
                                     "length": 4
                                 },
-                                "equalsSign": {
+                                "operator": {
                                     "kind": "ColonEqualsSign",
                                     "fullStart": 30,
                                     "start": 31,

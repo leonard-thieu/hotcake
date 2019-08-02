@@ -41,7 +41,7 @@
                                 "start": 30,
                                 "length": 6
                             },
-                            "equalsSign": {
+                            "operator": {
                                 "kind": "EqualsSign",
                                 "fullStart": 35,
                                 "start": 35,

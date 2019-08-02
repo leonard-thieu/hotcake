@@ -1,0 +1,856 @@
+{
+    "kind": "ModuleDeclaration",
+    "identifier": "forLoop",
+    "locals": [
+        "Main",
+        "CheckInt",
+        "Collection",
+        "CollectionEnumerator",
+        "Item",
+        "CheckItem"
+    ],
+    "members": [
+        {
+            "kind": "FunctionGroupDeclaration",
+            "identifier": "CheckInt",
+            "type": "CheckInt",
+            "overloads": [
+                {
+                    "kind": "FunctionDeclaration",
+                    "identifier": "CheckInt",
+                    "locals": [
+                        "val"
+                    ],
+                    "type": "CheckInt: Int(Int)",
+                    "returnType": "Int",
+                    "parameters": [
+                        {
+                            "kind": "DataDeclaration",
+                            "declarationKind": null,
+                            "identifier": "val",
+                            "typeAnnotation": "Int",
+                            "type": "Int"
+                        }
+                    ],
+                    "statements": []
+                }
+            ]
+        },
+        {
+            "kind": "FunctionGroupDeclaration",
+            "identifier": "CheckItem",
+            "type": "CheckItem",
+            "overloads": [
+                {
+                    "kind": "FunctionDeclaration",
+                    "identifier": "CheckItem",
+                    "locals": [
+                        "val"
+                    ],
+                    "type": "CheckItem: Int(Item)",
+                    "returnType": "Int",
+                    "parameters": [
+                        {
+                            "kind": "DataDeclaration",
+                            "declarationKind": null,
+                            "identifier": "val",
+                            "typeAnnotation": "Item",
+                            "type": "Item"
+                        }
+                    ],
+                    "statements": []
+                }
+            ]
+        },
+        {
+            "kind": "FunctionGroupDeclaration",
+            "identifier": "Main",
+            "type": "Main",
+            "overloads": [
+                {
+                    "kind": "FunctionDeclaration",
+                    "identifier": "Main",
+                    "locals": [
+                        "",
+                        "2",
+                        "3",
+                        "4",
+                        "5",
+                        "val2",
+                        "6",
+                        "7"
+                    ],
+                    "type": "Main: Int()",
+                    "returnType": "Int",
+                    "parameters": [],
+                    "statements": [
+                        {
+                            "kind": "ForLoop",
+                            "locals": [
+                                "i"
+                            ],
+                            "firstValueStatement": {
+                                "kind": "DataDeclarationStatement",
+                                "dataDeclaration": {
+                                    "kind": "DataDeclaration",
+                                    "declarationKind": "LocalKeyword",
+                                    "identifier": "i",
+                                    "expression": {
+                                        "kind": "IntegerLiteralExpression",
+                                        "type": "Int",
+                                        "value": "10"
+                                    },
+                                    "type": "Int"
+                                }
+                            },
+                            "lastValueExpression": {
+                                "kind": "BinaryExpression",
+                                "type": "Bool",
+                                "leftOperand": {
+                                    "kind": "IdentifierExpression",
+                                    "type": "Int",
+                                    "identifier": "i"
+                                },
+                                "operator": "GreaterThanSign",
+                                "rightOperand": {
+                                    "kind": "IntegerLiteralExpression",
+                                    "type": "Int",
+                                    "value": "0"
+                                }
+                            },
+                            "stepValueClause": {
+                                "kind": "AssignmentStatement",
+                                "leftOperand": {
+                                    "kind": "IdentifierExpression",
+                                    "type": "Int",
+                                    "identifier": "i"
+                                },
+                                "rightOperand": {
+                                    "kind": "BinaryExpression",
+                                    "type": "Int",
+                                    "leftOperand": {
+                                        "kind": "IdentifierExpression",
+                                        "type": "Int",
+                                        "identifier": "i"
+                                    },
+                                    "operator": "PlusSign",
+                                    "rightOperand": {
+                                        "kind": "UnaryExpression",
+                                        "type": "Int",
+                                        "operator": "HyphenMinus",
+                                        "operand": {
+                                            "kind": "IntegerLiteralExpression",
+                                            "type": "Int",
+                                            "value": "1"
+                                        }
+                                    }
+                                }
+                            },
+                            "statements": [
+                                {
+                                    "kind": "ExpressionStatement",
+                                    "expression": {
+                                        "kind": "InvokeExpression",
+                                        "type": "Int",
+                                        "invocationType": "CheckInt: Int(Int)",
+                                        "invokableExpression": {
+                                            "kind": "IdentifierExpression",
+                                            "type": "CheckInt",
+                                            "identifier": "CheckInt"
+                                        },
+                                        "arguments": [
+                                            {
+                                                "kind": "IdentifierExpression",
+                                                "type": "Int",
+                                                "identifier": "i"
+                                            }
+                                        ]
+                                    }
+                                }
+                            ]
+                        },
+                        {
+                            "kind": "DataDeclarationStatement",
+                            "dataDeclaration": {
+                                "kind": "DataDeclaration",
+                                "declarationKind": "LocalKeyword",
+                                "identifier": "",
+                                "expression": {
+                                    "kind": "StringLiteralExpression",
+                                    "type": "String",
+                                    "value": "MyValue"
+                                },
+                                "type": "String"
+                            }
+                        },
+                        {
+                            "kind": "DataDeclarationStatement",
+                            "dataDeclaration": {
+                                "kind": "DataDeclaration",
+                                "declarationKind": "LocalKeyword",
+                                "identifier": "2",
+                                "expression": {
+                                    "kind": "IntegerLiteralExpression",
+                                    "type": "Int",
+                                    "value": "0"
+                                },
+                                "type": "Int"
+                            }
+                        },
+                        {
+                            "kind": "WhileLoop",
+                            "locals": [
+                                "val"
+                            ],
+                            "expression": {
+                                "kind": "BinaryExpression",
+                                "type": "Bool",
+                                "leftOperand": {
+                                    "kind": "IdentifierExpression",
+                                    "type": "Int",
+                                    "identifier": "2"
+                                },
+                                "operator": "LessThanSign",
+                                "rightOperand": {
+                                    "kind": "InvokeExpression",
+                                    "type": "Int",
+                                    "invocationType": "Length: Int()",
+                                    "invokableExpression": {
+                                        "kind": "ScopeMemberAccessExpression",
+                                        "type": "Length",
+                                        "scopableExpression": {
+                                            "kind": "IdentifierExpression",
+                                            "type": "String",
+                                            "identifier": ""
+                                        },
+                                        "member": {
+                                            "kind": "IdentifierExpression",
+                                            "type": "Length",
+                                            "identifier": "Length"
+                                        }
+                                    },
+                                    "arguments": []
+                                }
+                            },
+                            "statements": [
+                                {
+                                    "kind": "DataDeclarationStatement",
+                                    "dataDeclaration": {
+                                        "kind": "DataDeclaration",
+                                        "declarationKind": "LocalKeyword",
+                                        "identifier": "val",
+                                        "expression": {
+                                            "kind": "IndexExpression",
+                                            "type": "Int",
+                                            "indexableExpression": {
+                                                "kind": "IdentifierExpression",
+                                                "type": "String",
+                                                "identifier": ""
+                                            },
+                                            "indexExpressionExpression": {
+                                                "kind": "IdentifierExpression",
+                                                "type": "Int",
+                                                "identifier": "2"
+                                            }
+                                        },
+                                        "type": "Int"
+                                    }
+                                },
+                                {
+                                    "kind": "AssignmentStatement",
+                                    "leftOperand": {
+                                        "kind": "IdentifierExpression",
+                                        "type": "Int",
+                                        "identifier": "2"
+                                    },
+                                    "rightOperand": {
+                                        "kind": "BinaryExpression",
+                                        "type": "Int",
+                                        "leftOperand": {
+                                            "kind": "IdentifierExpression",
+                                            "type": "Int",
+                                            "identifier": "2"
+                                        },
+                                        "operator": "PlusSign",
+                                        "rightOperand": {
+                                            "kind": "IntegerLiteralExpression",
+                                            "type": "Int",
+                                            "value": "1"
+                                        }
+                                    }
+                                },
+                                {
+                                    "kind": "ExpressionStatement",
+                                    "expression": {
+                                        "kind": "InvokeExpression",
+                                        "type": "Int",
+                                        "invocationType": "CheckInt: Int(Int)",
+                                        "invokableExpression": {
+                                            "kind": "IdentifierExpression",
+                                            "type": "CheckInt",
+                                            "identifier": "CheckInt"
+                                        },
+                                        "arguments": [
+                                            {
+                                                "kind": "IdentifierExpression",
+                                                "type": "Int",
+                                                "identifier": "val"
+                                            }
+                                        ]
+                                    }
+                                }
+                            ]
+                        },
+                        {
+                            "kind": "DataDeclarationStatement",
+                            "dataDeclaration": {
+                                "kind": "DataDeclaration",
+                                "declarationKind": "LocalKeyword",
+                                "identifier": "3",
+                                "expression": {
+                                    "kind": "ArrayLiteralExpression",
+                                    "type": "Int[]",
+                                    "expressions": [
+                                        {
+                                            "kind": "IntegerLiteralExpression",
+                                            "type": "Int",
+                                            "value": "1"
+                                        },
+                                        {
+                                            "kind": "IntegerLiteralExpression",
+                                            "type": "Int",
+                                            "value": "2"
+                                        },
+                                        {
+                                            "kind": "IntegerLiteralExpression",
+                                            "type": "Int",
+                                            "value": "3"
+                                        }
+                                    ]
+                                },
+                                "type": "Int[]"
+                            }
+                        },
+                        {
+                            "kind": "DataDeclarationStatement",
+                            "dataDeclaration": {
+                                "kind": "DataDeclaration",
+                                "declarationKind": "LocalKeyword",
+                                "identifier": "4",
+                                "expression": {
+                                    "kind": "IntegerLiteralExpression",
+                                    "type": "Int",
+                                    "value": "0"
+                                },
+                                "type": "Int"
+                            }
+                        },
+                        {
+                            "kind": "WhileLoop",
+                            "locals": [
+                                "val"
+                            ],
+                            "expression": {
+                                "kind": "BinaryExpression",
+                                "type": "Bool",
+                                "leftOperand": {
+                                    "kind": "IdentifierExpression",
+                                    "type": "Int",
+                                    "identifier": "4"
+                                },
+                                "operator": "LessThanSign",
+                                "rightOperand": {
+                                    "kind": "InvokeExpression",
+                                    "type": "Int",
+                                    "invocationType": "Length: Int()",
+                                    "invokableExpression": {
+                                        "kind": "ScopeMemberAccessExpression",
+                                        "type": "Length",
+                                        "scopableExpression": {
+                                            "kind": "IdentifierExpression",
+                                            "type": "Int[]",
+                                            "identifier": "3"
+                                        },
+                                        "member": {
+                                            "kind": "IdentifierExpression",
+                                            "type": "Length",
+                                            "identifier": "Length"
+                                        }
+                                    },
+                                    "arguments": []
+                                }
+                            },
+                            "statements": [
+                                {
+                                    "kind": "DataDeclarationStatement",
+                                    "dataDeclaration": {
+                                        "kind": "DataDeclaration",
+                                        "declarationKind": "LocalKeyword",
+                                        "identifier": "val",
+                                        "expression": {
+                                            "kind": "IndexExpression",
+                                            "type": "Int",
+                                            "indexableExpression": {
+                                                "kind": "IdentifierExpression",
+                                                "type": "Int[]",
+                                                "identifier": "3"
+                                            },
+                                            "indexExpressionExpression": {
+                                                "kind": "IdentifierExpression",
+                                                "type": "Int",
+                                                "identifier": "4"
+                                            }
+                                        },
+                                        "type": "Int"
+                                    }
+                                },
+                                {
+                                    "kind": "AssignmentStatement",
+                                    "leftOperand": {
+                                        "kind": "IdentifierExpression",
+                                        "type": "Int",
+                                        "identifier": "4"
+                                    },
+                                    "rightOperand": {
+                                        "kind": "BinaryExpression",
+                                        "type": "Int",
+                                        "leftOperand": {
+                                            "kind": "IdentifierExpression",
+                                            "type": "Int",
+                                            "identifier": "4"
+                                        },
+                                        "operator": "PlusSign",
+                                        "rightOperand": {
+                                            "kind": "IntegerLiteralExpression",
+                                            "type": "Int",
+                                            "value": "1"
+                                        }
+                                    }
+                                },
+                                {
+                                    "kind": "ExpressionStatement",
+                                    "expression": {
+                                        "kind": "InvokeExpression",
+                                        "type": "Int",
+                                        "invocationType": "CheckInt: Int(Int)",
+                                        "invokableExpression": {
+                                            "kind": "IdentifierExpression",
+                                            "type": "CheckInt",
+                                            "identifier": "CheckInt"
+                                        },
+                                        "arguments": [
+                                            {
+                                                "kind": "IdentifierExpression",
+                                                "type": "Int",
+                                                "identifier": "val"
+                                            }
+                                        ]
+                                    }
+                                }
+                            ]
+                        },
+                        {
+                            "kind": "DataDeclarationStatement",
+                            "dataDeclaration": {
+                                "kind": "DataDeclaration",
+                                "declarationKind": "LocalKeyword",
+                                "identifier": "5",
+                                "expression": {
+                                    "kind": "InvokeExpression",
+                                    "type": "CollectionEnumerator",
+                                    "invocationType": "ObjectEnumerator: CollectionEnumerator()",
+                                    "invokableExpression": {
+                                        "kind": "ScopeMemberAccessExpression",
+                                        "type": "ObjectEnumerator",
+                                        "scopableExpression": {
+                                            "kind": "InvokeExpression",
+                                            "type": "Collection",
+                                            "invocationType": "New Collection()",
+                                            "invokableExpression": {
+                                                "kind": "NewExpression",
+                                                "type": "New Collection",
+                                                "typeReference": "Collection"
+                                            },
+                                            "arguments": []
+                                        },
+                                        "member": {
+                                            "kind": "IdentifierExpression",
+                                            "type": "ObjectEnumerator",
+                                            "identifier": "ObjectEnumerator"
+                                        }
+                                    },
+                                    "arguments": []
+                                },
+                                "type": "CollectionEnumerator"
+                            }
+                        },
+                        {
+                            "kind": "WhileLoop",
+                            "locals": [
+                                "item"
+                            ],
+                            "expression": {
+                                "kind": "InvokeExpression",
+                                "type": "Bool",
+                                "invocationType": "HasNext: Bool()",
+                                "invokableExpression": {
+                                    "kind": "ScopeMemberAccessExpression",
+                                    "type": "HasNext",
+                                    "scopableExpression": {
+                                        "kind": "IdentifierExpression",
+                                        "type": "CollectionEnumerator",
+                                        "identifier": "5"
+                                    },
+                                    "member": {
+                                        "kind": "IdentifierExpression",
+                                        "type": "HasNext",
+                                        "identifier": "HasNext"
+                                    }
+                                },
+                                "arguments": []
+                            },
+                            "statements": [
+                                {
+                                    "kind": "DataDeclarationStatement",
+                                    "dataDeclaration": {
+                                        "kind": "DataDeclaration",
+                                        "declarationKind": "LocalKeyword",
+                                        "identifier": "item",
+                                        "expression": {
+                                            "kind": "InvokeExpression",
+                                            "type": "Item",
+                                            "invocationType": "NextObject: Item()",
+                                            "invokableExpression": {
+                                                "kind": "ScopeMemberAccessExpression",
+                                                "type": "NextObject",
+                                                "scopableExpression": {
+                                                    "kind": "IdentifierExpression",
+                                                    "type": "CollectionEnumerator",
+                                                    "identifier": "5"
+                                                },
+                                                "member": {
+                                                    "kind": "IdentifierExpression",
+                                                    "type": "NextObject",
+                                                    "identifier": "NextObject"
+                                                }
+                                            },
+                                            "arguments": []
+                                        },
+                                        "type": "Item"
+                                    }
+                                },
+                                {
+                                    "kind": "ExpressionStatement",
+                                    "expression": {
+                                        "kind": "InvokeExpression",
+                                        "type": "Int",
+                                        "invocationType": "CheckItem: Int(Item)",
+                                        "invokableExpression": {
+                                            "kind": "IdentifierExpression",
+                                            "type": "CheckItem",
+                                            "identifier": "CheckItem"
+                                        },
+                                        "arguments": [
+                                            {
+                                                "kind": "IdentifierExpression",
+                                                "type": "Item",
+                                                "identifier": "item"
+                                            }
+                                        ]
+                                    }
+                                }
+                            ]
+                        },
+                        {
+                            "kind": "DataDeclarationStatement",
+                            "dataDeclaration": {
+                                "kind": "DataDeclaration",
+                                "declarationKind": "LocalKeyword",
+                                "identifier": "val2",
+                                "typeAnnotation": "Int",
+                                "type": "Int"
+                            }
+                        },
+                        {
+                            "kind": "DataDeclarationStatement",
+                            "dataDeclaration": {
+                                "kind": "DataDeclaration",
+                                "declarationKind": "LocalKeyword",
+                                "identifier": "6",
+                                "expression": {
+                                    "kind": "ArrayLiteralExpression",
+                                    "type": "Int[]",
+                                    "expressions": [
+                                        {
+                                            "kind": "IntegerLiteralExpression",
+                                            "type": "Int",
+                                            "value": "3"
+                                        },
+                                        {
+                                            "kind": "IntegerLiteralExpression",
+                                            "type": "Int",
+                                            "value": "4"
+                                        },
+                                        {
+                                            "kind": "IntegerLiteralExpression",
+                                            "type": "Int",
+                                            "value": "5"
+                                        }
+                                    ]
+                                },
+                                "type": "Int[]"
+                            }
+                        },
+                        {
+                            "kind": "DataDeclarationStatement",
+                            "dataDeclaration": {
+                                "kind": "DataDeclaration",
+                                "declarationKind": "LocalKeyword",
+                                "identifier": "7",
+                                "expression": {
+                                    "kind": "IntegerLiteralExpression",
+                                    "type": "Int",
+                                    "value": "0"
+                                },
+                                "type": "Int"
+                            }
+                        },
+                        {
+                            "kind": "WhileLoop",
+                            "locals": [],
+                            "expression": {
+                                "kind": "BinaryExpression",
+                                "type": "Bool",
+                                "leftOperand": {
+                                    "kind": "IdentifierExpression",
+                                    "type": "Int",
+                                    "identifier": "7"
+                                },
+                                "operator": "LessThanSign",
+                                "rightOperand": {
+                                    "kind": "InvokeExpression",
+                                    "type": "Int",
+                                    "invocationType": "Length: Int()",
+                                    "invokableExpression": {
+                                        "kind": "ScopeMemberAccessExpression",
+                                        "type": "Length",
+                                        "scopableExpression": {
+                                            "kind": "IdentifierExpression",
+                                            "type": "Int[]",
+                                            "identifier": "6"
+                                        },
+                                        "member": {
+                                            "kind": "IdentifierExpression",
+                                            "type": "Length",
+                                            "identifier": "Length"
+                                        }
+                                    },
+                                    "arguments": []
+                                }
+                            },
+                            "statements": [
+                                {
+                                    "kind": "AssignmentStatement",
+                                    "leftOperand": {
+                                        "kind": "IdentifierExpression",
+                                        "type": "Int",
+                                        "identifier": "7"
+                                    },
+                                    "rightOperand": {
+                                        "kind": "IndexExpression",
+                                        "type": "Int",
+                                        "indexableExpression": {
+                                            "kind": "IdentifierExpression",
+                                            "type": "Int[]",
+                                            "identifier": "6"
+                                        },
+                                        "indexExpressionExpression": {
+                                            "kind": "IdentifierExpression",
+                                            "type": "Int",
+                                            "identifier": "7"
+                                        }
+                                    }
+                                },
+                                {
+                                    "kind": "AssignmentStatement",
+                                    "leftOperand": {
+                                        "kind": "IdentifierExpression",
+                                        "type": "Int",
+                                        "identifier": "7"
+                                    },
+                                    "rightOperand": {
+                                        "kind": "BinaryExpression",
+                                        "type": "Int",
+                                        "leftOperand": {
+                                            "kind": "IdentifierExpression",
+                                            "type": "Int",
+                                            "identifier": "7"
+                                        },
+                                        "operator": "PlusSign",
+                                        "rightOperand": {
+                                            "kind": "IntegerLiteralExpression",
+                                            "type": "Int",
+                                            "value": "1"
+                                        }
+                                    }
+                                },
+                                {
+                                    "kind": "ExpressionStatement",
+                                    "expression": {
+                                        "kind": "InvokeExpression",
+                                        "type": "Int",
+                                        "invocationType": "CheckInt: Int(Int)",
+                                        "invokableExpression": {
+                                            "kind": "IdentifierExpression",
+                                            "type": "CheckInt",
+                                            "identifier": "CheckInt"
+                                        },
+                                        "arguments": [
+                                            {
+                                                "kind": "IdentifierExpression",
+                                                "type": "Int",
+                                                "identifier": "val2"
+                                            }
+                                        ]
+                                    }
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "kind": "ClassDeclaration",
+            "locals": [
+                "ObjectEnumerator",
+                "New"
+            ],
+            "identifier": "Collection",
+            "type": "Collection",
+            "superType": "Object",
+            "members": [
+                {
+                    "kind": "ClassMethodGroupDeclaration",
+                    "identifier": "ObjectEnumerator",
+                    "type": "ObjectEnumerator",
+                    "overloads": [
+                        {
+                            "kind": "ClassMethodDeclaration",
+                            "identifier": "ObjectEnumerator",
+                            "locals": [],
+                            "type": "ObjectEnumerator: CollectionEnumerator()",
+                            "returnType": "CollectionEnumerator",
+                            "parameters": [],
+                            "statements": []
+                        }
+                    ]
+                },
+                {
+                    "kind": "ClassMethodGroupDeclaration",
+                    "identifier": "New",
+                    "type": "New Collection",
+                    "overloads": [
+                        {
+                            "kind": "ClassMethodDeclaration",
+                            "identifier": "New",
+                            "locals": [],
+                            "type": "New Collection()",
+                            "returnType": "Collection",
+                            "parameters": [],
+                            "statements": []
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "kind": "ClassDeclaration",
+            "locals": [
+                "HasNext",
+                "NextObject",
+                "New"
+            ],
+            "identifier": "CollectionEnumerator",
+            "type": "CollectionEnumerator",
+            "superType": "Object",
+            "members": [
+                {
+                    "kind": "ClassMethodGroupDeclaration",
+                    "identifier": "HasNext",
+                    "type": "HasNext",
+                    "overloads": [
+                        {
+                            "kind": "ClassMethodDeclaration",
+                            "identifier": "HasNext",
+                            "locals": [],
+                            "type": "HasNext: Bool()",
+                            "returnType": "Bool",
+                            "parameters": [],
+                            "statements": []
+                        }
+                    ]
+                },
+                {
+                    "kind": "ClassMethodGroupDeclaration",
+                    "identifier": "NextObject",
+                    "type": "NextObject",
+                    "overloads": [
+                        {
+                            "kind": "ClassMethodDeclaration",
+                            "identifier": "NextObject",
+                            "locals": [],
+                            "type": "NextObject: Item()",
+                            "returnType": "Item",
+                            "parameters": [],
+                            "statements": []
+                        }
+                    ]
+                },
+                {
+                    "kind": "ClassMethodGroupDeclaration",
+                    "identifier": "New",
+                    "type": "New CollectionEnumerator",
+                    "overloads": [
+                        {
+                            "kind": "ClassMethodDeclaration",
+                            "identifier": "New",
+                            "locals": [],
+                            "type": "New CollectionEnumerator()",
+                            "returnType": "CollectionEnumerator",
+                            "parameters": [],
+                            "statements": []
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "kind": "ClassDeclaration",
+            "locals": [
+                "New"
+            ],
+            "identifier": "Item",
+            "type": "Item",
+            "superType": "Object",
+            "members": [
+                {
+                    "kind": "ClassMethodGroupDeclaration",
+                    "identifier": "New",
+                    "type": "New Item",
+                    "overloads": [
+                        {
+                            "kind": "ClassMethodDeclaration",
+                            "identifier": "New",
+                            "locals": [],
+                            "type": "New Item()",
+                            "returnType": "Item",
+                            "parameters": [],
+                            "statements": []
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

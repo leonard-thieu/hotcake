@@ -17,13 +17,13 @@ export class BoundExternClassDeclaration extends BoundNode {
     declaration: ExternClassDeclaration = undefined!;
 
     identifier: BoundSymbol = undefined!;
-    locals: BoundSymbolTable = undefined!;
+    readonly locals = new BoundSymbolTable();
     type: ObjectType | StringType | ArrayType = undefined!;
 
     superType?: BoundExternClassDeclaration | BoundClassDeclaration = undefined;
     nativeSymbol?: BoundStringLiteralExpression = undefined;
 
-    members: BoundTypeMembers<BoundExternClassDeclarationMember> = undefined!;
+    readonly members = new BoundTypeMembers<BoundExternClassDeclarationMember>();
 }
 
 export type BoundExternClassDeclarationMember =

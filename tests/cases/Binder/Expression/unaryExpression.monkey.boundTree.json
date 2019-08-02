@@ -24,6 +24,7 @@
                     "parameters": [
                         {
                             "kind": "DataDeclaration",
+                            "declarationKind": null,
                             "identifier": "val",
                             "typeAnnotation": "Bool",
                             "type": "Bool"
@@ -49,6 +50,7 @@
                     "parameters": [
                         {
                             "kind": "DataDeclaration",
+                            "declarationKind": null,
                             "identifier": "val",
                             "typeAnnotation": "Int",
                             "type": "Int"
@@ -74,6 +76,7 @@
                     "parameters": [
                         {
                             "kind": "DataDeclaration",
+                            "declarationKind": null,
                             "identifier": "val",
                             "typeAnnotation": "Float",
                             "type": "Float"
@@ -114,7 +117,8 @@
                                         "operator": "PlusSign",
                                         "operand": {
                                             "kind": "IntegerLiteralExpression",
-                                            "type": "Int"
+                                            "type": "Int",
+                                            "value": "4"
                                         }
                                     }
                                 ]
@@ -138,7 +142,8 @@
                                         "operator": "PlusSign",
                                         "operand": {
                                             "kind": "FloatLiteralExpression",
-                                            "type": "Float"
+                                            "type": "Float",
+                                            "value": "13.85"
                                         }
                                     }
                                 ]
@@ -162,7 +167,8 @@
                                         "operator": "HyphenMinus",
                                         "operand": {
                                             "kind": "IntegerLiteralExpression",
-                                            "type": "Int"
+                                            "type": "Int",
+                                            "value": "2"
                                         }
                                     }
                                 ]
@@ -186,7 +192,8 @@
                                         "operator": "HyphenMinus",
                                         "operand": {
                                             "kind": "FloatLiteralExpression",
-                                            "type": "Float"
+                                            "type": "Float",
+                                            "value": "1.67"
                                         }
                                     }
                                 ]
@@ -210,7 +217,8 @@
                                         "operator": "Tilde",
                                         "operand": {
                                             "kind": "IntegerLiteralExpression",
-                                            "type": "Int"
+                                            "type": "Int",
+                                            "value": "12"
                                         }
                                     }
                                 ]
@@ -234,7 +242,8 @@
                                         "operator": "NotKeyword",
                                         "operand": {
                                             "kind": "BooleanLiteralExpression",
-                                            "type": "Bool"
+                                            "type": "Bool",
+                                            "value": "False"
                                         }
                                     }
                                 ]
@@ -258,7 +267,8 @@
                                         "operator": "NotKeyword",
                                         "operand": {
                                             "kind": "IntegerLiteralExpression",
-                                            "type": "Int"
+                                            "type": "Int",
+                                            "value": "5"
                                         }
                                     }
                                 ]
@@ -282,7 +292,8 @@
                                         "operator": "NotKeyword",
                                         "operand": {
                                             "kind": "FloatLiteralExpression",
-                                            "type": "Float"
+                                            "type": "Float",
+                                            "value": "9.12"
                                         }
                                     }
                                 ]
@@ -306,7 +317,8 @@
                                         "operator": "NotKeyword",
                                         "operand": {
                                             "kind": "StringLiteralExpression",
-                                            "type": "String"
+                                            "type": "String",
+                                            "value": ""
                                         }
                                     }
                                 ]

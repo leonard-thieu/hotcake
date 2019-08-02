@@ -22,6 +22,7 @@
                     "parameters": [
                         {
                             "kind": "DataDeclaration",
+                            "declarationKind": null,
                             "identifier": "value",
                             "typeAnnotation": "Int",
                             "type": "Int"
@@ -40,6 +41,7 @@
                     "parameters": [
                         {
                             "kind": "DataDeclaration",
+                            "declarationKind": null,
                             "identifier": "value",
                             "typeAnnotation": "Float",
                             "type": "Float"
@@ -58,6 +60,7 @@
                     "parameters": [
                         {
                             "kind": "DataDeclaration",
+                            "declarationKind": null,
                             "identifier": "value",
                             "typeAnnotation": "String",
                             "type": "String"
@@ -94,7 +97,8 @@
                                 "arguments": [
                                     {
                                         "kind": "IntegerLiteralExpression",
-                                        "type": "Int"
+                                        "type": "Int",
+                                        "value": "10"
                                     }
                                 ]
                             }
@@ -113,7 +117,8 @@
                                 "arguments": [
                                     {
                                         "kind": "FloatLiteralExpression",
-                                        "type": "Float"
+                                        "type": "Float",
+                                        "value": "10.0"
                                     }
                                 ]
                             }
@@ -132,7 +137,8 @@
                                 "arguments": [
                                     {
                                         "kind": "StringLiteralExpression",
-                                        "type": "String"
+                                        "type": "String",
+                                        "value": "10"
                                     }
                                 ]
                             }
