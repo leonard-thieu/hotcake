@@ -1980,15 +1980,10 @@ export class Binder {
                                 name: this.getIdentifierText(forEachInLoop.indexVariable),
                                 operator: operator.kind,
                                 getTypeAnnotation: () => this.bindTypeAnnotation(forEachInLoop.typeAnnotation),
-                                getExpression: (parent) => {
-                                    const indexExpression = new BoundIndexExpression();
-                                    indexExpression.parent = parent;
-                                    indexExpression.indexableExpression = this.identifierExpression(indexExpression, collectionIdentifier);
-                                    indexExpression.indexExpressionExpression = this.identifierExpression(indexExpression, indexIdentifier);
-                                    indexExpression.type = this.getCollectionElementType(boundCollectionDeclarationStatement.dataDeclaration.type);
-
-                                    return indexExpression;
-                                },
+                                getExpression: (parent) => this.indexExpression(parent,
+                                    (parent) => this.identifierExpression(parent, collectionIdentifier),
+                                    (parent) => this.identifierExpression(parent, indexIdentifier),
+                                ),
                             }
                         )
                     );
@@ -2002,15 +1997,10 @@ export class Binder {
                     const indexVariableStatement = this.assignmentStatement(boundWhileLoop,
                         (parent) => this.identifierExpression(parent, indexIdentifier),
                         operator.kind,
-                        (parent) => {
-                            const indexExpression = new BoundIndexExpression();
-                            indexExpression.parent = parent;
-                            indexExpression.indexableExpression = this.identifierExpression(indexExpression, collectionIdentifier);
-                            indexExpression.indexExpressionExpression = this.identifierExpression(indexExpression, indexIdentifier);
-                            indexExpression.type = this.getCollectionElementType(boundCollectionDeclarationStatement.dataDeclaration.type);
-
-                            return indexExpression;
-                        },
+                        (parent) => this.indexExpression(parent,
+                            (parent) => this.identifierExpression(parent, collectionIdentifier),
+                            (parent) => this.identifierExpression(parent, indexIdentifier),
+                        ),
                     );
                     boundWhileLoop.statements.push(indexVariableStatement);
                 }
@@ -3060,15 +3050,27 @@ export class Binder {
         parent: BoundNodes,
         indexExpression: IndexExpression,
     ): BoundIndexExpression {
+        return this.indexExpression(parent,
+            (parent) => this.bindExpression(parent, indexExpression.indexableExpression),
+            (parent) => this.bindExpression(parent, indexExpression.indexExpressionExpression),
+        );
+    }
+
+    private indexExpression(
+        parent: BoundNodes,
+        getIndexableExpression: GetExpression,
+        getIndexExpressionExpression: GetExpression,
+    ): BoundIndexExpression {
         const boundIndexExpression = new BoundIndexExpression();
         boundIndexExpression.parent = parent;
 
-        boundIndexExpression.indexableExpression = this.bindExpression(boundIndexExpression, indexExpression.indexableExpression);
+        boundIndexExpression.indexableExpression = getIndexableExpression(boundIndexExpression);
+        boundIndexExpression.indexExpressionExpression = getIndexExpressionExpression(boundIndexExpression);
+
         if (!boundIndexExpression.indexExpressionExpression.type.isConvertibleTo(this.project.intTypeDeclaration.type)) {
             throw new Error(`Index expression is '${boundIndexExpression.indexExpressionExpression.type}' but must be '${this.project.intTypeDeclaration.type}'.`);
         }
 
-        boundIndexExpression.indexExpressionExpression = this.bindExpression(boundIndexExpression, indexExpression.indexExpressionExpression);
         boundIndexExpression.type = this.getTypeOfIndexExpression(boundIndexExpression.indexableExpression);
 
         return boundIndexExpression;
