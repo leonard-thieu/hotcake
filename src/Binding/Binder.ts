@@ -1,5 +1,5 @@
 import path = require('path');
-import { assertNever } from '../assertNever';
+import { Evaluator } from '../Evaluator';
 import { FILE_EXTENSION, Project } from '../Project';
 import { CommaSeparator } from '../Syntax/Node/CommaSeparator';
 import { AccessibilityDirective } from '../Syntax/Node/Declaration/AccessibilityDirective';
@@ -55,6 +55,7 @@ import { MissableToken } from '../Syntax/Token/MissingToken';
 import { SkippedToken } from '../Syntax/Token/SkippedToken';
 import { ColonEqualsSignToken, EqualsSignToken, NewKeywordToken } from '../Syntax/Token/Token';
 import { TokenKind } from '../Syntax/Token/TokenKind';
+import { assertNever } from '../util';
 import { ANONYMOUS_NAME, areIdentifiersSame, BoundIdentifiableDeclaration, BoundSymbol, BoundSymbolTable } from './BoundSymbol';
 import { BoundModulePath } from "./Node/BoundModulePath";
 import { BoundNodes } from './Node/BoundNode';
@@ -465,9 +466,9 @@ export class Binder {
         externDataDeclaration: ExternDataDeclaration,
         dataDeclarationKeyword: ExternDataDeclarationKeywordToken,
     ): BoundExternDataDeclaration {
-        let boundExternDataDeclaration = this.declarationCache.get(externDataDeclaration);
+        let boundExternDataDeclaration = this.declarationCache.get(externDataDeclaration) as BoundExternDataDeclaration | undefined;
         if (boundExternDataDeclaration) {
-            return boundExternDataDeclaration as BoundExternDataDeclaration;
+            return boundExternDataDeclaration;
         }
 
         boundExternDataDeclaration = new BoundExternDataDeclaration();
@@ -500,7 +501,7 @@ export class Binder {
         parent: BoundModuleDeclaration | BoundExternClassDeclaration,
         externFunctionDeclaration: ExternFunctionDeclaration,
     ): BoundExternFunctionGroupDeclaration {
-        let boundExternFunctionDeclaration = this.declarationCache.get(externFunctionDeclaration);
+        let boundExternFunctionDeclaration = this.declarationCache.get(externFunctionDeclaration) as BoundExternFunctionDeclaration | undefined;
         if (boundExternFunctionDeclaration) {
             return boundExternFunctionDeclaration.parent as BoundExternFunctionGroupDeclaration;
         }
@@ -547,9 +548,9 @@ export class Binder {
         parent: BoundModuleDeclaration,
         externClassDeclaration: ExternClassDeclaration,
     ): BoundExternClassDeclaration {
-        let boundExternClassDeclaration = this.declarationCache.get(externClassDeclaration);
+        let boundExternClassDeclaration = this.declarationCache.get(externClassDeclaration) as BoundExternClassDeclaration | undefined;
         if (boundExternClassDeclaration) {
-            return boundExternClassDeclaration as BoundExternClassDeclaration;
+            return boundExternClassDeclaration;
         }
 
         const name = this.getIdentifierText(externClassDeclaration.identifier);
@@ -898,7 +899,7 @@ export class Binder {
         parent: BoundModuleDeclaration | BoundClassDeclaration,
         functionDeclaration: FunctionDeclaration,
     ): BoundFunctionGroupDeclaration {
-        let boundFunctionDeclaration = this.declarationCache.get(functionDeclaration);
+        let boundFunctionDeclaration = this.declarationCache.get(functionDeclaration) as BoundFunctionDeclaration | undefined;
         if (boundFunctionDeclaration) {
             return boundFunctionDeclaration.parent as BoundFunctionGroupDeclaration;
         }
@@ -1001,7 +1002,7 @@ export class Binder {
         parent: BoundInterfaceDeclaration,
         interfaceMethodDeclaration: InterfaceMethodDeclaration,
     ): BoundInterfaceMethodGroupDeclaration {
-        let boundInterfaceMethodDeclaration = this.declarationCache.get(interfaceMethodDeclaration);
+        let boundInterfaceMethodDeclaration = this.declarationCache.get(interfaceMethodDeclaration) as BoundInterfaceMethodDeclaration | undefined;
         if (boundInterfaceMethodDeclaration) {
             return boundInterfaceMethodDeclaration.parent as BoundInterfaceMethodGroupDeclaration;
         }
@@ -1042,9 +1043,9 @@ export class Binder {
         parent: BoundModuleDeclaration,
         classDeclaration: ClassDeclaration,
     ): BoundClassDeclaration {
-        let boundClassDeclaration = this.declarationCache.get(classDeclaration);
+        let boundClassDeclaration = this.declarationCache.get(classDeclaration) as BoundClassDeclaration | undefined;
         if (boundClassDeclaration) {
-            return boundClassDeclaration as BoundClassDeclaration;
+            return boundClassDeclaration;
         }
 
         boundClassDeclaration = new BoundClassDeclaration();
@@ -1812,7 +1813,12 @@ export class Binder {
         const boundForLoop = new BoundForLoop();
         boundForLoop.parent = parent;
 
-        let loopVariable: BoundSymbol;
+        const { indexVariable } = numericForLoop;
+        if (indexVariable.kind === TokenKind.Missing) {
+            throw new Error(`Index variable is missing.`);
+        }
+
+        let indexVariableDeclaration: BoundDataDeclaration;
 
         if (numericForLoop.localKeyword) {
             const { localKeyword } = numericForLoop;
@@ -1821,7 +1827,7 @@ export class Binder {
             boundForLoop.firstValueStatement = this.dataDeclarationStatement(boundForLoop,
                 (parent) => this.dataDeclaration(parent,
                     {
-                        name: this.getIdentifierText(numericForLoop.indexVariable),
+                        name: this.getIdentifierText(indexVariable),
                         declarationKind: localKeyword.kind,
                         operator: operator.kind,
                         getTypeAnnotation: () => this.bindTypeAnnotation(numericForLoop.typeAnnotation),
@@ -1830,71 +1836,30 @@ export class Binder {
                 ),
             );
 
-            loopVariable = boundForLoop.firstValueStatement.dataDeclaration.identifier;
+            indexVariableDeclaration = boundForLoop.firstValueStatement.dataDeclaration;
         } else {
-            // TODO: Resolve identifier
-            loopVariable = undefined!;
-
             const operator = numericForLoop.operator as MissableToken<AssignmentOperatorToken>;
             if (operator.kind === TokenKind.Missing) {
                 throw new Error(`Missing assignment operator.`);
             }
 
+            // TODO: Validate that it is a `BoundDataDeclaration`?
+            indexVariableDeclaration = this.resolveIdentifier(boundForLoop, indexVariable) as BoundDataDeclaration;
+
             boundForLoop.firstValueStatement = this.assignmentStatement(boundForLoop,
-                (parent) => this.identifierExpression(parent, loopVariable),
+                (parent) => this.identifierExpression(parent, indexVariableDeclaration),
                 operator.kind,
                 (parent) => this.bindExpression(parent, numericForLoop.firstValueExpression),
             );
         }
 
-        type ComparisonTokenKind =
-            | TokenKind.GreaterThanSignEqualsSign
-            | TokenKind.LessThanSignEqualsSign
-            | TokenKind.GreaterThanSign
-            | TokenKind.LessThanSign
-            ;
-        let comparisonExpressionOperator: ComparisonTokenKind;
-
-        switch (numericForLoop.toOrUntilKeyword.kind) {
-            case TokenKind.ToKeyword: {
-                if (numericForLoop.stepValueExpression &&
-                    numericForLoop.stepValueExpression.kind === NodeKind.UnaryExpression &&
-                    numericForLoop.stepValueExpression.operator.kind === TokenKind.HyphenMinus
-                ) {
-                    comparisonExpressionOperator = TokenKind.GreaterThanSignEqualsSign;
-                } else {
-                    comparisonExpressionOperator = TokenKind.LessThanSignEqualsSign;
-                }
-                break;
-            }
-            case TokenKind.UntilKeyword: {
-                if (numericForLoop.stepValueExpression &&
-                    numericForLoop.stepValueExpression.kind === NodeKind.UnaryExpression &&
-                    numericForLoop.stepValueExpression.operator.kind === TokenKind.HyphenMinus
-                ) {
-                    comparisonExpressionOperator = TokenKind.GreaterThanSign;
-                } else {
-                    comparisonExpressionOperator = TokenKind.LessThanSign;
-                }
-                break;
-            }
-            case TokenKind.Missing: {
-                throw new Error(`Missing 'To' or 'Until' keyword.`);
-            }
-            default: {
-                comparisonExpressionOperator = assertNever(numericForLoop.toOrUntilKeyword);
-                break;
-            }
-        }
-
         boundForLoop.lastValueExpression = this.binaryExpression(boundForLoop,
-            (parent) => this.identifierExpression(parent, loopVariable),
-            comparisonExpressionOperator,
+            (parent) => this.identifierExpression(parent, indexVariableDeclaration),
+            this.getComparisonExpressionOperator(numericForLoop),
             (parent) => this.bindExpression(parent, numericForLoop.lastValueExpression),
         );
 
         let getStepValueExpression: GetExpression;
-
         if (numericForLoop.stepValueExpression) {
             const { stepValueExpression } = numericForLoop;
             getStepValueExpression = (parent) => this.bindExpression(parent, stepValueExpression)
@@ -1903,7 +1868,7 @@ export class Binder {
         }
 
         boundForLoop.stepValueClause = this.assignmentStatement(boundForLoop,
-            (parent) => this.identifierExpression(parent, loopVariable),
+            (parent) => this.identifierExpression(parent, indexVariableDeclaration),
             TokenKind.PlusSignEqualsSign,
             getStepValueExpression,
         );
@@ -1911,6 +1876,37 @@ export class Binder {
         boundForLoop.statements = this.bindStatements(boundForLoop, numericForLoop.statements);
 
         return boundForLoop;
+    }
+
+    private getComparisonExpressionOperator(numericForLoop: NumericForLoop) {
+        switch (numericForLoop.toOrUntilKeyword.kind) {
+            case TokenKind.ToKeyword: {
+                if (numericForLoop.stepValueExpression &&
+                    numericForLoop.stepValueExpression.kind === NodeKind.UnaryExpression &&
+                    numericForLoop.stepValueExpression.operator.kind === TokenKind.HyphenMinus
+                ) {
+                    return TokenKind.GreaterThanSignEqualsSign;
+                }
+
+                return TokenKind.LessThanSignEqualsSign;
+            }
+            case TokenKind.UntilKeyword: {
+                if (numericForLoop.stepValueExpression &&
+                    numericForLoop.stepValueExpression.kind === NodeKind.UnaryExpression &&
+                    numericForLoop.stepValueExpression.operator.kind === TokenKind.HyphenMinus
+                ) {
+                    return TokenKind.GreaterThanSign;
+                }
+
+                return TokenKind.LessThanSign;
+            }
+            case TokenKind.Missing: {
+                throw new Error(`Missing 'To' or 'Until' keyword.`);
+            }
+            default: {
+                return assertNever(numericForLoop.toOrUntilKeyword);
+            }
+        }
     }
 
     private bindForEachInLoop(
@@ -1948,18 +1944,18 @@ export class Binder {
                 );
                 boundStatements.push(firstValueStatement);
 
-                const indexIdentifier = firstValueStatement.dataDeclaration.identifier;
-                const collectionIdentifier = boundCollectionDeclarationStatement.dataDeclaration.identifier;
+                const boundIndexDeclaration = firstValueStatement.dataDeclaration;
+                const boundCollectionDeclaration = boundCollectionDeclarationStatement.dataDeclaration;
 
                 const boundWhileLoop = new BoundWhileLoop();
                 boundWhileLoop.parent = parent;
 
                 boundWhileLoop.expression = this.binaryExpression(boundWhileLoop,
-                    (parent) => this.identifierExpression(parent, indexIdentifier),
+                    (parent) => this.identifierExpression(parent, boundIndexDeclaration),
                     TokenKind.LessThanSign,
                     (parent) => this.invokeExpression(parent,
                         (parent) => this.scopeMemberAccessExpression(parent,
-                            (parent) => this.identifierExpression(parent, collectionIdentifier),
+                            (parent) => this.identifierExpression(parent, boundCollectionDeclaration),
                             (parent, scope) => this.identifierExpressionFromName(parent,
                                 'Length',
                                 scope,
@@ -1981,8 +1977,8 @@ export class Binder {
                                 operator: operator.kind,
                                 getTypeAnnotation: () => this.bindTypeAnnotation(forEachInLoop.typeAnnotation),
                                 getExpression: (parent) => this.indexExpression(parent,
-                                    (parent) => this.identifierExpression(parent, collectionIdentifier),
-                                    (parent) => this.identifierExpression(parent, indexIdentifier),
+                                    (parent) => this.identifierExpression(parent, boundCollectionDeclaration),
+                                    (parent) => this.identifierExpression(parent, boundIndexDeclaration),
                                 ),
                             }
                         )
@@ -1995,24 +1991,25 @@ export class Binder {
                     }
 
                     const indexVariableStatement = this.assignmentStatement(boundWhileLoop,
-                        (parent) => this.identifierExpression(parent, indexIdentifier),
+                        (parent) => this.identifierExpression(parent, boundIndexDeclaration),
                         operator.kind,
                         (parent) => this.indexExpression(parent,
-                            (parent) => this.identifierExpression(parent, collectionIdentifier),
-                            (parent) => this.identifierExpression(parent, indexIdentifier),
+                            (parent) => this.identifierExpression(parent, boundCollectionDeclaration),
+                            (parent) => this.identifierExpression(parent, boundIndexDeclaration),
                         ),
                     );
                     boundWhileLoop.statements.push(indexVariableStatement);
                 }
 
                 const incrementStatement = this.assignmentStatement(boundWhileLoop,
-                    (parent) => this.identifierExpression(parent, indexIdentifier),
+                    (parent) => this.identifierExpression(parent, boundIndexDeclaration),
                     TokenKind.PlusSignEqualsSign,
                     (parent) => this.integerLiteral(parent, '1'),
                 );
                 boundWhileLoop.statements.push(incrementStatement);
 
-                boundWhileLoop.statements.push(...this.bindStatements(boundWhileLoop, forEachInLoop.statements));
+                const boundWhileLoopStatements = this.bindStatements(boundWhileLoop, forEachInLoop.statements);
+                boundWhileLoop.statements.push(...boundWhileLoopStatements);
 
                 boundStatements.push(boundWhileLoop);
                 break;
@@ -2040,14 +2037,14 @@ export class Binder {
                 );
                 boundStatements.push(boundCollectionDeclarationStatement);
 
-                const enumeratorIdentifier = boundCollectionDeclarationStatement.dataDeclaration.identifier;
+                const boundEnumeratorDeclaration = boundCollectionDeclarationStatement.dataDeclaration;
 
                 const boundWhileLoop = new BoundWhileLoop();
                 boundWhileLoop.parent = parent;
 
                 boundWhileLoop.expression = this.invokeExpression(boundWhileLoop,
                     (parent) => this.scopeMemberAccessExpression(parent,
-                        (parent) => this.identifierExpression(parent, enumeratorIdentifier),
+                        (parent) => this.identifierExpression(parent, boundEnumeratorDeclaration),
                         (parent, scope) => this.identifierExpressionFromName(parent,
                             'HasNext',
                             scope,
@@ -2058,18 +2055,23 @@ export class Binder {
 
                 boundWhileLoop.statements = [];
 
+                const { indexVariable } = forEachInLoop;
+                if (indexVariable.kind === TokenKind.Missing) {
+                    throw new Error(`Index variable is missnig.`);
+                }
+
                 if (forEachInLoop.localKeyword) {
                     const operator = forEachInLoop.operator as MissableToken<EqualsSignToken | ColonEqualsSignToken>;
 
                     const indexVariableStatement = this.dataDeclarationStatement(boundWhileLoop,
                         (parent) => this.dataDeclaration(parent,
                             {
-                                name: this.getIdentifierText(forEachInLoop.indexVariable),
+                                name: this.getIdentifierText(indexVariable),
                                 operator: operator.kind,
                                 getTypeAnnotation: () => this.bindTypeAnnotation(forEachInLoop.typeAnnotation),
                                 getExpression: (parent) => this.invokeExpression(parent,
                                     (parent) => this.scopeMemberAccessExpression(parent,
-                                        (parent) => this.identifierExpression(parent, enumeratorIdentifier),
+                                        (parent) => this.identifierExpression(parent, boundEnumeratorDeclaration),
                                         (parent, scope) => this.identifierExpressionFromName(parent,
                                             'NextObject',
                                             scope,
@@ -2087,14 +2089,14 @@ export class Binder {
                         throw new Error();
                     }
 
-                    let indexIdentifier: BoundSymbol = undefined!;
-
                     const indexVariableStatement = this.assignmentStatement(boundWhileLoop,
-                        (parent) => this.identifierExpression(parent, indexIdentifier),
+                        (parent) => this.identifierExpression(parent,
+                            (parent) => this.resolveIdentifier(parent, indexVariable),
+                        ),
                         operator.kind,
                         (parent) => this.invokeExpression(parent,
                             (parent) => this.scopeMemberAccessExpression(parent,
-                                (parent) => this.identifierExpression(parent, enumeratorIdentifier),
+                                (parent) => this.identifierExpression(parent, boundEnumeratorDeclaration),
                                 (parent, scope) => this.identifierExpressionFromName(parent,
                                     'NextObject',
                                     scope,
@@ -2106,7 +2108,8 @@ export class Binder {
                     boundWhileLoop.statements.push(indexVariableStatement);
                 }
 
-                boundWhileLoop.statements.push(...this.bindStatements(boundWhileLoop, forEachInLoop.statements));
+                const boundWhileLoopStatements = this.bindStatements(boundWhileLoop, forEachInLoop.statements);
+                boundWhileLoop.statements.push(...boundWhileLoopStatements);
 
                 boundStatements.push(boundWhileLoop);
                 break;
@@ -2531,10 +2534,21 @@ export class Binder {
         parent: BoundNodes,
         expression: UnaryExpression,
     ): BoundUnaryExpression {
+        return this.unaryExpression(parent,
+            expression.operator.kind,
+            (parent) => this.bindExpression(parent, expression.operand),
+        );
+    }
+
+    private unaryExpression(
+        parent: BoundNodes,
+        operator: UnaryOperatorToken['kind'],
+        getOperand: GetExpression,
+    ): BoundUnaryExpression {
         const boundUnaryExpression = new BoundUnaryExpression();
         boundUnaryExpression.parent = parent;
-        boundUnaryExpression.operator = expression.operator.kind;
-        boundUnaryExpression.operand = this.bindExpression(boundUnaryExpression, expression.operand);
+        boundUnaryExpression.operator = operator;
+        boundUnaryExpression.operand = getOperand(boundUnaryExpression);
         boundUnaryExpression.type = this.getTypeOfUnaryExpression(
             boundUnaryExpression.operator,
             boundUnaryExpression.operand,
@@ -2588,9 +2602,6 @@ export class Binder {
         parent: BoundNodes,
         newExpression: NewExpression,
     ): BoundNewExpression {
-        const boundNewExpression = new BoundNewExpression();
-        boundNewExpression.parent = parent;
-
         const boundClassLikeDeclaration = this.bindTypeReference(newExpression.type,
             NodeKind.ExternClassDeclaration,
             NodeKind.ClassDeclaration,
@@ -2600,6 +2611,15 @@ export class Binder {
             throw new Error(`Couldn't find a class named '${'TODO: Get the type name'}'.`);
         }
 
+        return this.newExpression(parent, boundClassLikeDeclaration);
+    }
+
+    private newExpression(
+        parent: BoundNodes,
+        boundClassLikeDeclaration: BoundExternClassDeclaration | BoundClassDeclaration,
+    ): BoundNewExpression {
+        const boundNewExpression = new BoundNewExpression();
+        boundNewExpression.parent = parent;
         boundNewExpression.typeReference = boundClassLikeDeclaration;
 
         const constructorGroup = this.bindConstructorGroup(boundClassLikeDeclaration);
@@ -2687,6 +2707,12 @@ export class Binder {
     private bindNullExpression(
         parent: BoundNodes,
     ): BoundNullExpression {
+        return this.nullExpression(parent);
+    }
+
+    private nullExpression(
+        parent: BoundNodes,
+    ): BoundNullExpression {
         const boundNullExpression = new BoundNullExpression();
         boundNullExpression.parent = parent;
         boundNullExpression.type = this.project.nullTypeDeclaration.type;
@@ -2726,6 +2752,12 @@ export class Binder {
     private bindSelfExpression(
         parent: BoundNodes,
     ): BoundSelfExpression {
+        return this.selfExpression(parent);
+    }
+
+    private selfExpression(
+        parent: BoundNodes,
+    ): BoundSelfExpression {
         const boundSelfExpression = new BoundSelfExpression();
         boundSelfExpression.parent = parent;
 
@@ -2743,6 +2775,12 @@ export class Binder {
     // #region Super expression
 
     private bindSuperExpression(
+        parent: BoundNodes,
+    ): BoundSuperExpression {
+        return this.superExpression(parent);
+    }
+
+    private superExpression(
         parent: BoundNodes,
     ): BoundSuperExpression {
         const boundSuperExpression = new BoundSuperExpression();
@@ -2769,51 +2807,8 @@ export class Binder {
         parent: BoundNodes,
         expression: StringLiteralExpression,
     ): BoundStringLiteralExpression {
-        let value = '';
-
-        for (const child of expression.children) {
-            switch (child.kind) {
-                case TokenKind.StringLiteralText: {
-                    value += child.getText(this.document);
-                    break;
-                }
-                case TokenKind.EscapeNull: {
-                    break;
-                }
-                case TokenKind.EscapeCharacterTabulation: {
-                    break;
-                }
-                case TokenKind.EscapeLineFeedLf: {
-                    break;
-                }
-                case TokenKind.EscapeCarriageReturnCr: {
-                    break;
-                }
-                case TokenKind.EscapeQuotationMark: {
-                    break;
-                }
-                case TokenKind.EscapeTilde: {
-                    break;
-                }
-                case TokenKind.EscapeUnicodeHexValue: {
-                    break;
-                }
-                case NodeKind.ConfigurationTag: {
-                    break;
-                }
-                case TokenKind.InvalidEscapeSequence:
-                case TokenKind.Skipped: {
-                    break;
-                }
-                default: {
-                    assertNever(child);
-                    break;
-                }
-            }
-        }
-
         return this.stringLiteral(parent,
-            value,
+            Evaluator.evalStringLiteral(expression, this.document),
         );
     }
 
@@ -2887,9 +2882,18 @@ export class Binder {
         parent: BoundNodes,
         arrayLiteralExpression: ArrayLiteralExpression,
     ): BoundArrayLiteralExpression {
+        return this.arrayLiteralExpression(parent,
+            (parent) => this.bindExpressionSequence(parent, arrayLiteralExpression.expressions),
+        );
+    }
+
+    private arrayLiteralExpression(
+        parent: BoundNodes,
+        getExpressions: (parent: BoundNodes) => BoundExpressions[],
+    ): BoundArrayLiteralExpression {
         const boundArrayLiteralExpression = new BoundArrayLiteralExpression();
         boundArrayLiteralExpression.parent = parent;
-        boundArrayLiteralExpression.expressions = this.bindExpressionSequence(boundArrayLiteralExpression, arrayLiteralExpression.expressions);
+        boundArrayLiteralExpression.expressions = getExpressions(boundArrayLiteralExpression);
         boundArrayLiteralExpression.type = this.getTypeOfArrayLiteralExpression(boundArrayLiteralExpression.expressions);
 
         return boundArrayLiteralExpression;
@@ -2919,6 +2923,12 @@ export class Binder {
     private bindGlobalScopeExpression(
         parent: BoundNodes,
     ): BoundGlobalScopeExpression {
+        return this.globalScopeExpression(parent);
+    }
+
+    private globalScopeExpression(
+        parent: BoundNodes,
+    ): BoundGlobalScopeExpression {
         const boundGlobalScopeExpression = new BoundGlobalScopeExpression();
         boundGlobalScopeExpression.parent = parent;
         boundGlobalScopeExpression.type = this.module.type;
@@ -2935,30 +2945,35 @@ export class Binder {
         identifierExpression: IdentifierExpression,
         scope?: MemberContainerType,
     ): BoundIdentifierExpression {
-        const boundIdentifierExpression = new BoundIdentifierExpression();
-        boundIdentifierExpression.parent = parent;
-
-        const member = this.resolveIdentifier(
-            boundIdentifierExpression,
-            identifierExpression.identifier,
-            scope,
-            identifierExpression.typeArguments,
-        ) as BoundTypeReferenceDeclaration;
-
-        boundIdentifierExpression.identifier = member.identifier;
-        boundIdentifierExpression.type = member.type;
-
-        return boundIdentifierExpression;
+        return this.identifierExpression(parent,
+            (parent) => this.resolveIdentifier(
+                parent,
+                identifierExpression.identifier,
+                scope,
+                identifierExpression.typeArguments,
+            ),
+        );
     }
 
     private identifierExpression(
         parent: BoundNodes,
-        identifier: BoundSymbol,
+        declaration_getDeclaration: BoundIdentifiableDeclaration | ((parent: BoundNodes) => BoundIdentifiableDeclaration),
     ): BoundIdentifierExpression {
         const boundIdentifierExpression = new BoundIdentifierExpression();
         boundIdentifierExpression.parent = parent;
-        boundIdentifierExpression.identifier = identifier;
-        boundIdentifierExpression.type = (identifier.declaration as BoundTypeReferenceDeclaration).type;
+
+        let declaration: BoundIdentifiableDeclaration;
+        if (typeof declaration_getDeclaration === 'function') {
+            declaration = declaration_getDeclaration(boundIdentifierExpression);
+        } else {
+            declaration = declaration_getDeclaration;
+        }
+
+        boundIdentifierExpression.identifier = declaration.identifier;
+
+        if (declaration.kind !== BoundNodeKind.Directory) {
+            boundIdentifierExpression.type = declaration.type;
+        }
 
         return boundIdentifierExpression;
     }
@@ -2986,9 +3001,18 @@ export class Binder {
         parent: BoundNodes,
         groupingExpression: GroupingExpression,
     ): BoundGroupingExpression {
+        return this.groupingExpression(parent,
+            (parent) => this.bindExpression(parent, groupingExpression.expression),
+        );
+    }
+
+    private groupingExpression(
+        parent: BoundNodes,
+        getExpression: GetExpression,
+    ): BoundGroupingExpression {
         const boundGroupingExpression = new BoundGroupingExpression();
         boundGroupingExpression.parent = parent;
-        boundGroupingExpression.expression = this.bindExpression(boundGroupingExpression, groupingExpression.expression);
+        boundGroupingExpression.expression = getExpression(boundGroupingExpression);
         boundGroupingExpression.type = boundGroupingExpression.expression.type;
 
         return boundGroupingExpression;
@@ -3099,9 +3123,34 @@ export class Binder {
         parent: BoundNodes,
         sliceExpression: SliceExpression,
     ): BoundSliceExpression {
+        let getStartExpression: GetExpression | undefined = undefined;
+        if (sliceExpression.startExpression) {
+            const { startExpression } = sliceExpression;
+            getStartExpression = (parent) => this.bindExpression(parent, startExpression);
+        }
+
+        let getEndExpression: GetExpression | undefined = undefined;
+        if (sliceExpression.endExpression) {
+            const { endExpression } = sliceExpression;
+            getEndExpression = (parent) => this.bindExpression(parent, endExpression);
+        }
+
+        return this.sliceExpression(parent,
+            (parent) => this.bindExpression(parent, sliceExpression.sliceableExpression),
+            getStartExpression,
+            getEndExpression,
+        );
+    }
+
+    private sliceExpression(
+        parent: BoundNodes,
+        getSliceableExpression: GetExpression,
+        getStartExpression?: GetExpression,
+        getEndExpression?: GetExpression,
+    ): BoundSliceExpression {
         const boundSliceExpression = new BoundSliceExpression();
         boundSliceExpression.parent = parent;
-        boundSliceExpression.sliceableExpression = this.bindExpression(boundSliceExpression, sliceExpression.sliceableExpression);
+        boundSliceExpression.sliceableExpression = getSliceableExpression(boundSliceExpression);
 
         const { sliceableExpression } = boundSliceExpression;
         switch (sliceableExpression.type.kind) {
@@ -3115,15 +3164,15 @@ export class Binder {
             }
         }
 
-        if (sliceExpression.startExpression) {
-            boundSliceExpression.startExpression = this.bindExpression(boundSliceExpression, sliceExpression.startExpression);
+        if (getStartExpression) {
+            boundSliceExpression.startExpression = getStartExpression(boundSliceExpression);
             if (!boundSliceExpression.startExpression.type.isConvertibleTo(this.project.intTypeDeclaration.type)) {
                 throw new Error(`Start index expression is '${boundSliceExpression.startExpression.type}' but must be '${this.project.intTypeDeclaration.type}'.`)
             }
         }
 
-        if (sliceExpression.endExpression) {
-            boundSliceExpression.endExpression = this.bindExpression(boundSliceExpression, sliceExpression.endExpression);
+        if (getEndExpression) {
+            boundSliceExpression.endExpression = getEndExpression(boundSliceExpression);
             if (!boundSliceExpression.endExpression.type.isConvertibleTo(this.project.intTypeDeclaration.type)) {
                 throw new Error(`End index expression is '${boundSliceExpression.endExpression.type}' but must be '${this.project.intTypeDeclaration.type}'.`)
             }
@@ -3189,13 +3238,12 @@ export class Binder {
     ): BoundFunctionLikeDeclaration {
         // Search for an exact match (cannot use default parameters)
         for (const overload of overloads) {
-            if (args.length === overload.parameters.length) {
+            const params = overload.parameters;
+            if (args.length === params.length) {
                 let match = true;
 
                 for (let i = 0; i < args.length; i++) {
-                    const argument = args[i].type;
-                    const parameter = overload.parameters[i].type;
-                    if (argument !== parameter) {
+                    if (args[i].type !== params[i].type) {
                         match = false;
                         break;
                     }
@@ -3212,13 +3260,12 @@ export class Binder {
         // Search for exactly one match with implicit conversions allowed
         for (const overload of overloads) {
             // TODO: Support default parameters
-            if (args.length === overload.parameters.length) {
+            const params = overload.parameters;
+            if (args.length === params.length) {
                 let match = true;
 
                 for (let i = 0; i < args.length; i++) {
-                    const argument = args[i].type;
-                    const parameter = overload.parameters[i].type;
-                    if (!argument.isConvertibleTo(parameter)) {
+                    if (!args[i].type.isConvertibleTo(params[i].type)) {
                         match = false;
                         break;
                     }
@@ -3926,156 +3973,125 @@ export class Binder {
         parent: BoundNodes,
         expression: BoundExpressions,
         typeMap: TypeMap,
+        scope?: MemberContainerType
     ): BoundExpressions {
         switch (expression.kind) {
             case BoundNodeKind.BinaryExpression: {
-                return this.binaryExpression(
-                    parent,
+                return this.binaryExpression(parent,
                     (parent) => this.instantiateExpression(parent, expression.leftOperand, typeMap),
                     expression.operator,
                     (parent) => this.instantiateExpression(parent, expression.rightOperand, typeMap),
                 );
             }
             case BoundNodeKind.UnaryExpression: {
-                const instExpr = new BoundUnaryExpression();
-                instExpr.parent = parent;
-                instExpr.operand = this.instantiateExpression(expression.operand, instExpr, typeMap);
-                instExpr.type = this.getTypeOfUnaryExpression(
-                    instExpr.operator,
-                    instExpr.operand,
+                return this.unaryExpression(parent,
+                    expression.operator,
+                    (parent) => this.instantiateExpression(parent, expression.operand, typeMap),
                 );
-
-                return instExpr;
             }
             case BoundNodeKind.NewExpression: {
-                const instExpr = new BoundNewExpression();
-                instExpr.parent = parent;
-                instExpr.typeReference = this.instantiateType(expression.typeReference, typeMap) as BoundExternClassDeclaration | BoundClassDeclaration;
-
-                const constructorGroup = this.bindConstructorGroup(instExpr.typeReference);
-                instExpr.type = constructorGroup.type;
-
-                return instExpr;
-            }
-            case BoundNodeKind.NullExpression: {
-                const instExpr = new BoundNullExpression();
-                instExpr.parent = parent;
-                instExpr.type = expression.type;
-
-                return instExpr;
-            }
-            case BoundNodeKind.BooleanLiteralExpression: {
-                const instExpr = new BoundBooleanLiteralExpression();
-                instExpr.parent = parent;
-                instExpr.type = expression.type;
-
-                return instExpr;
-            }
-            case BoundNodeKind.SelfExpression: {
-                const instExpr = new BoundSelfExpression();
-                instExpr.parent = parent;
-
-                const selfTypeDeclaration = this.instantiateType(
-                    expression.type.declaration as BoundClassDeclaration,
-                    typeMap,
-                ) as BoundClassDeclaration;
-                instExpr.type = selfTypeDeclaration.type;
-
-                return instExpr;
-            }
-            case BoundNodeKind.SuperExpression: {
-                const instExpr = new BoundSuperExpression();
-                instExpr.parent = parent;
-
-                const superTypeDeclaration = this.instantiateType(
-                    expression.type.declaration as BoundExternClassDeclaration | BoundClassDeclaration,
+                const boundClassLikeDeclaration = this.instantiateType(
+                    expression.typeReference,
                     typeMap,
                 ) as BoundExternClassDeclaration | BoundClassDeclaration;
-                instExpr.type = superTypeDeclaration.type;
 
-                return instExpr;
+                return this.newExpression(parent, boundClassLikeDeclaration);
+            }
+            case BoundNodeKind.NullExpression: {
+                return this.nullExpression(parent);
+            }
+            case BoundNodeKind.BooleanLiteralExpression: {
+                return this.booleanLiteral(parent, expression.value);
+            }
+            case BoundNodeKind.SelfExpression: {
+                return this.selfExpression(parent);
+            }
+            case BoundNodeKind.SuperExpression: {
+                return this.superExpression(parent);
             }
             case BoundNodeKind.StringLiteralExpression: {
-                const instExpr = new BoundStringLiteralExpression();
-                instExpr.parent = parent;
-                instExpr.type = expression.type;
-
-                return instExpr;
+                return this.stringLiteral(parent, expression.value);
             }
             case BoundNodeKind.FloatLiteralExpression: {
-                const instExpr = new BoundFloatLiteralExpression();
-                instExpr.parent = parent;
-                instExpr.type = expression.type;
-
-                return instExpr;
+                return this.floatLiteral(parent, expression.value);
             }
             case BoundNodeKind.IntegerLiteralExpression: {
-                const instExpr = new BoundIntegerLiteralExpression();
-                instExpr.parent = parent;
-                instExpr.type = expression.type;
-
-                return instExpr;
+                return this.integerLiteral(parent, expression.value);
             }
             case BoundNodeKind.ArrayLiteralExpression: {
-                const instExpr = new BoundArrayLiteralExpression();
-                instExpr.parent = parent;
-                instExpr.expressions = expression.expressions.map(e => this.instantiateExpression(e, instExpr, typeMap));
-                instExpr.type = this.getTypeOfArrayLiteralExpression(instExpr.expressions);
-
-                return instExpr;
-            }
-            case BoundNodeKind.GlobalScopeExpression: {
-                const instExpr = new BoundGlobalScopeExpression();
-                instExpr.parent = parent;
-                instExpr.type = expression.type;
-
-                return instExpr;
-            }
-            case BoundNodeKind.IdentifierExpression: {
-                return this.identifierExpression(
-                    parent,
-                    // TODO: Map to correct identifier. Probably need to use symbol resolution?
-                    expression.identifier,
+                return this.arrayLiteralExpression(parent,
+                    (parent) => expression.expressions.map((expression) =>
+                        this.instantiateExpression(parent, expression, typeMap)
+                    ),
                 );
             }
-            case BoundNodeKind.GroupingExpression: {
-                const instExpr = new BoundGroupingExpression();
-                instExpr.parent = parent;
-                instExpr.expression = this.instantiateExpression(expression.expression, instExpr, typeMap);
-                instExpr.type = instExpr.expression.type;
+            case BoundNodeKind.GlobalScopeExpression: {
+                return this.globalScopeExpression(parent);
+            }
+            case BoundNodeKind.IdentifierExpression: {
+                let declaration: BoundIdentifiableDeclaration;
 
-                return instExpr;
+                switch (expression.identifier.declaration.kind) {
+                    case BoundNodeKind.IntrinsicType:
+                    case BoundNodeKind.ExternClassDeclaration:
+                    case BoundNodeKind.InterfaceDeclaration:
+                    case BoundNodeKind.ClassDeclaration:
+                    case BoundNodeKind.TypeParameter: {
+                        declaration = this.instantiateType(expression.identifier.declaration, typeMap);
+                        break;
+                    }
+                    default: {
+                        // TODO: Some of these may still need to be instantiated.
+                        declaration = expression.identifier.declaration;
+                        break;
+                    }
+                }
+
+                return this.identifierExpression(parent, declaration);
+            }
+            case BoundNodeKind.GroupingExpression: {
+                return this.groupingExpression(parent,
+                    (parent) => this.instantiateExpression(parent, expression.expression, typeMap),
+                );
             }
             case BoundNodeKind.ScopeMemberAccessExpression: {
-                const instExpr = new BoundScopeMemberAccessExpression();
-                instExpr.parent = parent;
-                // TODO: Probably more to this
-                instExpr.scopableExpression = this.instantiateExpression(expression.scopableExpression, instExpr, typeMap);
-                instExpr.member = this.instantiateExpression(expression.member, instExpr, typeMap);
-                instExpr.type = instExpr.member.type;
-
-                return instExpr;
+                return this.scopeMemberAccessExpression(parent,
+                    (parent) => this.instantiateExpression(parent, expression.scopableExpression, typeMap, scope),
+                    (parent, scope) => this.instantiateExpression(parent, expression.member, typeMap, scope),
+                );
             }
             case BoundNodeKind.IndexExpression: {
-                const instExpr = new BoundIndexExpression();
-                instExpr.parent = parent;
-                instExpr.indexableExpression = this.instantiateExpression(expression.indexableExpression, instExpr, typeMap);
-                instExpr.indexExpressionExpression = this.instantiateExpression(expression.indexExpressionExpression, instExpr, typeMap);
-                instExpr.type = this.getTypeOfIndexExpression(instExpr.indexableExpression);
-
-                return instExpr;
+                return this.indexExpression(parent,
+                    (parent) => this.instantiateExpression(parent, expression.indexableExpression, typeMap),
+                    (parent) => this.instantiateExpression(parent, expression.indexExpressionExpression, typeMap),
+                );
             }
             case BoundNodeKind.SliceExpression: {
-                const instExpr = new BoundSliceExpression();
-                instExpr.parent = parent;
+                let getStartExpression: GetExpression | undefined = undefined;
+                if (expression.startExpression) {
+                    const { startExpression } = expression;
+                    getStartExpression = (parent) => this.instantiateExpression(parent, startExpression, typeMap);
+                }
 
-                return instExpr;
+                let getEndExpression: GetExpression | undefined = undefined;
+                if (expression.endExpression) {
+                    const { endExpression } = expression;
+                    getEndExpression = (parent) => this.instantiateExpression(parent, endExpression, typeMap);
+                }
+
+                return this.sliceExpression(parent,
+                    (parent) => this.instantiateExpression(parent, expression.sliceableExpression, typeMap),
+                    getStartExpression,
+                    getEndExpression,
+                );
             }
             case BoundNodeKind.InvokeExpression: {
-                const instExpr = new BoundInvokeExpression();
-                instExpr.parent = parent;
-
-                return instExpr;
+                return this.invokeExpression(parent,
+                    (parent) => this.instantiateExpression(parent, expression.invokableExpression, typeMap),
+                    (parent) => expression.arguments.map((argument) =>
+                        this.instantiateExpression(parent, argument, typeMap)
+                    ),
+                );
             }
             default: {
                 return assertNever(expression);

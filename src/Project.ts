@@ -1,6 +1,5 @@
 import fs = require('fs');
 import path = require('path');
-import { assertNever } from './assertNever';
 import { Binder } from './Binding/Binder';
 import { BoundSymbol, BoundSymbolTable } from './Binding/BoundSymbol';
 import { BoundNodeKind } from './Binding/Node/BoundNodeKind';
@@ -20,6 +19,7 @@ import { PreprocessorTokenizer } from './Syntax/PreprocessorTokenizer';
 import { IdentifierToken, PeriodToken } from './Syntax/Token/Token';
 import { TokenKind } from './Syntax/Token/TokenKind';
 import { Tokenizer } from './Syntax/Tokenizer';
+import { assertNever } from './util';
 
 const preprocessorTokenizer = new PreprocessorTokenizer();
 const preprocessorParser = new PreprocessorParser();

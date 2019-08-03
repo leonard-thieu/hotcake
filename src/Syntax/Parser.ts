@@ -1,6 +1,6 @@
-import { assertNever } from '../assertNever';
 import { Diagnostic } from '../Diagnostic';
 import { DiagnosticKind, DiagnosticKinds } from '../DiagnosticKind';
+import { assertNever } from '../util';
 import { AccessibilityDirective, AccessibilityKeywordToken } from './Node/Declaration/AccessibilityDirective';
 import { AliasDirective, AliasDirectiveSequence, MissableDeclarationReferenceIdentifier } from './Node/Declaration/AliasDirectiveSequence';
 import { ClassDeclaration } from './Node/Declaration/ClassDeclaration';

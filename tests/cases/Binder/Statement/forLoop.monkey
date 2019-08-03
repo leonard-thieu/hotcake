@@ -16,8 +16,13 @@ Function Main()
     End
 
     Local val2: Int
-    For val2 = EachIn [3, 4, 5]
+    For val2 = 0 To 18 Step 4
         CheckInt(val2)
+    End
+
+    Local val3: Int
+    For val3 = EachIn [3, 4, 5]
+        CheckInt(val3)
     End
 End
 

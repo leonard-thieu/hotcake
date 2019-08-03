@@ -77,6 +77,7 @@
                         "4",
                         "5",
                         "val2",
+                        "val3",
                         "6",
                         "7"
                     ],
@@ -572,6 +573,93 @@
                             }
                         },
                         {
+                            "kind": "ForLoop",
+                            "locals": [],
+                            "firstValueStatement": {
+                                "kind": "AssignmentStatement",
+                                "leftOperand": {
+                                    "kind": "IdentifierExpression",
+                                    "type": "Int",
+                                    "identifier": "val2"
+                                },
+                                "rightOperand": {
+                                    "kind": "IntegerLiteralExpression",
+                                    "type": "Int",
+                                    "value": "0"
+                                }
+                            },
+                            "lastValueExpression": {
+                                "kind": "BinaryExpression",
+                                "type": "Bool",
+                                "leftOperand": {
+                                    "kind": "IdentifierExpression",
+                                    "type": "Int",
+                                    "identifier": "val2"
+                                },
+                                "operator": "LessThanSignEqualsSign",
+                                "rightOperand": {
+                                    "kind": "IntegerLiteralExpression",
+                                    "type": "Int",
+                                    "value": "18"
+                                }
+                            },
+                            "stepValueClause": {
+                                "kind": "AssignmentStatement",
+                                "leftOperand": {
+                                    "kind": "IdentifierExpression",
+                                    "type": "Int",
+                                    "identifier": "val2"
+                                },
+                                "rightOperand": {
+                                    "kind": "BinaryExpression",
+                                    "type": "Int",
+                                    "leftOperand": {
+                                        "kind": "IdentifierExpression",
+                                        "type": "Int",
+                                        "identifier": "val2"
+                                    },
+                                    "operator": "PlusSign",
+                                    "rightOperand": {
+                                        "kind": "IntegerLiteralExpression",
+                                        "type": "Int",
+                                        "value": "4"
+                                    }
+                                }
+                            },
+                            "statements": [
+                                {
+                                    "kind": "ExpressionStatement",
+                                    "expression": {
+                                        "kind": "InvokeExpression",
+                                        "type": "Int",
+                                        "invocationType": "CheckInt: Int(Int)",
+                                        "invokableExpression": {
+                                            "kind": "IdentifierExpression",
+                                            "type": "CheckInt",
+                                            "identifier": "CheckInt"
+                                        },
+                                        "arguments": [
+                                            {
+                                                "kind": "IdentifierExpression",
+                                                "type": "Int",
+                                                "identifier": "val2"
+                                            }
+                                        ]
+                                    }
+                                }
+                            ]
+                        },
+                        {
+                            "kind": "DataDeclarationStatement",
+                            "dataDeclaration": {
+                                "kind": "DataDeclaration",
+                                "declarationKind": "LocalKeyword",
+                                "identifier": "val3",
+                                "typeAnnotation": "Int",
+                                "type": "Int"
+                            }
+                        },
+                        {
                             "kind": "DataDeclarationStatement",
                             "dataDeclaration": {
                                 "kind": "DataDeclaration",
@@ -709,7 +797,7 @@
                                             {
                                                 "kind": "IdentifierExpression",
                                                 "type": "Int",
-                                                "identifier": "val2"
+                                                "identifier": "val3"
                                             }
                                         ]
                                     }

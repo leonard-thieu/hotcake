@@ -1,4 +1,4 @@
-import { assertNever } from '../assertNever';
+import { assertNever } from '../util';
 import { ArrayTypeAnnotation } from './Node/ArrayTypeAnnotation';
 import { CommaSeparator } from './Node/CommaSeparator';
 import { ConfigurationTag } from './Node/ConfigurationTag';
