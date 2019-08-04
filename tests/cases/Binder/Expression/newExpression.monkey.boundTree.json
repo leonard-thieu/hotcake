@@ -79,6 +79,7 @@
                     "kind": "DataDeclaration",
                     "declarationKind": "FieldKeyword",
                     "identifier": "sibling",
+                    "operator": "ColonEqualsSign",
                     "expression": {
                         "kind": "InvokeExpression",
                         "type": "MyClass",

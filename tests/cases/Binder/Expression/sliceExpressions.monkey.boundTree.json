@@ -25,6 +25,7 @@
                             "declarationKind": null,
                             "identifier": "message",
                             "typeAnnotation": "String",
+                            "operator": null,
                             "type": "String"
                         }
                     ],
@@ -44,6 +45,7 @@
                             "declarationKind": null,
                             "identifier": "messages",
                             "typeAnnotation": "String[]",
+                            "operator": null,
                             "type": "String[]"
                         }
                     ],

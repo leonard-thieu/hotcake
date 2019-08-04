@@ -74,6 +74,7 @@
                     "declarationKind": "ConstKeyword",
                     "identifier": "Name",
                     "typeAnnotation": "String",
+                    "operator": "EqualsSign",
                     "expression": {
                         "kind": "StringLiteralExpression",
                         "type": "String",

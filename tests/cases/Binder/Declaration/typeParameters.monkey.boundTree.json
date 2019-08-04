@@ -7,6 +7,7 @@
     "members": [
         {
             "kind": "ClassDeclaration",
+            "instantiatedTypes": [],
             "locals": [
                 "T",
                 "value",
@@ -29,6 +30,7 @@
                     "declarationKind": "FieldKeyword",
                     "identifier": "value",
                     "typeAnnotation": "ArrayObject:T[]",
+                    "operator": null,
                     "type": "ArrayObject:T[]"
                 },
                 {
@@ -50,6 +52,7 @@
                                     "declarationKind": null,
                                     "identifier": "value",
                                     "typeAnnotation": "ArrayObject:T[]",
+                                    "operator": null,
                                     "type": "ArrayObject:T[]"
                                 }
                             ],
@@ -69,6 +72,7 @@
                                             "identifier": "value"
                                         }
                                     },
+                                    "operator": "EqualsSign",
                                     "rightOperand": {
                                         "kind": "IdentifierExpression",
                                         "type": "ArrayObject:T[]",

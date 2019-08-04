@@ -25,6 +25,7 @@
                             "declarationKind": null,
                             "identifier": "box",
                             "typeAnnotation": "Object",
+                            "operator": null,
                             "type": "Object"
                         }
                     ],

@@ -10,6 +10,7 @@
             "declarationKind": "GlobalKeyword",
             "identifier": "T",
             "typeAnnotation": "Int",
+            "operator": null,
             "type": "Int"
         }
     ]

@@ -25,6 +25,7 @@
                             "declarationKind": null,
                             "identifier": "filePath",
                             "typeAnnotation": "String",
+                            "operator": null,
                             "type": "String"
                         }
                     ]
@@ -50,6 +51,7 @@
                             "declarationKind": null,
                             "identifier": "filePath",
                             "typeAnnotation": "String",
+                            "operator": null,
                             "type": "String"
                         }
                     ],

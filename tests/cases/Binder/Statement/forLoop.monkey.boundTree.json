@@ -29,6 +29,7 @@
                             "declarationKind": null,
                             "identifier": "val",
                             "typeAnnotation": "Int",
+                            "operator": null,
                             "type": "Int"
                         }
                     ],
@@ -55,6 +56,7 @@
                             "declarationKind": null,
                             "identifier": "val",
                             "typeAnnotation": "Item",
+                            "operator": null,
                             "type": "Item"
                         }
                     ],
@@ -96,6 +98,7 @@
                                     "kind": "DataDeclaration",
                                     "declarationKind": "LocalKeyword",
                                     "identifier": "i",
+                                    "operator": "ColonEqualsSign",
                                     "expression": {
                                         "kind": "IntegerLiteralExpression",
                                         "type": "Int",
@@ -126,6 +129,7 @@
                                     "type": "Int",
                                     "identifier": "i"
                                 },
+                                "operator": "PlusSignEqualsSign",
                                 "rightOperand": {
                                     "kind": "BinaryExpression",
                                     "type": "Int",
@@ -176,6 +180,7 @@
                                 "kind": "DataDeclaration",
                                 "declarationKind": "LocalKeyword",
                                 "identifier": "",
+                                "operator": "ColonEqualsSign",
                                 "expression": {
                                     "kind": "StringLiteralExpression",
                                     "type": "String",
@@ -190,6 +195,7 @@
                                 "kind": "DataDeclaration",
                                 "declarationKind": "LocalKeyword",
                                 "identifier": "2",
+                                "operator": "ColonEqualsSign",
                                 "expression": {
                                     "kind": "IntegerLiteralExpression",
                                     "type": "Int",
@@ -240,6 +246,7 @@
                                         "kind": "DataDeclaration",
                                         "declarationKind": "LocalKeyword",
                                         "identifier": "val",
+                                        "operator": "ColonEqualsSign",
                                         "expression": {
                                             "kind": "IndexExpression",
                                             "type": "Int",
@@ -264,6 +271,7 @@
                                         "type": "Int",
                                         "identifier": "2"
                                     },
+                                    "operator": "PlusSignEqualsSign",
                                     "rightOperand": {
                                         "kind": "BinaryExpression",
                                         "type": "Int",
@@ -308,6 +316,7 @@
                                 "kind": "DataDeclaration",
                                 "declarationKind": "LocalKeyword",
                                 "identifier": "3",
+                                "operator": "ColonEqualsSign",
                                 "expression": {
                                     "kind": "ArrayLiteralExpression",
                                     "type": "Int[]",
@@ -338,6 +347,7 @@
                                 "kind": "DataDeclaration",
                                 "declarationKind": "LocalKeyword",
                                 "identifier": "4",
+                                "operator": "ColonEqualsSign",
                                 "expression": {
                                     "kind": "IntegerLiteralExpression",
                                     "type": "Int",
@@ -388,6 +398,7 @@
                                         "kind": "DataDeclaration",
                                         "declarationKind": "LocalKeyword",
                                         "identifier": "val",
+                                        "operator": "ColonEqualsSign",
                                         "expression": {
                                             "kind": "IndexExpression",
                                             "type": "Int",
@@ -412,6 +423,7 @@
                                         "type": "Int",
                                         "identifier": "4"
                                     },
+                                    "operator": "PlusSignEqualsSign",
                                     "rightOperand": {
                                         "kind": "BinaryExpression",
                                         "type": "Int",
@@ -456,6 +468,7 @@
                                 "kind": "DataDeclaration",
                                 "declarationKind": "LocalKeyword",
                                 "identifier": "5",
+                                "operator": "ColonEqualsSign",
                                 "expression": {
                                     "kind": "InvokeExpression",
                                     "type": "CollectionEnumerator",
@@ -517,6 +530,7 @@
                                         "kind": "DataDeclaration",
                                         "declarationKind": "LocalKeyword",
                                         "identifier": "item",
+                                        "operator": "ColonEqualsSign",
                                         "expression": {
                                             "kind": "InvokeExpression",
                                             "type": "Item",
@@ -569,6 +583,7 @@
                                 "declarationKind": "LocalKeyword",
                                 "identifier": "val2",
                                 "typeAnnotation": "Int",
+                                "operator": null,
                                 "type": "Int"
                             }
                         },
@@ -582,6 +597,7 @@
                                     "type": "Int",
                                     "identifier": "val2"
                                 },
+                                "operator": "EqualsSign",
                                 "rightOperand": {
                                     "kind": "IntegerLiteralExpression",
                                     "type": "Int",
@@ -610,6 +626,7 @@
                                     "type": "Int",
                                     "identifier": "val2"
                                 },
+                                "operator": "PlusSignEqualsSign",
                                 "rightOperand": {
                                     "kind": "BinaryExpression",
                                     "type": "Int",
@@ -656,6 +673,7 @@
                                 "declarationKind": "LocalKeyword",
                                 "identifier": "val3",
                                 "typeAnnotation": "Int",
+                                "operator": null,
                                 "type": "Int"
                             }
                         },
@@ -665,6 +683,7 @@
                                 "kind": "DataDeclaration",
                                 "declarationKind": "LocalKeyword",
                                 "identifier": "6",
+                                "operator": "ColonEqualsSign",
                                 "expression": {
                                     "kind": "ArrayLiteralExpression",
                                     "type": "Int[]",
@@ -695,6 +714,7 @@
                                 "kind": "DataDeclaration",
                                 "declarationKind": "LocalKeyword",
                                 "identifier": "7",
+                                "operator": "ColonEqualsSign",
                                 "expression": {
                                     "kind": "IntegerLiteralExpression",
                                     "type": "Int",
@@ -744,6 +764,7 @@
                                         "type": "Int",
                                         "identifier": "7"
                                     },
+                                    "operator": "EqualsSign",
                                     "rightOperand": {
                                         "kind": "IndexExpression",
                                         "type": "Int",
@@ -766,6 +787,7 @@
                                         "type": "Int",
                                         "identifier": "7"
                                     },
+                                    "operator": "PlusSignEqualsSign",
                                     "rightOperand": {
                                         "kind": "BinaryExpression",
                                         "type": "Int",

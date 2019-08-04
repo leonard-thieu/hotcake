@@ -28,6 +28,7 @@
                             "declarationKind": null,
                             "identifier": "val",
                             "typeAnnotation": "Bool",
+                            "operator": null,
                             "type": "Bool"
                         }
                     ],
@@ -54,6 +55,7 @@
                             "declarationKind": null,
                             "identifier": "val",
                             "typeAnnotation": "Int",
+                            "operator": null,
                             "type": "Int"
                         }
                     ],
@@ -80,6 +82,7 @@
                             "declarationKind": null,
                             "identifier": "val",
                             "typeAnnotation": "Float",
+                            "operator": null,
                             "type": "Float"
                         }
                     ],
@@ -106,6 +109,7 @@
                             "declarationKind": null,
                             "identifier": "val",
                             "typeAnnotation": "String",
+                            "operator": null,
                             "type": "String"
                         }
                     ],

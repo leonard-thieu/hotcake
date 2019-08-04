@@ -25,6 +25,7 @@
                             "declarationKind": null,
                             "identifier": "value",
                             "typeAnnotation": "Int",
+                            "operator": null,
                             "type": "Int"
                         }
                     ],
@@ -44,6 +45,7 @@
                             "declarationKind": null,
                             "identifier": "value",
                             "typeAnnotation": "Float",
+                            "operator": null,
                             "type": "Float"
                         }
                     ],
@@ -63,6 +65,7 @@
                             "declarationKind": null,
                             "identifier": "value",
                             "typeAnnotation": "String",
+                            "operator": null,
                             "type": "String"
                         }
                     ],

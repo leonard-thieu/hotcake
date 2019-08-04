@@ -1,0 +1,231 @@
+{
+    "kind": "ModuleDeclaration",
+    "identifier": "noSameTypeDuplicates",
+    "locals": [
+        "List",
+        "Node",
+        "HeadNode"
+    ],
+    "members": [
+        {
+            "kind": "ClassDeclaration",
+            "instantiatedTypes": [],
+            "locals": [
+                "T",
+                "_head",
+                "New"
+            ],
+            "identifier": "List",
+            "type": "List<List:T>",
+            "typeParameters": [
+                {
+                    "kind": "TypeParameter",
+                    "identifier": "T",
+                    "type": "List:T"
+                }
+            ],
+            "superType": "Object",
+            "members": [
+                {
+                    "kind": "DataDeclaration",
+                    "declarationKind": "FieldKeyword",
+                    "identifier": "_head",
+                    "typeAnnotation": "Node<List:T>",
+                    "operator": "EqualsSign",
+                    "expression": {
+                        "kind": "InvokeExpression",
+                        "type": "HeadNode<List:T>",
+                        "invocationType": "New HeadNode<List:T>()",
+                        "invokableExpression": {
+                            "kind": "NewExpression",
+                            "type": "New HeadNode<List:T>",
+                            "typeReference": "HeadNode<List:T>"
+                        },
+                        "arguments": []
+                    },
+                    "type": "Node<List:T>"
+                },
+                {
+                    "kind": "ClassMethodGroupDeclaration",
+                    "identifier": "New",
+                    "type": "New List<List:T>",
+                    "overloads": [
+                        {
+                            "kind": "ClassMethodDeclaration",
+                            "identifier": "New",
+                            "locals": [],
+                            "type": "New List<List:T>()",
+                            "returnType": "List<List:T>",
+                            "parameters": [],
+                            "statements": []
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "kind": "ClassDeclaration",
+            "instantiatedTypes": [
+                {
+                    "kind": "ClassDeclaration",
+                    "locals": [
+                        "New"
+                    ],
+                    "identifier": "Node",
+                    "type": "Node<List:T>",
+                    "typeArguments": [
+                        "List:T"
+                    ],
+                    "superType": "Object",
+                    "members": [
+                        {
+                            "kind": "ClassMethodGroupDeclaration",
+                            "identifier": "New",
+                            "type": "New Node<List:T>",
+                            "overloads": [
+                                {
+                                    "kind": "ClassMethodDeclaration",
+                                    "identifier": "New",
+                                    "locals": [],
+                                    "type": "New Node<List:T>()",
+                                    "returnType": "Node<List:T>",
+                                    "parameters": [],
+                                    "statements": []
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "kind": "ClassDeclaration",
+                    "locals": [
+                        "New"
+                    ],
+                    "identifier": "Node",
+                    "type": "Node<HeadNode:T>",
+                    "typeArguments": [
+                        "HeadNode:T"
+                    ],
+                    "superType": "Object",
+                    "members": [
+                        {
+                            "kind": "ClassMethodGroupDeclaration",
+                            "identifier": "New",
+                            "type": "New Node<HeadNode:T>",
+                            "overloads": [
+                                {
+                                    "kind": "ClassMethodDeclaration",
+                                    "identifier": "New",
+                                    "locals": [],
+                                    "type": "New Node<HeadNode:T>()",
+                                    "returnType": "Node<HeadNode:T>",
+                                    "parameters": [],
+                                    "statements": []
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ],
+            "locals": [
+                "T",
+                "New"
+            ],
+            "identifier": "Node",
+            "type": "Node<Node:T>",
+            "typeParameters": [
+                {
+                    "kind": "TypeParameter",
+                    "identifier": "T",
+                    "type": "Node:T"
+                }
+            ],
+            "superType": "Object",
+            "members": [
+                {
+                    "kind": "ClassMethodGroupDeclaration",
+                    "identifier": "New",
+                    "type": "New Node<Node:T>",
+                    "overloads": [
+                        {
+                            "kind": "ClassMethodDeclaration",
+                            "identifier": "New",
+                            "locals": [],
+                            "type": "New Node<Node:T>()",
+                            "returnType": "Node<Node:T>",
+                            "parameters": [],
+                            "statements": []
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "kind": "ClassDeclaration",
+            "instantiatedTypes": [
+                {
+                    "kind": "ClassDeclaration",
+                    "locals": [
+                        "New"
+                    ],
+                    "identifier": "HeadNode",
+                    "type": "HeadNode<List:T>",
+                    "typeArguments": [
+                        "List:T"
+                    ],
+                    "superType": "Node<List:T>",
+                    "members": [
+                        {
+                            "kind": "ClassMethodGroupDeclaration",
+                            "identifier": "New",
+                            "type": "New HeadNode<List:T>",
+                            "overloads": [
+                                {
+                                    "kind": "ClassMethodDeclaration",
+                                    "identifier": "New",
+                                    "locals": [],
+                                    "type": "New HeadNode<List:T>()",
+                                    "returnType": "HeadNode<List:T>",
+                                    "parameters": [],
+                                    "statements": []
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ],
+            "locals": [
+                "T",
+                "New"
+            ],
+            "identifier": "HeadNode",
+            "type": "HeadNode<HeadNode:T>",
+            "typeParameters": [
+                {
+                    "kind": "TypeParameter",
+                    "identifier": "T",
+                    "type": "HeadNode:T"
+                }
+            ],
+            "superType": "Node<HeadNode:T>",
+            "members": [
+                {
+                    "kind": "ClassMethodGroupDeclaration",
+                    "identifier": "New",
+                    "type": "New HeadNode<HeadNode:T>",
+                    "overloads": [
+                        {
+                            "kind": "ClassMethodDeclaration",
+                            "identifier": "New",
+                            "locals": [],
+                            "type": "New HeadNode<HeadNode:T>()",
+                            "returnType": "HeadNode<HeadNode:T>",
+                            "parameters": [],
+                            "statements": []
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

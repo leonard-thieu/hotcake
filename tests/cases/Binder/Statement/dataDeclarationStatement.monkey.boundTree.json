@@ -27,6 +27,7 @@
                                 "kind": "DataDeclaration",
                                 "declarationKind": "LocalKeyword",
                                 "identifier": "val",
+                                "operator": "ColonEqualsSign",
                                 "expression": {
                                     "kind": "FloatLiteralExpression",
                                     "type": "Float",
@@ -42,6 +43,7 @@
                                 "declarationKind": "LocalKeyword",
                                 "identifier": "enableLighting",
                                 "typeAnnotation": "Bool",
+                                "operator": null,
                                 "type": "Bool"
                             }
                         }

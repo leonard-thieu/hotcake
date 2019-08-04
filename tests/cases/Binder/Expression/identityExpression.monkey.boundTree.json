@@ -25,6 +25,7 @@
                             "declarationKind": null,
                             "identifier": "val",
                             "typeAnnotation": "String",
+                            "operator": null,
                             "type": "String"
                         }
                     ],
@@ -52,6 +53,7 @@
                             "declarationKind": null,
                             "identifier": "place",
                             "typeAnnotation": "Int",
+                            "operator": null,
                             "type": "Int"
                         },
                         {
@@ -59,6 +61,7 @@
                             "declarationKind": null,
                             "identifier": "percentile",
                             "typeAnnotation": "Float",
+                            "operator": null,
                             "type": "Float"
                         }
                     ],

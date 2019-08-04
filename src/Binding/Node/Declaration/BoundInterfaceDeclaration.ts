@@ -17,7 +17,7 @@ export class BoundInterfaceDeclaration extends BoundNode {
     type: ObjectType = undefined!;
 
     baseTypes?: BoundInterfaceDeclaration[] = undefined;
-    members: BoundTypeMembers<BoundInterfaceDeclarationMember> = undefined!;
+    readonly members = new BoundTypeMembers<BoundInterfaceDeclarationMember>();
 }
 
 export type BoundInterfaceDeclarationMember =

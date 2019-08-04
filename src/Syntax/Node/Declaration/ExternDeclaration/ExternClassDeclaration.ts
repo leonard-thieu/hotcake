@@ -35,7 +35,7 @@ export class ExternClassDeclaration extends ExternDeclaration {
 
     attribute?: AbstractKeywordToken | FinalKeywordToken = undefined;
 
-    members: (ExternClassDeclarationMember | SkippedToken)[] = undefined!;
+    members: ExternClassDeclarationMember[] = undefined!;
     endKeyword: MissableToken<EndKeywordToken> = undefined!;
     endClassKeyword?: ClassKeywordToken = undefined;
 }
@@ -46,4 +46,5 @@ export type ExternClassDeclarationMember =
     | ExternFunctionDeclaration
     | ExternClassMethodDeclaration
     | NewlineToken
+    | SkippedToken
     ;

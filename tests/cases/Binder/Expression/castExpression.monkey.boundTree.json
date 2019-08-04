@@ -34,6 +34,7 @@
                                     "declarationKind": null,
                                     "identifier": "obj",
                                     "typeAnnotation": "Object",
+                                    "operator": null,
                                     "type": "Object"
                                 }
                             ],

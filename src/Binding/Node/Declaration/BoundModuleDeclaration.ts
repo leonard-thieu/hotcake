@@ -25,7 +25,7 @@ export class BoundModuleDeclaration extends BoundNode {
     readonly locals = new BoundSymbolTable()
     type: ModuleType = undefined!;
 
-    members: BoundTypeMembers<BoundModuleDeclarationMember> = undefined!;
+    readonly members = new BoundTypeMembers<BoundModuleDeclarationMember>();
 }
 
 export type BoundModuleDeclarationMember =

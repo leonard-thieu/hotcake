@@ -11,6 +11,7 @@
             "declarationKind": "GlobalKeyword",
             "identifier": "T",
             "typeAnnotation": "Int",
+            "operator": null,
             "type": "Int"
         },
         {
@@ -29,6 +30,7 @@
                     "declarationKind": "GlobalKeyword",
                     "identifier": "T",
                     "typeAnnotation": "Int[]",
+                    "operator": null,
                     "type": "Int[]"
                 },
                 {
@@ -59,6 +61,7 @@
                                             "identifier": "T"
                                         }
                                     },
+                                    "operator": "EqualsSign",
                                     "rightOperand": {
                                         "kind": "IntegerLiteralExpression",
                                         "type": "Int",

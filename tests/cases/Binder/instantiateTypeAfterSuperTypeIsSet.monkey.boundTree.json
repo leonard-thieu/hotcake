@@ -1,0 +1,543 @@
+{
+    "kind": "ModuleDeclaration",
+    "identifier": "instantiateTypeAfterSuperTypeIsSet",
+    "locals": [
+        "List",
+        "Enumerator",
+        "Main"
+    ],
+    "members": [
+        {
+            "kind": "ClassDeclaration",
+            "instantiatedTypes": [
+                {
+                    "kind": "ClassDeclaration",
+                    "locals": [
+                        "ObjectEnumerator",
+                        "New"
+                    ],
+                    "identifier": "List",
+                    "type": "List<Object>",
+                    "typeArguments": [
+                        "Object"
+                    ],
+                    "superType": "Object",
+                    "members": [
+                        {
+                            "kind": "ClassMethodGroupDeclaration",
+                            "identifier": "ObjectEnumerator",
+                            "type": "ObjectEnumerator",
+                            "overloads": [
+                                {
+                                    "kind": "ClassMethodDeclaration",
+                                    "identifier": "ObjectEnumerator",
+                                    "locals": [],
+                                    "type": "ObjectEnumerator: Enumerator<Object>()",
+                                    "returnType": "Enumerator<Object>",
+                                    "parameters": [],
+                                    "statements": [
+                                        {
+                                            "kind": "ReturnStatement",
+                                            "type": "Enumerator<Object>",
+                                            "expression": {
+                                                "kind": "InvokeExpression",
+                                                "type": "Enumerator<Object>",
+                                                "invocationType": "New Enumerator<Object>()",
+                                                "invokableExpression": {
+                                                    "kind": "NewExpression",
+                                                    "type": "New Enumerator<Object>",
+                                                    "typeReference": "Enumerator<Object>"
+                                                },
+                                                "arguments": []
+                                            }
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "kind": "ClassMethodGroupDeclaration",
+                            "identifier": "New",
+                            "type": "New List<Object>",
+                            "overloads": [
+                                {
+                                    "kind": "ClassMethodDeclaration",
+                                    "identifier": "New",
+                                    "locals": [],
+                                    "type": "New List<Object>()",
+                                    "returnType": "List<Object>",
+                                    "parameters": [],
+                                    "statements": []
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ],
+            "locals": [
+                "T",
+                "ObjectEnumerator",
+                "New"
+            ],
+            "identifier": "List",
+            "type": "List<List:T>",
+            "typeParameters": [
+                {
+                    "kind": "TypeParameter",
+                    "identifier": "T",
+                    "type": "List:T"
+                }
+            ],
+            "superType": "Object",
+            "members": [
+                {
+                    "kind": "ClassMethodGroupDeclaration",
+                    "identifier": "ObjectEnumerator",
+                    "type": "ObjectEnumerator",
+                    "overloads": [
+                        {
+                            "kind": "ClassMethodDeclaration",
+                            "identifier": "ObjectEnumerator",
+                            "locals": [],
+                            "type": "ObjectEnumerator: Enumerator<List:T>()",
+                            "returnType": "Enumerator<List:T>",
+                            "parameters": [],
+                            "statements": [
+                                {
+                                    "kind": "ReturnStatement",
+                                    "type": "Enumerator<List:T>",
+                                    "expression": {
+                                        "kind": "InvokeExpression",
+                                        "type": "Enumerator<List:T>",
+                                        "invocationType": "New Enumerator<List:T>()",
+                                        "invokableExpression": {
+                                            "kind": "NewExpression",
+                                            "type": "New Enumerator<List:T>",
+                                            "typeReference": "Enumerator<List:T>"
+                                        },
+                                        "arguments": []
+                                    }
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "kind": "ClassMethodGroupDeclaration",
+                    "identifier": "New",
+                    "type": "New List<List:T>",
+                    "overloads": [
+                        {
+                            "kind": "ClassMethodDeclaration",
+                            "identifier": "New",
+                            "locals": [],
+                            "type": "New List<List:T>()",
+                            "returnType": "List<List:T>",
+                            "parameters": [],
+                            "statements": []
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "kind": "ClassDeclaration",
+            "instantiatedTypes": [
+                {
+                    "kind": "ClassDeclaration",
+                    "locals": [
+                        "val",
+                        "HasNext",
+                        "NextObject",
+                        "New"
+                    ],
+                    "identifier": "Enumerator",
+                    "type": "Enumerator<List:T>",
+                    "typeArguments": [
+                        "List:T"
+                    ],
+                    "superType": "Object",
+                    "members": [
+                        {
+                            "kind": "DataDeclaration",
+                            "declarationKind": "FieldKeyword",
+                            "identifier": "val",
+                            "typeAnnotation": "List:T",
+                            "operator": null,
+                            "type": "List:T"
+                        },
+                        {
+                            "kind": "ClassMethodGroupDeclaration",
+                            "identifier": "HasNext",
+                            "type": "HasNext",
+                            "overloads": [
+                                {
+                                    "kind": "ClassMethodDeclaration",
+                                    "identifier": "HasNext",
+                                    "locals": [],
+                                    "type": "HasNext: Bool()",
+                                    "returnType": "Bool",
+                                    "parameters": [],
+                                    "statements": [
+                                        {
+                                            "kind": "ReturnStatement",
+                                            "type": "Bool",
+                                            "expression": {
+                                                "kind": "BooleanLiteralExpression",
+                                                "type": "Bool",
+                                                "value": "True"
+                                            }
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "kind": "ClassMethodGroupDeclaration",
+                            "identifier": "NextObject",
+                            "type": "NextObject",
+                            "overloads": [
+                                {
+                                    "kind": "ClassMethodDeclaration",
+                                    "identifier": "NextObject",
+                                    "locals": [],
+                                    "type": "NextObject: List:T()",
+                                    "returnType": "List:T",
+                                    "parameters": [],
+                                    "statements": [
+                                        {
+                                            "kind": "ReturnStatement",
+                                            "type": "List:T",
+                                            "expression": {
+                                                "kind": "IdentifierExpression",
+                                                "type": "List:T",
+                                                "identifier": "val"
+                                            }
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "kind": "ClassMethodGroupDeclaration",
+                            "identifier": "New",
+                            "type": "New Enumerator<List:T>",
+                            "overloads": [
+                                {
+                                    "kind": "ClassMethodDeclaration",
+                                    "identifier": "New",
+                                    "locals": [],
+                                    "type": "New Enumerator<List:T>()",
+                                    "returnType": "Enumerator<List:T>",
+                                    "parameters": [],
+                                    "statements": []
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "kind": "ClassDeclaration",
+                    "locals": [
+                        "val",
+                        "HasNext",
+                        "NextObject",
+                        "New"
+                    ],
+                    "identifier": "Enumerator",
+                    "type": "Enumerator<Object>",
+                    "typeArguments": [
+                        "Object"
+                    ],
+                    "superType": "Object",
+                    "members": [
+                        {
+                            "kind": "DataDeclaration",
+                            "declarationKind": "FieldKeyword",
+                            "identifier": "val",
+                            "typeAnnotation": "Object",
+                            "operator": null,
+                            "type": "Object"
+                        },
+                        {
+                            "kind": "ClassMethodGroupDeclaration",
+                            "identifier": "HasNext",
+                            "type": "HasNext",
+                            "overloads": [
+                                {
+                                    "kind": "ClassMethodDeclaration",
+                                    "identifier": "HasNext",
+                                    "locals": [],
+                                    "type": "HasNext: Bool()",
+                                    "returnType": "Bool",
+                                    "parameters": [],
+                                    "statements": [
+                                        {
+                                            "kind": "ReturnStatement",
+                                            "type": "Bool",
+                                            "expression": {
+                                                "kind": "BooleanLiteralExpression",
+                                                "type": "Bool",
+                                                "value": "True"
+                                            }
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "kind": "ClassMethodGroupDeclaration",
+                            "identifier": "NextObject",
+                            "type": "NextObject",
+                            "overloads": [
+                                {
+                                    "kind": "ClassMethodDeclaration",
+                                    "identifier": "NextObject",
+                                    "locals": [],
+                                    "type": "NextObject: Object()",
+                                    "returnType": "Object",
+                                    "parameters": [],
+                                    "statements": [
+                                        {
+                                            "kind": "ReturnStatement",
+                                            "type": "Object",
+                                            "expression": {
+                                                "kind": "IdentifierExpression",
+                                                "type": "Object",
+                                                "identifier": "val"
+                                            }
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "kind": "ClassMethodGroupDeclaration",
+                            "identifier": "New",
+                            "type": "New Enumerator<Object>",
+                            "overloads": [
+                                {
+                                    "kind": "ClassMethodDeclaration",
+                                    "identifier": "New",
+                                    "locals": [],
+                                    "type": "New Enumerator<Object>()",
+                                    "returnType": "Enumerator<Object>",
+                                    "parameters": [],
+                                    "statements": []
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ],
+            "locals": [
+                "T",
+                "val",
+                "HasNext",
+                "NextObject",
+                "New"
+            ],
+            "identifier": "Enumerator",
+            "type": "Enumerator<Enumerator:T>",
+            "typeParameters": [
+                {
+                    "kind": "TypeParameter",
+                    "identifier": "T",
+                    "type": "Enumerator:T"
+                }
+            ],
+            "superType": "Object",
+            "members": [
+                {
+                    "kind": "DataDeclaration",
+                    "declarationKind": "FieldKeyword",
+                    "identifier": "val",
+                    "typeAnnotation": "Enumerator:T",
+                    "operator": null,
+                    "type": "Enumerator:T"
+                },
+                {
+                    "kind": "ClassMethodGroupDeclaration",
+                    "identifier": "HasNext",
+                    "type": "HasNext",
+                    "overloads": [
+                        {
+                            "kind": "ClassMethodDeclaration",
+                            "identifier": "HasNext",
+                            "locals": [],
+                            "type": "HasNext: Bool()",
+                            "returnType": "Bool",
+                            "parameters": [],
+                            "statements": [
+                                {
+                                    "kind": "ReturnStatement",
+                                    "type": "Bool",
+                                    "expression": {
+                                        "kind": "BooleanLiteralExpression",
+                                        "type": "Bool",
+                                        "value": "True"
+                                    }
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "kind": "ClassMethodGroupDeclaration",
+                    "identifier": "NextObject",
+                    "type": "NextObject",
+                    "overloads": [
+                        {
+                            "kind": "ClassMethodDeclaration",
+                            "identifier": "NextObject",
+                            "locals": [],
+                            "type": "NextObject: Enumerator:T()",
+                            "returnType": "Enumerator:T",
+                            "parameters": [],
+                            "statements": [
+                                {
+                                    "kind": "ReturnStatement",
+                                    "type": "Enumerator:T",
+                                    "expression": {
+                                        "kind": "IdentifierExpression",
+                                        "type": "Enumerator:T",
+                                        "identifier": "val"
+                                    }
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "kind": "ClassMethodGroupDeclaration",
+                    "identifier": "New",
+                    "type": "New Enumerator<Enumerator:T>",
+                    "overloads": [
+                        {
+                            "kind": "ClassMethodDeclaration",
+                            "identifier": "New",
+                            "locals": [],
+                            "type": "New Enumerator<Enumerator:T>()",
+                            "returnType": "Enumerator<Enumerator:T>",
+                            "parameters": [],
+                            "statements": []
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "kind": "FunctionGroupDeclaration",
+            "identifier": "Main",
+            "type": "Main",
+            "overloads": [
+                {
+                    "kind": "FunctionDeclaration",
+                    "identifier": "Main",
+                    "locals": [
+                        ""
+                    ],
+                    "type": "Main: Int()",
+                    "returnType": "Int",
+                    "parameters": [],
+                    "statements": [
+                        {
+                            "kind": "DataDeclarationStatement",
+                            "dataDeclaration": {
+                                "kind": "DataDeclaration",
+                                "declarationKind": "LocalKeyword",
+                                "identifier": "",
+                                "operator": "ColonEqualsSign",
+                                "expression": {
+                                    "kind": "InvokeExpression",
+                                    "type": "Enumerator<Object>",
+                                    "invocationType": "ObjectEnumerator: Enumerator<Object>()",
+                                    "invokableExpression": {
+                                        "kind": "ScopeMemberAccessExpression",
+                                        "type": "ObjectEnumerator",
+                                        "scopableExpression": {
+                                            "kind": "InvokeExpression",
+                                            "type": "List<Object>",
+                                            "invocationType": "New List<Object>()",
+                                            "invokableExpression": {
+                                                "kind": "NewExpression",
+                                                "type": "New List<Object>",
+                                                "typeReference": "List<Object>"
+                                            },
+                                            "arguments": []
+                                        },
+                                        "member": {
+                                            "kind": "IdentifierExpression",
+                                            "type": "ObjectEnumerator",
+                                            "identifier": "ObjectEnumerator"
+                                        }
+                                    },
+                                    "arguments": []
+                                },
+                                "type": "Enumerator<Object>"
+                            }
+                        },
+                        {
+                            "kind": "WhileLoop",
+                            "locals": [
+                                "val"
+                            ],
+                            "expression": {
+                                "kind": "InvokeExpression",
+                                "type": "Bool",
+                                "invocationType": "HasNext: Bool()",
+                                "invokableExpression": {
+                                    "kind": "ScopeMemberAccessExpression",
+                                    "type": "HasNext",
+                                    "scopableExpression": {
+                                        "kind": "IdentifierExpression",
+                                        "type": "Enumerator<Object>",
+                                        "identifier": ""
+                                    },
+                                    "member": {
+                                        "kind": "IdentifierExpression",
+                                        "type": "HasNext",
+                                        "identifier": "HasNext"
+                                    }
+                                },
+                                "arguments": []
+                            },
+                            "statements": [
+                                {
+                                    "kind": "DataDeclarationStatement",
+                                    "dataDeclaration": {
+                                        "kind": "DataDeclaration",
+                                        "declarationKind": "LocalKeyword",
+                                        "identifier": "val",
+                                        "operator": "ColonEqualsSign",
+                                        "expression": {
+                                            "kind": "InvokeExpression",
+                                            "type": "Object",
+                                            "invocationType": "NextObject: Object()",
+                                            "invokableExpression": {
+                                                "kind": "ScopeMemberAccessExpression",
+                                                "type": "NextObject",
+                                                "scopableExpression": {
+                                                    "kind": "IdentifierExpression",
+                                                    "type": "Enumerator<Object>",
+                                                    "identifier": ""
+                                                },
+                                                "member": {
+                                                    "kind": "IdentifierExpression",
+                                                    "type": "NextObject",
+                                                    "identifier": "NextObject"
+                                                }
+                                            },
+                                            "arguments": []
+                                        },
+                                        "type": "Object"
+                                    }
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

@@ -15,5 +15,5 @@ export class BoundFunctionDeclaration extends BoundNode {
 
     returnType: BoundTypeReferenceDeclaration = undefined!;
     parameters: BoundDataDeclaration[] = undefined!;
-    statements?: BoundStatements[] = undefined;
+    statements: BoundStatements[] = undefined!;
 }

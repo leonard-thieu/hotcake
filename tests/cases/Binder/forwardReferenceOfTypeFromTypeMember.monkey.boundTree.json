@@ -21,6 +21,7 @@
                     "declarationKind": "FieldKeyword",
                     "identifier": "node",
                     "typeAnnotation": "Node",
+                    "operator": null,
                     "type": "Node"
                 },
                 {

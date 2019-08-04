@@ -22,6 +22,7 @@
                     "declarationKind": "GlobalKeyword",
                     "identifier": "T",
                     "typeAnnotation": "Int",
+                    "operator": null,
                     "type": "Int"
                 },
                 {
@@ -58,6 +59,7 @@
                     "declarationKind": "FieldKeyword",
                     "identifier": "_pred",
                     "typeAnnotation": "HeadNode",
+                    "operator": null,
                     "type": "HeadNode"
                 },
                 {
@@ -65,6 +67,7 @@
                     "declarationKind": "FieldKeyword",
                     "identifier": "_head",
                     "typeAnnotation": "HeadNode",
+                    "operator": null,
                     "type": "HeadNode"
                 },
                 {
@@ -117,6 +120,7 @@
                                     "identifier": "T"
                                 }
                             },
+                            "operator": "EqualsSign",
                             "rightOperand": {
                                 "kind": "IntegerLiteralExpression",
                                 "type": "Int",
@@ -129,6 +133,7 @@
                                 "kind": "DataDeclaration",
                                 "declarationKind": "LocalKeyword",
                                 "identifier": "headNode",
+                                "operator": "ColonEqualsSign",
                                 "expression": {
                                     "kind": "InvokeExpression",
                                     "type": "HeadNode",
@@ -149,6 +154,7 @@
                                 "kind": "DataDeclaration",
                                 "declarationKind": "LocalKeyword",
                                 "identifier": "chainedScopeMemberAccess",
+                                "operator": "ColonEqualsSign",
                                 "expression": {
                                     "kind": "ScopeMemberAccessExpression",
                                     "type": "HeadNode",

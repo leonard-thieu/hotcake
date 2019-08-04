@@ -109,6 +109,7 @@
                             "declarationKind": null,
                             "identifier": "message",
                             "typeAnnotation": "String",
+                            "operator": null,
                             "type": "String"
                         }
                     ],
@@ -140,6 +141,7 @@
                                     "kind": "DataDeclaration",
                                     "declarationKind": "LocalKeyword",
                                     "identifier": "i",
+                                    "operator": "ColonEqualsSign",
                                     "expression": {
                                         "kind": "IntegerLiteralExpression",
                                         "type": "Int",
@@ -170,6 +172,7 @@
                                     "type": "Int",
                                     "identifier": "i"
                                 },
+                                "operator": "PlusSignEqualsSign",
                                 "rightOperand": {
                                     "kind": "BinaryExpression",
                                     "type": "Int",
@@ -262,6 +265,7 @@
                                                 "declarationKind": null,
                                                 "identifier": "ex",
                                                 "typeAnnotation": "Ex1",
+                                                "operator": null,
                                                 "type": "Ex1"
                                             },
                                             "statements": [
@@ -297,6 +301,7 @@
                                                 "declarationKind": null,
                                                 "identifier": "ex",
                                                 "typeAnnotation": "Ex2",
+                                                "operator": null,
                                                 "type": "Ex2"
                                             },
                                             "statements": [

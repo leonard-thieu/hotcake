@@ -41,6 +41,7 @@
                                 "declarationKind": "LocalKeyword",
                                 "identifier": "d0",
                                 "typeAnnotation": "Int",
+                                "operator": null,
                                 "type": "Int"
                             }
                         },
@@ -51,6 +52,7 @@
                                 "declarationKind": "LocalKeyword",
                                 "identifier": "s0",
                                 "typeAnnotation": "Bool",
+                                "operator": null,
                                 "type": "Bool"
                             }
                         },
@@ -61,6 +63,7 @@
                                 "declarationKind": "LocalKeyword",
                                 "identifier": "s1",
                                 "typeAnnotation": "Int",
+                                "operator": null,
                                 "type": "Int"
                             }
                         },
@@ -71,6 +74,7 @@
                                 "declarationKind": "LocalKeyword",
                                 "identifier": "s2",
                                 "typeAnnotation": "Float",
+                                "operator": null,
                                 "type": "Float"
                             }
                         },
@@ -81,6 +85,7 @@
                                 "declarationKind": "LocalKeyword",
                                 "identifier": "s3",
                                 "typeAnnotation": "String",
+                                "operator": null,
                                 "type": "String"
                             }
                         },
@@ -91,6 +96,7 @@
                                 "declarationKind": "LocalKeyword",
                                 "identifier": "sa0",
                                 "typeAnnotation": "Int[]",
+                                "operator": null,
                                 "type": "Int[]"
                             }
                         },
@@ -101,6 +107,7 @@
                                 "declarationKind": "LocalKeyword",
                                 "identifier": "sa1",
                                 "typeAnnotation": "Float[]",
+                                "operator": null,
                                 "type": "Float[]"
                             }
                         },
@@ -111,6 +118,7 @@
                                 "declarationKind": "LocalKeyword",
                                 "identifier": "sa2",
                                 "typeAnnotation": "Float[][]",
+                                "operator": null,
                                 "type": "Float[][]"
                             }
                         },
@@ -121,6 +129,7 @@
                                 "declarationKind": "LocalKeyword",
                                 "identifier": "l0",
                                 "typeAnnotation": "Bool",
+                                "operator": null,
                                 "type": "Bool"
                             }
                         },
@@ -131,6 +140,7 @@
                                 "declarationKind": "LocalKeyword",
                                 "identifier": "l1",
                                 "typeAnnotation": "Int",
+                                "operator": null,
                                 "type": "Int"
                             }
                         },
@@ -141,6 +151,7 @@
                                 "declarationKind": "LocalKeyword",
                                 "identifier": "l2",
                                 "typeAnnotation": "Float",
+                                "operator": null,
                                 "type": "Float"
                             }
                         },
@@ -151,6 +162,7 @@
                                 "declarationKind": "LocalKeyword",
                                 "identifier": "l3",
                                 "typeAnnotation": "String",
+                                "operator": null,
                                 "type": "String"
                             }
                         },
@@ -161,6 +173,7 @@
                                 "declarationKind": "LocalKeyword",
                                 "identifier": "l4",
                                 "typeAnnotation": "Object",
+                                "operator": null,
                                 "type": "Object"
                             }
                         },
@@ -171,6 +184,7 @@
                                 "declarationKind": "LocalKeyword",
                                 "identifier": "la0",
                                 "typeAnnotation": "Bool[]",
+                                "operator": null,
                                 "type": "Bool[]"
                             }
                         },
@@ -181,6 +195,7 @@
                                 "declarationKind": "LocalKeyword",
                                 "identifier": "la1",
                                 "typeAnnotation": "Bool[][]",
+                                "operator": null,
                                 "type": "Bool[][]"
                             }
                         }

@@ -4,19 +4,15 @@ import { FILE_EXTENSION, Project } from '../Project';
 import { CommaSeparator } from '../Syntax/Node/CommaSeparator';
 import { AccessibilityDirective } from '../Syntax/Node/Declaration/AccessibilityDirective';
 import { AliasDirective, AliasDirectiveSequence } from '../Syntax/Node/Declaration/AliasDirectiveSequence';
-import { ClassDeclaration } from '../Syntax/Node/Declaration/ClassDeclaration';
+import { ClassDeclaration, ClassDeclarationMember } from '../Syntax/Node/Declaration/ClassDeclaration';
 import { ClassMethodDeclaration } from '../Syntax/Node/Declaration/ClassMethodDeclaration';
 import { DataDeclaration, DataDeclarationKeywordToken, DataDeclarationSequence } from '../Syntax/Node/Declaration/DataDeclarationSequence';
 import { Declarations, TypeDeclaration } from '../Syntax/Node/Declaration/Declaration';
-import { ExternClassDeclaration } from '../Syntax/Node/Declaration/ExternDeclaration/ExternClassDeclaration';
-import { ExternClassMethodDeclaration } from '../Syntax/Node/Declaration/ExternDeclaration/ExternClassMethodDeclaration';
+import { ExternClassDeclaration, ExternClassDeclarationMember } from '../Syntax/Node/Declaration/ExternDeclaration/ExternClassDeclaration';
 import { ExternDataDeclaration, ExternDataDeclarationKeywordToken, ExternDataDeclarationSequence } from '../Syntax/Node/Declaration/ExternDeclaration/ExternDataDeclarationSequence';
-import { ExternFunctionDeclaration } from '../Syntax/Node/Declaration/ExternDeclaration/ExternFunctionDeclaration';
-import { FunctionDeclaration } from '../Syntax/Node/Declaration/FunctionDeclaration';
 import { ImportStatement } from '../Syntax/Node/Declaration/ImportStatement';
-import { InterfaceDeclaration } from '../Syntax/Node/Declaration/InterfaceDeclaration';
-import { InterfaceMethodDeclaration } from '../Syntax/Node/Declaration/InterfaceMethodDeclaration';
-import { ModuleDeclaration } from '../Syntax/Node/Declaration/ModuleDeclaration';
+import { InterfaceDeclaration, InterfaceDeclarationMember } from '../Syntax/Node/Declaration/InterfaceDeclaration';
+import { ModuleDeclaration, ModuleDeclarationHeaderMember, ModuleDeclarationMember } from '../Syntax/Node/Declaration/ModuleDeclaration';
 import { TypeParameter } from '../Syntax/Node/Declaration/TypeParameter';
 import { ArrayLiteralExpression } from '../Syntax/Node/Expression/ArrayLiteralExpression';
 import { BinaryExpression, BinaryExpressionOperatorToken } from '../Syntax/Node/Expression/BinaryExpression';
@@ -61,18 +57,17 @@ import { BoundModulePath } from "./Node/BoundModulePath";
 import { BoundNodes } from './Node/BoundNode';
 import { BoundNodeKind } from './Node/BoundNodeKind';
 import { BoundAliasDirective } from './Node/Declaration/BoundAliasDirective';
-import { BoundClassDeclaration, BoundClassDeclarationMember } from './Node/Declaration/BoundClassDeclaration';
+import { BoundClassDeclaration } from './Node/Declaration/BoundClassDeclaration';
 import { BoundClassMethodDeclaration } from './Node/Declaration/BoundClassMethodDeclaration';
 import { BoundDataDeclaration } from './Node/Declaration/BoundDataDeclaration';
 import { BoundDeclarations, BoundTypeReferenceDeclaration } from './Node/Declaration/BoundDeclarations';
 import { BoundDirectory } from './Node/Declaration/BoundDirectory';
 import { BoundFunctionDeclaration } from './Node/Declaration/BoundFunctionDeclaration';
-import { BoundClassMethodGroupDeclaration, BoundExternClassMethodGroupDeclaration, BoundExternFunctionGroupDeclaration, BoundFunctionGroupDeclaration, BoundFunctionLikeGroupDeclaration, BoundInterfaceMethodGroupDeclaration } from './Node/Declaration/BoundFunctionLikeGroupDeclaration';
+import { BoundClassMethodGroupDeclaration, BoundExternClassMethodGroupDeclaration, BoundExternFunctionGroupDeclaration, BoundFunctionGroupDeclaration, BoundInterfaceMethodGroupDeclaration } from './Node/Declaration/BoundFunctionLikeGroupDeclaration';
 import { BoundImportStatement } from './Node/Declaration/BoundImportStatement';
-import { BoundInterfaceDeclaration, BoundInterfaceDeclarationMember } from './Node/Declaration/BoundInterfaceDeclaration';
+import { BoundInterfaceDeclaration } from './Node/Declaration/BoundInterfaceDeclaration';
 import { BoundInterfaceMethodDeclaration } from './Node/Declaration/BoundInterfaceMethodDeclaration';
-import { BoundModuleDeclaration, BoundModuleDeclarationMember } from './Node/Declaration/BoundModuleDeclaration';
-import { BoundTypeMembers } from './Node/Declaration/BoundTypeMembers';
+import { BoundModuleDeclaration } from './Node/Declaration/BoundModuleDeclaration';
 import { BoundTypeParameter } from './Node/Declaration/BoundTypeParameter';
 import { BoundExternClassDeclaration } from './Node/Declaration/Extern/BoundExternClassDeclaration';
 import { BoundExternClassMethodDeclaration } from './Node/Declaration/Extern/BoundExternClassMethodDeclaration';
@@ -167,19 +162,17 @@ export class Binder {
         this.project.cacheModule(boundModuleDeclaration);
         this.project.importModuleFromSource(boundModuleDeclaration, 'monkey.lang');
 
-        this.bindModuleDeclarationHeaderMembers(boundModuleDeclaration, moduleDeclaration);
-
-        boundModuleDeclaration.members = new BoundTypeMembers<BoundModuleDeclarationMember>();
-        this.bindModuleDeclarationMembers(boundModuleDeclaration, moduleDeclaration);
+        this.bindModuleDeclarationHeaderMembers(boundModuleDeclaration, moduleDeclaration.headerMembers);
+        this.bindModuleDeclarationMembers(boundModuleDeclaration, moduleDeclaration.members);
 
         return boundModuleDeclaration;
     }
 
     private bindModuleDeclarationHeaderMembers(
         parent: BoundNodes,
-        moduleDeclaration: ModuleDeclaration,
+        members: ModuleDeclarationHeaderMember[],
     ): void {
-        for (const member of moduleDeclaration.headerMembers) {
+        for (const member of members) {
             switch (member.kind) {
                 case NodeKind.ImportStatement: {
                     this.bindImportStatement(parent, member);
@@ -207,53 +200,61 @@ export class Binder {
 
     private bindModuleDeclarationMembers(
         parent: BoundModuleDeclaration,
-        moduleDeclaration: ModuleDeclaration,
+        members: ModuleDeclarationMember[],
     ): void {
-        const boundModuleDeclarationMembers = parent.members;
-
-        for (const moduleDeclarationMember of moduleDeclaration.members) {
-            switch (moduleDeclarationMember.kind) {
+        for (const member of members) {
+            switch (member.kind) {
                 case NodeKind.AccessibilityDirective: {
-                    this.bindAccessibilityDirective(moduleDeclarationMember);
+                    this.bindAccessibilityDirective(member);
                     break;
                 }
                 case NodeKind.ExternDataDeclarationSequence: {
-                    const boundExternDataDeclarations = this.bindExternDataDeclarationSequence(parent, moduleDeclarationMember);
+                    const boundExternDataDeclarations = this.bindExternDataDeclarationSequence(parent, member);
                     for (const dataDeclaration of boundExternDataDeclarations) {
-                        boundModuleDeclarationMembers.set(dataDeclaration.identifier.name, dataDeclaration);
+                        parent.members.set(dataDeclaration.identifier.name, dataDeclaration);
                     }
                     break;
                 }
                 case NodeKind.ExternFunctionDeclaration: {
-                    const boundExternFunctionGroupDeclaration = this.bindExternFunctionDeclaration(parent, moduleDeclarationMember);
-                    boundModuleDeclarationMembers.set(boundExternFunctionGroupDeclaration.identifier.name, boundExternFunctionGroupDeclaration);
+                    if (this.declarationCache.get(member)) {
+                        continue;
+                    }
+
+                    const name = this.getIdentifierText(member.identifier);
+                    const boundExternFunctionGroupDeclaration = this.bindExternFunctionGroup(parent, name, members);
+                    parent.members.set(boundExternFunctionGroupDeclaration.identifier.name, boundExternFunctionGroupDeclaration);
                     break;
                 }
                 case NodeKind.ExternClassDeclaration: {
-                    const boundExternClassDeclaration = this.bindExternClassDeclaration(parent, moduleDeclarationMember);
-                    boundModuleDeclarationMembers.set(boundExternClassDeclaration.identifier.name, boundExternClassDeclaration);
+                    const boundExternClassDeclaration = this.bindExternClassDeclaration(parent, member);
+                    parent.members.set(boundExternClassDeclaration.identifier.name, boundExternClassDeclaration);
                     break;
                 }
                 case NodeKind.DataDeclarationSequence: {
-                    const boundDataDeclarationSequence = this.bindDataDeclarationSequence(parent, moduleDeclarationMember);
+                    const boundDataDeclarationSequence = this.bindDataDeclarationSequence(parent, member);
                     for (const dataDeclaration of boundDataDeclarationSequence) {
-                        boundModuleDeclarationMembers.set(dataDeclaration.identifier.name, dataDeclaration);
+                        parent.members.set(dataDeclaration.identifier.name, dataDeclaration);
                     }
                     break;
                 }
                 case NodeKind.FunctionDeclaration: {
-                    const boundFunctionGroupDeclaration = this.bindFunctionDeclaration(parent, moduleDeclarationMember);
-                    boundModuleDeclarationMembers.set(boundFunctionGroupDeclaration.identifier.name, boundFunctionGroupDeclaration);
+                    if (this.declarationCache.get(member)) {
+                        continue;
+                    }
+
+                    const name = this.getIdentifierText(member.identifier);
+                    const boundFunctionGroupDeclaration = this.bindFunctionGroup(parent, name, members);
+                    parent.members.set(boundFunctionGroupDeclaration.identifier.name, boundFunctionGroupDeclaration);
                     break;
                 }
                 case NodeKind.InterfaceDeclaration: {
-                    const boundInterfaceDeclaration = this.bindInterfaceDeclaration(parent, moduleDeclarationMember);
-                    boundModuleDeclarationMembers.set(boundInterfaceDeclaration.identifier.name, boundInterfaceDeclaration);
+                    const boundInterfaceDeclaration = this.bindInterfaceDeclaration(parent, member);
+                    parent.members.set(boundInterfaceDeclaration.identifier.name, boundInterfaceDeclaration);
                     break;
                 }
                 case NodeKind.ClassDeclaration: {
-                    const boundClassDeclaration = this.bindClassDeclaration(parent, moduleDeclarationMember);
-                    boundModuleDeclarationMembers.set(boundClassDeclaration.identifier.name, boundClassDeclaration);
+                    const boundClassDeclaration = this.bindClassDeclaration(parent, member);
+                    parent.members.set(boundClassDeclaration.identifier.name, boundClassDeclaration);
                     break;
                 }
                 case TokenKind.Newline:
@@ -261,7 +262,7 @@ export class Binder {
                     break;
                 }
                 default: {
-                    assertNever(moduleDeclarationMember);
+                    assertNever(member);
                     break;
                 }
             }
@@ -481,7 +482,7 @@ export class Binder {
         parent.locals.set(boundExternDataDeclaration.identifier);
 
         boundExternDataDeclaration.typeAnnotation = this.bindTypeAnnotation(externDataDeclaration.typeAnnotation);
-        boundExternDataDeclaration.type = boundExternDataDeclaration.typeAnnotation!.type;
+        boundExternDataDeclaration.type = boundExternDataDeclaration.typeAnnotation.type;
         if (externDataDeclaration.nativeSymbol) {
             if (externDataDeclaration.nativeSymbol.kind === TokenKind.Missing) {
                 throw new Error(`Native symbol is missing.`);
@@ -497,17 +498,43 @@ export class Binder {
 
     // #region Extern function declaration
 
-    private bindExternFunctionDeclaration(
+    private bindExternFunctionGroup(
         parent: BoundModuleDeclaration | BoundExternClassDeclaration,
-        externFunctionDeclaration: ExternFunctionDeclaration,
+        name: string,
+        members: ModuleDeclarationMember[] | ExternClassDeclarationMember[],
     ): BoundExternFunctionGroupDeclaration {
-        let boundExternFunctionDeclaration = this.declarationCache.get(externFunctionDeclaration) as BoundExternFunctionDeclaration | undefined;
-        if (boundExternFunctionDeclaration) {
-            return boundExternFunctionDeclaration.parent as BoundExternFunctionGroupDeclaration;
+        const boundExternFunctionGroupDeclaration = this.getExternFunctionGroupDeclaration(parent, name);
+
+        for (const member of members) {
+            if (member.kind === NodeKind.ExternFunctionDeclaration) {
+                const memberName = this.getIdentifierText(member.identifier);
+                if (areIdentifiersSame(name, memberName)) {
+                    const boundExternFunctionDeclaration = new BoundExternFunctionDeclaration();
+                    this.declarationCache.set(member, boundExternFunctionDeclaration);
+                    boundExternFunctionGroupDeclaration.overloads.add(boundExternFunctionDeclaration);
+                    boundExternFunctionDeclaration.parent = boundExternFunctionGroupDeclaration;
+                    boundExternFunctionDeclaration.type = new FunctionType(boundExternFunctionDeclaration);
+                    boundExternFunctionDeclaration.identifier = new BoundSymbol(name, boundExternFunctionDeclaration);
+                    boundExternFunctionDeclaration.returnType = this.bindTypeAnnotation(member.returnType);
+                    boundExternFunctionDeclaration.parameters = this.bindDataDeclarationSequence(boundExternFunctionDeclaration, member.parameters);
+                    if (member.nativeSymbol) {
+                        if (member.nativeSymbol.kind === TokenKind.Missing) {
+                            throw new Error(`Native symbol is missing.`);
+                        }
+
+                        boundExternFunctionDeclaration.nativeSymbol = this.bindStringLiteralExpression(boundExternFunctionDeclaration, member.nativeSymbol);
+                    }
+                }
+            }
         }
 
-        const name = this.getIdentifierText(externFunctionDeclaration.identifier);
+        return boundExternFunctionGroupDeclaration;
+    }
 
+    private getExternFunctionGroupDeclaration(
+        parent: BoundModuleDeclaration | BoundExternClassDeclaration,
+        name: string,
+    ) {
         let boundExternFunctionGroupDeclaration = parent.members.get(name,
             BoundNodeKind.ExternFunctionGroupDeclaration,
         ) as BoundExternFunctionGroupDeclaration | undefined;
@@ -516,25 +543,8 @@ export class Binder {
             boundExternFunctionGroupDeclaration = new BoundExternFunctionGroupDeclaration();
             boundExternFunctionGroupDeclaration.parent = parent;
             boundExternFunctionGroupDeclaration.type = new FunctionGroupType(boundExternFunctionGroupDeclaration);
-
             boundExternFunctionGroupDeclaration.identifier = new BoundSymbol(name, boundExternFunctionGroupDeclaration);
             parent.locals.set(boundExternFunctionGroupDeclaration.identifier);
-        }
-
-        boundExternFunctionDeclaration = new BoundExternFunctionDeclaration();
-        this.declarationCache.set(externFunctionDeclaration, boundExternFunctionDeclaration);
-        boundExternFunctionGroupDeclaration.overloads.add(boundExternFunctionDeclaration);
-        boundExternFunctionDeclaration.parent = boundExternFunctionGroupDeclaration;
-        boundExternFunctionDeclaration.type = new FunctionType(boundExternFunctionDeclaration);
-        boundExternFunctionDeclaration.identifier = new BoundSymbol(name, boundExternFunctionDeclaration);
-        boundExternFunctionDeclaration.returnType = this.bindTypeAnnotation(externFunctionDeclaration.returnType);
-        boundExternFunctionDeclaration.parameters = this.bindDataDeclarationSequence(boundExternFunctionDeclaration, externFunctionDeclaration.parameters);
-        if (externFunctionDeclaration.nativeSymbol) {
-            if (externFunctionDeclaration.nativeSymbol.kind === TokenKind.Missing) {
-                throw new Error(`Native symbol is missing.`);
-            }
-
-            boundExternFunctionDeclaration.nativeSymbol = this.bindStringLiteralExpression(boundExternFunctionDeclaration, externFunctionDeclaration.nativeSymbol);
         }
 
         return boundExternFunctionGroupDeclaration;
@@ -590,6 +600,7 @@ export class Binder {
         }
 
         this.declarationCache.set(externClassDeclaration, boundExternClassDeclaration);
+        boundExternClassDeclaration.declaration = externClassDeclaration;
         boundExternClassDeclaration.parent = parent;
         // TODO: Does this apply to all the built-in types too?
         boundExternClassDeclaration.identifier = new BoundSymbol(name, boundExternClassDeclaration);
@@ -614,7 +625,7 @@ export class Binder {
             boundExternClassDeclaration.nativeSymbol = this.bindStringLiteralExpression(boundExternClassDeclaration, externClassDeclaration.nativeSymbol);
         }
 
-        this.bindExternClassDeclarationMembers(externClassDeclaration, boundExternClassDeclaration);
+        this.bindExternClassDeclarationMembers(boundExternClassDeclaration, externClassDeclaration.members);
 
         if (!this.hasParameterlessExternConstructor(boundExternClassDeclaration)) {
             const boundMethodGroupDeclaration = this.createParameterlessExternConstructor(boundExternClassDeclaration);
@@ -625,36 +636,38 @@ export class Binder {
     }
 
     private bindExternClassDeclarationMembers(
-        externClassDeclaration: ExternClassDeclaration,
         parent: BoundExternClassDeclaration,
+        members: ExternClassDeclarationMember[],
     ): void {
-        const boundExternClassDeclarationMembers = parent.members;
-
-        for (const externClassDeclarationMember of externClassDeclaration.members) {
-            switch (externClassDeclarationMember.kind) {
+        for (const member of members) {
+            switch (member.kind) {
                 case NodeKind.AccessibilityDirective: {
                     throw new Error('Method not implemented.');
                 }
                 case NodeKind.ExternDataDeclarationSequence: {
-                    const boundExternDataDeclarations = this.bindExternDataDeclarationSequence(parent, externClassDeclarationMember);
+                    const boundExternDataDeclarations = this.bindExternDataDeclarationSequence(parent, member);
                     for (const dataDeclaration of boundExternDataDeclarations) {
-                        boundExternClassDeclarationMembers.set(dataDeclaration.identifier.name, dataDeclaration);
+                        parent.members.set(dataDeclaration.identifier.name, dataDeclaration);
                     }
                     break;
                 }
                 case NodeKind.ExternFunctionDeclaration: {
-                    const boundExternFunctionGroupDeclaration = this.bindExternFunctionDeclaration(parent, externClassDeclarationMember);
-                    boundExternClassDeclarationMembers.set(boundExternFunctionGroupDeclaration.identifier.name, boundExternFunctionGroupDeclaration);
-                    break;
-                }
-                case NodeKind.ExternClassMethodDeclaration: {
-                    if (this.declarationCache.get(externClassDeclarationMember)) {
+                    if (this.declarationCache.get(member)) {
                         continue;
                     }
 
-                    const name = this.getIdentifierText(externClassDeclarationMember.identifier);
-                    const boundExternClassMethodGroupDeclaration = this.bindExternClassMethodGroup(parent, name, externClassDeclaration.members);
-                    // boundExternClassDeclarationMembers.set(boundExternClassMethodGroupDeclaration.identifier.name, boundExternClassMethodGroupDeclaration);
+                    const name = this.getIdentifierText(member.identifier);
+                    const boundExternFunctionGroupDeclaration = this.bindExternFunctionGroup(parent, name, members);
+                    parent.members.set(boundExternFunctionGroupDeclaration.identifier.name, boundExternFunctionGroupDeclaration);
+                    break;
+                }
+                case NodeKind.ExternClassMethodDeclaration: {
+                    if (this.declarationCache.get(member)) {
+                        continue;
+                    }
+
+                    const name = this.getIdentifierText(member.identifier);
+                    this.bindExternClassMethodGroup(parent, name, members);
                     break;
                 }
                 case TokenKind.Newline:
@@ -662,7 +675,7 @@ export class Binder {
                     break;
                 }
                 default: {
-                    assertNever(externClassDeclarationMember);
+                    assertNever(member);
                     break;
                 }
             }
@@ -700,7 +713,49 @@ export class Binder {
 
     // #region Extern class method declaration
 
-    private getBoundExternClassMethodGroupDeclaration(parent: BoundExternClassDeclaration, name: string) {
+    private bindExternClassMethodGroup(
+        parent: BoundExternClassDeclaration,
+        name: string,
+        members: ExternClassDeclarationMember[],
+    ): BoundExternClassMethodGroupDeclaration {
+        const boundExternClassMethodGroupDeclaration = this.getBoundExternClassMethodGroupDeclaration(parent, name);
+
+        for (const member of members) {
+            if (member.kind === NodeKind.ExternClassMethodDeclaration) {
+                const memberName = this.getIdentifierText(member.identifier);
+                if (areIdentifiersSame(name, memberName)) {
+                    const boundExternClassMethodDeclaration = new BoundExternClassMethodDeclaration();
+                    this.declarationCache.set(member, boundExternClassMethodDeclaration);
+                    boundExternClassMethodGroupDeclaration.overloads.add(boundExternClassMethodDeclaration);
+                    boundExternClassMethodDeclaration.parent = boundExternClassMethodGroupDeclaration;
+                    boundExternClassMethodDeclaration.type = new MethodType(boundExternClassMethodDeclaration);
+                    boundExternClassMethodDeclaration.identifier = new BoundSymbol(memberName, boundExternClassMethodDeclaration);
+
+                    if (areIdentifiersSame('New', memberName)) {
+                        boundExternClassMethodDeclaration.returnType = parent;
+                    } else {
+                        boundExternClassMethodDeclaration.returnType = this.bindTypeAnnotation(member.returnType);
+                    }
+
+                    boundExternClassMethodDeclaration.parameters = this.bindDataDeclarationSequence(boundExternClassMethodDeclaration, member.parameters);
+                    if (member.nativeSymbol) {
+                        if (member.nativeSymbol.kind === TokenKind.Missing) {
+                            throw new Error(`Native symbol is missing.`);
+                        }
+
+                        boundExternClassMethodDeclaration.nativeSymbol = this.bindStringLiteralExpression(boundExternClassMethodDeclaration, member.nativeSymbol);
+                    }
+                }
+            }
+        }
+
+        return boundExternClassMethodGroupDeclaration;
+    }
+
+    private getBoundExternClassMethodGroupDeclaration(
+        parent: BoundExternClassDeclaration,
+        name: string,
+    ): BoundExternClassMethodGroupDeclaration {
         let boundExternClassMethodGroupDeclaration = parent.members.get(name,
             BoundNodeKind.ExternClassMethodGroupDeclaration,
         ) as BoundExternClassMethodGroupDeclaration | undefined;
@@ -712,51 +767,6 @@ export class Binder {
             parent.locals.set(boundExternClassMethodGroupDeclaration.identifier);
             parent.members.set(boundExternClassMethodGroupDeclaration.identifier.name, boundExternClassMethodGroupDeclaration);
             boundExternClassMethodGroupDeclaration.type = new MethodGroupType(boundExternClassMethodGroupDeclaration);
-        }
-
-        return boundExternClassMethodGroupDeclaration;
-    }
-
-    private bindExternClassMethodGroup(
-        parent: BoundExternClassDeclaration,
-        name: string,
-        members: ExternClassDeclaration['members'],
-    ): BoundExternClassMethodGroupDeclaration {
-        const boundExternClassMethodGroupDeclaration = this.getBoundExternClassMethodGroupDeclaration(parent, name);
-
-        const externClassMethodDeclarations: ExternClassMethodDeclaration[] = [];
-
-        for (const member of members) {
-            if (member.kind === NodeKind.ExternClassMethodDeclaration) {
-                const memberName = this.getIdentifierText(member.identifier);
-                if (areIdentifiersSame(name, memberName)) {
-                    externClassMethodDeclarations.push(member);
-                }
-            }
-        }
-
-        for (const externClassMethodDeclaration of externClassMethodDeclarations) {
-            const boundExternClassMethodDeclaration = new BoundExternClassMethodDeclaration();
-            this.declarationCache.set(externClassMethodDeclaration, boundExternClassMethodDeclaration);
-            boundExternClassMethodGroupDeclaration.overloads.add(boundExternClassMethodDeclaration);
-            boundExternClassMethodDeclaration.parent = boundExternClassMethodGroupDeclaration;
-            boundExternClassMethodDeclaration.type = new MethodType(boundExternClassMethodDeclaration);
-            boundExternClassMethodDeclaration.identifier = new BoundSymbol(name, boundExternClassMethodDeclaration);
-
-            if (areIdentifiersSame('New', name)) {
-                boundExternClassMethodDeclaration.returnType = parent;
-            } else {
-                boundExternClassMethodDeclaration.returnType = this.bindTypeAnnotation(externClassMethodDeclaration.returnType);
-            }
-
-            boundExternClassMethodDeclaration.parameters = this.bindDataDeclarationSequence(boundExternClassMethodDeclaration, externClassMethodDeclaration.parameters);
-            if (externClassMethodDeclaration.nativeSymbol) {
-                if (externClassMethodDeclaration.nativeSymbol.kind === TokenKind.Missing) {
-                    throw new Error(`Native symbol is missing.`);
-                }
-
-                boundExternClassMethodDeclaration.nativeSymbol = this.bindStringLiteralExpression(boundExternClassMethodDeclaration, externClassMethodDeclaration.nativeSymbol);
-            }
         }
 
         return boundExternClassMethodGroupDeclaration;
@@ -804,15 +814,29 @@ export class Binder {
             return boundDataDeclaration;
         }
 
-        const { expression } = dataDeclaration;
+        let declarationKind: BoundDataDeclaration['declarationKind'] = null;
+        if (dataDeclarationKeyword) {
+            declarationKind = dataDeclarationKeyword.kind;
+        }
+
+        let operator: BoundDataDeclaration['operator'] = null;
+        if (dataDeclaration.operator) {
+            operator = dataDeclaration.operator.kind;
+        }
+
+        let getExpression: GetBoundNode<BoundExpressions> | undefined = undefined;
+        if (dataDeclaration.expression) {
+            const { expression } = dataDeclaration;
+            getExpression = (parent) => this.bindExpression(parent, expression);
+        }
 
         return this.dataDeclaration(parent,
             {
                 name: this.getIdentifierText(dataDeclaration.identifier),
-                declarationKind: dataDeclarationKeyword ? dataDeclarationKeyword.kind : null,
-                operator: dataDeclaration.operator ? dataDeclaration.operator.kind : null,
+                declarationKind,
+                operator,
                 getTypeAnnotation: () => this.bindTypeAnnotation(dataDeclaration.typeAnnotation),
-                getExpression: expression ? (parent) => this.bindExpression(parent, expression) : undefined,
+                getExpression,
             },
             dataDeclaration,
         );
@@ -828,10 +852,10 @@ export class Binder {
             getExpression,
         }: {
             name?: string;
-            declarationKind?: DataDeclarationKeywordToken['kind'] | null;
-            operator?: NonNullable<DataDeclaration['operator']>['kind'] | null;
-            getTypeAnnotation?: () => BoundTypeReferenceDeclaration;
-            getExpression?: GetExpression;
+            declarationKind?: BoundDataDeclaration['declarationKind'];
+            operator?: BoundDataDeclaration['operator'];
+            getTypeAnnotation?: GetBoundNode<BoundTypeReferenceDeclaration>;
+            getExpression?: GetBoundNode<BoundExpressions>;
         },
         dataDeclaration?: DataDeclaration,
     ): BoundDataDeclaration {
@@ -853,12 +877,12 @@ export class Binder {
 
         switch (operator) {
             case null: {
-                boundDataDeclaration.typeAnnotation = getTypeAnnotation!();
+                boundDataDeclaration.typeAnnotation = getTypeAnnotation!(boundDataDeclaration);
                 boundDataDeclaration.type = boundDataDeclaration.typeAnnotation.type;
                 break;
             }
             case TokenKind.EqualsSign: {
-                boundDataDeclaration.typeAnnotation = getTypeAnnotation!();
+                boundDataDeclaration.typeAnnotation = getTypeAnnotation!(boundDataDeclaration);
                 boundDataDeclaration.type = boundDataDeclaration.typeAnnotation.type;
 
                 if (!getExpression) {
@@ -885,6 +909,7 @@ export class Binder {
                 break;
             }
         }
+        boundDataDeclaration.operator = operator;
 
         return boundDataDeclaration;
     }
@@ -895,17 +920,37 @@ export class Binder {
 
     // #region Function declaration
 
-    private bindFunctionDeclaration(
+    private bindFunctionGroup(
         parent: BoundModuleDeclaration | BoundClassDeclaration,
-        functionDeclaration: FunctionDeclaration,
+        name: string,
+        members: ModuleDeclarationMember[] | ClassDeclarationMember[],
     ): BoundFunctionGroupDeclaration {
-        let boundFunctionDeclaration = this.declarationCache.get(functionDeclaration) as BoundFunctionDeclaration | undefined;
-        if (boundFunctionDeclaration) {
-            return boundFunctionDeclaration.parent as BoundFunctionGroupDeclaration;
+        const boundFunctionGroupDeclaration = this.getFunctionGroupDeclaration(parent, name);
+
+        for (const member of members) {
+            if (member.kind === NodeKind.FunctionDeclaration) {
+                const memberName = this.getIdentifierText(member.identifier);
+                if (areIdentifiersSame(name, memberName)) {
+                    const boundFunctionDeclaration = new BoundFunctionDeclaration();
+                    this.declarationCache.set(member, boundFunctionDeclaration);
+                    boundFunctionGroupDeclaration.overloads.add(boundFunctionDeclaration);
+                    boundFunctionDeclaration.parent = boundFunctionGroupDeclaration;
+                    boundFunctionDeclaration.type = new FunctionType(boundFunctionDeclaration);
+                    boundFunctionDeclaration.identifier = new BoundSymbol(memberName, boundFunctionDeclaration);
+                    boundFunctionDeclaration.returnType = this.bindTypeAnnotation(member.returnType);
+                    boundFunctionDeclaration.parameters = this.bindDataDeclarationSequence(boundFunctionDeclaration, member.parameters);
+                    boundFunctionDeclaration.statements = this.bindStatements(boundFunctionDeclaration, member.statements);
+                }
+            }
         }
 
-        const name = this.getIdentifierText(functionDeclaration.identifier);
+        return boundFunctionGroupDeclaration;
+    }
 
+    private getFunctionGroupDeclaration(
+        parent: BoundModuleDeclaration | BoundClassDeclaration,
+        name: string,
+    ) {
         let boundFunctionGroupDeclaration = parent.members.get(name,
             BoundNodeKind.FunctionGroupDeclaration,
         ) as BoundFunctionGroupDeclaration | undefined;
@@ -918,18 +963,9 @@ export class Binder {
             parent.locals.set(boundFunctionGroupDeclaration.identifier);
         }
 
-        boundFunctionDeclaration = new BoundFunctionDeclaration();
-        this.declarationCache.set(functionDeclaration, boundFunctionDeclaration);
-        boundFunctionGroupDeclaration.overloads.add(boundFunctionDeclaration);
-        boundFunctionDeclaration.parent = boundFunctionGroupDeclaration;
-        boundFunctionDeclaration.type = new FunctionType(boundFunctionDeclaration);
-        boundFunctionDeclaration.identifier = new BoundSymbol(name, boundFunctionDeclaration);
-        boundFunctionDeclaration.returnType = this.bindTypeAnnotation(functionDeclaration.returnType);
-        boundFunctionDeclaration.parameters = this.bindDataDeclarationSequence(boundFunctionDeclaration, functionDeclaration.parameters);
-        boundFunctionDeclaration.statements = this.bindStatements(boundFunctionDeclaration, functionDeclaration.statements);
-
         return boundFunctionGroupDeclaration;
     }
+
     // #endregion
 
     // #region Interface declaration
@@ -958,30 +994,32 @@ export class Binder {
             ) as BoundInterfaceDeclaration[];
         }
 
-        boundInterfaceDeclaration.members = new BoundTypeMembers<BoundInterfaceDeclarationMember>();
-        this.bindInterfaceDeclarationMembers(boundInterfaceDeclaration, interfaceDeclaration);
+        this.bindInterfaceDeclarationMembers(boundInterfaceDeclaration, interfaceDeclaration.members);
 
         return boundInterfaceDeclaration;
     }
 
     private bindInterfaceDeclarationMembers(
         parent: BoundInterfaceDeclaration,
-        interfaceDeclaration: InterfaceDeclaration,
+        members: InterfaceDeclarationMember[],
     ): void {
-        const boundInterfaceDeclarationMembers = parent.members;
-
-        for (const interfaceDeclarationMember of interfaceDeclaration.members) {
-            switch (interfaceDeclarationMember.kind) {
+        for (const member of members) {
+            switch (member.kind) {
                 case NodeKind.DataDeclarationSequence: {
-                    const boundDataDeclarations = this.bindDataDeclarationSequence(parent, interfaceDeclarationMember);
+                    const boundDataDeclarations = this.bindDataDeclarationSequence(parent, member);
                     for (const dataDeclaration of boundDataDeclarations) {
-                        boundInterfaceDeclarationMembers.set(dataDeclaration.identifier.name, dataDeclaration);
+                        parent.members.set(dataDeclaration.identifier.name, dataDeclaration);
                     }
                     break;
                 }
                 case NodeKind.InterfaceMethodDeclaration: {
-                    const boundInterfaceMethodGroupDeclaration = this.bindInterfaceMethodDeclaration(parent, interfaceDeclarationMember);
-                    boundInterfaceDeclarationMembers.set(boundInterfaceMethodGroupDeclaration.identifier.name, boundInterfaceMethodGroupDeclaration);
+                    if (this.declarationCache.get(member)) {
+                        continue;
+                    }
+
+                    const name = this.getIdentifierText(member.identifier);
+                    const boundInterfaceMethodGroupDeclaration = this.bindInterfaceMethodGroup(parent, name, members);
+                    parent.members.set(boundInterfaceMethodGroupDeclaration.identifier.name, boundInterfaceMethodGroupDeclaration);
                     break;
                 }
                 case TokenKind.Newline:
@@ -989,7 +1027,7 @@ export class Binder {
                     break;
                 }
                 default: {
-                    assertNever(interfaceDeclarationMember);
+                    assertNever(member);
                     break;
                 }
             }
@@ -998,17 +1036,33 @@ export class Binder {
 
     // #region Interface method declaration
 
-    private bindInterfaceMethodDeclaration(
+    private bindInterfaceMethodGroup(
         parent: BoundInterfaceDeclaration,
-        interfaceMethodDeclaration: InterfaceMethodDeclaration,
+        name: string,
+        members: InterfaceDeclarationMember[],
     ): BoundInterfaceMethodGroupDeclaration {
-        let boundInterfaceMethodDeclaration = this.declarationCache.get(interfaceMethodDeclaration) as BoundInterfaceMethodDeclaration | undefined;
-        if (boundInterfaceMethodDeclaration) {
-            return boundInterfaceMethodDeclaration.parent as BoundInterfaceMethodGroupDeclaration;
+        const boundInterfaceMethodGroupDeclaration = this.getInterfaceMethodGroupDeclaration(parent, name);
+
+        for (const member of members) {
+            if (member.kind === NodeKind.InterfaceMethodDeclaration) {
+                const memberName = this.getIdentifierText(member.identifier);
+                if (areIdentifiersSame(name, memberName)) {
+                    const boundInterfaceMethodDeclaration = new BoundInterfaceMethodDeclaration();
+                    this.declarationCache.set(member, boundInterfaceMethodDeclaration);
+                    boundInterfaceMethodGroupDeclaration.overloads.add(boundInterfaceMethodDeclaration);
+                    boundInterfaceMethodDeclaration.parent = boundInterfaceMethodGroupDeclaration;
+                    boundInterfaceMethodDeclaration.type = new MethodType(boundInterfaceMethodDeclaration);
+                    boundInterfaceMethodDeclaration.identifier = new BoundSymbol(name, boundInterfaceMethodDeclaration);
+                    boundInterfaceMethodDeclaration.returnType = this.bindTypeAnnotation(member.returnType);
+                    boundInterfaceMethodDeclaration.parameters = this.bindDataDeclarationSequence(boundInterfaceMethodDeclaration, member.parameters);
+                }
+            }
         }
 
-        const name = this.getIdentifierText(interfaceMethodDeclaration.identifier);
+        return boundInterfaceMethodGroupDeclaration;
+    }
 
+    private getInterfaceMethodGroupDeclaration(parent: BoundInterfaceDeclaration, name: string) {
         let boundInterfaceMethodGroupDeclaration = parent.members.get(name,
             BoundNodeKind.InterfaceMethodGroupDeclaration,
         ) as BoundInterfaceMethodGroupDeclaration | undefined;
@@ -1020,15 +1074,6 @@ export class Binder {
             boundInterfaceMethodGroupDeclaration.identifier = new BoundSymbol(name, boundInterfaceMethodGroupDeclaration);
             parent.locals.set(boundInterfaceMethodGroupDeclaration.identifier);
         }
-
-        boundInterfaceMethodDeclaration = new BoundInterfaceMethodDeclaration();
-        this.declarationCache.set(interfaceMethodDeclaration, boundInterfaceMethodDeclaration);
-        boundInterfaceMethodGroupDeclaration.overloads.add(boundInterfaceMethodDeclaration);
-        boundInterfaceMethodDeclaration.parent = boundInterfaceMethodGroupDeclaration;
-        boundInterfaceMethodDeclaration.type = new MethodType(boundInterfaceMethodDeclaration);
-        boundInterfaceMethodDeclaration.identifier = new BoundSymbol(name, boundInterfaceMethodDeclaration);
-        boundInterfaceMethodDeclaration.returnType = this.bindTypeAnnotation(interfaceMethodDeclaration.returnType);
-        boundInterfaceMethodDeclaration.parameters = this.bindDataDeclarationSequence(boundInterfaceMethodDeclaration, interfaceMethodDeclaration.parameters);
 
         return boundInterfaceMethodGroupDeclaration;
     }
@@ -1059,6 +1104,8 @@ export class Binder {
         parent.locals.set(boundClassDeclaration.identifier);
 
         if (classDeclaration.typeParameters) {
+            boundClassDeclaration.rootType = boundClassDeclaration;
+            boundClassDeclaration.instantiatedTypes = [];
             boundClassDeclaration.typeParameters = this.bindTypeParameters(boundClassDeclaration, classDeclaration.typeParameters);
         }
 
@@ -1077,8 +1124,7 @@ export class Binder {
             ) as BoundInterfaceDeclaration[];
         }
 
-        boundClassDeclaration.members = new BoundTypeMembers<BoundClassDeclarationMember>();
-        this.bindClassDeclarationMembers(boundClassDeclaration, classDeclaration);
+        this.bindClassDeclarationMembers(boundClassDeclaration, classDeclaration.members);
 
         if (!this.hasParameterlessConstructor(boundClassDeclaration)) {
             const boundMethodGroupDeclaration = this.createParameterlessConstructor(boundClassDeclaration);
@@ -1155,6 +1201,7 @@ export class Binder {
                     const typeMap = this.createTypeMap(boundDeclaration, boundTypeArguments);
                     boundDeclaration = this.instantiateGenericType(boundDeclaration, typeMap);
                 }
+                break;
             }
         }
 
@@ -1337,36 +1384,39 @@ export class Binder {
 
     private bindClassDeclarationMembers(
         parent: BoundClassDeclaration,
-        classDeclaration: ClassDeclaration,
+        members: ClassDeclarationMember[],
     ): void {
-        const boundClassDeclarationMembers = parent.members;
-
-        for (const classDeclarationMember of classDeclaration.members) {
-            switch (classDeclarationMember.kind) {
+        for (const member of members) {
+            switch (member.kind) {
                 case NodeKind.AccessibilityDirective: {
-                    console.warn(`'${classDeclarationMember.accessibilityKeyword.kind}' directive is not implemented.`);
+                    console.warn(`'${member.accessibilityKeyword.kind}' directive is not implemented.`);
                     break;
                 }
                 case NodeKind.DataDeclarationSequence: {
-                    const boundDataDeclarationSequence = this.bindDataDeclarationSequence(parent, classDeclarationMember);
+                    const boundDataDeclarationSequence = this.bindDataDeclarationSequence(parent, member);
                     for (const dataDeclaration of boundDataDeclarationSequence) {
-                        boundClassDeclarationMembers.set(dataDeclaration.identifier.name, dataDeclaration);
+                        parent.members.set(dataDeclaration.identifier.name, dataDeclaration);
                     }
                     break;
                 }
                 case NodeKind.FunctionDeclaration: {
-                    const boundFunctionGroupDeclaration = this.bindFunctionDeclaration(parent, classDeclarationMember);
-                    boundClassDeclarationMembers.set(boundFunctionGroupDeclaration.identifier.name, boundFunctionGroupDeclaration);
-                    break;
-                }
-                case NodeKind.ClassMethodDeclaration: {
-                    if (this.declarationCache.get(classDeclarationMember)) {
+                    if (this.declarationCache.get(member)) {
                         continue;
                     }
 
-                    const classMethodName = this.getIdentifierText(classDeclarationMember.identifier);
-                    const boundClassMethodGroupDeclaration = this.bindClassMethodGroup(parent, classMethodName, classDeclaration.members);
-                    boundClassDeclarationMembers.set(boundClassMethodGroupDeclaration.identifier.name, boundClassMethodGroupDeclaration);
+                    const name = this.getIdentifierText(member.identifier);
+                    const boundFunctionGroupDeclaration = this.bindFunctionGroup(parent, name, members);
+                    parent.members.set(boundFunctionGroupDeclaration.identifier.name, boundFunctionGroupDeclaration);
+                    break;
+                }
+                case NodeKind.ClassMethodDeclaration: {
+                    if (this.declarationCache.get(member)) {
+                        continue;
+                    }
+
+                    const name = this.getIdentifierText(member.identifier);
+                    const boundClassMethodGroupDeclaration = this.bindClassMethodGroup(parent, name, members);
+                    parent.members.set(boundClassMethodGroupDeclaration.identifier.name, boundClassMethodGroupDeclaration);
                     break;
                 }
                 case TokenKind.Newline:
@@ -1374,7 +1424,7 @@ export class Binder {
                     break;
                 }
                 default: {
-                    assertNever(classDeclarationMember);
+                    assertNever(member);
                     break;
                 }
             }
@@ -1613,7 +1663,7 @@ export class Binder {
 
     private dataDeclarationStatement(
         parent: BoundNodes,
-        getDataDeclaration: (parent: BoundNodes) => BoundDataDeclaration,
+        getDataDeclaration: GetBoundNode<BoundDataDeclaration>,
     ): BoundDataDeclarationStatement {
         const boundDataDeclarationStatement = new BoundDataDeclarationStatement();
         boundDataDeclarationStatement.parent = parent;
@@ -1630,11 +1680,24 @@ export class Binder {
         parent: BoundNodes,
         statement: ReturnStatement,
     ): BoundReturnStatement {
+        let getExpression: GetBoundNode<BoundExpressions> | undefined = undefined;
+        if (statement.expression) {
+            const { expression } = statement;
+            getExpression = (parent) => this.bindExpression(parent, expression);
+        }
+
+        return this.returnStatement(parent, getExpression);
+    }
+
+    private returnStatement(
+        parent: BoundNodes,
+        getExpression: GetBoundNode<BoundExpressions> | undefined,
+    ): BoundReturnStatement {
         const boundReturnStatement = new BoundReturnStatement();
         boundReturnStatement.parent = parent;
 
-        if (statement.expression) {
-            boundReturnStatement.expression = this.bindExpression(boundReturnStatement, statement.expression);
+        if (getExpression) {
+            boundReturnStatement.expression = getExpression(boundReturnStatement);
             boundReturnStatement.type = boundReturnStatement.expression.type;
         } else {
             boundReturnStatement.type = this.project.voidTypeDeclaration.type;
@@ -1660,42 +1723,68 @@ export class Binder {
         parent: BoundNodes,
         ifStatement: IfStatement,
     ): BoundIfStatement {
+        let getElseIfClauses: GetBoundNodes<BoundElseIfClause> | undefined = undefined;
+        if (ifStatement.elseIfClauses) {
+            const { elseIfClauses } = ifStatement;
+            getElseIfClauses = (parent) => elseIfClauses.map((elseIfClause) =>
+                this.bindElseIfClause(parent, elseIfClause)
+            );
+        }
+
+        let getElseClause: GetBoundNode<BoundElseClause> | undefined = undefined;
+        if (ifStatement.elseClause) {
+            const { elseClause } = ifStatement;
+            getElseClause = (parent) => this.bindElseClause(parent, elseClause);
+        }
+
+        return this.ifStatement(parent,
+            (parent) => this.bindExpression(parent, ifStatement.expression),
+            (parent) => this.bindStatements(parent, ifStatement.statements),
+            getElseIfClauses,
+            getElseClause,
+        );
+    }
+
+    private ifStatement(
+        parent: BoundNodes,
+        getExpression: GetBoundNode<BoundExpressions>,
+        getStatements: GetBoundNodes<BoundStatements>,
+        getElseIfClauses: GetBoundNodes<BoundElseIfClause> | undefined,
+        getElseClause: GetBoundNode<BoundElseClause> | undefined,
+    ): BoundIfStatement {
         const boundIfStatement = new BoundIfStatement();
         boundIfStatement.parent = parent;
-        boundIfStatement.expression = this.bindExpression(boundIfStatement, ifStatement.expression);
-        boundIfStatement.statements = this.bindStatements(boundIfStatement, ifStatement.statements);
-        if (ifStatement.elseIfClauses) {
-            boundIfStatement.elseIfClauses = this.bindElseIfClauses(boundIfStatement, ifStatement.elseIfClauses);
+        boundIfStatement.expression = getExpression(boundIfStatement);
+        boundIfStatement.statements = getStatements(boundIfStatement);
+        if (getElseIfClauses) {
+            boundIfStatement.elseIfClauses = getElseIfClauses(boundIfStatement);
         }
-        if (ifStatement.elseClause) {
-            boundIfStatement.elseClause = this.bindElseClause(boundIfStatement, ifStatement.elseClause);
+        if (getElseClause) {
+            boundIfStatement.elseClause = getElseClause(boundIfStatement);
         }
 
         return boundIfStatement;
-    }
-
-    private bindElseIfClauses(
-        parent: BoundNodes,
-        elseIfClauses: ElseIfClause[],
-    ): BoundElseIfClause[] {
-        const boundElseIfClauses: BoundElseIfClause[] = [];
-
-        for (const elseifClause of elseIfClauses) {
-            const boundElseIfClause = this.bindElseIfClause(parent, elseifClause);
-            boundElseIfClauses.push(boundElseIfClause);
-        }
-
-        return boundElseIfClauses;
     }
 
     private bindElseIfClause(
         parent: BoundNodes,
         elseifClause: ElseIfClause,
     ): BoundElseIfClause {
+        return this.elseIfClause(parent,
+            (parent) => this.bindExpression(parent, elseifClause.expression),
+            (parent) => this.bindStatements(parent, elseifClause.statements),
+        );
+    }
+
+    private elseIfClause(
+        parent: BoundNodes,
+        getExpression: GetBoundNode<BoundExpressions>,
+        getStatements: GetBoundNodes<BoundStatements>,
+    ): BoundElseIfClause {
         const boundElseIfClause = new BoundElseIfClause();
         boundElseIfClause.parent = parent;
-        boundElseIfClause.expression = this.bindExpression(boundElseIfClause, elseifClause.expression);
-        boundElseIfClause.statements = this.bindStatements(boundElseIfClause, elseifClause.statements);
+        boundElseIfClause.expression = getExpression(boundElseIfClause);
+        boundElseIfClause.statements = getStatements(boundElseIfClause);
 
         return boundElseIfClause;
     }
@@ -1704,9 +1793,18 @@ export class Binder {
         parent: BoundNodes,
         elseClause: ElseClause,
     ): BoundElseClause {
+        return this.elseClause(parent,
+            (parent) => this.bindStatements(parent, elseClause.statements),
+        );
+    }
+
+    private elseClause(
+        parent: BoundNodes,
+        getStatements: GetBoundNodes<BoundStatements>,
+    ): BoundElseClause {
         const boundElseClause = new BoundElseClause();
         boundElseClause.parent = parent;
-        boundElseClause.statements = this.bindStatements(boundElseClause, elseClause.statements);
+        boundElseClause.statements = getStatements(boundElseClause);
 
         return boundElseClause;
     }
@@ -1719,38 +1817,54 @@ export class Binder {
         parent: BoundNodes,
         selectStatement: SelectStatement,
     ): BoundSelectStatement {
+        let getDefaultClause: GetBoundNode<BoundDefaultClause> | undefined = undefined;
+        if (selectStatement.defaultClause) {
+            const { defaultClause } = selectStatement;
+            getDefaultClause = (parent) => this.bindDefaultClause(parent, defaultClause);
+        }
+
+        return this.selectStatement(parent,
+            (parent) => selectStatement.caseClauses.map((caseClause) =>
+                this.bindCaseClause(parent, caseClause)
+            ),
+            getDefaultClause,
+        );
+    }
+
+    private selectStatement(
+        parent: BoundNodes,
+        getCaseClauses: GetBoundNodes<BoundCaseClause>,
+        getDefaultClause: GetBoundNode<BoundDefaultClause> | undefined,
+    ): BoundSelectStatement {
         const boundSelectStatement = new BoundSelectStatement();
         boundSelectStatement.parent = parent;
-        boundSelectStatement.caseClauses = this.bindCaseClauses(boundSelectStatement, selectStatement.caseClauses);
-        if (selectStatement.defaultClause) {
-            boundSelectStatement.defaultClause = this.bindDefaultClause(boundSelectStatement, selectStatement.defaultClause);
+        boundSelectStatement.caseClauses = getCaseClauses(boundSelectStatement);
+        if (getDefaultClause) {
+            boundSelectStatement.defaultClause = getDefaultClause(boundSelectStatement);
         }
 
         return boundSelectStatement;
-    }
-
-    private bindCaseClauses(
-        parent: BoundNodes,
-        caseClauses: CaseClause[],
-    ): BoundCaseClause[] {
-        const boundCaseClauses: BoundCaseClause[] = [];
-
-        for (const caseClause of caseClauses) {
-            const boundCaseClause = this.bindCaseClause(parent, caseClause);
-            boundCaseClauses.push(boundCaseClause);
-        }
-
-        return boundCaseClauses;
     }
 
     private bindCaseClause(
         parent: BoundNodes,
         caseClause: CaseClause,
     ): BoundCaseClause {
+        return this.caseClause(parent,
+            (parent) => this.bindExpressionSequence(parent, caseClause.expressions),
+            (parent) => this.bindStatements(parent, caseClause.statements),
+        );
+    }
+
+    private caseClause(
+        parent: BoundNodes,
+        getExpressions: GetBoundNodes<BoundExpressions>,
+        getStatements: GetBoundNodes<BoundStatements>,
+    ): BoundCaseClause {
         const boundCaseClause = new BoundCaseClause();
         boundCaseClause.parent = parent;
-        boundCaseClause.expressions = this.bindExpressionSequence(boundCaseClause, caseClause.expressions);
-        boundCaseClause.statements = this.bindStatements(boundCaseClause, caseClause.statements);
+        boundCaseClause.expressions = getExpressions(boundCaseClause);
+        boundCaseClause.statements = getStatements(boundCaseClause);
 
         return boundCaseClause;
     }
@@ -1759,9 +1873,18 @@ export class Binder {
         parent: BoundNodes,
         defaultClause: DefaultClause,
     ): BoundDefaultClause {
+        return this.defaultClause(parent,
+            (parent) => this.bindStatements(parent, defaultClause.statements),
+        );
+    }
+
+    private defaultClause(
+        parent: BoundNodes,
+        getStatements: GetBoundNodes<BoundStatements>,
+    ): BoundDefaultClause {
         const boundDefaultClause = new BoundDefaultClause();
         boundDefaultClause.parent = parent;
-        boundDefaultClause.statements = this.bindStatements(boundDefaultClause, defaultClause.statements);
+        boundDefaultClause.statements = getStatements(boundDefaultClause);
 
         return boundDefaultClause;
     }
@@ -1776,10 +1899,21 @@ export class Binder {
         parent: BoundNodes,
         whileLoop: WhileLoop,
     ): BoundWhileLoop {
+        return this.whileLoop(parent,
+            (parent) => this.bindExpression(parent, whileLoop.expression),
+            (parent) => this.bindStatements(parent, whileLoop.statements),
+        );
+    }
+
+    private whileLoop(
+        parent: BoundNodes,
+        getExpression: GetBoundNode<BoundExpressions>,
+        getStatements: GetBoundNodes<BoundStatements>,
+    ): BoundWhileLoop {
         const boundWhileLoop = new BoundWhileLoop();
         boundWhileLoop.parent = parent;
-        boundWhileLoop.expression = this.bindExpression(boundWhileLoop, whileLoop.expression);
-        boundWhileLoop.statements = this.bindStatements(boundWhileLoop, whileLoop.statements);
+        boundWhileLoop.expression = getExpression(boundWhileLoop);
+        boundWhileLoop.statements = getStatements(boundWhileLoop);
 
         return boundWhileLoop;
     }
@@ -1792,12 +1926,29 @@ export class Binder {
         parent: BoundNodes,
         repeatLoop: RepeatLoop,
     ): BoundRepeatLoop {
+        let getUntilExpression: GetBoundNode<BoundExpressions> | undefined = undefined;
+        if (repeatLoop.untilExpression) {
+            const { untilExpression } = repeatLoop;
+            getUntilExpression = (parent) => this.bindExpression(parent, untilExpression);
+        }
+
+        return this.repeatLoop(parent,
+            getUntilExpression,
+            (parent) => this.bindStatements(parent, repeatLoop.statements),
+        );
+    }
+
+    private repeatLoop(
+        parent: BoundNodes,
+        getUntilExpression: GetBoundNode<BoundExpressions> | undefined,
+        getStatements: GetBoundNodes<BoundStatements>,
+    ): BoundRepeatLoop {
         const boundRepeatLoop = new BoundRepeatLoop();
         boundRepeatLoop.parent = parent;
-        if (repeatLoop.untilExpression) {
-            boundRepeatLoop.expression = this.bindExpression(boundRepeatLoop, repeatLoop.untilExpression);
+        if (getUntilExpression) {
+            boundRepeatLoop.untilExpression = getUntilExpression(boundRepeatLoop);
         }
-        boundRepeatLoop.statements = this.bindStatements(boundRepeatLoop, repeatLoop.statements);
+        boundRepeatLoop.statements = getStatements(boundRepeatLoop);
 
         return boundRepeatLoop;
     }
@@ -1810,21 +1961,17 @@ export class Binder {
         parent: BoundNodes,
         numericForLoop: NumericForLoop,
     ): BoundForLoop {
-        const boundForLoop = new BoundForLoop();
-        boundForLoop.parent = parent;
-
         const { indexVariable } = numericForLoop;
         if (indexVariable.kind === TokenKind.Missing) {
             throw new Error(`Index variable is missing.`);
         }
 
-        let indexVariableDeclaration: BoundDataDeclaration;
-
+        let getFirstValueStatement: GetBoundNode<BoundStatements>;
         if (numericForLoop.localKeyword) {
             const { localKeyword } = numericForLoop;
             const operator = numericForLoop.operator as MissableToken<EqualsSignToken | ColonEqualsSignToken>;
 
-            boundForLoop.firstValueStatement = this.dataDeclarationStatement(boundForLoop,
+            getFirstValueStatement = (parent) => this.dataDeclarationStatement(parent,
                 (parent) => this.dataDeclaration(parent,
                     {
                         name: this.getIdentifierText(indexVariable),
@@ -1835,31 +1982,22 @@ export class Binder {
                     },
                 ),
             );
-
-            indexVariableDeclaration = boundForLoop.firstValueStatement.dataDeclaration;
         } else {
             const operator = numericForLoop.operator as MissableToken<AssignmentOperatorToken>;
             if (operator.kind === TokenKind.Missing) {
                 throw new Error(`Missing assignment operator.`);
             }
 
-            // TODO: Validate that it is a `BoundDataDeclaration`?
-            indexVariableDeclaration = this.resolveIdentifier(boundForLoop, indexVariable) as BoundDataDeclaration;
-
-            boundForLoop.firstValueStatement = this.assignmentStatement(boundForLoop,
-                (parent) => this.identifierExpression(parent, indexVariableDeclaration),
+            getFirstValueStatement = (parent) => this.assignmentStatement(parent,
+                (parent) => this.identifierExpression(parent,
+                    (parent) => this.resolveIdentifier(parent, indexVariable),
+                ),
                 operator.kind,
                 (parent) => this.bindExpression(parent, numericForLoop.firstValueExpression),
             );
         }
 
-        boundForLoop.lastValueExpression = this.binaryExpression(boundForLoop,
-            (parent) => this.identifierExpression(parent, indexVariableDeclaration),
-            this.getComparisonExpressionOperator(numericForLoop),
-            (parent) => this.bindExpression(parent, numericForLoop.lastValueExpression),
-        );
-
-        let getStepValueExpression: GetExpression;
+        let getStepValueExpression: GetBoundNode<BoundExpressions>;
         if (numericForLoop.stepValueExpression) {
             const { stepValueExpression } = numericForLoop;
             getStepValueExpression = (parent) => this.bindExpression(parent, stepValueExpression)
@@ -1867,13 +2005,39 @@ export class Binder {
             getStepValueExpression = (parent) => this.integerLiteral(parent, '1');
         }
 
-        boundForLoop.stepValueClause = this.assignmentStatement(boundForLoop,
-            (parent) => this.identifierExpression(parent, indexVariableDeclaration),
-            TokenKind.PlusSignEqualsSign,
-            getStepValueExpression,
+        return this.forLoop(parent,
+            getFirstValueStatement,
+            (parent) => this.binaryExpression(parent,
+                (parent) => this.identifierExpression(parent,
+                    (parent) => this.resolveIdentifier(parent, indexVariable),
+                ),
+                this.getComparisonExpressionOperator(numericForLoop),
+                (parent) => this.bindExpression(parent, numericForLoop.lastValueExpression),
+            ),
+            (parent) => this.assignmentStatement(parent,
+                (parent) => this.identifierExpression(parent,
+                    (parent) => this.resolveIdentifier(parent, indexVariable),
+                ),
+                TokenKind.PlusSignEqualsSign,
+                getStepValueExpression,
+            ),
+            (parent) => this.bindStatements(parent, numericForLoop.statements),
         );
+    }
 
-        boundForLoop.statements = this.bindStatements(boundForLoop, numericForLoop.statements);
+    private forLoop(
+        parent: BoundNodes,
+        getFirstValueStatement: GetBoundNode<BoundStatements>,
+        getLastValueExpression: GetBoundNode<BoundExpressions>,
+        getStepValueClause: GetBoundNode<BoundAssignmentStatement>,
+        getStatements: GetBoundNodes<BoundStatements>,
+    ): BoundForLoop {
+        const boundForLoop = new BoundForLoop();
+        boundForLoop.parent = parent;
+        boundForLoop.firstValueStatement = getFirstValueStatement(boundForLoop);
+        boundForLoop.lastValueExpression = getLastValueExpression(boundForLoop);
+        boundForLoop.stepValueClause = getStepValueClause(boundForLoop);
+        boundForLoop.statements = getStatements(boundForLoop);
 
         return boundForLoop;
     }
@@ -1980,8 +2144,8 @@ export class Binder {
                                     (parent) => this.identifierExpression(parent, boundCollectionDeclaration),
                                     (parent) => this.identifierExpression(parent, boundIndexDeclaration),
                                 ),
-                            }
-                        )
+                            },
+                        ),
                     );
                     boundWhileLoop.statements.push(indexVariableStatement);
                 } else {
@@ -2127,6 +2291,12 @@ export class Binder {
     private bindContinueStatement(
         parent: BoundNodes,
     ): BoundContinueStatement {
+        return this.continueStatement(parent);
+    }
+
+    private continueStatement(
+        parent: BoundNodes,
+    ): BoundContinueStatement {
         const boundContinueStatement = new BoundContinueStatement();
         boundContinueStatement.parent = parent;
 
@@ -2134,6 +2304,12 @@ export class Binder {
     }
 
     private bindExitStatement(
+        parent: BoundNodes,
+    ): BoundExitStatement {
+        return this.exitStatement(parent);
+    }
+
+    private exitStatement(
         parent: BoundNodes,
     ): BoundExitStatement {
         const boundExitStatement = new BoundExitStatement();
@@ -2150,9 +2326,18 @@ export class Binder {
         parent: BoundNodes,
         throwStatement: ThrowStatement,
     ): BoundThrowStatement {
+        return this.throwStatement(parent,
+            (parent) => this.bindExpression(parent, throwStatement.expression),
+        );
+    }
+
+    private throwStatement(
+        parent: BoundNodes,
+        getExpression: GetBoundNode<BoundExpressions>,
+    ): BoundThrowStatement {
         const boundThrowStatement = new BoundThrowStatement();
         boundThrowStatement.parent = parent;
-        boundThrowStatement.expression = this.bindExpression(boundThrowStatement, throwStatement.expression);
+        boundThrowStatement.expression = getExpression(boundThrowStatement);
 
         return boundThrowStatement;
     }
@@ -2165,50 +2350,62 @@ export class Binder {
         parent: BoundNodes,
         tryStatement: TryStatement,
     ): BoundTryStatement {
-        const boundTryStatement = new BoundTryStatement();
-        boundTryStatement.parent = parent;
-        boundTryStatement.statements = this.bindStatements(boundTryStatement, tryStatement.statements);
-        boundTryStatement.catchClauses = this.bindCatchClauses(boundTryStatement, tryStatement);
-
-        return boundTryStatement;
+        return this.tryStatement(parent,
+            (parent) => this.bindStatements(parent, tryStatement.statements),
+            (parent) => tryStatement.catchClauses.map((catchClause) =>
+                this.bindCatchClause(parent, catchClause)
+            ),
+        );
     }
 
-    private bindCatchClauses(
+    private tryStatement(
         parent: BoundNodes,
-        tryStatement: TryStatement,
-    ): BoundCatchClause[] {
-        const boundCatchClauses: BoundCatchClause[] = [];
+        getStatements: GetBoundNodes<BoundStatements>,
+        getCatchClauses: GetBoundNodes<BoundCatchClause>,
+    ): BoundTryStatement {
+        const boundTryStatement = new BoundTryStatement();
+        boundTryStatement.parent = parent;
+        boundTryStatement.statements = getStatements(boundTryStatement);
+        boundTryStatement.catchClauses = getCatchClauses(boundTryStatement);
 
-        for (const catchClause of tryStatement.catchClauses) {
-            const boundCatchClause = this.bindCatchClause(parent, catchClause);
-            boundCatchClauses.push(boundCatchClause);
-        }
-
-        return boundCatchClauses;
+        return boundTryStatement;
     }
 
     private bindCatchClause(
         parent: BoundNodes,
         catchClause: CatchClause,
     ): BoundCatchClause {
-        const boundCatchClause = new BoundCatchClause();
-        boundCatchClause.parent = parent;
-
+        let getParameter: GetBoundNode<BoundDataDeclaration>;
         switch (catchClause.parameter.kind) {
             case NodeKind.DataDeclaration: {
-                boundCatchClause.parameter = this.bindDataDeclaration(boundCatchClause, catchClause.parameter);
+                const { parameter } = catchClause;
+                getParameter = (parent) => this.bindDataDeclaration(parent, parameter);
                 break;
             }
             case TokenKind.Missing: {
                 throw new Error('Catch clause must declare a parameter.');
             }
             default: {
-                assertNever(catchClause.parameter);
+                getParameter = assertNever(catchClause.parameter);
                 break;
             }
         }
 
-        boundCatchClause.statements = this.bindStatements(boundCatchClause, catchClause.statements);
+        return this.catchClause(parent,
+            getParameter,
+            (parent) => this.bindStatements(parent, catchClause.statements),
+        );
+    }
+
+    private catchClause(
+        parent: BoundNodes,
+        getParameter: GetBoundNode<BoundDataDeclaration>,
+        getStatements: GetBoundNodes<BoundStatements>,
+    ): BoundCatchClause {
+        const boundCatchClause = new BoundCatchClause();
+        boundCatchClause.parent = parent;
+        boundCatchClause.parameter = getParameter(boundCatchClause);
+        boundCatchClause.statements = getStatements(boundCatchClause);
 
         return boundCatchClause;
     }
@@ -2230,13 +2427,14 @@ export class Binder {
 
     private assignmentStatement(
         parent: BoundNodes,
-        getLeftOperand: GetExpression,
-        operator: AssignmentOperatorToken['kind'],
-        getRightOperand: GetExpression,
+        getLeftOperand: GetBoundNode<BoundExpressions>,
+        operator: BoundAssignmentStatement['operator'],
+        getRightOperand: GetBoundNode<BoundExpressions>,
     ): BoundAssignmentStatement {
         const boundAssignmentStatement = new BoundAssignmentStatement();
         boundAssignmentStatement.parent = parent;
         boundAssignmentStatement.leftOperand = getLeftOperand(boundAssignmentStatement);
+        boundAssignmentStatement.operator = operator;
         boundAssignmentStatement.rightOperand = getRightOperand(boundAssignmentStatement);
 
         const { leftOperand, rightOperand } = boundAssignmentStatement;
@@ -2294,9 +2492,18 @@ export class Binder {
         parent: BoundNodes,
         expressionStatement: ExpressionStatement,
     ): BoundExpressionStatement {
+        return this.expressionStatement(parent,
+            (parent) => this.bindExpression(parent, expressionStatement.expression),
+        );
+    }
+
+    private expressionStatement(
+        parent: BoundNodes,
+        getExpression: GetBoundNode<BoundExpressions>,
+    ): BoundExpressionStatement {
         const boundExpressionStatement = new BoundExpressionStatement();
         boundExpressionStatement.parent = parent;
-        boundExpressionStatement.expression = this.bindExpression(boundExpressionStatement, expressionStatement.expression);
+        boundExpressionStatement.expression = getExpression(boundExpressionStatement);
 
         return boundExpressionStatement;
     }
@@ -2310,7 +2517,7 @@ export class Binder {
     private bindExpression(
         parent: BoundNodes,
         expression: MissableExpression,
-        scope?: MemberContainerType,
+        scope?: MemberContainerDeclaration,
     ) {
         switch (expression.kind) {
             case NodeKind.BinaryExpression: {
@@ -2543,7 +2750,7 @@ export class Binder {
     private unaryExpression(
         parent: BoundNodes,
         operator: UnaryOperatorToken['kind'],
-        getOperand: GetExpression,
+        getOperand: GetBoundNode<BoundExpressions>,
     ): BoundUnaryExpression {
         const boundUnaryExpression = new BoundUnaryExpression();
         boundUnaryExpression.parent = parent;
@@ -2943,7 +3150,7 @@ export class Binder {
     private bindIdentifierExpression(
         parent: BoundNodes,
         identifierExpression: IdentifierExpression,
-        scope?: MemberContainerType,
+        scope?: MemberContainerDeclaration,
     ): BoundIdentifierExpression {
         return this.identifierExpression(parent,
             (parent) => this.resolveIdentifier(
@@ -2957,7 +3164,7 @@ export class Binder {
 
     private identifierExpression(
         parent: BoundNodes,
-        declaration_getDeclaration: BoundIdentifiableDeclaration | ((parent: BoundNodes) => BoundIdentifiableDeclaration),
+        declaration_getDeclaration: BoundIdentifiableDeclaration | GetBoundNode<BoundIdentifiableDeclaration>,
     ): BoundIdentifierExpression {
         const boundIdentifierExpression = new BoundIdentifierExpression();
         boundIdentifierExpression.parent = parent;
@@ -2981,7 +3188,7 @@ export class Binder {
     private identifierExpressionFromName(
         parent: BoundNodes,
         name: string,
-        scope: MemberContainerType,
+        scope: MemberContainerDeclaration,
     ): BoundIdentifierExpression {
         const boundIdentifierExpression = new BoundIdentifierExpression();
         boundIdentifierExpression.parent = parent;
@@ -3008,7 +3215,7 @@ export class Binder {
 
     private groupingExpression(
         parent: BoundNodes,
-        getExpression: GetExpression,
+        getExpression: GetBoundNode<BoundExpressions>,
     ): BoundGroupingExpression {
         const boundGroupingExpression = new BoundGroupingExpression();
         boundGroupingExpression.parent = parent;
@@ -3025,24 +3232,24 @@ export class Binder {
     private bindScopeMemberAccessExpression(
         parent: BoundNodes,
         scopeMemberAccessExpression: ScopeMemberAccessExpression,
-        scope?: MemberContainerType,
+        scope?: MemberContainerDeclaration,
     ): BoundScopeMemberAccessExpression {
         return this.scopeMemberAccessExpression(parent,
             (parent) => this.bindExpression(parent,
                 scopeMemberAccessExpression.scopableExpression,
                 scope,
             ),
-            (parent, scopableExpressionType) => this.bindExpression(parent,
+            (parent, scope) => this.bindExpression(parent,
                 scopeMemberAccessExpression.member,
-                scopableExpressionType,
+                scope,
             ),
         );
     }
 
     private scopeMemberAccessExpression(
         parent: BoundNodes,
-        getScopableExpression: GetExpression,
-        getMemberExpression: (parent: BoundNodes, scope: MemberContainerType) => BoundExpressions,
+        getScopableExpression: GetBoundNode<BoundExpressions>,
+        getMemberExpression: (parent: BoundNodes, scope: MemberContainerDeclaration) => BoundExpressions,
     ): BoundScopeMemberAccessExpression {
         const boundScopeMemberAccessExpression = new BoundScopeMemberAccessExpression();
         boundScopeMemberAccessExpression.parent = parent;
@@ -3054,7 +3261,7 @@ export class Binder {
             case TypeKind.String:
             case TypeKind.Array:
             case TypeKind.Object: {
-                boundScopeMemberAccessExpression.member = getMemberExpression(boundScopeMemberAccessExpression, scopableExpressionType);
+                boundScopeMemberAccessExpression.member = getMemberExpression(boundScopeMemberAccessExpression, scopableExpressionType.declaration);
                 boundScopeMemberAccessExpression.type = boundScopeMemberAccessExpression.member.type;
                 break;
             }
@@ -3082,8 +3289,8 @@ export class Binder {
 
     private indexExpression(
         parent: BoundNodes,
-        getIndexableExpression: GetExpression,
-        getIndexExpressionExpression: GetExpression,
+        getIndexableExpression: GetBoundNode<BoundExpressions>,
+        getIndexExpressionExpression: GetBoundNode<BoundExpressions>,
     ): BoundIndexExpression {
         const boundIndexExpression = new BoundIndexExpression();
         boundIndexExpression.parent = parent;
@@ -3123,13 +3330,13 @@ export class Binder {
         parent: BoundNodes,
         sliceExpression: SliceExpression,
     ): BoundSliceExpression {
-        let getStartExpression: GetExpression | undefined = undefined;
+        let getStartExpression: GetBoundNode<BoundExpressions> | undefined = undefined;
         if (sliceExpression.startExpression) {
             const { startExpression } = sliceExpression;
             getStartExpression = (parent) => this.bindExpression(parent, startExpression);
         }
 
-        let getEndExpression: GetExpression | undefined = undefined;
+        let getEndExpression: GetBoundNode<BoundExpressions> | undefined = undefined;
         if (sliceExpression.endExpression) {
             const { endExpression } = sliceExpression;
             getEndExpression = (parent) => this.bindExpression(parent, endExpression);
@@ -3144,9 +3351,9 @@ export class Binder {
 
     private sliceExpression(
         parent: BoundNodes,
-        getSliceableExpression: GetExpression,
-        getStartExpression?: GetExpression,
-        getEndExpression?: GetExpression,
+        getSliceableExpression: GetBoundNode<BoundExpressions>,
+        getStartExpression?: GetBoundNode<BoundExpressions>,
+        getEndExpression?: GetBoundNode<BoundExpressions>,
     ): BoundSliceExpression {
         const boundSliceExpression = new BoundSliceExpression();
         boundSliceExpression.parent = parent;
@@ -3188,7 +3395,7 @@ export class Binder {
     private bindInvokeExpression(
         parent: BoundNodes,
         expression: InvokeExpression,
-        scope?: MemberContainerType,
+        scope?: MemberContainerDeclaration,
     ): BoundInvokeExpression {
         return this.invokeExpression(parent,
             (parent) => this.bindExpression(parent, expression.invokableExpression, scope),
@@ -3198,8 +3405,8 @@ export class Binder {
 
     private invokeExpression(
         parent: BoundNodes,
-        getInvokableExpression: GetExpression,
-        getArguments: (parent: BoundNodes) => BoundExpressions[],
+        getInvokableExpression: GetBoundNode<BoundExpressions>,
+        getArguments: GetBoundNodes<BoundExpressions>,
     ): BoundInvokeExpression {
         const boundInvokeExpression = new BoundInvokeExpression();
         boundInvokeExpression.parent = parent;
@@ -3338,439 +3545,6 @@ export class Binder {
 
     // #endregion
 
-    // #region Core
-
-    // #region Symbols
-
-    private getIdentifierText(identifier: MissableIdentifier | NewKeywordToken, document: string = this.document) {
-        switch (identifier.kind) {
-            case NodeKind.EscapedIdentifier: {
-                return identifier.name.getText(document);
-            }
-            case TokenKind.Identifier:
-            case TokenKind.ObjectKeyword:
-            case TokenKind.ThrowableKeyword:
-            case TokenKind.NewKeyword: {
-                return identifier.getText(document);
-            }
-            case TokenKind.Missing: {
-                throw new Error(`Missing identifier.`);
-            }
-            default: {
-                return assertNever(identifier);
-            }
-        }
-    }
-
-    private resolveIdentifier(
-        node: BoundNodes,
-        identifier: IdentifierExpressionIdentifier,
-        scope?: MemberContainerType,
-        typeArguments?: (TypeReference | CommaSeparator)[],
-    ) {
-        // When binding `member` on `ScopeMemberAccessExpression`.
-        if (scope) {
-            switch (identifier.kind) {
-                case TokenKind.BoolKeyword:
-                case TokenKind.IntKeyword:
-                case TokenKind.FloatKeyword:
-                case TokenKind.StringKeyword: {
-                    throw new Error(`'${identifier.kind}' is a reserved keyword.`);
-                }
-                default: {
-                    const identifierText = this.getIdentifierText(identifier);
-
-                    return this.resolveIdentifierName(node, identifierText, scope, typeArguments);
-                }
-            }
-        } else {
-            switch (identifier.kind) {
-                case TokenKind.BoolKeyword: {
-                    return this.project.boolTypeDeclaration;
-                }
-                case TokenKind.IntKeyword: {
-                    return this.project.intTypeDeclaration;
-                }
-                case TokenKind.FloatKeyword: {
-                    return this.project.floatTypeDeclaration;
-                }
-                case TokenKind.StringKeyword: {
-                    return this.project.stringTypeDeclaration;
-                }
-                case TokenKind.Identifier:
-                case TokenKind.ObjectKeyword:
-                case TokenKind.ThrowableKeyword:
-                case TokenKind.NewKeyword:
-                case NodeKind.EscapedIdentifier: {
-                    const identifierText = this.getIdentifierText(identifier);
-
-                    return this.resolveIdentifierName(node, identifierText, scope, typeArguments);
-                }
-                default: {
-                    return assertNever(identifier);
-                }
-            }
-        }
-    }
-
-    private resolveIdentifierName(
-        node: BoundNodes,
-        name: string,
-        scope?: MemberContainerType,
-        typeArguments?: (TypeReference | CommaSeparator)[],
-    ) {
-        if (scope) {
-            const member = scope.declaration.members.get(name);
-            if (!member) {
-                throw new Error(`'${name}' does not exist on '${scope.declaration.identifier.name}'.`);
-            }
-
-            return member;
-        } else {
-            let member = this.resolveIdentifierFromNode(name, node);
-            if (!member) {
-                throw new Error(`Could not find '${name}'.`);
-            }
-
-            // Cast expression
-            if (typeArguments) {
-                if (member.kind !== BoundNodeKind.ClassDeclaration ||
-                    !member.typeParameters
-                ) {
-                    throw new Error(`'${name}' is not a generic class.`);
-                }
-
-                const boundTypeArguments = this.bindTypeReferenceSequence(typeArguments);
-                const typeMap = this.createTypeMap(member, boundTypeArguments);
-                member = this.instantiateGenericType(member, typeMap);
-            }
-
-            return member;
-        }
-    }
-
-    private resolveIdentifierFromNode(
-        name: string,
-        node: BoundNodes,
-    ): BoundIdentifiableDeclaration | undefined {
-        let scope = this.getScope(node);
-        while (scope) {
-            let identifierSymbol = scope.locals.get(name);
-            if (identifierSymbol) {
-                return identifierSymbol.declaration;
-            }
-
-            switch (scope.kind) {
-                case BoundNodeKind.ModuleDeclaration: {
-                    let functionLikeGroup: BoundFunctionLikeGroupDeclaration | undefined = undefined;
-
-                    for (const member of scope.declaration.members) {
-                        switch (member.kind) {
-                            case NodeKind.ExternDataDeclarationSequence: {
-                                for (const dataDeclaration of member.children) {
-                                    switch (dataDeclaration.kind) {
-                                        case NodeKind.ExternDataDeclaration: {
-                                            const identifierText = this.getIdentifierText(dataDeclaration.identifier);
-                                            if (areIdentifiersSame(name, identifierText)) {
-                                                return this.bindExternDataDeclaration(scope, dataDeclaration, member.dataDeclarationKeyword);
-                                            }
-                                            break;
-                                        }
-                                        case NodeKind.CommaSeparator: { break; }
-                                        default: {
-                                            assertNever(dataDeclaration);
-                                            break;
-                                        }
-                                    }
-                                }
-                                break;
-                            }
-                            case NodeKind.DataDeclarationSequence: {
-                                for (const dataDeclaration of member.children) {
-                                    switch (dataDeclaration.kind) {
-                                        case NodeKind.DataDeclaration: {
-                                            const identifierText = this.getIdentifierText(dataDeclaration.identifier);
-                                            if (areIdentifiersSame(name, identifierText)) {
-                                                return this.bindDataDeclaration(scope, dataDeclaration, member.dataDeclarationKeyword);
-                                            }
-                                            break;
-                                        }
-                                        case NodeKind.CommaSeparator: { break; }
-                                        default: {
-                                            assertNever(dataDeclaration);
-                                            break;
-                                        }
-                                    }
-                                }
-                                break;
-                            }
-                            case NodeKind.AccessibilityDirective:
-                            case TokenKind.Newline:
-                            case TokenKind.Skipped: {
-                                break;
-                            }
-                            default: {
-                                const identifierText = this.getIdentifierText(member.identifier);
-                                if (areIdentifiersSame(name, identifierText)) {
-                                    switch (member.kind) {
-                                        case NodeKind.ExternFunctionDeclaration: {
-                                            functionLikeGroup = this.bindExternFunctionDeclaration(scope, member);
-                                            scope.members.set(functionLikeGroup.identifier.name, functionLikeGroup);
-                                            break;
-                                        }
-                                        case NodeKind.ExternClassDeclaration: {
-                                            return this.bindExternClassDeclaration(scope, member);
-                                        }
-                                        case NodeKind.FunctionDeclaration: {
-                                            functionLikeGroup = this.bindFunctionDeclaration(scope, member);
-                                            scope.members.set(functionLikeGroup.identifier.name, functionLikeGroup);
-                                            break;
-                                        }
-                                        case NodeKind.InterfaceDeclaration: {
-                                            return this.bindInterfaceDeclaration(scope, member);
-                                        }
-                                        case NodeKind.ClassDeclaration: {
-                                            return this.bindClassDeclaration(scope, member);
-                                        }
-                                        default: {
-                                            assertNever(member);
-                                            break;
-                                        }
-                                    }
-                                }
-                                break;
-                            }
-                        }
-                    }
-
-                    if (functionLikeGroup) {
-                        return functionLikeGroup;
-                    }
-                    break;
-                }
-                case BoundNodeKind.ExternClassDeclaration: {
-                    // TODO: Overloads of methods on super types?
-                    let functionLikeGroup: BoundFunctionLikeGroupDeclaration | undefined = undefined;
-
-                    for (const member of scope.declaration.members) {
-                        switch (member.kind) {
-                            case NodeKind.ExternDataDeclarationSequence: {
-                                for (const dataDeclaration of member.children) {
-                                    switch (dataDeclaration.kind) {
-                                        case NodeKind.ExternDataDeclaration: {
-                                            const identifierText = this.getIdentifierText(dataDeclaration.identifier);
-                                            if (areIdentifiersSame(name, identifierText)) {
-                                                return this.bindExternDataDeclaration(scope, dataDeclaration, member.dataDeclarationKeyword);
-                                            }
-                                            break;
-                                        }
-                                        case NodeKind.CommaSeparator: { break; }
-                                        default: {
-                                            assertNever(dataDeclaration);
-                                            break;
-                                        }
-                                    }
-                                }
-                                break;
-                            }
-                            case NodeKind.AccessibilityDirective:
-                            case TokenKind.Newline:
-                            case TokenKind.Skipped: {
-                                break;
-                            }
-                            default: {
-                                const identifierText = this.getIdentifierText(member.identifier);
-                                if (areIdentifiersSame(name, identifierText)) {
-                                    switch (member.kind) {
-                                        case NodeKind.ExternFunctionDeclaration: {
-                                            functionLikeGroup = this.bindExternFunctionDeclaration(scope, member);
-                                            scope.members.set(functionLikeGroup.identifier.name, functionLikeGroup);
-                                            break;
-                                        }
-                                        case NodeKind.ExternClassMethodDeclaration: {
-                                            functionLikeGroup = this.bindExternClassMethodGroup(scope, identifierText, scope.declaration.members);
-                                            scope.members.set(functionLikeGroup.identifier.name, functionLikeGroup);
-                                            break;
-                                        }
-                                        default: {
-                                            assertNever(member);
-                                            break;
-                                        }
-                                    }
-                                }
-                                break;
-                            }
-                        }
-                    }
-
-                    if (functionLikeGroup) {
-                        return functionLikeGroup;
-                    }
-                    break;
-                }
-                case BoundNodeKind.InterfaceDeclaration: {
-                    // TODO: Overloads of methods on super types?
-                    let functionLikeGroup: BoundFunctionLikeGroupDeclaration | undefined = undefined;
-
-                    for (const member of scope.declaration.members) {
-                        switch (member.kind) {
-                            case NodeKind.DataDeclarationSequence: {
-                                for (const dataDeclaration of member.children) {
-                                    switch (dataDeclaration.kind) {
-                                        case NodeKind.DataDeclaration: {
-                                            const identifierText = this.getIdentifierText(dataDeclaration.identifier);
-                                            if (areIdentifiersSame(name, identifierText)) {
-                                                return this.bindDataDeclaration(scope, dataDeclaration, member.dataDeclarationKeyword);
-                                            }
-                                            break;
-                                        }
-                                        case NodeKind.CommaSeparator: { break; }
-                                        default: {
-                                            assertNever(dataDeclaration);
-                                            break;
-                                        }
-                                    }
-                                }
-                                break;
-                            }
-                            case TokenKind.Newline:
-                            case TokenKind.Skipped: {
-                                break;
-                            }
-                            default: {
-                                const identifierText = this.getIdentifierText(member.identifier);
-                                if (areIdentifiersSame(name, identifierText)) {
-                                    functionLikeGroup = this.bindInterfaceMethodDeclaration(scope, member);
-                                    scope.members.set(functionLikeGroup.identifier.name, functionLikeGroup);
-                                }
-                                break;
-                            }
-                        }
-                    }
-
-                    if (functionLikeGroup) {
-                        return functionLikeGroup;
-                    }
-                    break;
-                }
-                case BoundNodeKind.ClassDeclaration: {
-                    // TODO: Overloads of methods on super types?
-                    let functionLikeGroup: BoundFunctionLikeGroupDeclaration | undefined = undefined;
-
-                    for (const member of scope.declaration.members) {
-                        switch (member.kind) {
-                            case NodeKind.DataDeclarationSequence: {
-                                for (const dataDeclaration of member.children) {
-                                    switch (dataDeclaration.kind) {
-                                        case NodeKind.DataDeclaration: {
-                                            const identifierText = this.getIdentifierText(dataDeclaration.identifier);
-                                            if (areIdentifiersSame(name, identifierText)) {
-                                                return this.bindDataDeclaration(scope, dataDeclaration, member.dataDeclarationKeyword);
-                                            }
-                                            break;
-                                        }
-                                        case NodeKind.CommaSeparator: { break; }
-                                        default: {
-                                            assertNever(dataDeclaration);
-                                            break;
-                                        }
-                                    }
-                                }
-                                break;
-                            }
-                            case NodeKind.AccessibilityDirective:
-                            case TokenKind.Newline:
-                            case TokenKind.Skipped: {
-                                break;
-                            }
-                            default: {
-                                const identifierText = this.getIdentifierText(member.identifier);
-                                if (areIdentifiersSame(name, identifierText)) {
-                                    switch (member.kind) {
-                                        case NodeKind.FunctionDeclaration: {
-                                            functionLikeGroup = this.bindFunctionDeclaration(scope, member);
-                                            scope.members.set(functionLikeGroup.identifier.name, functionLikeGroup);
-                                            break;
-                                        }
-                                        case NodeKind.ClassMethodDeclaration: {
-                                            const boundClassMethodGroup = this.bindClassMethodGroup(scope, identifierText, scope.declaration.members);
-                                            scope.members.set(boundClassMethodGroup.identifier.name, boundClassMethodGroup);
-
-                                            return boundClassMethodGroup;
-                                        }
-                                        default: {
-                                            assertNever(member);
-                                            break;
-                                        }
-                                    }
-                                }
-                                break;
-                            }
-                        }
-                    }
-
-                    if (functionLikeGroup) {
-                        return functionLikeGroup;
-                    }
-                    break;
-                }
-            }
-
-            switch (scope.kind) {
-                case BoundNodeKind.ClassDeclaration: {
-                    const { superType } = scope;
-                    if (superType) {
-                        identifierSymbol = superType.locals.get(name);
-                        if (identifierSymbol) {
-                            return identifierSymbol.declaration;
-                        }
-                    }
-                    break;
-                }
-            }
-
-            scope = this.getScope(scope);
-        }
-    }
-
-    private getScope(node: BoundNodes): Scope | undefined {
-        let ancestor = node.parent;
-
-        while (true) {
-            if (!ancestor) {
-                return undefined;
-            }
-
-            switch (ancestor.kind) {
-                case BoundNodeKind.ModuleDeclaration:
-                case BoundNodeKind.ExternFunctionDeclaration:
-                case BoundNodeKind.ExternClassDeclaration:
-                case BoundNodeKind.ExternClassMethodDeclaration:
-                case BoundNodeKind.FunctionDeclaration:
-                case BoundNodeKind.InterfaceDeclaration:
-                case BoundNodeKind.InterfaceMethodDeclaration:
-                case BoundNodeKind.ClassDeclaration:
-                case BoundNodeKind.ClassMethodDeclaration:
-                case BoundNodeKind.IfStatement:
-                case BoundNodeKind.ElseIfClause:
-                case BoundNodeKind.ElseClause:
-                case BoundNodeKind.CaseClause:
-                case BoundNodeKind.DefaultClause:
-                case BoundNodeKind.WhileLoop:
-                case BoundNodeKind.RepeatLoop:
-                case BoundNodeKind.ForLoop:
-                case BoundNodeKind.TryStatement:
-                case BoundNodeKind.CatchClause: {
-                    return ancestor;
-                }
-            }
-
-            ancestor = ancestor.parent;
-        }
-    }
-
-    // #endregion
-
     // #region Generics
 
     private instantiateType(openType: BoundTypeReferenceDeclaration, typeMap: TypeMap) {
@@ -3790,7 +3564,7 @@ export class Binder {
             }
             case BoundNodeKind.ClassDeclaration: {
                 if (openType.kind === BoundNodeKind.ClassDeclaration &&
-                    openType.typeParameters
+                    (openType.typeParameters || openType.typeArguments)
                 ) {
                     return this.instantiateGenericType(openType, typeMap);
                 }
@@ -3836,19 +3610,17 @@ export class Binder {
         instantiatedType.superType = openType.superType;
         instantiatedType.nativeSymbol = openType.nativeSymbol;
 
-        // TODO: Clone members
         for (const [name, member] of openType.members) {
             switch (member.kind) {
-                case BoundNodeKind.ExternDataDeclaration: {
-
-                    break;
-                }
+                // We can skip these since we know `Array` doesn't have these kinds of members.
+                case BoundNodeKind.ExternDataDeclaration:
                 case BoundNodeKind.ExternFunctionGroupDeclaration: {
-
                     break;
                 }
+                // TODO: Should these be cloned anyway even though they don't take a generic type parameter?
                 case BoundNodeKind.ExternClassMethodGroupDeclaration: {
                     instantiatedType.members.set(name, member);
+                    instantiatedType.locals.set(member.identifier);
                     break;
                 }
                 default: {
@@ -3887,14 +3659,34 @@ export class Binder {
         openType: BoundClassDeclaration,
         typeMap: TypeMap,
     ): BoundClassDeclaration {
-        // TODO: Where are instantiated types stored? Should the declaration be added to the bound tree?
+        const rootType = openType.rootType!;
+        const instantiatedTypes = rootType.instantiatedTypes!;
+        const typeArguments = Array.from(typeMap.values());
+
+        for (const instantiatedType of instantiatedTypes) {
+            let match = true;
+
+            const instantiatedTypeTypeArguments = instantiatedType.typeArguments!;
+            for (let i = 0; i < instantiatedTypeTypeArguments.length; i++) {
+                if (typeArguments[i] !== instantiatedTypeTypeArguments[i]) {
+                    match = false;
+                    break;
+                }
+            }
+
+            if (match) {
+                return instantiatedType;
+            }
+        }
+
         const instantiatedType = new BoundClassDeclaration();
         instantiatedType.declaration = openType.declaration;
         instantiatedType.parent = openType.parent;
         instantiatedType.type = new ObjectType(instantiatedType);
-
         instantiatedType.identifier = new BoundSymbol(openType.identifier.name, instantiatedType);
-        // TODO: Set symbol in scope?
+        instantiatedType.typeArguments = typeArguments;
+        instantiatedType.rootType = rootType;
+        instantiatedTypes.push(instantiatedType);
 
         if (openType.superType) {
             instantiatedType.superType = this.instantiateType(
@@ -3907,23 +3699,21 @@ export class Binder {
             instantiatedType.implementedTypes = [...openType.implementedTypes];
         }
 
-        const instantiatedMembers = new BoundTypeMembers<BoundClassDeclarationMember>();
-
         for (const [name, member] of openType.members) {
             switch (member.kind) {
                 case BoundNodeKind.DataDeclaration: {
                     const instantiatedDataDeclaration = this.instantiateDataDeclaration(instantiatedType, member, typeMap);
-                    instantiatedMembers.set(name, instantiatedDataDeclaration);
+                    instantiatedType.members.set(name, instantiatedDataDeclaration);
                     break;
                 }
                 case BoundNodeKind.FunctionGroupDeclaration: {
-                    // TODO: Instantiate function group
-                    instantiatedMembers.set(name, member);
+                    const instantiatedFunctionGroupDeclaration = this.instantiateFunctionGroupDeclaration(instantiatedType, member, typeMap);
+                    instantiatedType.members.set(name, instantiatedFunctionGroupDeclaration);
                     break;
                 }
                 case BoundNodeKind.ClassMethodGroupDeclaration: {
-                    // TODO: Instantiate class method group
-                    instantiatedMembers.set(name, member);
+                    const instantiatedClassMethodGroupDeclaration = this.instantiateClassMethodGroupDeclaration(instantiatedType, member, typeMap);
+                    instantiatedType.members.set(name, instantiatedClassMethodGroupDeclaration);
                     break;
                 }
                 default: {
@@ -3933,47 +3723,295 @@ export class Binder {
             }
         }
 
-        instantiatedType.members = instantiatedMembers;
-
         return instantiatedType;
     }
 
+    // #region Instantiate data declaration
+
     private instantiateDataDeclaration(
-        parent: BoundClassDeclaration,
+        parent: BoundNodes,
         boundDataDeclaration: BoundDataDeclaration,
         typeMap: TypeMap,
-    ) {
-        const instantiatedDataDeclaration = new BoundDataDeclaration();
-        instantiatedDataDeclaration.parent = parent;
-        instantiatedDataDeclaration.declarationKind = boundDataDeclaration.declarationKind;
-
-        instantiatedDataDeclaration.identifier = new BoundSymbol(boundDataDeclaration.identifier.name, instantiatedDataDeclaration);
-        parent.locals.set(instantiatedDataDeclaration.identifier);
-
+    ): BoundDataDeclaration {
+        let getTypeAnnotation: GetBoundNode<BoundTypeReferenceDeclaration> | undefined = undefined;
         if (boundDataDeclaration.typeAnnotation) {
-            instantiatedDataDeclaration.typeAnnotation = this.instantiateType(
-                boundDataDeclaration.typeAnnotation,
-                typeMap,
-            ) as BoundExternClassDeclaration | BoundClassDeclaration;
-
-            instantiatedDataDeclaration.type = instantiatedDataDeclaration.typeAnnotation.type;
+            const { typeAnnotation } = boundDataDeclaration;
+            getTypeAnnotation = () => this.instantiateType(typeAnnotation, typeMap);
         }
 
+        let getExpression: GetBoundNode<BoundExpressions> | undefined = undefined;
         if (boundDataDeclaration.expression) {
-            instantiatedDataDeclaration.expression = this.instantiateExpression(instantiatedDataDeclaration, boundDataDeclaration.expression, typeMap);
-            instantiatedDataDeclaration.type = instantiatedDataDeclaration.expression.type;
+            const { expression } = boundDataDeclaration;
+            getExpression = (parent) => this.instantiateExpression(parent, expression, typeMap);
         }
 
-        instantiatedDataDeclaration.type = boundDataDeclaration.type;
-
-        return instantiatedDataDeclaration;
+        return this.dataDeclaration(parent,
+            {
+                name: boundDataDeclaration.identifier.name,
+                declarationKind: boundDataDeclaration.declarationKind,
+                operator: boundDataDeclaration.operator,
+                getTypeAnnotation,
+                getExpression,
+            },
+        );
     }
+
+    // #endregion
+
+    // #region Instantiate function declaration
+
+    private instantiateFunctionGroupDeclaration(
+        parent: BoundClassDeclaration,
+        boundFunctionGroupDeclaration: BoundFunctionGroupDeclaration,
+        typeMap: TypeMap,
+    ): BoundFunctionGroupDeclaration {
+        const instantiatedFunctionGroupDeclaration = new BoundFunctionGroupDeclaration();
+        instantiatedFunctionGroupDeclaration.parent = parent;
+        instantiatedFunctionGroupDeclaration.type = new FunctionGroupType(instantiatedFunctionGroupDeclaration);
+        instantiatedFunctionGroupDeclaration.identifier = new BoundSymbol(instantiatedFunctionGroupDeclaration.identifier.name, instantiatedFunctionGroupDeclaration);
+        parent.locals.set(instantiatedFunctionGroupDeclaration.identifier);
+
+        for (const overload of boundFunctionGroupDeclaration.overloads) {
+            const instantiatedFunctionDeclaration = this.instantiateFunctionDeclaration(instantiatedFunctionGroupDeclaration, overload, typeMap);
+            instantiatedFunctionGroupDeclaration.overloads.add(instantiatedFunctionDeclaration);
+        }
+
+        return instantiatedFunctionGroupDeclaration;
+    }
+
+    private instantiateFunctionDeclaration(
+        parent: BoundFunctionGroupDeclaration,
+        boundFunctionDeclaration: BoundFunctionDeclaration,
+        typeMap: TypeMap,
+    ) {
+        const instantiatedFunctionDeclaration = new BoundFunctionDeclaration();
+        instantiatedFunctionDeclaration.parent = parent;
+        instantiatedFunctionDeclaration.identifier = new BoundSymbol(boundFunctionDeclaration.identifier.name, instantiatedFunctionDeclaration);
+        instantiatedFunctionDeclaration.type = new FunctionType(instantiatedFunctionDeclaration);
+        instantiatedFunctionDeclaration.returnType = this.instantiateType(boundFunctionDeclaration.returnType, typeMap);
+        instantiatedFunctionDeclaration.parameters = boundFunctionDeclaration.parameters.map((parameter) =>
+            this.instantiateDataDeclaration(instantiatedFunctionDeclaration, parameter, typeMap)
+        );
+        instantiatedFunctionDeclaration.statements = boundFunctionDeclaration.statements.map((statement) =>
+            this.instantiateStatement(instantiatedFunctionDeclaration, statement, typeMap)
+        );
+
+        return instantiatedFunctionDeclaration;
+    }
+
+    // #endregion
+
+    // #region Instantiate class method declaration
+
+    private instantiateClassMethodGroupDeclaration(
+        parent: BoundClassDeclaration,
+        boundClassMethodGroupDeclaration: BoundClassMethodGroupDeclaration,
+        typeMap: TypeMap,
+    ): BoundClassMethodGroupDeclaration {
+        const instantiatedClassMethodGroupDeclaration = new BoundClassMethodGroupDeclaration();
+        instantiatedClassMethodGroupDeclaration.parent = parent;
+        instantiatedClassMethodGroupDeclaration.type = new MethodGroupType(instantiatedClassMethodGroupDeclaration);
+        instantiatedClassMethodGroupDeclaration.identifier = new BoundSymbol(boundClassMethodGroupDeclaration.identifier.name, instantiatedClassMethodGroupDeclaration);
+        parent.locals.set(instantiatedClassMethodGroupDeclaration.identifier);
+
+        for (const overload of boundClassMethodGroupDeclaration.overloads) {
+            const instantiatedClassMethodDeclaration = this.instantiateClassMethodDeclaration(instantiatedClassMethodGroupDeclaration, overload, typeMap);
+            instantiatedClassMethodGroupDeclaration.overloads.add(instantiatedClassMethodDeclaration);
+        }
+
+        return instantiatedClassMethodGroupDeclaration;
+    }
+
+    private instantiateClassMethodDeclaration(
+        parent: BoundClassMethodGroupDeclaration,
+        boundClassMethodDeclaration: BoundClassMethodDeclaration,
+        typeMap: TypeMap,
+    ): BoundClassMethodDeclaration {
+        const instantiatedClassMethodDeclaration = new BoundClassMethodDeclaration();
+        instantiatedClassMethodDeclaration.parent = parent;
+        instantiatedClassMethodDeclaration.type = new MethodType(instantiatedClassMethodDeclaration);
+        instantiatedClassMethodDeclaration.identifier = new BoundSymbol(boundClassMethodDeclaration.identifier.name, instantiatedClassMethodDeclaration);
+        instantiatedClassMethodDeclaration.returnType = this.instantiateType(boundClassMethodDeclaration.returnType, typeMap);
+        instantiatedClassMethodDeclaration.parameters = boundClassMethodDeclaration.parameters.map((parameter) =>
+            this.instantiateDataDeclaration(instantiatedClassMethodDeclaration, parameter, typeMap)
+        );
+
+        if (boundClassMethodDeclaration.statements) {
+            instantiatedClassMethodDeclaration.statements = boundClassMethodDeclaration.statements.map((statement) =>
+                this.instantiateStatement(instantiatedClassMethodDeclaration, statement, typeMap)
+            );
+        }
+
+        return instantiatedClassMethodDeclaration;
+    }
+
+    // #endregion
+
+    // #region Instantiate statements
+
+    private instantiateStatement(
+        parent: BoundNodes,
+        statement: BoundStatements,
+        typeMap: TypeMap,
+    ): BoundStatements {
+        switch (statement.kind) {
+            case BoundNodeKind.DataDeclarationStatement: {
+                return this.dataDeclarationStatement(parent, (parent) =>
+                    this.instantiateDataDeclaration(parent, statement.dataDeclaration, typeMap)
+                );
+            }
+            case BoundNodeKind.ReturnStatement: {
+                let getExpression: GetBoundNode<BoundExpressions> | undefined = undefined;
+                if (statement.expression) {
+                    const { expression } = statement;
+                    getExpression = (parent) => this.instantiateExpression(parent, expression, typeMap);
+                }
+
+                return this.returnStatement(parent, getExpression);
+            }
+            case BoundNodeKind.IfStatement: {
+                let getElseIfClauses: GetBoundNodes<BoundElseIfClause> | undefined = undefined;
+                if (statement.elseIfClauses) {
+                    const { elseIfClauses } = statement;
+                    getElseIfClauses = (parent) => elseIfClauses.map((elseIfClause) =>
+                        this.elseIfClause(parent,
+                            (parent) => this.instantiateExpression(parent, elseIfClause.expression, typeMap),
+                            (parent) => elseIfClause.statements.map((statement) =>
+                                this.instantiateStatement(parent, statement, typeMap)
+                            ),
+                        )
+                    );
+                }
+
+                let getElseClause: GetBoundNode<BoundElseClause> | undefined = undefined;
+                if (statement.elseClause) {
+                    const { elseClause } = statement;
+                    getElseClause = (parent) => this.elseClause(parent,
+                        (parent) => elseClause.statements.map((statement) =>
+                            this.instantiateStatement(parent, statement, typeMap)
+                        ),
+                    );
+                }
+
+                return this.ifStatement(parent,
+                    (parent) => this.instantiateExpression(parent, statement.expression, typeMap),
+                    (parent) => statement.statements.map((statement) =>
+                        this.instantiateStatement(parent, statement, typeMap)
+                    ),
+                    getElseIfClauses,
+                    getElseClause,
+                );
+            }
+            case BoundNodeKind.SelectStatement: {
+                let getDefaultClause: GetBoundNode<BoundDefaultClause> | undefined = undefined;
+                if (statement.defaultClause) {
+                    const { defaultClause } = statement;
+                    getDefaultClause = (parent) => this.defaultClause(parent,
+                        (parent) => defaultClause.statements.map((statement) =>
+                            this.instantiateStatement(parent, statement, typeMap)
+                        ),
+                    );
+                }
+
+                return this.selectStatement(parent,
+                    (parent) => statement.caseClauses.map((caseClause) =>
+                        this.caseClause(parent,
+                            (parent) => caseClause.expressions.map((expression) =>
+                                this.instantiateExpression(parent, expression, typeMap)
+                            ),
+                            (parent) => caseClause.statements.map((statement) =>
+                                this.instantiateStatement(parent, statement, typeMap)
+                            ),
+                        ),
+                    ),
+                    getDefaultClause,
+                );
+            }
+            case BoundNodeKind.WhileLoop: {
+                return this.whileLoop(parent,
+                    (parent) => this.instantiateExpression(parent, statement.expression, typeMap),
+                    (parent) => statement.statements.map((statement) =>
+                        this.instantiateStatement(parent, statement, typeMap)
+                    ),
+                );
+            }
+            case BoundNodeKind.RepeatLoop: {
+                let getUntilExpression: GetBoundNode<BoundExpressions> | undefined = undefined;
+                if (statement.untilExpression) {
+                    const { untilExpression } = statement;
+                    getUntilExpression = (parent) => this.instantiateExpression(parent, untilExpression, typeMap);
+                }
+
+                return this.repeatLoop(parent,
+                    getUntilExpression,
+                    (parent) => statement.statements.map((statement) =>
+                        this.instantiateStatement(parent, statement, typeMap)
+                    ),
+                );
+            }
+            case BoundNodeKind.ForLoop: {
+                return this.forLoop(parent,
+                    (parent) => this.instantiateStatement(parent, statement.firstValueStatement, typeMap),
+                    (parent) => this.instantiateExpression(parent, statement.lastValueExpression, typeMap),
+                    (parent) => this.instantiateStatement(parent, statement.stepValueClause, typeMap) as BoundAssignmentStatement,
+                    (parent) => statement.statements.map((statement) =>
+                        this.instantiateStatement(parent, statement, typeMap)
+                    ),
+                );
+            }
+            case BoundNodeKind.ContinueStatement: {
+                return this.continueStatement(parent);
+            }
+            case BoundNodeKind.ExitStatement: {
+                return this.exitStatement(parent);
+            }
+            case BoundNodeKind.ThrowStatement: {
+                return this.throwStatement(parent,
+                    (parent) => this.instantiateExpression(parent, statement.expression, typeMap),
+                );
+            }
+            case BoundNodeKind.TryStatement: {
+                return this.tryStatement(parent,
+                    (parent) => statement.statements.map((statement) =>
+                        this.instantiateStatement(parent, statement, typeMap)
+                    ),
+                    (parent) => statement.catchClauses.map((catchClause) =>
+                        this.catchClause(parent,
+                            (parent) => this.instantiateDataDeclaration(parent, catchClause.parameter, typeMap),
+                            (parent) => statement.statements.map((statement) =>
+                                this.instantiateStatement(parent, statement, typeMap)
+                            ),
+                        )
+                    ),
+                );
+            }
+            case BoundNodeKind.AssignmentStatement: {
+                return this.assignmentStatement(parent,
+                    (parent) => this.instantiateExpression(parent, statement.leftOperand, typeMap),
+                    statement.operator,
+                    (parent) => this.instantiateExpression(parent, statement.rightOperand, typeMap),
+                );
+            }
+            case BoundNodeKind.ExpressionStatement: {
+                return this.expressionStatement(parent,
+                    (parent) => this.instantiateExpression(parent, statement.expression, typeMap),
+                );
+            }
+            default: {
+                return assertNever(statement);
+            }
+        }
+    }
+
+    // #endregion
+
+    // #region Instantiate expressions
 
     private instantiateExpression(
         parent: BoundNodes,
         expression: BoundExpressions,
         typeMap: TypeMap,
-        scope?: MemberContainerType
+        scope?: MemberContainerDeclaration,
     ): BoundExpressions {
         switch (expression.kind) {
             case BoundNodeKind.BinaryExpression: {
@@ -4029,25 +4067,30 @@ export class Binder {
                 return this.globalScopeExpression(parent);
             }
             case BoundNodeKind.IdentifierExpression: {
-                let declaration: BoundIdentifiableDeclaration;
+                let instantiatedDeclaration: BoundIdentifiableDeclaration | GetBoundNode<BoundIdentifiableDeclaration>;
 
-                switch (expression.identifier.declaration.kind) {
+                const { declaration } = expression.identifier;
+                switch (declaration.kind) {
                     case BoundNodeKind.IntrinsicType:
                     case BoundNodeKind.ExternClassDeclaration:
                     case BoundNodeKind.InterfaceDeclaration:
                     case BoundNodeKind.ClassDeclaration:
                     case BoundNodeKind.TypeParameter: {
-                        declaration = this.instantiateType(expression.identifier.declaration, typeMap);
+                        instantiatedDeclaration = this.instantiateType(declaration, typeMap);
+                        break;
+                    }
+                    case BoundNodeKind.DataDeclaration: {
+                        instantiatedDeclaration = (parent) => this.resolveIdentifierName(parent, expression.identifier.name, scope);
                         break;
                     }
                     default: {
                         // TODO: Some of these may still need to be instantiated.
-                        declaration = expression.identifier.declaration;
+                        instantiatedDeclaration = declaration;
                         break;
                     }
                 }
 
-                return this.identifierExpression(parent, declaration);
+                return this.identifierExpression(parent, instantiatedDeclaration);
             }
             case BoundNodeKind.GroupingExpression: {
                 return this.groupingExpression(parent,
@@ -4067,13 +4110,13 @@ export class Binder {
                 );
             }
             case BoundNodeKind.SliceExpression: {
-                let getStartExpression: GetExpression | undefined = undefined;
+                let getStartExpression: GetBoundNode<BoundExpressions> | undefined = undefined;
                 if (expression.startExpression) {
                     const { startExpression } = expression;
                     getStartExpression = (parent) => this.instantiateExpression(parent, startExpression, typeMap);
                 }
 
-                let getEndExpression: GetExpression | undefined = undefined;
+                let getEndExpression: GetBoundNode<BoundExpressions> | undefined = undefined;
                 if (expression.endExpression) {
                     const { endExpression } = expression;
                     getEndExpression = (parent) => this.instantiateExpression(parent, endExpression, typeMap);
@@ -4096,6 +4139,483 @@ export class Binder {
             default: {
                 return assertNever(expression);
             }
+        }
+    }
+
+    // #endregion
+
+    // #endregion
+
+    // #region Core
+
+    // #region Symbols
+
+    private getIdentifierText(identifier: MissableIdentifier | NewKeywordToken, document: string = this.document) {
+        switch (identifier.kind) {
+            case NodeKind.EscapedIdentifier: {
+                return identifier.name.getText(document);
+            }
+            case TokenKind.Identifier:
+            case TokenKind.ObjectKeyword:
+            case TokenKind.ThrowableKeyword:
+            case TokenKind.NewKeyword: {
+                return identifier.getText(document);
+            }
+            case TokenKind.Missing: {
+                throw new Error(`Missing identifier.`);
+            }
+            default: {
+                return assertNever(identifier);
+            }
+        }
+    }
+
+    private resolveIdentifier(
+        node: BoundNodes,
+        identifier: IdentifierExpressionIdentifier,
+        scope?: MemberContainerDeclaration,
+        typeArguments?: (TypeReference | CommaSeparator)[],
+    ) {
+        // When binding `member` on `ScopeMemberAccessExpression`.
+        if (scope) {
+            switch (identifier.kind) {
+                case TokenKind.BoolKeyword:
+                case TokenKind.IntKeyword:
+                case TokenKind.FloatKeyword:
+                case TokenKind.StringKeyword: {
+                    throw new Error(`'${identifier.kind}' is a reserved keyword.`);
+                }
+                default: {
+                    const identifierText = this.getIdentifierText(identifier);
+
+                    return this.resolveIdentifierName(node, identifierText, scope, typeArguments);
+                }
+            }
+        } else {
+            switch (identifier.kind) {
+                case TokenKind.BoolKeyword: {
+                    return this.project.boolTypeDeclaration;
+                }
+                case TokenKind.IntKeyword: {
+                    return this.project.intTypeDeclaration;
+                }
+                case TokenKind.FloatKeyword: {
+                    return this.project.floatTypeDeclaration;
+                }
+                case TokenKind.StringKeyword: {
+                    return this.project.stringTypeDeclaration;
+                }
+                case TokenKind.Identifier:
+                case TokenKind.ObjectKeyword:
+                case TokenKind.ThrowableKeyword:
+                case TokenKind.NewKeyword:
+                case NodeKind.EscapedIdentifier: {
+                    const identifierText = this.getIdentifierText(identifier);
+
+                    return this.resolveIdentifierName(node, identifierText, scope, typeArguments);
+                }
+                default: {
+                    return assertNever(identifier);
+                }
+            }
+        }
+    }
+
+    private resolveIdentifierName(
+        node: BoundNodes,
+        name: string,
+        scope?: MemberContainerDeclaration,
+        typeArguments?: (TypeReference | CommaSeparator)[],
+    ) {
+        if (scope) {
+            const declaration = this.resolveIdentifierOnScope(name, scope);
+            if (declaration) {
+                return declaration;
+            }
+
+            throw new Error(`'${name}' does not exist on '${scope.type}'.`);
+        } else {
+            let member = this.resolveIdentifierFromNode(name, node);
+            if (!member) {
+                throw new Error(`Could not find '${name}'.`);
+            }
+
+            // Cast expression
+            if (typeArguments) {
+                if (member.kind !== BoundNodeKind.ClassDeclaration ||
+                    !member.typeParameters
+                ) {
+                    throw new Error(`'${name}' is not a generic class.`);
+                }
+
+                const boundTypeArguments = this.bindTypeReferenceSequence(typeArguments);
+                const typeMap = this.createTypeMap(member, boundTypeArguments);
+                member = this.instantiateGenericType(member, typeMap);
+            }
+
+            return member;
+        }
+    }
+
+    private resolveIdentifierFromNode(
+        name: string,
+        node: BoundNodes,
+    ): BoundIdentifiableDeclaration | undefined {
+        let scope = this.getScope(node);
+        while (scope) {
+            const declaration = this.resolveIdentifierOnScope(name, scope);
+            if (declaration) {
+                return declaration;
+            }
+
+            switch (scope.kind) {
+                case BoundNodeKind.ExternClassDeclaration:
+                case BoundNodeKind.ClassDeclaration: {
+                    let { superType } = scope;
+                    while (superType) {
+                        const declaration = this.resolveIdentifierOnScope(name, superType);
+                        if (declaration) {
+                            return declaration;
+                        }
+
+                        superType = superType.superType;
+                    }
+                    break;
+                }
+            }
+
+            scope = this.getScope(scope);
+        }
+    }
+
+    private resolveIdentifierOnScope(
+        name: string,
+        scope: Scope,
+    ) {
+        const identifier = scope.locals.get(name);
+        if (identifier) {
+            return identifier.declaration;
+        }
+
+        const declaration = this.tryBindMemberDeclarationWithName(scope, name);
+        if (declaration) {
+            return declaration;
+        }
+    }
+
+    // #region Eager binding
+
+    private tryBindMemberDeclarationWithName(
+        scope: Scope,
+        name: string,
+    ) {
+        switch (scope.kind) {
+            case BoundNodeKind.ModuleDeclaration: {
+                const memberDeclaration = this.tryBindModuleMemberDeclarationWithName(scope, name);
+                if (memberDeclaration) {
+                    scope.members.set(name, memberDeclaration);
+
+                    return memberDeclaration;
+                }
+                break;
+            }
+            case BoundNodeKind.ExternClassDeclaration: {
+                const memberDeclaration = this.tryBindExternClassDeclarationMemberWithName(scope, name);
+                if (memberDeclaration) {
+                    scope.members.set(name, memberDeclaration);
+
+                    return memberDeclaration;
+                }
+                break;
+            }
+            case BoundNodeKind.InterfaceDeclaration: {
+                const memberDeclaration = this.tryBindInterfaceDeclarationMemberWithName(scope, name);
+                if (memberDeclaration) {
+                    scope.members.set(name, memberDeclaration);
+
+                    return memberDeclaration;
+                }
+                break;
+            }
+            case BoundNodeKind.ClassDeclaration: {
+                const memberDeclaration = this.tryBindClassDeclarationMemberWithName(scope, name);
+                if (memberDeclaration) {
+                    scope.members.set(name, memberDeclaration);
+
+                    return memberDeclaration;
+                }
+                break;
+            }
+        }
+    }
+
+    private tryBindModuleMemberDeclarationWithName(
+        scope: BoundModuleDeclaration,
+        name: string,
+    ) {
+        for (const member of scope.declaration.members) {
+            switch (member.kind) {
+                case NodeKind.ExternDataDeclarationSequence: {
+                    const boundMember = this.tryBindExternDataDeclarationWithName(scope, name, member);
+                    if (boundMember) {
+                        return boundMember;
+                    }
+                    break;
+                }
+                case NodeKind.DataDeclarationSequence: {
+                    const boundMember = this.tryBindDataDeclarationWithName(scope, name, member);
+                    if (boundMember) {
+                        return boundMember;
+                    }
+                    break;
+                }
+                case NodeKind.ExternFunctionDeclaration: {
+                    const memberName = this.getIdentifierText(member.identifier);
+                    if (areIdentifiersSame(name, memberName)) {
+                        return this.bindExternFunctionGroup(scope, memberName, scope.declaration.members);
+                    }
+                    break;
+                }
+                case NodeKind.ExternClassDeclaration: {
+                    const identifierText = this.getIdentifierText(member.identifier);
+                    if (areIdentifiersSame(name, identifierText)) {
+                        return this.bindExternClassDeclaration(scope, member);
+                    }
+                    break;
+                }
+                case NodeKind.FunctionDeclaration: {
+                    const memberName = this.getIdentifierText(member.identifier);
+                    if (areIdentifiersSame(name, memberName)) {
+                        return this.bindFunctionGroup(scope, memberName, scope.declaration.members);
+                    }
+                    break;
+                }
+                case NodeKind.InterfaceDeclaration: {
+                    const identifierText = this.getIdentifierText(member.identifier);
+                    if (areIdentifiersSame(name, identifierText)) {
+                        return this.bindInterfaceDeclaration(scope, member);
+                    }
+                    break;
+                }
+                case NodeKind.ClassDeclaration: {
+                    const identifierText = this.getIdentifierText(member.identifier);
+                    if (areIdentifiersSame(name, identifierText)) {
+                        return this.bindClassDeclaration(scope, member);
+                    }
+                    break;
+                }
+                case NodeKind.AccessibilityDirective:
+                case TokenKind.Newline:
+                case TokenKind.Skipped: {
+                    break;
+                }
+                default: {
+                    assertNever(member);
+                    break;
+                }
+            }
+        }
+    }
+
+    private tryBindExternClassDeclarationMemberWithName(
+        scope: BoundExternClassDeclaration,
+        name: string,
+    ) {
+        // TODO: Overloads of methods on super types?
+
+        for (const member of scope.declaration.members) {
+            switch (member.kind) {
+                case NodeKind.ExternDataDeclarationSequence: {
+                    const boundMember = this.tryBindExternDataDeclarationWithName(scope, name, member);
+                    if (boundMember) {
+                        return boundMember;
+                    }
+                    break;
+                }
+                case NodeKind.ExternFunctionDeclaration: {
+                    const memberName = this.getIdentifierText(member.identifier);
+                    if (areIdentifiersSame(name, memberName)) {
+                        return this.bindExternFunctionGroup(scope, memberName, scope.declaration.members);
+                    }
+                    break;
+                }
+                case NodeKind.ExternClassMethodDeclaration: {
+                    const identifierText = this.getIdentifierText(member.identifier);
+                    if (areIdentifiersSame(name, identifierText)) {
+                        return this.bindExternClassMethodGroup(scope, identifierText, scope.declaration.members);
+                    }
+                    break;
+                }
+                case NodeKind.AccessibilityDirective:
+                case TokenKind.Newline:
+                case TokenKind.Skipped: {
+                    break;
+                }
+                default: {
+                    assertNever(member);
+                    break;
+                }
+            }
+        }
+    }
+
+    private tryBindInterfaceDeclarationMemberWithName(
+        scope: BoundInterfaceDeclaration,
+        name: string,
+    ) {
+        // TODO: Overloads of methods on super types?
+
+        for (const member of scope.declaration.members) {
+            switch (member.kind) {
+                case NodeKind.DataDeclarationSequence: {
+                    const boundMember = this.tryBindDataDeclarationWithName(scope, name, member);
+                    if (boundMember) {
+                        return boundMember;
+                    }
+                    break;
+                }
+                case NodeKind.InterfaceMethodDeclaration: {
+                    const memberName = this.getIdentifierText(member.identifier);
+                    if (areIdentifiersSame(name, memberName)) {
+                        return this.bindInterfaceMethodGroup(scope, memberName, scope.declaration.members);
+                    }
+                    break;
+                }
+                case TokenKind.Newline:
+                case TokenKind.Skipped: {
+                    break;
+                }
+                default: {
+                    assertNever(member);
+                    break;
+                }
+            }
+        }
+    }
+
+    private tryBindClassDeclarationMemberWithName(
+        scope: BoundClassDeclaration,
+        name: string,
+    ) {
+        // TODO: Overloads of methods on super types?
+
+        for (const member of scope.declaration.members) {
+            switch (member.kind) {
+                case NodeKind.DataDeclarationSequence: {
+                    const boundMember = this.tryBindDataDeclarationWithName(scope, name, member);
+                    if (boundMember) {
+                        return boundMember;
+                    }
+                    break;
+                }
+                case NodeKind.FunctionDeclaration: {
+                    const memberName = this.getIdentifierText(member.identifier);
+                    if (areIdentifiersSame(name, memberName)) {
+                        return this.bindFunctionGroup(scope, memberName, scope.declaration.members);
+                    }
+                    break;
+                }
+                case NodeKind.ClassMethodDeclaration: {
+                    const memberName = this.getIdentifierText(member.identifier);
+                    if (areIdentifiersSame(name, memberName)) {
+                        return this.bindClassMethodGroup(scope, memberName, scope.declaration.members);
+                    }
+                    break;
+                }
+                case NodeKind.AccessibilityDirective:
+                case TokenKind.Newline:
+                case TokenKind.Skipped: {
+                    break;
+                }
+                default: {
+                    assertNever(member);
+                    break;
+                }
+            }
+        }
+    }
+
+    private tryBindExternDataDeclarationWithName(
+        scope: BoundModuleDeclaration | BoundExternClassDeclaration,
+        name: string,
+        member: ExternDataDeclarationSequence,
+    ): BoundExternDataDeclaration | undefined {
+        for (const dataDeclaration of member.children) {
+            switch (dataDeclaration.kind) {
+                case NodeKind.ExternDataDeclaration: {
+                    const identifierText = this.getIdentifierText(dataDeclaration.identifier);
+                    if (areIdentifiersSame(name, identifierText)) {
+                        return this.bindExternDataDeclaration(scope, dataDeclaration, member.dataDeclarationKeyword);
+                    }
+                    break;
+                }
+                case NodeKind.CommaSeparator: { break; }
+                default: {
+                    assertNever(dataDeclaration);
+                    break;
+                }
+            }
+        }
+    }
+
+    private tryBindDataDeclarationWithName(
+        scope: BoundModuleDeclaration | BoundInterfaceDeclaration | BoundClassDeclaration,
+        name: string,
+        member: DataDeclarationSequence,
+    ): BoundDataDeclaration | undefined {
+        for (const dataDeclaration of member.children) {
+            switch (dataDeclaration.kind) {
+                case NodeKind.DataDeclaration: {
+                    const identifierText = this.getIdentifierText(dataDeclaration.identifier);
+                    if (areIdentifiersSame(name, identifierText)) {
+                        return this.bindDataDeclaration(scope, dataDeclaration, member.dataDeclarationKeyword);
+                    }
+                    break;
+                }
+                case NodeKind.CommaSeparator: { break; }
+                default: {
+                    assertNever(dataDeclaration);
+                    break;
+                }
+            }
+        }
+    }
+
+    // #endregion
+
+    private getScope(node: BoundNodes): Scope | undefined {
+        let ancestor = node.parent;
+
+        while (true) {
+            if (!ancestor) {
+                return undefined;
+            }
+
+            switch (ancestor.kind) {
+                case BoundNodeKind.ModuleDeclaration:
+                case BoundNodeKind.ExternFunctionDeclaration:
+                case BoundNodeKind.ExternClassDeclaration:
+                case BoundNodeKind.ExternClassMethodDeclaration:
+                case BoundNodeKind.FunctionDeclaration:
+                case BoundNodeKind.InterfaceDeclaration:
+                case BoundNodeKind.InterfaceMethodDeclaration:
+                case BoundNodeKind.ClassDeclaration:
+                case BoundNodeKind.ClassMethodDeclaration:
+                case BoundNodeKind.IfStatement:
+                case BoundNodeKind.ElseIfClause:
+                case BoundNodeKind.ElseClause:
+                case BoundNodeKind.CaseClause:
+                case BoundNodeKind.DefaultClause:
+                case BoundNodeKind.WhileLoop:
+                case BoundNodeKind.RepeatLoop:
+                case BoundNodeKind.ForLoop:
+                case BoundNodeKind.TryStatement:
+                case BoundNodeKind.CatchClause: {
+                    return ancestor;
+                }
+            }
+
+            ancestor = ancestor.parent;
         }
     }
 
@@ -4181,51 +4701,6 @@ export class Binder {
         }
     }
 
-    private getCollectionElementType(collection: Types) {
-        switch (collection.kind) {
-            case TypeKind.Array: {
-                return collection.elementType.type;
-            }
-            case TypeKind.String: {
-                return this.project.intTypeDeclaration.type;
-            }
-            case TypeKind.Object: {
-                const objectEnumeratorMethod = this.getMethod(
-                    collection.declaration,
-                    /*name*/ 'ObjectEnumerator',
-                    (returnType) => returnType.isConvertibleTo(this.project.objectTypeDeclaration.type),
-                );
-                if (!objectEnumeratorMethod) {
-                    throw new Error(`'${collection}' does not have a 'ObjectEnumerator: TObjectEnumerator()' method.`);
-                }
-
-                const enumeratorType = objectEnumeratorMethod.returnType as MethodContainerDeclaration;
-
-                const hasNextMethod = this.getMethod(
-                    enumeratorType,
-                    /*name*/ 'HasNext',
-                    (returnType) => returnType === this.project.boolTypeDeclaration.type,
-                );
-                if (!hasNextMethod) {
-                    throw new Error(`'${enumeratorType}' does not have a 'HasNext: Bool()' method.`);
-                }
-
-                const nextObjectMethod = this.getMethod(
-                    enumeratorType,
-                    /*name*/ 'NextObject',
-                );
-                if (!nextObjectMethod) {
-                    throw new Error(`'${enumeratorType}' does not have a 'NextObject: T()' method.`);
-                }
-
-                return nextObjectMethod.returnType.type;
-            }
-            default: {
-                throw new Error(`'${collection.kind}' is not a valid collection type.`);
-            }
-        }
-    }
-
     private getNearestAncestor(node: BoundNodes, kind: BoundNodeKind, ...kinds: BoundNodeKind[]): BoundNodes | undefined {
         let ancestor = node.parent;
 
@@ -4243,7 +4718,7 @@ export class Binder {
     private getMethod(
         typeDeclaration: MethodContainerDeclaration,
         name: string,
-        checkReturnType: (type: Types) => boolean = (returnType) => true,
+        checkReturnType: (type: Types) => boolean = () => true,
         ...parameters: Types[]
     ) {
         let member = typeDeclaration.members.get(name);
@@ -4260,7 +4735,7 @@ export class Binder {
 
     private getOverload(
         members: MethodLikeGroupDeclaration['overloads'],
-        checkReturnType: (type: Types) => boolean = (returnType) => true,
+        checkReturnType: (type: Types) => boolean = () => true,
         ...parameters: Types[]
     ) {
         for (const member of members) {
@@ -4281,7 +4756,8 @@ export class Binder {
     // #endregion
 }
 
-type GetExpression = (parent: BoundNodes) => BoundExpressions;
+type GetBoundNode<TBoundNode extends BoundNodes> = (parent: BoundNodes) => TBoundNode;
+type GetBoundNodes<TBoundNode extends BoundNodes> = (parent: BoundNodes) => TBoundNode[];
 
 class TypeMap extends Map<BoundTypeParameter, BoundTypeReferenceDeclaration> {
     get(key: BoundTypeReferenceDeclaration): BoundTypeReferenceDeclaration {
@@ -4307,11 +4783,11 @@ type Scope =
         BoundDirectory
     >;
 
-type MemberContainerType =
-    | ModuleType
-    | StringType
-    | ArrayType
-    | ObjectType
+type MemberContainerDeclaration =
+    | BoundModuleDeclaration
+    | BoundExternClassDeclaration
+    | BoundInterfaceDeclaration
+    | BoundClassDeclaration
     ;
 
 type MethodContainerDeclaration =

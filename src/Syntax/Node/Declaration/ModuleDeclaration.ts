@@ -40,8 +40,8 @@ export class ModuleDeclaration extends Declaration {
 
     strictNewlines: NewlineToken[] = undefined!;
     strictDirective?: StrictDirective = undefined;
-    headerMembers: (ModuleDeclarationHeaderMember | SkippedToken)[] = undefined!;
-    members: (ModuleDeclarationMember | SkippedToken)[] = undefined!;
+    headerMembers: ModuleDeclarationHeaderMember[] = undefined!;
+    members: ModuleDeclarationMember[] = undefined!;
     eofToken: EOFToken = undefined!;
 
     parseDiagnostics?: Diagnostic[];
@@ -53,6 +53,7 @@ export type ModuleDeclarationHeaderMember =
     | AliasDirectiveSequence
     | AccessibilityDirective
     | NewlineToken
+    | SkippedToken
     ;
 
 export type ModuleDeclarationMember =
@@ -65,4 +66,5 @@ export type ModuleDeclarationMember =
     | ClassDeclaration
     | ExternClassDeclaration
     | NewlineToken
+    | SkippedToken
     ;

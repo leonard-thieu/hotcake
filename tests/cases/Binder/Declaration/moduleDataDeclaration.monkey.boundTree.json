@@ -10,6 +10,7 @@
             "kind": "DataDeclaration",
             "declarationKind": "GlobalKeyword",
             "identifier": "ScaleX",
+            "operator": "ColonEqualsSign",
             "expression": {
                 "kind": "IntegerLiteralExpression",
                 "type": "Int",
@@ -21,6 +22,7 @@
             "kind": "DataDeclaration",
             "declarationKind": "ConstKeyword",
             "identifier": "Version",
+            "operator": "ColonEqualsSign",
             "expression": {
                 "kind": "StringLiteralExpression",
                 "type": "String",

@@ -49,7 +49,7 @@ export class ClassDeclaration extends Declaration {
 
     attribute?: AbstractKeywordToken | FinalKeywordToken = undefined;
 
-    members: (ClassDeclarationMember | SkippedToken)[] = undefined!;
+    members: ClassDeclarationMember[] = undefined!;
     endKeyword: MissableToken<EndKeywordToken> = undefined!;
     endClassKeyword?: ClassKeywordToken = undefined;
 }
@@ -60,4 +60,5 @@ export type ClassDeclarationMember =
     | ClassMethodDeclaration
     | AccessibilityDirective
     | NewlineToken
+    | SkippedToken
     ;

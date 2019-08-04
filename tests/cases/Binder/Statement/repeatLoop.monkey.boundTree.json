@@ -26,6 +26,7 @@
                                 "kind": "DataDeclaration",
                                 "declarationKind": "LocalKeyword",
                                 "identifier": "i",
+                                "operator": "ColonEqualsSign",
                                 "expression": {
                                     "kind": "IntegerLiteralExpression",
                                     "type": "Int",
@@ -37,7 +38,7 @@
                         {
                             "kind": "RepeatLoop",
                             "locals": [],
-                            "expression": {
+                            "untilExpression": {
                                 "kind": "BinaryExpression",
                                 "type": "Bool",
                                 "leftOperand": {

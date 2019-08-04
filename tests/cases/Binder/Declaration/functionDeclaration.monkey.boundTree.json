@@ -25,6 +25,7 @@
                             "declarationKind": null,
                             "identifier": "place",
                             "typeAnnotation": "Int",
+                            "operator": null,
                             "type": "Int"
                         },
                         {
@@ -32,6 +33,7 @@
                             "declarationKind": null,
                             "identifier": "percentile",
                             "typeAnnotation": "Float",
+                            "operator": null,
                             "type": "Float"
                         }
                     ],

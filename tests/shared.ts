@@ -215,21 +215,19 @@ export function executeBinderTestCases(name: string, casesPath: string): void {
                     switch (key) {
                         case 'project':
                         case 'directory':
-                        case 'parent': {
+                        case 'parent':
+                        case 'rootType': {
                             return undefined;
                         }
                         case 'declaration': {
-                            if (this.kind !== BoundNodeKind.DataDeclarationStatement) {
-                                if (value &&
-                                    value.kind === BoundNodeKind.ModuleDeclaration &&
-                                    value.identifier
-                                ) {
-                                    return value.identifier.name;
-                                }
-
-                                return undefined;
+                            if (value &&
+                                value.kind === BoundNodeKind.ModuleDeclaration &&
+                                value.identifier
+                            ) {
+                                return value.identifier.name;
                             }
-                            break;
+
+                            return undefined;
                         }
                         case 'identifier': {
                             if (value) {
@@ -243,6 +241,12 @@ export function executeBinderTestCases(name: string, casesPath: string): void {
                                 names.push(k);
                             }
                             return names;
+                        }
+                        case 'typeArguments': {
+                            if (value) {
+                                return value.map((typeArgument: any) => typeArgument.type);
+                            }
+                            break;
                         }
                         case 'superType':
                         case 'returnType':

@@ -43,28 +43,20 @@ export class ObjectType extends Type {
     }
 
     toString(): string {
-        let str = this.declaration.identifier.name;
+        let str = '';
+
+        str += this.declaration.identifier.name;
 
         if (this.declaration.kind === BoundNodeKind.ClassDeclaration) {
-            // if (this.declaration.typeArguments) {
-            //     str += '<';
-
-            //     const argNames: Types[] = [];
-            //     for (const arg of this.declaration.typeArguments) {
-            //         argNames.push(arg.type);
-            //     }
-            //     str += argNames.join(',');
-
-            //     str += '>';
-            // } else
-            if (this.declaration.typeParameters) {
+            const typeArguments = this.declaration.typeArguments || this.declaration.typeParameters;
+            if (typeArguments) {
                 str += '<';
 
-                const argNames: Types[] = [];
-                for (const arg of this.declaration.typeParameters) {
-                    argNames.push(arg.type);
+                const typeArgumentNames: Types[] = [];
+                for (const typeArgument of typeArguments) {
+                    typeArgumentNames.push(typeArgument.type);
                 }
-                str += argNames.join(',');
+                str += typeArgumentNames.join(',');
 
                 str += '>';
             }

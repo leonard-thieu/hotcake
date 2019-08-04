@@ -25,6 +25,7 @@
                             "declarationKind": null,
                             "identifier": "message",
                             "typeAnnotation": "String",
+                            "operator": null,
                             "type": "String"
                         }
                     ],
@@ -53,6 +54,7 @@
                                 "kind": "DataDeclaration",
                                 "declarationKind": "LocalKeyword",
                                 "identifier": "val",
+                                "operator": "ColonEqualsSign",
                                 "expression": {
                                     "kind": "IntegerLiteralExpression",
                                     "type": "Int",
