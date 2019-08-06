@@ -1,4 +1,4 @@
-import { BoundNodeKindToBoundNodeMap, BoundNodes } from './Node/BoundNode';
+import { BoundNodeKindToBoundNodeMap, BoundNodes } from './Node/BoundNodes';
 import { BoundDeclarations } from './Node/Declaration/BoundDeclarations';
 
 export class BoundSymbol {

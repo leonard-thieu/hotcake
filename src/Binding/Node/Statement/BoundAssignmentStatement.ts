@@ -1,6 +1,5 @@
 import { AssignmentOperatorToken } from '../../../Syntax/Node/Statement/AssignmentStatement';
-import { BoundNode } from '../BoundNode';
-import { BoundNodeKind } from '../BoundNodeKind';
+import { BoundNode, BoundNodeKind } from '../BoundNodes';
 import { BoundExpressions } from '../Expression/BoundExpressions';
 
 export class BoundAssignmentStatement extends BoundNode {

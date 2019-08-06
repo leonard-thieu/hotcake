@@ -3,8 +3,7 @@ import { BoolKeywordToken, FloatKeywordToken, GreaterThanSignToken, IdentifierTo
 import { ArrayTypeAnnotation } from './ArrayTypeAnnotation';
 import { CommaSeparator } from './CommaSeparator';
 import { Identifier, IdentifierStartToken } from './Identifier';
-import { Node } from './Node';
-import { NodeKind } from './NodeKind';
+import { Node, NodeKind } from './Nodes';
 
 export const TypeReferenceChildNames: ReadonlyArray<keyof TypeReference> = [
     'moduleIdentifier',

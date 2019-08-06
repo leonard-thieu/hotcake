@@ -1,7 +1,7 @@
 import { ErrorDirectiveKeywordToken } from '../../Token/Tokens';
-import { MissableExpression } from '../Expression/Expression';
-import { NodeKind } from '../NodeKind';
-import { Directive } from './Directive';
+import { MissableExpression } from '../Expression/Expressions';
+import { NodeKind } from '../Nodes';
+import { Directive } from './Directives';
 
 export const ErrorDirectiveChildNames: ReadonlyArray<keyof ErrorDirective> = [
     'numberSign',

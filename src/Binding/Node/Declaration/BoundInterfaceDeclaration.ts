@@ -2,8 +2,7 @@ import { InterfaceDeclaration, InterfaceMethodDeclaration } from '../../../Synta
 import { BoundSymbol, BoundSymbolTable } from '../../BoundSymbol';
 import { MethodType } from '../../Type/FunctionLikeType';
 import { ObjectType } from '../../Type/ObjectType';
-import { BoundNode } from '../BoundNode';
-import { BoundNodeKind } from '../BoundNodeKind';
+import { BoundNode, BoundNodeKind } from '../BoundNodes';
 import { BoundDataDeclaration } from './BoundDataDeclaration';
 import { BoundTypeReferenceDeclaration } from './BoundDeclarations';
 

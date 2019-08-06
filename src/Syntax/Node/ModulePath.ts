@@ -1,7 +1,6 @@
 import { MissableToken } from '../Token/MissingToken';
 import { IdentifierToken, PeriodToken } from '../Token/Tokens';
-import { Node } from './Node';
-import { NodeKind } from './NodeKind';
+import { Node, NodeKind } from './Nodes';
 
 export const ModulePathChildNames: ReadonlyArray<keyof ModulePath> = [
     'children',

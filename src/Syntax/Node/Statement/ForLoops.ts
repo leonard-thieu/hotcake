@@ -1,12 +1,12 @@
 import { MissableToken } from '../../Token/MissingToken';
 import { SkippedToken } from '../../Token/SkippedToken';
 import { ColonEqualsSignToken, EachInKeywordToken, EndKeywordToken, EqualsSignToken, ForKeywordToken, LocalKeywordToken, NextKeywordToken, StepKeywordToken, ToKeywordToken, UntilKeywordToken } from '../../Token/Tokens';
-import { MissableExpression } from '../Expression/Expression';
+import { MissableExpression } from '../Expression/Expressions';
 import { MissableIdentifier } from '../Identifier';
-import { NodeKind } from '../NodeKind';
+import { NodeKind } from '../Nodes';
 import { TypeAnnotation } from '../TypeAnnotation';
 import { AssignmentOperatorToken } from './AssignmentStatement';
-import { Statement, Statements } from './Statement';
+import { Statement, Statements } from './Statements';
 
 // #region Numeric for loop
 

@@ -1,11 +1,11 @@
 import { MissingToken } from '../../Token/MissingToken';
 import { ColonEqualsSignToken, ConstKeywordToken, EqualsSignToken, FieldKeywordToken, GlobalKeywordToken, LocalKeywordToken } from '../../Token/Tokens';
 import { CommaSeparator } from '../CommaSeparator';
-import { MissableExpression } from '../Expression/Expression';
+import { MissableExpression } from '../Expression/Expressions';
 import { Identifier } from '../Identifier';
-import { NodeKind } from '../NodeKind';
+import { NodeKind } from '../Nodes';
 import { TypeAnnotation } from '../TypeAnnotation';
-import { Declaration } from './Declaration';
+import { Declaration } from './Declarations';
 
 // #region Data declaration sequence
 

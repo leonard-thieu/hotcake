@@ -1,7 +1,6 @@
 import { BoundSymbol } from '../../BoundSymbol';
 import { IntrinsicType } from '../../Type/Types';
-import { BoundNode } from '../BoundNode';
-import { BoundNodeKind } from '../BoundNodeKind';
+import { BoundNode, BoundNodeKind } from '../BoundNodes';
 
 export class BoundIntrinsicTypeDeclaration extends BoundNode {
     readonly kind = BoundNodeKind.IntrinsicType;

@@ -2,8 +2,7 @@ import { Project } from '../../../Project';
 import { ModuleDeclaration } from '../../../Syntax/Node/Declaration/ModuleDeclaration';
 import { BoundSymbol, BoundSymbolTable } from '../../BoundSymbol';
 import { ModuleType } from '../../Type/ModuleType';
-import { BoundNode } from '../BoundNode';
-import { BoundNodeKind } from '../BoundNodeKind';
+import { BoundNode, BoundNodeKind } from '../BoundNodes';
 import { BoundDirectory } from './BoundDirectory';
 
 export class BoundModuleDeclaration extends BoundNode {

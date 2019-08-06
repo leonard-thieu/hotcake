@@ -1,6 +1,6 @@
 import { IntegerLiteralToken } from '../../Token/Tokens';
-import { NodeKind } from '../NodeKind';
-import { Expression } from './Expression';
+import { NodeKind } from '../Nodes';
+import { Expression } from './Expressions';
 
 export const IntegerLiteralExpressionChildNames: ReadonlyArray<keyof IntegerLiteralExpression> = [
     'newlines',

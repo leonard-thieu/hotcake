@@ -1,4 +1,4 @@
-import { NodeKind } from '../Node/NodeKind';
+import { NodeKind } from '../Node/Nodes';
 import { NewlineToken, Token, TokenKind, TokenKindToTokenMap, Tokens } from './Tokens';
 
 export class MissingToken extends Token<TokenKind.Missing> {

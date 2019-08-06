@@ -1,5 +1,5 @@
 import { BoundIdentifiableDeclaration } from '../../BoundSymbol';
-import { BoundNodeKind } from '../BoundNodeKind';
+import { BoundNodeKind } from '../BoundNodes';
 
 export class BoundTypeMembers<TMember extends BoundIdentifiableDeclaration> extends Map<string, TMember> {
     get(key: string, ...kinds: BoundNodeKind[]): TMember | undefined {

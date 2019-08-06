@@ -1,6 +1,6 @@
 import { HyphenMinusToken, NotKeywordToken, PlusSignToken, TildeToken } from '../../Token/Tokens';
-import { NodeKind } from '../NodeKind';
-import { Expression, MissableExpression } from './Expression';
+import { NodeKind } from '../Nodes';
+import { Expression, MissableExpression } from './Expressions';
 
 export const UnaryExpressionChildNames: ReadonlyArray<keyof UnaryExpression> = [
     'newlines',

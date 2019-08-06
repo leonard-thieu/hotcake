@@ -3,13 +3,13 @@ import { SkippedToken } from '../../Token/SkippedToken';
 import { AbstractKeywordToken, ClassKeywordToken, ClosingParenthesisToken, EndKeywordToken, ExtendsKeywordToken, FinalKeywordToken, GreaterThanSignToken, ImplementsKeywordToken, LessThanSignToken, MethodKeywordToken, NewKeywordToken, NewlineToken, OpeningParenthesisToken, PropertyKeywordToken } from '../../Token/Tokens';
 import { CommaSeparator } from '../CommaSeparator';
 import { MissableIdentifier } from '../Identifier';
-import { NodeKind } from '../NodeKind';
-import { Statements } from '../Statement/Statement';
+import { NodeKind } from '../Nodes';
+import { Statements } from '../Statement/Statements';
 import { TypeAnnotation } from '../TypeAnnotation';
 import { MissableTypeReference, TypeReference } from '../TypeReference';
 import { AccessibilityDirective } from './AccessibilityDirective';
 import { DataDeclarationSequence } from './DataDeclarationSequence';
-import { Declaration } from './Declaration';
+import { Declaration } from './Declarations';
 import { FunctionDeclaration } from './FunctionDeclaration';
 import { TypeParameter } from './TypeParameter';
 

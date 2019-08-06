@@ -1,5 +1,5 @@
 import { StringLiteralExpression } from './Syntax/Node/Expression/StringLiteralExpression';
-import { NodeKind } from './Syntax/Node/NodeKind';
+import { NodeKind } from './Syntax/Node/Nodes';
 import { TokenKind } from './Syntax/Token/Tokens';
 import { ConfigurationVariableMap } from './Syntax/Tokenizer';
 import { assertNever } from './util';

@@ -1,9 +1,9 @@
 import { MissableToken } from '../../Token/MissingToken';
 import { SkippedToken } from '../../Token/SkippedToken';
 import { ForeverKeywordToken, RepeatKeywordToken, UntilKeywordToken } from '../../Token/Tokens';
-import { MissableExpression } from '../Expression/Expression';
-import { NodeKind } from '../NodeKind';
-import { Statement, Statements } from './Statement';
+import { MissableExpression } from '../Expression/Expressions';
+import { NodeKind } from '../Nodes';
+import { Statement, Statements } from './Statements';
 
 export const RepeatLoopChildNames: ReadonlyArray<keyof RepeatLoop> = [
     'repeatKeyword',

@@ -1,7 +1,6 @@
 import { BoundSymbol } from '../../BoundSymbol';
 import { BoundFunctionLikeDeclaration, FunctionGroupType, MethodGroupType } from '../../Type/FunctionLikeType';
-import { BoundNode } from '../BoundNode';
-import { BoundNodeKind } from '../BoundNodeKind';
+import { BoundNode, BoundNodeKind } from '../BoundNodes';
 import { BoundClassMethodDeclaration } from './BoundClassDeclaration';
 import { BoundFunctionDeclaration } from './BoundFunctionDeclaration';
 import { BoundInterfaceMethodDeclaration } from './BoundInterfaceDeclaration';

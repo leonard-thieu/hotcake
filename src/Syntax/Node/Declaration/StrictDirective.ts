@@ -1,6 +1,6 @@
 import { StrictKeywordToken } from '../../Token/Tokens';
-import { NodeKind } from '../NodeKind';
-import { Declaration } from './Declaration';
+import { NodeKind } from '../Nodes';
+import { Declaration } from './Declarations';
 
 export const StrictDirectiveChildNames: ReadonlyArray<keyof StrictDirective> = [
     'strictKeyword',

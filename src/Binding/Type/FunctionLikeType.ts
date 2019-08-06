@@ -1,6 +1,5 @@
 import { normalizeIdentifier } from '../BoundSymbol';
-import { BoundNodes } from '../Node/BoundNode';
-import { BoundNodeKind } from '../Node/BoundNodeKind';
+import { BoundNodeKind, BoundNodes } from '../Node/BoundNodes';
 import { BoundClassMethodDeclaration } from '../Node/Declaration/BoundClassDeclaration';
 import { BoundFunctionDeclaration } from '../Node/Declaration/BoundFunctionDeclaration';
 import { BoundClassMethodGroupDeclaration, BoundExternClassMethodGroupDeclaration, BoundExternFunctionGroupDeclaration, BoundFunctionGroupDeclaration, BoundInterfaceMethodGroupDeclaration } from '../Node/Declaration/BoundFunctionLikeGroupDeclaration';

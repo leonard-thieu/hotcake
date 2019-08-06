@@ -2,10 +2,10 @@ import { MissableToken } from '../../Token/MissingToken';
 import { SkippedToken } from '../../Token/SkippedToken';
 import { CaseKeywordToken, DefaultKeywordToken, EndKeywordToken, NewlineToken, SelectKeywordToken } from '../../Token/Tokens';
 import { CommaSeparator } from '../CommaSeparator';
-import { MissableExpression } from '../Expression/Expression';
-import { Node } from '../Node';
-import { NodeKind } from '../NodeKind';
-import { Statement, Statements } from './Statement';
+import { MissableExpression } from '../Expression/Expressions';
+import { Node } from '../Nodes';
+import { NodeKind } from '../Nodes';
+import { Statement, Statements } from './Statements';
 
 // #region Select statement
 

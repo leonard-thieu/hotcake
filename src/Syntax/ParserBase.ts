@@ -5,7 +5,7 @@ import { ConfigurationTag } from './Node/ConfigurationTag';
 import { ArrayLiteralExpression } from './Node/Expression/ArrayLiteralExpression';
 import { BinaryExpression, BinaryExpressionOperatorToken } from './Node/Expression/BinaryExpression';
 import { BooleanLiteralExpression, BooleanLiteralExpressionValueToken } from './Node/Expression/BooleanLiteralExpression';
-import { Expressions, MissableExpression } from './Node/Expression/Expression';
+import { Expressions, MissableExpression } from './Node/Expression/Expressions';
 import { FloatLiteralExpression } from './Node/Expression/FloatLiteralExpression';
 import { GlobalScopeExpression } from './Node/Expression/GlobalScopeExpression';
 import { GroupingExpression } from './Node/Expression/GroupingExpression';
@@ -22,8 +22,7 @@ import { MissableStringLiteralExpression, StringLiteralExpression } from './Node
 import { SuperExpression } from './Node/Expression/SuperExpression';
 import { UnaryExpression, UnaryOperatorToken } from './Node/Expression/UnaryExpression';
 import { EscapedIdentifier, MissableIdentifier } from './Node/Identifier';
-import { Nodes } from './Node/Node';
-import { NodeKind } from './Node/NodeKind';
+import { NodeKind, Nodes } from './Node/Nodes';
 import { MissableTypeReference, TypeReference, TypeReferenceIdentifierStartToken } from './Node/TypeReference';
 import { GreaterThanSignEqualsSignToken } from './Token/GreaterThanSignEqualsSignToken';
 import { MissingToken, MissingTokenKinds } from './Token/MissingToken';

@@ -2,7 +2,7 @@ import fs = require('fs');
 import path = require('path');
 import { Binder } from './Binding/Binder';
 import { BoundSymbol } from './Binding/BoundSymbol';
-import { BoundNodeKind } from './Binding/Node/BoundNodeKind';
+import { BoundNodeKind } from './Binding/Node/BoundNodes';
 import { BoundTypeReferenceDeclaration } from './Binding/Node/Declaration/BoundDeclarations';
 import { BoundDirectory } from './Binding/Node/Declaration/BoundDirectory';
 import { BoundIntrinsicTypeDeclaration } from './Binding/Node/Declaration/BoundIntrinsicTypeDeclaration';

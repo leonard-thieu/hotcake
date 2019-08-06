@@ -6,7 +6,7 @@ import process = require('process');
 import mkdirp = require('mkdirp');
 import { orderBy } from 'natural-orderby';
 import { Scope } from '../src/Binding/Binder';
-import { BoundNodeKind } from '../src/Binding/Node/BoundNodeKind';
+import { BoundNodeKind } from '../src/Binding/Node/BoundNodes';
 import { BoundDirectory } from '../src/Binding/Node/Declaration/BoundDirectory';
 import { BoundFunctionLikeGroupDeclaration } from '../src/Binding/Node/Declaration/BoundFunctionLikeGroupDeclaration';
 import { BoundModuleDeclaration } from '../src/Binding/Node/Declaration/BoundModuleDeclaration';

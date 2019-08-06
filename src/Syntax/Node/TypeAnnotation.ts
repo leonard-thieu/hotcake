@@ -1,7 +1,6 @@
 import { ColonToken, DollarSignToken, NumberSignToken, PercentSignToken, QuestionMarkToken } from '../Token/Tokens';
 import { ArrayTypeAnnotation } from './ArrayTypeAnnotation';
-import { Node } from './Node';
-import { NodeKind } from './NodeKind';
+import { Node, NodeKind } from './Nodes';
 import { MissableTypeReference } from './TypeReference';
 
 export type TypeAnnotation =

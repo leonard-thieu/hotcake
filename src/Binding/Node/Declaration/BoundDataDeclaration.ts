@@ -1,8 +1,7 @@
 import { DataDeclaration, DataDeclarationKeywordToken } from '../../../Syntax/Node/Declaration/DataDeclarationSequence';
 import { BoundSymbol } from '../../BoundSymbol';
 import { Types } from '../../Type/Types';
-import { BoundNode } from '../BoundNode';
-import { BoundNodeKind } from '../BoundNodeKind';
+import { BoundNode, BoundNodeKind } from '../BoundNodes';
 import { BoundExpressions } from '../Expression/BoundExpressions';
 import { BoundTypeReferenceDeclaration } from './BoundDeclarations';
 

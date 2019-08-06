@@ -1,7 +1,7 @@
 import { MissableToken } from '../../../Token/MissingToken';
 import { ClosingParenthesisToken, FunctionKeywordToken, OpeningParenthesisToken } from '../../../Token/Tokens';
 import { MissableIdentifier } from '../../Identifier';
-import { NodeKind } from '../../NodeKind';
+import { NodeKind } from '../../Nodes';
 import { TypeAnnotation } from '../../TypeAnnotation';
 import { DataDeclarationSequence } from '../DataDeclarationSequence';
 import { ExternDeclaration } from './ExternDeclaration';

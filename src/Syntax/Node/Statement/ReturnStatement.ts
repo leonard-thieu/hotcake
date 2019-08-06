@@ -1,7 +1,7 @@
 import { ReturnKeywordToken } from '../../Token/Tokens';
-import { MissableExpression } from '../Expression/Expression';
-import { NodeKind } from '../NodeKind';
-import { Statement } from './Statement';
+import { MissableExpression } from '../Expression/Expressions';
+import { NodeKind } from '../Nodes';
+import { Statement } from './Statements';
 
 export const ReturnStatementChildNames: ReadonlyArray<keyof ReturnStatement> = [
     'returnKeyword',

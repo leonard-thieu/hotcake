@@ -1,7 +1,6 @@
 import { UnaryOperatorToken } from '../../../Syntax/Node/Expression/UnaryExpression';
-import { BoundNodeKind } from '../BoundNodeKind';
-import { BoundExpression } from './BoundExpression';
-import { BoundExpressions } from './BoundExpressions';
+import { BoundNodeKind } from '../BoundNodes';
+import { BoundExpression, BoundExpressions } from './BoundExpressions';
 
 export class BoundUnaryExpression extends BoundExpression {
     readonly kind = BoundNodeKind.UnaryExpression;

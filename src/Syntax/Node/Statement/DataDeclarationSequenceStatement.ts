@@ -1,6 +1,6 @@
 import { DataDeclarationSequence } from '../Declaration/DataDeclarationSequence';
-import { NodeKind } from '../NodeKind';
-import { Statement } from './Statement';
+import { NodeKind } from '../Nodes';
+import { Statement } from './Statements';
 
 export const DataDeclarationSequenceStatementChildNames: ReadonlyArray<keyof DataDeclarationSequenceStatement> = [
     'dataDeclarationSequence',

@@ -3,11 +3,11 @@ import { SkippedToken } from '../../Token/SkippedToken';
 import { ClosingParenthesisToken, EndKeywordToken, ExtendsKeywordToken, InterfaceKeywordToken, MethodKeywordToken, NewlineToken, OpeningParenthesisToken } from '../../Token/Tokens';
 import { CommaSeparator } from '../CommaSeparator';
 import { MissableIdentifier } from '../Identifier';
-import { NodeKind } from '../NodeKind';
+import { NodeKind } from '../Nodes';
 import { TypeAnnotation } from '../TypeAnnotation';
 import { TypeReference } from '../TypeReference';
 import { DataDeclarationSequence } from './DataDeclarationSequence';
-import { Declaration } from './Declaration';
+import { Declaration } from './Declarations';
 
 // #region Interface declaration
 

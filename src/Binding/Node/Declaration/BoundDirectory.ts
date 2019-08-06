@@ -1,6 +1,5 @@
 import { BoundSymbol, BoundSymbolTable } from '../../BoundSymbol';
-import { BoundNode } from '../BoundNode';
-import { BoundNodeKind } from '../BoundNodeKind';
+import { BoundNode, BoundNodeKind } from '../BoundNodes';
 
 export class BoundDirectory extends BoundNode {
     readonly kind = BoundNodeKind.Directory;

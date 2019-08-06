@@ -1,6 +1,6 @@
 import { PeriodToken } from '../../Token/Tokens';
-import { NodeKind } from '../NodeKind';
-import { Expression, Expressions, MissableExpression } from './Expression';
+import { NodeKind } from '../Nodes';
+import { Expression, Expressions, MissableExpression } from './Expressions';
 
 export const ScopeMemberAccessExpressionChildNames: ReadonlyArray<keyof ScopeMemberAccessExpression> = [
     'newlines',

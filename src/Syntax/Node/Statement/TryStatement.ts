@@ -2,9 +2,9 @@ import { MissableToken } from '../../Token/MissingToken';
 import { SkippedToken } from '../../Token/SkippedToken';
 import { CatchKeywordToken, EndKeywordToken, TryKeywordToken } from '../../Token/Tokens';
 import { MissableDataDeclaration } from '../Declaration/DataDeclarationSequence';
-import { Node } from '../Node';
-import { NodeKind } from '../NodeKind';
-import { Statement, Statements } from './Statement';
+import { Node } from '../Nodes';
+import { NodeKind } from '../Nodes';
+import { Statement, Statements } from './Statements';
 
 // #region Try statement
 

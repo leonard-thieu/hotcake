@@ -1,4 +1,4 @@
-import { BoundNodeKind } from '../Node/BoundNodeKind';
+import { BoundNodeKind } from '../Node/BoundNodes';
 import { BoundClassDeclaration } from '../Node/Declaration/BoundClassDeclaration';
 import { BoundInterfaceDeclaration } from '../Node/Declaration/BoundInterfaceDeclaration';
 import { BoundExternClassDeclaration } from '../Node/Declaration/Extern/BoundExternClassDeclaration';

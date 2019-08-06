@@ -1,7 +1,7 @@
 import { FriendKeywordToken } from '../../Token/Tokens';
 import { ModulePath } from '../ModulePath';
-import { NodeKind } from '../NodeKind';
-import { Declaration } from './Declaration';
+import { NodeKind } from '../Nodes';
+import { Declaration } from './Declarations';
 
 export const FriendDirectiveChildNames: ReadonlyArray<keyof FriendDirective> = [
     'friendKeyword',

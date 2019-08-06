@@ -1,6 +1,6 @@
 import { ExitKeywordToken } from '../../Token/Tokens';
-import { NodeKind } from '../NodeKind';
-import { Statement } from './Statement';
+import { NodeKind } from '../Nodes';
+import { Statement } from './Statements';
 
 export const ExitStatementChildNames: ReadonlyArray<keyof ExitStatement> = [
     'exitKeyword',

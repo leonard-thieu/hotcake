@@ -1,7 +1,7 @@
 import { MissableToken } from '../../Token/MissingToken';
 import { ClosingSquareBracketToken, OpeningSquareBracketToken } from '../../Token/Tokens';
-import { NodeKind } from '../NodeKind';
-import { Expression, Expressions, MissableExpression } from './Expression';
+import { NodeKind } from '../Nodes';
+import { Expression, Expressions, MissableExpression } from './Expressions';
 
 export const IndexExpressionChildNames: ReadonlyArray<keyof IndexExpression> = [
     'newlines',

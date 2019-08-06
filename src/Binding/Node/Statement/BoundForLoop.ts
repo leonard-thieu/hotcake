@@ -1,6 +1,5 @@
 import { BoundSymbolTable } from '../../BoundSymbol';
-import { BoundNode } from '../BoundNode';
-import { BoundNodeKind } from '../BoundNodeKind';
+import { BoundNode, BoundNodeKind } from '../BoundNodes';
 import { BoundExpressions } from '../Expression/BoundExpressions';
 import { BoundAssignmentStatement } from './BoundAssignmentStatement';
 import { BoundStatements } from './BoundStatements';

@@ -1,9 +1,9 @@
 import { Evaluator } from '../Evaluator';
 import { assertNever } from '../util';
 import { PreprocessorModuleDeclaration } from './Node/Declaration/PreprocessorModuleDeclaration';
-import { Directives } from './Node/Directive/Directive';
-import { MissableExpression } from './Node/Expression/Expression';
-import { NodeKind } from './Node/NodeKind';
+import { Directives } from './Node/Directive/Directives';
+import { MissableExpression } from './Node/Expression/Expressions';
+import { NodeKind } from './Node/Nodes';
 import { TokenKind, Tokens } from './Token/Tokens';
 
 export class Tokenizer {

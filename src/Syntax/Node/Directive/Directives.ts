@@ -1,5 +1,5 @@
 import { NumberSignToken } from '../../Token/Tokens';
-import { Node } from '../Node';
+import { Node } from '../Nodes';
 import { AssignmentDirective } from './AssignmentDirective';
 import { ErrorDirective } from './ErrorDirective';
 import { IfDirective } from './IfDirective';

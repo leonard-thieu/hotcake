@@ -1,10 +1,10 @@
 import { MissableToken } from '../../Token/MissingToken';
 import { SkippedToken } from '../../Token/SkippedToken';
 import { ElseIfKeywordToken, ElseKeywordToken, EndIfKeywordToken, EndKeywordToken, IfKeywordToken, ThenKeywordToken } from '../../Token/Tokens';
-import { MissableExpression } from '../Expression/Expression';
-import { Node } from '../Node';
-import { NodeKind } from '../NodeKind';
-import { Statement, Statements } from './Statement';
+import { MissableExpression } from '../Expression/Expressions';
+import { Node } from '../Nodes';
+import { NodeKind } from '../Nodes';
+import { Statement, Statements } from './Statements';
 
 // #region If statement
 

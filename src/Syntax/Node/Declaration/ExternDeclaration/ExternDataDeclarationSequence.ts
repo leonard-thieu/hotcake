@@ -1,9 +1,9 @@
 import { FieldKeywordToken, GlobalKeywordToken } from '../../../Token/Tokens';
 import { CommaSeparator } from '../../CommaSeparator';
 import { Identifier } from '../../Identifier';
-import { NodeKind } from '../../NodeKind';
+import { NodeKind } from '../../Nodes';
 import { TypeAnnotation } from '../../TypeAnnotation';
-import { Declaration } from '../Declaration';
+import { Declaration } from '../Declarations';
 import { ExternDeclaration } from './ExternDeclaration';
 
 // #region Extern data declaration sequence

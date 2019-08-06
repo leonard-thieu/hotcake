@@ -1,8 +1,8 @@
 import { MissableToken } from '../../Token/MissingToken';
 import { ClosingSquareBracketToken, NewlineToken, OpeningSquareBracketToken } from '../../Token/Tokens';
 import { CommaSeparator } from '../CommaSeparator';
-import { NodeKind } from '../NodeKind';
-import { Expression, MissableExpression } from './Expression';
+import { NodeKind } from '../Nodes';
+import { Expression, MissableExpression } from './Expressions';
 
 export const ArrayLiteralExpressionChildNames: ReadonlyArray<keyof ArrayLiteralExpression> = [
     'newlines',

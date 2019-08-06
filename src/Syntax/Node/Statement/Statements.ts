@@ -1,5 +1,5 @@
 import { NewlineToken, SemicolonToken } from '../../Token/Tokens';
-import { Node } from '../Node';
+import { Node } from '../Nodes';
 import { AssignmentStatement } from './AssignmentStatement';
 import { ContinueStatement } from './ContinueStatement';
 import { DataDeclarationSequenceStatement } from './DataDeclarationSequenceStatement';

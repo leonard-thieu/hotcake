@@ -1,6 +1,5 @@
 import { CommaToken, NewlineToken } from '../Token/Tokens';
-import { Node } from './Node';
-import { NodeKind } from './NodeKind';
+import { Node, NodeKind } from './Nodes';
 
 export const CommaSeparatorChildNames: ReadonlyArray<keyof CommaSeparator> = [
     'separator',

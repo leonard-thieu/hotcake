@@ -1,4 +1,4 @@
-import { Node } from '../Node';
+import { Node } from '../Nodes';
 import { AccessibilityDirective } from './AccessibilityDirective';
 import { AliasDirective, AliasDirectiveSequence } from './AliasDirectiveSequence';
 import { ClassDeclaration, ClassMethodDeclaration } from './ClassDeclaration';

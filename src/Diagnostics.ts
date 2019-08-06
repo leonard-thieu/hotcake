@@ -1,4 +1,4 @@
-import { BoundNodeKind } from './Binding/Node/BoundNodeKind';
+import { BoundNodeKind } from './Binding/Node/BoundNodes';
 
 export class Diagnostic {
     constructor(

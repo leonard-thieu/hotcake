@@ -1,6 +1,6 @@
 import { EqualsSignToken } from '../../../Token/Tokens';
 import { MissableStringLiteralExpression } from '../../Expression/StringLiteralExpression';
-import { Declaration } from '../Declaration';
+import { Declaration } from '../Declarations';
 import { ExternClassDeclaration, ExternClassMethodDeclaration } from './ExternClassDeclaration';
 import { ExternDataDeclaration } from './ExternDataDeclarationSequence';
 import { ExternFunctionDeclaration } from './ExternFunctionDeclaration';

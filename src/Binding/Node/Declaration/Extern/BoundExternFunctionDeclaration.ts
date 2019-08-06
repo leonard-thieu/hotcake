@@ -1,8 +1,7 @@
 import { ExternFunctionDeclaration } from '../../../../Syntax/Node/Declaration/ExternDeclaration/ExternFunctionDeclaration';
 import { BoundSymbol, BoundSymbolTable } from '../../../BoundSymbol';
 import { FunctionType } from '../../../Type/FunctionLikeType';
-import { BoundNode } from '../../BoundNode';
-import { BoundNodeKind } from '../../BoundNodeKind';
+import { BoundNode, BoundNodeKind } from '../../BoundNodes';
 import { BoundStringLiteralExpression } from '../../Expression/BoundStringLiteralExpression';
 import { BoundDataDeclaration } from '../BoundDataDeclaration';
 import { BoundTypeReferenceDeclaration } from '../BoundDeclarations';

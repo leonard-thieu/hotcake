@@ -1,6 +1,5 @@
 import { Types } from '../../Type/Types';
-import { BoundNode } from '../BoundNode';
-import { BoundNodeKind } from '../BoundNodeKind';
+import { BoundNode, BoundNodeKind } from '../BoundNodes';
 import { BoundExpressions } from '../Expression/BoundExpressions';
 
 export class BoundReturnStatement extends BoundNode {

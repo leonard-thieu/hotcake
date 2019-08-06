@@ -1,12 +1,12 @@
 import { DiagnosticBag } from '../../../Diagnostics';
 import { SkippedToken } from '../../Token/SkippedToken';
 import { EOFToken, NewlineToken } from '../../Token/Tokens';
-import { NodeKind } from '../NodeKind';
+import { NodeKind } from '../Nodes';
 import { AccessibilityDirective } from './AccessibilityDirective';
 import { AliasDirectiveSequence } from './AliasDirectiveSequence';
 import { ClassDeclaration } from './ClassDeclaration';
 import { DataDeclarationSequence } from './DataDeclarationSequence';
-import { Declaration } from './Declaration';
+import { Declaration } from './Declarations';
 import { ExternClassDeclaration } from './ExternDeclaration/ExternClassDeclaration';
 import { ExternDataDeclarationSequence } from './ExternDeclaration/ExternDataDeclarationSequence';
 import { ExternFunctionDeclaration } from './ExternDeclaration/ExternFunctionDeclaration';

@@ -1,6 +1,6 @@
 import { Identifier } from '../Identifier';
-import { NodeKind } from '../NodeKind';
-import { Declaration } from './Declaration';
+import { NodeKind } from '../Nodes';
+import { Declaration } from './Declarations';
 
 export const TypeParameterChildNames: ReadonlyArray<keyof TypeParameter> = [
     'identifier',

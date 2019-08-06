@@ -1,7 +1,7 @@
 import { EOFToken, Tokens } from '../../Token/Tokens';
-import { Directives } from '../Directive/Directive';
-import { NodeKind } from '../NodeKind';
-import { Declaration } from './Declaration';
+import { Directives } from '../Directive/Directives';
+import { NodeKind } from '../Nodes';
+import { Declaration } from './Declarations';
 
 export const PreprocessorModuleDeclarationChildNames: ReadonlyArray<keyof PreprocessorModuleDeclaration> = [
     'members',
