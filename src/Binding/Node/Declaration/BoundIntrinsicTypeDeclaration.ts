@@ -1,5 +1,10 @@
 import { BoundSymbol } from '../../BoundSymbol';
-import { IntrinsicType } from '../../Type/Types';
+import { ArrayType } from '../../Type/ArrayType';
+import { BoolType } from '../../Type/BoolType';
+import { FloatType } from '../../Type/FloatType';
+import { IntType } from '../../Type/IntType';
+import { NullType } from '../../Type/NullType';
+import { VoidType } from '../../Type/VoidType';
 import { BoundNode, BoundNodeKind } from '../BoundNodes';
 
 export class BoundIntrinsicTypeDeclaration extends BoundNode {
@@ -8,3 +13,12 @@ export class BoundIntrinsicTypeDeclaration extends BoundNode {
     identifier: BoundSymbol = undefined!;
     type: IntrinsicType = undefined!;
 }
+
+type IntrinsicType =
+    | NullType
+    | BoolType
+    | IntType
+    | FloatType
+    | VoidType
+    | ArrayType
+    ;

@@ -27,11 +27,19 @@ export type Types =
     | VoidType
     ;
 
-export type IntrinsicType =
-    | NullType
-    | BoolType
-    | IntType
-    | FloatType
-    | VoidType
-    | ArrayType
-    ;
+export enum TypeKind {
+    Array = 'Array',
+    Bool = 'Bool',
+    Float = 'Float',
+    Function = 'Function',
+    FunctionGroup = 'FunctionGroup',
+    Int = 'Int',
+    Method = 'Method',
+    MethodGroup = 'MethodGroup',
+    Module = 'Module',
+    Null = 'Null',
+    String = 'String',
+    Object = 'Object',
+    TypeParameter = 'TypeParameter',
+    Void = 'Void',
+}

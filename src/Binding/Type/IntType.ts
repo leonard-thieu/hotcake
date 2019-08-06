@@ -1,7 +1,6 @@
 import { BoundIntrinsicTypeDeclaration } from '../Node/Declaration/BoundIntrinsicTypeDeclaration';
 import { Type } from './Type';
-import { TypeKind } from './TypeKind';
-import { Types } from './Types';
+import { TypeKind, Types } from './Types';
 
 export class IntType extends Type {
     constructor(readonly declaration: BoundIntrinsicTypeDeclaration) {

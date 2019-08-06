@@ -101,9 +101,8 @@ import { BoundFunctionLikeDeclaration, FunctionGroupType, FunctionType, MethodGr
 import { ModuleType } from './Type/ModuleType';
 import { ObjectType } from './Type/ObjectType';
 import { StringType } from './Type/StringType';
-import { TypeKind } from './Type/TypeKind';
 import { TypeParameterType } from './Type/TypeParameterType';
-import { Types } from './Type/Types';
+import { TypeKind, Types } from './Type/Types';
 
 export class Binder {
     // Debugging aid

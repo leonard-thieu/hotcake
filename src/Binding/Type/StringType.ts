@@ -1,7 +1,6 @@
 import { BoundExternClassDeclaration } from '../Node/Declaration/Extern/BoundExternClassDeclaration';
 import { Type } from './Type';
-import { TypeKind } from './TypeKind';
-import { Types } from './Types';
+import { TypeKind, Types } from './Types';
 
 export class StringType extends Type {
     constructor(readonly declaration: BoundExternClassDeclaration) {

@@ -2,13 +2,12 @@ import { normalizeIdentifier } from '../BoundSymbol';
 import { BoundNodeKind, BoundNodes } from '../Node/BoundNodes';
 import { BoundClassMethodDeclaration } from '../Node/Declaration/BoundClassDeclaration';
 import { BoundFunctionDeclaration } from '../Node/Declaration/BoundFunctionDeclaration';
-import { BoundClassMethodGroupDeclaration, BoundExternClassMethodGroupDeclaration, BoundExternFunctionGroupDeclaration, BoundFunctionGroupDeclaration, BoundInterfaceMethodGroupDeclaration } from '../Node/Declaration/BoundFunctionLikeGroupDeclaration';
+import { BoundFunctionGroupDeclarations, BoundMethodGroupDeclaration } from '../Node/Declaration/BoundFunctionLikeGroupDeclaration';
 import { BoundInterfaceMethodDeclaration } from '../Node/Declaration/BoundInterfaceDeclaration';
 import { BoundExternClassMethodDeclaration } from '../Node/Declaration/Extern/BoundExternClassDeclaration';
 import { BoundExternFunctionDeclaration } from '../Node/Declaration/Extern/BoundExternFunctionDeclaration';
 import { Type } from './Type';
-import { TypeKind } from './TypeKind';
-import { Types } from './Types';
+import { TypeKind, Types } from './Types';
 
 // #region Function like
 
@@ -78,7 +77,7 @@ export class FunctionType extends FunctionLikeType {
 }
 
 export class FunctionGroupType extends Type {
-    constructor(readonly declaration: BoundExternFunctionGroupDeclaration | BoundFunctionGroupDeclaration) {
+    constructor(readonly declaration: BoundFunctionGroupDeclarations) {
         super();
     }
 
@@ -143,7 +142,7 @@ export class MethodType extends FunctionLikeType {
 }
 
 export class MethodGroupType extends Type {
-    constructor(readonly declaration: BoundExternClassMethodGroupDeclaration | BoundInterfaceMethodGroupDeclaration | BoundClassMethodGroupDeclaration) {
+    constructor(readonly declaration: BoundMethodGroupDeclaration) {
         super();
     }
 
