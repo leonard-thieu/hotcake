@@ -4842,13 +4842,18 @@ function getOverload(
     for (const [, overload] of overloads) {
         if (checkReturnType(overload.returnType.type)) {
             if (overload.parameters.length === parameters.length) {
+                let match = true;
+
                 for (let i = 0; i < overload.parameters.length; i++) {
                     if (overload.parameters[i].type !== parameters[i]) {
-                        return undefined;
+                        match = false;
+                        break;
                     }
                 }
 
-                return overload;
+                if (match) {
+                    return overload;
+                }
             }
         }
     }
