@@ -2563,7 +2563,10 @@ export class Binder {
         ) as BoundExternClassDeclaration | BoundClassDeclaration | undefined;
 
         if (!boundClassLikeDeclaration) {
-            throw new Error(`Couldn't find a class named '${'TODO: Get the type name'}'.`);
+            const type = newExpression.type as TypeReference;
+            const typeName = this.getIdentifierText(type.identifier as MissableIdentifier | NewKeywordToken);
+
+            throw new Error(`Couldn't find a class named '${typeName}'.`);
         }
 
         return this.newExpression(parent, boundClassLikeDeclaration);

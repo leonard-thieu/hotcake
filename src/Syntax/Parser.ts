@@ -916,7 +916,6 @@ export class Parser extends ParserBase {
         const classMethodDeclaration = new ClassMethodDeclaration();
         classMethodDeclaration.parent = parent;
         classMethodDeclaration.methodKeyword = methodKeyword;
-        // TODO: Constructors should probably be a separate type.
         const newKeyword = this.eatOptional(TokenKind.NewKeyword);
         if (newKeyword) {
             classMethodDeclaration.identifier = newKeyword;
