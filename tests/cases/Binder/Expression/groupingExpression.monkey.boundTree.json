@@ -2,10 +2,6 @@
     "kind": "ModuleDeclaration",
     "identifier": "groupingExpression",
     "locals": [
-        "Print",
-        "Main"
-    ],
-    "members": [
         {
             "kind": "FunctionGroupDeclaration",
             "identifier": "Print",

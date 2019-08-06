@@ -1,5 +1,5 @@
 import { BoundSymbol } from '../../BoundSymbol';
-import { FunctionGroupType, MethodGroupType } from '../../Type/FunctionLikeType';
+import { BoundFunctionLikeDeclaration, FunctionGroupType, MethodGroupType } from '../../Type/FunctionLikeType';
 import { BoundNode } from '../BoundNode';
 import { BoundNodeKind } from '../BoundNodeKind';
 import { BoundClassMethodDeclaration } from './BoundClassMethodDeclaration';
@@ -9,9 +9,17 @@ import { BoundExternClassMethodDeclaration } from './Extern/BoundExternClassMeth
 import { BoundExternFunctionDeclaration } from './Extern/BoundExternFunctionDeclaration';
 
 export type BoundFunctionLikeGroupDeclaration =
+    | BoundFunctionGroupDeclarations
+    | BoundMethodGroupDeclaration
+    ;
+
+export type BoundFunctionGroupDeclarations =
     | BoundExternFunctionGroupDeclaration
-    | BoundExternClassMethodGroupDeclaration
     | BoundFunctionGroupDeclaration
+    ;
+
+export type BoundMethodGroupDeclaration =
+    | BoundExternClassMethodGroupDeclaration
     | BoundInterfaceMethodGroupDeclaration
     | BoundClassMethodGroupDeclaration
     ;
@@ -21,7 +29,7 @@ export class BoundExternFunctionGroupDeclaration extends BoundNode {
 
     identifier: BoundSymbol = undefined!;
     type: FunctionGroupType = undefined!;
-    readonly overloads = new Set<BoundExternFunctionDeclaration>();
+    readonly overloads = new Overloads<BoundExternFunctionDeclaration>();
 }
 
 export class BoundExternClassMethodGroupDeclaration extends BoundNode {
@@ -29,7 +37,7 @@ export class BoundExternClassMethodGroupDeclaration extends BoundNode {
 
     identifier: BoundSymbol = undefined!;
     type: MethodGroupType = undefined!;
-    readonly overloads = new Set<BoundExternClassMethodDeclaration>();
+    readonly overloads = new Overloads<BoundExternClassMethodDeclaration>();
 }
 
 export class BoundFunctionGroupDeclaration extends BoundNode {
@@ -37,7 +45,7 @@ export class BoundFunctionGroupDeclaration extends BoundNode {
 
     identifier: BoundSymbol = undefined!;
     type: FunctionGroupType = undefined!;
-    readonly overloads = new Set<BoundFunctionDeclaration>();
+    readonly overloads = new Overloads<BoundFunctionDeclaration>();
 }
 
 export class BoundInterfaceMethodGroupDeclaration extends BoundNode {
@@ -45,7 +53,7 @@ export class BoundInterfaceMethodGroupDeclaration extends BoundNode {
 
     identifier: BoundSymbol = undefined!;
     type: MethodGroupType = undefined!;
-    readonly overloads = new Set<BoundInterfaceMethodDeclaration>();
+    readonly overloads = new Overloads<BoundInterfaceMethodDeclaration>();
 }
 
 export class BoundClassMethodGroupDeclaration extends BoundNode {
@@ -53,5 +61,26 @@ export class BoundClassMethodGroupDeclaration extends BoundNode {
 
     identifier: BoundSymbol = undefined!;
     type: MethodGroupType = undefined!;
-    readonly overloads = new Set<BoundClassMethodDeclaration>();
+    readonly overloads = new Overloads<BoundClassMethodDeclaration>();
+}
+
+export class Overloads<
+    TBound extends BoundFunctionLikeDeclaration,
+    TSyntax extends TBound['declaration'] = TBound['declaration'],
+    > extends Map<TSyntax, TBound> {
+    set(value: TBound): this;
+    set(key: TSyntax, value: TBound): this;
+    set(key_value: TSyntax | TBound, value?: TBound): this {
+        let key: TSyntax;
+
+        if ('declaration' in key_value) {
+            key = key_value.declaration as TSyntax;
+            value = key_value;
+        } else {
+            key = key_value;
+            value = value!;
+        }
+
+        return super.set(key, value);
+    }
 }

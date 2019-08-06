@@ -2,17 +2,9 @@
     "kind": "ModuleDeclaration",
     "identifier": "externClassDeclaration",
     "locals": [
-        "Driver"
-    ],
-    "members": [
         {
             "kind": "ExternClassDeclaration",
             "identifier": "Driver",
-            "locals": [
-                "Method1",
-                "Method2",
-                "New"
-            ],
             "type": "Driver",
             "superType": "Object",
             "nativeSymbol": {
@@ -20,7 +12,7 @@
                 "type": "String",
                 "value": "xyzDriver"
             },
-            "members": [
+            "locals": [
                 {
                     "kind": "ExternClassMethodGroupDeclaration",
                     "identifier": "Method1",

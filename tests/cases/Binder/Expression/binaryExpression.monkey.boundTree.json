@@ -2,13 +2,6 @@
     "kind": "ModuleDeclaration",
     "identifier": "binaryExpression",
     "locals": [
-        "BoxBool",
-        "BoxInt",
-        "BoxFloat",
-        "BoxString",
-        "Main"
-    ],
-    "members": [
         {
             "kind": "FunctionGroupDeclaration",
             "identifier": "BoxBool",

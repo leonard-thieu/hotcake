@@ -1,10 +1,14 @@
 import glob = require('glob');
 import fs = require('fs');
+import os = require('os');
 import path = require('path');
 import process = require('process');
 import mkdirp = require('mkdirp');
 import { orderBy } from 'natural-orderby';
+import { Scope } from '../src/Binding/Binder';
 import { BoundNodeKind } from '../src/Binding/Node/BoundNodeKind';
+import { BoundDirectory } from '../src/Binding/Node/Declaration/BoundDirectory';
+import { BoundFunctionLikeGroupDeclaration } from '../src/Binding/Node/Declaration/BoundFunctionLikeGroupDeclaration';
 import { BoundModuleDeclaration } from '../src/Binding/Node/Declaration/BoundModuleDeclaration';
 import { Type } from '../src/Binding/Type/Type';
 import { Project } from '../src/Project';
@@ -95,10 +99,27 @@ export function executeBaselineTestCase(outputPath: string, testCallback: () => 
         }
     }
 
-    const result = testCallback();
+    try {
+        const result = testCallback();
 
-    const json = JSON.stringify(result, replacer, /*space*/ 4);
-    fs.writeFileSync(outputPath, json);
+        const json = JSON.stringify(result, replacer, /*space*/ 4);
+        fs.writeFileSync(outputPath, json);
+    } catch (error) {
+        if (error.diagnostics) {
+            const diagnosticsOutput = Array.from(error.diagnostics.values()).map((diagnostic: any) =>
+                diagnostic.message
+            ).join(os.EOL);
+
+            const outputPathObject = path.parse(outputPath);
+            outputPathObject.base = '';
+            outputPathObject.ext = '.yaml';
+            outputPath = path.format(outputPathObject);
+
+            fs.writeFileSync(outputPath, diagnosticsOutput);
+        }
+
+        throw error;
+    }
 }
 
 export function executePreprocessorTokenizerTestCases(name: string, casesPath: string): void {
@@ -219,6 +240,41 @@ export function executeBinderTestCases(name: string, casesPath: string): void {
                         case 'rootType': {
                             return undefined;
                         }
+                        case 'importedModules': {
+                            const serializeAsModulePath = false;
+
+                            const module = this as BoundModuleDeclaration;
+                            if (module.identifier.name !== 'smokeTest') {
+                                return undefined;
+                            }
+
+                            if (serializeAsModulePath) {
+                                const importedModules = value as typeof module[typeof key];
+
+                                return Array.from(importedModules.values()).map(getModulePath);
+                            }
+
+                            // Prevent converting circular structure to JSON
+                            if (getModulePath(module) === 'monkey.lang') {
+                                return undefined;
+                            }
+
+                            function getModulePath(module: BoundModuleDeclaration) {
+                                const components: string[] = [];
+
+                                let directory: BoundDirectory | undefined = module.directory;
+                                while (directory) {
+                                    components.unshift(directory.identifier.name);
+                                    directory = directory.parent as BoundDirectory | undefined;
+                                }
+
+                                components.shift(); // Take off root directory
+                                components.push(module.identifier.name);
+
+                                return components.join('.');
+                            }
+                            break;
+                        }
                         case 'declaration': {
                             if (value &&
                                 value.kind === BoundNodeKind.ModuleDeclaration &&
@@ -235,13 +291,6 @@ export function executeBinderTestCases(name: string, casesPath: string): void {
                             }
                             break;
                         }
-                        case 'locals': {
-                            const names: any[] = [];
-                            for (const [k] of value) {
-                                names.push(k);
-                            }
-                            return names;
-                        }
                         case 'typeArguments': {
                             if (value) {
                                 return value.map((typeArgument: any) => typeArgument.type);
@@ -255,12 +304,36 @@ export function executeBinderTestCases(name: string, casesPath: string): void {
                             if (value) {
                                 return value.type.toString();
                             }
+                            break;
                         }
                         case 'implementedTypes':
                         case 'baseTypes': {
                             if (value) {
                                 return value.map((v: any) => v.type.toString());
                             }
+                            break;
+                        }
+                        case 'locals': {
+                            const scope = this as Scope;
+                            const locals = value as typeof scope[typeof key];
+
+                            switch (scope.kind) {
+                                case BoundNodeKind.ModuleDeclaration:
+                                case BoundNodeKind.ExternClassDeclaration:
+                                case BoundNodeKind.InterfaceDeclaration:
+                                case BoundNodeKind.ClassDeclaration: {
+                                    return Array.from(locals.values()).map((identifier) =>
+                                        identifier.declaration
+                                    );
+                                }
+                            }
+
+                            return Array.from(locals.keys());
+                        }
+                        case 'overloads': {
+                            const overloads = value as BoundFunctionLikeGroupDeclaration[typeof key];
+
+                            return Array.from(overloads.values() as IterableIterator<any>);
                         }
                     }
 
@@ -334,5 +407,11 @@ export function getBoundTree(filePath: string, document: string): BoundModuleDec
     const projectDirectory = path.dirname(filePath);
     const project = new Project(frameworkDirectory, projectDirectory);
 
-    return project.importModule(filePath);
+    try {
+        return project.importModule(filePath);
+    } catch (error) {
+        error.diagnostics = project.diagnostics;
+
+        throw error;
+    }
 }

@@ -2,26 +2,18 @@
     "kind": "ModuleDeclaration",
     "identifier": "generics",
     "locals": [
-        "ArrayObject",
-        "ArrayBoxer"
-    ],
-    "members": [
         {
             "kind": "ClassDeclaration",
             "instantiatedTypes": [
                 {
                     "kind": "ClassDeclaration",
-                    "locals": [
-                        "value",
-                        "New"
-                    ],
                     "identifier": "ArrayObject",
                     "type": "ArrayObject<ArrayBoxer:T>",
                     "typeArguments": [
                         "ArrayBoxer:T"
                     ],
                     "superType": "Object",
-                    "members": [
+                    "locals": [
                         {
                             "kind": "DataDeclaration",
                             "declarationKind": "FieldKeyword",
@@ -49,11 +41,6 @@
                     ]
                 }
             ],
-            "locals": [
-                "T",
-                "value",
-                "New"
-            ],
             "identifier": "ArrayObject",
             "type": "ArrayObject<ArrayObject:T>",
             "typeParameters": [
@@ -64,7 +51,12 @@
                 }
             ],
             "superType": "Object",
-            "members": [
+            "locals": [
+                {
+                    "kind": "TypeParameter",
+                    "identifier": "T",
+                    "type": "ArrayObject:T"
+                },
                 {
                     "kind": "DataDeclaration",
                     "declarationKind": "FieldKeyword",
@@ -94,11 +86,6 @@
         {
             "kind": "ClassDeclaration",
             "instantiatedTypes": [],
-            "locals": [
-                "T",
-                "Unbox",
-                "New"
-            ],
             "identifier": "ArrayBoxer",
             "type": "ArrayBoxer<ArrayBoxer:T>",
             "typeParameters": [
@@ -109,7 +96,12 @@
                 }
             ],
             "superType": "Object",
-            "members": [
+            "locals": [
+                {
+                    "kind": "TypeParameter",
+                    "identifier": "T",
+                    "type": "ArrayBoxer:T"
+                },
                 {
                     "kind": "FunctionGroupDeclaration",
                     "identifier": "Unbox",

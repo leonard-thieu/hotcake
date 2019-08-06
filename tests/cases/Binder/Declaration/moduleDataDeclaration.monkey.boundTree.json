@@ -2,10 +2,6 @@
     "kind": "ModuleDeclaration",
     "identifier": "moduleDataDeclaration",
     "locals": [
-        "ScaleX",
-        "Version"
-    ],
-    "members": [
         {
             "kind": "DataDeclaration",
             "declarationKind": "GlobalKeyword",

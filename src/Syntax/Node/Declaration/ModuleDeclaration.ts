@@ -1,4 +1,4 @@
-import { Diagnostic } from '../../../Diagnostic';
+import { Diagnostic } from '../../../Diagnostics';
 import { SkippedToken } from '../../Token/SkippedToken';
 import { EOFToken, NewlineToken } from '../../Token/Token';
 import { NodeKind } from '../NodeKind';

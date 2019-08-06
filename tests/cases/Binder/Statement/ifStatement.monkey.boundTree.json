@@ -2,10 +2,6 @@
     "kind": "ModuleDeclaration",
     "identifier": "ifStatement",
     "locals": [
-        "Print",
-        "Main"
-    ],
-    "members": [
         {
             "kind": "FunctionGroupDeclaration",
             "identifier": "Print",

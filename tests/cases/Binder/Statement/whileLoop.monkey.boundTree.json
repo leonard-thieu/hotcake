@@ -2,9 +2,6 @@
     "kind": "ModuleDeclaration",
     "identifier": "whileLoop",
     "locals": [
-        "Main"
-    ],
-    "members": [
         {
             "kind": "FunctionGroupDeclaration",
             "identifier": "Main",

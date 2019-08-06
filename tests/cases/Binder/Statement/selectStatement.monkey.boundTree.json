@@ -2,10 +2,6 @@
     "kind": "ModuleDeclaration",
     "identifier": "selectStatement",
     "locals": [
-        "Print",
-        "Main"
-    ],
-    "members": [
         {
             "kind": "FunctionGroupDeclaration",
             "identifier": "Print",

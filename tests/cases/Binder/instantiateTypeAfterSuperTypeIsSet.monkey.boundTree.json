@@ -2,27 +2,18 @@
     "kind": "ModuleDeclaration",
     "identifier": "instantiateTypeAfterSuperTypeIsSet",
     "locals": [
-        "List",
-        "Enumerator",
-        "Main"
-    ],
-    "members": [
         {
             "kind": "ClassDeclaration",
             "instantiatedTypes": [
                 {
                     "kind": "ClassDeclaration",
-                    "locals": [
-                        "ObjectEnumerator",
-                        "New"
-                    ],
                     "identifier": "List",
                     "type": "List<Object>",
                     "typeArguments": [
                         "Object"
                     ],
                     "superType": "Object",
-                    "members": [
+                    "locals": [
                         {
                             "kind": "ClassMethodGroupDeclaration",
                             "identifier": "ObjectEnumerator",
@@ -74,11 +65,6 @@
                     ]
                 }
             ],
-            "locals": [
-                "T",
-                "ObjectEnumerator",
-                "New"
-            ],
             "identifier": "List",
             "type": "List<List:T>",
             "typeParameters": [
@@ -89,7 +75,12 @@
                 }
             ],
             "superType": "Object",
-            "members": [
+            "locals": [
+                {
+                    "kind": "TypeParameter",
+                    "identifier": "T",
+                    "type": "List:T"
+                },
                 {
                     "kind": "ClassMethodGroupDeclaration",
                     "identifier": "ObjectEnumerator",
@@ -145,19 +136,13 @@
             "instantiatedTypes": [
                 {
                     "kind": "ClassDeclaration",
-                    "locals": [
-                        "val",
-                        "HasNext",
-                        "NextObject",
-                        "New"
-                    ],
                     "identifier": "Enumerator",
                     "type": "Enumerator<List:T>",
                     "typeArguments": [
                         "List:T"
                     ],
                     "superType": "Object",
-                    "members": [
+                    "locals": [
                         {
                             "kind": "DataDeclaration",
                             "declarationKind": "FieldKeyword",
@@ -238,19 +223,13 @@
                 },
                 {
                     "kind": "ClassDeclaration",
-                    "locals": [
-                        "val",
-                        "HasNext",
-                        "NextObject",
-                        "New"
-                    ],
                     "identifier": "Enumerator",
                     "type": "Enumerator<Object>",
                     "typeArguments": [
                         "Object"
                     ],
                     "superType": "Object",
-                    "members": [
+                    "locals": [
                         {
                             "kind": "DataDeclaration",
                             "declarationKind": "FieldKeyword",
@@ -330,13 +309,6 @@
                     ]
                 }
             ],
-            "locals": [
-                "T",
-                "val",
-                "HasNext",
-                "NextObject",
-                "New"
-            ],
             "identifier": "Enumerator",
             "type": "Enumerator<Enumerator:T>",
             "typeParameters": [
@@ -347,7 +319,12 @@
                 }
             ],
             "superType": "Object",
-            "members": [
+            "locals": [
+                {
+                    "kind": "TypeParameter",
+                    "identifier": "T",
+                    "type": "Enumerator:T"
+                },
                 {
                     "kind": "DataDeclaration",
                     "declarationKind": "FieldKeyword",

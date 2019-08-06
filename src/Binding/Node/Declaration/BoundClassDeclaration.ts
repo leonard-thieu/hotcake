@@ -5,9 +5,8 @@ import { BoundNode } from '../BoundNode';
 import { BoundNodeKind } from '../BoundNodeKind';
 import { BoundDataDeclaration } from './BoundDataDeclaration';
 import { BoundTypeReferenceDeclaration } from './BoundDeclarations';
-import { BoundClassMethodGroupDeclaration, BoundFunctionGroupDeclaration } from "./BoundFunctionLikeGroupDeclaration";
+import { BoundClassMethodGroupDeclaration, BoundFunctionGroupDeclaration } from './BoundFunctionLikeGroupDeclaration';
 import { BoundInterfaceDeclaration } from './BoundInterfaceDeclaration';
-import { BoundTypeMembers } from './BoundTypeMembers';
 import { BoundTypeParameter } from './BoundTypeParameter';
 import { BoundExternClassDeclaration } from './Extern/BoundExternClassDeclaration';
 
@@ -18,7 +17,6 @@ export class BoundClassDeclaration extends BoundNode {
     rootType?: BoundClassDeclaration = undefined;
     instantiatedTypes?: BoundClassDeclaration[] = undefined;
 
-    readonly locals = new BoundSymbolTable();
     identifier: BoundSymbol = undefined!;
     type: ObjectType = undefined!;
 
@@ -27,7 +25,7 @@ export class BoundClassDeclaration extends BoundNode {
     superType?: BoundExternClassDeclaration | BoundClassDeclaration = undefined;
     implementedTypes?: BoundInterfaceDeclaration[] = undefined;
 
-    readonly members = new BoundTypeMembers<BoundClassDeclarationMember>();
+    readonly locals = new BoundSymbolTable();
 }
 
 export type BoundClassDeclarationMember =
@@ -35,4 +33,3 @@ export type BoundClassDeclarationMember =
     | BoundFunctionGroupDeclaration
     | BoundClassMethodGroupDeclaration
     ;
-

@@ -2,19 +2,12 @@
     "kind": "ModuleDeclaration",
     "identifier": "throwStatement",
     "locals": [
-        "Throwable",
-        "Main"
-    ],
-    "members": [
         {
             "kind": "ClassDeclaration",
-            "locals": [
-                "New"
-            ],
             "identifier": "Throwable",
             "type": "Throwable",
             "superType": "Object",
-            "members": [
+            "locals": [
                 {
                     "kind": "ClassMethodGroupDeclaration",
                     "identifier": "New",

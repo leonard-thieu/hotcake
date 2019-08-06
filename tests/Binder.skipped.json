@@ -1,5 +1,6 @@
 [
     "Declaration/aliasDirective.monkey",
     "Declaration/importStatement.monkey",
+    "instantiateTypeAfterSuperTypeIsSet.monkey",
     "smokeTest.monkey"
 ]

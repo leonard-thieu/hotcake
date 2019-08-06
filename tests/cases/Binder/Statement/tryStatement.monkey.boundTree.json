@@ -2,22 +2,12 @@
     "kind": "ModuleDeclaration",
     "identifier": "tryStatement",
     "locals": [
-        "Throwable",
-        "Ex1",
-        "Ex2",
-        "Print",
-        "Main"
-    ],
-    "members": [
         {
             "kind": "ClassDeclaration",
-            "locals": [
-                "New"
-            ],
             "identifier": "Throwable",
             "type": "Throwable",
             "superType": "Object",
-            "members": [
+            "locals": [
                 {
                     "kind": "ClassMethodGroupDeclaration",
                     "identifier": "New",
@@ -38,13 +28,10 @@
         },
         {
             "kind": "ClassDeclaration",
-            "locals": [
-                "New"
-            ],
             "identifier": "Ex1",
             "type": "Ex1",
             "superType": "Throwable",
-            "members": [
+            "locals": [
                 {
                     "kind": "ClassMethodGroupDeclaration",
                     "identifier": "New",
@@ -65,13 +52,10 @@
         },
         {
             "kind": "ClassDeclaration",
-            "locals": [
-                "New"
-            ],
             "identifier": "Ex2",
             "type": "Ex2",
             "superType": "Throwable",
-            "members": [
+            "locals": [
                 {
                     "kind": "ClassMethodGroupDeclaration",
                     "identifier": "New",

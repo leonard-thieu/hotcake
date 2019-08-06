@@ -5,8 +5,8 @@ import { BoundNodeKind } from '../BoundNodeKind';
 export class BoundDirectory extends BoundNode {
     readonly kind = BoundNodeKind.Directory;
 
-    readonly locals = new BoundSymbolTable();
-
     identifier: BoundSymbol = undefined!;
     fullPath: string = undefined!;
+
+    readonly locals = new BoundSymbolTable();
 }

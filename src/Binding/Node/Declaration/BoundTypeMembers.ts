@@ -1,8 +1,8 @@
-import { BoundNodes } from '../BoundNode';
+import { BoundIdentifiableDeclaration } from '../../BoundSymbol';
 import { BoundNodeKind } from '../BoundNodeKind';
 
-export class BoundTypeMembers<TBoundNode extends BoundNodes> extends Map<string, TBoundNode> {
-    get(key: string, ...kinds: BoundNodeKind[]): TBoundNode | undefined {
+export class BoundTypeMembers<TMember extends BoundIdentifiableDeclaration> extends Map<string, TMember> {
+    get(key: string, ...kinds: BoundNodeKind[]): TMember | undefined {
         const value = super.get(key);
 
         if (value &&
@@ -15,7 +15,19 @@ export class BoundTypeMembers<TBoundNode extends BoundNodes> extends Map<string,
         return value;
     }
 
-    set(key: string, value: TBoundNode): this {
+    set(value: TMember): this;
+    set(key: string, value: TMember): this;
+    set(key_value: string | TMember, value?: TMember): this {
+        let key: string;
+
+        if (typeof key_value !== 'string') {
+            key = key_value.identifier.name;
+            value = key_value;
+        } else {
+            key = key_value;
+            value = value!;
+        }
+
         const existingValue = this.get(key);
         if (existingValue &&
             existingValue !== value

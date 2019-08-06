@@ -1,5 +1,4 @@
-import { Diagnostic } from '../Diagnostic';
-import { DiagnosticKind, DiagnosticKinds } from '../DiagnosticKind';
+import { Diagnostic, DiagnosticKind } from '../Diagnostics';
 import { assertNever } from '../util';
 import { AccessibilityDirective, AccessibilityKeywordToken } from './Node/Declaration/AccessibilityDirective';
 import { AliasDirective, AliasDirectiveSequence, MissableDeclarationReferenceIdentifier } from './Node/Declaration/AliasDirectiveSequence';
@@ -2233,7 +2232,7 @@ export class Parser extends ParserBase {
         return super.createSkippedToken(token);
     }
 
-    private addDiagnostic(kind: DiagnosticKinds, message: string, start: number, length: number) {
+    private addDiagnostic(kind: DiagnosticKind, message: string, start: number, length: number) {
         if (!this.moduleDeclaration.parseDiagnostics) {
             this.moduleDeclaration.parseDiagnostics = [];
         }

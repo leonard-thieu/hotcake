@@ -21,6 +21,20 @@ export class BoundSymbolTable extends Map<string, BoundSymbol> {
         return super.get(key);
     }
 
+    getDeclaration(key: string, kind: BoundSymbol['declaration']['kind']) {
+        const value = this.get(key);
+
+        if (!value) {
+            return value;
+        }
+
+        if (value.declaration.kind !== kind) {
+            throw new Error(`Expected '${key}' to be '${kind}' but got '${value.declaration.kind}'.`);
+        }
+
+        return value.declaration;
+    }
+
     private anonymousSymbolCount = 0;
 
     set(value: BoundSymbol): this;
@@ -46,7 +60,9 @@ export class BoundSymbolTable extends Map<string, BoundSymbol> {
             key = normalizeIdentifier(key);
 
             const existingSymbol = this.get(key);
-            if (existingSymbol) {
+            if (existingSymbol &&
+                existingSymbol !== value
+            ) {
                 throw new Error(`Duplicate symbol '${key}'.`);
             }
         }

@@ -2,9 +2,6 @@
     "kind": "ModuleDeclaration",
     "identifier": "arrayLiteralExpression",
     "locals": [
-        "GetHomeCoords"
-    ],
-    "members": [
         {
             "kind": "FunctionGroupDeclaration",
             "identifier": "GetHomeCoords",

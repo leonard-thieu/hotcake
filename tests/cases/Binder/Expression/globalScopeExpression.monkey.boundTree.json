@@ -2,10 +2,6 @@
     "kind": "ModuleDeclaration",
     "identifier": "globalScopeExpression",
     "locals": [
-        "T",
-        "Actor"
-    ],
-    "members": [
         {
             "kind": "DataDeclaration",
             "declarationKind": "GlobalKeyword",
@@ -16,15 +12,10 @@
         },
         {
             "kind": "ClassDeclaration",
-            "locals": [
-                "T",
-                "Act",
-                "New"
-            ],
             "identifier": "Actor",
             "type": "Actor",
             "superType": "Object",
-            "members": [
+            "locals": [
                 {
                     "kind": "DataDeclaration",
                     "declarationKind": "GlobalKeyword",

@@ -2,19 +2,12 @@
     "kind": "ModuleDeclaration",
     "identifier": "selfExpression",
     "locals": [
-        "MyClass"
-    ],
-    "members": [
         {
             "kind": "ClassDeclaration",
-            "locals": [
-                "GetInstance",
-                "New"
-            ],
             "identifier": "MyClass",
             "type": "MyClass",
             "superType": "Object",
-            "members": [
+            "locals": [
                 {
                     "kind": "ClassMethodGroupDeclaration",
                     "identifier": "GetInstance",

@@ -2,9 +2,6 @@
     "kind": "ModuleDeclaration",
     "identifier": "assignmentExpression",
     "locals": [
-        "Main"
-    ],
-    "members": [
         {
             "kind": "FunctionGroupDeclaration",
             "identifier": "Main",

@@ -2,19 +2,12 @@
     "kind": "ModuleDeclaration",
     "identifier": "castExpression",
     "locals": [
-        "MyClass"
-    ],
-    "members": [
         {
             "kind": "ClassDeclaration",
-            "locals": [
-                "Cast",
-                "New"
-            ],
             "identifier": "MyClass",
             "type": "MyClass",
             "superType": "Object",
-            "members": [
+            "locals": [
                 {
                     "kind": "ClassMethodGroupDeclaration",
                     "identifier": "Cast",

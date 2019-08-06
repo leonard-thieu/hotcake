@@ -2,9 +2,6 @@
     "kind": "ModuleDeclaration",
     "identifier": "exitStatement",
     "locals": [
-        "Main"
-    ],
-    "members": [
         {
             "kind": "FunctionGroupDeclaration",
             "identifier": "Main",

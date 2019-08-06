@@ -2,68 +2,6 @@
     "kind": "ModuleDeclaration",
     "identifier": "forLoop",
     "locals": [
-        "Main",
-        "CheckInt",
-        "Collection",
-        "CollectionEnumerator",
-        "Item",
-        "CheckItem"
-    ],
-    "members": [
-        {
-            "kind": "FunctionGroupDeclaration",
-            "identifier": "CheckInt",
-            "type": "CheckInt",
-            "overloads": [
-                {
-                    "kind": "FunctionDeclaration",
-                    "identifier": "CheckInt",
-                    "locals": [
-                        "val"
-                    ],
-                    "type": "CheckInt: Int(Int)",
-                    "returnType": "Int",
-                    "parameters": [
-                        {
-                            "kind": "DataDeclaration",
-                            "declarationKind": null,
-                            "identifier": "val",
-                            "typeAnnotation": "Int",
-                            "operator": null,
-                            "type": "Int"
-                        }
-                    ],
-                    "statements": []
-                }
-            ]
-        },
-        {
-            "kind": "FunctionGroupDeclaration",
-            "identifier": "CheckItem",
-            "type": "CheckItem",
-            "overloads": [
-                {
-                    "kind": "FunctionDeclaration",
-                    "identifier": "CheckItem",
-                    "locals": [
-                        "val"
-                    ],
-                    "type": "CheckItem: Int(Item)",
-                    "returnType": "Int",
-                    "parameters": [
-                        {
-                            "kind": "DataDeclaration",
-                            "declarationKind": null,
-                            "identifier": "val",
-                            "typeAnnotation": "Item",
-                            "operator": null,
-                            "type": "Item"
-                        }
-                    ],
-                    "statements": []
-                }
-            ]
-        },
         {
             "kind": "FunctionGroupDeclaration",
             "identifier": "Main",
@@ -831,15 +769,38 @@
             ]
         },
         {
+            "kind": "FunctionGroupDeclaration",
+            "identifier": "CheckInt",
+            "type": "CheckInt",
+            "overloads": [
+                {
+                    "kind": "FunctionDeclaration",
+                    "identifier": "CheckInt",
+                    "locals": [
+                        "val"
+                    ],
+                    "type": "CheckInt: Int(Int)",
+                    "returnType": "Int",
+                    "parameters": [
+                        {
+                            "kind": "DataDeclaration",
+                            "declarationKind": null,
+                            "identifier": "val",
+                            "typeAnnotation": "Int",
+                            "operator": null,
+                            "type": "Int"
+                        }
+                    ],
+                    "statements": []
+                }
+            ]
+        },
+        {
             "kind": "ClassDeclaration",
-            "locals": [
-                "ObjectEnumerator",
-                "New"
-            ],
             "identifier": "Collection",
             "type": "Collection",
             "superType": "Object",
-            "members": [
+            "locals": [
                 {
                     "kind": "ClassMethodGroupDeclaration",
                     "identifier": "ObjectEnumerator",
@@ -876,15 +837,10 @@
         },
         {
             "kind": "ClassDeclaration",
-            "locals": [
-                "HasNext",
-                "NextObject",
-                "New"
-            ],
             "identifier": "CollectionEnumerator",
             "type": "CollectionEnumerator",
             "superType": "Object",
-            "members": [
+            "locals": [
                 {
                     "kind": "ClassMethodGroupDeclaration",
                     "identifier": "HasNext",
@@ -937,13 +893,10 @@
         },
         {
             "kind": "ClassDeclaration",
-            "locals": [
-                "New"
-            ],
             "identifier": "Item",
             "type": "Item",
             "superType": "Object",
-            "members": [
+            "locals": [
                 {
                     "kind": "ClassMethodGroupDeclaration",
                     "identifier": "New",
@@ -959,6 +912,33 @@
                             "statements": []
                         }
                     ]
+                }
+            ]
+        },
+        {
+            "kind": "FunctionGroupDeclaration",
+            "identifier": "CheckItem",
+            "type": "CheckItem",
+            "overloads": [
+                {
+                    "kind": "FunctionDeclaration",
+                    "identifier": "CheckItem",
+                    "locals": [
+                        "val"
+                    ],
+                    "type": "CheckItem: Int(Item)",
+                    "returnType": "Int",
+                    "parameters": [
+                        {
+                            "kind": "DataDeclaration",
+                            "declarationKind": null,
+                            "identifier": "val",
+                            "typeAnnotation": "Item",
+                            "operator": null,
+                            "type": "Item"
+                        }
+                    ],
+                    "statements": []
                 }
             ]
         }

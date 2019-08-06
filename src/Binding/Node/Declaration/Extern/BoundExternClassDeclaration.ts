@@ -8,7 +8,6 @@ import { BoundNodeKind } from '../../BoundNodeKind';
 import { BoundStringLiteralExpression } from '../../Expression/BoundStringLiteralExpression';
 import { BoundClassDeclaration } from '../BoundClassDeclaration';
 import { BoundExternClassMethodGroupDeclaration, BoundExternFunctionGroupDeclaration } from '../BoundFunctionLikeGroupDeclaration';
-import { BoundTypeMembers } from '../BoundTypeMembers';
 import { BoundExternDataDeclaration } from './BoundExternDataDeclaration';
 
 export class BoundExternClassDeclaration extends BoundNode {
@@ -17,13 +16,12 @@ export class BoundExternClassDeclaration extends BoundNode {
     declaration: ExternClassDeclaration = undefined!;
 
     identifier: BoundSymbol = undefined!;
-    readonly locals = new BoundSymbolTable();
     type: ObjectType | StringType | ArrayType = undefined!;
 
     superType?: BoundExternClassDeclaration | BoundClassDeclaration = undefined;
     nativeSymbol?: BoundStringLiteralExpression = undefined;
 
-    readonly members = new BoundTypeMembers<BoundExternClassDeclarationMember>();
+    readonly locals = new BoundSymbolTable();
 }
 
 export type BoundExternClassDeclarationMember =

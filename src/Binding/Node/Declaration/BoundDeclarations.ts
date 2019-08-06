@@ -4,7 +4,6 @@ import { BoundDataDeclaration } from './BoundDataDeclaration';
 import { BoundDirectory } from './BoundDirectory';
 import { BoundFunctionDeclaration } from './BoundFunctionDeclaration';
 import { BoundClassMethodGroupDeclaration, BoundFunctionGroupDeclaration, BoundInterfaceMethodGroupDeclaration } from "./BoundFunctionLikeGroupDeclaration";
-import { BoundImportStatement } from './BoundImportStatement';
 import { BoundInterfaceDeclaration } from './BoundInterfaceDeclaration';
 import { BoundInterfaceMethodDeclaration } from './BoundInterfaceMethodDeclaration';
 import { BoundIntrinsicTypeDeclaration } from './BoundIntrinsicTypeDeclaration';
@@ -17,7 +16,6 @@ export type BoundDeclarations =
     | BoundDirectory
     | BoundIntrinsicTypeDeclaration
     | BoundModuleDeclaration
-    | BoundImportStatement
     | BoundExternDeclarations
     | BoundDataDeclaration
     | BoundFunctionDeclaration

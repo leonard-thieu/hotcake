@@ -90,7 +90,7 @@ export class FunctionGroupType extends Type {
     }
 
     toString(): string {
-        for (const overload of this.declaration.overloads) {
+        for (const [, overload] of this.declaration.overloads) {
             return overload.identifier.name;
         }
 
@@ -155,7 +155,7 @@ export class MethodGroupType extends Type {
     }
 
     toString(): string {
-        for (const overload of this.declaration.overloads) {
+        for (const [, overload] of this.declaration.overloads) {
             const name = overload.identifier.name;
 
             if (normalizeIdentifier(name) === 'New') {

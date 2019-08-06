@@ -2,12 +2,6 @@
     "kind": "ModuleDeclaration",
     "identifier": "unaryExpression",
     "locals": [
-        "BoxBool",
-        "BoxInt",
-        "BoxFloat",
-        "Main"
-    ],
-    "members": [
         {
             "kind": "FunctionGroupDeclaration",
             "identifier": "BoxBool",

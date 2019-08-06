@@ -2,10 +2,6 @@
     "kind": "ModuleDeclaration",
     "identifier": "sliceExpressions",
     "locals": [
-        "Print",
-        "Main"
-    ],
-    "members": [
         {
             "kind": "FunctionGroupDeclaration",
             "identifier": "Print",

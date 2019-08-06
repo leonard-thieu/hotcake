@@ -2,19 +2,9 @@
     "kind": "ModuleDeclaration",
     "identifier": "noSameTypeDuplicates",
     "locals": [
-        "List",
-        "Node",
-        "HeadNode"
-    ],
-    "members": [
         {
             "kind": "ClassDeclaration",
             "instantiatedTypes": [],
-            "locals": [
-                "T",
-                "_head",
-                "New"
-            ],
             "identifier": "List",
             "type": "List<List:T>",
             "typeParameters": [
@@ -25,7 +15,12 @@
                 }
             ],
             "superType": "Object",
-            "members": [
+            "locals": [
+                {
+                    "kind": "TypeParameter",
+                    "identifier": "T",
+                    "type": "List:T"
+                },
                 {
                     "kind": "DataDeclaration",
                     "declarationKind": "FieldKeyword",
@@ -68,16 +63,13 @@
             "instantiatedTypes": [
                 {
                     "kind": "ClassDeclaration",
-                    "locals": [
-                        "New"
-                    ],
                     "identifier": "Node",
                     "type": "Node<List:T>",
                     "typeArguments": [
                         "List:T"
                     ],
                     "superType": "Object",
-                    "members": [
+                    "locals": [
                         {
                             "kind": "ClassMethodGroupDeclaration",
                             "identifier": "New",
@@ -98,16 +90,13 @@
                 },
                 {
                     "kind": "ClassDeclaration",
-                    "locals": [
-                        "New"
-                    ],
                     "identifier": "Node",
                     "type": "Node<HeadNode:T>",
                     "typeArguments": [
                         "HeadNode:T"
                     ],
                     "superType": "Object",
-                    "members": [
+                    "locals": [
                         {
                             "kind": "ClassMethodGroupDeclaration",
                             "identifier": "New",
@@ -127,10 +116,6 @@
                     ]
                 }
             ],
-            "locals": [
-                "T",
-                "New"
-            ],
             "identifier": "Node",
             "type": "Node<Node:T>",
             "typeParameters": [
@@ -141,7 +126,12 @@
                 }
             ],
             "superType": "Object",
-            "members": [
+            "locals": [
+                {
+                    "kind": "TypeParameter",
+                    "identifier": "T",
+                    "type": "Node:T"
+                },
                 {
                     "kind": "ClassMethodGroupDeclaration",
                     "identifier": "New",
@@ -165,16 +155,13 @@
             "instantiatedTypes": [
                 {
                     "kind": "ClassDeclaration",
-                    "locals": [
-                        "New"
-                    ],
                     "identifier": "HeadNode",
                     "type": "HeadNode<List:T>",
                     "typeArguments": [
                         "List:T"
                     ],
                     "superType": "Node<List:T>",
-                    "members": [
+                    "locals": [
                         {
                             "kind": "ClassMethodGroupDeclaration",
                             "identifier": "New",
@@ -194,10 +181,6 @@
                     ]
                 }
             ],
-            "locals": [
-                "T",
-                "New"
-            ],
             "identifier": "HeadNode",
             "type": "HeadNode<HeadNode:T>",
             "typeParameters": [
@@ -208,7 +191,12 @@
                 }
             ],
             "superType": "Node<HeadNode:T>",
-            "members": [
+            "locals": [
+                {
+                    "kind": "TypeParameter",
+                    "identifier": "T",
+                    "type": "HeadNode:T"
+                },
                 {
                     "kind": "ClassMethodGroupDeclaration",
                     "identifier": "New",

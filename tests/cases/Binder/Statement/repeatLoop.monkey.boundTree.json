@@ -2,9 +2,6 @@
     "kind": "ModuleDeclaration",
     "identifier": "repeatLoop",
     "locals": [
-        "Main"
-    ],
-    "members": [
         {
             "kind": "FunctionGroupDeclaration",
             "identifier": "Main",

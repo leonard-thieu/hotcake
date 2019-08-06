@@ -2,9 +2,6 @@
     "kind": "ModuleDeclaration",
     "identifier": "dataDeclarationStatement",
     "locals": [
-        "Main"
-    ],
-    "members": [
         {
             "kind": "FunctionGroupDeclaration",
             "identifier": "Main",

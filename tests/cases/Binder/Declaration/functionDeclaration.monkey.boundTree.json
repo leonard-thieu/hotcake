@@ -2,9 +2,6 @@
     "kind": "ModuleDeclaration",
     "identifier": "functionDeclaration",
     "locals": [
-        "Encode"
-    ],
-    "members": [
         {
             "kind": "FunctionGroupDeclaration",
             "identifier": "Encode",

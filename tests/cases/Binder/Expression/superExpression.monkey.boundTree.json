@@ -2,19 +2,12 @@
     "kind": "ModuleDeclaration",
     "identifier": "superExpression",
     "locals": [
-        "MyBaseClass",
-        "MyClass"
-    ],
-    "members": [
         {
             "kind": "ClassDeclaration",
-            "locals": [
-                "New"
-            ],
             "identifier": "MyBaseClass",
             "type": "MyBaseClass",
             "superType": "Object",
-            "members": [
+            "locals": [
                 {
                     "kind": "ClassMethodGroupDeclaration",
                     "identifier": "New",
@@ -35,14 +28,10 @@
         },
         {
             "kind": "ClassDeclaration",
-            "locals": [
-                "GetBaseClass",
-                "New"
-            ],
             "identifier": "MyClass",
             "type": "MyClass",
             "superType": "MyBaseClass",
-            "members": [
+            "locals": [
                 {
                     "kind": "ClassMethodGroupDeclaration",
                     "identifier": "GetBaseClass",

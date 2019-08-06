@@ -2,19 +2,9 @@
     "kind": "ModuleDeclaration",
     "identifier": "forwardReferenceOfTypeMemberFromTypeMember",
     "locals": [
-        "List",
-        "HeadNode",
-        "ArrayObject"
-    ],
-    "members": [
         {
             "kind": "ClassDeclaration",
             "instantiatedTypes": [],
-            "locals": [
-                "T",
-                "_head",
-                "New"
-            ],
             "identifier": "List",
             "type": "List<List:T>",
             "typeParameters": [
@@ -25,7 +15,12 @@
                 }
             ],
             "superType": "Object",
-            "members": [
+            "locals": [
+                {
+                    "kind": "TypeParameter",
+                    "identifier": "T",
+                    "type": "List:T"
+                },
                 {
                     "kind": "DataDeclaration",
                     "declarationKind": "FieldKeyword",
@@ -68,16 +63,13 @@
             "instantiatedTypes": [
                 {
                     "kind": "ClassDeclaration",
-                    "locals": [
-                        "New"
-                    ],
                     "identifier": "HeadNode",
                     "type": "HeadNode<List:T>",
                     "typeArguments": [
                         "List:T"
                     ],
                     "superType": "Object",
-                    "members": [
+                    "locals": [
                         {
                             "kind": "ClassMethodGroupDeclaration",
                             "identifier": "New",
@@ -97,10 +89,6 @@
                     ]
                 }
             ],
-            "locals": [
-                "T",
-                "New"
-            ],
             "identifier": "HeadNode",
             "type": "HeadNode<HeadNode:T>",
             "typeParameters": [
@@ -111,7 +99,12 @@
                 }
             ],
             "superType": "Object",
-            "members": [
+            "locals": [
+                {
+                    "kind": "TypeParameter",
+                    "identifier": "T",
+                    "type": "HeadNode:T"
+                },
                 {
                     "kind": "ClassMethodGroupDeclaration",
                     "identifier": "New",
@@ -133,11 +126,6 @@
         {
             "kind": "ClassDeclaration",
             "instantiatedTypes": [],
-            "locals": [
-                "T",
-                "value",
-                "New"
-            ],
             "identifier": "ArrayObject",
             "type": "ArrayObject<ArrayObject:T>",
             "typeParameters": [
@@ -148,7 +136,12 @@
                 }
             ],
             "superType": "Object",
-            "members": [
+            "locals": [
+                {
+                    "kind": "TypeParameter",
+                    "identifier": "T",
+                    "type": "ArrayObject:T"
+                },
                 {
                     "kind": "DataDeclaration",
                     "declarationKind": "FieldKeyword",

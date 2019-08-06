@@ -2,10 +2,6 @@
     "kind": "ModuleDeclaration",
     "identifier": "externFunctionDeclaration",
     "locals": [
-        "ReadFile",
-        "WriteFile"
-    ],
-    "members": [
         {
             "kind": "ExternFunctionGroupDeclaration",
             "identifier": "ReadFile",

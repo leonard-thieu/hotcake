@@ -2,26 +2,6 @@
     "kind": "ModuleDeclaration",
     "identifier": "forwardReferenceFromStatement",
     "locals": [
-        "Main",
-        "Test"
-    ],
-    "members": [
-        {
-            "kind": "FunctionGroupDeclaration",
-            "identifier": "Test",
-            "type": "Test",
-            "overloads": [
-                {
-                    "kind": "FunctionDeclaration",
-                    "identifier": "Test",
-                    "locals": [],
-                    "type": "Test: Int()",
-                    "returnType": "Int",
-                    "parameters": [],
-                    "statements": []
-                }
-            ]
-        },
         {
             "kind": "FunctionGroupDeclaration",
             "identifier": "Main",
@@ -50,6 +30,22 @@
                             }
                         }
                     ]
+                }
+            ]
+        },
+        {
+            "kind": "FunctionGroupDeclaration",
+            "identifier": "Test",
+            "type": "Test",
+            "overloads": [
+                {
+                    "kind": "FunctionDeclaration",
+                    "identifier": "Test",
+                    "locals": [],
+                    "type": "Test: Int()",
+                    "returnType": "Int",
+                    "parameters": [],
+                    "statements": []
                 }
             ]
         }

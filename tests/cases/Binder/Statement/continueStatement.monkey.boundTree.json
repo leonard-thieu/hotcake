@@ -2,9 +2,6 @@
     "kind": "ModuleDeclaration",
     "identifier": "continueStatement",
     "locals": [
-        "Main"
-    ],
-    "members": [
         {
             "kind": "FunctionGroupDeclaration",
             "identifier": "Main",

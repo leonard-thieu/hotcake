@@ -2,18 +2,9 @@
     "kind": "ModuleDeclaration",
     "identifier": "typeParameters",
     "locals": [
-        "ArrayObject"
-    ],
-    "members": [
         {
             "kind": "ClassDeclaration",
             "instantiatedTypes": [],
-            "locals": [
-                "T",
-                "value",
-                "New",
-                "ToArray"
-            ],
             "identifier": "ArrayObject",
             "type": "ArrayObject<ArrayObject:T>",
             "typeParameters": [
@@ -24,7 +15,12 @@
                 }
             ],
             "superType": "Object",
-            "members": [
+            "locals": [
+                {
+                    "kind": "TypeParameter",
+                    "identifier": "T",
+                    "type": "ArrayObject:T"
+                },
                 {
                     "kind": "DataDeclaration",
                     "declarationKind": "FieldKeyword",

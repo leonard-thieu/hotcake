@@ -2,10 +2,6 @@
     "kind": "ModuleDeclaration",
     "identifier": "nullExpression",
     "locals": [
-        "UnboxBool",
-        "Main"
-    ],
-    "members": [
         {
             "kind": "FunctionGroupDeclaration",
             "identifier": "UnboxBool",

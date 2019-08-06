@@ -2,10 +2,6 @@
     "kind": "ModuleDeclaration",
     "identifier": "identityExpression",
     "locals": [
-        "Print",
-        "Encode"
-    ],
-    "members": [
         {
             "kind": "FunctionGroupDeclaration",
             "identifier": "Print",

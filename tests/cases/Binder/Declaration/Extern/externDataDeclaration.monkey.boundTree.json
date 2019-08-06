@@ -2,19 +2,12 @@
     "kind": "ModuleDeclaration",
     "identifier": "externDataDeclaration",
     "locals": [
-        "Driver",
-        "ActiveDriver"
-    ],
-    "members": [
         {
             "kind": "ClassDeclaration",
-            "locals": [
-                "New"
-            ],
             "identifier": "Driver",
             "type": "Driver",
             "superType": "Object",
-            "members": [
+            "locals": [
                 {
                     "kind": "ClassMethodGroupDeclaration",
                     "identifier": "New",

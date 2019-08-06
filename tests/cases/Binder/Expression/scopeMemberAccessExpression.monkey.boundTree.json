@@ -2,21 +2,12 @@
     "kind": "ModuleDeclaration",
     "identifier": "scopeMemberAccessExpression",
     "locals": [
-        "C",
-        "HeadNode",
-        "Main"
-    ],
-    "members": [
         {
             "kind": "ClassDeclaration",
-            "locals": [
-                "T",
-                "New"
-            ],
             "identifier": "C",
             "type": "C",
             "superType": "Object",
-            "members": [
+            "locals": [
                 {
                     "kind": "DataDeclaration",
                     "declarationKind": "GlobalKeyword",
@@ -45,15 +36,10 @@
         },
         {
             "kind": "ClassDeclaration",
-            "locals": [
-                "_pred",
-                "_head",
-                "New"
-            ],
             "identifier": "HeadNode",
             "type": "HeadNode",
             "superType": "Object",
-            "members": [
+            "locals": [
                 {
                     "kind": "DataDeclaration",
                     "declarationKind": "FieldKeyword",
