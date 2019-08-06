@@ -1,4 +1,4 @@
-import { AmpersandEqualsSignToken, AsteriskEqualsSignToken, EqualsSignToken, HyphenMinusEqualsSignToken, ModKeywordEqualsSignToken, PlusSignEqualsSignToken, ShlKeywordEqualsSignToken, ShrKeywordEqualsSignToken, SlashEqualsSignToken, TildeEqualsSignToken, VerticalBarEqualsSignToken } from '../../Token/Token';
+import { AmpersandEqualsSignToken, AsteriskEqualsSignToken, EqualsSignToken, HyphenMinusEqualsSignToken, ModKeywordEqualsSignToken, PlusSignEqualsSignToken, ShlKeywordEqualsSignToken, ShrKeywordEqualsSignToken, SlashEqualsSignToken, TildeEqualsSignToken, VerticalBarEqualsSignToken } from '../../Token/Tokens';
 import { MissableExpression } from '../Expression/Expression';
 import { GlobalScopeExpression } from '../Expression/GlobalScopeExpression';
 import { IdentifierExpression } from '../Expression/IdentifierExpression';

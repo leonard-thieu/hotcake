@@ -60,8 +60,7 @@ import { CatchClauseChildNames, TryStatementChildNames } from './Node/Statement/
 import { WhileLoopChildNames } from './Node/Statement/WhileLoop';
 import { LonghandTypeAnnotationChildNames, ShorthandTypeAnnotationChildNames } from './Node/TypeAnnotation';
 import { TypeReferenceChildNames } from './Node/TypeReference';
-import { ErrorableToken } from './Token/Token';
-import { TokenKind } from './Token/TokenKind';
+import { ErrorableToken, TokenKind } from './Token/Tokens';
 
 export namespace ParseTreeVisitor {
     export function getNearestAncestor<TKind extends NodeKind>(

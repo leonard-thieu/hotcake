@@ -1,6 +1,6 @@
 import { MissableToken } from '../../../Token/MissingToken';
 import { SkippedToken } from '../../../Token/SkippedToken';
-import { AbstractKeywordToken, ClassKeywordToken, ClosingParenthesisToken, EndKeywordToken, ExtendsKeywordToken, FinalKeywordToken, MethodKeywordToken, NewlineToken, NullKeywordToken, OpeningParenthesisToken, PropertyKeywordToken } from '../../../Token/Token';
+import { AbstractKeywordToken, ClassKeywordToken, ClosingParenthesisToken, EndKeywordToken, ExtendsKeywordToken, FinalKeywordToken, MethodKeywordToken, NewlineToken, NullKeywordToken, OpeningParenthesisToken, PropertyKeywordToken } from '../../../Token/Tokens';
 import { MissableIdentifier } from '../../Identifier';
 import { NodeKind } from '../../NodeKind';
 import { TypeAnnotation } from '../../TypeAnnotation';

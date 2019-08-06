@@ -1,6 +1,6 @@
 import { MissableToken } from '../../Token/MissingToken';
 import { SkippedToken } from '../../Token/SkippedToken';
-import { CaseKeywordToken, DefaultKeywordToken, EndKeywordToken, NewlineToken, SelectKeywordToken } from '../../Token/Token';
+import { CaseKeywordToken, DefaultKeywordToken, EndKeywordToken, NewlineToken, SelectKeywordToken } from '../../Token/Tokens';
 import { CommaSeparator } from '../CommaSeparator';
 import { MissableExpression } from '../Expression/Expression';
 import { Node } from '../Node';

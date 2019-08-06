@@ -1,4 +1,4 @@
-import { IntegerLiteralToken } from '../../Token/Token';
+import { IntegerLiteralToken } from '../../Token/Tokens';
 import { NodeKind } from '../NodeKind';
 import { Expression } from './Expression';
 

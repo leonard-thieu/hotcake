@@ -1,4 +1,4 @@
-import { FriendKeywordToken } from '../../Token/Token';
+import { FriendKeywordToken } from '../../Token/Tokens';
 import { ModulePath } from '../ModulePath';
 import { NodeKind } from '../NodeKind';
 import { Declaration } from './Declaration';

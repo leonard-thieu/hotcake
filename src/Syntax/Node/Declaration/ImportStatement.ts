@@ -1,5 +1,5 @@
 import { MissingToken } from '../../Token/MissingToken';
-import { ImportKeywordToken } from '../../Token/Token';
+import { ImportKeywordToken } from '../../Token/Tokens';
 import { StringLiteralExpression } from '../Expression/StringLiteralExpression';
 import { ModulePath } from '../ModulePath';
 import { NodeKind } from '../NodeKind';

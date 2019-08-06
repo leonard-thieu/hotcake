@@ -1,4 +1,4 @@
-import { BoolKeywordToken, FloatKeywordToken, GreaterThanSignToken, IntKeywordToken, LessThanSignToken, NewKeywordToken, StringKeywordToken } from '../../Token/Token';
+import { BoolKeywordToken, FloatKeywordToken, GreaterThanSignToken, IntKeywordToken, LessThanSignToken, NewKeywordToken, StringKeywordToken } from '../../Token/Tokens';
 import { CommaSeparator } from '../CommaSeparator';
 import { EscapeOptionalIdentifierToken, Identifier } from '../Identifier';
 import { NodeKind } from '../NodeKind';

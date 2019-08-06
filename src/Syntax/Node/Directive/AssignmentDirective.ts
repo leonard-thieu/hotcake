@@ -1,5 +1,5 @@
 import { MissableToken } from '../../Token/MissingToken';
-import { ConfigurationVariableToken, EqualsSignToken, PlusSignEqualsSignToken } from '../../Token/Token';
+import { ConfigurationVariableToken, EqualsSignToken, PlusSignEqualsSignToken } from '../../Token/Tokens';
 import { MissableExpression } from '../Expression/Expression';
 import { NodeKind } from '../NodeKind';
 import { Directive } from './Directive';

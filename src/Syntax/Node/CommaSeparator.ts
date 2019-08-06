@@ -1,4 +1,4 @@
-import { CommaToken, NewlineToken } from '../Token/Token';
+import { CommaToken, NewlineToken } from '../Token/Tokens';
 import { Node } from './Node';
 import { NodeKind } from './NodeKind';
 

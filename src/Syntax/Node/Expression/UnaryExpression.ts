@@ -1,4 +1,4 @@
-import { HyphenMinusToken, NotKeywordToken, PlusSignToken, TildeToken } from '../../Token/Token';
+import { HyphenMinusToken, NotKeywordToken, PlusSignToken, TildeToken } from '../../Token/Tokens';
 import { NodeKind } from '../NodeKind';
 import { Expression, MissableExpression } from './Expression';
 

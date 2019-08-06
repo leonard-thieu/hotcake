@@ -1,5 +1,5 @@
 import { MissableToken } from '../../Token/MissingToken';
-import { ClosingSquareBracketToken, NewlineToken, OpeningSquareBracketToken } from '../../Token/Token';
+import { ClosingSquareBracketToken, NewlineToken, OpeningSquareBracketToken } from '../../Token/Tokens';
 import { CommaSeparator } from '../CommaSeparator';
 import { NodeKind } from '../NodeKind';
 import { Expression, MissableExpression } from './Expression';

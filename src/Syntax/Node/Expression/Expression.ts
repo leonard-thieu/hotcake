@@ -1,5 +1,5 @@
 import { MissingToken } from '../../Token/MissingToken';
-import { NewlineToken } from '../../Token/Token';
+import { NewlineToken } from '../../Token/Tokens';
 import { Node } from '../Node';
 import { ArrayLiteralExpression } from './ArrayLiteralExpression';
 import { BinaryExpression } from './BinaryExpression';

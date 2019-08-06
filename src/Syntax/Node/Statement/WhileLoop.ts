@@ -1,6 +1,6 @@
 import { MissableToken } from '../../Token/MissingToken';
 import { SkippedToken } from '../../Token/SkippedToken';
-import { EndKeywordToken, WendKeywordToken, WhileKeywordToken } from '../../Token/Token';
+import { EndKeywordToken, WendKeywordToken, WhileKeywordToken } from '../../Token/Tokens';
 import { MissableExpression } from '../Expression/Expression';
 import { NodeKind } from '../NodeKind';
 import { Statement, Statements } from './Statement';

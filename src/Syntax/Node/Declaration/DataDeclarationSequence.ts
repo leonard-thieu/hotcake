@@ -1,5 +1,5 @@
 import { MissingToken } from '../../Token/MissingToken';
-import { ColonEqualsSignToken, ConstKeywordToken, EqualsSignToken, FieldKeywordToken, GlobalKeywordToken, LocalKeywordToken } from '../../Token/Token';
+import { ColonEqualsSignToken, ConstKeywordToken, EqualsSignToken, FieldKeywordToken, GlobalKeywordToken, LocalKeywordToken } from '../../Token/Tokens';
 import { CommaSeparator } from '../CommaSeparator';
 import { MissableExpression } from '../Expression/Expression';
 import { Identifier } from '../Identifier';

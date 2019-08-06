@@ -1,4 +1,4 @@
-import { ColonToken, DollarSignToken, NumberSignToken, PercentSignToken, QuestionMarkToken } from '../Token/Token';
+import { ColonToken, DollarSignToken, NumberSignToken, PercentSignToken, QuestionMarkToken } from '../Token/Tokens';
 import { ArrayTypeAnnotation } from './ArrayTypeAnnotation';
 import { Node } from './Node';
 import { NodeKind } from './NodeKind';
@@ -8,6 +8,8 @@ export type TypeAnnotation =
     | ShorthandTypeAnnotation
     | LonghandTypeAnnotation
     ;
+
+// #region Shorthand type annotation
 
 export const ShorthandTypeAnnotationChildNames: ReadonlyArray<keyof ShorthandTypeAnnotation> = [
     'shorthandType',
@@ -28,6 +30,10 @@ export type ShorthandTypeToken =
     | DollarSignToken
     ;
 
+// #endregion
+
+// #region Longhand type annotation
+
 export const LonghandTypeAnnotationChildNames: ReadonlyArray<keyof LonghandTypeAnnotation> = [
     'colon',
     'typeReference',
@@ -39,3 +45,5 @@ export class LonghandTypeAnnotation extends Node {
     colon: ColonToken = undefined!;
     typeReference: MissableTypeReference = undefined!;
 }
+
+// #endregion

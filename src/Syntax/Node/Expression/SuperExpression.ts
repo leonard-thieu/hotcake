@@ -1,4 +1,4 @@
-import { SuperKeywordToken } from '../../Token/Token';
+import { SuperKeywordToken } from '../../Token/Tokens';
 import { NodeKind } from '../NodeKind';
 import { Expression } from './Expression';
 

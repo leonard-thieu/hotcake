@@ -1,4 +1,4 @@
-import { PeriodToken } from '../../Token/Token';
+import { PeriodToken } from '../../Token/Tokens';
 import { NodeKind } from '../NodeKind';
 import { Expression, Expressions, MissableExpression } from './Expression';
 

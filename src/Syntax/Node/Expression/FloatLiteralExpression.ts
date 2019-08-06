@@ -1,4 +1,4 @@
-import { FloatLiteralToken } from '../../Token/Token';
+import { FloatLiteralToken } from '../../Token/Tokens';
 import { NodeKind } from '../NodeKind';
 import { Expression } from './Expression';
 

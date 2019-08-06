@@ -1,4 +1,4 @@
-import { EqualsSignToken } from '../../../Token/Token';
+import { EqualsSignToken } from '../../../Token/Tokens';
 import { MissableStringLiteralExpression } from '../../Expression/StringLiteralExpression';
 import { Declaration } from '../Declaration';
 import { ExternClassDeclaration, ExternClassMethodDeclaration } from './ExternClassDeclaration';

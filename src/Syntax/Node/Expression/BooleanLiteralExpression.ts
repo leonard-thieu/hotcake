@@ -1,4 +1,4 @@
-import { FalseKeywordToken, TrueKeywordToken } from '../../Token/Token';
+import { FalseKeywordToken, TrueKeywordToken } from '../../Token/Tokens';
 import { NodeKind } from '../NodeKind';
 import { Expression } from './Expression';
 

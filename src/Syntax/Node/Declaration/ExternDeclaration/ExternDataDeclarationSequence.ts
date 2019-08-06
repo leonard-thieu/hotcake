@@ -1,4 +1,4 @@
-import { FieldKeywordToken, GlobalKeywordToken } from '../../../Token/Token';
+import { FieldKeywordToken, GlobalKeywordToken } from '../../../Token/Tokens';
 import { CommaSeparator } from '../../CommaSeparator';
 import { Identifier } from '../../Identifier';
 import { NodeKind } from '../../NodeKind';

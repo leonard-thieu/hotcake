@@ -1,4 +1,4 @@
-import { ThrowKeywordToken } from '../../Token/Token';
+import { ThrowKeywordToken } from '../../Token/Tokens';
 import { MissableExpression } from '../Expression/Expression';
 import { NodeKind } from '../NodeKind';
 import { Statement } from './Statement';

@@ -1,6 +1,6 @@
 import { MissableToken } from '../../Token/MissingToken';
 import { SkippedToken } from '../../Token/SkippedToken';
-import { ForeverKeywordToken, RepeatKeywordToken, UntilKeywordToken } from '../../Token/Token';
+import { ForeverKeywordToken, RepeatKeywordToken, UntilKeywordToken } from '../../Token/Tokens';
 import { MissableExpression } from '../Expression/Expression';
 import { NodeKind } from '../NodeKind';
 import { Statement, Statements } from './Statement';

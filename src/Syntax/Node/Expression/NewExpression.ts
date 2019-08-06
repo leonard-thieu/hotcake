@@ -1,4 +1,4 @@
-import { NewKeywordToken } from '../../Token/Token';
+import { NewKeywordToken } from '../../Token/Tokens';
 import { NodeKind } from '../NodeKind';
 import { MissableTypeReference } from '../TypeReference';
 import { Expression } from './Expression';

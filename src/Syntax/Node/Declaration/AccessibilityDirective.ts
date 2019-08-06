@@ -1,4 +1,4 @@
-import { ExternKeywordToken, PrivateKeywordToken, ProtectedKeywordToken, PublicKeywordToken } from '../../Token/Token';
+import { ExternKeywordToken, PrivateKeywordToken, ProtectedKeywordToken, PublicKeywordToken } from '../../Token/Tokens';
 import { NodeKind } from '../NodeKind';
 import { Declaration } from './Declaration';
 

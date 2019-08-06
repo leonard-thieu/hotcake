@@ -1,4 +1,4 @@
-import { ErrorDirectiveKeywordToken } from '../../Token/Token';
+import { ErrorDirectiveKeywordToken } from '../../Token/Tokens';
 import { MissableExpression } from '../Expression/Expression';
 import { NodeKind } from '../NodeKind';
 import { Directive } from './Directive';

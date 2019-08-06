@@ -28,8 +28,7 @@ import { MissableTypeReference, TypeReference, TypeReferenceIdentifierStartToken
 import { GreaterThanSignEqualsSignToken } from './Token/GreaterThanSignEqualsSignToken';
 import { MissingToken, MissingTokenKinds } from './Token/MissingToken';
 import { SkippedToken } from './Token/SkippedToken';
-import { CommaToken, CommercialAtToken, ConfigurationTagStartToken, FloatLiteralToken, IntegerLiteralToken, NewKeywordToken, NullKeywordToken, OpeningParenthesisToken, OpeningSquareBracketToken, PeriodPeriodToken, PeriodToken, QuotationMarkToken, SelfKeywordToken, SuperKeywordToken, TokenKindToTokenMap, Tokens } from './Token/Token';
-import { TokenKind } from './Token/TokenKind';
+import { CommaToken, CommercialAtToken, ConfigurationTagStartToken, FloatLiteralToken, IntegerLiteralToken, NewKeywordToken, NullKeywordToken, OpeningParenthesisToken, OpeningSquareBracketToken, PeriodPeriodToken, PeriodToken, QuotationMarkToken, SelfKeywordToken, SuperKeywordToken, TokenKind, TokenKindToTokenMap, Tokens } from './Token/Tokens';
 
 export abstract class ParserBase {
     protected tokens: Tokens[] = undefined!;

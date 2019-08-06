@@ -1,4 +1,4 @@
-import { ExitKeywordToken } from '../../Token/Token';
+import { ExitKeywordToken } from '../../Token/Tokens';
 import { NodeKind } from '../NodeKind';
 import { Statement } from './Statement';
 

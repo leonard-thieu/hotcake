@@ -1,4 +1,4 @@
-import { ConfigurationTagEndToken, ConfigurationTagStartToken, IdentifierToken } from '../Token/Token';
+import { ConfigurationTagEndToken, ConfigurationTagStartToken, IdentifierToken } from '../Token/Tokens';
 import { Node } from './Node';
 import { NodeKind } from './NodeKind';
 

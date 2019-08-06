@@ -1,4 +1,4 @@
-import { NumberSignToken } from '../../Token/Token';
+import { NumberSignToken } from '../../Token/Tokens';
 import { Node } from '../Node';
 import { AssignmentDirective } from './AssignmentDirective';
 import { ErrorDirective } from './ErrorDirective';

@@ -4,8 +4,7 @@ import { PreprocessorModuleDeclaration } from './Node/Declaration/PreprocessorMo
 import { Directives } from './Node/Directive/Directive';
 import { MissableExpression } from './Node/Expression/Expression';
 import { NodeKind } from './Node/NodeKind';
-import { Tokens } from './Token/Token';
-import { TokenKind } from './Token/TokenKind';
+import { TokenKind, Tokens } from './Token/Tokens';
 
 export class Tokenizer {
     private document: string = undefined!;

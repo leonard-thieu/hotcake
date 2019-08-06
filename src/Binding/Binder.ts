@@ -47,8 +47,7 @@ import { MissableTypeReference, TypeReference } from '../Syntax/Node/TypeReferen
 import { ParseTreeVisitor } from '../Syntax/ParseTreeVisitor';
 import { MissableToken } from '../Syntax/Token/MissingToken';
 import { SkippedToken } from '../Syntax/Token/SkippedToken';
-import { ColonEqualsSignToken, EqualsSignToken, NewKeywordToken } from '../Syntax/Token/Token';
-import { TokenKind } from '../Syntax/Token/TokenKind';
+import { ColonEqualsSignToken, EqualsSignToken, NewKeywordToken, TokenKind } from '../Syntax/Token/Tokens';
 import { assertNever } from '../util';
 import { ANONYMOUS_NAME, areIdentifiersSame, BoundIdentifiableDeclaration, BoundSymbol, BoundSymbolTable } from './BoundSymbol';
 import { BoundNodeKindToBoundNodeMap, BoundNodes } from './Node/BoundNode';

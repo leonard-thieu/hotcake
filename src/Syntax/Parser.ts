@@ -42,8 +42,7 @@ import { ModKeywordEqualsSignToken } from './Token/ModKeywordEqualsSignToken';
 import { ShlKeywordEqualsSignToken } from './Token/ShlKeywordEqualsSignToken';
 import { ShrKeywordEqualsSignToken } from './Token/ShrKeywordEqualsSignToken';
 import { SkippedToken } from './Token/SkippedToken';
-import { AliasKeywordToken, CaseKeywordToken, CatchKeywordToken, ClassKeywordToken, ColonToken, ConstKeywordToken, ContinueKeywordToken, DefaultKeywordToken, ElseIfKeywordToken, ElseKeywordToken, ExitKeywordToken, ForKeywordToken, FriendKeywordToken, FunctionKeywordToken, IfKeywordToken, ImportKeywordToken, InterfaceKeywordToken, LocalKeywordToken, MethodKeywordToken, RepeatKeywordToken, ReturnKeywordToken, SelectKeywordToken, StrictKeywordToken, ThrowKeywordToken, Tokens, TryKeywordToken, WhileKeywordToken } from './Token/Token';
-import { TokenKind } from './Token/TokenKind';
+import { AliasKeywordToken, CaseKeywordToken, CatchKeywordToken, ClassKeywordToken, ColonToken, ConstKeywordToken, ContinueKeywordToken, DefaultKeywordToken, ElseIfKeywordToken, ElseKeywordToken, ExitKeywordToken, ForKeywordToken, FriendKeywordToken, FunctionKeywordToken, IfKeywordToken, ImportKeywordToken, InterfaceKeywordToken, LocalKeywordToken, MethodKeywordToken, RepeatKeywordToken, ReturnKeywordToken, SelectKeywordToken, StrictKeywordToken, ThrowKeywordToken, TokenKind, Tokens, TryKeywordToken, WhileKeywordToken } from './Token/Tokens';
 
 export class Parser extends ParserBase {
     private document: string = undefined!;

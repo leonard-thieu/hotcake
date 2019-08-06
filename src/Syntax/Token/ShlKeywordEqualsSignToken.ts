@@ -1,5 +1,4 @@
-import { EqualsSignToken, ShlKeywordToken, Token } from './Token';
-import { TokenKind } from './TokenKind';
+import { EqualsSignToken, ShlKeywordToken, Token, TokenKind } from './Tokens';
 
 export class ShlKeywordEqualsSignToken extends Token<TokenKind.ShlKeywordEqualsSign> {
     constructor(

@@ -17,7 +17,7 @@ import { PreprocessorModuleDeclaration } from '../src/Syntax/Node/Declaration/Pr
 import { Parser } from '../src/Syntax/Parser';
 import { PreprocessorParser } from '../src/Syntax/PreprocessorParser';
 import { PreprocessorTokenizer } from '../src/Syntax/PreprocessorTokenizer';
-import { Tokens } from '../src/Syntax/Token/Token';
+import { Tokens } from '../src/Syntax/Token/Tokens';
 import { ConfigurationVariables, Tokenizer } from '../src/Syntax/Tokenizer';
 
 interface TestCaseOptions {

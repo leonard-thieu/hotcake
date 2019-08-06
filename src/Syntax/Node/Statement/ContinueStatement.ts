@@ -1,4 +1,4 @@
-import { ContinueKeywordToken } from '../../Token/Token';
+import { ContinueKeywordToken } from '../../Token/Tokens';
 import { NodeKind } from '../NodeKind';
 import { Statement } from './Statement';
 

@@ -1,5 +1,4 @@
-import { EqualsSignToken, ModKeywordToken, Token } from './Token';
-import { TokenKind } from './TokenKind';
+import { EqualsSignToken, ModKeywordToken, Token, TokenKind } from './Tokens';
 
 export class ModKeywordEqualsSignToken extends Token<TokenKind.ModKeywordEqualsSign> {
     constructor(

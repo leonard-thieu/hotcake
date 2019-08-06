@@ -1,6 +1,6 @@
 import { MissableToken } from '../../Token/MissingToken';
 import { SkippedToken } from '../../Token/SkippedToken';
-import { CatchKeywordToken, EndKeywordToken, TryKeywordToken } from '../../Token/Token';
+import { CatchKeywordToken, EndKeywordToken, TryKeywordToken } from '../../Token/Tokens';
 import { MissableDataDeclaration } from '../Declaration/DataDeclarationSequence';
 import { Node } from '../Node';
 import { NodeKind } from '../NodeKind';

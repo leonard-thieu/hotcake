@@ -1,4 +1,4 @@
-import { SelfKeywordToken } from '../../Token/Token';
+import { SelfKeywordToken } from '../../Token/Tokens';
 import { NodeKind } from '../NodeKind';
 import { Expression } from './Expression';
 

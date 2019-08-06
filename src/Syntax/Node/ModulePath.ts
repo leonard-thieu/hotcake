@@ -1,5 +1,5 @@
 import { MissableToken } from '../Token/MissingToken';
-import { IdentifierToken, PeriodToken } from '../Token/Token';
+import { IdentifierToken, PeriodToken } from '../Token/Tokens';
 import { Node } from './Node';
 import { NodeKind } from './NodeKind';
 

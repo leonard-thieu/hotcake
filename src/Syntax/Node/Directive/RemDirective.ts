@@ -1,6 +1,6 @@
 import { MissableToken } from '../../Token/MissingToken';
 import { SkippedToken } from '../../Token/SkippedToken';
-import { EndDirectiveKeywordToken, IfDirectiveKeywordToken, NumberSignToken, RemDirectiveBodyToken, RemDirectiveKeywordToken } from '../../Token/Token';
+import { EndDirectiveKeywordToken, IfDirectiveKeywordToken, NumberSignToken, RemDirectiveBodyToken, RemDirectiveKeywordToken } from '../../Token/Tokens';
 import { NodeKind } from '../NodeKind';
 import { Directive } from './Directive';
 import { IfDirective } from './IfDirective';

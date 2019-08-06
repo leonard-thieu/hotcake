@@ -1,4 +1,4 @@
-import { ReturnKeywordToken } from '../../Token/Token';
+import { ReturnKeywordToken } from '../../Token/Tokens';
 import { MissableExpression } from '../Expression/Expression';
 import { NodeKind } from '../NodeKind';
 import { Statement } from './Statement';

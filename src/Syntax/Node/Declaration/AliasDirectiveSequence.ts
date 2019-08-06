@@ -1,5 +1,5 @@
 import { MissableToken, MissingToken } from '../../Token/MissingToken';
-import { AliasKeywordToken, EqualsSignToken, FloatKeywordToken, IdentifierToken, IntKeywordToken, PeriodToken, StringKeywordToken } from '../../Token/Token';
+import { AliasKeywordToken, EqualsSignToken, FloatKeywordToken, IdentifierToken, IntKeywordToken, PeriodToken, StringKeywordToken } from '../../Token/Tokens';
 import { CommaSeparator } from '../CommaSeparator';
 import { EscapedIdentifier, Identifier } from '../Identifier';
 import { NodeKind } from '../NodeKind';

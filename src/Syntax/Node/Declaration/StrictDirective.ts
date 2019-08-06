@@ -1,4 +1,4 @@
-import { StrictKeywordToken } from '../../Token/Token';
+import { StrictKeywordToken } from '../../Token/Tokens';
 import { NodeKind } from '../NodeKind';
 import { Declaration } from './Declaration';
 

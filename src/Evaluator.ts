@@ -1,6 +1,6 @@
 import { StringLiteralExpression } from './Syntax/Node/Expression/StringLiteralExpression';
 import { NodeKind } from './Syntax/Node/NodeKind';
-import { TokenKind } from './Syntax/Token/TokenKind';
+import { TokenKind } from './Syntax/Token/Tokens';
 import { ConfigurationVariableMap } from './Syntax/Tokenizer';
 import { assertNever } from './util';
 

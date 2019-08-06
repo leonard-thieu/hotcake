@@ -1,6 +1,6 @@
 import { DiagnosticBag } from '../../../Diagnostics';
 import { SkippedToken } from '../../Token/SkippedToken';
-import { EOFToken, NewlineToken } from '../../Token/Token';
+import { EOFToken, NewlineToken } from '../../Token/Tokens';
 import { NodeKind } from '../NodeKind';
 import { AccessibilityDirective } from './AccessibilityDirective';
 import { AliasDirectiveSequence } from './AliasDirectiveSequence';

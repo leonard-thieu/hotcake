@@ -1,4 +1,4 @@
-import { NewlineToken, SemicolonToken } from '../../Token/Token';
+import { NewlineToken, SemicolonToken } from '../../Token/Tokens';
 import { Node } from '../Node';
 import { AssignmentStatement } from './AssignmentStatement';
 import { ContinueStatement } from './ContinueStatement';

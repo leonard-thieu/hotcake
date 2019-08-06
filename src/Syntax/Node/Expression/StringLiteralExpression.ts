@@ -1,6 +1,6 @@
 import { MissableToken, MissingToken } from '../../Token/MissingToken';
 import { SkippedToken } from '../../Token/SkippedToken';
-import { EscapeCarriageReturnCrToken, EscapeCharacterTabulationToken, EscapeLineFeedLfToken, EscapeNullToken, EscapeQuotationMarkToken, EscapeTildeToken, EscapeUnicodeHexValueToken, InvalidEscapeSequenceToken, QuotationMarkToken, StringLiteralTextToken } from '../../Token/Token';
+import { EscapeCarriageReturnCrToken, EscapeCharacterTabulationToken, EscapeLineFeedLfToken, EscapeNullToken, EscapeQuotationMarkToken, EscapeTildeToken, EscapeUnicodeHexValueToken, InvalidEscapeSequenceToken, QuotationMarkToken, StringLiteralTextToken } from '../../Token/Tokens';
 import { ConfigurationTag } from '../ConfigurationTag';
 import { NodeKind } from '../NodeKind';
 import { Expression } from './Expression';
