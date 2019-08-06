@@ -7,6 +7,8 @@ import { NodeKind } from '../NodeKind';
 import { TypeAnnotation } from '../TypeAnnotation';
 import { Declaration } from './Declaration';
 
+// #region Data declaration sequence
+
 export const DataDeclarationSequenceChildNames: ReadonlyArray<keyof DataDeclarationSequence> = [
     'dataDeclarationKeyword',
     'children',
@@ -26,6 +28,10 @@ export type DataDeclarationKeywordToken =
     | FieldKeywordToken
     | LocalKeywordToken
     ;
+
+// #endregion
+
+// #region Data declaration
 
 export const DataDeclarationChildNames: ReadonlyArray<keyof DataDeclaration> = [
     'identifier',
@@ -65,3 +71,5 @@ export type MissableDataDeclaration =
     | DataDeclaration
     | MissingToken
     ;
+
+// #endregion

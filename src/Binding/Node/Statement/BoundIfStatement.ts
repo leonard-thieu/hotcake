@@ -4,6 +4,8 @@ import { BoundNodeKind } from '../BoundNodeKind';
 import { BoundExpressions } from '../Expression/BoundExpressions';
 import { BoundStatements } from './BoundStatements';
 
+// #region Bound if statement
+
 export class BoundIfStatement extends BoundNode {
     readonly kind = BoundNodeKind.IfStatement;
 
@@ -15,6 +17,10 @@ export class BoundIfStatement extends BoundNode {
     elseClause?: BoundElseClause = undefined;
 }
 
+// #endregion
+
+// #region Bound else if clause
+
 export class BoundElseIfClause extends BoundNode {
     readonly kind = BoundNodeKind.ElseIfClause;
 
@@ -24,6 +30,10 @@ export class BoundElseIfClause extends BoundNode {
     statements: BoundStatements[] = undefined!;
 }
 
+// #endregion
+
+// #region Bound else clause
+
 export class BoundElseClause extends BoundNode {
     readonly kind = BoundNodeKind.ElseClause;
 
@@ -31,3 +41,5 @@ export class BoundElseClause extends BoundNode {
 
     statements: BoundStatements[] = undefined!;
 }
+
+// #endregion

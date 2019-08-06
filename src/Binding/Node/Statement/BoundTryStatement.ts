@@ -4,6 +4,8 @@ import { BoundNodeKind } from '../BoundNodeKind';
 import { BoundDataDeclaration } from '../Declaration/BoundDataDeclaration';
 import { BoundStatements } from './BoundStatements';
 
+// #region Bound try statement
+
 export class BoundTryStatement extends BoundNode {
     readonly kind = BoundNodeKind.TryStatement;
 
@@ -13,6 +15,10 @@ export class BoundTryStatement extends BoundNode {
     catchClauses: BoundCatchClause[] = undefined!;
 }
 
+// #endregion
+
+// #region Bound catch clause
+
 export class BoundCatchClause extends BoundNode {
     readonly kind = BoundNodeKind.CatchClause;
 
@@ -21,3 +27,5 @@ export class BoundCatchClause extends BoundNode {
     parameter: BoundDataDeclaration = undefined!;
     statements: BoundStatements[] = undefined!;
 }
+
+// #endregion

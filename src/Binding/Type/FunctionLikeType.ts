@@ -1,11 +1,11 @@
 import { normalizeIdentifier } from '../BoundSymbol';
 import { BoundNodes } from '../Node/BoundNode';
 import { BoundNodeKind } from '../Node/BoundNodeKind';
-import { BoundClassMethodDeclaration } from '../Node/Declaration/BoundClassMethodDeclaration';
+import { BoundClassMethodDeclaration } from '../Node/Declaration/BoundClassDeclaration';
 import { BoundFunctionDeclaration } from '../Node/Declaration/BoundFunctionDeclaration';
 import { BoundClassMethodGroupDeclaration, BoundExternClassMethodGroupDeclaration, BoundExternFunctionGroupDeclaration, BoundFunctionGroupDeclaration, BoundInterfaceMethodGroupDeclaration } from '../Node/Declaration/BoundFunctionLikeGroupDeclaration';
-import { BoundInterfaceMethodDeclaration } from '../Node/Declaration/BoundInterfaceMethodDeclaration';
-import { BoundExternClassMethodDeclaration } from '../Node/Declaration/Extern/BoundExternClassMethodDeclaration';
+import { BoundInterfaceMethodDeclaration } from '../Node/Declaration/BoundInterfaceDeclaration';
+import { BoundExternClassMethodDeclaration } from '../Node/Declaration/Extern/BoundExternClassDeclaration';
 import { BoundExternFunctionDeclaration } from '../Node/Declaration/Extern/BoundExternFunctionDeclaration';
 import { Type } from './Type';
 import { TypeKind } from './TypeKind';

@@ -6,6 +6,8 @@ import { TypeAnnotation } from '../../TypeAnnotation';
 import { Declaration } from '../Declaration';
 import { ExternDeclaration } from './ExternDeclaration';
 
+// #region Extern data declaration sequence
+
 export const ExternDataDeclarationSequenceChildNames: ReadonlyArray<keyof ExternDataDeclarationSequence> = [
     'dataDeclarationKeyword',
     'children',
@@ -23,6 +25,10 @@ export type ExternDataDeclarationKeywordToken =
     | FieldKeywordToken
     ;
 
+// #endregion
+
+// #region Extern data declaration
+
 export const ExternDataDeclarationChildNames: ReadonlyArray<keyof ExternDataDeclaration> = [
     'identifier',
     'typeAnnotation',
@@ -36,3 +42,5 @@ export class ExternDataDeclaration extends ExternDeclaration {
     identifier: Identifier = undefined!;
     typeAnnotation?: TypeAnnotation = undefined;
 }
+
+// #endregion

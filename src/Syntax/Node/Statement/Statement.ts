@@ -6,7 +6,7 @@ import { DataDeclarationSequenceStatement } from './DataDeclarationSequenceState
 import { EmptyStatement } from './EmptyStatement';
 import { ExitStatement } from './ExitStatement';
 import { ExpressionStatement } from './ExpressionStatement';
-import { ForEachInLoop, NumericForLoop } from './ForLoop';
+import { ForEachInLoop, NumericForLoop } from './ForLoops';
 import { IfStatement } from './IfStatement';
 import { RepeatLoop } from './RepeatLoop';
 import { ReturnStatement } from './ReturnStatement';

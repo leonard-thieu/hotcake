@@ -6,6 +6,8 @@ import { Node } from '../Node';
 import { NodeKind } from '../NodeKind';
 import { Statement, Statements } from './Statement';
 
+// #region If statement
+
 export const IfStatementChildNames: ReadonlyArray<keyof IfStatement> = [
     'ifKeyword',
     'expression',
@@ -31,6 +33,10 @@ export class IfStatement extends Statement {
     endIfKeyword?: IfKeywordToken = undefined;
 }
 
+// #endregion
+
+// #region Else if clause
+
 export const ElseIfClauseChildNames: ReadonlyArray<keyof ElseIfClause> = [
     'elseIfKeyword',
     'ifKeyword',
@@ -49,6 +55,10 @@ export class ElseIfClause extends Node {
     statements: (Statements | SkippedToken)[] = undefined!;
 }
 
+// #endregion
+
+// #region Else clause
+
 export const ElseClauseChildNames: ReadonlyArray<keyof ElseClause> = [
     'elseKeyword',
     'statements',
@@ -60,3 +70,5 @@ export class ElseClause extends Node {
     elseKeyword: ElseKeywordToken = undefined!;
     statements: (Statements | SkippedToken)[] = undefined!;
 }
+
+// #endregion

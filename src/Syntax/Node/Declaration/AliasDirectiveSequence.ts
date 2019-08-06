@@ -5,6 +5,8 @@ import { EscapedIdentifier, Identifier } from '../Identifier';
 import { NodeKind } from '../NodeKind';
 import { Declaration } from './Declaration';
 
+// #region Alias directive sequence
+
 export const AliasDirectiveSequenceChildNames: ReadonlyArray<keyof AliasDirectiveSequence> = [
     'aliasKeyword',
     'children',
@@ -16,6 +18,10 @@ export class AliasDirectiveSequence extends Declaration {
     aliasKeyword: AliasKeywordToken = undefined!;
     children: (AliasDirective | CommaSeparator)[] = undefined!;
 }
+
+// #endregion
+
+// #region Alias directive
 
 export const AliasDirectiveChildNames: ReadonlyArray<keyof AliasDirective> = [
     'identifier',
@@ -49,3 +55,5 @@ type DeclarationReferenceIdentifier =
     | FloatKeywordToken
     | StringKeywordToken
     ;
+
+// #endregion

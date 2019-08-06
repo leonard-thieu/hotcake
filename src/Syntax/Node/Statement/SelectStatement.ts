@@ -7,6 +7,8 @@ import { Node } from '../Node';
 import { NodeKind } from '../NodeKind';
 import { Statement, Statements } from './Statement';
 
+// #region Select statement
+
 export const SelectStatementChildNames: ReadonlyArray<keyof SelectStatement> = [
     'selectKeyword',
     'expression',
@@ -30,6 +32,10 @@ export class SelectStatement extends Statement {
     endSelectKeyword?: SelectKeywordToken = undefined;
 }
 
+// #endregion
+
+// #region Case clause
+
 export const CaseClauseChildNames: ReadonlyArray<keyof CaseClause> = [
     'caseKeyword',
     'expressions',
@@ -44,6 +50,10 @@ export class CaseClause extends Node {
     statements: (Statements | SkippedToken)[] = undefined!;
 }
 
+// #endregion
+
+// #region Default clause
+
 export const DefaultClauseChildNames: ReadonlyArray<keyof DefaultClause> = [
     'defaultKeyword',
     'statements',
@@ -55,3 +65,5 @@ export class DefaultClause extends Node {
     defaultKeyword: DefaultKeywordToken = undefined!;
     statements: (Statements | SkippedToken)[] = undefined!;
 }
+
+// #endregion

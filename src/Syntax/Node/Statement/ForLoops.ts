@@ -8,6 +8,8 @@ import { TypeAnnotation } from '../TypeAnnotation';
 import { AssignmentOperatorToken } from './AssignmentStatement';
 import { Statement, Statements } from './Statement';
 
+// #region Numeric for loop
+
 export const NumericForLoopChildNames: ReadonlyArray<keyof NumericForLoop> = [
     'forKeyword',
     'localKeyword',
@@ -43,6 +45,10 @@ export class NumericForLoop extends Statement {
     endForKeyword?: ForKeywordToken = undefined;
 }
 
+// #endregion
+
+// #region For EachIn loop
+
 export const ForEachInLoopChildNames: ReadonlyArray<keyof ForEachInLoop> = [
     'forKeyword',
     'localKeyword',
@@ -71,6 +77,8 @@ export class ForEachInLoop extends Statement {
     endKeyword: MissableToken<NextKeywordToken | EndKeywordToken> = undefined!;
     endForKeyword?: ForKeywordToken = undefined;
 }
+
+// #endregion
 
 export type ForLoopOperatorToken =
     | MissableToken<EqualsSignToken | ColonEqualsSignToken>

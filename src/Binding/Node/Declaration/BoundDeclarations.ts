@@ -1,11 +1,9 @@
-import { BoundClassDeclaration } from './BoundClassDeclaration';
-import { BoundClassMethodDeclaration } from './BoundClassMethodDeclaration';
+import { BoundClassDeclaration, BoundClassMethodDeclaration } from './BoundClassDeclaration';
 import { BoundDataDeclaration } from './BoundDataDeclaration';
 import { BoundDirectory } from './BoundDirectory';
 import { BoundFunctionDeclaration } from './BoundFunctionDeclaration';
 import { BoundClassMethodGroupDeclaration, BoundFunctionGroupDeclaration, BoundInterfaceMethodGroupDeclaration } from "./BoundFunctionLikeGroupDeclaration";
-import { BoundInterfaceDeclaration } from './BoundInterfaceDeclaration';
-import { BoundInterfaceMethodDeclaration } from './BoundInterfaceMethodDeclaration';
+import { BoundInterfaceDeclaration, BoundInterfaceMethodDeclaration } from './BoundInterfaceDeclaration';
 import { BoundIntrinsicTypeDeclaration } from './BoundIntrinsicTypeDeclaration';
 import { BoundModuleDeclaration } from './BoundModuleDeclaration';
 import { BoundTypeParameter } from './BoundTypeParameter';

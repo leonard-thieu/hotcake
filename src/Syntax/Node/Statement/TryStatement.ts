@@ -6,6 +6,8 @@ import { Node } from '../Node';
 import { NodeKind } from '../NodeKind';
 import { Statement, Statements } from './Statement';
 
+// #region Try statement
+
 export const TryStatementChildNames: ReadonlyArray<keyof TryStatement> = [
     'tryKeyword',
     'statements',
@@ -25,6 +27,10 @@ export class TryStatement extends Statement {
     endTryKeyword?: TryKeywordToken = undefined;
 }
 
+// #endregion
+
+// #region Catch clause
+
 export const CatchClauseChildNames: ReadonlyArray<keyof CatchClause> = [
     'catchKeyword',
     'parameter',
@@ -38,3 +44,5 @@ export class CatchClause extends Node {
     parameter: MissableDataDeclaration = undefined!;
     statements: (Statements | SkippedToken)[] = undefined!;
 }
+
+// #endregion

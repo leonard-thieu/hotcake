@@ -4,6 +4,8 @@ import { BoundNodeKind } from '../BoundNodeKind';
 import { BoundExpressions } from '../Expression/BoundExpressions';
 import { BoundStatements } from './BoundStatements';
 
+// #region Bound select statement
+
 export class BoundSelectStatement extends BoundNode {
     readonly kind = BoundNodeKind.SelectStatement;
 
@@ -11,6 +13,10 @@ export class BoundSelectStatement extends BoundNode {
     caseClauses: BoundCaseClause[] = undefined!;
     defaultClause?: BoundDefaultClause = undefined;
 }
+
+// #endregion
+
+// #region Bound case clause
 
 export class BoundCaseClause extends BoundNode {
     readonly kind = BoundNodeKind.CaseClause;
@@ -21,6 +27,10 @@ export class BoundCaseClause extends BoundNode {
     statements: BoundStatements[] = undefined!;
 }
 
+// #endregion
+
+// #region Bound default clause
+
 export class BoundDefaultClause extends BoundNode {
     readonly kind = BoundNodeKind.DefaultClause;
 
@@ -28,3 +38,5 @@ export class BoundDefaultClause extends BoundNode {
 
     statements: BoundStatements[] = undefined!;
 }
+
+// #endregion
