@@ -16,31 +16,6 @@ export class ObjectType extends Type {
         if (target.kind === TypeKind.Null) { return true; }
         if (target === this) { return true; }
 
-        if (this.declaration.kind === BoundNodeKind.ClassDeclaration &&
-            target.declaration.kind === BoundNodeKind.ClassDeclaration &&
-            this.declaration.rootType &&
-            this.declaration.rootType === target.declaration.rootType
-        ) {
-            const typeArgs1 = this.declaration.typeParameters || this.declaration.typeArguments!;
-            const typeArgs2 = target.declaration.typeParameters || target.declaration.typeArguments!;
-
-            let match = true;
-
-            for (let i = 0; i < typeArgs1.length; i++) {
-                const typeParameter = typeArgs1[i];
-                const typeArgument = typeArgs2[i];
-
-                if (typeParameter !== typeArgument) {
-                    match = false;
-                    break;
-                }
-            }
-
-            if (match) {
-                return true;
-            }
-        }
-
         // TODO: Implements `target`
 
         switch (this.declaration.kind) {
@@ -56,9 +31,6 @@ export class ObjectType extends Type {
                 }
                 break;
             }
-
-            default:
-                break;
         }
 
         // TODO: Unboxing conversions

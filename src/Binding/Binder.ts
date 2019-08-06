@@ -1083,207 +1083,6 @@ export class Binder {
         return boundClassDeclaration;
     }
 
-    // #region Type reference sequence
-
-    private bindTypeReferenceSequence(typeReferenceSequence: (TypeReference | CommaSeparator)[], ...kinds: TypeDeclaration['kind'][]) {
-        const boundTypeReferences: BoundTypeReferenceDeclaration[] = [];
-
-        for (const typeReference of typeReferenceSequence) {
-            switch (typeReference.kind) {
-                case NodeKind.TypeReference: {
-                    const boundTypeReference = this.bindTypeReference(typeReference, ...kinds);
-                    boundTypeReferences.push(boundTypeReference);
-                    break;
-                }
-                case NodeKind.CommaSeparator: { break; }
-                default: {
-                    assertNever(typeReference);
-                    break;
-                }
-            }
-        }
-
-        return boundTypeReferences;
-    }
-
-    private bindTypeReference(typeReference: MissableTypeReference, ...kinds: TypeDeclaration['kind'][]) {
-        if (typeReference.kind === TokenKind.Missing) {
-            throw new Error('Type reference is missing.');
-        }
-
-        let boundDeclaration: BoundTypeReferenceDeclaration;
-
-        switch (typeReference.identifier.kind) {
-            case TokenKind.VoidKeyword: {
-                boundDeclaration = this.project.voidTypeDeclaration;
-                break;
-            }
-            case TokenKind.BoolKeyword: {
-                boundDeclaration = this.project.boolTypeDeclaration;
-                break;
-            }
-            case TokenKind.IntKeyword: {
-                boundDeclaration = this.project.intTypeDeclaration;
-                break;
-            }
-            case TokenKind.FloatKeyword: {
-                boundDeclaration = this.project.floatTypeDeclaration;
-                break;
-            }
-            case TokenKind.StringKeyword: {
-                boundDeclaration = this.resolveSpecialType(SpecialType.String);
-                break;
-            }
-            default: {
-                boundDeclaration = this.resolveTypeReference(typeReference, ...kinds);
-
-                if (typeReference.typeArguments) {
-                    switch (boundDeclaration.kind) {
-                        case BoundNodeKind.ExternClassDeclaration:
-                        case BoundNodeKind.InterfaceDeclaration:
-                        case BoundNodeKind.TypeParameter: {
-                            throw new Error(`'${boundDeclaration.kind}' cannot be generic.`);
-                        }
-                    }
-
-                    const boundTypeArguments = this.bindTypeReferenceSequence(typeReference.typeArguments);
-                    const typeMap = this.createTypeMap(boundDeclaration, boundTypeArguments);
-                    boundDeclaration = this.instantiateGenericType(boundDeclaration, typeMap);
-                }
-                break;
-            }
-        }
-
-        for (const { } of typeReference.arrayTypeAnnotations) {
-            boundDeclaration = this.instantiateArrayType(boundDeclaration);
-        }
-
-        return boundDeclaration;
-    }
-
-    private resolveTypeReference(typeReference: TypeReference, ...kinds: TypeDeclarationNodeKind[]) {
-        const { identifier } = typeReference;
-        switch (identifier.kind) {
-            case TokenKind.ObjectKeyword:
-            case TokenKind.ThrowableKeyword:
-            case TokenKind.Identifier: {
-                break;
-            }
-            case NodeKind.EscapedIdentifier: {
-                throw new Error(`Resolving type references with escaped identifiers is not implemented.`);
-            }
-            case TokenKind.Missing: {
-                throw new Error(`Type reference identifier is missing.`);
-            }
-            default: {
-                throw new Error(`'resolveTypeReference()' may only be called with identifier type references.`);
-            }
-        }
-
-        const identifierText = identifier.getText(this.document);
-
-        // Module is specified
-        if (typeReference.moduleIdentifier) {
-            const moduleIdentifierText = typeReference.moduleIdentifier.getText(this.document);
-            const moduleSymbol = this.module.locals.get(moduleIdentifierText);
-            if (!moduleSymbol) {
-                throw new Error(`The '${moduleIdentifierText}' module is not imported.`);
-            }
-
-            const boundModuleDeclaration = moduleSymbol.declaration;
-            if (boundModuleDeclaration.kind !== BoundNodeKind.ModuleDeclaration) {
-                throw new Error(`'${moduleIdentifierText}' is not a module.`);
-            }
-
-            const declaration = this.bindTypeDeclarationFromModule(boundModuleDeclaration, identifierText, ...kinds);
-            if (!declaration) {
-                throw new Error(`Could not find '${identifierText}' in '${moduleIdentifierText}'.`);
-            }
-
-            return declaration;
-        }
-
-        // If we're in a class, check if it's a type parameter
-        const classDeclaration = ParseTreeVisitor.getNearestAncestor(typeReference, NodeKind.ClassDeclaration);
-        if (classDeclaration &&
-            classDeclaration.typeParameters
-        ) {
-            const boundClassDeclaration = this.bindClassDeclaration(this.module, classDeclaration);
-            const boundTypeParameter = boundClassDeclaration.locals.get(identifierText);
-            if (boundTypeParameter &&
-                boundTypeParameter.declaration.kind === BoundNodeKind.TypeParameter
-            ) {
-                return boundTypeParameter.declaration;
-            }
-        }
-
-        // Check if it's a type in this module
-        const declaration = this.bindTypeDeclarationFromModule(this.module, identifierText, ...kinds);
-        if (declaration) {
-            return declaration;
-        }
-
-        // Check if it's a type in any imported modules
-        for (const [, node] of this.module.locals) {
-            const nodeDeclaration = node.declaration!;
-            if (nodeDeclaration.kind === BoundNodeKind.ModuleDeclaration) {
-                const declaration = this.bindTypeDeclarationFromModule(nodeDeclaration, identifierText, ...kinds);
-                if (declaration) {
-                    return declaration;
-                }
-            }
-        }
-
-        // TODO: This is a temporary hack until `Import monkey` is working.
-        switch (identifier.kind) {
-            case TokenKind.ObjectKeyword: {
-                return this.resolveSpecialType(SpecialType.Object);
-            }
-            case TokenKind.ThrowableKeyword: {
-                return this.resolveSpecialType(SpecialType.Throwable);
-            }
-        }
-
-        throw new Error(`Could not find '${identifierText}'.`);
-    }
-
-    private bindTypeDeclarationFromModule(
-        parent: BoundModuleDeclaration,
-        name: string,
-        ...kinds: TypeDeclarationNodeKind[]
-    ) {
-        for (const member of parent.declaration.members) {
-            switch (member.kind) {
-                case NodeKind.ExternClassDeclaration:
-                case NodeKind.InterfaceDeclaration:
-                case NodeKind.ClassDeclaration: {
-                    const memberName = this.getIdentifierText(member.identifier, parent.declaration.document);
-                    if (areIdentifiersSame(name, memberName)) {
-                        assertTypeDeclarationKind(member.kind, kinds, memberName);
-
-                        switch (member.kind) {
-                            case NodeKind.ExternClassDeclaration: {
-                                return this.bindExternClassDeclaration(parent, member);
-                            }
-                            case NodeKind.InterfaceDeclaration: {
-                                return this.bindInterfaceDeclaration(parent, member);
-                            }
-                            case NodeKind.ClassDeclaration: {
-                                return this.bindClassDeclaration(parent, member);
-                            }
-                            default: {
-                                return assertNever(member);
-                            }
-                        }
-                    }
-                    break;
-                }
-            }
-        }
-    }
-
-    // #endregion
-
     // #region Type parameters
 
     private bindTypeParameters(
@@ -4179,6 +3978,207 @@ export class Binder {
     // #endregion
 
     // #region Core
+
+    // #region Type reference sequence
+
+    private bindTypeReferenceSequence(typeReferenceSequence: (TypeReference | CommaSeparator)[], ...kinds: TypeDeclaration['kind'][]) {
+        const boundTypeReferences: BoundTypeReferenceDeclaration[] = [];
+
+        for (const typeReference of typeReferenceSequence) {
+            switch (typeReference.kind) {
+                case NodeKind.TypeReference: {
+                    const boundTypeReference = this.bindTypeReference(typeReference, ...kinds);
+                    boundTypeReferences.push(boundTypeReference);
+                    break;
+                }
+                case NodeKind.CommaSeparator: { break; }
+                default: {
+                    assertNever(typeReference);
+                    break;
+                }
+            }
+        }
+
+        return boundTypeReferences;
+    }
+
+    private bindTypeReference(typeReference: MissableTypeReference, ...kinds: TypeDeclaration['kind'][]) {
+        if (typeReference.kind === TokenKind.Missing) {
+            throw new Error('Type reference is missing.');
+        }
+
+        let boundDeclaration: BoundTypeReferenceDeclaration;
+
+        switch (typeReference.identifier.kind) {
+            case TokenKind.VoidKeyword: {
+                boundDeclaration = this.project.voidTypeDeclaration;
+                break;
+            }
+            case TokenKind.BoolKeyword: {
+                boundDeclaration = this.project.boolTypeDeclaration;
+                break;
+            }
+            case TokenKind.IntKeyword: {
+                boundDeclaration = this.project.intTypeDeclaration;
+                break;
+            }
+            case TokenKind.FloatKeyword: {
+                boundDeclaration = this.project.floatTypeDeclaration;
+                break;
+            }
+            case TokenKind.StringKeyword: {
+                boundDeclaration = this.resolveSpecialType(SpecialType.String);
+                break;
+            }
+            default: {
+                boundDeclaration = this.resolveTypeReference(typeReference, ...kinds);
+
+                if (typeReference.typeArguments) {
+                    switch (boundDeclaration.kind) {
+                        case BoundNodeKind.ExternClassDeclaration:
+                        case BoundNodeKind.InterfaceDeclaration:
+                        case BoundNodeKind.TypeParameter: {
+                            throw new Error(`'${boundDeclaration.kind}' cannot be generic.`);
+                        }
+                    }
+
+                    const boundTypeArguments = this.bindTypeReferenceSequence(typeReference.typeArguments);
+                    const typeMap = this.createTypeMap(boundDeclaration, boundTypeArguments);
+                    boundDeclaration = this.instantiateGenericType(boundDeclaration, typeMap);
+                }
+                break;
+            }
+        }
+
+        for (const { } of typeReference.arrayTypeAnnotations) {
+            boundDeclaration = this.instantiateArrayType(boundDeclaration);
+        }
+
+        return boundDeclaration;
+    }
+
+    private resolveTypeReference(typeReference: TypeReference, ...kinds: TypeDeclarationNodeKind[]) {
+        const { identifier } = typeReference;
+        switch (identifier.kind) {
+            case TokenKind.ObjectKeyword:
+            case TokenKind.ThrowableKeyword:
+            case TokenKind.Identifier: {
+                break;
+            }
+            case NodeKind.EscapedIdentifier: {
+                throw new Error(`Resolving type references with escaped identifiers is not implemented.`);
+            }
+            case TokenKind.Missing: {
+                throw new Error(`Type reference identifier is missing.`);
+            }
+            default: {
+                throw new Error(`'resolveTypeReference()' may only be called with identifier type references.`);
+            }
+        }
+
+        const identifierText = identifier.getText(this.document);
+
+        // Module is specified
+        if (typeReference.moduleIdentifier) {
+            const moduleIdentifierText = typeReference.moduleIdentifier.getText(this.document);
+            const moduleSymbol = this.module.locals.get(moduleIdentifierText);
+            if (!moduleSymbol) {
+                throw new Error(`The '${moduleIdentifierText}' module is not imported.`);
+            }
+
+            const boundModuleDeclaration = moduleSymbol.declaration;
+            if (boundModuleDeclaration.kind !== BoundNodeKind.ModuleDeclaration) {
+                throw new Error(`'${moduleIdentifierText}' is not a module.`);
+            }
+
+            const declaration = this.bindTypeDeclarationFromModule(boundModuleDeclaration, identifierText, ...kinds);
+            if (!declaration) {
+                throw new Error(`Could not find '${identifierText}' in '${moduleIdentifierText}'.`);
+            }
+
+            return declaration;
+        }
+
+        // If we're in a class, check if it's a type parameter
+        const classDeclaration = ParseTreeVisitor.getNearestAncestor(typeReference, NodeKind.ClassDeclaration);
+        if (classDeclaration &&
+            classDeclaration.typeParameters
+        ) {
+            const boundClassDeclaration = this.bindClassDeclaration(this.module, classDeclaration);
+            const boundTypeParameter = boundClassDeclaration.locals.get(identifierText);
+            if (boundTypeParameter &&
+                boundTypeParameter.declaration.kind === BoundNodeKind.TypeParameter
+            ) {
+                return boundTypeParameter.declaration;
+            }
+        }
+
+        // Check if it's a type in this module
+        const declaration = this.bindTypeDeclarationFromModule(this.module, identifierText, ...kinds);
+        if (declaration) {
+            return declaration;
+        }
+
+        // Check if it's a type in any imported modules
+        for (const [, node] of this.module.locals) {
+            const nodeDeclaration = node.declaration!;
+            if (nodeDeclaration.kind === BoundNodeKind.ModuleDeclaration) {
+                const declaration = this.bindTypeDeclarationFromModule(nodeDeclaration, identifierText, ...kinds);
+                if (declaration) {
+                    return declaration;
+                }
+            }
+        }
+
+        // TODO: This is a temporary hack until `Import monkey` is working.
+        switch (identifier.kind) {
+            case TokenKind.ObjectKeyword: {
+                return this.resolveSpecialType(SpecialType.Object);
+            }
+            case TokenKind.ThrowableKeyword: {
+                return this.resolveSpecialType(SpecialType.Throwable);
+            }
+        }
+
+        throw new Error(`Could not find '${identifierText}'.`);
+    }
+
+    private bindTypeDeclarationFromModule(
+        parent: BoundModuleDeclaration,
+        name: string,
+        ...kinds: TypeDeclarationNodeKind[]
+    ) {
+        for (const member of parent.declaration.members) {
+            switch (member.kind) {
+                case NodeKind.ExternClassDeclaration:
+                case NodeKind.InterfaceDeclaration:
+                case NodeKind.ClassDeclaration: {
+                    const memberName = this.getIdentifierText(member.identifier, parent.declaration.document);
+                    if (areIdentifiersSame(name, memberName)) {
+                        assertTypeDeclarationKind(member.kind, kinds, memberName);
+
+                        switch (member.kind) {
+                            case NodeKind.ExternClassDeclaration: {
+                                return this.bindExternClassDeclaration(parent, member);
+                            }
+                            case NodeKind.InterfaceDeclaration: {
+                                return this.bindInterfaceDeclaration(parent, member);
+                            }
+                            case NodeKind.ClassDeclaration: {
+                                return this.bindClassDeclaration(parent, member);
+                            }
+                            default: {
+                                return assertNever(member);
+                            }
+                        }
+                    }
+                    break;
+                }
+            }
+        }
+    }
+
+    // #endregion
 
     // #region Symbols
 
