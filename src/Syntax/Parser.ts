@@ -679,7 +679,7 @@ export class Parser extends ParserBase {
         interfaceDeclaration.identifier = this.parseMissableIdentifier(interfaceDeclaration);
         interfaceDeclaration.extendsKeyword = this.eatOptional(TokenKind.ExtendsKeyword);
         if (interfaceDeclaration.extendsKeyword) {
-            interfaceDeclaration.baseTypes = this.parseList(ParseContextKind.TypeReferenceSequence, interfaceDeclaration, TokenKind.Comma);
+            interfaceDeclaration.implementedTypes = this.parseList(ParseContextKind.TypeReferenceSequence, interfaceDeclaration, TokenKind.Comma);
         }
         interfaceDeclaration.members = this.parseListWithSkippedTokens(ParseContextKind.InterfaceDeclaration, interfaceDeclaration);
         interfaceDeclaration.endKeyword = this.eatMissable(TokenKind.EndKeyword);

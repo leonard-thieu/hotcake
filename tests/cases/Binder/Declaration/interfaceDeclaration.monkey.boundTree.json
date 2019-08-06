@@ -50,7 +50,7 @@
             "kind": "InterfaceDeclaration",
             "identifier": "Actor",
             "type": "Actor",
-            "baseTypes": [
+            "implementedTypes": [
                 "Moveable",
                 "Drawable"
             ],

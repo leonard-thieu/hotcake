@@ -914,13 +914,14 @@ export class Binder {
         this.project.diagnostics.traceBindingStart(BoundNodeKind.InterfaceDeclaration, name);
 
         boundInterfaceDeclaration = new BoundInterfaceDeclaration();
+        boundInterfaceDeclaration.declaration = interfaceDeclaration;
         boundInterfaceDeclaration.parent = parent;
         boundInterfaceDeclaration.type = new ObjectType(boundInterfaceDeclaration);
         boundInterfaceDeclaration.identifier = new BoundSymbol(name, boundInterfaceDeclaration);
         parent.locals.set(boundInterfaceDeclaration.identifier);
 
-        if (interfaceDeclaration.baseTypes) {
-            boundInterfaceDeclaration.baseTypes = this.bindTypeReferenceSequence(interfaceDeclaration.baseTypes,
+        if (interfaceDeclaration.implementedTypes) {
+            boundInterfaceDeclaration.implementedTypes = this.bindTypeReferenceSequence(interfaceDeclaration.implementedTypes,
                 NodeKind.InterfaceDeclaration,
             ) as BoundInterfaceDeclaration[];
         }

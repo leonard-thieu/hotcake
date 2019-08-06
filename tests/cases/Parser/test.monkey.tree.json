@@ -1927,7 +1927,7 @@
                 "start": 2406,
                 "length": 8
             },
-            "baseTypes": [
+            "implementedTypes": [
                 {
                     "kind": "TypeReference",
                     "identifier": {
@@ -2078,7 +2078,7 @@
                 "start": 2567,
                 "length": 8
             },
-            "baseTypes": [
+            "implementedTypes": [
                 {
                     "kind": "TypeReference",
                     "identifier": {

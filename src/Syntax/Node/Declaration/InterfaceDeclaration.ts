@@ -15,7 +15,7 @@ export const InterfaceDeclarationChildNames: ReadonlyArray<keyof InterfaceDeclar
     'interfaceKeyword',
     'identifier',
     'extendsKeyword',
-    'baseTypes',
+    'implementedTypes',
     'members',
     'endKeyword',
     'endInterfaceKeyword',
@@ -27,7 +27,7 @@ export class InterfaceDeclaration extends Declaration {
     interfaceKeyword: InterfaceKeywordToken = undefined!;
     identifier: MissableIdentifier = undefined!;
     extendsKeyword?: ExtendsKeywordToken = undefined;
-    baseTypes?: (TypeReference | CommaSeparator)[] = undefined;
+    implementedTypes?: (TypeReference | CommaSeparator)[] = undefined;
     members: InterfaceDeclarationMember[] = undefined!;
     endKeyword: MissableToken<EndKeywordToken> = undefined!;
     endInterfaceKeyword?: InterfaceKeywordToken = undefined;

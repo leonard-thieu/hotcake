@@ -16,18 +16,42 @@ export class ObjectType extends Type {
         if (target.kind === TypeKind.Null) { return true; }
         if (target === this) { return true; }
 
-        // TODO: Implements `target`
+        switch (target.declaration.kind) {
+            case BoundNodeKind.InterfaceDeclaration: {
+                switch (this.declaration.kind) {
+                    case BoundNodeKind.InterfaceDeclaration:
+                    case BoundNodeKind.ClassDeclaration: {
+                        if (this.declaration.implementedTypes) {
+                            for (const implementedType of this.declaration.implementedTypes) {
+                                if (implementedType.type.isConvertibleTo(target)) {
+                                    return true;
+                                }
+                            }
+                        }
 
-        switch (this.declaration.kind) {
+                        if (this.declaration.kind === BoundNodeKind.ClassDeclaration &&
+                            this.declaration.superType &&
+                            this.declaration.superType.type.isConvertibleTo(target)
+                        ) {
+                            return true;
+                        }
+                        break;
+                    }
+                }
+                break;
+            }
             case BoundNodeKind.ExternClassDeclaration:
             case BoundNodeKind.ClassDeclaration: {
-                let ancestor = this.declaration.superType;
-                while (ancestor) {
-                    if (target === ancestor.type) {
-                        return true;
+                switch (this.declaration.kind) {
+                    case BoundNodeKind.ExternClassDeclaration:
+                    case BoundNodeKind.ClassDeclaration: {
+                        if (this.declaration.superType) {
+                            if (this.declaration.superType.type.isConvertibleTo(target)) {
+                                return true;
+                            }
+                        }
+                        break;
                     }
-
-                    ancestor = ancestor.superType;
                 }
                 break;
             }

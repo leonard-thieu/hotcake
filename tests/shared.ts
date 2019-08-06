@@ -7,8 +7,10 @@ import mkdirp = require('mkdirp');
 import { orderBy } from 'natural-orderby';
 import { Scope } from '../src/Binding/Binder';
 import { BoundNodeKind } from '../src/Binding/Node/BoundNodes';
+import { BoundClassDeclaration } from '../src/Binding/Node/Declaration/BoundClassDeclaration';
 import { BoundDirectory } from '../src/Binding/Node/Declaration/BoundDirectory';
 import { BoundFunctionLikeGroupDeclaration } from '../src/Binding/Node/Declaration/BoundFunctionLikeGroupDeclaration';
+import { BoundInterfaceDeclaration } from '../src/Binding/Node/Declaration/BoundInterfaceDeclaration';
 import { BoundModuleDeclaration } from '../src/Binding/Node/Declaration/BoundModuleDeclaration';
 import { Type } from '../src/Binding/Type/Type';
 import { Project } from '../src/Project';
@@ -306,10 +308,12 @@ export function executeBinderTestCases(name: string, casesPath: string): void {
                             }
                             break;
                         }
-                        case 'implementedTypes':
-                        case 'baseTypes': {
-                            if (value) {
-                                return value.map((v: any) => v.type.toString());
+                        case 'implementedTypes': {
+                            const implementedTypes = value as (BoundClassDeclaration | BoundInterfaceDeclaration)[typeof key];
+                            if (implementedTypes) {
+                                return implementedTypes.map((implementedType) =>
+                                    implementedType.type.toString()
+                                );
                             }
                             break;
                         }
