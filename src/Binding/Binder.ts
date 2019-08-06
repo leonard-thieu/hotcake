@@ -560,7 +560,7 @@ export class Binder {
     // #region Default constructor
 
     private hasParameterlessExternConstructor(boundClassDeclaration: BoundExternClassDeclaration): boolean {
-        const newMethod = this.getMethod(boundClassDeclaration, 'New');
+        const newMethod = getMethod(boundClassDeclaration, 'New');
         if (newMethod) {
             return true;
         }
@@ -1166,7 +1166,7 @@ export class Binder {
     // #region Default constructor
 
     private hasParameterlessConstructor(boundClassDeclaration: BoundClassDeclaration): boolean {
-        const newMethod = this.getMethod(boundClassDeclaration, 'New');
+        const newMethod = getMethod(boundClassDeclaration, 'New');
         if (newMethod) {
             return true;
         }
@@ -4813,45 +4813,45 @@ export class Binder {
         throw new Error(`Could not find the specified ancestor.`);
     }
 
-    private getMethod(
-        typeDeclaration: BoundMethodContainerDeclaration,
-        name: string,
-        checkReturnType: (type: Types) => boolean = () => true,
-        ...parameters: Types[]
-    ) {
-        const member = typeDeclaration.locals.get(name);
-        if (member) {
-            switch (member.declaration.kind) {
-                case BoundNodeKind.ExternClassMethodGroupDeclaration:
-                case BoundNodeKind.InterfaceMethodGroupDeclaration:
-                case BoundNodeKind.ClassMethodGroupDeclaration: {
-                    return this.getOverload(member.declaration.overloads, checkReturnType, ...parameters);
-                }
-            }
-        }
-    }
-
-    private getOverload(
-        overloads: BoundMethodGroupDeclaration['overloads'],
-        checkReturnType: (type: Types) => boolean = () => true,
-        ...parameters: Types[]
-    ) {
-        for (const [, overload] of overloads) {
-            if (checkReturnType(overload.returnType.type)) {
-                if (overload.parameters.length === parameters.length) {
-                    for (let i = 0; i < overload.parameters.length; i++) {
-                        if (overload.parameters[i].type !== parameters[i]) {
-                            return undefined;
-                        }
-                    }
-
-                    return overload;
-                }
-            }
-        }
-    }
-
     // #endregion
+}
+
+export function getMethod(
+    typeDeclaration: BoundMethodContainerDeclaration,
+    name: string,
+    checkReturnType: (type: Types) => boolean = () => true,
+    ...parameters: Types[]
+) {
+    const member = typeDeclaration.locals.get(name);
+    if (member) {
+        switch (member.declaration.kind) {
+            case BoundNodeKind.ExternClassMethodGroupDeclaration:
+            case BoundNodeKind.InterfaceMethodGroupDeclaration:
+            case BoundNodeKind.ClassMethodGroupDeclaration: {
+                return getOverload(member.declaration.overloads, checkReturnType, ...parameters);
+            }
+        }
+    }
+}
+
+function getOverload(
+    overloads: BoundMethodGroupDeclaration['overloads'],
+    checkReturnType: (type: Types) => boolean = () => true,
+    ...parameters: Types[]
+) {
+    for (const [, overload] of overloads) {
+        if (checkReturnType(overload.returnType.type)) {
+            if (overload.parameters.length === parameters.length) {
+                for (let i = 0; i < overload.parameters.length; i++) {
+                    if (overload.parameters[i].type !== parameters[i]) {
+                        return undefined;
+                    }
+                }
+
+                return overload;
+            }
+        }
+    }
 }
 
 enum SpecialType {
