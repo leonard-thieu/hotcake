@@ -19,3 +19,7 @@ export type BoundNodes =
     | BoundCatchClause
     | BoundExpressions
     ;
+
+export type BoundNodeKindToBoundNodeMap = {
+    [K in keyof typeof BoundNodeKind]: Extract<BoundNodes, { kind: K; }>;
+}

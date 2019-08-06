@@ -1,7 +1,7 @@
 import { Diagnostic, DiagnosticKind } from '../Diagnostics';
 import { assertNever } from '../util';
 import { AccessibilityDirective, AccessibilityKeywordToken } from './Node/Declaration/AccessibilityDirective';
-import { AliasDirective, AliasDirectiveSequence, MissableDeclarationReferenceIdentifier } from './Node/Declaration/AliasDirectiveSequence';
+import { AliasDirective, AliasDirectiveSequence } from './Node/Declaration/AliasDirectiveSequence';
 import { ClassDeclaration } from './Node/Declaration/ClassDeclaration';
 import { ClassMethodDeclaration } from './Node/Declaration/ClassMethodDeclaration';
 import { DataDeclaration, DataDeclarationKeywordToken, DataDeclarationSequence, MissableDataDeclaration } from './Node/Declaration/DataDeclarationSequence';
@@ -426,13 +426,18 @@ export class Parser extends ParserBase {
         }
 
         // Parse target
-        let target: MissableDeclarationReferenceIdentifier | undefined = this.eatOptional(TokenKind.IntKeyword, TokenKind.FloatKeyword, TokenKind.StringKeyword);
-        if (!target) {
-            target = this.parseMissableIdentifier(aliasDirective);
-        }
-        aliasDirective.target = target;
+        aliasDirective.target = this.parseAliasDirectiveTarget(aliasDirective);
 
         return aliasDirective;
+    }
+
+    private parseAliasDirectiveTarget(aliasDirective: AliasDirective) {
+        const target = this.eatOptional(TokenKind.IntKeyword, TokenKind.FloatKeyword, TokenKind.StringKeyword);
+        if (target) {
+            return target;
+        }
+
+        return this.parseMissableIdentifier(aliasDirective);
     }
 
     // #endregion
@@ -2233,12 +2238,8 @@ export class Parser extends ParserBase {
     }
 
     private addDiagnostic(kind: DiagnosticKind, message: string, start: number, length: number) {
-        if (!this.moduleDeclaration.parseDiagnostics) {
-            this.moduleDeclaration.parseDiagnostics = [];
-        }
-
         const diagnostic = new Diagnostic(kind, message, start, length);
-        this.moduleDeclaration.parseDiagnostics.push(diagnostic);
+        this.moduleDeclaration.parseDiagnostics.add(diagnostic);
     }
 
     // #endregion

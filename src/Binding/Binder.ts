@@ -54,7 +54,7 @@ import { ColonEqualsSignToken, EqualsSignToken, NewKeywordToken } from '../Synta
 import { TokenKind } from '../Syntax/Token/TokenKind';
 import { assertNever } from '../util';
 import { ANONYMOUS_NAME, areIdentifiersSame, BoundIdentifiableDeclaration, BoundSymbol, BoundSymbolTable } from './BoundSymbol';
-import { BoundNodes } from './Node/BoundNode';
+import { BoundNodeKindToBoundNodeMap, BoundNodes } from './Node/BoundNode';
 import { BoundNodeKind } from './Node/BoundNodeKind';
 import { BoundClassDeclaration, BoundClassDeclarationMember } from './Node/Declaration/BoundClassDeclaration';
 import { BoundClassMethodDeclaration } from './Node/Declaration/BoundClassMethodDeclaration';
@@ -351,10 +351,7 @@ export class Binder {
     ): BoundExternDataDeclaration {
         const name = this.getIdentifierText(externDataDeclaration.identifier);
 
-        let boundExternDataDeclaration = parent.locals.getDeclaration(name,
-            BoundNodeKind.ExternDataDeclaration,
-        ) as BoundExternDataDeclaration | undefined;
-
+        let boundExternDataDeclaration = parent.locals.getDeclaration(name, BoundNodeKind.ExternDataDeclaration);
         if (boundExternDataDeclaration) {
             return boundExternDataDeclaration;
         }
@@ -413,10 +410,7 @@ export class Binder {
         parent: BoundModuleDeclaration | BoundExternClassDeclaration,
         name: string,
     ) {
-        let boundExternFunctionGroupDeclaration = parent.locals.getDeclaration(name,
-            BoundNodeKind.ExternFunctionGroupDeclaration,
-        ) as BoundExternFunctionGroupDeclaration | undefined;
-
+        let boundExternFunctionGroupDeclaration = parent.locals.getDeclaration(name, BoundNodeKind.ExternFunctionGroupDeclaration);
         if (boundExternFunctionGroupDeclaration) {
             return boundExternFunctionGroupDeclaration;
         }
@@ -474,10 +468,7 @@ export class Binder {
     ): BoundExternClassDeclaration {
         const name = this.getIdentifierText(externClassDeclaration.identifier);
 
-        let boundExternClassDeclaration = parent.locals.getDeclaration(name,
-            BoundNodeKind.ExternClassDeclaration,
-        ) as BoundExternClassDeclaration | undefined;
-
+        let boundExternClassDeclaration = parent.locals.getDeclaration(name, BoundNodeKind.ExternClassDeclaration);
         if (boundExternClassDeclaration) {
             return boundExternClassDeclaration;
         }
@@ -633,10 +624,7 @@ export class Binder {
         parent: BoundExternClassDeclaration,
         name: string,
     ): BoundExternClassMethodGroupDeclaration {
-        let boundExternClassMethodGroupDeclaration = parent.locals.getDeclaration(name,
-            BoundNodeKind.ExternClassMethodGroupDeclaration,
-        ) as BoundExternClassMethodGroupDeclaration | undefined;
-
+        let boundExternClassMethodGroupDeclaration = parent.locals.getDeclaration(name, BoundNodeKind.ExternClassMethodGroupDeclaration);
         if (boundExternClassMethodGroupDeclaration) {
             return boundExternClassMethodGroupDeclaration;
         }
@@ -730,8 +718,8 @@ export class Binder {
         const name = this.getIdentifierText(dataDeclaration.identifier);
 
         let scope: Scope | undefined;
-        if ('locals' in parent) {
-            scope = parent as Scope;
+        if (this.isScope(parent)) {
+            scope = parent;
         } else {
             scope = this.getScope(parent);
             if (!scope) {
@@ -739,10 +727,7 @@ export class Binder {
             }
         }
 
-        let boundDataDeclaration = scope.locals.getDeclaration(name,
-            BoundNodeKind.DataDeclaration,
-        ) as BoundDataDeclaration | undefined;
-
+        let boundDataDeclaration = scope.locals.getDeclaration(name, BoundNodeKind.DataDeclaration);
         if (boundDataDeclaration) {
             return boundDataDeclaration;
         }
@@ -879,10 +864,7 @@ export class Binder {
         parent: BoundModuleDeclaration | BoundClassDeclaration,
         name: string,
     ): BoundFunctionGroupDeclaration {
-        let boundFunctionGroupDeclaration = parent.locals.getDeclaration(name,
-            BoundNodeKind.FunctionGroupDeclaration,
-        ) as BoundFunctionGroupDeclaration | undefined;
-
+        let boundFunctionGroupDeclaration = parent.locals.getDeclaration(name, BoundNodeKind.FunctionGroupDeclaration);
         if (boundFunctionGroupDeclaration) {
             return boundFunctionGroupDeclaration;
         }
@@ -933,10 +915,7 @@ export class Binder {
     ): BoundInterfaceDeclaration {
         const name = this.getIdentifierText(interfaceDeclaration.identifier);
 
-        let boundInterfaceDeclaration = parent.locals.getDeclaration(name,
-            BoundNodeKind.InterfaceDeclaration,
-        ) as BoundInterfaceDeclaration | undefined;
-
+        let boundInterfaceDeclaration = parent.locals.getDeclaration(name, BoundNodeKind.InterfaceDeclaration);
         if (boundInterfaceDeclaration) {
             return boundInterfaceDeclaration;
         }
@@ -1015,10 +994,7 @@ export class Binder {
     }
 
     private bindInterfaceMethodGroupDeclaration(parent: BoundInterfaceDeclaration, name: string) {
-        let boundInterfaceMethodGroupDeclaration = parent.locals.getDeclaration(name,
-            BoundNodeKind.InterfaceMethodGroupDeclaration,
-        ) as BoundInterfaceMethodGroupDeclaration | undefined;
-
+        let boundInterfaceMethodGroupDeclaration = parent.locals.getDeclaration(name, BoundNodeKind.InterfaceMethodGroupDeclaration);
         if (boundInterfaceMethodGroupDeclaration) {
             return boundInterfaceMethodGroupDeclaration;
         }
@@ -1070,10 +1046,7 @@ export class Binder {
     ): BoundClassDeclaration {
         const name = this.getIdentifierText(classDeclaration.identifier);
 
-        let boundClassDeclaration = parent.locals.getDeclaration(name,
-            BoundNodeKind.ClassDeclaration,
-        ) as BoundClassDeclaration | undefined;
-
+        let boundClassDeclaration = parent.locals.getDeclaration(name, BoundNodeKind.ClassDeclaration);
         if (boundClassDeclaration) {
             return boundClassDeclaration;
         }
@@ -1240,9 +1213,7 @@ export class Binder {
         }
 
         // If we're in a class, check if it's a type parameter
-        const classDeclaration = ParseTreeVisitor.getNearestAncestor(typeReference,
-            NodeKind.ClassDeclaration,
-        ) as ClassDeclaration | undefined;
+        const classDeclaration = ParseTreeVisitor.getNearestAncestor(typeReference, NodeKind.ClassDeclaration);
         if (classDeclaration &&
             classDeclaration.typeParameters
         ) {
@@ -1459,10 +1430,7 @@ export class Binder {
     }
 
     private bindBoundClassMethodGroupDeclaration(parent: BoundClassDeclaration, name: string) {
-        let boundClassMethodGroupDeclaration = parent.locals.getDeclaration(name,
-            BoundNodeKind.ClassMethodGroupDeclaration,
-        ) as BoundClassMethodGroupDeclaration | undefined;
-
+        let boundClassMethodGroupDeclaration = parent.locals.getDeclaration(name, BoundNodeKind.ClassMethodGroupDeclaration);
         if (boundClassMethodGroupDeclaration) {
             return boundClassMethodGroupDeclaration;
         }
@@ -1695,7 +1663,7 @@ export class Binder {
         const functionOrMethodDeclaration = this.getNearestAncestor(boundReturnStatement,
             BoundNodeKind.FunctionDeclaration,
             BoundNodeKind.ClassMethodDeclaration,
-        ) as BoundFunctionDeclaration | BoundClassMethodDeclaration;
+        );
 
         if (!boundReturnStatement.type.isConvertibleTo(functionOrMethodDeclaration.returnType.type)) {
             throw new Error(`'${boundReturnStatement.type}' is not convertible to '${functionOrMethodDeclaration.returnType.type}'.`);
@@ -2949,10 +2917,7 @@ export class Binder {
         const boundSelfExpression = new BoundSelfExpression();
         boundSelfExpression.parent = parent;
 
-        const classDeclaration = this.getNearestAncestor(boundSelfExpression,
-            BoundNodeKind.ClassDeclaration,
-        ) as BoundClassDeclaration;
-
+        const classDeclaration = this.getNearestAncestor(boundSelfExpression, BoundNodeKind.ClassDeclaration);
         boundSelfExpression.type = classDeclaration.type;
 
         return boundSelfExpression;
@@ -2974,10 +2939,7 @@ export class Binder {
         const boundSuperExpression = new BoundSuperExpression();
         boundSuperExpression.parent = parent;
 
-        const classDeclaration = this.getNearestAncestor(boundSuperExpression,
-            BoundNodeKind.ClassDeclaration,
-        ) as BoundClassDeclaration;
-
+        const classDeclaration = this.getNearestAncestor(boundSuperExpression, BoundNodeKind.ClassDeclaration);
         if (!classDeclaration.superType) {
             throw new Error(`'${classDeclaration.identifier.name}' does not extend a base class.`);
         }
@@ -3737,8 +3699,8 @@ export class Binder {
         const { name } = boundDataDeclaration.identifier;
 
         let scope: Scope | undefined;
-        if ('locals' in parent) {
-            scope = parent as Scope;
+        if (this.isScope(parent)) {
+            scope = parent;
         } else {
             scope = this.getScope(parent);
             if (!scope) {
@@ -3746,10 +3708,7 @@ export class Binder {
             }
         }
 
-        let instantiatedDataDeclaration = scope.locals.getDeclaration(name,
-            BoundNodeKind.DataDeclaration,
-        ) as BoundDataDeclaration | undefined;
-
+        let instantiatedDataDeclaration = scope.locals.getDeclaration(name, BoundNodeKind.DataDeclaration);
         if (instantiatedDataDeclaration) {
             return instantiatedDataDeclaration;
         }
@@ -3848,10 +3807,7 @@ export class Binder {
     ): BoundClassMethodGroupDeclaration {
         const { name } = boundClassMethodGroupDeclaration.identifier;
 
-        let instantiatedClassMethodGroupDeclaration = parent.locals.getDeclaration(name,
-            BoundNodeKind.ClassMethodGroupDeclaration,
-        ) as BoundClassMethodGroupDeclaration | undefined;
-
+        let instantiatedClassMethodGroupDeclaration = parent.locals.getDeclaration(name, BoundNodeKind.ClassMethodGroupDeclaration);
         if (instantiatedClassMethodGroupDeclaration) {
             return instantiatedClassMethodGroupDeclaration;
         }
@@ -4144,9 +4100,7 @@ export class Binder {
                         break;
                     }
                     case BoundNodeKind.ClassMethodGroupDeclaration: {
-                        const boundClassDeclaration = this.getNearestAncestor(parent,
-                            BoundNodeKind.ClassDeclaration,
-                        ) as BoundClassDeclaration;
+                        const boundClassDeclaration = this.getNearestAncestor(parent, BoundNodeKind.ClassDeclaration);
                         instantiatedDeclaration = this.instantiateClassMethodGroupDeclaration(boundClassDeclaration, declaration, typeMap);
                         break;
                     }
@@ -4455,32 +4409,40 @@ export class Binder {
                 return undefined;
             }
 
-            switch (ancestor.kind) {
-                case BoundNodeKind.ModuleDeclaration:
-                case BoundNodeKind.ExternFunctionDeclaration:
-                case BoundNodeKind.ExternClassDeclaration:
-                case BoundNodeKind.ExternClassMethodDeclaration:
-                case BoundNodeKind.FunctionDeclaration:
-                case BoundNodeKind.InterfaceDeclaration:
-                case BoundNodeKind.InterfaceMethodDeclaration:
-                case BoundNodeKind.ClassDeclaration:
-                case BoundNodeKind.ClassMethodDeclaration:
-                case BoundNodeKind.IfStatement:
-                case BoundNodeKind.ElseIfClause:
-                case BoundNodeKind.ElseClause:
-                case BoundNodeKind.CaseClause:
-                case BoundNodeKind.DefaultClause:
-                case BoundNodeKind.WhileLoop:
-                case BoundNodeKind.RepeatLoop:
-                case BoundNodeKind.ForLoop:
-                case BoundNodeKind.TryStatement:
-                case BoundNodeKind.CatchClause: {
-                    return ancestor;
-                }
+            if (this.isScope(ancestor)) {
+                return ancestor;
             }
 
             ancestor = ancestor.parent;
         }
+    }
+
+    private isScope(node: BoundNodes): node is Scope {
+        switch (node.kind) {
+            case BoundNodeKind.ModuleDeclaration:
+            case BoundNodeKind.ExternFunctionDeclaration:
+            case BoundNodeKind.ExternClassDeclaration:
+            case BoundNodeKind.ExternClassMethodDeclaration:
+            case BoundNodeKind.FunctionDeclaration:
+            case BoundNodeKind.InterfaceDeclaration:
+            case BoundNodeKind.InterfaceMethodDeclaration:
+            case BoundNodeKind.ClassDeclaration:
+            case BoundNodeKind.ClassMethodDeclaration:
+            case BoundNodeKind.IfStatement:
+            case BoundNodeKind.ElseIfClause:
+            case BoundNodeKind.ElseClause:
+            case BoundNodeKind.CaseClause:
+            case BoundNodeKind.DefaultClause:
+            case BoundNodeKind.WhileLoop:
+            case BoundNodeKind.RepeatLoop:
+            case BoundNodeKind.ForLoop:
+            case BoundNodeKind.TryStatement:
+            case BoundNodeKind.CatchClause: {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     // #endregion
@@ -4839,18 +4801,24 @@ export class Binder {
         }
     }
 
-    private getNearestAncestor(node: BoundNodes, kind: BoundNodeKind, ...kinds: BoundNodeKind[]): BoundNodes | undefined {
+    private getNearestAncestor<TKind extends BoundNodeKind>(node: BoundNodes, ...kinds: TKind[]): BoundNodeKindToBoundNodeMap[TKind] {
         let ancestor = node.parent;
 
         while (ancestor) {
-            if (ancestor.kind === kind ||
-                kinds.includes(ancestor.kind)
-            ) {
+            if (kinds.length === 0) {
                 return ancestor;
+            }
+
+            for (const kind of kinds) {
+                if (ancestor.kind === kind) {
+                    return ancestor;
+                }
             }
 
             ancestor = ancestor.parent;
         }
+
+        throw new Error(`Could not find the specified ancestor.`);
     }
 
     private getMethod(

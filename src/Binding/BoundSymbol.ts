@@ -1,4 +1,4 @@
-import { BoundNodes } from './Node/BoundNode';
+import { BoundNodeKindToBoundNodeMap, BoundNodes } from './Node/BoundNode';
 import { BoundDeclarations } from './Node/Declaration/BoundDeclarations';
 
 export class BoundSymbol {
@@ -21,7 +21,10 @@ export class BoundSymbolTable extends Map<string, BoundSymbol> {
         return super.get(key);
     }
 
-    getDeclaration(key: string, kind: BoundSymbol['declaration']['kind']) {
+    getDeclaration<TKind extends BoundSymbol['declaration']['kind']>(
+        key: string,
+        kind: TKind,
+    ): BoundNodeKindToBoundNodeMap[TKind] | undefined {
         const value = this.get(key);
 
         if (!value) {

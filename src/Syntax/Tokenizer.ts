@@ -61,7 +61,7 @@ export class Tokenizer {
                      *       Looks like CD and MODPATH are settable but are always overwritten.
                      */
                     const varName = member.name.getText(this.document);
-                    const value = this.eval(member.expression);
+                    let value = this.eval(member.expression);
 
                     const { kind } = member.operator;
                     switch (kind) {
@@ -70,12 +70,12 @@ export class Tokenizer {
                             break;
                         }
                         case TokenKind.PlusSignEqualsSign: {
-                            let v = value as string;
-                            if (!v.startsWith(';')) {
-                                v = ';' + v;
+                            value = value as string;
+                            if (!value.startsWith(';')) {
+                                value = ';' + value;
                             }
-                            v = this.configVars.get(varName) + v;
-                            this.configVars.set(varName, v);
+                            value = this.configVars.get(varName) + value;
+                            this.configVars.set(varName, value);
                             break;
                         }
                         case TokenKind.Missing: {

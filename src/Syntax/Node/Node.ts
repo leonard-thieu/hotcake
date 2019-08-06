@@ -37,3 +37,7 @@ export type Nodes =
     | ModulePath
     | TypeReference
     ;
+
+export type NodeKindToNodeMap = {
+    [K in keyof typeof NodeKind]: Extract<Nodes, { kind: K; }>;
+}

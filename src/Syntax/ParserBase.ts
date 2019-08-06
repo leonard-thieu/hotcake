@@ -28,7 +28,7 @@ import { MissableTypeReference, TypeReference, TypeReferenceIdentifierStartToken
 import { GreaterThanSignEqualsSignToken } from './Token/GreaterThanSignEqualsSignToken';
 import { MissingToken, MissingTokenKinds } from './Token/MissingToken';
 import { SkippedToken } from './Token/SkippedToken';
-import { CommaToken, CommercialAtToken, ConfigurationTagStartToken, FloatLiteralToken, IntegerLiteralToken, NewKeywordToken, NullKeywordToken, OpeningParenthesisToken, OpeningSquareBracketToken, PeriodPeriodToken, PeriodToken, QuotationMarkToken, SelfKeywordToken, SuperKeywordToken, TokenKinds, TokenKindTokenMap, Tokens } from './Token/Token';
+import { CommaToken, CommercialAtToken, ConfigurationTagStartToken, FloatLiteralToken, IntegerLiteralToken, NewKeywordToken, NullKeywordToken, OpeningParenthesisToken, OpeningSquareBracketToken, PeriodPeriodToken, PeriodToken, QuotationMarkToken, SelfKeywordToken, SuperKeywordToken, TokenKindToTokenMap, Tokens } from './Token/Token';
 import { TokenKind } from './Token/TokenKind';
 
 export abstract class ParserBase {
@@ -1016,7 +1016,7 @@ export abstract class ParserBase {
     protected parseList<TParseContext extends ParseContext>(
         parseContext: TParseContext,
         parent: Nodes,
-        delimiter?: TokenKinds,
+        delimiter?: TokenKind,
         allowEmpty?: boolean,
     ) {
         return this.parseListCore(parseContext, parent, delimiter, allowEmpty) as ParseContextElementMap[TParseContext][];
@@ -1032,7 +1032,7 @@ export abstract class ParserBase {
     private parseListCore<TParseContext extends ParseContext>(
         parseContext: TParseContext,
         parent: Nodes,
-        delimiter?: TokenKinds,
+        delimiter?: TokenKind,
         allowEmpty?: boolean,
     ) {
         if (typeof parseContext === 'undefined') {
@@ -1192,49 +1192,53 @@ export abstract class ParserBase {
         return new SkippedToken(token);
     }
 
-    protected eatMissable<TTokenKind extends TokenKinds>(
+    protected eatMissable<TTokenKind extends TokenKind>(
         kind: TTokenKind,
-    ): TokenKindTokenMap[TTokenKind] | MissingToken;
-    protected eatMissable<TTokenKind extends TokenKinds, TTokenKinds extends TokenKinds>(
-        kind: TTokenKind,
-        ...kinds: TTokenKinds[]
-    ): TokenKindTokenMap[TTokenKind | TTokenKinds] | MissingToken;
-    protected eatMissable<TTokenKind extends TokenKinds, TTokenKinds extends TokenKinds>(
-        kind: TTokenKind,
-        ...kinds: TTokenKinds[]
-    ): TokenKindTokenMap[TTokenKind | TTokenKinds] | MissingToken {
+        ...kinds: TTokenKind[]
+    ): TokenKindToTokenMap[TTokenKind] | MissingToken {
         const token = this.getToken();
-        if (kind === token.kind ||
-            kinds.includes(token.kind as TTokenKinds)
-        ) {
+
+        if (kind === token.kind) {
             this.advanceToken();
 
             return token;
+        }
+
+        for (const kind of kinds) {
+            if (kind === token.kind) {
+                this.advanceToken();
+
+                return token;
+            }
         }
 
         return this.createMissingToken(token.fullStart, kind);
     }
 
-    protected eat<TTokenKind extends TokenKinds>(...kinds: TTokenKind[]): TokenKindTokenMap[TTokenKind] {
+    protected eat<TTokenKind extends TokenKind>(...kinds: TTokenKind[]): TokenKindToTokenMap[TTokenKind] {
         const token = this.getToken();
-        if (kinds.includes(token.kind as TTokenKind)) {
-            this.advanceToken();
 
-            return token;
+        for (const kind of kinds) {
+            if (kind === token.kind) {
+                this.advanceToken();
+
+                return token;
+            }
         }
 
         throw new Error(`Unexpected token: ${JSON.stringify(token.kind)} not in ${JSON.stringify(kinds)}`);
     }
 
-    protected eatOptional<TTokenKind extends TokenKinds>(...kinds: TTokenKind[]): TokenKindTokenMap[TTokenKind] | undefined {
+    protected eatOptional<TTokenKind extends TokenKind>(...kinds: TTokenKind[]): TokenKindToTokenMap[TTokenKind] | undefined {
         const token = this.getToken();
-        if (kinds.includes(token.kind as TTokenKind)) {
-            this.advanceToken();
 
-            return token;
+        for (const kind of kinds) {
+            if (kind === token.kind) {
+                this.advanceToken();
+
+                return token;
+            }
         }
-
-        return undefined;
     }
 
     protected getToken(offset: number = 0): Tokens {
@@ -1275,7 +1279,7 @@ enum Associativity {
 type PrecedenceAndAssociativity = [Precedence, Associativity];
 
 type PrecedenceAndAssociativityMap = {
-    readonly [P in TokenKinds]?: PrecedenceAndAssociativity;
+    readonly [P in TokenKind]?: PrecedenceAndAssociativity;
 };
 
 const LogicalOrPrecedenceAndAssociativity: PrecedenceAndAssociativity = [Precedence.LogicalOr, Associativity.Left];
@@ -1314,7 +1318,7 @@ const OperatorPrecedenceAndAssociativityMap: PrecedenceAndAssociativityMap = {
     [TokenKind.Asterisk]: ShiftMultiplicativePrecedenceAndAssociativity,
 };
 
-function getBinaryOperatorPrecedenceAndAssociativity(kind: TokenKinds): PrecedenceAndAssociativity {
+function getBinaryOperatorPrecedenceAndAssociativity(kind: TokenKind): PrecedenceAndAssociativity {
     return OperatorPrecedenceAndAssociativityMap[kind] ||
         UnknownPrecedenceAndAssociativity;
 }

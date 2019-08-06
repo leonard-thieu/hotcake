@@ -1,5 +1,5 @@
 import { NodeKind } from '../Node/NodeKind';
-import { NewlineToken, Token, TokenKinds, TokenKindTokenMap, Tokens } from './Token';
+import { NewlineToken, Token, TokenKindToTokenMap, Tokens } from './Token';
 import { TokenKind } from './TokenKind';
 
 export class MissingToken extends Token<TokenKind.Missing> {
@@ -19,7 +19,7 @@ export class MissingToken extends Token<TokenKind.Missing> {
 }
 
 export type MissingTokenKinds =
-    | TokenKinds
+    | TokenKind
     | TokenKind.Expression
     | TokenKind.ImportStatementPath
     | NodeKind.DataDeclaration
@@ -28,6 +28,6 @@ export type MissingTokenKinds =
     ;
 
 export type MissableToken<TToken extends Tokens> =
-    | TokenKindTokenMap[TToken['kind']]
+    | TokenKindToTokenMap[TToken['kind']]
     | MissingToken
     ;

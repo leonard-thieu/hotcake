@@ -1,4 +1,4 @@
-import { Diagnostic } from '../../../Diagnostics';
+import { DiagnosticBag } from '../../../Diagnostics';
 import { SkippedToken } from '../../Token/SkippedToken';
 import { EOFToken, NewlineToken } from '../../Token/Token';
 import { NodeKind } from '../NodeKind';
@@ -44,7 +44,7 @@ export class ModuleDeclaration extends Declaration {
     members: ModuleDeclarationMember[] = undefined!;
     eofToken: EOFToken = undefined!;
 
-    parseDiagnostics?: Diagnostic[];
+    readonly parseDiagnostics = new DiagnosticBag();
 }
 
 export type ModuleDeclarationHeaderMember =

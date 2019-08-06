@@ -45,7 +45,7 @@ import { SuperExpressionChildNames } from './Node/Expression/SuperExpression';
 import { UnaryExpressionChildNames } from './Node/Expression/UnaryExpression';
 import { EscapedIdentifierChildNames } from './Node/Identifier';
 import { ModulePathChildNames } from './Node/ModulePath';
-import { Nodes } from './Node/Node';
+import { NodeKindToNodeMap, Nodes } from './Node/Node';
 import { NodeKind } from './Node/NodeKind';
 import { AssignmentStatementChildNames } from './Node/Statement/AssignmentStatement';
 import { ContinueStatementChildNames } from './Node/Statement/ContinueStatement';
@@ -67,14 +67,21 @@ import { ErrorableToken } from './Token/Token';
 import { TokenKind } from './Token/TokenKind';
 
 export namespace ParseTreeVisitor {
-    export function getNearestAncestor(node: Nodes, kind: NodeKind, ...kinds: NodeKind[]) {
+    export function getNearestAncestor<TKind extends NodeKind>(
+        node: Nodes,
+        ...kinds: TKind[]
+    ): NodeKindToNodeMap[TKind] | undefined {
         let ancestor = node.parent;
 
         while (ancestor) {
-            if (ancestor.kind === kind ||
-                kinds.includes(ancestor.kind)
-            ) {
+            if (kinds.length === 0) {
                 return ancestor;
+            }
+
+            for (const kind of kinds) {
+                if (ancestor.kind === kind) {
+                    return ancestor;
+                }
             }
 
             ancestor = ancestor.parent;

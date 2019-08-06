@@ -5,7 +5,7 @@ import { NodeKind } from './NodeKind';
 
 export type Identifier =
     | EscapedIdentifier
-    | EscapeOptionalIdentifierNameToken
+    | EscapeOptionalIdentifierToken
     ;
 
 export type MissableIdentifier =
@@ -14,7 +14,7 @@ export type MissableIdentifier =
     ;
 
 export type IdentifierStartToken =
-    | EscapeOptionalIdentifierNameToken
+    | EscapeOptionalIdentifierToken
     | CommercialAtToken
     ;
 
@@ -27,21 +27,21 @@ export class EscapedIdentifier extends Node {
     readonly kind = NodeKind.EscapedIdentifier;
 
     commercialAt: CommercialAtToken = undefined!;
-    name: EscapedIdentifierNameToken | MissingToken = undefined!;
+    name: IdentifierTokens | MissingToken = undefined!;
 }
 
-export type EscapedIdentifierNameToken =
-    | EscapeOptionalIdentifierNameToken
-    | EscapeRequiredIdentifierNameToken
+type IdentifierTokens =
+    | EscapeOptionalIdentifierToken
+    | EscapeRequiredIdentifierToken
     ;
 
-export type EscapeOptionalIdentifierNameToken =
+export type EscapeOptionalIdentifierToken =
     | IdentifierToken
     | ObjectKeywordToken
     | ThrowableKeywordToken
     ;
 
-export type EscapeRequiredIdentifierNameToken =
+type EscapeRequiredIdentifierToken =
     | VoidKeywordToken
     | StrictKeywordToken
     | PublicKeywordToken

@@ -39,18 +39,13 @@ export class AliasDirective extends Declaration {
     typeIdentifier?: EscapedIdentifier | IdentifierToken = undefined;
     typeScopeMemberAccessOperator?: PeriodToken = undefined;
 
-    target: MissableDeclarationReferenceIdentifier = undefined!;
+    target: DeclarationReferenceIdentifier | MissingToken = undefined!;
 }
 
 // NOTE: Does not include BoolKeywordToken.
-export type DeclarationReferenceIdentifier =
+type DeclarationReferenceIdentifier =
     | Identifier
     | IntKeywordToken
     | FloatKeywordToken
     | StringKeywordToken
-    ;
-
-export type MissableDeclarationReferenceIdentifier =
-    | DeclarationReferenceIdentifier
-    | MissingToken
     ;
