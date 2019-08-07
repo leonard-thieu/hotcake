@@ -73,10 +73,10 @@ export class Project {
     readonly boolTypeDeclaration: BoundIntrinsicTypeDeclaration;
     readonly intTypeDeclaration: BoundIntrinsicTypeDeclaration;
     readonly floatTypeDeclaration: BoundIntrinsicTypeDeclaration;
-    stringTypeDeclaration: BoundExternClassDeclaration | undefined = undefined;
-    arrayTypeDeclaration: BoundExternClassDeclaration | undefined = undefined;
-    objectTypeDeclaration: BoundExternClassDeclaration | undefined = undefined;
-    throwableTypeDeclaration: BoundExternClassDeclaration | undefined = undefined;
+    stringTypeDeclaration: BoundExternClassDeclaration = undefined!;
+    arrayTypeDeclaration: BoundExternClassDeclaration = undefined!;
+    objectTypeDeclaration: BoundExternClassDeclaration = undefined!;
+    throwableTypeDeclaration: BoundExternClassDeclaration = undefined!;
 
     private readonly moduleCache = new Map<string, BoundModuleDeclaration>();
     readonly arrayTypeCache = new Map<BoundTypeReferenceDeclaration, BoundExternClassDeclaration>();

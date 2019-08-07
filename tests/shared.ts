@@ -234,6 +234,10 @@ export function executeBinderTestCases(name: string, casesPath: string): void {
                 executeBaselineTestCase(outputPath, () => {
                     return getBoundTree(path.resolve(casesPath, sourceRelativePath), contents);
                 }, function (this: any, key, value) {
+                    if (!value) {
+                        return value;
+                    }
+
                     switch (this.kind) {
                         case BoundNodeKind.ModuleDeclaration: {
                             switch (key) {
@@ -254,19 +258,19 @@ export function executeBinderTestCases(name: string, casesPath: string): void {
                         case 'importedModules': {
                             const serializeAsModulePath = false;
 
-                            const module = this as BoundModuleDeclaration;
-                            if (module.identifier.name !== 'smokeTest') {
+                            const moduleDeclaration = this as BoundModuleDeclaration;
+                            if (moduleDeclaration.identifier.name !== 'smokeTest') {
                                 return undefined;
                             }
 
                             if (serializeAsModulePath) {
-                                const importedModules = value as typeof module[typeof key];
+                                const importedModules = value as typeof moduleDeclaration[typeof key];
 
                                 return Array.from(importedModules.values()).map(getModulePath);
                             }
 
                             // Prevent converting circular structure to JSON
-                            if (getModulePath(module) === 'monkey.lang') {
+                            if (getModulePath(moduleDeclaration) === 'monkey.lang') {
                                 return undefined;
                             }
 
@@ -287,8 +291,7 @@ export function executeBinderTestCases(name: string, casesPath: string): void {
                             break;
                         }
                         case 'declaration': {
-                            if (value &&
-                                value.kind === BoundNodeKind.ModuleDeclaration &&
+                            if (value.kind === BoundNodeKind.ModuleDeclaration &&
                                 value.identifier
                             ) {
                                 return value.identifier.name;
@@ -297,25 +300,20 @@ export function executeBinderTestCases(name: string, casesPath: string): void {
                             return undefined;
                         }
                         case 'identifier': {
-                            if (value) {
-                                return value.name;
-                            }
-                            break;
+                            return value.name;
                         }
                         case 'typeArguments': {
-                            if (value) {
-                                return value.map((typeArgument: any) => typeArgument.type);
-                            }
-                            break;
+                            const typeArguments = value as BoundClassDeclaration[typeof key];
+
+                            return typeArguments!.map((typeArgument) =>
+                                typeArgument.type
+                            );
                         }
                         case 'superType':
                         case 'returnType':
                         case 'typeAnnotation':
                         case 'typeReference': {
-                            if (value) {
-                                return value.type.toString();
-                            }
-                            break;
+                            return value.type.toString();
                         }
                         case 'implementedTypes': {
                             const implementedTypes = value as (BoundClassDeclaration | BoundInterfaceDeclaration)[typeof key];

@@ -1,6 +1,8 @@
 [
     "Declaration/aliasDirective.monkey",
     "Declaration/importStatement.monkey",
+    "forwardReferenceOfTypeMemberFromTypeMember.monkey",
     "instantiateTypeAfterSuperTypeIsSet.monkey",
+    "noSameTypeDuplicates.monkey",
     "smokeTest.monkey"
 ]

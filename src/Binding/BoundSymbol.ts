@@ -23,7 +23,7 @@ export class BoundSymbolTable extends Map<string, BoundSymbol> {
 
     getDeclaration<TKind extends BoundSymbol['declaration']['kind']>(
         key: string,
-        kind: TKind,
+        ...kinds: TKind[]
     ): BoundNodeKindToBoundNodeMap[TKind] | undefined {
         const value = this.get(key);
 
@@ -31,8 +31,14 @@ export class BoundSymbolTable extends Map<string, BoundSymbol> {
             return value;
         }
 
-        if (value.declaration.kind !== kind) {
-            throw new Error(`Expected '${key}' to be '${kind}' but got '${value.declaration.kind}'.`);
+        if (kinds.length) {
+            for (const kind of kinds) {
+                if (value.declaration.kind === kind) {
+                    return value.declaration;
+                }
+            }
+
+            throw new Error(`Expected '${key}' to be '${kinds.join(',')}' but got '${value.declaration.kind}'.`);
         }
 
         return value.declaration;

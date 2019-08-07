@@ -28,12 +28,22 @@ export class DiagnosticBag extends Set<Diagnostic> {
         this.add(diagnostic);
     }
 
-    traceBindingStart(kind: BoundNodeKind, name: string) {
-        this.trace(`- BIND ${kind} (${name})`);
+    traceBindingPhase1Start(kind: BoundNodeKind, name: string) {
+        this.trace(`- BIND1 ${kind} (${name})`);
         this.tabLevel++;
     }
 
-    traceBindingEnd() {
+    traceBindingPhase1End() {
+        this.trace(`complete: true`);
+        this.tabLevel--;
+    }
+
+    traceBindingPhase2Start(kind: BoundNodeKind, name: string) {
+        this.trace(`- BIND2 ${kind} (${name})`);
+        this.tabLevel++;
+    }
+
+    traceBindingPhase2End() {
         this.trace(`complete: true`);
         this.tabLevel--;
     }
@@ -49,7 +59,7 @@ export class DiagnosticBag extends Set<Diagnostic> {
     }
 }
 
-export function traceBinding(kind: BoundNodeKind) {
+export function traceBindingPhase1(kind: BoundNodeKind) {
     return function (_target: Binder, _propertyKey: string, descriptor: PropertyDescriptor) {
         const method = descriptor.value;
 
@@ -67,9 +77,38 @@ export function traceBinding(kind: BoundNodeKind) {
                 name = this.getIdentifierText(node.identifier);
             }
 
-            this.project.diagnostics.traceBindingStart(kind, name);
+            this.project.diagnostics.traceBindingPhase1Start(kind, name);
             const retVal = method.call(this, parent, node, ...args);
-            this.project.diagnostics.traceBindingEnd();
+            this.project.diagnostics.traceBindingPhase1End();
+
+            return retVal;
+        };
+    };
+}
+
+export function traceBindingPhase2(kind: BoundNodeKind) {
+    return function (_target: Binder, _propertyKey: string, descriptor: PropertyDescriptor) {
+        const method = descriptor.value;
+
+        type IdentifiableNode = Extract<
+            Nodes,
+            {
+                identifier: MissableIdentifier | NewKeywordToken;
+            }
+        >;
+        descriptor.value = function (this: Binder, parent: BoundNodes, node: IdentifiableNode | string, ...args: any[]) {
+            let name: string
+            if (typeof node === 'string') {
+                name = node;
+            } else if (typeof node === 'function' || !node) {
+                name = (parent as BoundIdentifiableDeclaration).identifier.name;
+            } else {
+                name = this.getIdentifierText(node.identifier);
+            }
+
+            this.project.diagnostics.traceBindingPhase2Start(kind, name);
+            const retVal = method.call(this, parent, node, ...args);
+            this.project.diagnostics.traceBindingPhase2End();
 
             return retVal;
         };
