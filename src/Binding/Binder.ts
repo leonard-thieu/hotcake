@@ -2133,7 +2133,7 @@ export class Binder {
                 } else {
                     const operator = forEachInLoop.operator as MissableToken<AssignmentOperatorToken>;
                     if (operator.kind === TokenKind.Missing) {
-                        throw new Error();
+                        throw new Error(`Missing assignment operator.`);
                     }
 
                     const indexVariableStatement = this.assignmentStatement(boundWhileLoop,
@@ -2232,7 +2232,7 @@ export class Binder {
                 } else {
                     const operator = forEachInLoop.operator as MissableToken<AssignmentOperatorToken>;
                     if (operator.kind === TokenKind.Missing) {
-                        throw new Error();
+                        throw new Error(`Missing assignment operator.`);
                     }
 
                     const indexVariableStatement = this.assignmentStatement(boundWhileLoop,
@@ -2261,7 +2261,7 @@ export class Binder {
                 break;
             }
             default: {
-                throw new Error(`Unexpected collection expression type: '${boundCollectionExpression.type.kind}'`);
+                throw new Error(`'${boundCollectionExpression.type.kind}' is not a collection type.`);
             }
         }
 
@@ -3557,35 +3557,22 @@ export class Binder {
         openType: BoundClassDeclaration,
         typeMap: TypeMap,
     ): BoundClassDeclaration {
-        let match = true;
+        const typeParameters = Array.from(typeMap.keys());
+        const typeArguments = Array.from(typeMap.values());
 
-        for (const [typeParameter, typeArgument] of typeMap) {
-            if (typeParameter !== typeArgument) {
-                match = false;
-                break;
-            }
-        }
-
-        if (match) {
+        if (areElementsSame(typeParameters, typeArguments,
+            (typeParameter, typeArgument) => typeParameter === typeArgument,
+        )) {
             return openType;
         }
 
         const rootType = openType.rootType!;
         const instantiatedTypes = rootType.instantiatedTypes!;
-        const typeArguments = Array.from(typeMap.values());
 
         for (const instantiatedType of instantiatedTypes) {
-            let match = true;
-
-            const instantiatedTypeTypeArguments = instantiatedType.typeArguments!;
-            for (let i = 0; i < instantiatedTypeTypeArguments.length; i++) {
-                if (typeArguments[i] !== instantiatedTypeTypeArguments[i]) {
-                    match = false;
-                    break;
-                }
-            }
-
-            if (match) {
+            if (areElementsSame(typeArguments, instantiatedType.typeArguments!,
+                (typeArgument, instantiatedTypeTypeArgument) => typeArgument === instantiatedTypeTypeArgument,
+            )) {
                 return instantiatedType;
             }
         }
@@ -4643,6 +4630,20 @@ export class Binder {
     }
 
     // #endregion
+}
+
+function areElementsSame<T1, T2>(arr1: T1[], arr2: T2[], compare: ((e1: T1, e2: T2) => boolean)) {
+    if (arr1.length === arr2.length) {
+        return false;
+    }
+
+    for (let i = 0; i < arr1.length; i++) {
+        if (!compare(arr1[i], arr2[i])) {
+            return false;
+        }
+    }
+
+    return true;
 }
 
 export function getMethod(
