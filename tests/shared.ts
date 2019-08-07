@@ -13,6 +13,7 @@ import { BoundFunctionLikeGroupDeclaration } from '../src/Binding/Node/Declarati
 import { BoundInterfaceDeclaration } from '../src/Binding/Node/Declaration/BoundInterfaceDeclaration';
 import { BoundModuleDeclaration } from '../src/Binding/Node/Declaration/BoundModuleDeclaration';
 import { Type } from '../src/Binding/Type/Type';
+import { DiagnosticBag } from '../src/Diagnostics';
 import { Project } from '../src/Project';
 import { ModuleDeclaration } from '../src/Syntax/Node/Declaration/ModuleDeclaration';
 import { PreprocessorModuleDeclaration } from '../src/Syntax/Node/Declaration/PreprocessorModuleDeclaration';
@@ -106,9 +107,19 @@ export function executeBaselineTestCase(outputPath: string, testCallback: () => 
 
         const json = JSON.stringify(result, replacer, /*space*/ 4);
         fs.writeFileSync(outputPath, json);
+
+        if (result.project) {
+            writeDiagnostics(result.project.diagnostics);
+        }
     } catch (error) {
-        if (error.diagnostics) {
-            const diagnosticsOutput = Array.from(error.diagnostics.values()).map((diagnostic: any) =>
+        writeDiagnostics(error.diagnostics);
+
+        throw error;
+    }
+
+    function writeDiagnostics(diagnostics: DiagnosticBag | undefined) {
+        if (diagnostics) {
+            const diagnosticsOutput = Array.from(diagnostics.values()).map((diagnostic) =>
                 diagnostic.message
             ).join(os.EOL);
 
@@ -119,8 +130,6 @@ export function executeBaselineTestCase(outputPath: string, testCallback: () => 
 
             fs.writeFileSync(outputPath, diagnosticsOutput);
         }
-
-        throw error;
     }
 }
 
