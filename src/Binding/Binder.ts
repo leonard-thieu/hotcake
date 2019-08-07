@@ -1,3 +1,4 @@
+import { traceBinding, traceInstantiating } from '../Diagnostics';
 import { Evaluator } from '../Evaluator';
 import { Project } from '../Project';
 import { CommaSeparator } from '../Syntax/Node/CommaSeparator';
@@ -109,43 +110,41 @@ export class Binder {
     private filePath: string = undefined!;
 
     private document: string = undefined!;
-    private project: Project = undefined!;
+    project: Project = undefined!;
     private module: BoundModuleDeclaration = undefined!;
 
     bind(
         moduleDeclaration: ModuleDeclaration,
         project: Project,
-        boundDirectory: BoundDirectory,
-        moduleIdentifier: string,
+        moduleDirectory: BoundDirectory,
+        moduleName: string,
     ): BoundModuleDeclaration {
         this.filePath = moduleDeclaration.filePath.substr(0, moduleDeclaration.filePath.lastIndexOf('.'));
 
         this.document = moduleDeclaration.document;
         this.project = project;
 
-        return this.bindModuleDeclaration(moduleDeclaration, project, boundDirectory, moduleIdentifier);
+        return this.bindModuleDeclaration(moduleDirectory, moduleName, moduleDeclaration, project);
     }
 
     // #region Declarations
 
     // #region Module declaration
 
+    @traceBinding(BoundNodeKind.ModuleDeclaration)
     private bindModuleDeclaration(
+        directory: BoundDirectory,
+        name: string,
         moduleDeclaration: ModuleDeclaration,
         project: Project,
-        boundDirectory: BoundDirectory,
-        moduleIdentifier: string,
     ): BoundModuleDeclaration {
-        this.project.diagnostics.traceBindingStart(BoundNodeKind.ModuleDeclaration, moduleIdentifier);
-
         const boundModuleDeclaration = new BoundModuleDeclaration();
         boundModuleDeclaration.declaration = moduleDeclaration;
         boundModuleDeclaration.project = project;
-        boundModuleDeclaration.directory = boundDirectory;
+        boundModuleDeclaration.directory = directory;
         boundModuleDeclaration.type = new ModuleType(boundModuleDeclaration);
-
-        boundModuleDeclaration.identifier = new BoundSymbol(moduleIdentifier, boundModuleDeclaration);
-        boundDirectory.locals.set(boundModuleDeclaration.identifier);
+        boundModuleDeclaration.identifier = new BoundSymbol(name, boundModuleDeclaration);
+        directory.locals.set(boundModuleDeclaration.identifier);
 
         this.module = boundModuleDeclaration;
         this.project.cacheModule(boundModuleDeclaration);
@@ -154,8 +153,6 @@ export class Binder {
 
         this.bindModuleDeclarationHeaderMembers(moduleDeclaration.headerMembers);
         this.bindModuleDeclarationMembers(boundModuleDeclaration, moduleDeclaration.members);
-
-        this.project.diagnostics.traceBindingEnd();
 
         return boundModuleDeclaration;
     }
@@ -335,6 +332,7 @@ export class Binder {
         return boundExternDataDeclarations;
     }
 
+    @traceBinding(BoundNodeKind.ExternDataDeclaration)
     private bindExternDataDeclaration(
         parent: BoundModuleDeclaration | BoundExternClassDeclaration,
         externDataDeclaration: ExternDataDeclaration,
@@ -346,8 +344,6 @@ export class Binder {
         if (boundExternDataDeclaration) {
             return boundExternDataDeclaration;
         }
-
-        this.project.diagnostics.traceBindingStart(BoundNodeKind.ExternDataDeclaration, name);
 
         boundExternDataDeclaration = new BoundExternDataDeclaration();
         boundExternDataDeclaration.parent = parent;
@@ -365,8 +361,6 @@ export class Binder {
             boundExternDataDeclaration.nativeSymbol = this.bindStringLiteralExpression(boundExternDataDeclaration, externDataDeclaration.nativeSymbol);
         }
 
-        this.project.diagnostics.traceBindingEnd();
-
         return boundExternDataDeclaration;
     }
 
@@ -374,13 +368,12 @@ export class Binder {
 
     // #region Extern function declaration
 
+    @traceBinding(BoundNodeKind.ExternFunctionGroupDeclaration)
     private bindExternFunctionGroup(
         parent: BoundModuleDeclaration | BoundExternClassDeclaration,
         name: string,
         members: ModuleDeclarationMember[] | ExternClassDeclarationMember[],
     ): BoundExternFunctionGroupDeclaration {
-        this.project.diagnostics.traceBindingStart(BoundNodeKind.ExternFunctionGroupDeclaration, name);
-
         const boundExternFunctionGroupDeclaration = this.bindExternFunctionGroupDeclaration(parent, name);
 
         for (const member of members) {
@@ -391,8 +384,6 @@ export class Binder {
                 }
             }
         }
-
-        this.project.diagnostics.traceBindingEnd();
 
         return boundExternFunctionGroupDeclaration;
     }
@@ -415,6 +406,7 @@ export class Binder {
         return boundExternFunctionGroupDeclaration;
     }
 
+    @traceBinding(BoundNodeKind.ExternFunctionDeclaration)
     private bindExternFunctionDeclaration(
         parent: BoundExternFunctionGroupDeclaration,
         externFunctionDeclaration: ExternFunctionDeclaration,
@@ -425,7 +417,6 @@ export class Binder {
         }
 
         const name = this.getIdentifierText(externFunctionDeclaration.identifier);
-        this.project.diagnostics.traceBindingStart(BoundNodeKind.ExternFunctionDeclaration, name);
 
         boundExternFunctionDeclaration = new BoundExternFunctionDeclaration();
         boundExternFunctionDeclaration.declaration = externFunctionDeclaration;
@@ -444,8 +435,6 @@ export class Binder {
             boundExternFunctionDeclaration.nativeSymbol = this.bindStringLiteralExpression(boundExternFunctionDeclaration, externFunctionDeclaration.nativeSymbol);
         }
 
-        this.project.diagnostics.traceBindingEnd();
-
         return boundExternFunctionDeclaration;
     }
 
@@ -453,6 +442,7 @@ export class Binder {
 
     // #region Extern class declaration
 
+    @traceBinding(BoundNodeKind.ExternClassDeclaration)
     private bindExternClassDeclaration(
         parent: BoundModuleDeclaration,
         externClassDeclaration: ExternClassDeclaration,
@@ -463,8 +453,6 @@ export class Binder {
         if (boundExternClassDeclaration) {
             return boundExternClassDeclaration;
         }
-
-        this.project.diagnostics.traceBindingStart(BoundNodeKind.ExternFunctionGroupDeclaration, name);
 
         boundExternClassDeclaration = new BoundExternClassDeclaration();
         boundExternClassDeclaration.declaration = externClassDeclaration;
@@ -516,8 +504,6 @@ export class Binder {
         if (!this.hasParameterlessExternConstructor(boundExternClassDeclaration)) {
             this.createParameterlessExternConstructor(boundExternClassDeclaration);
         }
-
-        this.project.diagnostics.traceBindingEnd();
 
         return boundExternClassDeclaration;
     }
@@ -588,13 +574,12 @@ export class Binder {
 
     // #region Extern class method declaration
 
+    @traceBinding(BoundNodeKind.ExternClassMethodGroupDeclaration)
     private bindExternClassMethodGroup(
         parent: BoundExternClassDeclaration,
         name: string,
         members: ExternClassDeclarationMember[],
     ): BoundExternClassMethodGroupDeclaration {
-        this.project.diagnostics.traceBindingStart(BoundNodeKind.ExternClassMethodDeclaration, name);
-
         const boundExternClassMethodGroupDeclaration = this.bindBoundExternClassMethodGroupDeclaration(parent, name);
 
         for (const member of members) {
@@ -605,8 +590,6 @@ export class Binder {
                 }
             }
         }
-
-        this.project.diagnostics.traceBindingEnd();
 
         return boundExternClassMethodGroupDeclaration;
     }
@@ -629,6 +612,7 @@ export class Binder {
         return boundExternClassMethodGroupDeclaration;
     }
 
+    @traceBinding(BoundNodeKind.ExternClassMethodDeclaration)
     private bindExternClassMethodDeclaration(
         parent: BoundExternClassMethodGroupDeclaration,
         externClassMethodDeclaration: ExternClassMethodDeclaration,
@@ -639,7 +623,6 @@ export class Binder {
         }
 
         const name = this.getIdentifierText(externClassMethodDeclaration.identifier);
-        this.project.diagnostics.traceBindingStart(BoundNodeKind.ExternClassMethodDeclaration, name);
 
         boundExternClassMethodDeclaration = new BoundExternClassMethodDeclaration();
         boundExternClassMethodDeclaration.declaration = externClassMethodDeclaration;
@@ -663,8 +646,6 @@ export class Binder {
 
             boundExternClassMethodDeclaration.nativeSymbol = this.bindStringLiteralExpression(boundExternClassMethodDeclaration, externClassMethodDeclaration.nativeSymbol);
         }
-
-        this.project.diagnostics.traceBindingEnd();
 
         return boundExternClassMethodDeclaration;
     }
@@ -701,6 +682,7 @@ export class Binder {
 
     // #region Data declaration
 
+    @traceBinding(BoundNodeKind.DataDeclaration)
     private bindDataDeclaration(
         parent: BoundNodes,
         dataDeclaration: DataDeclaration,
@@ -718,12 +700,10 @@ export class Binder {
             }
         }
 
-        let boundDataDeclaration = scope.locals.getDeclaration(name, BoundNodeKind.DataDeclaration);
+        const boundDataDeclaration = scope.locals.getDeclaration(name, BoundNodeKind.DataDeclaration);
         if (boundDataDeclaration) {
             return boundDataDeclaration;
         }
-
-        this.project.diagnostics.traceBindingStart(BoundNodeKind.DataDeclaration, name);
 
         let declarationKind: BoundDataDeclaration['declarationKind'] = null;
         if (dataDeclarationKeyword) {
@@ -741,7 +721,7 @@ export class Binder {
             getExpression = (parent) => this.bindExpression(parent, expression);
         }
 
-        boundDataDeclaration = this.dataDeclaration(parent,
+        return this.dataDeclaration(parent,
             {
                 name,
                 declarationKind,
@@ -750,10 +730,6 @@ export class Binder {
                 getExpression,
             },
         );
-
-        this.project.diagnostics.traceBindingEnd();
-
-        return boundDataDeclaration;
     }
 
     private dataDeclaration(
@@ -828,13 +804,12 @@ export class Binder {
 
     // #region Function declaration
 
+    @traceBinding(BoundNodeKind.FunctionGroupDeclaration)
     private bindFunctionGroup(
         parent: BoundModuleDeclaration | BoundClassDeclaration,
         name: string,
         members: ModuleDeclarationMember[] | ClassDeclarationMember[],
     ): BoundFunctionGroupDeclaration {
-        this.project.diagnostics.traceBindingStart(BoundNodeKind.FunctionGroupDeclaration, name);
-
         const boundFunctionGroupDeclaration = this.bindFunctionGroupDeclaration(parent, name);
 
         for (const member of members) {
@@ -845,8 +820,6 @@ export class Binder {
                 }
             }
         }
-
-        this.project.diagnostics.traceBindingEnd();
 
         return boundFunctionGroupDeclaration;
     }
@@ -869,6 +842,7 @@ export class Binder {
         return boundFunctionGroupDeclaration;
     }
 
+    @traceBinding(BoundNodeKind.FunctionDeclaration)
     private bindFunctionDeclaration(
         parent: BoundFunctionGroupDeclaration,
         functionDeclaration: FunctionDeclaration,
@@ -879,7 +853,6 @@ export class Binder {
         }
 
         const name = this.getIdentifierText(functionDeclaration.identifier);
-        this.project.diagnostics.traceBindingStart(BoundNodeKind.FunctionDeclaration, name);
 
         boundFunctionDeclaration = new BoundFunctionDeclaration();
         boundFunctionDeclaration.declaration = functionDeclaration;
@@ -891,8 +864,6 @@ export class Binder {
         boundFunctionDeclaration.parameters = this.bindDataDeclarationSequence(boundFunctionDeclaration, functionDeclaration.parameters);
         boundFunctionDeclaration.statements = this.bindStatements(boundFunctionDeclaration, functionDeclaration.statements);
 
-        this.project.diagnostics.traceBindingEnd();
-
         return boundFunctionDeclaration;
     }
 
@@ -900,6 +871,7 @@ export class Binder {
 
     // #region Interface declaration
 
+    @traceBinding(BoundNodeKind.InterfaceDeclaration)
     private bindInterfaceDeclaration(
         parent: BoundModuleDeclaration,
         interfaceDeclaration: InterfaceDeclaration,
@@ -910,8 +882,6 @@ export class Binder {
         if (boundInterfaceDeclaration) {
             return boundInterfaceDeclaration;
         }
-
-        this.project.diagnostics.traceBindingStart(BoundNodeKind.InterfaceDeclaration, name);
 
         boundInterfaceDeclaration = new BoundInterfaceDeclaration();
         boundInterfaceDeclaration.declaration = interfaceDeclaration;
@@ -927,8 +897,6 @@ export class Binder {
         }
 
         this.bindInterfaceDeclarationMembers(boundInterfaceDeclaration, interfaceDeclaration.members);
-
-        this.project.diagnostics.traceBindingEnd();
 
         return boundInterfaceDeclaration;
     }
@@ -962,13 +930,12 @@ export class Binder {
 
     // #region Interface method declaration
 
+    @traceBinding(BoundNodeKind.InterfaceMethodGroupDeclaration)
     private bindInterfaceMethodGroup(
         parent: BoundInterfaceDeclaration,
         name: string,
         members: InterfaceDeclarationMember[],
     ): BoundInterfaceMethodGroupDeclaration {
-        this.project.diagnostics.traceBindingStart(BoundNodeKind.InterfaceMethodGroupDeclaration, name);
-
         const boundInterfaceMethodGroupDeclaration = this.bindInterfaceMethodGroupDeclaration(parent, name);
 
         for (const member of members) {
@@ -979,8 +946,6 @@ export class Binder {
                 }
             }
         }
-
-        this.project.diagnostics.traceBindingEnd();
 
         return boundInterfaceMethodGroupDeclaration;
     }
@@ -1000,6 +965,7 @@ export class Binder {
         return boundInterfaceMethodGroupDeclaration;
     }
 
+    @traceBinding(BoundNodeKind.InterfaceMethodDeclaration)
     private bindInterfaceMethodDeclaration(
         boundInterfaceMethodGroupDeclaration: BoundInterfaceMethodGroupDeclaration,
         interfaceMethodDeclaration: InterfaceMethodDeclaration,
@@ -1010,7 +976,6 @@ export class Binder {
         }
 
         const name = this.getIdentifierText(interfaceMethodDeclaration.identifier);
-        this.project.diagnostics.traceBindingStart(BoundNodeKind.InterfaceMethodDeclaration, name);
 
         boundInterfaceMethodDeclaration = new BoundInterfaceMethodDeclaration();
         boundInterfaceMethodDeclaration.declaration = interfaceMethodDeclaration;
@@ -1021,8 +986,6 @@ export class Binder {
         boundInterfaceMethodDeclaration.returnType = this.bindTypeAnnotation(interfaceMethodDeclaration.returnType);
         boundInterfaceMethodDeclaration.parameters = this.bindDataDeclarationSequence(boundInterfaceMethodDeclaration, interfaceMethodDeclaration.parameters);
 
-        this.project.diagnostics.traceBindingEnd();
-
         return boundInterfaceMethodDeclaration;
     }
 
@@ -1032,6 +995,7 @@ export class Binder {
 
     // #region Class declaration
 
+    @traceBinding(BoundNodeKind.ClassDeclaration)
     private bindClassDeclaration(
         parent: BoundModuleDeclaration,
         classDeclaration: ClassDeclaration,
@@ -1042,8 +1006,6 @@ export class Binder {
         if (boundClassDeclaration) {
             return boundClassDeclaration;
         }
-
-        this.project.diagnostics.traceBindingStart(BoundNodeKind.ClassDeclaration, name);
 
         boundClassDeclaration = new BoundClassDeclaration();
         boundClassDeclaration.declaration = classDeclaration;
@@ -1078,8 +1040,6 @@ export class Binder {
         if (!this.hasParameterlessConstructor(boundClassDeclaration)) {
             this.createParameterlessConstructor(boundClassDeclaration);
         }
-
-        this.project.diagnostics.traceBindingEnd();
 
         return boundClassDeclaration;
     }
@@ -1197,13 +1157,12 @@ export class Binder {
 
     // #region Class method declaration
 
+    @traceBinding(BoundNodeKind.ClassMethodGroupDeclaration)
     private bindClassMethodGroup(
         parent: BoundClassDeclaration,
         name: string,
         members: ClassDeclaration['members'],
     ): BoundClassMethodGroupDeclaration {
-        this.project.diagnostics.traceBindingStart(BoundNodeKind.ClassMethodGroupDeclaration, name);
-
         const boundClassMethodGroupDeclaration = this.bindBoundClassMethodGroupDeclaration(parent, name);
 
         for (const member of members) {
@@ -1214,8 +1173,6 @@ export class Binder {
                 }
             }
         }
-
-        this.project.diagnostics.traceBindingEnd();
 
         return boundClassMethodGroupDeclaration;
     }
@@ -1235,6 +1192,7 @@ export class Binder {
         return boundClassMethodGroupDeclaration;
     }
 
+    @traceBinding(BoundNodeKind.ClassMethodDeclaration)
     private bindClassMethodDeclaration(
         parent: BoundClassMethodGroupDeclaration,
         classMethodDeclaration: ClassMethodDeclaration,
@@ -1245,7 +1203,6 @@ export class Binder {
         }
 
         const name = this.getIdentifierText(classMethodDeclaration.identifier);
-        this.project.diagnostics.traceBindingStart(BoundNodeKind.ClassMethodDeclaration, name);
 
         boundClassMethodDeclaration = new BoundClassMethodDeclaration();
         boundClassMethodDeclaration.declaration = classMethodDeclaration;
@@ -1265,8 +1222,6 @@ export class Binder {
         if (classMethodDeclaration.statements) {
             boundClassMethodDeclaration.statements = this.bindStatements(boundClassMethodDeclaration, classMethodDeclaration.statements);
         }
-
-        this.project.diagnostics.traceBindingEnd();
 
         return boundClassMethodDeclaration;
     }
@@ -3321,6 +3276,7 @@ export class Binder {
         }
     }
 
+    @traceInstantiating(BoundNodeKind.ExternClassDeclaration)
     private instantiateArrayType(elementType: BoundTypeReferenceDeclaration): BoundExternClassDeclaration {
         let instantiatedType = this.project.arrayTypeCache.get(elementType);
         if (instantiatedType) {
@@ -3328,8 +3284,6 @@ export class Binder {
         }
 
         const openType = this.resolveSpecialType(SpecialType.Array);
-
-        this.project.diagnostics.traceInstantiateStart(openType.kind, openType.identifier.name);
 
         instantiatedType = new BoundExternClassDeclaration();
         this.project.arrayTypeCache.set(elementType, instantiatedType);
@@ -3361,8 +3315,6 @@ export class Binder {
             }
         }
 
-        this.project.diagnostics.traceInstantiateEnd();
-
         return instantiatedType;
     }
 
@@ -3388,6 +3340,7 @@ export class Binder {
         return typeMap;
     }
 
+    @traceInstantiating(BoundNodeKind.ClassDeclaration)
     private instantiateGenericType(
         openType: BoundClassDeclaration,
         typeMap: TypeMap,
@@ -3424,8 +3377,6 @@ export class Binder {
                 return instantiatedType;
             }
         }
-
-        this.project.diagnostics.traceInstantiateStart(openType.kind, openType.identifier.name);
 
         const instantiatedType = new BoundClassDeclaration();
         instantiatedType.declaration = openType.declaration;
@@ -3470,13 +3421,12 @@ export class Binder {
             }
         }
 
-        this.project.diagnostics.traceInstantiateEnd();
-
         return instantiatedType;
     }
 
     // #region Instantiate data declaration
 
+    @traceInstantiating(BoundNodeKind.DataDeclaration)
     private instantiateDataDeclaration(
         parent: BoundNodes,
         boundDataDeclaration: BoundDataDeclaration,
@@ -3498,8 +3448,6 @@ export class Binder {
         if (instantiatedDataDeclaration) {
             return instantiatedDataDeclaration;
         }
-
-        this.project.diagnostics.traceInstantiateStart(boundDataDeclaration.kind, name);
 
         let getTypeAnnotation: GetBoundNode<BoundTypeReferenceDeclaration> | undefined = undefined;
         if (boundDataDeclaration.typeAnnotation) {
@@ -3523,8 +3471,6 @@ export class Binder {
             },
         );
 
-        this.project.diagnostics.traceInstantiateEnd();
-
         return instantiatedDataDeclaration;
     }
 
@@ -3532,13 +3478,13 @@ export class Binder {
 
     // #region Instantiate function declaration
 
+    @traceInstantiating(BoundNodeKind.FunctionGroupDeclaration)
     private instantiateFunctionGroupDeclaration(
         parent: BoundClassDeclaration,
         boundFunctionGroupDeclaration: BoundFunctionGroupDeclaration,
         typeMap: TypeMap,
     ): BoundFunctionGroupDeclaration {
         const { name } = boundFunctionGroupDeclaration.identifier;
-        this.project.diagnostics.traceInstantiateStart(boundFunctionGroupDeclaration.kind, name);
 
         const instantiatedFunctionGroupDeclaration = new BoundFunctionGroupDeclaration();
         instantiatedFunctionGroupDeclaration.parent = parent;
@@ -3550,18 +3496,16 @@ export class Binder {
             this.instantiateFunctionDeclaration(instantiatedFunctionGroupDeclaration, overload, typeMap);
         }
 
-        this.project.diagnostics.traceInstantiateEnd();
-
         return instantiatedFunctionGroupDeclaration;
     }
 
+    @traceInstantiating(BoundNodeKind.FunctionDeclaration)
     private instantiateFunctionDeclaration(
         parent: BoundFunctionGroupDeclaration,
         boundFunctionDeclaration: BoundFunctionDeclaration,
         typeMap: TypeMap,
     ): BoundFunctionDeclaration {
         const { name } = boundFunctionDeclaration.identifier;
-        this.project.diagnostics.traceInstantiateStart(boundFunctionDeclaration.kind, name);
 
         const instantiatedFunctionDeclaration = new BoundFunctionDeclaration();
         instantiatedFunctionDeclaration.declaration = boundFunctionDeclaration.declaration;
@@ -3577,8 +3521,6 @@ export class Binder {
             this.instantiateStatement(instantiatedFunctionDeclaration, statement, typeMap)
         );
 
-        this.project.diagnostics.traceInstantiateEnd();
-
         return instantiatedFunctionDeclaration;
     }
 
@@ -3586,6 +3528,7 @@ export class Binder {
 
     // #region Instantiate class method declaration
 
+    @traceInstantiating(BoundNodeKind.ClassMethodGroupDeclaration)
     private instantiateClassMethodGroupDeclaration(
         parent: BoundClassDeclaration,
         boundClassMethodGroupDeclaration: BoundClassMethodGroupDeclaration,
@@ -3598,8 +3541,6 @@ export class Binder {
             return instantiatedClassMethodGroupDeclaration;
         }
 
-        this.project.diagnostics.traceInstantiateStart(boundClassMethodGroupDeclaration.kind, name);
-
         instantiatedClassMethodGroupDeclaration = new BoundClassMethodGroupDeclaration();
         instantiatedClassMethodGroupDeclaration.parent = parent;
         instantiatedClassMethodGroupDeclaration.type = new MethodGroupType(instantiatedClassMethodGroupDeclaration);
@@ -3610,18 +3551,15 @@ export class Binder {
             this.instantiateClassMethodDeclaration(instantiatedClassMethodGroupDeclaration, overload, typeMap);
         }
 
-        this.project.diagnostics.traceInstantiateEnd();
-
         return instantiatedClassMethodGroupDeclaration;
     }
 
+    @traceInstantiating(BoundNodeKind.ClassMethodDeclaration)
     private instantiateClassMethodDeclaration(
         parent: BoundClassMethodGroupDeclaration,
         boundClassMethodDeclaration: BoundClassMethodDeclaration,
         typeMap: TypeMap,
     ): BoundClassMethodDeclaration {
-        this.project.diagnostics.traceInstantiateStart(boundClassMethodDeclaration.kind, boundClassMethodDeclaration.identifier.name);
-
         const instantiatedClassMethodDeclaration = new BoundClassMethodDeclaration();
         instantiatedClassMethodDeclaration.declaration = boundClassMethodDeclaration.declaration;
         parent.overloads.set(instantiatedClassMethodDeclaration);
@@ -3638,8 +3576,6 @@ export class Binder {
                 this.instantiateStatement(instantiatedClassMethodDeclaration, statement, typeMap)
             );
         }
-
-        this.project.diagnostics.traceInstantiateEnd();
 
         return instantiatedClassMethodDeclaration;
     }
@@ -4194,7 +4130,7 @@ export class Binder {
 
     // #region Symbols
 
-    private getIdentifierText(identifier: MissableIdentifier | NewKeywordToken, document: string = this.document) {
+    getIdentifierText(identifier: MissableIdentifier | NewKeywordToken, document: string = this.document) {
         switch (identifier.kind) {
             case NodeKind.EscapedIdentifier: {
                 return identifier.name.getText(document);
