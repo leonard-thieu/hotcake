@@ -4139,7 +4139,62 @@ export class Binder {
 
     // #region Core
 
-    // #region Type reference sequence
+    // #region Type resolution
+
+    private bindTypeAnnotation(
+        node: BoundNodes,
+        typeAnnotation: TypeAnnotation | undefined,
+    ) {
+        if (!typeAnnotation) {
+            return this.project.intTypeDeclaration;
+        }
+
+        switch (typeAnnotation.kind) {
+            case NodeKind.ShorthandTypeAnnotation: {
+                const { arrayTypeAnnotations, shorthandType } = typeAnnotation;
+
+                let type: BoundDeclarations;
+
+                if (!shorthandType) {
+                    type = this.project.intTypeDeclaration;
+                } else {
+                    type = this.bindShorthandType(shorthandType);
+                }
+
+                for (const { } of arrayTypeAnnotations) {
+                    type = this.instantiateArrayType(type);
+                }
+
+                return type;
+            }
+            case NodeKind.LonghandTypeAnnotation: {
+                return this.bindTypeReference(node, typeAnnotation.typeReference);
+            }
+            default: {
+                return assertNever(typeAnnotation);
+            }
+        }
+    }
+
+    private bindShorthandType(shorthandType: ShorthandTypeToken) {
+        switch (shorthandType.kind) {
+            case TokenKind.QuestionMark: {
+                return this.project.boolTypeDeclaration;
+            }
+            case TokenKind.PercentSign: {
+                return this.project.intTypeDeclaration;
+            }
+            case TokenKind.NumberSign: {
+                return this.project.floatTypeDeclaration;
+            }
+            case TokenKind.DollarSign: {
+                return this.project.stringTypeDeclaration;
+            }
+            default: {
+                return assertNever(shorthandType);
+            }
+        }
+    }
 
     private bindTypeReferenceSequence<TKind extends BoundTypeReferenceDeclaration['kind']>(
         node: BoundNodes,
@@ -4537,61 +4592,6 @@ export class Binder {
     }
 
     // #endregion
-
-    private bindTypeAnnotation(
-        node: BoundNodes,
-        typeAnnotation: TypeAnnotation | undefined,
-    ) {
-        if (!typeAnnotation) {
-            return this.project.intTypeDeclaration;
-        }
-
-        switch (typeAnnotation.kind) {
-            case NodeKind.ShorthandTypeAnnotation: {
-                const { arrayTypeAnnotations, shorthandType } = typeAnnotation;
-
-                let type: BoundDeclarations;
-
-                if (!shorthandType) {
-                    type = this.project.intTypeDeclaration;
-                } else {
-                    type = this.bindShorthandType(shorthandType);
-                }
-
-                for (const { } of arrayTypeAnnotations) {
-                    type = this.instantiateArrayType(type);
-                }
-
-                return type;
-            }
-            case NodeKind.LonghandTypeAnnotation: {
-                return this.bindTypeReference(node, typeAnnotation.typeReference);
-            }
-            default: {
-                return assertNever(typeAnnotation);
-            }
-        }
-    }
-
-    private bindShorthandType(shorthandType: ShorthandTypeToken) {
-        switch (shorthandType.kind) {
-            case TokenKind.QuestionMark: {
-                return this.project.boolTypeDeclaration;
-            }
-            case TokenKind.PercentSign: {
-                return this.project.intTypeDeclaration;
-            }
-            case TokenKind.NumberSign: {
-                return this.project.floatTypeDeclaration;
-            }
-            case TokenKind.DollarSign: {
-                return this.project.stringTypeDeclaration;
-            }
-            default: {
-                return assertNever(shorthandType);
-            }
-        }
-    }
 
     private getBalancedType(leftOperandType: Types, rightOperandType: Types) {
         if (leftOperandType === this.project.stringTypeDeclaration.type ||
