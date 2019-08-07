@@ -2889,12 +2889,17 @@ export class Binder {
         identifierExpression: IdentifierExpression,
         scope?: BoundMemberContainerDeclaration,
     ): BoundIdentifierExpression {
+        let boundTypeArguments: BoundTypeReferenceDeclaration[] | undefined = undefined;
+        if (identifierExpression.typeArguments) {
+            boundTypeArguments = this.bindTypeReferenceSequence(identifierExpression.typeArguments);
+        }
+
         return this.identifierExpression(parent,
             (parent) => this.resolveIdentifier(
                 parent,
                 identifierExpression.identifier,
                 scope,
-                identifierExpression.typeArguments,
+                boundTypeArguments,
             ),
         );
     }
@@ -3031,7 +3036,6 @@ export class Binder {
     ): BoundIndexExpression {
         const boundIndexExpression = new BoundIndexExpression();
         boundIndexExpression.parent = parent;
-
         boundIndexExpression.indexableExpression = getIndexableExpression(boundIndexExpression);
         boundIndexExpression.indexExpressionExpression = getIndexExpressionExpression(boundIndexExpression);
 
@@ -3324,18 +3328,6 @@ export class Binder {
         }
 
         const openType = this.resolveSpecialType(SpecialType.Array);
-
-        if (!openType.declaration) {
-            for (const member of this.module.declaration.members) {
-                if (member.kind === NodeKind.ExternClassDeclaration) {
-                    const identifierText = this.getIdentifierText(member.identifier);
-                    if (identifierText === 'Array') {
-                        this.bindExternClassDeclaration(this.module, member);
-                        break;
-                    }
-                }
-            }
-        }
 
         this.project.diagnostics.traceInstantiateStart(openType.kind, openType.identifier.name);
 
@@ -4210,7 +4202,7 @@ export class Binder {
         node: BoundNodes,
         identifier: IdentifierExpressionIdentifier,
         scope?: BoundMemberContainerDeclaration,
-        typeArguments?: (TypeReference | CommaSeparator)[],
+        typeArguments?: BoundTypeReferenceDeclaration[],
     ) {
         // When binding `member` on `ScopeMemberAccessExpression`.
         if (scope) {
@@ -4261,7 +4253,7 @@ export class Binder {
         node: BoundNodes,
         name: string,
         scope?: BoundMemberContainerDeclaration,
-        typeArguments?: (TypeReference | CommaSeparator)[],
+        typeArguments?: BoundTypeReferenceDeclaration[],
     ) {
         if (scope) {
             const declaration = this.resolveIdentifierOnScope(name, scope);
@@ -4284,8 +4276,7 @@ export class Binder {
                     throw new Error(`'${name}' is not a generic class.`);
                 }
 
-                const boundTypeArguments = this.bindTypeReferenceSequence(typeArguments);
-                const typeMap = this.createTypeMap(declaration, boundTypeArguments);
+                const typeMap = this.createTypeMap(declaration, typeArguments);
                 declaration = this.instantiateGenericType(declaration, typeMap);
             }
 
@@ -4399,11 +4390,7 @@ export class Binder {
     private getScope(node: BoundNodes): Scope | undefined {
         let ancestor = node.parent;
 
-        while (true) {
-            if (!ancestor) {
-                return undefined;
-            }
-
+        while (ancestor) {
             if (this.isScope(ancestor)) {
                 return ancestor;
             }
