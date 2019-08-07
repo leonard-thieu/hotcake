@@ -3880,9 +3880,25 @@ export class Binder {
                     }
 
                     case BoundNodeKind.DataDeclaration: {
-                        // TODO: `parent` is not the parent of the data declaration. Need to locate correct parent.
-                        //       Didn't eager binding run into the same scenario? Check what was done there.
-                        instantiatedDeclaration = this.instantiateDataDeclaration(parent, declaration, typeMap);
+                        if (scope) {
+                            instantiatedDeclaration = this.instantiateDataDeclaration(scope, declaration, typeMap);
+                        } else {
+                            switch (declaration.parent!.kind) {
+                                case BoundNodeKind.ModuleDeclaration:
+                                case BoundNodeKind.ClassDeclaration: {
+                                    const dataDeclarationParent = this.getNearestAncestor(parent,
+                                        BoundNodeKind.ModuleDeclaration,
+                                        BoundNodeKind.ClassDeclaration,
+                                    );
+                                    instantiatedDeclaration = this.instantiateDataDeclaration(dataDeclarationParent, declaration, typeMap);
+                                    break;
+                                }
+                                default: {
+                                    instantiatedDeclaration = (parent) => this.resolveIdentifierName(parent, expression.identifier.name, scope);
+                                    break;
+                                }
+                            }
+                        }
                         break;
                     }
                     case BoundNodeKind.ClassMethodGroupDeclaration: {
@@ -4257,11 +4273,11 @@ export class Binder {
     ) {
         if (scope) {
             const declaration = this.resolveIdentifierOnScope(name, scope);
-            if (declaration) {
-                return declaration;
+            if (!declaration) {
+                throw new Error(`'${name}' does not exist on '${scope.type}'.`);
             }
 
-            throw new Error(`'${name}' does not exist on '${scope.type}'.`);
+            return declaration;
         } else {
             let declaration = this.resolveIdentifierFromNode(name, node);
             if (!declaration) {
