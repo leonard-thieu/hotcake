@@ -271,7 +271,8 @@ export class Binder {
                 case NodeKind.FriendDirective:
                 case NodeKind.AccessibilityDirective:
                 case NodeKind.AliasDirectiveSequence: {
-                    throw new Error('Method not implemented.');
+                    // console.warn('Method not implemented.');
+                    break;
                 }
                 case TokenKind.Newline:
                 case TokenKind.Skipped: {
@@ -3386,6 +3387,10 @@ export class Binder {
                 break;
             }
             // Cast expression
+            case TypeKind.Bool:
+            case TypeKind.Int:
+            case TypeKind.Float:
+            case TypeKind.String:
             case TypeKind.Object: {
                 // TODO: Validate arguments
                 boundInvokeExpression.type = type;
