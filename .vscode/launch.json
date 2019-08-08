@@ -98,7 +98,12 @@
                 "${workspaceFolder}/tests/BinderTests.js"
             ],
             "console": "integratedTerminal",
-            "internalConsoleOptions": "neverOpen"
+            "internalConsoleOptions": "neverOpen",
+            "skipFiles": [
+                "${workspaceFolder}/node_modules/**/*.js",
+                "<node_internals>/**/*.js",
+                "${workspaceFolder}/src/Diagnostics.js"
+            ]
         },
 		{
 			"type": "extensionHost",

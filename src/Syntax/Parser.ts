@@ -631,10 +631,7 @@ export class Parser extends ParserBase {
         functionDeclaration.parent = parent;
         functionDeclaration.functionKeyword = functionKeyword;
         functionDeclaration.identifier = this.parseMissableIdentifier(functionDeclaration);
-
         functionDeclaration.returnType = this.parseTypeAnnotation(functionDeclaration);
-        this.isReturnStatementExpressionRequired = this.isReturnTypeVoid(functionDeclaration.returnType);
-
         functionDeclaration.openingParenthesis = this.eatMissable(TokenKind.OpeningParenthesis);
         functionDeclaration.parameters = this.parseDataDeclarationSequence(functionDeclaration);
         functionDeclaration.closingParenthesis = this.eatMissable(TokenKind.ClosingParenthesis);
@@ -921,9 +918,7 @@ export class Parser extends ParserBase {
             classMethodDeclaration.identifier = newKeyword;
         } else {
             classMethodDeclaration.identifier = this.parseMissableIdentifier(classMethodDeclaration);
-
             classMethodDeclaration.returnType = this.parseTypeAnnotation(classMethodDeclaration);
-            this.isReturnStatementExpressionRequired = this.isReturnTypeVoid(classMethodDeclaration.returnType);
         }
         classMethodDeclaration.openingParenthesis = this.eatMissable(TokenKind.OpeningParenthesis);
         classMethodDeclaration.parameters = this.parseDataDeclarationSequence(classMethodDeclaration);
@@ -1304,26 +1299,15 @@ export class Parser extends ParserBase {
         const returnStatement = new ReturnStatement();
         returnStatement.parent = parent;
         returnStatement.returnKeyword = returnKeyword;
-        if (this.isReturnStatementExpressionRequired) {
-            returnStatement.expression = this.parseExpression(returnStatement);
+
+        const token = this.getToken();
+        if (this.isExpressionStart(token)) {
+            returnStatement.expression = this.parseExpression(returnStatement) as Expressions;
         }
+
         returnStatement.terminator = this.eatStatementTerminator();
 
         return returnStatement;
-    }
-
-    private isReturnStatementExpressionRequired: boolean = false;
-
-    private isReturnTypeVoid(returnType: TypeAnnotation | undefined): boolean {
-        if (returnType &&
-            returnType.kind === NodeKind.LonghandTypeAnnotation &&
-            returnType.typeReference.kind !== TokenKind.Missing &&
-            returnType.typeReference.identifier.kind === TokenKind.VoidKeyword
-        ) {
-            return false;
-        }
-
-        return true;
     }
 
     // #endregion

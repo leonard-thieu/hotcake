@@ -101,7 +101,7 @@ import { ModuleType } from './Type/ModuleType';
 import { ObjectType } from './Type/ObjectType';
 import { StringType } from './Type/StringType';
 import { TypeParameterType } from './Type/TypeParameterType';
-import { TypeKind, Types } from './Type/Types';
+import { DefaultableType, TypeKind, Types } from './Type/Types';
 
 export class Binder {
     // Debugging aid
@@ -1678,23 +1678,68 @@ export class Binder {
         const boundReturnStatement = new BoundReturnStatement();
         boundReturnStatement.parent = parent;
 
+        const functionLikeDeclaration = this.getNearestAncestor(boundReturnStatement,
+            BoundNodeKind.FunctionDeclaration,
+            BoundNodeKind.ClassMethodDeclaration,
+        )!;
+        const { returnType } = functionLikeDeclaration;
+
         if (getExpression) {
             boundReturnStatement.expression = getExpression(boundReturnStatement);
             boundReturnStatement.type = boundReturnStatement.expression.type;
         } else {
-            boundReturnStatement.type = this.project.voidTypeDeclaration.type;
+            switch (returnType.type.kind) {
+                case TypeKind.Null: {
+                    // Should be unreachable
+                    throw new Error(`'${returnType.type.kind}' is not a valid return type.`);
+                }
+                case TypeKind.Void:
+                case TypeKind.TypeParameter: {
+                    boundReturnStatement.type = returnType.type;
+                    break;
+                }
+                default: {
+                    boundReturnStatement.expression = this.getDefaultValueExpression(boundReturnStatement, returnType.type.kind);
+                    boundReturnStatement.type = boundReturnStatement.expression.type;
+                    break;
+                }
+            }
         }
 
-        const functionOrMethodDeclaration = this.getNearestAncestor(boundReturnStatement,
-            BoundNodeKind.FunctionDeclaration,
-            BoundNodeKind.ClassMethodDeclaration,
-        )!;
-
-        if (!boundReturnStatement.type.isConvertibleTo(functionOrMethodDeclaration.returnType.type)) {
-            throw new Error(`'${boundReturnStatement.type}' is not convertible to '${functionOrMethodDeclaration.returnType.type}'.`);
+        if (!boundReturnStatement.type.isConvertibleTo(returnType.type)) {
+            throw new Error(`'${boundReturnStatement.type}' is not convertible to '${returnType.type}'.`);
         }
 
         return boundReturnStatement;
+    }
+
+    private getDefaultValueExpression(
+        parent: BoundReturnStatement,
+        kind: DefaultableType['kind'],
+    ) {
+        switch (kind) {
+            case TypeKind.Bool: {
+                return this.booleanLiteral(parent, 'False');
+            }
+            case TypeKind.Int: {
+                return this.integerLiteral(parent, '0');
+            }
+            case TypeKind.Float: {
+                return this.floatLiteral(parent, '.0');
+            }
+            case TypeKind.String: {
+                return this.stringLiteral(parent, '');
+            }
+            case TypeKind.Array: {
+                return this.arrayLiteralExpression(parent, () => []);
+            }
+            case TypeKind.Object: {
+                return this.nullExpression(parent);
+            }
+            default: {
+                return assertNever(kind);
+            }
+        }
     }
 
     // #endregion
@@ -3010,15 +3055,22 @@ export class Binder {
     }
 
     private getTypeOfArrayLiteralExpression(expressions: BoundExpressions[]) {
-        let { type } = expressions[0];
+        let type: Types;
 
-        for (const expression of expressions) {
-            const balancedType = this.getBalancedType(type, expression.type);
-            if (!balancedType) {
-                throw new Error('Array must contain a common type.');
+        // TODO: `Void[]` seems to be implicitly convertible to any other array. Verify that the binder handles this correctly.
+        if (!expressions.length) {
+            type = this.project.voidTypeDeclaration.type;
+        } else {
+            type = expressions[0].type;
+
+            for (const expression of expressions) {
+                const balancedType = this.getBalancedType(type, expression.type);
+                if (!balancedType) {
+                    throw new Error('Array must contain a common type.');
+                }
+
+                type = balancedType;
             }
-
-            type = balancedType;
         }
 
         const arrayTypeDeclaration = this.instantiateArrayType(type.declaration as BoundTypeReferenceDeclaration);

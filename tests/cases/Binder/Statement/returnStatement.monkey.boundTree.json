@@ -1,0 +1,182 @@
+{
+    "kind": "ModuleDeclaration",
+    "identifier": "returnStatement",
+    "locals": [
+        {
+            "kind": "FunctionGroupDeclaration",
+            "identifier": "DefaultReturnBool",
+            "type": "DefaultReturnBool",
+            "overloads": [
+                {
+                    "kind": "FunctionDeclaration",
+                    "identifier": "DefaultReturnBool",
+                    "locals": [],
+                    "type": "DefaultReturnBool: Bool()",
+                    "returnType": "Bool",
+                    "parameters": [],
+                    "statements": [
+                        {
+                            "kind": "ReturnStatement",
+                            "type": "Bool",
+                            "expression": {
+                                "kind": "BooleanLiteralExpression",
+                                "type": "Bool",
+                                "value": "False"
+                            }
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "kind": "FunctionGroupDeclaration",
+            "identifier": "DefaultReturnInt",
+            "type": "DefaultReturnInt",
+            "overloads": [
+                {
+                    "kind": "FunctionDeclaration",
+                    "identifier": "DefaultReturnInt",
+                    "locals": [],
+                    "type": "DefaultReturnInt: Int()",
+                    "returnType": "Int",
+                    "parameters": [],
+                    "statements": [
+                        {
+                            "kind": "ReturnStatement",
+                            "type": "Int",
+                            "expression": {
+                                "kind": "IntegerLiteralExpression",
+                                "type": "Int",
+                                "value": "0"
+                            }
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "kind": "FunctionGroupDeclaration",
+            "identifier": "DefaultReturnFloat",
+            "type": "DefaultReturnFloat",
+            "overloads": [
+                {
+                    "kind": "FunctionDeclaration",
+                    "identifier": "DefaultReturnFloat",
+                    "locals": [],
+                    "type": "DefaultReturnFloat: Float()",
+                    "returnType": "Float",
+                    "parameters": [],
+                    "statements": [
+                        {
+                            "kind": "ReturnStatement",
+                            "type": "Float",
+                            "expression": {
+                                "kind": "FloatLiteralExpression",
+                                "type": "Float",
+                                "value": ".0"
+                            }
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "kind": "FunctionGroupDeclaration",
+            "identifier": "DefaultReturnString",
+            "type": "DefaultReturnString",
+            "overloads": [
+                {
+                    "kind": "FunctionDeclaration",
+                    "identifier": "DefaultReturnString",
+                    "locals": [],
+                    "type": "DefaultReturnString: String()",
+                    "returnType": "String",
+                    "parameters": [],
+                    "statements": [
+                        {
+                            "kind": "ReturnStatement",
+                            "type": "String",
+                            "expression": {
+                                "kind": "StringLiteralExpression",
+                                "type": "String",
+                                "value": ""
+                            }
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "kind": "FunctionGroupDeclaration",
+            "identifier": "DefaultReturnArray",
+            "type": "DefaultReturnArray",
+            "overloads": [
+                {
+                    "kind": "FunctionDeclaration",
+                    "identifier": "DefaultReturnArray",
+                    "locals": [],
+                    "type": "DefaultReturnArray: Void[]()",
+                    "returnType": "Void[]",
+                    "parameters": [],
+                    "statements": [
+                        {
+                            "kind": "ReturnStatement",
+                            "type": "Void[]",
+                            "expression": {
+                                "kind": "ArrayLiteralExpression",
+                                "type": "Void[]",
+                                "expressions": []
+                            }
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "kind": "FunctionGroupDeclaration",
+            "identifier": "DefaultReturnObject",
+            "type": "DefaultReturnObject",
+            "overloads": [
+                {
+                    "kind": "FunctionDeclaration",
+                    "identifier": "DefaultReturnObject",
+                    "locals": [],
+                    "type": "DefaultReturnObject: Object()",
+                    "returnType": "Object",
+                    "parameters": [],
+                    "statements": [
+                        {
+                            "kind": "ReturnStatement",
+                            "type": "Null",
+                            "expression": {
+                                "kind": "NullExpression",
+                                "type": "Null"
+                            }
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "kind": "FunctionGroupDeclaration",
+            "identifier": "DefaultReturnVoid",
+            "type": "DefaultReturnVoid",
+            "overloads": [
+                {
+                    "kind": "FunctionDeclaration",
+                    "identifier": "DefaultReturnVoid",
+                    "locals": [],
+                    "type": "DefaultReturnVoid: Void()",
+                    "returnType": "Void",
+                    "parameters": [],
+                    "statements": [
+                        {
+                            "kind": "ReturnStatement",
+                            "type": "Void"
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

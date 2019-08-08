@@ -1,5 +1,5 @@
 import { ReturnKeywordToken } from '../../Token/Tokens';
-import { MissableExpression } from '../Expression/Expressions';
+import { Expressions } from '../Expression/Expressions';
 import { NodeKind } from '../Nodes';
 import { Statement } from './Statements';
 
@@ -13,5 +13,5 @@ export class ReturnStatement extends Statement {
     readonly kind = NodeKind.ReturnStatement;
 
     returnKeyword: ReturnKeywordToken = undefined!;
-    expression?: MissableExpression = undefined;
+    expression?: Expressions = undefined;
 }

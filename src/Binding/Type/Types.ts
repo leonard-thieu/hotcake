@@ -43,3 +43,12 @@ export enum TypeKind {
     TypeParameter = 'TypeParameter',
     Void = 'Void',
 }
+
+export type DefaultableType =
+    | BoolType
+    | IntType
+    | FloatType
+    | StringType
+    | ArrayType
+    | ObjectType
+    ;
