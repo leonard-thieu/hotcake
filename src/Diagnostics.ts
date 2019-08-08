@@ -1,6 +1,7 @@
 import { Binder } from './Binding/Binder';
 import { BoundIdentifiableDeclaration } from './Binding/BoundSymbol';
 import { BoundNodeKind, BoundNodes } from './Binding/Node/BoundNodes';
+import { BoundTypeReferenceDeclaration } from './Binding/Node/Declaration/BoundDeclarations';
 import { MissableIdentifier } from './Syntax/Node/Identifier';
 import { Nodes } from './Syntax/Node/Nodes';
 import { NewKeywordToken } from './Syntax/Token/Tokens';
@@ -116,30 +117,32 @@ export function traceBindingPhase2(kind: BoundNodeKind) {
 }
 
 export function traceInstantiating(kind: BoundNodeKind) {
-    return function (_target: Binder, _propertyKey: string, descriptor: PropertyDescriptor) {
+    return function (_target: Binder, propertyKey: string, descriptor: PropertyDescriptor) {
         const method = descriptor.value;
 
         descriptor.value = function (
             this: Binder,
-            parent_node: BoundNodes | BoundIdentifiableDeclaration,
-            node_name?: BoundIdentifiableDeclaration | string,
+            arg1: BoundNodes | BoundIdentifiableDeclaration | BoundTypeReferenceDeclaration,
+            arg2?: BoundIdentifiableDeclaration | string,
             ...args: any[]
         ) {
             let name: string
-            if (typeof node_name === 'string') {
-                name = node_name;
+            if (propertyKey === 'instantiateArrayType') {
+                const elementType = arg1 as BoundTypeReferenceDeclaration;
+                name = elementType.identifier.name + '[]';
+            } else if (typeof arg2 === 'string') {
+                name = arg2;
+            } else if (
+                arg2 &&
+                arg2.identifier
+            ) {
+                name = arg2.identifier.name;
             } else {
-                if (node_name &&
-                    node_name.identifier
-                ) {
-                    name = node_name.identifier.name;
-                } else {
-                    name = (parent_node as BoundIdentifiableDeclaration).identifier.name;
-                }
+                name = (arg1 as BoundIdentifiableDeclaration).identifier.name;
             }
 
             this.project.diagnostics.traceInstantiatingStart(kind, name);
-            const retVal = method.call(this, parent_node, node_name, ...args);
+            const retVal = method.call(this, arg1, arg2, ...args);
             this.project.diagnostics.traceInstantiatingEnd();
 
             return retVal;
