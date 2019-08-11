@@ -1,4 +1,4 @@
-import { getMethod } from '../Binder';
+import { CONSTRUCTOR_NAME, getMethod } from '../Binder';
 import { BoundNodeKind } from '../Node/BoundNodes';
 import { BoundIntrinsicTypeDeclaration } from '../Node/Declaration/BoundIntrinsicTypeDeclaration';
 import { Type } from './Type';
@@ -15,7 +15,7 @@ export class FloatType extends Type {
         switch (target.declaration.kind) {
             case BoundNodeKind.ExternClassDeclaration:
             case BoundNodeKind.ClassDeclaration: {
-                const method = getMethod(target.declaration, 'New', undefined, this);
+                const method = getMethod(target.declaration, CONSTRUCTOR_NAME, undefined, this);
                 if (method) {
                     return true;
                 }

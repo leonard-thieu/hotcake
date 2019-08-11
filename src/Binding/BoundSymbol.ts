@@ -4,13 +4,11 @@ import { BoundDeclarations } from './Node/Declaration/BoundDeclarations';
 export class BoundSymbol {
     constructor(
         public name: string,
-        readonly declaration: BoundIdentifiableDeclaration,
+        readonly declaration: BoundDeclarations,
     ) { }
 
     readonly references: BoundNodes[] = [];
 }
-
-export type BoundIdentifiableDeclaration = Extract<BoundDeclarations, { identifier: BoundSymbol; }>;
 
 export const ANONYMOUS_NAME = '';
 

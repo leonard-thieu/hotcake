@@ -4,113 +4,150 @@
     "locals": [
         {
             "kind": "ClassDeclaration",
-            "instantiatedTypes": [],
             "identifier": "ArrayObject",
-            "type": "ArrayObject<ArrayObject:T>",
-            "typeParameters": [
+            "type": "ArrayObject",
+            "locals": [],
+            "instantiatedTypes": [
                 {
-                    "kind": "TypeParameter",
-                    "identifier": "T",
-                    "type": "ArrayObject:T"
-                }
-            ],
-            "superType": "Object",
-            "locals": [
-                {
-                    "kind": "TypeParameter",
-                    "identifier": "T",
-                    "type": "ArrayObject:T"
-                },
-                {
-                    "kind": "DataDeclaration",
-                    "declarationKind": "FieldKeyword",
-                    "identifier": "value",
-                    "typeAnnotation": "ArrayObject:T[]",
-                    "operator": null,
-                    "type": "ArrayObject:T[]"
-                },
-                {
-                    "kind": "ClassMethodGroupDeclaration",
-                    "identifier": "New",
-                    "type": "New ArrayObject<ArrayObject:T>",
-                    "overloads": [
+                    "kind": "ClassDeclaration",
+                    "identifier": "ArrayObject",
+                    "type": "ArrayObject<Int>",
+                    "typeParameters": [
+                        "T"
+                    ],
+                    "typeArguments": [
+                        "Int"
+                    ],
+                    "superType": "Object",
+                    "locals": [
                         {
-                            "kind": "ClassMethodDeclaration",
+                            "kind": "TypeParameter",
+                            "identifier": "T",
+                            "type": "ArrayObject:T"
+                        },
+                        {
+                            "kind": "DataDeclaration",
+                            "declarationKind": "Field",
+                            "identifier": "value",
+                            "typeAnnotation": "Int[]",
+                            "operator": null,
+                            "type": "Int[]"
+                        },
+                        {
+                            "kind": "ClassMethodGroupDeclaration",
                             "identifier": "New",
-                            "locals": [
-                                "value"
-                            ],
-                            "type": "New ArrayObject<ArrayObject:T>(ArrayObject:T[])",
-                            "returnType": "ArrayObject<ArrayObject:T>",
-                            "parameters": [
+                            "type": "New ArrayObject<Int>",
+                            "overloads": [
                                 {
-                                    "kind": "DataDeclaration",
-                                    "declarationKind": null,
-                                    "identifier": "value",
-                                    "typeAnnotation": "ArrayObject:T[]",
-                                    "operator": null,
-                                    "type": "ArrayObject:T[]"
-                                }
-                            ],
-                            "statements": [
-                                {
-                                    "kind": "AssignmentStatement",
-                                    "leftOperand": {
-                                        "kind": "ScopeMemberAccessExpression",
-                                        "type": "ArrayObject:T[]",
-                                        "scopableExpression": {
-                                            "kind": "SelfExpression",
-                                            "type": "ArrayObject<ArrayObject:T>"
-                                        },
-                                        "member": {
-                                            "kind": "IdentifierExpression",
-                                            "type": "ArrayObject:T[]",
-                                            "identifier": "value"
+                                    "kind": "ClassMethodDeclaration",
+                                    "identifier": "New",
+                                    "locals": [
+                                        "value"
+                                    ],
+                                    "type": "New ArrayObject<Int>(Int[])",
+                                    "returnType": "ArrayObject<Int>",
+                                    "parameters": [
+                                        {
+                                            "kind": "DataDeclaration",
+                                            "declarationKind": "Parameter",
+                                            "identifier": "value",
+                                            "typeAnnotation": "Int[]",
+                                            "operator": null,
+                                            "type": "Int[]"
                                         }
-                                    },
-                                    "operator": "EqualsSign",
-                                    "rightOperand": {
-                                        "kind": "IdentifierExpression",
-                                        "type": "ArrayObject:T[]",
-                                        "identifier": "value"
-                                    }
+                                    ],
+                                    "statements": [
+                                        {
+                                            "kind": "AssignmentStatement",
+                                            "leftOperand": {
+                                                "kind": "ScopeMemberAccessExpression",
+                                                "type": "Int[]",
+                                                "scopableExpression": {
+                                                    "kind": "SelfExpression",
+                                                    "type": "ArrayObject<Int>"
+                                                },
+                                                "member": {
+                                                    "kind": "IdentifierExpression",
+                                                    "type": "Int[]",
+                                                    "identifier": "value"
+                                                }
+                                            },
+                                            "operator": "EqualsSign",
+                                            "rightOperand": {
+                                                "kind": "IdentifierExpression",
+                                                "type": "Int[]",
+                                                "identifier": "value"
+                                            }
+                                        }
+                                    ]
+                                },
+                                {
+                                    "kind": "ClassMethodDeclaration",
+                                    "identifier": "New",
+                                    "locals": [],
+                                    "type": "New ArrayObject<Int>()",
+                                    "returnType": "ArrayObject<Int>",
+                                    "parameters": [],
+                                    "statements": []
                                 }
                             ]
                         },
                         {
-                            "kind": "ClassMethodDeclaration",
-                            "identifier": "New",
-                            "locals": [],
-                            "type": "New ArrayObject<ArrayObject:T>()",
-                            "returnType": "ArrayObject<ArrayObject:T>",
-                            "parameters": [],
-                            "statements": []
-                        }
-                    ]
-                },
-                {
-                    "kind": "ClassMethodGroupDeclaration",
-                    "identifier": "ToArray",
-                    "type": "ToArray",
-                    "overloads": [
-                        {
-                            "kind": "ClassMethodDeclaration",
+                            "kind": "ClassMethodGroupDeclaration",
                             "identifier": "ToArray",
-                            "locals": [],
-                            "type": "ToArray: ArrayObject:T[]()",
-                            "returnType": "ArrayObject:T[]",
-                            "parameters": [],
-                            "statements": [
+                            "type": "ToArray",
+                            "overloads": [
                                 {
-                                    "kind": "ReturnStatement",
-                                    "type": "ArrayObject:T[]",
-                                    "expression": {
-                                        "kind": "IdentifierExpression",
-                                        "type": "ArrayObject:T[]",
-                                        "identifier": "value"
-                                    }
+                                    "kind": "ClassMethodDeclaration",
+                                    "identifier": "ToArray",
+                                    "locals": [],
+                                    "type": "ToArray: Int[]()",
+                                    "returnType": "Int[]",
+                                    "parameters": [],
+                                    "statements": [
+                                        {
+                                            "kind": "ReturnStatement",
+                                            "type": "Int[]",
+                                            "expression": {
+                                                "kind": "IdentifierExpression",
+                                                "type": "Int[]",
+                                                "identifier": "value"
+                                            }
+                                        }
+                                    ]
                                 }
                             ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "kind": "FunctionGroupDeclaration",
+            "identifier": "Main",
+            "type": "Main",
+            "overloads": [
+                {
+                    "kind": "FunctionDeclaration",
+                    "identifier": "Main",
+                    "locals": [],
+                    "type": "Main: Int()",
+                    "returnType": "Int",
+                    "parameters": [],
+                    "statements": [
+                        {
+                            "kind": "ExpressionStatement",
+                            "expression": {
+                                "kind": "InvokeExpression",
+                                "type": "ArrayObject<Int>",
+                                "invocationType": "New ArrayObject<Int>()",
+                                "invokableExpression": {
+                                    "kind": "NewExpression",
+                                    "type": "New ArrayObject<Int>",
+                                    "typeReference": "ArrayObject<Int>"
+                                },
+                                "arguments": []
+                            }
                         }
                     ]
                 }

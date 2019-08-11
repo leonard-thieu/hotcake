@@ -90,7 +90,7 @@
                     "parameters": [
                         {
                             "kind": "DataDeclaration",
-                            "declarationKind": null,
+                            "declarationKind": "Parameter",
                             "identifier": "message",
                             "typeAnnotation": "String",
                             "operator": null,
@@ -123,7 +123,7 @@
                                 "kind": "DataDeclarationStatement",
                                 "dataDeclaration": {
                                     "kind": "DataDeclaration",
-                                    "declarationKind": "LocalKeyword",
+                                    "declarationKind": "Local",
                                     "identifier": "i",
                                     "operator": "ColonEqualsSign",
                                     "expression": {
@@ -246,7 +246,7 @@
                                             ],
                                             "parameter": {
                                                 "kind": "DataDeclaration",
-                                                "declarationKind": null,
+                                                "declarationKind": "Parameter",
                                                 "identifier": "ex",
                                                 "typeAnnotation": "Ex1",
                                                 "operator": null,
@@ -282,7 +282,7 @@
                                             ],
                                             "parameter": {
                                                 "kind": "DataDeclaration",
-                                                "declarationKind": null,
+                                                "declarationKind": "Parameter",
                                                 "identifier": "ex",
                                                 "typeAnnotation": "Ex2",
                                                 "operator": null,

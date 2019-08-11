@@ -10,7 +10,7 @@
             "locals": [
                 {
                     "kind": "DataDeclaration",
-                    "declarationKind": "FieldKeyword",
+                    "declarationKind": "Field",
                     "identifier": "id",
                     "typeAnnotation": "Int",
                     "operator": null,
@@ -67,7 +67,7 @@
             "locals": [
                 {
                     "kind": "DataDeclaration",
-                    "declarationKind": "FieldKeyword",
+                    "declarationKind": "Field",
                     "identifier": "name",
                     "typeAnnotation": "String",
                     "operator": null,
@@ -362,7 +362,7 @@
                     "parameters": [
                         {
                             "kind": "DataDeclaration",
-                            "declarationKind": null,
+                            "declarationKind": "Parameter",
                             "identifier": "baseObject",
                             "typeAnnotation": "BaseObject",
                             "operator": null,
@@ -429,7 +429,7 @@
                     "parameters": [
                         {
                             "kind": "DataDeclaration",
-                            "declarationKind": null,
+                            "declarationKind": "Parameter",
                             "identifier": "speakable",
                             "typeAnnotation": "Speakable",
                             "operator": null,
@@ -480,7 +480,7 @@
                     "parameters": [
                         {
                             "kind": "DataDeclaration",
-                            "declarationKind": null,
+                            "declarationKind": "Parameter",
                             "identifier": "entity",
                             "typeAnnotation": "Entity",
                             "operator": null,
@@ -557,7 +557,7 @@
                     "parameters": [
                         {
                             "kind": "DataDeclaration",
-                            "declarationKind": null,
+                            "declarationKind": "Parameter",
                             "identifier": "moveable",
                             "typeAnnotation": "Moveable",
                             "operator": null,
@@ -608,7 +608,7 @@
                     "parameters": [
                         {
                             "kind": "DataDeclaration",
-                            "declarationKind": null,
+                            "declarationKind": "Parameter",
                             "identifier": "drawable",
                             "typeAnnotation": "Drawable",
                             "operator": null,
@@ -662,7 +662,7 @@
                             "kind": "DataDeclarationStatement",
                             "dataDeclaration": {
                                 "kind": "DataDeclaration",
-                                "declarationKind": "LocalKeyword",
+                                "declarationKind": "Local",
                                 "identifier": "actor",
                                 "operator": "ColonEqualsSign",
                                 "expression": {

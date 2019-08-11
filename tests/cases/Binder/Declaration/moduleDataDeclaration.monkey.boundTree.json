@@ -4,7 +4,7 @@
     "locals": [
         {
             "kind": "DataDeclaration",
-            "declarationKind": "GlobalKeyword",
+            "declarationKind": "Global",
             "identifier": "ScaleX",
             "operator": "ColonEqualsSign",
             "expression": {
@@ -16,7 +16,7 @@
         },
         {
             "kind": "DataDeclaration",
-            "declarationKind": "ConstKeyword",
+            "declarationKind": "Const",
             "identifier": "Version",
             "operator": "ColonEqualsSign",
             "expression": {

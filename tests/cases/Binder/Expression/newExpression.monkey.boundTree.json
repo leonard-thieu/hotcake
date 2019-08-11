@@ -65,7 +65,7 @@
             "locals": [
                 {
                     "kind": "DataDeclaration",
-                    "declarationKind": "FieldKeyword",
+                    "declarationKind": "Field",
                     "identifier": "sibling",
                     "operator": "ColonEqualsSign",
                     "expression": {

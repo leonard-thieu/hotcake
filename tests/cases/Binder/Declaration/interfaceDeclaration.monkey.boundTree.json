@@ -57,7 +57,7 @@
             "locals": [
                 {
                     "kind": "DataDeclaration",
-                    "declarationKind": "ConstKeyword",
+                    "declarationKind": "Const",
                     "identifier": "Name",
                     "typeAnnotation": "String",
                     "operator": "EqualsSign",

@@ -18,7 +18,7 @@
                     "parameters": [
                         {
                             "kind": "DataDeclaration",
-                            "declarationKind": null,
+                            "declarationKind": "Parameter",
                             "identifier": "message",
                             "typeAnnotation": "String",
                             "operator": null,

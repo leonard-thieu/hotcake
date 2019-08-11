@@ -21,7 +21,7 @@
                             "kind": "DataDeclarationStatement",
                             "dataDeclaration": {
                                 "kind": "DataDeclaration",
-                                "declarationKind": "LocalKeyword",
+                                "declarationKind": "Local",
                                 "identifier": "i",
                                 "operator": "ColonEqualsSign",
                                 "expression": {

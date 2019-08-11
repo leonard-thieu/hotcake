@@ -10,7 +10,7 @@
             "locals": [
                 {
                     "kind": "DataDeclaration",
-                    "declarationKind": "GlobalKeyword",
+                    "declarationKind": "Global",
                     "identifier": "T",
                     "typeAnnotation": "Int",
                     "operator": null,
@@ -42,7 +42,7 @@
             "locals": [
                 {
                     "kind": "DataDeclaration",
-                    "declarationKind": "FieldKeyword",
+                    "declarationKind": "Field",
                     "identifier": "_pred",
                     "typeAnnotation": "HeadNode",
                     "operator": null,
@@ -50,7 +50,7 @@
                 },
                 {
                     "kind": "DataDeclaration",
-                    "declarationKind": "FieldKeyword",
+                    "declarationKind": "Field",
                     "identifier": "_head",
                     "typeAnnotation": "HeadNode",
                     "operator": null,
@@ -117,7 +117,7 @@
                             "kind": "DataDeclarationStatement",
                             "dataDeclaration": {
                                 "kind": "DataDeclaration",
-                                "declarationKind": "LocalKeyword",
+                                "declarationKind": "Local",
                                 "identifier": "headNode",
                                 "operator": "ColonEqualsSign",
                                 "expression": {
@@ -138,7 +138,7 @@
                             "kind": "DataDeclarationStatement",
                             "dataDeclaration": {
                                 "kind": "DataDeclaration",
-                                "declarationKind": "LocalKeyword",
+                                "declarationKind": "Local",
                                 "identifier": "chainedScopeMemberAccess",
                                 "operator": "ColonEqualsSign",
                                 "expression": {

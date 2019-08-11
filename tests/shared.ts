@@ -13,7 +13,7 @@ import { BoundFunctionLikeGroupDeclaration } from '../src/Binding/Node/Declarati
 import { BoundInterfaceDeclaration } from '../src/Binding/Node/Declaration/BoundInterfaceDeclaration';
 import { BoundModuleDeclaration } from '../src/Binding/Node/Declaration/BoundModuleDeclaration';
 import { Type } from '../src/Binding/Type/Type';
-import { DiagnosticBag } from '../src/Diagnostics';
+import { DiagnosticBag, DiagnosticKind, Diagnostic } from '../src/Diagnostics';
 import { Project } from '../src/Project';
 import { ModuleDeclaration } from '../src/Syntax/Node/Declaration/ModuleDeclaration';
 import { PreprocessorModuleDeclaration } from '../src/Syntax/Node/Declaration/PreprocessorModuleDeclaration';
@@ -22,6 +22,8 @@ import { PreprocessorParser } from '../src/Syntax/PreprocessorParser';
 import { PreprocessorTokenizer } from '../src/Syntax/PreprocessorTokenizer';
 import { Tokens } from '../src/Syntax/Token/Tokens';
 import { ConfigurationVariables, Tokenizer } from '../src/Syntax/Tokenizer';
+
+const LOG_LEVEL = DiagnosticKind.Error;
 
 interface TestCaseOptions {
     name: string;
@@ -119,16 +121,26 @@ export function executeBaselineTestCase(outputPath: string, testCallback: () => 
 
     function writeDiagnostics(diagnostics: DiagnosticBag | undefined) {
         if (diagnostics) {
-            const diagnosticsOutput = Array.from(diagnostics.values()).map((diagnostic) =>
-                diagnostic.message
-            ).join(os.EOL);
+            const filteredDiagnostics: Diagnostic[] = [];
+            for (const diagnostic of diagnostics) {
+                // TODO: Need proper handling for severity
+                if (diagnostic.kind === LOG_LEVEL) {
+                    filteredDiagnostics.push(diagnostic);
+                }
+            }
 
-            const outputPathObject = path.parse(outputPath);
-            outputPathObject.base = '';
-            outputPathObject.ext = '.yaml';
-            outputPath = path.format(outputPathObject);
+            if (filteredDiagnostics.length) {
+                const diagnosticsOutput = filteredDiagnostics.map((diagnostic) =>
+                    diagnostic.message
+                ).join(os.EOL);
 
-            fs.writeFileSync(outputPath, diagnosticsOutput);
+                const outputPathObject = path.parse(outputPath);
+                outputPathObject.base = '';
+                outputPathObject.ext = '.yaml';
+                outputPath = path.format(outputPathObject);
+
+                fs.writeFileSync(outputPath, diagnosticsOutput);
+            }
         }
     }
 }
@@ -252,7 +264,7 @@ export function executeBinderTestCases(name: string, casesPath: string): void {
                         case 'project':
                         case 'directory':
                         case 'parent':
-                        case 'rootType': {
+                        case 'openType': {
                             return undefined;
                         }
                         case 'importedModules': {
@@ -301,6 +313,13 @@ export function executeBinderTestCases(name: string, casesPath: string): void {
                         }
                         case 'identifier': {
                             return value.name;
+                        }
+                        case 'typeParameters': {
+                            const typeParameters = value as BoundClassDeclaration[typeof key];
+
+                            return typeParameters!.map((typeParameter) =>
+                                typeParameter.identifier.name
+                            );
                         }
                         case 'typeArguments': {
                             const typeArguments = value as BoundClassDeclaration[typeof key];

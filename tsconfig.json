@@ -9,6 +9,7 @@
         "esModuleInterop": true,
         "inlineSourceMap": true,
         "inlineSources": true,
+        "noFallthroughCasesInSwitch": true,
         "experimentalDecorators": true
     }
 }

@@ -82,9 +82,9 @@ export class Project {
     readonly arrayTypeCache = new Map<BoundTypeReferenceDeclaration, BoundExternClassDeclaration>();
 
     getLangModule(): BoundModuleDeclaration {
-        const monkeyDirectory = this.boundFrameworkModulesDirectory.locals.get('monkey')!.declaration as BoundDirectory;
+        const langModulePath = path.resolve(this.boundFrameworkModulesDirectory.fullPath, 'monkey', 'lang' + FILE_EXTENSION);
 
-        return monkeyDirectory.locals.get('lang')!.declaration as BoundModuleDeclaration;
+        return this.importModule(langModulePath);
     }
 
     cacheModule(boundModuleDeclaration: BoundModuleDeclaration): void {
@@ -92,76 +92,6 @@ export class Project {
         const moduleFullPath = path.resolve(directory.fullPath, identifier.name + FILE_EXTENSION);
         this.moduleCache.set(moduleFullPath, boundModuleDeclaration);
     }
-
-    // #region Import module by path
-
-    importModule(moduleFilePath: string): BoundModuleDeclaration {
-        moduleFilePath = path.resolve(moduleFilePath);
-
-        let boundModuleDeclaration = this.moduleCache.get(moduleFilePath);
-        if (boundModuleDeclaration) {
-            return boundModuleDeclaration;
-        }
-
-        const document = fs.readFileSync(moduleFilePath, 'utf8');
-        const currentDirectory = path.dirname(moduleFilePath);
-        const boundModuleDirectory = this.bindModuleDirectory(currentDirectory);
-
-        const preprocessorTokens = preprocessorTokenizer.getTokens(document);
-        const preprocessorModuleDeclaration = preprocessorParser.parse(moduleFilePath, document, preprocessorTokens);
-        const tokens = tokenizer.getTokens(preprocessorModuleDeclaration, {
-            HOST: 'winnt',
-            LANG: 'cpp',
-            TARGET: 'glfw',
-            CONFIG: 'debug',
-            CD: currentDirectory,
-            MODPATH: moduleFilePath,
-        });
-        const moduleDeclaration = parser.parse(preprocessorModuleDeclaration, tokens);
-
-        const moduleIdentifier = path.basename(moduleFilePath, FILE_EXTENSION);
-        const binder = new Binder();
-        boundModuleDeclaration = binder.bind(moduleDeclaration, this, boundModuleDirectory, moduleIdentifier);
-
-        return boundModuleDeclaration;
-    }
-
-    private bindModuleDirectory(currentDirectory: string) {
-        let root: BoundDirectory;
-        let relativePathComponents: string[];
-
-        relativePathComponents = this.getRelativePathComponents(this.boundProjectDirectory.fullPath, currentDirectory);
-        if (relativePathComponents[0] !== '..') {
-            root = this.boundProjectDirectory;
-        } else {
-            relativePathComponents = this.getRelativePathComponents(this.boundFrameworkModulesDirectory.fullPath, currentDirectory);
-            if (relativePathComponents[0] !== '..') {
-                root = this.boundFrameworkModulesDirectory;
-            } else {
-                throw new Error(`Module is not within the project or framework modules directory tree.`);
-            }
-        }
-
-        let boundDirectory = root;
-
-        for (const component of relativePathComponents) {
-            const fullPath = path.resolve(boundDirectory.fullPath, component);
-            boundDirectory = this.bindDirectory(component, fullPath, boundDirectory);
-        }
-
-        return boundDirectory;
-    }
-
-    private getRelativePathComponents(baseDirectory: string, currentDirectory: string) {
-        const relativePath = path.relative(baseDirectory, currentDirectory);
-        if (relativePath === '') {
-            return [];
-        }
-
-        return relativePath.split(path.sep);
-    }
-
-    // #endregion
 
     // #region Import module from source
 
@@ -259,6 +189,76 @@ export class Project {
 
             return boundDirectory;
         }
+    }
+
+    // #endregion
+
+    // #region Import module by path
+
+    importModule(moduleFilePath: string): BoundModuleDeclaration {
+        moduleFilePath = path.resolve(moduleFilePath);
+
+        let boundModuleDeclaration = this.moduleCache.get(moduleFilePath);
+        if (boundModuleDeclaration) {
+            return boundModuleDeclaration;
+        }
+
+        const document = fs.readFileSync(moduleFilePath, 'utf8');
+        const currentDirectory = path.dirname(moduleFilePath);
+        const boundModuleDirectory = this.bindModuleDirectory(currentDirectory);
+
+        const preprocessorTokens = preprocessorTokenizer.getTokens(document);
+        const preprocessorModuleDeclaration = preprocessorParser.parse(moduleFilePath, document, preprocessorTokens);
+        const tokens = tokenizer.getTokens(preprocessorModuleDeclaration, {
+            HOST: 'winnt',
+            LANG: 'cpp',
+            TARGET: 'glfw',
+            CONFIG: 'debug',
+            CD: currentDirectory,
+            MODPATH: moduleFilePath,
+        });
+        const moduleDeclaration = parser.parse(preprocessorModuleDeclaration, tokens);
+
+        const moduleIdentifier = path.basename(moduleFilePath, FILE_EXTENSION);
+        const binder = new Binder();
+        boundModuleDeclaration = binder.bind(moduleDeclaration, this, boundModuleDirectory, moduleIdentifier);
+
+        return boundModuleDeclaration;
+    }
+
+    private bindModuleDirectory(currentDirectory: string) {
+        let root: BoundDirectory;
+        let relativePathComponents: string[];
+
+        relativePathComponents = this.getRelativePathComponents(this.boundProjectDirectory.fullPath, currentDirectory);
+        if (relativePathComponents[0] !== '..') {
+            root = this.boundProjectDirectory;
+        } else {
+            relativePathComponents = this.getRelativePathComponents(this.boundFrameworkModulesDirectory.fullPath, currentDirectory);
+            if (relativePathComponents[0] !== '..') {
+                root = this.boundFrameworkModulesDirectory;
+            } else {
+                throw new Error(`Module is not within the project or framework modules directory tree.`);
+            }
+        }
+
+        let boundDirectory = root;
+
+        for (const component of relativePathComponents) {
+            const fullPath = path.resolve(boundDirectory.fullPath, component);
+            boundDirectory = this.bindDirectory(component, fullPath, boundDirectory);
+        }
+
+        return boundDirectory;
+    }
+
+    private getRelativePathComponents(baseDirectory: string, currentDirectory: string) {
+        const relativePath = path.relative(baseDirectory, currentDirectory);
+        if (relativePath === '') {
+            return [];
+        }
+
+        return relativePath.split(path.sep);
     }
 
     // #endregion

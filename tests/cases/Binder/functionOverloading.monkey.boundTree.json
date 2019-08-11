@@ -18,7 +18,7 @@
                     "parameters": [
                         {
                             "kind": "DataDeclaration",
-                            "declarationKind": null,
+                            "declarationKind": "Parameter",
                             "identifier": "value",
                             "typeAnnotation": "Int",
                             "operator": null,
@@ -38,7 +38,7 @@
                     "parameters": [
                         {
                             "kind": "DataDeclaration",
-                            "declarationKind": null,
+                            "declarationKind": "Parameter",
                             "identifier": "value",
                             "typeAnnotation": "Float",
                             "operator": null,
@@ -58,7 +58,7 @@
                     "parameters": [
                         {
                             "kind": "DataDeclaration",
-                            "declarationKind": null,
+                            "declarationKind": "Parameter",
                             "identifier": "value",
                             "typeAnnotation": "String",
                             "operator": null,

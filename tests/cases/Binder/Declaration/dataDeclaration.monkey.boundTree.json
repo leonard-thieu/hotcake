@@ -1,6 +1,6 @@
 {
     "kind": "ModuleDeclaration",
-    "identifier": "forwardReferenceOfTypeFromTypeMember",
+    "identifier": "dataDeclaration",
     "locals": [
         {
             "kind": "ClassDeclaration",
@@ -11,10 +11,21 @@
                 {
                     "kind": "DataDeclaration",
                     "declarationKind": "Field",
-                    "identifier": "node",
-                    "typeAnnotation": "Node",
-                    "operator": null,
-                    "type": "Node"
+                    "identifier": "_head",
+                    "typeAnnotation": "HeadNode",
+                    "operator": "EqualsSign",
+                    "expression": {
+                        "kind": "InvokeExpression",
+                        "type": "HeadNode",
+                        "invocationType": "New HeadNode()",
+                        "invokableExpression": {
+                            "kind": "NewExpression",
+                            "type": "New HeadNode",
+                            "typeReference": "HeadNode"
+                        },
+                        "arguments": []
+                    },
+                    "type": "HeadNode"
                 },
                 {
                     "kind": "ClassMethodGroupDeclaration",
@@ -36,21 +47,21 @@
         },
         {
             "kind": "ClassDeclaration",
-            "identifier": "Node",
-            "type": "Node",
+            "identifier": "HeadNode",
+            "type": "HeadNode",
             "superType": "Object",
             "locals": [
                 {
                     "kind": "ClassMethodGroupDeclaration",
                     "identifier": "New",
-                    "type": "New Node",
+                    "type": "New HeadNode",
                     "overloads": [
                         {
                             "kind": "ClassMethodDeclaration",
                             "identifier": "New",
                             "locals": [],
-                            "type": "New Node()",
-                            "returnType": "Node",
+                            "type": "New HeadNode()",
+                            "returnType": "HeadNode",
                             "parameters": [],
                             "statements": []
                         }

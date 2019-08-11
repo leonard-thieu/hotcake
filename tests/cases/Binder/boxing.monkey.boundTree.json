@@ -24,7 +24,7 @@
                             "parameters": [
                                 {
                                     "kind": "DataDeclaration",
-                                    "declarationKind": null,
+                                    "declarationKind": "Parameter",
                                     "identifier": "val",
                                     "typeAnnotation": "Bool",
                                     "operator": null,
@@ -44,7 +44,7 @@
                             "parameters": [
                                 {
                                     "kind": "DataDeclaration",
-                                    "declarationKind": null,
+                                    "declarationKind": "Parameter",
                                     "identifier": "val",
                                     "typeAnnotation": "Int",
                                     "operator": null,
@@ -64,7 +64,7 @@
                             "parameters": [
                                 {
                                     "kind": "DataDeclaration",
-                                    "declarationKind": null,
+                                    "declarationKind": "Parameter",
                                     "identifier": "val",
                                     "typeAnnotation": "Float",
                                     "operator": null,
@@ -84,7 +84,7 @@
                             "parameters": [
                                 {
                                     "kind": "DataDeclaration",
-                                    "declarationKind": null,
+                                    "declarationKind": "Parameter",
                                     "identifier": "val",
                                     "typeAnnotation": "String",
                                     "operator": null,
@@ -122,7 +122,7 @@
                     "parameters": [
                         {
                             "kind": "DataDeclaration",
-                            "declarationKind": null,
+                            "declarationKind": "Parameter",
                             "identifier": "box",
                             "typeAnnotation": "Box",
                             "operator": null,

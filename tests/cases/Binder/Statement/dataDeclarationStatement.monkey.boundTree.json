@@ -22,7 +22,7 @@
                             "kind": "DataDeclarationStatement",
                             "dataDeclaration": {
                                 "kind": "DataDeclaration",
-                                "declarationKind": "LocalKeyword",
+                                "declarationKind": "Local",
                                 "identifier": "val",
                                 "operator": "ColonEqualsSign",
                                 "expression": {
@@ -37,7 +37,7 @@
                             "kind": "DataDeclarationStatement",
                             "dataDeclaration": {
                                 "kind": "DataDeclaration",
-                                "declarationKind": "LocalKeyword",
+                                "declarationKind": "Local",
                                 "identifier": "enableLighting",
                                 "typeAnnotation": "Bool",
                                 "operator": null,

@@ -34,7 +34,7 @@
                                 "kind": "DataDeclarationStatement",
                                 "dataDeclaration": {
                                     "kind": "DataDeclaration",
-                                    "declarationKind": "LocalKeyword",
+                                    "declarationKind": "Local",
                                     "identifier": "i",
                                     "operator": "ColonEqualsSign",
                                     "expression": {
@@ -116,7 +116,7 @@
                             "kind": "DataDeclarationStatement",
                             "dataDeclaration": {
                                 "kind": "DataDeclaration",
-                                "declarationKind": "LocalKeyword",
+                                "declarationKind": "Local",
                                 "identifier": "",
                                 "operator": "ColonEqualsSign",
                                 "expression": {
@@ -131,7 +131,7 @@
                             "kind": "DataDeclarationStatement",
                             "dataDeclaration": {
                                 "kind": "DataDeclaration",
-                                "declarationKind": "LocalKeyword",
+                                "declarationKind": "Local",
                                 "identifier": "2",
                                 "operator": "ColonEqualsSign",
                                 "expression": {
@@ -182,7 +182,7 @@
                                     "kind": "DataDeclarationStatement",
                                     "dataDeclaration": {
                                         "kind": "DataDeclaration",
-                                        "declarationKind": "LocalKeyword",
+                                        "declarationKind": "Local",
                                         "identifier": "val",
                                         "operator": "ColonEqualsSign",
                                         "expression": {
@@ -252,7 +252,7 @@
                             "kind": "DataDeclarationStatement",
                             "dataDeclaration": {
                                 "kind": "DataDeclaration",
-                                "declarationKind": "LocalKeyword",
+                                "declarationKind": "Local",
                                 "identifier": "3",
                                 "operator": "ColonEqualsSign",
                                 "expression": {
@@ -283,7 +283,7 @@
                             "kind": "DataDeclarationStatement",
                             "dataDeclaration": {
                                 "kind": "DataDeclaration",
-                                "declarationKind": "LocalKeyword",
+                                "declarationKind": "Local",
                                 "identifier": "4",
                                 "operator": "ColonEqualsSign",
                                 "expression": {
@@ -334,7 +334,7 @@
                                     "kind": "DataDeclarationStatement",
                                     "dataDeclaration": {
                                         "kind": "DataDeclaration",
-                                        "declarationKind": "LocalKeyword",
+                                        "declarationKind": "Local",
                                         "identifier": "val",
                                         "operator": "ColonEqualsSign",
                                         "expression": {
@@ -404,7 +404,7 @@
                             "kind": "DataDeclarationStatement",
                             "dataDeclaration": {
                                 "kind": "DataDeclaration",
-                                "declarationKind": "LocalKeyword",
+                                "declarationKind": "Local",
                                 "identifier": "5",
                                 "operator": "ColonEqualsSign",
                                 "expression": {
@@ -466,7 +466,7 @@
                                     "kind": "DataDeclarationStatement",
                                     "dataDeclaration": {
                                         "kind": "DataDeclaration",
-                                        "declarationKind": "LocalKeyword",
+                                        "declarationKind": "Local",
                                         "identifier": "item",
                                         "operator": "ColonEqualsSign",
                                         "expression": {
@@ -518,7 +518,7 @@
                             "kind": "DataDeclarationStatement",
                             "dataDeclaration": {
                                 "kind": "DataDeclaration",
-                                "declarationKind": "LocalKeyword",
+                                "declarationKind": "Local",
                                 "identifier": "val2",
                                 "typeAnnotation": "Int",
                                 "operator": null,
@@ -608,7 +608,7 @@
                             "kind": "DataDeclarationStatement",
                             "dataDeclaration": {
                                 "kind": "DataDeclaration",
-                                "declarationKind": "LocalKeyword",
+                                "declarationKind": "Local",
                                 "identifier": "val3",
                                 "typeAnnotation": "Int",
                                 "operator": null,
@@ -619,7 +619,7 @@
                             "kind": "DataDeclarationStatement",
                             "dataDeclaration": {
                                 "kind": "DataDeclaration",
-                                "declarationKind": "LocalKeyword",
+                                "declarationKind": "Local",
                                 "identifier": "6",
                                 "operator": "ColonEqualsSign",
                                 "expression": {
@@ -650,7 +650,7 @@
                             "kind": "DataDeclarationStatement",
                             "dataDeclaration": {
                                 "kind": "DataDeclaration",
-                                "declarationKind": "LocalKeyword",
+                                "declarationKind": "Local",
                                 "identifier": "7",
                                 "operator": "ColonEqualsSign",
                                 "expression": {
@@ -784,7 +784,7 @@
                     "parameters": [
                         {
                             "kind": "DataDeclaration",
-                            "declarationKind": null,
+                            "declarationKind": "Parameter",
                             "identifier": "val",
                             "typeAnnotation": "Int",
                             "operator": null,
@@ -931,7 +931,7 @@
                     "parameters": [
                         {
                             "kind": "DataDeclaration",
-                            "declarationKind": null,
+                            "declarationKind": "Parameter",
                             "identifier": "val",
                             "typeAnnotation": "Item",
                             "operator": null,

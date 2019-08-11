@@ -1,4 +1,5 @@
-import { normalizeIdentifier } from '../BoundSymbol';
+import { CONSTRUCTOR_NAME } from '../Binder';
+import { areIdentifiersSame } from '../BoundSymbol';
 import { BoundNodeKind, BoundNodes } from '../Node/BoundNodes';
 import { BoundClassMethodDeclaration } from '../Node/Declaration/BoundClassDeclaration';
 import { BoundFunctionDeclaration } from '../Node/Declaration/BoundFunctionDeclaration';
@@ -126,10 +127,10 @@ export class MethodType extends FunctionLikeType {
     readonly kind = TypeKind.Method;
 
     toString(): string {
-        if (normalizeIdentifier(this.declaration.identifier.name) === 'New') {
+        if (areIdentifiersSame(CONSTRUCTOR_NAME, this.declaration.identifier.name)) {
             let str = '';
 
-            str += `New ${this.declaration.returnType.type}`;
+            str += `${CONSTRUCTOR_NAME} ${this.declaration.returnType.type}`;
             str += '(';
             str += this.declaration.parameters.map(p => p.type).join(',');
             str += ')';
@@ -156,8 +157,8 @@ export class MethodGroupType extends Type {
         for (const [, overload] of this.declaration.overloads) {
             const name = overload.identifier.name;
 
-            if (normalizeIdentifier(name) === 'New') {
-                return `New ${overload.returnType.type}`;
+            if (areIdentifiersSame(CONSTRUCTOR_NAME, name)) {
+                return `${CONSTRUCTOR_NAME} ${overload.returnType.type}`;
             }
 
             return name;

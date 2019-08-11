@@ -16,10 +16,6 @@ import { BoundExternClassDeclaration } from './Extern/BoundExternClassDeclaratio
 export class BoundClassDeclaration extends BoundNode {
     readonly kind = BoundNodeKind.ClassDeclaration;
 
-    declaration: ClassDeclaration = undefined!;
-    rootType?: BoundClassDeclaration = undefined;
-    instantiatedTypes?: BoundClassDeclaration[] = undefined;
-
     identifier: BoundSymbol = undefined!;
     type: ObjectType = undefined!;
 
@@ -29,6 +25,10 @@ export class BoundClassDeclaration extends BoundNode {
     implementedTypes?: BoundInterfaceDeclaration[] = undefined;
 
     readonly locals = new BoundSymbolTable();
+
+    declaration: ClassDeclaration = undefined!;
+    openType?: BoundClassDeclaration = undefined;
+    instantiatedTypes?: BoundClassDeclaration[] = undefined;
 }
 
 export type BoundClassDeclarationMember =

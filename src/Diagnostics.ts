@@ -1,10 +1,10 @@
 import { Binder } from './Binding/Binder';
-import { BoundIdentifiableDeclaration } from './Binding/BoundSymbol';
 import { BoundNodeKind, BoundNodes } from './Binding/Node/BoundNodes';
-import { BoundTypeReferenceDeclaration } from './Binding/Node/Declaration/BoundDeclarations';
+import { BoundDeclarations, BoundTypeReferenceDeclaration } from './Binding/Node/Declaration/BoundDeclarations';
 import { MissableIdentifier } from './Syntax/Node/Identifier';
 import { Nodes } from './Syntax/Node/Nodes';
 import { NewKeywordToken } from './Syntax/Token/Tokens';
+import { getText } from './util';
 
 export class Diagnostic {
     constructor(
@@ -29,22 +29,12 @@ export class DiagnosticBag extends Set<Diagnostic> {
         this.add(diagnostic);
     }
 
-    traceBindingPhase1Start(kind: BoundNodeKind, name: string) {
-        this.trace(`- BIND1 ${kind} (${name})`);
+    traceBindingStart(kind: BoundNodeKind, name: string) {
+        this.trace(`- BIND ${kind} (${name})`);
         this.tabLevel++;
     }
 
-    traceBindingPhase1End() {
-        this.trace(`complete: true`);
-        this.tabLevel--;
-    }
-
-    traceBindingPhase2Start(kind: BoundNodeKind, name: string) {
-        this.trace(`- BIND2 ${kind} (${name})`);
-        this.tabLevel++;
-    }
-
-    traceBindingPhase2End() {
+    traceBindingEnd() {
         this.trace(`complete: true`);
         this.tabLevel--;
     }
@@ -60,7 +50,7 @@ export class DiagnosticBag extends Set<Diagnostic> {
     }
 }
 
-export function traceBindingPhase1(kind: BoundNodeKind) {
+export function traceBinding(kind: BoundNodeKind) {
     return function (_target: Binder, _propertyKey: string, descriptor: PropertyDescriptor) {
         const method = descriptor.value;
 
@@ -70,46 +60,17 @@ export function traceBindingPhase1(kind: BoundNodeKind) {
                 identifier: MissableIdentifier | NewKeywordToken;
             }
         >;
-        descriptor.value = function (this: Binder, parent: BoundNodes, node: IdentifiableNode | string, ...args: any[]) {
+        descriptor.value = function (this: Binder, parent: BoundNodes, node: string | IdentifiableNode, ...args: any[]) {
             let name: string
             if (typeof node === 'string') {
                 name = node;
             } else {
-                name = this.getIdentifierText(node.identifier);
+                name = getText(node.identifier, parent);
             }
 
-            this.project.diagnostics.traceBindingPhase1Start(kind, name);
+            this.project.diagnostics.traceBindingStart(kind, name);
             const retVal = method.call(this, parent, node, ...args);
-            this.project.diagnostics.traceBindingPhase1End();
-
-            return retVal;
-        };
-    };
-}
-
-export function traceBindingPhase2(kind: BoundNodeKind) {
-    return function (_target: Binder, _propertyKey: string, descriptor: PropertyDescriptor) {
-        const method = descriptor.value;
-
-        type IdentifiableNode = Extract<
-            Nodes,
-            {
-                identifier: MissableIdentifier | NewKeywordToken;
-            }
-        >;
-        descriptor.value = function (this: Binder, parent: BoundNodes, node: IdentifiableNode | string, ...args: any[]) {
-            let name: string
-            if (typeof node === 'string') {
-                name = node;
-            } else if (typeof node === 'function' || !node) {
-                name = (parent as BoundIdentifiableDeclaration).identifier.name;
-            } else {
-                name = this.getIdentifierText(node.identifier);
-            }
-
-            this.project.diagnostics.traceBindingPhase2Start(kind, name);
-            const retVal = method.call(this, parent, node, ...args);
-            this.project.diagnostics.traceBindingPhase2End();
+            this.project.diagnostics.traceBindingEnd();
 
             return retVal;
         };
@@ -122,8 +83,8 @@ export function traceInstantiating(kind: BoundNodeKind) {
 
         descriptor.value = function (
             this: Binder,
-            arg1: BoundNodes | BoundIdentifiableDeclaration | BoundTypeReferenceDeclaration,
-            arg2?: BoundIdentifiableDeclaration | string,
+            arg1: BoundNodes | BoundDeclarations | BoundTypeReferenceDeclaration,
+            arg2?: BoundDeclarations | string,
             ...args: any[]
         ) {
             let name: string
@@ -138,7 +99,7 @@ export function traceInstantiating(kind: BoundNodeKind) {
             ) {
                 name = arg2.identifier.name;
             } else {
-                name = (arg1 as BoundIdentifiableDeclaration).identifier.name;
+                name = (arg1 as BoundDeclarations).identifier.name;
             }
 
             this.project.diagnostics.traceInstantiatingStart(kind, name);

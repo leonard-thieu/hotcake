@@ -4,35 +4,46 @@
     "locals": [
         {
             "kind": "ClassDeclaration",
+            "identifier": "ArrayObject",
+            "type": "ArrayObject",
+            "locals": [],
             "instantiatedTypes": [
                 {
                     "kind": "ClassDeclaration",
                     "identifier": "ArrayObject",
-                    "type": "ArrayObject<ArrayBoxer:T>",
+                    "type": "ArrayObject<String>",
+                    "typeParameters": [
+                        "T"
+                    ],
                     "typeArguments": [
-                        "ArrayBoxer:T"
+                        "String"
                     ],
                     "superType": "Object",
                     "locals": [
                         {
+                            "kind": "TypeParameter",
+                            "identifier": "T",
+                            "type": "ArrayObject:T"
+                        },
+                        {
                             "kind": "DataDeclaration",
-                            "declarationKind": "FieldKeyword",
+                            "declarationKind": "Field",
                             "identifier": "value",
-                            "typeAnnotation": "ArrayBoxer:T[]",
+                            "typeAnnotation": "String[]",
                             "operator": null,
-                            "type": "ArrayBoxer:T[]"
+                            "type": "String[]"
                         },
                         {
                             "kind": "ClassMethodGroupDeclaration",
                             "identifier": "New",
-                            "type": "New ArrayObject<ArrayBoxer:T>",
+                            "type": "New ArrayObject<String>",
                             "overloads": [
                                 {
                                     "kind": "ClassMethodDeclaration",
                                     "identifier": "New",
                                     "locals": [],
-                                    "type": "New ArrayObject<ArrayBoxer:T>()",
-                                    "returnType": "ArrayObject<ArrayBoxer:T>",
+                                    "type": "New ArrayObject<String>()",
+                                    "returnType": "ArrayObject<String>",
                                     "parameters": [],
                                     "statements": []
                                 }
@@ -40,138 +51,134 @@
                         }
                     ]
                 }
-            ],
-            "identifier": "ArrayObject",
-            "type": "ArrayObject<ArrayObject:T>",
-            "typeParameters": [
+            ]
+        },
+        {
+            "kind": "ClassDeclaration",
+            "identifier": "ArrayBoxer",
+            "type": "ArrayBoxer",
+            "locals": [],
+            "instantiatedTypes": [
                 {
-                    "kind": "TypeParameter",
-                    "identifier": "T",
-                    "type": "ArrayObject:T"
-                }
-            ],
-            "superType": "Object",
-            "locals": [
-                {
-                    "kind": "TypeParameter",
-                    "identifier": "T",
-                    "type": "ArrayObject:T"
-                },
-                {
-                    "kind": "DataDeclaration",
-                    "declarationKind": "FieldKeyword",
-                    "identifier": "value",
-                    "typeAnnotation": "ArrayObject:T[]",
-                    "operator": null,
-                    "type": "ArrayObject:T[]"
-                },
-                {
-                    "kind": "ClassMethodGroupDeclaration",
-                    "identifier": "New",
-                    "type": "New ArrayObject<ArrayObject:T>",
-                    "overloads": [
+                    "kind": "ClassDeclaration",
+                    "identifier": "ArrayBoxer",
+                    "type": "ArrayBoxer<String>",
+                    "typeParameters": [
+                        "T"
+                    ],
+                    "typeArguments": [
+                        "String"
+                    ],
+                    "superType": "Object",
+                    "locals": [
                         {
-                            "kind": "ClassMethodDeclaration",
+                            "kind": "TypeParameter",
+                            "identifier": "T",
+                            "type": "ArrayBoxer:T"
+                        },
+                        {
+                            "kind": "FunctionGroupDeclaration",
+                            "identifier": "Unbox",
+                            "type": "Unbox",
+                            "overloads": [
+                                {
+                                    "kind": "FunctionDeclaration",
+                                    "identifier": "Unbox",
+                                    "locals": [
+                                        "box"
+                                    ],
+                                    "type": "Unbox: String[](Object)",
+                                    "returnType": "String[]",
+                                    "parameters": [
+                                        {
+                                            "kind": "DataDeclaration",
+                                            "declarationKind": "Parameter",
+                                            "identifier": "box",
+                                            "typeAnnotation": "Object",
+                                            "operator": null,
+                                            "type": "Object"
+                                        }
+                                    ],
+                                    "statements": [
+                                        {
+                                            "kind": "ReturnStatement",
+                                            "type": "String[]",
+                                            "expression": {
+                                                "kind": "ScopeMemberAccessExpression",
+                                                "type": "String[]",
+                                                "scopableExpression": {
+                                                    "kind": "InvokeExpression",
+                                                    "type": "ArrayObject<String>",
+                                                    "invokableExpression": {
+                                                        "kind": "IdentifierExpression",
+                                                        "type": "ArrayObject<String>",
+                                                        "identifier": "ArrayObject"
+                                                    },
+                                                    "arguments": [
+                                                        {
+                                                            "kind": "IdentifierExpression",
+                                                            "type": "Object",
+                                                            "identifier": "box"
+                                                        }
+                                                    ]
+                                                },
+                                                "member": {
+                                                    "kind": "IdentifierExpression",
+                                                    "type": "String[]",
+                                                    "identifier": "value"
+                                                }
+                                            }
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "kind": "ClassMethodGroupDeclaration",
                             "identifier": "New",
-                            "locals": [],
-                            "type": "New ArrayObject<ArrayObject:T>()",
-                            "returnType": "ArrayObject<ArrayObject:T>",
-                            "parameters": [],
-                            "statements": []
+                            "type": "New ArrayBoxer<String>",
+                            "overloads": [
+                                {
+                                    "kind": "ClassMethodDeclaration",
+                                    "identifier": "New",
+                                    "locals": [],
+                                    "type": "New ArrayBoxer<String>()",
+                                    "returnType": "ArrayBoxer<String>",
+                                    "parameters": [],
+                                    "statements": []
+                                }
+                            ]
                         }
                     ]
                 }
             ]
         },
         {
-            "kind": "ClassDeclaration",
-            "instantiatedTypes": [],
-            "identifier": "ArrayBoxer",
-            "type": "ArrayBoxer<ArrayBoxer:T>",
-            "typeParameters": [
+            "kind": "FunctionGroupDeclaration",
+            "identifier": "Main",
+            "type": "Main",
+            "overloads": [
                 {
-                    "kind": "TypeParameter",
-                    "identifier": "T",
-                    "type": "ArrayBoxer:T"
-                }
-            ],
-            "superType": "Object",
-            "locals": [
-                {
-                    "kind": "TypeParameter",
-                    "identifier": "T",
-                    "type": "ArrayBoxer:T"
-                },
-                {
-                    "kind": "FunctionGroupDeclaration",
-                    "identifier": "Unbox",
-                    "type": "Unbox",
-                    "overloads": [
+                    "kind": "FunctionDeclaration",
+                    "identifier": "Main",
+                    "locals": [],
+                    "type": "Main: Int()",
+                    "returnType": "Int",
+                    "parameters": [],
+                    "statements": [
                         {
-                            "kind": "FunctionDeclaration",
-                            "identifier": "Unbox",
-                            "locals": [
-                                "box"
-                            ],
-                            "type": "Unbox: ArrayBoxer:T[](Object)",
-                            "returnType": "ArrayBoxer:T[]",
-                            "parameters": [
-                                {
-                                    "kind": "DataDeclaration",
-                                    "declarationKind": null,
-                                    "identifier": "box",
-                                    "typeAnnotation": "Object",
-                                    "operator": null,
-                                    "type": "Object"
-                                }
-                            ],
-                            "statements": [
-                                {
-                                    "kind": "ReturnStatement",
-                                    "type": "ArrayBoxer:T[]",
-                                    "expression": {
-                                        "kind": "ScopeMemberAccessExpression",
-                                        "type": "ArrayBoxer:T[]",
-                                        "scopableExpression": {
-                                            "kind": "InvokeExpression",
-                                            "type": "ArrayObject<ArrayBoxer:T>",
-                                            "invokableExpression": {
-                                                "kind": "IdentifierExpression",
-                                                "type": "ArrayObject<ArrayBoxer:T>",
-                                                "identifier": "ArrayObject"
-                                            },
-                                            "arguments": [
-                                                {
-                                                    "kind": "IdentifierExpression",
-                                                    "type": "Object",
-                                                    "identifier": "box"
-                                                }
-                                            ]
-                                        },
-                                        "member": {
-                                            "kind": "IdentifierExpression",
-                                            "type": "ArrayBoxer:T[]",
-                                            "identifier": "value"
-                                        }
-                                    }
-                                }
-                            ]
-                        }
-                    ]
-                },
-                {
-                    "kind": "ClassMethodGroupDeclaration",
-                    "identifier": "New",
-                    "type": "New ArrayBoxer<ArrayBoxer:T>",
-                    "overloads": [
-                        {
-                            "kind": "ClassMethodDeclaration",
-                            "identifier": "New",
-                            "locals": [],
-                            "type": "New ArrayBoxer<ArrayBoxer:T>()",
-                            "returnType": "ArrayBoxer<ArrayBoxer:T>",
-                            "parameters": [],
-                            "statements": []
+                            "kind": "ExpressionStatement",
+                            "expression": {
+                                "kind": "InvokeExpression",
+                                "type": "ArrayBoxer<String>",
+                                "invocationType": "New ArrayBoxer<String>()",
+                                "invokableExpression": {
+                                    "kind": "NewExpression",
+                                    "type": "New ArrayBoxer<String>",
+                                    "typeReference": "ArrayBoxer<String>"
+                                },
+                                "arguments": []
+                            }
                         }
                     ]
                 }
