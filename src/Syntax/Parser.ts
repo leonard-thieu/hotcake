@@ -16,6 +16,7 @@ import { PreprocessorModuleDeclaration } from './Node/Declaration/PreprocessorMo
 import { StrictDirective } from './Node/Declaration/StrictDirective';
 import { TypeParameter } from './Node/Declaration/TypeParameter';
 import { Expressions, MissableExpression } from './Node/Expression/Expressions';
+import { ScopeMemberAccessExpression } from './Node/Expression/ScopeMemberAccessExpression';
 import { IdentifierStartToken } from './Node/Identifier';
 import { ModulePath } from './Node/ModulePath';
 import { NodeKind, Nodes } from './Node/Nodes';
@@ -1254,20 +1255,27 @@ export class Parser extends ParserBase {
         const newlines = this.parseList(ParseContextKind.NewlineList, parent);
         let expression = this.parsePrimaryExpression(parent);
 
-        switch (expression.kind) {
-            case NodeKind.IdentifierExpression:
-            case NodeKind.ScopeMemberAccessExpression: {
-                expression = this.parseInvokeExpression(expression);
-                break;
+        let rightExpression = expression;
+        while (rightExpression.kind === NodeKind.ScopeMemberAccessExpression) {
+            rightExpression = rightExpression.member;
+        }
+
+        if (rightExpression.kind === NodeKind.IdentifierExpression) {
+            rightExpression = this.parseInvokeExpression(rightExpression);
+
+            if (rightExpression.parent &&
+                rightExpression.parent.kind === NodeKind.ScopeMemberAccessExpression
+            ) {
+                rightExpression.parent.member = rightExpression;
+            } else {
+                expression = rightExpression;
             }
         }
 
         expression.newlines = newlines;
 
-        switch (expression.kind) {
-            case NodeKind.InvokeExpression: {
-                return this.parseExpressionStatement(parent, expression);
-            }
+        if (rightExpression.kind === NodeKind.InvokeExpression) {
+            return this.parseExpressionStatement(parent, expression);
         }
 
         console.warn(`Expression cannot be used as a statement.`);

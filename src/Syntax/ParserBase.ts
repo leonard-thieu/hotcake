@@ -5,7 +5,7 @@ import { ConfigurationTag } from './Node/ConfigurationTag';
 import { ArrayLiteralExpression } from './Node/Expression/ArrayLiteralExpression';
 import { BinaryExpression, BinaryExpressionOperatorToken } from './Node/Expression/BinaryExpression';
 import { BooleanLiteralExpression, BooleanLiteralExpressionValueToken } from './Node/Expression/BooleanLiteralExpression';
-import { Expressions, MissableExpression } from './Node/Expression/Expressions';
+import { Expressions, MissableExpression, PrimaryExpression } from './Node/Expression/Expressions';
 import { FloatLiteralExpression } from './Node/Expression/FloatLiteralExpression';
 import { GlobalScopeExpression } from './Node/Expression/GlobalScopeExpression';
 import { GroupingExpression } from './Node/Expression/GroupingExpression';
@@ -235,27 +235,35 @@ export abstract class ParserBase {
 
     // #region Primary expressions
 
-    protected parsePrimaryExpression(parent: Nodes) {
-        type PrimaryExpression =
-            | ReturnType<ParserBase['parsePrimaryExpressionCore']>
-            | ReturnType<ParserBase['parsePostfixExpression']>
-            ;
+    // Without the return type annotation, TypeScript seems to think it can eliminate `InvokeExpression`, `IndexExpression`, and
+    // `SliceExpression` from the return type.
+    protected parsePrimaryExpression(parent: Nodes): PrimaryExpression | MissingToken {
+        let primaryExpression: PrimaryExpression | MissingToken = this.parsePrimaryExpressionCore(parent);
 
-        let expression: PrimaryExpression = this.parsePrimaryExpressionCore(parent);
+        while (true) {
+            let expression = primaryExpression;
+            if (primaryExpression.kind === NodeKind.ScopeMemberAccessExpression) {
+                expression = primaryExpression.member;
+            }
 
-        if (expression.kind !== TokenKind.Missing) {
-            while (true) {
-                const postfixExpression = this.parsePostfixExpression(expression);
+            if (expression.kind === TokenKind.Missing) {
+                break;
+            }
 
-                if (!postfixExpression) {
-                    break;
-                }
+            const postfixExpression = this.parsePostfixExpression(expression);
+            if (!postfixExpression) {
+                break;
+            }
 
-                expression = postfixExpression;
+            if (expression.kind === NodeKind.ScopeMemberAccessExpression) {
+                postfixExpression.parent = expression;
+                expression.member = postfixExpression;
+            } else {
+                primaryExpression = postfixExpression;
             }
         }
 
-        return expression;
+        return primaryExpression;
     }
 
     private parsePrimaryExpressionCore(parent: Nodes) {
@@ -574,31 +582,32 @@ export abstract class ParserBase {
     protected parseScopeMemberAccessExpression(expression: Expressions, scopeMemberAccessOperator: PeriodToken): ScopeMemberAccessExpression {
         const scopeMemberAccessExpression = new ScopeMemberAccessExpression();
         scopeMemberAccessExpression.parent = expression.parent;
+        expression.parent = scopeMemberAccessExpression;
         scopeMemberAccessExpression.scopableExpression = expression;
         scopeMemberAccessExpression.scopableExpression.parent = scopeMemberAccessExpression;
         scopeMemberAccessExpression.scopeMemberAccessOperator = scopeMemberAccessOperator;
-        scopeMemberAccessExpression.member = this.parseUnaryExpressionOrHigher(scopeMemberAccessExpression);
+        scopeMemberAccessExpression.member = this.parsePrimaryExpression(scopeMemberAccessExpression);
 
         return scopeMemberAccessExpression;
     }
 
     protected parseIndexOrSliceExpression(expression: Expressions, openingSquareBracket: OpeningSquareBracketToken) {
-        let indexExpressionExpressionOrstartExpression: MissableExpression | undefined = undefined;
+        let indexExpressionExpression_startExpression: MissableExpression | undefined = undefined;
         const token = this.getToken();
         if (this.isExpressionStart(token)) {
-            indexExpressionExpressionOrstartExpression = this.parseExpression(/*parent*/ undefined!) as Expressions;
+            indexExpressionExpression_startExpression = this.parseExpression(/*parent*/ undefined!) as Expressions;
         }
 
         const sliceOperator = this.eatOptional(TokenKind.PeriodPeriod);
         if (!sliceOperator) {
-            if (!indexExpressionExpressionOrstartExpression) {
-                indexExpressionExpressionOrstartExpression = this.createMissingToken(token.fullStart, TokenKind.Expression);
+            if (!indexExpressionExpression_startExpression) {
+                indexExpressionExpression_startExpression = this.createMissingToken(token.fullStart, TokenKind.Expression);
             }
 
-            return this.parseIndexExpression(expression, openingSquareBracket, indexExpressionExpressionOrstartExpression);
+            return this.parseIndexExpression(expression, openingSquareBracket, indexExpressionExpression_startExpression);
         }
 
-        return this.parseSliceExpression(expression, openingSquareBracket, indexExpressionExpressionOrstartExpression, sliceOperator);
+        return this.parseSliceExpression(expression, openingSquareBracket, indexExpressionExpression_startExpression, sliceOperator);
     }
 
     protected parseIndexExpression(
@@ -608,6 +617,7 @@ export abstract class ParserBase {
     ): IndexExpression {
         const indexExpression = new IndexExpression();
         indexExpression.parent = expression.parent;
+        expression.parent = indexExpression;
         indexExpression.indexableExpression = expression;
         indexExpression.indexableExpression.parent = indexExpression;
         indexExpression.openingSquareBracket = openingSquareBracket;
@@ -628,6 +638,7 @@ export abstract class ParserBase {
     ): SliceExpression {
         const sliceExpression = new SliceExpression();
         sliceExpression.parent = expression.parent;
+        expression.parent = sliceExpression;
         sliceExpression.sliceableExpression = expression;
         sliceExpression.sliceableExpression.parent = sliceExpression;
         sliceExpression.openingSquareBracket = openingSquareBracket;
@@ -649,6 +660,7 @@ export abstract class ParserBase {
     protected parseInvokeExpression(expression: Expressions): InvokeExpression {
         const invokeExpression = new InvokeExpression();
         invokeExpression.parent = expression.parent;
+        expression.parent = invokeExpression;
         invokeExpression.invokableExpression = expression;
         invokeExpression.invokableExpression.parent = invokeExpression;
         invokeExpression.openingParenthesis = this.eatOptional(TokenKind.OpeningParenthesis);

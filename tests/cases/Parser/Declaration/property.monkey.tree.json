@@ -1,0 +1,645 @@
+{
+    "kind": "ModuleDeclaration",
+    "strictNewlines": [],
+    "headerMembers": [],
+    "members": [
+        {
+            "kind": "ClassDeclaration",
+            "classKeyword": {
+                "kind": "ClassKeyword",
+                "fullStart": 0,
+                "start": 0,
+                "length": 5
+            },
+            "identifier": {
+                "kind": "Identifier",
+                "fullStart": 5,
+                "start": 6,
+                "length": 8
+            },
+            "members": [
+                {
+                    "kind": "Newline",
+                    "fullStart": 13,
+                    "start": 14,
+                    "length": 2
+                },
+                {
+                    "kind": "ClassMethodDeclaration",
+                    "methodKeyword": {
+                        "kind": "MethodKeyword",
+                        "fullStart": 15,
+                        "start": 19,
+                        "length": 10
+                    },
+                    "identifier": {
+                        "kind": "Identifier",
+                        "fullStart": 25,
+                        "start": 26,
+                        "length": 7
+                    },
+                    "openingParenthesis": {
+                        "kind": "OpeningParenthesis",
+                        "fullStart": 32,
+                        "start": 32,
+                        "length": 1
+                    },
+                    "parameters": {
+                        "kind": "DataDeclarationSequence",
+                        "dataDeclarationKeyword": null,
+                        "children": []
+                    },
+                    "closingParenthesis": {
+                        "kind": "ClosingParenthesis",
+                        "fullStart": 33,
+                        "start": 33,
+                        "length": 1
+                    },
+                    "attributes": [
+                        {
+                            "kind": "PropertyKeyword",
+                            "fullStart": 34,
+                            "start": 35,
+                            "length": 9
+                        }
+                    ],
+                    "statements": [
+                        {
+                            "kind": "EmptyStatement",
+                            "terminator": {
+                                "kind": "Newline",
+                                "fullStart": 43,
+                                "start": 44,
+                                "length": 2
+                            }
+                        }
+                    ],
+                    "endKeyword": {
+                        "kind": "EndKeyword",
+                        "fullStart": 45,
+                        "start": 49,
+                        "length": 7
+                    }
+                },
+                {
+                    "kind": "Newline",
+                    "fullStart": 52,
+                    "start": 53,
+                    "length": 2
+                },
+                {
+                    "kind": "Newline",
+                    "fullStart": 54,
+                    "start": 55,
+                    "length": 2
+                },
+                {
+                    "kind": "ClassMethodDeclaration",
+                    "methodKeyword": {
+                        "kind": "MethodKeyword",
+                        "fullStart": 56,
+                        "start": 60,
+                        "length": 10
+                    },
+                    "identifier": {
+                        "kind": "Identifier",
+                        "fullStart": 66,
+                        "start": 67,
+                        "length": 7
+                    },
+                    "openingParenthesis": {
+                        "kind": "OpeningParenthesis",
+                        "fullStart": 73,
+                        "start": 73,
+                        "length": 1
+                    },
+                    "parameters": {
+                        "kind": "DataDeclarationSequence",
+                        "dataDeclarationKeyword": null,
+                        "children": [
+                            {
+                                "kind": "DataDeclaration",
+                                "identifier": {
+                                    "kind": "Identifier",
+                                    "fullStart": 74,
+                                    "start": 74,
+                                    "length": 6
+                                },
+                                "operator": null
+                            }
+                        ]
+                    },
+                    "closingParenthesis": {
+                        "kind": "ClosingParenthesis",
+                        "fullStart": 80,
+                        "start": 80,
+                        "length": 1
+                    },
+                    "attributes": [
+                        {
+                            "kind": "PropertyKeyword",
+                            "fullStart": 81,
+                            "start": 82,
+                            "length": 9
+                        }
+                    ],
+                    "statements": [
+                        {
+                            "kind": "EmptyStatement",
+                            "terminator": {
+                                "kind": "Newline",
+                                "fullStart": 90,
+                                "start": 91,
+                                "length": 2
+                            }
+                        }
+                    ],
+                    "endKeyword": {
+                        "kind": "EndKeyword",
+                        "fullStart": 92,
+                        "start": 96,
+                        "length": 7
+                    }
+                },
+                {
+                    "kind": "Newline",
+                    "fullStart": 99,
+                    "start": 100,
+                    "length": 2
+                },
+                {
+                    "kind": "Newline",
+                    "fullStart": 101,
+                    "start": 102,
+                    "length": 2
+                },
+                {
+                    "kind": "ClassMethodDeclaration",
+                    "methodKeyword": {
+                        "kind": "MethodKeyword",
+                        "fullStart": 103,
+                        "start": 107,
+                        "length": 10
+                    },
+                    "identifier": {
+                        "kind": "Identifier",
+                        "fullStart": 113,
+                        "start": 114,
+                        "length": 11
+                    },
+                    "openingParenthesis": {
+                        "kind": "OpeningParenthesis",
+                        "fullStart": 124,
+                        "start": 124,
+                        "length": 1
+                    },
+                    "parameters": {
+                        "kind": "DataDeclarationSequence",
+                        "dataDeclarationKeyword": null,
+                        "children": []
+                    },
+                    "closingParenthesis": {
+                        "kind": "ClosingParenthesis",
+                        "fullStart": 125,
+                        "start": 125,
+                        "length": 1
+                    },
+                    "attributes": [
+                        {
+                            "kind": "PropertyKeyword",
+                            "fullStart": 126,
+                            "start": 127,
+                            "length": 9
+                        }
+                    ],
+                    "statements": [
+                        {
+                            "kind": "EmptyStatement",
+                            "terminator": {
+                                "kind": "Newline",
+                                "fullStart": 135,
+                                "start": 136,
+                                "length": 2
+                            }
+                        }
+                    ],
+                    "endKeyword": {
+                        "kind": "EndKeyword",
+                        "fullStart": 137,
+                        "start": 141,
+                        "length": 7
+                    }
+                },
+                {
+                    "kind": "Newline",
+                    "fullStart": 144,
+                    "start": 145,
+                    "length": 2
+                },
+                {
+                    "kind": "Newline",
+                    "fullStart": 146,
+                    "start": 147,
+                    "length": 2
+                },
+                {
+                    "kind": "ClassMethodDeclaration",
+                    "methodKeyword": {
+                        "kind": "MethodKeyword",
+                        "fullStart": 148,
+                        "start": 152,
+                        "length": 10
+                    },
+                    "identifier": {
+                        "kind": "Identifier",
+                        "fullStart": 158,
+                        "start": 159,
+                        "length": 7
+                    },
+                    "returnType": {
+                        "kind": "LonghandTypeAnnotation",
+                        "colon": {
+                            "kind": "Colon",
+                            "fullStart": 165,
+                            "start": 165,
+                            "length": 1
+                        },
+                        "typeReference": {
+                            "kind": "TypeReference",
+                            "identifier": {
+                                "kind": "Identifier",
+                                "fullStart": 166,
+                                "start": 167,
+                                "length": 8
+                            },
+                            "arrayTypeAnnotations": []
+                        }
+                    },
+                    "openingParenthesis": {
+                        "kind": "OpeningParenthesis",
+                        "fullStart": 174,
+                        "start": 174,
+                        "length": 1
+                    },
+                    "parameters": {
+                        "kind": "DataDeclarationSequence",
+                        "dataDeclarationKeyword": null,
+                        "children": []
+                    },
+                    "closingParenthesis": {
+                        "kind": "ClosingParenthesis",
+                        "fullStart": 175,
+                        "start": 175,
+                        "length": 1
+                    },
+                    "attributes": [
+                        {
+                            "kind": "PropertyKeyword",
+                            "fullStart": 176,
+                            "start": 178,
+                            "length": 10
+                        }
+                    ],
+                    "statements": [
+                        {
+                            "kind": "EmptyStatement",
+                            "terminator": {
+                                "kind": "Newline",
+                                "fullStart": 186,
+                                "start": 187,
+                                "length": 2
+                            }
+                        }
+                    ],
+                    "endKeyword": {
+                        "kind": "EndKeyword",
+                        "fullStart": 188,
+                        "start": 192,
+                        "length": 7
+                    }
+                },
+                {
+                    "kind": "Newline",
+                    "fullStart": 195,
+                    "start": 196,
+                    "length": 2
+                }
+            ],
+            "endKeyword": {
+                "kind": "EndKeyword",
+                "fullStart": 197,
+                "start": 197,
+                "length": 3
+            }
+        },
+        {
+            "kind": "Newline",
+            "fullStart": 200,
+            "start": 201,
+            "length": 2
+        },
+        {
+            "kind": "Newline",
+            "fullStart": 202,
+            "start": 203,
+            "length": 2
+        },
+        {
+            "kind": "FunctionDeclaration",
+            "functionKeyword": {
+                "kind": "FunctionKeyword",
+                "fullStart": 204,
+                "start": 204,
+                "length": 8
+            },
+            "identifier": {
+                "kind": "Identifier",
+                "fullStart": 212,
+                "start": 213,
+                "length": 5
+            },
+            "openingParenthesis": {
+                "kind": "OpeningParenthesis",
+                "fullStart": 217,
+                "start": 217,
+                "length": 1
+            },
+            "parameters": {
+                "kind": "DataDeclarationSequence",
+                "dataDeclarationKeyword": null,
+                "children": []
+            },
+            "closingParenthesis": {
+                "kind": "ClosingParenthesis",
+                "fullStart": 218,
+                "start": 218,
+                "length": 1
+            },
+            "statements": [
+                {
+                    "kind": "EmptyStatement",
+                    "terminator": {
+                        "kind": "Newline",
+                        "fullStart": 219,
+                        "start": 220,
+                        "length": 2
+                    }
+                },
+                {
+                    "kind": "DataDeclarationSequenceStatement",
+                    "dataDeclarationSequence": {
+                        "kind": "DataDeclarationSequence",
+                        "dataDeclarationKeyword": {
+                            "kind": "LocalKeyword",
+                            "fullStart": 221,
+                            "start": 225,
+                            "length": 9
+                        },
+                        "children": [
+                            {
+                                "kind": "DataDeclaration",
+                                "identifier": {
+                                    "kind": "Identifier",
+                                    "fullStart": 230,
+                                    "start": 231,
+                                    "length": 8
+                                },
+                                "operator": {
+                                    "kind": "ColonEqualsSign",
+                                    "fullStart": 238,
+                                    "start": 239,
+                                    "length": 3
+                                },
+                                "expression": {
+                                    "kind": "InvokeExpression",
+                                    "newlines": [],
+                                    "invokableExpression": {
+                                        "kind": "NewExpression",
+                                        "newKeyword": {
+                                            "kind": "NewKeyword",
+                                            "fullStart": 241,
+                                            "start": 242,
+                                            "length": 4
+                                        },
+                                        "type": {
+                                            "kind": "TypeReference",
+                                            "identifier": {
+                                                "kind": "Identifier",
+                                                "fullStart": 245,
+                                                "start": 246,
+                                                "length": 8
+                                            },
+                                            "arrayTypeAnnotations": []
+                                        }
+                                    },
+                                    "arguments": []
+                                }
+                            }
+                        ]
+                    },
+                    "terminator": {
+                        "kind": "Newline",
+                        "fullStart": 253,
+                        "start": 254,
+                        "length": 2
+                    }
+                },
+                {
+                    "kind": "ExpressionStatement",
+                    "expression": {
+                        "kind": "ScopeMemberAccessExpression",
+                        "newlines": [],
+                        "scopableExpression": {
+                            "kind": "IdentifierExpression",
+                            "identifier": {
+                                "kind": "Identifier",
+                                "fullStart": 255,
+                                "start": 259,
+                                "length": 11
+                            }
+                        },
+                        "scopeMemberAccessOperator": {
+                            "kind": "Period",
+                            "fullStart": 266,
+                            "start": 266,
+                            "length": 1
+                        },
+                        "member": {
+                            "kind": "InvokeExpression",
+                            "invokableExpression": {
+                                "kind": "IdentifierExpression",
+                                "identifier": {
+                                    "kind": "Identifier",
+                                    "fullStart": 267,
+                                    "start": 267,
+                                    "length": 6
+                                }
+                            },
+                            "arguments": []
+                        }
+                    },
+                    "terminator": {
+                        "kind": "Newline",
+                        "fullStart": 273,
+                        "start": 274,
+                        "length": 2
+                    }
+                },
+                {
+                    "kind": "ExpressionStatement",
+                    "expression": {
+                        "kind": "ScopeMemberAccessExpression",
+                        "newlines": [],
+                        "scopableExpression": {
+                            "kind": "IdentifierExpression",
+                            "identifier": {
+                                "kind": "Identifier",
+                                "fullStart": 275,
+                                "start": 279,
+                                "length": 11
+                            }
+                        },
+                        "scopeMemberAccessOperator": {
+                            "kind": "Period",
+                            "fullStart": 286,
+                            "start": 286,
+                            "length": 1
+                        },
+                        "member": {
+                            "kind": "ScopeMemberAccessExpression",
+                            "scopableExpression": {
+                                "kind": "IdentifierExpression",
+                                "identifier": {
+                                    "kind": "Identifier",
+                                    "fullStart": 287,
+                                    "start": 287,
+                                    "length": 6
+                                }
+                            },
+                            "scopeMemberAccessOperator": {
+                                "kind": "Period",
+                                "fullStart": 293,
+                                "start": 293,
+                                "length": 1
+                            },
+                            "member": {
+                                "kind": "InvokeExpression",
+                                "invokableExpression": {
+                                    "kind": "IdentifierExpression",
+                                    "identifier": {
+                                        "kind": "Identifier",
+                                        "fullStart": 294,
+                                        "start": 294,
+                                        "length": 6
+                                    }
+                                },
+                                "arguments": []
+                            }
+                        }
+                    },
+                    "terminator": {
+                        "kind": "Newline",
+                        "fullStart": 300,
+                        "start": 301,
+                        "length": 2
+                    }
+                },
+                {
+                    "kind": "ExpressionStatement",
+                    "expression": {
+                        "kind": "ScopeMemberAccessExpression",
+                        "newlines": [],
+                        "scopableExpression": {
+                            "kind": "IdentifierExpression",
+                            "identifier": {
+                                "kind": "Identifier",
+                                "fullStart": 302,
+                                "start": 306,
+                                "length": 11
+                            }
+                        },
+                        "scopeMemberAccessOperator": {
+                            "kind": "Period",
+                            "fullStart": 313,
+                            "start": 313,
+                            "length": 1
+                        },
+                        "member": {
+                            "kind": "ScopeMemberAccessExpression",
+                            "scopableExpression": {
+                                "kind": "IdentifierExpression",
+                                "identifier": {
+                                    "kind": "Identifier",
+                                    "fullStart": 314,
+                                    "start": 314,
+                                    "length": 6
+                                }
+                            },
+                            "scopeMemberAccessOperator": {
+                                "kind": "Period",
+                                "fullStart": 320,
+                                "start": 320,
+                                "length": 1
+                            },
+                            "member": {
+                                "kind": "ScopeMemberAccessExpression",
+                                "scopableExpression": {
+                                    "kind": "IdentifierExpression",
+                                    "identifier": {
+                                        "kind": "Identifier",
+                                        "fullStart": 321,
+                                        "start": 321,
+                                        "length": 6
+                                    }
+                                },
+                                "scopeMemberAccessOperator": {
+                                    "kind": "Period",
+                                    "fullStart": 327,
+                                    "start": 327,
+                                    "length": 1
+                                },
+                                "member": {
+                                    "kind": "InvokeExpression",
+                                    "invokableExpression": {
+                                        "kind": "IdentifierExpression",
+                                        "identifier": {
+                                            "kind": "Identifier",
+                                            "fullStart": 328,
+                                            "start": 328,
+                                            "length": 6
+                                        }
+                                    },
+                                    "arguments": []
+                                }
+                            }
+                        }
+                    },
+                    "terminator": {
+                        "kind": "Newline",
+                        "fullStart": 334,
+                        "start": 335,
+                        "length": 2
+                    }
+                }
+            ],
+            "endKeyword": {
+                "kind": "EndKeyword",
+                "fullStart": 336,
+                "start": 336,
+                "length": 3
+            }
+        },
+        {
+            "kind": "Newline",
+            "fullStart": 339,
+            "start": 340,
+            "length": 2
+        }
+    ],
+    "eofToken": {
+        "kind": "EOF",
+        "fullStart": 341,
+        "start": 341,
+        "length": 0
+    }
+}

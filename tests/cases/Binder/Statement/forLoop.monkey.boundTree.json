@@ -813,6 +813,7 @@
                             "type": "ObjectEnumerator: CollectionEnumerator()",
                             "returnType": "CollectionEnumerator",
                             "parameters": [],
+                            "isProperty": false,
                             "statements": []
                         }
                     ]
@@ -853,6 +854,7 @@
                             "type": "HasNext: Bool()",
                             "returnType": "Bool",
                             "parameters": [],
+                            "isProperty": false,
                             "statements": []
                         }
                     ]
@@ -869,6 +871,7 @@
                             "type": "NextObject: Item()",
                             "returnType": "Item",
                             "parameters": [],
+                            "isProperty": false,
                             "statements": []
                         }
                     ]

@@ -2,8 +2,7 @@ import { CONSTRUCTOR_NAME } from '../Binder';
 import { BoundTreeWalker } from '../BoundTreeWalker';
 import { BoundNodeKind } from '../Node/BoundNodes';
 import { BoundIntrinsicTypeDeclaration } from '../Node/Declaration/BoundIntrinsicTypeDeclaration';
-import { Type } from './Type';
-import { TypeKind, Types } from './Types';
+import { Type, TypeKind, Types } from './Types';
 
 export class IntType extends Type {
     constructor(readonly declaration: BoundIntrinsicTypeDeclaration) {

@@ -44,6 +44,7 @@
                             "type": "GetBaseClass: MyBaseClass()",
                             "returnType": "MyBaseClass",
                             "parameters": [],
+                            "isProperty": false,
                             "statements": [
                                 {
                                     "kind": "ReturnStatement",

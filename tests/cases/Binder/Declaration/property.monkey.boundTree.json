@@ -1,0 +1,559 @@
+{
+    "kind": "ModuleDeclaration",
+    "identifier": "property",
+    "locals": [
+        {
+            "kind": "ClassDeclaration",
+            "identifier": "MyClass",
+            "type": "MyClass",
+            "superType": "Object",
+            "locals": [
+                {
+                    "kind": "ClassMethodGroupDeclaration",
+                    "identifier": "Length",
+                    "type": "Length",
+                    "overloads": [
+                        {
+                            "kind": "ClassMethodDeclaration",
+                            "identifier": "Length",
+                            "locals": [],
+                            "type": "Length: Int()",
+                            "returnType": "Int",
+                            "parameters": [],
+                            "isProperty": true,
+                            "statements": []
+                        },
+                        {
+                            "kind": "ClassMethodDeclaration",
+                            "identifier": "Length",
+                            "locals": [
+                                "length"
+                            ],
+                            "type": "Length: Int(Int)",
+                            "returnType": "Int",
+                            "parameters": [
+                                {
+                                    "kind": "DataDeclaration",
+                                    "declarationKind": "Parameter",
+                                    "identifier": "length",
+                                    "typeAnnotation": "Int",
+                                    "operator": null,
+                                    "type": "Int"
+                                }
+                            ],
+                            "isProperty": true,
+                            "statements": []
+                        }
+                    ]
+                },
+                {
+                    "kind": "ClassMethodGroupDeclaration",
+                    "identifier": "LongLength",
+                    "type": "LongLength",
+                    "overloads": [
+                        {
+                            "kind": "ClassMethodDeclaration",
+                            "identifier": "LongLength",
+                            "locals": [],
+                            "type": "LongLength: Int()",
+                            "returnType": "Int",
+                            "parameters": [],
+                            "isProperty": true,
+                            "statements": []
+                        }
+                    ]
+                },
+                {
+                    "kind": "ClassMethodGroupDeclaration",
+                    "identifier": "Parent",
+                    "type": "Parent",
+                    "overloads": [
+                        {
+                            "kind": "ClassMethodDeclaration",
+                            "identifier": "Parent",
+                            "locals": [],
+                            "type": "Parent: MyClass()",
+                            "returnType": "MyClass",
+                            "parameters": [],
+                            "isProperty": true,
+                            "statements": []
+                        }
+                    ]
+                },
+                {
+                    "kind": "ClassMethodGroupDeclaration",
+                    "identifier": "Test",
+                    "type": "Test",
+                    "overloads": [
+                        {
+                            "kind": "ClassMethodDeclaration",
+                            "identifier": "Test",
+                            "locals": [
+                                "a"
+                            ],
+                            "type": "Test: Int()",
+                            "returnType": "Int",
+                            "parameters": [],
+                            "isProperty": false,
+                            "statements": [
+                                {
+                                    "kind": "DataDeclarationStatement",
+                                    "dataDeclaration": {
+                                        "kind": "DataDeclaration",
+                                        "declarationKind": "Local",
+                                        "identifier": "a",
+                                        "typeAnnotation": "Int",
+                                        "operator": null,
+                                        "type": "Int"
+                                    }
+                                },
+                                {
+                                    "kind": "AssignmentStatement",
+                                    "leftOperand": {
+                                        "kind": "IdentifierExpression",
+                                        "type": "Int",
+                                        "identifier": "a"
+                                    },
+                                    "operator": "Assignment",
+                                    "rightOperand": {
+                                        "kind": "InvokeExpression",
+                                        "type": "Int",
+                                        "invocationType": "Length: Int()",
+                                        "invokableExpression": {
+                                            "kind": "IdentifierExpression",
+                                            "type": "Length",
+                                            "identifier": "Length"
+                                        },
+                                        "arguments": []
+                                    }
+                                },
+                                {
+                                    "kind": "AssignmentStatement",
+                                    "leftOperand": {
+                                        "kind": "IdentifierExpression",
+                                        "type": "Int",
+                                        "identifier": "a"
+                                    },
+                                    "operator": "Assignment",
+                                    "rightOperand": {
+                                        "kind": "ScopeMemberAccessExpression",
+                                        "type": "Int",
+                                        "scopableExpression": {
+                                            "kind": "SelfExpression",
+                                            "type": "MyClass"
+                                        },
+                                        "member": {
+                                            "kind": "InvokeExpression",
+                                            "type": "Int",
+                                            "invocationType": "Length: Int()",
+                                            "invokableExpression": {
+                                                "kind": "IdentifierExpression",
+                                                "type": "Length",
+                                                "identifier": "Length"
+                                            },
+                                            "arguments": []
+                                        }
+                                    }
+                                },
+                                {
+                                    "kind": "AssignmentStatement",
+                                    "leftOperand": {
+                                        "kind": "IdentifierExpression",
+                                        "type": "Int",
+                                        "identifier": "a"
+                                    },
+                                    "operator": "Assignment",
+                                    "rightOperand": {
+                                        "kind": "ScopeMemberAccessExpression",
+                                        "type": "Int",
+                                        "scopableExpression": {
+                                            "kind": "SelfExpression",
+                                            "type": "MyClass"
+                                        },
+                                        "member": {
+                                            "kind": "ScopeMemberAccessExpression",
+                                            "type": "Int",
+                                            "scopableExpression": {
+                                                "kind": "InvokeExpression",
+                                                "type": "MyClass",
+                                                "invocationType": "Parent: MyClass()",
+                                                "invokableExpression": {
+                                                    "kind": "IdentifierExpression",
+                                                    "type": "Parent",
+                                                    "identifier": "Parent"
+                                                },
+                                                "arguments": []
+                                            },
+                                            "member": {
+                                                "kind": "InvokeExpression",
+                                                "type": "Int",
+                                                "invocationType": "Length: Int()",
+                                                "invokableExpression": {
+                                                    "kind": "IdentifierExpression",
+                                                    "type": "Length",
+                                                    "identifier": "Length"
+                                                },
+                                                "arguments": []
+                                            }
+                                        }
+                                    }
+                                },
+                                {
+                                    "kind": "AssignmentStatement",
+                                    "leftOperand": {
+                                        "kind": "IdentifierExpression",
+                                        "type": "Int",
+                                        "identifier": "a"
+                                    },
+                                    "operator": "Assignment",
+                                    "rightOperand": {
+                                        "kind": "ScopeMemberAccessExpression",
+                                        "type": "Int",
+                                        "scopableExpression": {
+                                            "kind": "SelfExpression",
+                                            "type": "MyClass"
+                                        },
+                                        "member": {
+                                            "kind": "ScopeMemberAccessExpression",
+                                            "type": "Int",
+                                            "scopableExpression": {
+                                                "kind": "InvokeExpression",
+                                                "type": "MyClass",
+                                                "invocationType": "Parent: MyClass()",
+                                                "invokableExpression": {
+                                                    "kind": "IdentifierExpression",
+                                                    "type": "Parent",
+                                                    "identifier": "Parent"
+                                                },
+                                                "arguments": []
+                                            },
+                                            "member": {
+                                                "kind": "ScopeMemberAccessExpression",
+                                                "type": "Int",
+                                                "scopableExpression": {
+                                                    "kind": "InvokeExpression",
+                                                    "type": "MyClass",
+                                                    "invokableExpression": {
+                                                        "kind": "InvokeExpression",
+                                                        "type": "MyClass",
+                                                        "invocationType": "Parent: MyClass()",
+                                                        "invokableExpression": {
+                                                            "kind": "IdentifierExpression",
+                                                            "type": "Parent",
+                                                            "identifier": "Parent"
+                                                        },
+                                                        "arguments": []
+                                                    },
+                                                    "arguments": []
+                                                },
+                                                "member": {
+                                                    "kind": "ScopeMemberAccessExpression",
+                                                    "type": "Int",
+                                                    "scopableExpression": {
+                                                        "kind": "InvokeExpression",
+                                                        "type": "MyClass",
+                                                        "invocationType": "Parent: MyClass()",
+                                                        "invokableExpression": {
+                                                            "kind": "IdentifierExpression",
+                                                            "type": "Parent",
+                                                            "identifier": "Parent"
+                                                        },
+                                                        "arguments": []
+                                                    },
+                                                    "member": {
+                                                        "kind": "InvokeExpression",
+                                                        "type": "Int",
+                                                        "invocationType": "Test: Int()",
+                                                        "invokableExpression": {
+                                                            "kind": "IdentifierExpression",
+                                                            "type": "Test",
+                                                            "identifier": "Test"
+                                                        },
+                                                        "arguments": []
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "kind": "ClassMethodGroupDeclaration",
+                    "identifier": "New",
+                    "type": "New MyClass",
+                    "overloads": [
+                        {
+                            "kind": "ClassMethodDeclaration",
+                            "identifier": "New",
+                            "locals": [],
+                            "type": "New MyClass()",
+                            "returnType": "MyClass",
+                            "parameters": [],
+                            "statements": []
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "kind": "FunctionGroupDeclaration",
+            "identifier": "Main",
+            "type": "Main",
+            "overloads": [
+                {
+                    "kind": "FunctionDeclaration",
+                    "identifier": "Main",
+                    "locals": [
+                        "myClass",
+                        "length"
+                    ],
+                    "type": "Main: Int()",
+                    "returnType": "Int",
+                    "parameters": [],
+                    "statements": [
+                        {
+                            "kind": "DataDeclarationStatement",
+                            "dataDeclaration": {
+                                "kind": "DataDeclaration",
+                                "declarationKind": "Local",
+                                "identifier": "myClass",
+                                "operator": "ColonEqualsSign",
+                                "expression": {
+                                    "kind": "InvokeExpression",
+                                    "type": "MyClass",
+                                    "invocationType": "New MyClass()",
+                                    "invokableExpression": {
+                                        "kind": "NewExpression",
+                                        "type": "New MyClass",
+                                        "typeReference": "MyClass"
+                                    },
+                                    "arguments": []
+                                },
+                                "type": "MyClass"
+                            }
+                        },
+                        {
+                            "kind": "ExpressionStatement",
+                            "expression": {
+                                "kind": "InvokeExpression",
+                                "type": "Int",
+                                "invocationType": "CheckInt: Int(Int)",
+                                "invokableExpression": {
+                                    "kind": "IdentifierExpression",
+                                    "type": "CheckInt",
+                                    "identifier": "CheckInt"
+                                },
+                                "arguments": [
+                                    {
+                                        "kind": "ScopeMemberAccessExpression",
+                                        "type": "Int",
+                                        "scopableExpression": {
+                                            "kind": "IdentifierExpression",
+                                            "type": "MyClass",
+                                            "identifier": "myClass"
+                                        },
+                                        "member": {
+                                            "kind": "InvokeExpression",
+                                            "type": "Int",
+                                            "invocationType": "Length: Int()",
+                                            "invokableExpression": {
+                                                "kind": "IdentifierExpression",
+                                                "type": "Length",
+                                                "identifier": "Length"
+                                            },
+                                            "arguments": []
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "kind": "AssignmentStatement",
+                            "leftOperand": {
+                                "kind": "ScopeMemberAccessExpression",
+                                "type": "Int",
+                                "scopableExpression": {
+                                    "kind": "IdentifierExpression",
+                                    "type": "MyClass",
+                                    "identifier": "myClass"
+                                },
+                                "member": {
+                                    "kind": "InvokeExpression",
+                                    "type": "Int",
+                                    "invocationType": "Length: Int()",
+                                    "invokableExpression": {
+                                        "kind": "IdentifierExpression",
+                                        "type": "Length",
+                                        "identifier": "Length"
+                                    },
+                                    "arguments": []
+                                }
+                            },
+                            "operator": "Assignment",
+                            "rightOperand": {
+                                "kind": "IntegerLiteralExpression",
+                                "type": "Int",
+                                "value": "1"
+                            }
+                        },
+                        {
+                            "kind": "DataDeclarationStatement",
+                            "dataDeclaration": {
+                                "kind": "DataDeclaration",
+                                "declarationKind": "Local",
+                                "identifier": "length",
+                                "typeAnnotation": "Int",
+                                "operator": null,
+                                "type": "Int"
+                            }
+                        },
+                        {
+                            "kind": "AssignmentStatement",
+                            "leftOperand": {
+                                "kind": "IdentifierExpression",
+                                "type": "Int",
+                                "identifier": "length"
+                            },
+                            "operator": "Assignment",
+                            "rightOperand": {
+                                "kind": "ScopeMemberAccessExpression",
+                                "type": "Int",
+                                "scopableExpression": {
+                                    "kind": "IdentifierExpression",
+                                    "type": "MyClass",
+                                    "identifier": "myClass"
+                                },
+                                "member": {
+                                    "kind": "InvokeExpression",
+                                    "type": "Int",
+                                    "invocationType": "Length: Int()",
+                                    "invokableExpression": {
+                                        "kind": "IdentifierExpression",
+                                        "type": "Length",
+                                        "identifier": "Length"
+                                    },
+                                    "arguments": []
+                                }
+                            }
+                        },
+                        {
+                            "kind": "IfStatement",
+                            "locals": [],
+                            "expression": {
+                                "kind": "BinaryExpression",
+                                "type": "Bool",
+                                "leftOperand": {
+                                    "kind": "GroupingExpression",
+                                    "type": "Int",
+                                    "expression": {
+                                        "kind": "BinaryExpression",
+                                        "type": "Int",
+                                        "leftOperand": {
+                                            "kind": "ScopeMemberAccessExpression",
+                                            "type": "Int",
+                                            "scopableExpression": {
+                                                "kind": "IdentifierExpression",
+                                                "type": "MyClass",
+                                                "identifier": "myClass"
+                                            },
+                                            "member": {
+                                                "kind": "InvokeExpression",
+                                                "type": "Int",
+                                                "invocationType": "LongLength: Int()",
+                                                "invokableExpression": {
+                                                    "kind": "IdentifierExpression",
+                                                    "type": "LongLength",
+                                                    "identifier": "LongLength"
+                                                },
+                                                "arguments": []
+                                            }
+                                        },
+                                        "operator": "Subtraction",
+                                        "rightOperand": {
+                                            "kind": "ScopeMemberAccessExpression",
+                                            "type": "Int",
+                                            "scopableExpression": {
+                                                "kind": "IdentifierExpression",
+                                                "type": "MyClass",
+                                                "identifier": "myClass"
+                                            },
+                                            "member": {
+                                                "kind": "InvokeExpression",
+                                                "type": "Int",
+                                                "invocationType": "Length: Int()",
+                                                "invokableExpression": {
+                                                    "kind": "IdentifierExpression",
+                                                    "type": "Length",
+                                                    "identifier": "Length"
+                                                },
+                                                "arguments": []
+                                            }
+                                        }
+                                    }
+                                },
+                                "operator": "ConditionalOr",
+                                "rightOperand": {
+                                    "kind": "UnaryExpression",
+                                    "type": "Int",
+                                    "operator": "BitwiseComplement",
+                                    "operand": {
+                                        "kind": "ScopeMemberAccessExpression",
+                                        "type": "Int",
+                                        "scopableExpression": {
+                                            "kind": "IdentifierExpression",
+                                            "type": "MyClass",
+                                            "identifier": "myClass"
+                                        },
+                                        "member": {
+                                            "kind": "InvokeExpression",
+                                            "type": "Int",
+                                            "invocationType": "Length: Int()",
+                                            "invokableExpression": {
+                                                "kind": "IdentifierExpression",
+                                                "type": "Length",
+                                                "identifier": "Length"
+                                            },
+                                            "arguments": []
+                                        }
+                                    }
+                                }
+                            },
+                            "statements": [],
+                            "elseIfClauses": []
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "kind": "FunctionGroupDeclaration",
+            "identifier": "CheckInt",
+            "type": "CheckInt",
+            "overloads": [
+                {
+                    "kind": "FunctionDeclaration",
+                    "identifier": "CheckInt",
+                    "locals": [
+                        "val"
+                    ],
+                    "type": "CheckInt: Int(Int)",
+                    "returnType": "Int",
+                    "parameters": [
+                        {
+                            "kind": "DataDeclaration",
+                            "declarationKind": "Parameter",
+                            "identifier": "val",
+                            "typeAnnotation": "Int",
+                            "operator": null,
+                            "type": "Int"
+                        }
+                    ],
+                    "statements": []
+                }
+            ]
+        }
+    ]
+}

@@ -7,8 +7,7 @@ import { BoundFunctionGroupDeclarations, BoundMethodGroupDeclaration } from '../
 import { BoundInterfaceMethodDeclaration } from '../Node/Declaration/BoundInterfaceDeclaration';
 import { BoundExternClassMethodDeclaration } from '../Node/Declaration/Extern/BoundExternClassDeclaration';
 import { BoundExternFunctionDeclaration } from '../Node/Declaration/Extern/BoundExternFunctionDeclaration';
-import { Type } from './Type';
-import { TypeKind, Types } from './Types';
+import { Type, TypeKind, Types } from './Types';
 
 // #region Function like
 
@@ -32,17 +31,15 @@ abstract class FunctionLikeType extends Type {
         super();
     }
 
-    isConvertibleTo(target: Types): boolean {
-        throw new Error('Method not implemented.');
-    }
-
     toString(): string {
         let str = '';
 
         str += this.declaration.identifier.name;
         str += `: ${this.declaration.returnType.type}`;
         str += '(';
-        str += this.declaration.parameters.map(p => p.type).join(',');
+        str += this.declaration.parameters.map((parameter) =>
+            parameter.type
+        ).join(',');
         str += ')';
 
         return str;
@@ -75,6 +72,10 @@ export class FunctionType extends FunctionLikeType {
     }
 
     readonly kind = TypeKind.Function;
+
+    isConvertibleTo(_target: Types): boolean {
+        throw new Error(`'${this.kind}' types are not convertible.`);
+    }
 }
 
 export class FunctionGroupType extends Type {
@@ -84,8 +85,8 @@ export class FunctionGroupType extends Type {
 
     readonly kind = TypeKind.FunctionGroup;
 
-    isConvertibleTo(target: Types): boolean {
-        throw new Error('Method not implemented.');
+    isConvertibleTo(_target: Types): boolean {
+        throw new Error(`'${this.kind}' types are not convertible.`);
     }
 
     toString(): string {
@@ -126,6 +127,10 @@ export class MethodType extends FunctionLikeType {
 
     readonly kind = TypeKind.Method;
 
+    isConvertibleTo(_target: Types): boolean {
+        throw new Error(`'${this.kind}' types are not convertible.`);
+    }
+
     toString(): string {
         if (areIdentifiersSame(CONSTRUCTOR_NAME, this.declaration.identifier.name)) {
             let str = '';
@@ -149,8 +154,8 @@ export class MethodGroupType extends Type {
 
     readonly kind = TypeKind.MethodGroup;
 
-    isConvertibleTo(target: Types): boolean {
-        throw new Error('Method not implemented.');
+    isConvertibleTo(_target: Types): boolean {
+        throw new Error(`'${this.kind}' types are not convertible.`);
     }
 
     toString(): string {

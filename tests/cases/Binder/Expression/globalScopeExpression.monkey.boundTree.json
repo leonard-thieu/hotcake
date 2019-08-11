@@ -36,6 +36,7 @@
                             "type": "Act: Int()",
                             "returnType": "Int",
                             "parameters": [],
+                            "isProperty": false,
                             "statements": [
                                 {
                                     "kind": "AssignmentStatement",

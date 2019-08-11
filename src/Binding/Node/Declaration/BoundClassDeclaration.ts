@@ -45,6 +45,7 @@ export class BoundClassMethodDeclaration extends BoundNode {
 
     returnType: BoundTypeReferenceDeclaration = undefined!;
     parameters: BoundDataDeclaration[] = undefined!;
+    isProperty: boolean = undefined!;
     statements?: BoundStatements[] = undefined;
 }
 

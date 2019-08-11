@@ -2,8 +2,7 @@ import { CONSTRUCTOR_NAME } from '../Binder';
 import { BoundTreeWalker } from '../BoundTreeWalker';
 import { BoundNodeKind } from '../Node/BoundNodes';
 import { BoundExternClassDeclaration } from '../Node/Declaration/Extern/BoundExternClassDeclaration';
-import { Type } from './Type';
-import { TypeKind, Types } from './Types';
+import { Type, TypeKind, Types } from './Types';
 
 export class StringType extends Type {
     constructor(readonly declaration: BoundExternClassDeclaration) {

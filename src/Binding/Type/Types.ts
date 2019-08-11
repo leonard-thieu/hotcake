@@ -10,22 +10,15 @@ import { StringType } from './StringType';
 import { TypeParameterType } from './TypeParameterType';
 import { VoidType } from './VoidType';
 
-export type Types =
-    | ArrayType
-    | BoolType
-    | FloatType
-    | FunctionType
-    | FunctionGroupType
-    | IntType
-    | MethodType
-    | MethodGroupType
-    | ModuleType
-    | NullType
-    | ObjectType
-    | StringType
-    | TypeParameterType
-    | VoidType
-    ;
+export abstract class Type {
+    abstract readonly kind: TypeKind;
+
+    abstract isConvertibleTo(target: Types): boolean;
+
+    toString(): string {
+        return this.kind.toString();
+    }
+}
 
 export enum TypeKind {
     Array = 'Array',
@@ -43,6 +36,23 @@ export enum TypeKind {
     TypeParameter = 'TypeParameter',
     Void = 'Void',
 }
+
+export type Types =
+    | ArrayType
+    | BoolType
+    | FloatType
+    | FunctionType
+    | FunctionGroupType
+    | IntType
+    | MethodType
+    | MethodGroupType
+    | ModuleType
+    | NullType
+    | ObjectType
+    | StringType
+    | TypeParameterType
+    | VoidType
+    ;
 
 export type DefaultableType =
     | BoolType

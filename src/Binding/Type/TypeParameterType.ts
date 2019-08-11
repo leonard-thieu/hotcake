@@ -1,7 +1,6 @@
 import { BoundClassDeclaration } from '../Node/Declaration/BoundClassDeclaration';
 import { BoundTypeParameter } from '../Node/Declaration/BoundTypeParameter';
-import { Type } from './Type';
-import { TypeKind, Types } from './Types';
+import { Type, TypeKind, Types } from './Types';
 
 export class TypeParameterType extends Type {
     constructor(readonly declaration: BoundTypeParameter) {

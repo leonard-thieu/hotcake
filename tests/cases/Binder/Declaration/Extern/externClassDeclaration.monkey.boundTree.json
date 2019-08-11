@@ -24,7 +24,8 @@
                             "locals": [],
                             "type": "Method1: Int()",
                             "returnType": "Int",
-                            "parameters": []
+                            "parameters": [],
+                            "isProperty": false
                         }
                     ]
                 },
@@ -39,7 +40,8 @@
                             "locals": [],
                             "type": "Method2: Int()",
                             "returnType": "Int",
-                            "parameters": []
+                            "parameters": [],
+                            "isProperty": false
                         }
                     ]
                 },

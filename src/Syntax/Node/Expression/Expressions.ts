@@ -25,6 +25,17 @@ export abstract class Expression extends Node {
 }
 
 export type Expressions =
+    | PrimaryExpression
+    | UnaryExpression
+    | BinaryExpression
+    ;
+
+export type MissableExpression =
+    | Expressions
+    | MissingToken
+    ;
+
+export type PrimaryExpression =
     | NewExpression
     | NullExpression
     | BooleanLiteralExpression
@@ -39,13 +50,6 @@ export type Expressions =
     | InvokeExpression
     | IndexExpression
     | SliceExpression
-    | GroupingExpression
-    | UnaryExpression
-    | BinaryExpression
     | GlobalScopeExpression
-    ;
-
-export type MissableExpression =
-    | Expressions
-    | MissingToken
+    | GroupingExpression
     ;
