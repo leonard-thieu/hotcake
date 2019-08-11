@@ -69,7 +69,7 @@ export namespace ParseTreeVisitor {
         let ancestor = node.parent;
 
         while (ancestor) {
-            if (kinds.length === 0) {
+            if (!kinds.length) {
                 return ancestor;
             }
 

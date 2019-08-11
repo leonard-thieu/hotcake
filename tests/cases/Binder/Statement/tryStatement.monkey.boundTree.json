@@ -142,7 +142,7 @@
                                     "type": "Int",
                                     "identifier": "i"
                                 },
-                                "operator": "LessThanSignEqualsSign",
+                                "operator": "LessThanOrEquals",
                                 "rightOperand": {
                                     "kind": "IntegerLiteralExpression",
                                     "type": "Int",
@@ -156,7 +156,7 @@
                                     "type": "Int",
                                     "identifier": "i"
                                 },
-                                "operator": "PlusSignEqualsSign",
+                                "operator": "AdditionUpdateAssignment",
                                 "rightOperand": {
                                     "kind": "BinaryExpression",
                                     "type": "Int",
@@ -165,7 +165,7 @@
                                         "type": "Int",
                                         "identifier": "i"
                                     },
-                                    "operator": "PlusSign",
+                                    "operator": "Addition",
                                     "rightOperand": {
                                         "kind": "IntegerLiteralExpression",
                                         "type": "Int",
@@ -192,7 +192,7 @@
                                                         "type": "Int",
                                                         "identifier": "i"
                                                     },
-                                                    "operator": "Ampersand",
+                                                    "operator": "BitwiseAnd",
                                                     "rightOperand": {
                                                         "kind": "IntegerLiteralExpression",
                                                         "type": "Int",

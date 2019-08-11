@@ -68,7 +68,7 @@
                                                     "type": "String",
                                                     "value": "My "
                                                 },
-                                                "operator": "PlusSign",
+                                                "operator": "Addition",
                                                 "rightOperand": {
                                                     "kind": "StringLiteralExpression",
                                                     "type": "String",
@@ -76,7 +76,7 @@
                                                 }
                                             }
                                         },
-                                        "operator": "PlusSign",
+                                        "operator": "Addition",
                                         "rightOperand": {
                                             "kind": "StringLiteralExpression",
                                             "type": "String",

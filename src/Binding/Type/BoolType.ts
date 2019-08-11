@@ -1,4 +1,5 @@
-import { CONSTRUCTOR_NAME, getMethod } from '../Binder';
+import { CONSTRUCTOR_NAME } from '../Binder';
+import { BoundTreeWalker } from '../BoundTreeWalker';
 import { BoundNodeKind } from '../Node/BoundNodes';
 import { BoundIntrinsicTypeDeclaration } from '../Node/Declaration/BoundIntrinsicTypeDeclaration';
 import { Type } from './Type';
@@ -15,7 +16,7 @@ export class BoolType extends Type {
         switch (target.declaration.kind) {
             case BoundNodeKind.ExternClassDeclaration:
             case BoundNodeKind.ClassDeclaration: {
-                const method = getMethod(target.declaration, CONSTRUCTOR_NAME, undefined, this);
+                const method = BoundTreeWalker.getMethod(target.declaration, CONSTRUCTOR_NAME, undefined, this);
                 if (method) {
                     return true;
                 }

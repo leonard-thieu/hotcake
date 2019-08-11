@@ -44,10 +44,9 @@ import { WhileLoop } from '../Syntax/Node/Statement/WhileLoop';
 import { ShorthandTypeToken, TypeAnnotation } from '../Syntax/Node/TypeAnnotation';
 import { MissableTypeReference, TypeReference } from '../Syntax/Node/TypeReference';
 import { ParseTreeVisitor } from '../Syntax/ParseTreeVisitor';
-import { MissableToken } from '../Syntax/Token/MissingToken';
 import { SkippedToken } from '../Syntax/Token/SkippedToken';
 import { ColonEqualsSignToken, EqualsSignToken, TokenKind } from '../Syntax/Token/Tokens';
-import { assertNever, getText } from '../util';
+import { areElementsSame, assertNever, getText } from '../util';
 import { ANONYMOUS_NAME, areIdentifiersSame, BoundSymbol, BoundSymbolTable } from './BoundSymbol';
 import { BoundTreeWalker } from './BoundTreeWalker';
 import { BoundNodeKind, BoundNodeKindToBoundNodeMap, BoundNodes } from './Node/BoundNodes';
@@ -56,15 +55,15 @@ import { BoundDataDeclaration, BoundDataDeclarationKind, BoundDataDeclarationOpe
 import { BoundDeclarations, BoundTypeReferenceDeclaration } from './Node/Declaration/BoundDeclarations';
 import { BoundDirectory } from './Node/Declaration/BoundDirectory';
 import { BoundFunctionDeclaration } from './Node/Declaration/BoundFunctionDeclaration';
-import { BoundClassMethodGroupDeclaration, BoundExternClassMethodGroupDeclaration, BoundExternFunctionGroupDeclaration, BoundFunctionGroupDeclaration, BoundFunctionLikeGroupDeclaration, BoundInterfaceMethodGroupDeclaration, BoundMethodGroupDeclaration } from './Node/Declaration/BoundFunctionLikeGroupDeclaration';
+import { BoundClassMethodGroupDeclaration, BoundExternClassMethodGroupDeclaration, BoundExternFunctionGroupDeclaration, BoundFunctionGroupDeclaration, BoundFunctionLikeGroupDeclaration, BoundInterfaceMethodGroupDeclaration } from './Node/Declaration/BoundFunctionLikeGroupDeclaration';
 import { BoundInterfaceDeclaration, BoundInterfaceMethodDeclaration } from './Node/Declaration/BoundInterfaceDeclaration';
 import { BoundModuleDeclaration } from './Node/Declaration/BoundModuleDeclaration';
 import { BoundTypeParameter } from './Node/Declaration/BoundTypeParameter';
 import { BoundExternClassDeclaration, BoundExternClassDeclarationMember, BoundExternClassMethodDeclaration } from './Node/Declaration/Extern/BoundExternClassDeclaration';
-import { BoundExternDataDeclaration } from './Node/Declaration/Extern/BoundExternDataDeclaration';
+import { BoundExternDataDeclaration, BoundExternDataDeclarationKind } from './Node/Declaration/Extern/BoundExternDataDeclaration';
 import { BoundExternFunctionDeclaration } from './Node/Declaration/Extern/BoundExternFunctionDeclaration';
 import { BoundArrayLiteralExpression } from './Node/Expression/BoundArrayLiteralExpression';
-import { BoundBinaryExpression } from './Node/Expression/BoundBinaryExpression';
+import { BoundBinaryExpression, BoundBinaryExpressionOperator } from './Node/Expression/BoundBinaryExpression';
 import { BoundBooleanLiteralExpression } from './Node/Expression/BoundBooleanLiteralExpression';
 import { BoundExpressions } from './Node/Expression/BoundExpressions';
 import { BoundFloatLiteralExpression } from './Node/Expression/BoundFloatLiteralExpression';
@@ -81,8 +80,8 @@ import { BoundSelfExpression } from './Node/Expression/BoundSelfExpression';
 import { BoundSliceExpression } from './Node/Expression/BoundSliceExpression';
 import { BoundStringLiteralExpression } from './Node/Expression/BoundStringLiteralExpression';
 import { BoundSuperExpression } from './Node/Expression/BoundSuperExpression';
-import { BoundUnaryExpression } from './Node/Expression/BoundUnaryExpression';
-import { BoundAssignmentStatement } from './Node/Statement/BoundAssignmentStatement';
+import { BoundUnaryExpression, BoundUnaryExpressionOperator } from './Node/Expression/BoundUnaryExpression';
+import { BoundAssignmentStatement, BoundAssignmentStatementOperator, UpdateAssignmentOperator } from './Node/Statement/BoundAssignmentStatement';
 import { BoundContinueStatement } from './Node/Statement/BoundContinueStatement';
 import { BoundDataDeclarationStatement } from './Node/Statement/BoundDataDeclarationStatement';
 import { BoundExitStatement } from './Node/Statement/BoundExitStatement';
@@ -346,10 +345,12 @@ export class Binder {
     ): BoundExternDataDeclaration[] {
         const boundExternDataDeclarations: BoundExternDataDeclaration[] = [];
 
+        const declarationKind = this.getExternDataDeclarationKind(externDataDeclarationSequence.dataDeclarationKeyword);
+
         for (const externDataDeclaration of externDataDeclarationSequence.children) {
             switch (externDataDeclaration.kind) {
                 case NodeKind.ExternDataDeclaration: {
-                    const boundExternDataDeclaration = this.bindExternDataDeclaration(parent, externDataDeclaration, externDataDeclarationSequence.dataDeclarationKeyword);
+                    const boundExternDataDeclaration = this.bindExternDataDeclaration(parent, externDataDeclaration, declarationKind);
                     boundExternDataDeclarations.push(boundExternDataDeclaration);
                     break;
                 }
@@ -364,17 +365,25 @@ export class Binder {
         return boundExternDataDeclarations;
     }
 
+    private getExternDataDeclarationKind(externDataDeclarationKeyword: ExternDataDeclarationKeywordToken) {
+        switch (externDataDeclarationKeyword.kind) {
+            case TokenKind.GlobalKeyword: { return BoundExternDataDeclarationKind.Global; }
+            case TokenKind.FieldKeyword: { return BoundExternDataDeclarationKind.Field; }
+            default: { return assertNever(externDataDeclarationKeyword); }
+        }
+    }
+
     @traceBinding(BoundNodeKind.ExternDataDeclaration)
     private bindExternDataDeclaration(
         parent: BoundModuleDeclaration | BoundExternClassDeclaration,
         externDataDeclaration: ExternDataDeclaration,
-        dataDeclarationKeyword: ExternDataDeclarationKeywordToken,
+        declarationKind: BoundExternDataDeclarationKind,
     ): BoundExternDataDeclaration {
         const name = getText(externDataDeclaration.identifier, parent);
 
         const boundExternDataDeclaration = new BoundExternDataDeclaration();
         boundExternDataDeclaration.parent = parent;
-        boundExternDataDeclaration.declarationKind = dataDeclarationKeyword.kind;
+        boundExternDataDeclaration.declarationKind = declarationKind;
         boundExternDataDeclaration.identifier = new BoundSymbol(name, boundExternDataDeclaration);
         parent.locals.set(boundExternDataDeclaration.identifier);
 
@@ -1785,42 +1794,40 @@ export class Binder {
             throw new Error(`Index variable is missing.`);
         }
 
+        if (numericForLoop.operator.kind === TokenKind.Missing) {
+            throw new Error(`Operator is missing.`);
+        }
+
         let getFirstValueStatement: GetBoundNode<BoundStatements>;
         if (numericForLoop.localKeyword) {
-            const { localKeyword } = numericForLoop;
-            const operator = numericForLoop.operator as MissableToken<EqualsSignToken | ColonEqualsSignToken>;
-            const name = getText(indexVariable, parent);
+            const operatorToken = numericForLoop.operator as EqualsSignToken | ColonEqualsSignToken;
 
             getFirstValueStatement = (parent) => this.dataDeclarationStatement(parent,
                 (parent) => this.dataDeclaration(parent,
                     {
-                        name,
-                        declarationKind: this.getDataDeclarationKind(localKeyword),
-                        operator: operator.kind,
+                        name: getText(indexVariable, parent),
+                        declarationKind: this.getDataDeclarationKind(numericForLoop.localKeyword!),
+                        operator: operatorToken.kind,
                         getTypeAnnotation: (parent) => this.bindTypeAnnotation(parent, numericForLoop.typeAnnotation, typeMap),
                         getExpression: (parent) => this.bindExpression(parent, numericForLoop.firstValueExpression, typeMap),
                     },
                 ),
             );
         } else {
-            const operator = numericForLoop.operator as MissableToken<AssignmentOperatorToken>;
-            if (operator.kind === TokenKind.Missing) {
-                throw new Error(`Missing assignment operator.`);
-            }
+            const operatorToken = numericForLoop.operator as AssignmentOperatorToken;
 
             getFirstValueStatement = (parent) => this.assignmentStatement(parent,
                 (parent) => this.identifierExpression(parent,
                     (parent) => this.resolveIdentifier(indexVariable, parent),
                 ),
-                operator.kind,
+                this.getAssignmentStatementOperator(operatorToken.kind),
                 (parent) => this.bindExpression(parent, numericForLoop.firstValueExpression, typeMap),
             );
         }
 
         let getStepValueExpression: GetBoundNode<BoundExpressions>;
         if (numericForLoop.stepValueExpression) {
-            const { stepValueExpression } = numericForLoop;
-            getStepValueExpression = (parent) => this.bindExpression(parent, stepValueExpression, typeMap)
+            getStepValueExpression = (parent) => this.bindExpression(parent, numericForLoop.stepValueExpression!, typeMap)
         } else {
             getStepValueExpression = (parent) => this.integerLiteral(parent, '1');
         }
@@ -1838,7 +1845,7 @@ export class Binder {
                 (parent) => this.identifierExpression(parent,
                     (parent) => this.resolveIdentifier(indexVariable, parent),
                 ),
-                TokenKind.PlusSignEqualsSign,
+                BoundAssignmentStatementOperator.AdditionUpdateAssignment,
                 getStepValueExpression,
             ),
             (parent) => this.bindStatements(parent, numericForLoop.statements, typeMap),
@@ -1869,20 +1876,20 @@ export class Binder {
                     numericForLoop.stepValueExpression.kind === NodeKind.UnaryExpression &&
                     numericForLoop.stepValueExpression.operator.kind === TokenKind.HyphenMinus
                 ) {
-                    return TokenKind.GreaterThanSignEqualsSign;
+                    return BoundBinaryExpressionOperator.GreaterThanOrEquals;
                 }
 
-                return TokenKind.LessThanSignEqualsSign;
+                return BoundBinaryExpressionOperator.LessThanOrEquals;
             }
             case TokenKind.UntilKeyword: {
                 if (numericForLoop.stepValueExpression &&
                     numericForLoop.stepValueExpression.kind === NodeKind.UnaryExpression &&
                     numericForLoop.stepValueExpression.operator.kind === TokenKind.HyphenMinus
                 ) {
-                    return TokenKind.GreaterThanSign;
+                    return BoundBinaryExpressionOperator.GreaterThan;
                 }
 
-                return TokenKind.LessThanSign;
+                return BoundBinaryExpressionOperator.LessThan;
             }
             case TokenKind.Missing: {
                 throw new Error(`Missing 'To' or 'Until' keyword.`);
@@ -1939,7 +1946,7 @@ export class Binder {
                     (parent) => this.identifierExpression(parent,
                         () => boundIndexDeclaration,
                     ),
-                    TokenKind.LessThanSign,
+                    BoundBinaryExpressionOperator.LessThan,
                     (parent) => this.invokeExpression(parent,
                         (parent) => this.scopeMemberAccessExpression(parent,
                             (parent) => this.identifierExpression(parent,
@@ -1956,15 +1963,18 @@ export class Binder {
 
                 boundWhileLoop.statements = [];
 
+                if (forEachInLoop.operator.kind === TokenKind.Missing) {
+                    throw new Error(`Operator is missing.`);
+                }
+
                 if (forEachInLoop.localKeyword) {
-                    const operator = forEachInLoop.operator as MissableToken<EqualsSignToken | ColonEqualsSignToken>;
-                    const name = getText(forEachInLoop.indexVariable, parent);
+                    const operatorToken = forEachInLoop.operator as EqualsSignToken | ColonEqualsSignToken;
 
                     const indexVariableStatement = this.dataDeclarationStatement(boundWhileLoop,
                         (parent) => this.dataDeclaration(parent,
                             {
-                                name,
-                                operator: operator.kind,
+                                name: getText(forEachInLoop.indexVariable, parent),
+                                operator: operatorToken.kind,
                                 getTypeAnnotation: (parent) => this.bindTypeAnnotation(parent, forEachInLoop.typeAnnotation, typeMap),
                                 getExpression: (parent) => this.indexExpression(parent,
                                     (parent) => this.identifierExpression(parent,
@@ -1979,16 +1989,13 @@ export class Binder {
                     );
                     boundWhileLoop.statements.push(indexVariableStatement);
                 } else {
-                    const operator = forEachInLoop.operator as MissableToken<AssignmentOperatorToken>;
-                    if (operator.kind === TokenKind.Missing) {
-                        throw new Error(`Missing assignment operator.`);
-                    }
+                    const operatorToken = forEachInLoop.operator as AssignmentOperatorToken;
 
                     const indexVariableStatement = this.assignmentStatement(boundWhileLoop,
                         (parent) => this.identifierExpression(parent,
                             () => boundIndexDeclaration,
                         ),
-                        operator.kind,
+                        this.getAssignmentStatementOperator(operatorToken.kind),
                         (parent) => this.indexExpression(parent,
                             (parent) => this.identifierExpression(parent,
                                 () => boundCollectionDeclaration,
@@ -2005,7 +2012,7 @@ export class Binder {
                     (parent) => this.identifierExpression(parent,
                         () => boundIndexDeclaration,
                     ),
-                    TokenKind.PlusSignEqualsSign,
+                    BoundAssignmentStatementOperator.AdditionUpdateAssignment,
                     (parent) => this.integerLiteral(parent, '1'),
                 );
                 boundWhileLoop.statements.push(incrementStatement);
@@ -2064,15 +2071,18 @@ export class Binder {
                     throw new Error(`Index variable is missnig.`);
                 }
 
+                if (forEachInLoop.operator.kind === TokenKind.Missing) {
+                    throw new Error(`Operator is missing.`);
+                }
+
                 if (forEachInLoop.localKeyword) {
-                    const operator = forEachInLoop.operator as MissableToken<EqualsSignToken | ColonEqualsSignToken>;
-                    const name = getText(indexVariable, parent);
+                    const operatorToken = forEachInLoop.operator as EqualsSignToken | ColonEqualsSignToken;
 
                     const indexVariableStatement = this.dataDeclarationStatement(boundWhileLoop,
                         (parent) => this.dataDeclaration(parent,
                             {
-                                name,
-                                operator: operator.kind,
+                                name: getText(indexVariable, parent),
+                                operator: operatorToken.kind,
                                 getTypeAnnotation: (parent) => this.bindTypeAnnotation(parent, forEachInLoop.typeAnnotation, typeMap),
                                 getExpression: (parent) => this.invokeExpression(parent,
                                     (parent) => this.scopeMemberAccessExpression(parent,
@@ -2091,16 +2101,13 @@ export class Binder {
                     );
                     boundWhileLoop.statements.push(indexVariableStatement);
                 } else {
-                    const operator = forEachInLoop.operator as MissableToken<AssignmentOperatorToken>;
-                    if (operator.kind === TokenKind.Missing) {
-                        throw new Error(`Missing assignment operator.`);
-                    }
+                    const operatorToken = forEachInLoop.operator as AssignmentOperatorToken;
 
                     const indexVariableStatement = this.assignmentStatement(boundWhileLoop,
                         (parent) => this.identifierExpression(parent,
                             (parent) => this.resolveIdentifier(indexVariable, parent),
                         ),
-                        operator.kind,
+                        this.getAssignmentStatementOperator(operatorToken.kind),
                         (parent) => this.invokeExpression(parent,
                             (parent) => this.scopeMemberAccessExpression(parent,
                                 (parent) => this.identifierExpression(parent,
@@ -2269,15 +2276,32 @@ export class Binder {
     ): BoundAssignmentStatement {
         return this.assignmentStatement(parent,
             (parent) => this.bindExpression(parent, assignmentStatement.leftOperand, typeMap),
-            assignmentStatement.operator.kind,
+            this.getAssignmentStatementOperator(assignmentStatement.operator.kind),
             (parent) => this.bindExpression(parent, assignmentStatement.rightOperand, typeMap),
         );
+    }
+
+    private getAssignmentStatementOperator(operatorKind: AssignmentOperatorToken['kind']) {
+        switch (operatorKind) {
+            case TokenKind.VerticalBarEqualsSign: { return BoundAssignmentStatementOperator.BitwiseOrUpdateAssignment; }
+            case TokenKind.TildeEqualsSign: { return BoundAssignmentStatementOperator.BitwiseXorUpdateAssignment; }
+            case TokenKind.AmpersandEqualsSign: { return BoundAssignmentStatementOperator.BitwiseAndUpdateAssignment; }
+            case TokenKind.HyphenMinusEqualsSign: { return BoundAssignmentStatementOperator.SubtractionUpdateAssignment; }
+            case TokenKind.PlusSignEqualsSign: { return BoundAssignmentStatementOperator.AdditionUpdateAssignment; }
+            case TokenKind.ShrKeywordEqualsSign: { return BoundAssignmentStatementOperator.BitwiseShiftRightUpdateAssignment; }
+            case TokenKind.ShlKeywordEqualsSign: { return BoundAssignmentStatementOperator.BitwiseShiftLeftUpdateAssignment; }
+            case TokenKind.ModKeywordEqualsSign: { return BoundAssignmentStatementOperator.ModulusUpdateAssignment; }
+            case TokenKind.SlashEqualsSign: { return BoundAssignmentStatementOperator.DivisionUpdateAssignment; }
+            case TokenKind.AsteriskEqualsSign: { return BoundAssignmentStatementOperator.MultiplicationUpdateAssignment; }
+            case TokenKind.EqualsSign: { return BoundAssignmentStatementOperator.Assignment; }
+            default: { return assertNever(operatorKind); }
+        }
     }
 
     private assignmentStatement(
         parent: BoundNodes,
         getLeftOperand: GetBoundNode<BoundExpressions>,
-        operator: BoundAssignmentStatement['operator'],
+        operator: BoundAssignmentStatementOperator,
         getRightOperand: GetBoundNode<BoundExpressions>,
     ): BoundAssignmentStatement {
         const boundAssignmentStatement = new BoundAssignmentStatement();
@@ -2289,10 +2313,10 @@ export class Binder {
         const { leftOperand, rightOperand } = boundAssignmentStatement;
 
         // Lower update assignments to an assignment of a binary expression
-        if (operator !== TokenKind.EqualsSign) {
+        if (operator !== BoundAssignmentStatementOperator.Assignment) {
             boundAssignmentStatement.rightOperand = this.binaryExpression(boundAssignmentStatement,
                 (parent) => getLeftOperand(parent),
-                this.getBinaryExpressionOperatorKind(operator),
+                this.getBinaryExpressionOperatorForUpdateAssignmentOperator(operator),
                 (parent) => getRightOperand(parent),
             );
         }
@@ -2315,21 +2339,19 @@ export class Binder {
         return boundAssignmentStatement;
     }
 
-    private getBinaryExpressionOperatorKind(assignmentStatementOperatorKind: Exclude<AssignmentOperatorToken, EqualsSignToken>['kind']) {
-        switch (assignmentStatementOperatorKind) {
-            case TokenKind.AsteriskEqualsSign: { return TokenKind.Asterisk; }
-            case TokenKind.SlashEqualsSign: { return TokenKind.Slash; }
-            case TokenKind.ModKeywordEqualsSign: { return TokenKind.ModKeyword; }
-            case TokenKind.PlusSignEqualsSign: { return TokenKind.PlusSign; }
-            case TokenKind.HyphenMinusEqualsSign: { return TokenKind.HyphenMinus; }
-            case TokenKind.ShlKeywordEqualsSign: { return TokenKind.ShlKeyword; }
-            case TokenKind.ShrKeywordEqualsSign: { return TokenKind.ShrKeyword; }
-            case TokenKind.AmpersandEqualsSign: { return TokenKind.Ampersand; }
-            case TokenKind.TildeEqualsSign: { return TokenKind.Tilde; }
-            case TokenKind.VerticalBarEqualsSign: { return TokenKind.VerticalBar; }
-            default: {
-                return assertNever(assignmentStatementOperatorKind);
-            }
+    private getBinaryExpressionOperatorForUpdateAssignmentOperator(operator: UpdateAssignmentOperator) {
+        switch (operator) {
+            case BoundAssignmentStatementOperator.BitwiseOrUpdateAssignment: { return BoundBinaryExpressionOperator.BitwiseOr; }
+            case BoundAssignmentStatementOperator.BitwiseXorUpdateAssignment: { return BoundBinaryExpressionOperator.BitwiseXor; }
+            case BoundAssignmentStatementOperator.BitwiseAndUpdateAssignment: { return BoundBinaryExpressionOperator.BitwiseAnd; }
+            case BoundAssignmentStatementOperator.SubtractionUpdateAssignment: { return BoundBinaryExpressionOperator.Subtraction; }
+            case BoundAssignmentStatementOperator.AdditionUpdateAssignment: { return BoundBinaryExpressionOperator.Addition; }
+            case BoundAssignmentStatementOperator.BitwiseShiftRightUpdateAssignment: { return BoundBinaryExpressionOperator.BitwiseShiftRight; }
+            case BoundAssignmentStatementOperator.BitwiseShiftLeftUpdateAssignment: { return BoundBinaryExpressionOperator.BitwiseShiftLeft; }
+            case BoundAssignmentStatementOperator.ModulusUpdateAssignment: { return BoundBinaryExpressionOperator.Modulus; }
+            case BoundAssignmentStatementOperator.DivisionUpdateAssignment: { return BoundBinaryExpressionOperator.Division; }
+            case BoundAssignmentStatementOperator.MultiplicationUpdateAssignment: { return BoundBinaryExpressionOperator.Multiplication; }
+            default: { return assertNever(operator); }
         }
     }
 
@@ -2443,15 +2465,39 @@ export class Binder {
     ): BoundBinaryExpression {
         return this.binaryExpression(parent,
             (parent) => this.bindExpression(parent, expression.leftOperand, typeMap),
-            expression.operator.kind,
+            this.getBinaryExpressionOperator(expression.operator.kind),
             (parent) => this.bindExpression(parent, expression.rightOperand, typeMap),
         );
+    }
+
+    private getBinaryExpressionOperator(operatorKind: BinaryExpressionOperatorToken['kind']) {
+        switch (operatorKind) {
+            case TokenKind.OrKeyword: { return BoundBinaryExpressionOperator.ConditionalOr; }
+            case TokenKind.AndKeyword: { return BoundBinaryExpressionOperator.ConditionalAnd; }
+            case TokenKind.LessThanSignGreaterThanSign: { return BoundBinaryExpressionOperator.NotEquals; }
+            case TokenKind.GreaterThanSignEqualsSign: { return BoundBinaryExpressionOperator.GreaterThanOrEquals; }
+            case TokenKind.LessThanSignEqualsSign: { return BoundBinaryExpressionOperator.LessThanOrEquals; }
+            case TokenKind.GreaterThanSign: { return BoundBinaryExpressionOperator.GreaterThan; }
+            case TokenKind.LessThanSign: { return BoundBinaryExpressionOperator.LessThan; }
+            case TokenKind.EqualsSign: { return BoundBinaryExpressionOperator.Equals; }
+            case TokenKind.VerticalBar: { return BoundBinaryExpressionOperator.BitwiseOr; }
+            case TokenKind.Tilde: { return BoundBinaryExpressionOperator.BitwiseXor; }
+            case TokenKind.Ampersand: { return BoundBinaryExpressionOperator.BitwiseAnd; }
+            case TokenKind.HyphenMinus: { return BoundBinaryExpressionOperator.Subtraction; }
+            case TokenKind.PlusSign: { return BoundBinaryExpressionOperator.Addition; }
+            case TokenKind.ShrKeyword: { return BoundBinaryExpressionOperator.BitwiseShiftRight; }
+            case TokenKind.ShlKeyword: { return BoundBinaryExpressionOperator.BitwiseShiftLeft; }
+            case TokenKind.ModKeyword: { return BoundBinaryExpressionOperator.Modulus; }
+            case TokenKind.Slash: { return BoundBinaryExpressionOperator.Division; }
+            case TokenKind.Asterisk: { return BoundBinaryExpressionOperator.Multiplication; }
+            default: { return assertNever(operatorKind); }
+        }
     }
 
     private binaryExpression(
         parent: BoundNodes,
         getLeftOperand: (parent: BoundBinaryExpression) => BoundExpressions,
-        operator: BinaryExpressionOperatorToken['kind'],
+        operator: BoundBinaryExpressionOperator,
         getRightOperand: (parent: BoundBinaryExpression) => BoundExpressions,
     ): BoundBinaryExpression {
         const boundBinaryExpression = new BoundBinaryExpression();
@@ -2470,41 +2516,41 @@ export class Binder {
 
     private getTypeOfBinaryExpression(
         leftOperand: BoundExpressions,
-        operator: BinaryExpressionOperatorToken['kind'],
+        operator: BoundBinaryExpressionOperator,
         rightOperand: BoundExpressions,
     ) {
         switch (operator) {
             // Binary arithmetic operations
-            case TokenKind.Asterisk:
-            case TokenKind.Slash:
-            case TokenKind.ModKeyword:
-            case TokenKind.PlusSign:
-            case TokenKind.HyphenMinus: {
+            case BoundBinaryExpressionOperator.Multiplication:
+            case BoundBinaryExpressionOperator.Division:
+            case BoundBinaryExpressionOperator.Modulus:
+            case BoundBinaryExpressionOperator.Addition:
+            case BoundBinaryExpressionOperator.Subtraction: {
                 return this.bindBinaryArithmeticOperationType(leftOperand, operator, rightOperand);
             }
 
             // Bitwise operations
-            case TokenKind.ShlKeyword:
-            case TokenKind.ShrKeyword:
-            case TokenKind.Ampersand:
-            case TokenKind.Tilde:
-            case TokenKind.VerticalBar: {
+            case BoundBinaryExpressionOperator.BitwiseShiftLeft:
+            case BoundBinaryExpressionOperator.BitwiseShiftRight:
+            case BoundBinaryExpressionOperator.BitwiseAnd:
+            case BoundBinaryExpressionOperator.BitwiseXor:
+            case BoundBinaryExpressionOperator.BitwiseOr: {
                 return this.bindBitwiseOperationType(leftOperand, operator, rightOperand);
             }
 
             // Comparison operations
-            case TokenKind.EqualsSign:
-            case TokenKind.LessThanSign:
-            case TokenKind.GreaterThanSign:
-            case TokenKind.LessThanSignEqualsSign:
-            case TokenKind.GreaterThanSignEqualsSign:
-            case TokenKind.LessThanSignGreaterThanSign: {
+            case BoundBinaryExpressionOperator.Equals:
+            case BoundBinaryExpressionOperator.LessThan:
+            case BoundBinaryExpressionOperator.GreaterThan:
+            case BoundBinaryExpressionOperator.LessThanOrEquals:
+            case BoundBinaryExpressionOperator.GreaterThanOrEquals:
+            case BoundBinaryExpressionOperator.NotEquals: {
                 return this.bindComparisonOperationType(leftOperand, operator, rightOperand);
             }
 
             // Conditional operations
-            case TokenKind.AndKeyword:
-            case TokenKind.OrKeyword: {
+            case BoundBinaryExpressionOperator.ConditionalAnd:
+            case BoundBinaryExpressionOperator.ConditionalOr: {
                 return this.project.boolTypeDeclaration.type;
             }
 
@@ -2516,18 +2562,18 @@ export class Binder {
 
     private bindBinaryArithmeticOperationType(
         leftOperand: BoundExpressions,
-        operatorKind: TokenKind,
+        operator: BoundBinaryExpressionOperator,
         rightOperand: BoundExpressions,
     ) {
         const balancedType = this.getBalancedType(leftOperand.type, rightOperand.type);
         if (!balancedType) {
-            throw new Error(`'${operatorKind}' is not valid for '${leftOperand.kind}' and '${rightOperand.kind}'.`);
+            throw new Error(`'${operator}' is not valid for '${leftOperand.kind}' and '${rightOperand.kind}'.`);
         }
 
         switch (balancedType.kind) {
             case TypeKind.String: {
-                if (operatorKind !== TokenKind.PlusSign) {
-                    throw new Error(`'${operatorKind}' is not valid for '${leftOperand.kind}' and '${rightOperand.kind}'.`);
+                if (operator !== BoundBinaryExpressionOperator.Addition) {
+                    throw new Error(`'${operator}' is not valid for '${leftOperand.kind}' and '${rightOperand.kind}'.`);
                 }
                 break;
             }
@@ -2536,7 +2582,7 @@ export class Binder {
                 break;
             }
             default: {
-                throw new Error(`'${operatorKind}' is not valid for '${leftOperand.kind}' and '${rightOperand.kind}'.`);
+                throw new Error(`'${operator}' is not valid for '${leftOperand.kind}' and '${rightOperand.kind}'.`);
             }
         }
 
@@ -2545,13 +2591,13 @@ export class Binder {
 
     private bindBitwiseOperationType(
         leftOperand: BoundExpressions,
-        operatorKind: TokenKind,
+        operator: BoundBinaryExpressionOperator,
         rightOperand: BoundExpressions,
     ) {
         if (!leftOperand.type.isConvertibleTo(this.project.intTypeDeclaration.type) ||
             !rightOperand.type.isConvertibleTo(this.project.intTypeDeclaration.type)
         ) {
-            throw new Error(`'${operatorKind}' is not valid for '${leftOperand.kind}' and '${rightOperand.kind}'.`);
+            throw new Error(`'${operator}' is not valid for '${leftOperand.kind}' and '${rightOperand.kind}'.`);
         }
 
         return this.project.intTypeDeclaration.type;
@@ -2559,24 +2605,28 @@ export class Binder {
 
     private bindComparisonOperationType(
         leftOperand: BoundExpressions,
-        operatorKind: TokenKind,
+        operator: BoundBinaryExpressionOperator,
         rightOperand: BoundExpressions,
     ) {
         const balancedType = this.getBalancedType(leftOperand.type, rightOperand.type);
         if (!balancedType) {
-            throw new Error(`'${operatorKind}' is not valid for '${leftOperand.kind}' and '${rightOperand.kind}'.`);
+            throw new Error(`'${operator}' is not valid for '${leftOperand.kind}' and '${rightOperand.kind}'.`);
         }
 
         switch (balancedType.kind) {
             case TypeKind.Array: {
-                throw new Error(`'${operatorKind}' is not valid for '${leftOperand.kind}' and '${rightOperand.kind}'.`);
+                throw new Error(`'${operator}' is not valid for '${leftOperand.kind}' and '${rightOperand.kind}'.`);
             }
             case TypeKind.Bool:
             case TypeKind.Object: {
-                if (operatorKind !== TokenKind.EqualsSign &&
-                    operatorKind !== TokenKind.LessThanSignGreaterThanSign
-                ) {
-                    throw new Error(`'${operatorKind}' is not valid for '${leftOperand.kind}' and '${rightOperand.kind}'.`);
+                switch (operator) {
+                    case BoundBinaryExpressionOperator.Equals:
+                    case BoundBinaryExpressionOperator.NotEquals: {
+                        break;
+                    }
+                    default: {
+                        throw new Error(`'${operator}' is not valid for '${leftOperand.kind}' and '${rightOperand.kind}'.`);
+                    }
                 }
                 break;
             }
@@ -2595,14 +2645,24 @@ export class Binder {
         typeMap: TypeMap | undefined,
     ): BoundUnaryExpression {
         return this.unaryExpression(parent,
-            expression.operator.kind,
+            this.getUnaryExpressionOperator(expression.operator.kind),
             (parent) => this.bindExpression(parent, expression.operand, typeMap),
         );
     }
 
+    private getUnaryExpressionOperator(operatorKind: UnaryOperatorToken['kind']) {
+        switch (operatorKind) {
+            case TokenKind.PlusSign: { return BoundUnaryExpressionOperator.UnaryPlus; }
+            case TokenKind.HyphenMinus: { return BoundUnaryExpressionOperator.UnaryMinus; }
+            case TokenKind.Tilde: { return BoundUnaryExpressionOperator.BitwiseComplement; }
+            case TokenKind.NotKeyword: { return BoundUnaryExpressionOperator.BooleanInverse; }
+            default: { return assertNever(operatorKind); }
+        }
+    }
+
     private unaryExpression(
         parent: BoundNodes,
-        operator: UnaryOperatorToken['kind'],
+        operator: BoundUnaryExpressionOperator,
         getOperand: GetBoundNode<BoundExpressions>,
     ): BoundUnaryExpression {
         const boundUnaryExpression = new BoundUnaryExpression();
@@ -2618,14 +2678,12 @@ export class Binder {
     }
 
     private getTypeOfUnaryExpression(
-        operator: UnaryOperatorToken['kind'],
+        operator: BoundUnaryExpressionOperator,
         operand: BoundExpressions,
     ) {
         switch (operator) {
-            // Unary plus
-            case TokenKind.PlusSign:
-            // Unary minus
-            case TokenKind.HyphenMinus: {
+            case BoundUnaryExpressionOperator.UnaryPlus:
+            case BoundUnaryExpressionOperator.UnaryMinus: {
                 switch (operand.type.kind) {
                     case TypeKind.Int:
                     case TypeKind.Float: {
@@ -2636,16 +2694,14 @@ export class Binder {
                     }
                 }
             }
-            // Bitwise complement
-            case TokenKind.Tilde: {
+            case BoundUnaryExpressionOperator.BitwiseComplement: {
                 if (operand.type.isConvertibleTo(this.project.intTypeDeclaration.type)) {
                     return this.project.intTypeDeclaration.type;
                 } else {
                     throw new Error(`Cannot get bitwise complement of '${operand.type}'. '${operand.type}' is not implicitly convertible to 'Int'.`);
                 }
             }
-            // Boolean inverse
-            case TokenKind.NotKeyword: {
+            case BoundUnaryExpressionOperator.BooleanInverse: {
                 return this.project.boolTypeDeclaration.type;
             }
             default: {
@@ -2874,7 +2930,7 @@ export class Binder {
 
     private arrayLiteralExpression(
         parent: BoundNodes,
-        getExpressions: (parent: BoundNodes) => BoundExpressions[],
+        getExpressions: GetBoundNodes<BoundExpressions>,
     ): BoundArrayLiteralExpression {
         const boundArrayLiteralExpression = new BoundArrayLiteralExpression();
         boundArrayLiteralExpression.parent = parent;
@@ -3314,114 +3370,6 @@ export class Binder {
 
     // #endregion
 
-    // #region Generics
-
-    @traceInstantiating(BoundNodeKind.ExternClassDeclaration)
-    private instantiateArrayType(elementType: BoundTypeReferenceDeclaration): BoundExternClassDeclaration {
-        let instantiatedType = this.project.arrayTypeCache.get(elementType);
-        if (instantiatedType) {
-            return instantiatedType;
-        }
-
-        const openType = this.project.arrayTypeDeclaration;
-
-        instantiatedType = new BoundExternClassDeclaration();
-        this.project.arrayTypeCache.set(elementType, instantiatedType);
-        instantiatedType.declaration = openType.declaration;
-        instantiatedType.parent = openType.parent;
-        instantiatedType.identifier = new BoundSymbol(openType.identifier.name, instantiatedType);
-        instantiatedType.type = new ArrayType(instantiatedType, elementType);
-        instantiatedType.superType = openType.superType;
-        instantiatedType.nativeSymbol = openType.nativeSymbol;
-
-        for (const [, identifier] of openType.locals) {
-            // TODO: Investigate parameterizing `BoundSymbol.declaration` for improved type checking.
-            const declaration = identifier.declaration as BoundExternClassDeclarationMember;
-            switch (declaration.kind) {
-                // We can skip these since we know `Array` doesn't have these kinds of members.
-                case BoundNodeKind.ExternDataDeclaration:
-                case BoundNodeKind.ExternFunctionGroupDeclaration: {
-                    break;
-                }
-                // TODO: Should these be cloned anyway even though they don't take a generic type parameter?
-                case BoundNodeKind.ExternClassMethodGroupDeclaration: {
-                    instantiatedType.locals.set(identifier);
-                    break;
-                }
-                default: {
-                    assertNever(declaration);
-                    break;
-                }
-            }
-        }
-
-        return instantiatedType;
-    }
-
-    private createTypeMap(
-        typeParameters: BoundTypeParameter[],
-        typeArguments: BoundTypeReferenceDeclaration[],
-    ): TypeMap {
-        if (typeParameters.length !== typeArguments.length) {
-            throw new Error(`Wrong number of type arguments (expected: ${typeParameters.length}, got: ${typeArguments.length}).`);
-        }
-
-        const typeMap = new TypeMap();
-
-        for (let i = 0; i < typeParameters.length; i++) {
-            typeMap.set(typeParameters[i], typeArguments[i]);
-        }
-
-        return typeMap;
-    }
-
-    @traceInstantiating(BoundNodeKind.ClassDeclaration)
-    private instantiateGenericType(
-        openType: BoundClassDeclaration,
-        typeArguments: BoundTypeReferenceDeclaration[],
-    ): BoundClassDeclaration {
-        if (!openType.declaration.typeParameters) {
-            throw new Error(`'${openType.identifier.name}' is not generic.`);
-        }
-
-        let rootType = openType;
-        while (rootType.openType) {
-            rootType = rootType.openType;
-        }
-
-        const instantiatedTypes = rootType.instantiatedTypes!;
-
-        for (const instantiatedType of instantiatedTypes) {
-            if (areElementsSame(typeArguments, instantiatedType.typeArguments!,
-                (typeArgument, instantiatedTypeTypeArgument) => typeArgument === instantiatedTypeTypeArgument,
-            )) {
-                return instantiatedType;
-            }
-        }
-
-        const instantiatedType = new BoundClassDeclaration();
-        instantiatedType.declaration = openType.declaration;
-        instantiatedType.openType = openType;
-        instantiatedType.parent = openType.parent;
-        instantiatedType.type = new ObjectType(instantiatedType);
-        instantiatedType.identifier = new BoundSymbol(openType.identifier.name, instantiatedType);
-        instantiatedType.typeParameters = this.bindTypeParameters(instantiatedType, openType.declaration.typeParameters);
-        instantiatedType.typeArguments = typeArguments;
-        instantiatedTypes.push(instantiatedType);
-
-        if (typeArguments.some((typeArgument) => typeArgument.kind !== BoundNodeKind.TypeParameter)) {
-            // TODO: Need to map through whole chain?
-            const typeMap = this.createTypeMap(instantiatedType.typeParameters, typeArguments);
-            this.bindClassDeclaration2(instantiatedType, typeMap);
-        }
-
-        return instantiatedType;
-    }
-
-    // #endregion
-
-    // #region Core
-
     // #region Type resolution
 
     private bindTypeAnnotation(
@@ -3662,6 +3610,139 @@ export class Binder {
         throw new Error(`Could not find '${name}'.`);
     }
 
+    private getBalancedType(leftOperandType: Types, rightOperandType: Types) {
+        if (leftOperandType === this.project.stringTypeDeclaration.type ||
+            rightOperandType === this.project.stringTypeDeclaration.type
+        ) {
+            return this.project.stringTypeDeclaration.type;
+        }
+
+        if (leftOperandType === this.project.floatTypeDeclaration.type ||
+            rightOperandType === this.project.floatTypeDeclaration.type
+        ) {
+            return this.project.floatTypeDeclaration.type;
+        }
+
+        if (leftOperandType === this.project.intTypeDeclaration.type ||
+            rightOperandType === this.project.intTypeDeclaration.type
+        ) {
+            return this.project.intTypeDeclaration.type;
+        }
+
+        if (leftOperandType.isConvertibleTo(rightOperandType)) {
+            return rightOperandType;
+        }
+
+        if (rightOperandType.isConvertibleTo(leftOperandType)) {
+            return leftOperandType;
+        }
+    }
+
+    // #endregion
+
+    // #region Generics
+
+    @traceInstantiating(BoundNodeKind.ExternClassDeclaration)
+    private instantiateArrayType(elementType: BoundTypeReferenceDeclaration): BoundExternClassDeclaration {
+        let instantiatedType = this.project.arrayTypeCache.get(elementType);
+        if (instantiatedType) {
+            return instantiatedType;
+        }
+
+        const openType = this.project.arrayTypeDeclaration;
+
+        instantiatedType = new BoundExternClassDeclaration();
+        this.project.arrayTypeCache.set(elementType, instantiatedType);
+        instantiatedType.declaration = openType.declaration;
+        instantiatedType.parent = openType.parent;
+        instantiatedType.identifier = new BoundSymbol(openType.identifier.name, instantiatedType);
+        instantiatedType.type = new ArrayType(instantiatedType, elementType);
+        instantiatedType.superType = openType.superType;
+        instantiatedType.nativeSymbol = openType.nativeSymbol;
+
+        for (const [, identifier] of openType.locals) {
+            const declaration = identifier.declaration as BoundExternClassDeclarationMember;
+            switch (declaration.kind) {
+                // We can skip these since we know `Array` doesn't have these kinds of members.
+                case BoundNodeKind.ExternDataDeclaration:
+                case BoundNodeKind.ExternFunctionGroupDeclaration: {
+                    break;
+                }
+                // TODO: Should these be cloned anyway even though they don't take a generic type parameter?
+                case BoundNodeKind.ExternClassMethodGroupDeclaration: {
+                    instantiatedType.locals.set(identifier);
+                    break;
+                }
+                default: {
+                    assertNever(declaration);
+                    break;
+                }
+            }
+        }
+
+        return instantiatedType;
+    }
+
+    private createTypeMap(
+        typeParameters: BoundTypeParameter[],
+        typeArguments: BoundTypeReferenceDeclaration[],
+    ): TypeMap {
+        if (typeParameters.length !== typeArguments.length) {
+            throw new Error(`Wrong number of type arguments (expected: ${typeParameters.length}, got: ${typeArguments.length}).`);
+        }
+
+        const typeMap = new TypeMap();
+
+        for (let i = 0; i < typeParameters.length; i++) {
+            typeMap.set(typeParameters[i], typeArguments[i]);
+        }
+
+        return typeMap;
+    }
+
+    @traceInstantiating(BoundNodeKind.ClassDeclaration)
+    private instantiateGenericType(
+        openType: BoundClassDeclaration,
+        typeArguments: BoundTypeReferenceDeclaration[],
+    ): BoundClassDeclaration {
+        if (!openType.declaration.typeParameters) {
+            throw new Error(`'${openType.identifier.name}' is not generic.`);
+        }
+
+        let rootType = openType;
+        while (rootType.openType) {
+            rootType = rootType.openType;
+        }
+
+        const instantiatedTypes = rootType.instantiatedTypes!;
+
+        for (const instantiatedType of instantiatedTypes) {
+            if (areElementsSame(typeArguments, instantiatedType.typeArguments!,
+                (typeArgument, instantiatedTypeTypeArgument) => typeArgument === instantiatedTypeTypeArgument,
+            )) {
+                return instantiatedType;
+            }
+        }
+
+        const instantiatedType = new BoundClassDeclaration();
+        instantiatedType.declaration = openType.declaration;
+        instantiatedType.openType = openType;
+        instantiatedType.parent = openType.parent;
+        instantiatedType.type = new ObjectType(instantiatedType);
+        instantiatedType.identifier = new BoundSymbol(openType.identifier.name, instantiatedType);
+        instantiatedType.typeParameters = this.bindTypeParameters(instantiatedType, openType.declaration.typeParameters);
+        instantiatedType.typeArguments = typeArguments;
+        instantiatedTypes.push(instantiatedType);
+
+        if (typeArguments.some((typeArgument) => typeArgument.kind !== BoundNodeKind.TypeParameter)) {
+            // TODO: Need to map through whole chain?
+            const typeMap = this.createTypeMap(instantiatedType.typeParameters, typeArguments);
+            this.bindClassDeclaration2(instantiatedType, typeMap);
+        }
+
+        return instantiatedType;
+    }
+
     // #endregion
 
     // #region Symbols
@@ -3843,104 +3924,6 @@ export class Binder {
     }
 
     // #endregion
-
-    private getBalancedType(leftOperandType: Types, rightOperandType: Types) {
-        if (leftOperandType === this.project.stringTypeDeclaration.type ||
-            rightOperandType === this.project.stringTypeDeclaration.type
-        ) {
-            return this.project.stringTypeDeclaration.type;
-        }
-
-        if (leftOperandType === this.project.floatTypeDeclaration.type ||
-            rightOperandType === this.project.floatTypeDeclaration.type
-        ) {
-            return this.project.floatTypeDeclaration.type;
-        }
-
-        if (leftOperandType === this.project.intTypeDeclaration.type ||
-            rightOperandType === this.project.intTypeDeclaration.type
-        ) {
-            return this.project.intTypeDeclaration.type;
-        }
-
-        if (leftOperandType.isConvertibleTo(rightOperandType)) {
-            return rightOperandType;
-        }
-
-        if (rightOperandType.isConvertibleTo(leftOperandType)) {
-            return leftOperandType;
-        }
-    }
-
-    // #endregion
-}
-
-function areElementsSame<T1, T2>(arr1: T1[], arr2: T2[], compare: ((e1: T1, e2: T2) => boolean)) {
-    if (arr1.length !== arr2.length) {
-        return false;
-    }
-
-    for (let i = 0; i < arr1.length; i++) {
-        if (!compare(arr1[i], arr2[i])) {
-            return false;
-        }
-    }
-
-    return true;
-}
-
-export function getMethod(
-    typeDeclaration: BoundMethodContainerDeclaration,
-    name: string,
-    checkReturnType: (type: Types) => boolean = () => true,
-    ...parameters: Types[]
-) {
-    const member = typeDeclaration.locals.get(name);
-    if (member) {
-        switch (member.declaration.kind) {
-            case BoundNodeKind.ExternClassMethodGroupDeclaration:
-            case BoundNodeKind.InterfaceMethodGroupDeclaration:
-            case BoundNodeKind.ClassMethodGroupDeclaration: {
-                return getOverload(member.declaration.overloads, checkReturnType, ...parameters);
-            }
-        }
-    }
-}
-
-function getOverload(
-    overloads: BoundMethodGroupDeclaration['overloads'],
-    checkReturnType: (type: Types) => boolean = () => true,
-    ...parameters: Types[]
-) {
-    for (const [, overload] of overloads) {
-        if (checkReturnType(overload.returnType.type)) {
-            if (overload.parameters.length === parameters.length) {
-                let match = true;
-
-                for (let i = 0; i < overload.parameters.length; i++) {
-                    if (overload.parameters[i].type !== parameters[i]) {
-                        match = false;
-                        break;
-                    }
-                }
-
-                if (match) {
-                    return overload;
-                }
-            }
-        }
-    }
-}
-
-export function getDocument(node: BoundNodes) {
-    let moduleDeclaration: BoundModuleDeclaration;
-    if (node.kind === BoundNodeKind.ModuleDeclaration) {
-        moduleDeclaration = node;
-    } else {
-        moduleDeclaration = BoundTreeWalker.getClosest(node, BoundNodeKind.ModuleDeclaration)!;
-    }
-
-    return moduleDeclaration.declaration.document;
 }
 
 type GetBoundNode<TBoundNode extends BoundNodes> = (parent: BoundNodes) => TBoundNode;
@@ -3989,9 +3972,3 @@ function isBoundMemberContainerDeclaration(node: BoundNodes): node is BoundMembe
 
     return false;
 }
-
-type BoundMethodContainerDeclaration =
-    | BoundExternClassDeclaration
-    | BoundInterfaceDeclaration
-    | BoundClassDeclaration
-    ;

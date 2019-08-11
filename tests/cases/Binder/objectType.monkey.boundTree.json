@@ -106,7 +106,7 @@
                                                     "type": "String",
                                                     "value": "Hello, my name is "
                                                 },
-                                                "operator": "PlusSign",
+                                                "operator": "Addition",
                                                 "rightOperand": {
                                                     "kind": "IdentifierExpression",
                                                     "type": "String",
@@ -390,7 +390,7 @@
                                             "type": "String",
                                             "value": "Object has id: "
                                         },
-                                        "operator": "PlusSign",
+                                        "operator": "Addition",
                                         "rightOperand": {
                                             "kind": "ScopeMemberAccessExpression",
                                             "type": "Int",
@@ -511,7 +511,7 @@
                                                 "type": "String",
                                                 "value": "You're hired, "
                                             },
-                                            "operator": "PlusSign",
+                                            "operator": "Addition",
                                             "rightOperand": {
                                                 "kind": "ScopeMemberAccessExpression",
                                                 "type": "String",
@@ -527,7 +527,7 @@
                                                 }
                                             }
                                         },
-                                        "operator": "PlusSign",
+                                        "operator": "Addition",
                                         "rightOperand": {
                                             "kind": "StringLiteralExpression",
                                             "type": "String",

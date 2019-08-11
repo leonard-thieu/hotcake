@@ -6,7 +6,6 @@ import { BoundNode, BoundNodeKind } from '../BoundNodes';
 import { BoundStatements } from '../Statement/BoundStatements';
 import { BoundDataDeclaration } from './BoundDataDeclaration';
 import { BoundTypeReferenceDeclaration } from './BoundDeclarations';
-import { BoundClassMethodGroupDeclaration, BoundFunctionGroupDeclaration } from './BoundFunctionLikeGroupDeclaration';
 import { BoundInterfaceDeclaration } from './BoundInterfaceDeclaration';
 import { BoundTypeParameter } from './BoundTypeParameter';
 import { BoundExternClassDeclaration } from './Extern/BoundExternClassDeclaration';
@@ -30,12 +29,6 @@ export class BoundClassDeclaration extends BoundNode {
     openType?: BoundClassDeclaration = undefined;
     instantiatedTypes?: BoundClassDeclaration[] = undefined;
 }
-
-export type BoundClassDeclarationMember =
-    | BoundDataDeclaration
-    | BoundFunctionGroupDeclaration
-    | BoundClassMethodGroupDeclaration
-    ;
 
 // #endregion
 

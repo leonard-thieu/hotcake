@@ -1,4 +1,4 @@
-import { MissableToken } from '../../Token/MissingToken';
+import { MissableToken, MissingToken } from '../../Token/MissingToken';
 import { SkippedToken } from '../../Token/SkippedToken';
 import { ColonEqualsSignToken, EachInKeywordToken, EndKeywordToken, EqualsSignToken, ForKeywordToken, LocalKeywordToken, NextKeywordToken, StepKeywordToken, ToKeywordToken, UntilKeywordToken } from '../../Token/Tokens';
 import { MissableExpression } from '../Expression/Expressions';
@@ -81,6 +81,7 @@ export class ForEachInLoop extends Statement {
 // #endregion
 
 export type ForLoopOperatorToken =
-    | MissableToken<EqualsSignToken | ColonEqualsSignToken>
-    | MissableToken<AssignmentOperatorToken>
+    | EqualsSignToken | ColonEqualsSignToken
+    | AssignmentOperatorToken
+    | MissingToken
     ;

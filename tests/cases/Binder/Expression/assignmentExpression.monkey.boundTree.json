@@ -33,7 +33,7 @@
                                 "type": "String",
                                 "identifier": "val"
                             },
-                            "operator": "EqualsSign",
+                            "operator": "Assignment",
                             "rightOperand": {
                                 "kind": "StringLiteralExpression",
                                 "type": "String",
@@ -47,7 +47,7 @@
                                 "type": "String",
                                 "identifier": "val"
                             },
-                            "operator": "PlusSignEqualsSign",
+                            "operator": "AdditionUpdateAssignment",
                             "rightOperand": {
                                 "kind": "BinaryExpression",
                                 "type": "String",
@@ -56,7 +56,7 @@
                                     "type": "String",
                                     "identifier": "val"
                                 },
-                                "operator": "PlusSign",
+                                "operator": "Addition",
                                 "rightOperand": {
                                     "kind": "IntegerLiteralExpression",
                                     "type": "Int",

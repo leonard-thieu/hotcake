@@ -88,21 +88,21 @@
                                                     "type": "Int",
                                                     "identifier": "place"
                                                 },
-                                                "operator": "PlusSign",
+                                                "operator": "Addition",
                                                 "rightOperand": {
                                                     "kind": "StringLiteralExpression",
                                                     "type": "String",
                                                     "value": "th "
                                                 }
                                             },
-                                            "operator": "PlusSign",
+                                            "operator": "Addition",
                                             "rightOperand": {
                                                 "kind": "IdentifierExpression",
                                                 "type": "Float",
                                                 "identifier": "percentile"
                                             }
                                         },
-                                        "operator": "PlusSign",
+                                        "operator": "Addition",
                                         "rightOperand": {
                                             "kind": "StringLiteralExpression",
                                             "type": "String",

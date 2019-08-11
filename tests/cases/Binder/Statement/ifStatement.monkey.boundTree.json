@@ -53,7 +53,7 @@
                                     "type": "Int",
                                     "value": "1"
                                 },
-                                "operator": "GreaterThanSign",
+                                "operator": "GreaterThan",
                                 "rightOperand": {
                                     "kind": "IntegerLiteralExpression",
                                     "type": "Int",

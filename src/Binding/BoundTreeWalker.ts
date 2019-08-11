@@ -1,4 +1,10 @@
+import { areElementsSame } from '../util';
 import { BoundNodeKind, BoundNodeKindToBoundNodeMap, BoundNodes } from './Node/BoundNodes';
+import { BoundClassDeclaration } from './Node/Declaration/BoundClassDeclaration';
+import { BoundMethodGroupDeclaration } from './Node/Declaration/BoundFunctionLikeGroupDeclaration';
+import { BoundInterfaceDeclaration } from './Node/Declaration/BoundInterfaceDeclaration';
+import { BoundExternClassDeclaration } from './Node/Declaration/Extern/BoundExternClassDeclaration';
+import { Types } from './Type/Types';
 
 export namespace BoundTreeWalker {
     export function getClosest<TKind extends BoundNodeKind>(
@@ -8,7 +14,7 @@ export namespace BoundTreeWalker {
         let closest: BoundNodes | undefined = node;
 
         do {
-            if (kinds.length === 0) {
+            if (!kinds.length) {
                 return closest;
             }
 
@@ -20,5 +26,45 @@ export namespace BoundTreeWalker {
 
             closest = closest.parent;
         } while (closest);
+    }
+
+    export function getMethod(
+        methodContainer: BoundMethodContainerDeclaration,
+        name: string,
+        checkReturnType: (type: Types) => boolean = () => true,
+        ...parameters: Types[]
+    ) {
+        const methodGroup = methodContainer.locals.get(name);
+        if (methodGroup) {
+            switch (methodGroup.declaration.kind) {
+                case BoundNodeKind.ExternClassMethodGroupDeclaration:
+                case BoundNodeKind.InterfaceMethodGroupDeclaration:
+                case BoundNodeKind.ClassMethodGroupDeclaration: {
+                    return getOverload(methodGroup.declaration.overloads, checkReturnType, parameters);
+                }
+            }
+        }
+    }
+
+    type BoundMethodContainerDeclaration =
+        | BoundExternClassDeclaration
+        | BoundInterfaceDeclaration
+        | BoundClassDeclaration
+        ;
+
+    function getOverload(
+        overloads: BoundMethodGroupDeclaration['overloads'],
+        checkReturnType: (type: Types) => boolean,
+        parameters: Types[],
+    ) {
+        for (const [, overload] of overloads) {
+            if (checkReturnType(overload.returnType.type)) {
+                if (areElementsSame(overload.parameters, parameters,
+                    (overloadParameter, parameter) => overloadParameter.type === parameter
+                )) {
+                    return overload;
+                }
+            }
+        }
     }
 }

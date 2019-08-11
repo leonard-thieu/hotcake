@@ -24,3 +24,17 @@ export function getText(identifier: EscapedIdentifier | Tokens | MissingToken, n
         }
     }
 }
+
+export function areElementsSame<T1, T2>(arr1: T1[], arr2: T2[], compare: ((e1: T1, e2: T2) => boolean)) {
+    if (arr1.length !== arr2.length) {
+        return false;
+    }
+
+    for (let i = 0; i < arr1.length; i++) {
+        if (!compare(arr1[i], arr2[i])) {
+            return false;
+        }
+    }
+
+    return true;
+}

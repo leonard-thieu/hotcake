@@ -28,7 +28,7 @@
         },
         {
             "kind": "ExternDataDeclaration",
-            "declarationKind": "GlobalKeyword",
+            "declarationKind": "Global",
             "identifier": "ActiveDriver",
             "typeAnnotation": "Driver",
             "type": "Driver",

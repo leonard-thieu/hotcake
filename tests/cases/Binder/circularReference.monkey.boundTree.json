@@ -136,7 +136,7 @@
                                                 "type": "List<Int>",
                                                 "identifier": "_list"
                                             },
-                                            "operator": "EqualsSign",
+                                            "operator": "Assignment",
                                             "rightOperand": {
                                                 "kind": "IdentifierExpression",
                                                 "type": "List<Int>",

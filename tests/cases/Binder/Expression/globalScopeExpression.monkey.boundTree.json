@@ -52,7 +52,7 @@
                                             "identifier": "T"
                                         }
                                     },
-                                    "operator": "EqualsSign",
+                                    "operator": "Assignment",
                                     "rightOperand": {
                                         "kind": "IntegerLiteralExpression",
                                         "type": "Int",

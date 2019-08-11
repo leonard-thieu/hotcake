@@ -143,7 +143,7 @@
                                             "type": "Int",
                                             "value": "1"
                                         },
-                                        "operator": "PlusSign",
+                                        "operator": "Addition",
                                         "rightOperand": {
                                             "kind": "IntegerLiteralExpression",
                                             "type": "Int",
@@ -173,7 +173,7 @@
                                             "type": "Int",
                                             "value": "4"
                                         },
-                                        "operator": "HyphenMinus",
+                                        "operator": "Subtraction",
                                         "rightOperand": {
                                             "kind": "IntegerLiteralExpression",
                                             "type": "Int",
@@ -203,7 +203,7 @@
                                             "type": "Int",
                                             "value": "23"
                                         },
-                                        "operator": "ModKeyword",
+                                        "operator": "Modulus",
                                         "rightOperand": {
                                             "kind": "IntegerLiteralExpression",
                                             "type": "Int",
@@ -233,7 +233,7 @@
                                             "type": "Int",
                                             "value": "3"
                                         },
-                                        "operator": "Asterisk",
+                                        "operator": "Multiplication",
                                         "rightOperand": {
                                             "kind": "FloatLiteralExpression",
                                             "type": "Float",
@@ -263,7 +263,7 @@
                                             "type": "Int",
                                             "value": "12"
                                         },
-                                        "operator": "Slash",
+                                        "operator": "Division",
                                         "rightOperand": {
                                             "kind": "FloatLiteralExpression",
                                             "type": "Float",
@@ -293,7 +293,7 @@
                                             "type": "Int",
                                             "value": "12"
                                         },
-                                        "operator": "ShlKeyword",
+                                        "operator": "BitwiseShiftLeft",
                                         "rightOperand": {
                                             "kind": "IntegerLiteralExpression",
                                             "type": "Int",
@@ -323,7 +323,7 @@
                                             "type": "Int",
                                             "value": "127"
                                         },
-                                        "operator": "ShrKeyword",
+                                        "operator": "BitwiseShiftRight",
                                         "rightOperand": {
                                             "kind": "IntegerLiteralExpression",
                                             "type": "Int",
@@ -353,7 +353,7 @@
                                             "type": "Int",
                                             "value": "242"
                                         },
-                                        "operator": "Ampersand",
+                                        "operator": "BitwiseAnd",
                                         "rightOperand": {
                                             "kind": "IntegerLiteralExpression",
                                             "type": "Int",
@@ -383,7 +383,7 @@
                                             "type": "Int",
                                             "value": "966"
                                         },
-                                        "operator": "Tilde",
+                                        "operator": "BitwiseXor",
                                         "rightOperand": {
                                             "kind": "IntegerLiteralExpression",
                                             "type": "Int",
@@ -413,7 +413,7 @@
                                             "type": "Int",
                                             "value": "549"
                                         },
-                                        "operator": "VerticalBar",
+                                        "operator": "BitwiseOr",
                                         "rightOperand": {
                                             "kind": "IntegerLiteralExpression",
                                             "type": "Int",
@@ -443,7 +443,7 @@
                                             "type": "Float",
                                             "value": "24.2"
                                         },
-                                        "operator": "EqualsSign",
+                                        "operator": "Equals",
                                         "rightOperand": {
                                             "kind": "IntegerLiteralExpression",
                                             "type": "Int",
@@ -473,7 +473,7 @@
                                             "type": "Int",
                                             "value": "17"
                                         },
-                                        "operator": "LessThanSign",
+                                        "operator": "LessThan",
                                         "rightOperand": {
                                             "kind": "BooleanLiteralExpression",
                                             "type": "Bool",
@@ -503,7 +503,7 @@
                                             "type": "Int",
                                             "value": "42"
                                         },
-                                        "operator": "GreaterThanSign",
+                                        "operator": "GreaterThan",
                                         "rightOperand": {
                                             "kind": "StringLiteralExpression",
                                             "type": "String",
@@ -533,7 +533,7 @@
                                             "type": "Int",
                                             "value": "24"
                                         },
-                                        "operator": "LessThanSignEqualsSign",
+                                        "operator": "LessThanOrEquals",
                                         "rightOperand": {
                                             "kind": "FloatLiteralExpression",
                                             "type": "Float",
@@ -563,7 +563,7 @@
                                             "type": "Int",
                                             "value": "64"
                                         },
-                                        "operator": "GreaterThanSignEqualsSign",
+                                        "operator": "GreaterThanOrEquals",
                                         "rightOperand": {
                                             "kind": "IntegerLiteralExpression",
                                             "type": "Int",
@@ -593,7 +593,7 @@
                                             "type": "Bool",
                                             "value": "True"
                                         },
-                                        "operator": "LessThanSignGreaterThanSign",
+                                        "operator": "NotEquals",
                                         "rightOperand": {
                                             "kind": "BooleanLiteralExpression",
                                             "type": "Bool",
@@ -623,7 +623,7 @@
                                             "type": "Bool",
                                             "value": "True"
                                         },
-                                        "operator": "AndKeyword",
+                                        "operator": "ConditionalAnd",
                                         "rightOperand": {
                                             "kind": "BooleanLiteralExpression",
                                             "type": "Bool",
@@ -653,7 +653,7 @@
                                             "type": "Bool",
                                             "value": "False"
                                         },
-                                        "operator": "OrKeyword",
+                                        "operator": "ConditionalOr",
                                         "rightOperand": {
                                             "kind": "BooleanLiteralExpression",
                                             "type": "Bool",
@@ -683,7 +683,7 @@
                                             "type": "Int",
                                             "value": "10"
                                         },
-                                        "operator": "PlusSign",
+                                        "operator": "Addition",
                                         "rightOperand": {
                                             "kind": "StringLiteralExpression",
                                             "type": "String",
@@ -713,7 +713,7 @@
                                             "type": "Float",
                                             "value": "12.4"
                                         },
-                                        "operator": "PlusSign",
+                                        "operator": "Addition",
                                         "rightOperand": {
                                             "kind": "StringLiteralExpression",
                                             "type": "String",
@@ -743,7 +743,7 @@
                                             "type": "String",
                                             "value": "full"
                                         },
-                                        "operator": "PlusSign",
+                                        "operator": "Addition",
                                         "rightOperand": {
                                             "kind": "StringLiteralExpression",
                                             "type": "String",

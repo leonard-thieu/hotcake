@@ -111,7 +111,7 @@
                                     {
                                         "kind": "UnaryExpression",
                                         "type": "Int",
-                                        "operator": "PlusSign",
+                                        "operator": "UnaryPlus",
                                         "operand": {
                                             "kind": "IntegerLiteralExpression",
                                             "type": "Int",
@@ -136,7 +136,7 @@
                                     {
                                         "kind": "UnaryExpression",
                                         "type": "Float",
-                                        "operator": "PlusSign",
+                                        "operator": "UnaryPlus",
                                         "operand": {
                                             "kind": "FloatLiteralExpression",
                                             "type": "Float",
@@ -161,7 +161,7 @@
                                     {
                                         "kind": "UnaryExpression",
                                         "type": "Int",
-                                        "operator": "HyphenMinus",
+                                        "operator": "UnaryMinus",
                                         "operand": {
                                             "kind": "IntegerLiteralExpression",
                                             "type": "Int",
@@ -186,7 +186,7 @@
                                     {
                                         "kind": "UnaryExpression",
                                         "type": "Float",
-                                        "operator": "HyphenMinus",
+                                        "operator": "UnaryMinus",
                                         "operand": {
                                             "kind": "FloatLiteralExpression",
                                             "type": "Float",
@@ -211,7 +211,7 @@
                                     {
                                         "kind": "UnaryExpression",
                                         "type": "Int",
-                                        "operator": "Tilde",
+                                        "operator": "BitwiseComplement",
                                         "operand": {
                                             "kind": "IntegerLiteralExpression",
                                             "type": "Int",
@@ -236,7 +236,7 @@
                                     {
                                         "kind": "UnaryExpression",
                                         "type": "Bool",
-                                        "operator": "NotKeyword",
+                                        "operator": "BooleanInverse",
                                         "operand": {
                                             "kind": "BooleanLiteralExpression",
                                             "type": "Bool",
@@ -261,7 +261,7 @@
                                     {
                                         "kind": "UnaryExpression",
                                         "type": "Bool",
-                                        "operator": "NotKeyword",
+                                        "operator": "BooleanInverse",
                                         "operand": {
                                             "kind": "IntegerLiteralExpression",
                                             "type": "Int",
@@ -286,7 +286,7 @@
                                     {
                                         "kind": "UnaryExpression",
                                         "type": "Bool",
-                                        "operator": "NotKeyword",
+                                        "operator": "BooleanInverse",
                                         "operand": {
                                             "kind": "FloatLiteralExpression",
                                             "type": "Float",
@@ -311,7 +311,7 @@
                                     {
                                         "kind": "UnaryExpression",
                                         "type": "Bool",
-                                        "operator": "NotKeyword",
+                                        "operator": "BooleanInverse",
                                         "operand": {
                                             "kind": "StringLiteralExpression",
                                             "type": "String",
