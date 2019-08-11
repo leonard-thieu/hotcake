@@ -89,7 +89,6 @@
                                 },
                                 "member": {
                                     "kind": "IdentifierExpression",
-                                    "newlines": [],
                                     "identifier": {
                                         "kind": "Identifier",
                                         "fullStart": 39,
@@ -128,7 +127,6 @@
                                 },
                                 "member": {
                                     "kind": "IdentifierExpression",
-                                    "newlines": [],
                                     "identifier": {
                                         "kind": "Identifier",
                                         "fullStart": 44,

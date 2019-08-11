@@ -3,8 +3,7 @@ import { BoundNodeKind } from '../Node/BoundNodes';
 import { BoundClassDeclaration } from '../Node/Declaration/BoundClassDeclaration';
 import { BoundInterfaceDeclaration } from '../Node/Declaration/BoundInterfaceDeclaration';
 import { BoundExternClassDeclaration } from '../Node/Declaration/Extern/BoundExternClassDeclaration';
-import { Type } from './Type';
-import { TypeKind, Types } from './Types';
+import { Type, TypeKind, Types } from './Types';
 
 export class ObjectType extends Type {
     constructor(readonly declaration: ObjectTypeDeclaration) {

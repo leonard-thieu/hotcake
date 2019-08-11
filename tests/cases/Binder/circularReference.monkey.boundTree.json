@@ -37,6 +37,7 @@
                                     "type": "ObjectEnumerator: Enumerator<Int>()",
                                     "returnType": "Enumerator<Int>",
                                     "parameters": [],
+                                    "isProperty": false,
                                     "statements": [
                                         {
                                             "kind": "ReturnStatement",
@@ -128,6 +129,7 @@
                                             "type": "List<Int>"
                                         }
                                     ],
+                                    "isProperty": false,
                                     "statements": [
                                         {
                                             "kind": "AssignmentStatement",

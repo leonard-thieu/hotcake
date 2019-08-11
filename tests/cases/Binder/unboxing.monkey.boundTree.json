@@ -20,6 +20,7 @@
                             "type": "ToBool: Bool()",
                             "returnType": "Bool",
                             "parameters": [],
+                            "isProperty": false,
                             "statements": []
                         }
                     ]
@@ -36,6 +37,7 @@
                             "type": "ToInt: Int()",
                             "returnType": "Int",
                             "parameters": [],
+                            "isProperty": false,
                             "statements": []
                         }
                     ]
@@ -52,6 +54,7 @@
                             "type": "ToFloat: Float()",
                             "returnType": "Float",
                             "parameters": [],
+                            "isProperty": false,
                             "statements": []
                         }
                     ]
@@ -68,6 +71,7 @@
                             "type": "ToString: String()",
                             "returnType": "String",
                             "parameters": [],
+                            "isProperty": false,
                             "statements": []
                         }
                     ]

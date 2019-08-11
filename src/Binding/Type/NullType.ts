@@ -1,6 +1,5 @@
 import { BoundIntrinsicTypeDeclaration } from '../Node/Declaration/BoundIntrinsicTypeDeclaration';
-import { Type } from './Type';
-import { TypeKind, Types } from './Types';
+import { Type, TypeKind, Types } from './Types';
 
 export class NullType extends Type {
     constructor(readonly declaration: BoundIntrinsicTypeDeclaration) {

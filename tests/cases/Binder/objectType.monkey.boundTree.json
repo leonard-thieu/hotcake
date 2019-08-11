@@ -85,6 +85,7 @@
                             "type": "Speak: Int()",
                             "returnType": "Int",
                             "parameters": [],
+                            "isProperty": false,
                             "statements": [
                                 {
                                     "kind": "ExpressionStatement",
@@ -229,6 +230,7 @@
                             "type": "Move: Int()",
                             "returnType": "Int",
                             "parameters": [],
+                            "isProperty": false,
                             "statements": [
                                 {
                                     "kind": "ExpressionStatement",
@@ -266,6 +268,7 @@
                             "type": "Draw: Int()",
                             "returnType": "Int",
                             "parameters": [],
+                            "isProperty": false,
                             "statements": [
                                 {
                                     "kind": "ExpressionStatement",
@@ -303,6 +306,7 @@
                             "type": "Shade: Int()",
                             "returnType": "Int",
                             "parameters": [],
+                            "isProperty": false,
                             "statements": [
                                 {
                                     "kind": "ExpressionStatement",
@@ -440,24 +444,24 @@
                         {
                             "kind": "ExpressionStatement",
                             "expression": {
-                                "kind": "InvokeExpression",
+                                "kind": "ScopeMemberAccessExpression",
                                 "type": "Int",
-                                "invocationType": "Speak: Int()",
-                                "invokableExpression": {
-                                    "kind": "ScopeMemberAccessExpression",
-                                    "type": "Speak",
-                                    "scopableExpression": {
-                                        "kind": "IdentifierExpression",
-                                        "type": "Speakable",
-                                        "identifier": "speakable"
-                                    },
-                                    "member": {
+                                "scopableExpression": {
+                                    "kind": "IdentifierExpression",
+                                    "type": "Speakable",
+                                    "identifier": "speakable"
+                                },
+                                "member": {
+                                    "kind": "InvokeExpression",
+                                    "type": "Int",
+                                    "invocationType": "Speak: Int()",
+                                    "invokableExpression": {
                                         "kind": "IdentifierExpression",
                                         "type": "Speak",
                                         "identifier": "Speak"
-                                    }
-                                },
-                                "arguments": []
+                                    },
+                                    "arguments": []
+                                }
                             }
                         }
                     ]
@@ -568,24 +572,24 @@
                         {
                             "kind": "ExpressionStatement",
                             "expression": {
-                                "kind": "InvokeExpression",
+                                "kind": "ScopeMemberAccessExpression",
                                 "type": "Int",
-                                "invocationType": "Move: Int()",
-                                "invokableExpression": {
-                                    "kind": "ScopeMemberAccessExpression",
-                                    "type": "Move",
-                                    "scopableExpression": {
-                                        "kind": "IdentifierExpression",
-                                        "type": "Moveable",
-                                        "identifier": "moveable"
-                                    },
-                                    "member": {
+                                "scopableExpression": {
+                                    "kind": "IdentifierExpression",
+                                    "type": "Moveable",
+                                    "identifier": "moveable"
+                                },
+                                "member": {
+                                    "kind": "InvokeExpression",
+                                    "type": "Int",
+                                    "invocationType": "Move: Int()",
+                                    "invokableExpression": {
                                         "kind": "IdentifierExpression",
                                         "type": "Move",
                                         "identifier": "Move"
-                                    }
-                                },
-                                "arguments": []
+                                    },
+                                    "arguments": []
+                                }
                             }
                         }
                     ]
@@ -619,24 +623,24 @@
                         {
                             "kind": "ExpressionStatement",
                             "expression": {
-                                "kind": "InvokeExpression",
+                                "kind": "ScopeMemberAccessExpression",
                                 "type": "Int",
-                                "invocationType": "Draw: Int()",
-                                "invokableExpression": {
-                                    "kind": "ScopeMemberAccessExpression",
-                                    "type": "Draw",
-                                    "scopableExpression": {
-                                        "kind": "IdentifierExpression",
-                                        "type": "Drawable",
-                                        "identifier": "drawable"
-                                    },
-                                    "member": {
+                                "scopableExpression": {
+                                    "kind": "IdentifierExpression",
+                                    "type": "Drawable",
+                                    "identifier": "drawable"
+                                },
+                                "member": {
+                                    "kind": "InvokeExpression",
+                                    "type": "Int",
+                                    "invocationType": "Draw: Int()",
+                                    "invokableExpression": {
                                         "kind": "IdentifierExpression",
                                         "type": "Draw",
                                         "identifier": "Draw"
-                                    }
-                                },
-                                "arguments": []
+                                    },
+                                    "arguments": []
+                                }
                             }
                         }
                     ]

@@ -31,6 +31,7 @@
                                     "type": "Bool"
                                 }
                             ],
+                            "isProperty": false,
                             "statements": []
                         },
                         {
@@ -51,6 +52,7 @@
                                     "type": "Int"
                                 }
                             ],
+                            "isProperty": false,
                             "statements": []
                         },
                         {
@@ -71,6 +73,7 @@
                                     "type": "Float"
                                 }
                             ],
+                            "isProperty": false,
                             "statements": []
                         },
                         {
@@ -91,6 +94,7 @@
                                     "type": "String"
                                 }
                             ],
+                            "isProperty": false,
                             "statements": []
                         },
                         {

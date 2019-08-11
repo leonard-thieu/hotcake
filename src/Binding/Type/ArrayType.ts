@@ -1,7 +1,6 @@
 import { BoundTypeReferenceDeclaration } from '../Node/Declaration/BoundDeclarations';
 import { BoundExternClassDeclaration } from '../Node/Declaration/Extern/BoundExternClassDeclaration';
-import { Type } from './Type';
-import { TypeKind, Types } from './Types';
+import { Type, TypeKind, Types } from './Types';
 
 export class ArrayType extends Type {
     constructor(

@@ -622,6 +622,7 @@ export class Binder {
         boundExternClassMethodDeclaration.type = new MethodType(boundExternClassMethodDeclaration);
         boundExternClassMethodDeclaration.identifier = new BoundSymbol(name, boundExternClassMethodDeclaration);
         boundExternClassMethodDeclaration.parameters = this.bindDataDeclarationSequence(boundExternClassMethodDeclaration, externClassMethodDeclaration.parameters);
+        boundExternClassMethodDeclaration.isProperty = this.isProperty(externClassMethodDeclaration);
 
         const bindTypeReferencesOnExternClassMethodDeclaration = () => {
             if (areIdentifiersSame(CONSTRUCTOR_NAME, boundExternClassMethodDeclaration.identifier.name)) {
@@ -1252,6 +1253,7 @@ export class Binder {
         boundClassMethodDeclaration.type = new MethodType(boundClassMethodDeclaration);
         boundClassMethodDeclaration.identifier = new BoundSymbol(name, boundClassMethodDeclaration);
         boundClassMethodDeclaration.parameters = this.bindDataDeclarationSequence(boundClassMethodDeclaration, classMethodDeclaration.parameters, typeMap);
+        boundClassMethodDeclaration.isProperty = this.isProperty(classMethodDeclaration);
 
         const bindTypeReferencesOnClassMethodDeclaration = () => {
             if (areIdentifiersSame(CONSTRUCTOR_NAME, boundClassMethodDeclaration.identifier.name)) {
@@ -1290,6 +1292,34 @@ export class Binder {
         parent.locals.set(boundClassMethodGroupDeclaration.identifier);
 
         return boundClassMethodGroupDeclaration;
+    }
+
+    private isProperty(classLikeMethodDeclaration: ExternClassMethodDeclaration | ClassMethodDeclaration) {
+        const isProperty = classLikeMethodDeclaration.attributes.some((attribute) =>
+            attribute.kind === TokenKind.PropertyKeyword
+        );
+
+        if (isProperty) {
+            let parameterCount = 0;
+
+            for (const parameter of classLikeMethodDeclaration.parameters.children) {
+                if (parameter.kind === NodeKind.DataDeclaration) {
+                    parameterCount++;
+                }
+            }
+
+            switch (parameterCount) {
+                case 0:
+                case 1: {
+                    break;
+                }
+                default: {
+                    throw new Error(`Properties may only have 0 or 1 parameters.`);
+                }
+            }
+        }
+
+        return isProperty;
     }
 
     // #endregion
@@ -1917,11 +1947,7 @@ export class Binder {
                 const boundCollectionDeclarationStatement = this.dataDeclarationStatement(parent,
                     (parent) => this.dataDeclaration(parent,
                         {
-                            getExpression: (parent) => {
-                                boundCollectionExpression.parent = parent;
-
-                                return boundCollectionExpression;
-                            },
+                            getExpression: (parent) => setParent(boundCollectionExpression, parent),
                         },
                     ),
                 );
@@ -2029,11 +2055,7 @@ export class Binder {
                         {
                             getExpression: (parent) => this.invokeExpression(parent,
                                 (parent) => this.scopeMemberAccessExpression(parent,
-                                    (parent) => {
-                                        boundCollectionExpression.parent = parent;
-
-                                        return boundCollectionExpression;
-                                    },
+                                    (parent) => setParent(boundCollectionExpression, parent),
                                     (parent, scope) => this.identifierExpressionFromName(parent,
                                         'ObjectEnumerator',
                                         scope,
@@ -2273,9 +2295,20 @@ export class Binder {
         parent: BoundNodes,
         assignmentStatement: AssignmentStatement,
         typeMap: TypeMap | undefined,
-    ): BoundAssignmentStatement {
+    ): BoundAssignmentStatement | BoundExpressionStatement {
+        const leftOperand = this.bindExpression(parent, assignmentStatement.leftOperand, typeMap);
+
+        if (leftOperand.type.kind === TypeKind.MethodGroup) {
+            return this.expressionStatement(parent,
+                (parent) => this.invokeExpression(parent,
+                    (parent) => setParent(leftOperand, parent),
+                    (parent) => [this.bindExpression(parent, assignmentStatement.rightOperand, typeMap)],
+                ),
+            );
+        }
+
         return this.assignmentStatement(parent,
-            (parent) => this.bindExpression(parent, assignmentStatement.leftOperand, typeMap),
+            (parent) => setParent(leftOperand, parent),
             this.getAssignmentStatementOperator(assignmentStatement.operator.kind),
             (parent) => this.bindExpression(parent, assignmentStatement.rightOperand, typeMap),
         );
@@ -2496,9 +2529,9 @@ export class Binder {
 
     private binaryExpression(
         parent: BoundNodes,
-        getLeftOperand: (parent: BoundBinaryExpression) => BoundExpressions,
+        getLeftOperand: GetBoundNode<BoundExpressions>,
         operator: BoundBinaryExpressionOperator,
-        getRightOperand: (parent: BoundBinaryExpression) => BoundExpressions,
+        getRightOperand: GetBoundNode<BoundExpressions>,
     ): BoundBinaryExpression {
         const boundBinaryExpression = new BoundBinaryExpression();
         boundBinaryExpression.parent = parent;
@@ -2506,18 +2539,18 @@ export class Binder {
         boundBinaryExpression.operator = operator;
         boundBinaryExpression.rightOperand = getRightOperand(boundBinaryExpression);
         boundBinaryExpression.type = this.getTypeOfBinaryExpression(
-            boundBinaryExpression.leftOperand,
+            boundBinaryExpression.leftOperand.type,
             boundBinaryExpression.operator,
-            boundBinaryExpression.rightOperand,
+            boundBinaryExpression.rightOperand.type,
         );
 
         return boundBinaryExpression;
     }
 
     private getTypeOfBinaryExpression(
-        leftOperand: BoundExpressions,
+        leftOperand: Types,
         operator: BoundBinaryExpressionOperator,
-        rightOperand: BoundExpressions,
+        rightOperand: Types,
     ) {
         switch (operator) {
             // Binary arithmetic operations
@@ -2561,19 +2594,19 @@ export class Binder {
     }
 
     private bindBinaryArithmeticOperationType(
-        leftOperand: BoundExpressions,
+        leftOperand: Types,
         operator: BoundBinaryExpressionOperator,
-        rightOperand: BoundExpressions,
+        rightOperand: Types,
     ) {
-        const balancedType = this.getBalancedType(leftOperand.type, rightOperand.type);
+        const balancedType = this.getBalancedType(leftOperand, rightOperand);
         if (!balancedType) {
-            throw new Error(`'${operator}' is not valid for '${leftOperand.kind}' and '${rightOperand.kind}'.`);
+            throw new Error(`'${operator}' is not valid for '${leftOperand}' and '${rightOperand}'.`);
         }
 
         switch (balancedType.kind) {
             case TypeKind.String: {
                 if (operator !== BoundBinaryExpressionOperator.Addition) {
-                    throw new Error(`'${operator}' is not valid for '${leftOperand.kind}' and '${rightOperand.kind}'.`);
+                    throw new Error(`'${operator}' is not valid for '${leftOperand}' and '${rightOperand}'.`);
                 }
                 break;
             }
@@ -2582,7 +2615,7 @@ export class Binder {
                 break;
             }
             default: {
-                throw new Error(`'${operator}' is not valid for '${leftOperand.kind}' and '${rightOperand.kind}'.`);
+                throw new Error(`'${operator}' is not valid for '${leftOperand}' and '${rightOperand}'.`);
             }
         }
 
@@ -2590,32 +2623,32 @@ export class Binder {
     }
 
     private bindBitwiseOperationType(
-        leftOperand: BoundExpressions,
+        leftOperand: Types,
         operator: BoundBinaryExpressionOperator,
-        rightOperand: BoundExpressions,
+        rightOperand: Types,
     ) {
-        if (!leftOperand.type.isConvertibleTo(this.project.intTypeDeclaration.type) ||
-            !rightOperand.type.isConvertibleTo(this.project.intTypeDeclaration.type)
+        if (!leftOperand.isConvertibleTo(this.project.intTypeDeclaration.type) ||
+            !rightOperand.isConvertibleTo(this.project.intTypeDeclaration.type)
         ) {
-            throw new Error(`'${operator}' is not valid for '${leftOperand.kind}' and '${rightOperand.kind}'.`);
+            throw new Error(`'${operator}' is not valid for '${leftOperand}' and '${rightOperand}'.`);
         }
 
         return this.project.intTypeDeclaration.type;
     }
 
     private bindComparisonOperationType(
-        leftOperand: BoundExpressions,
+        leftOperand: Types,
         operator: BoundBinaryExpressionOperator,
-        rightOperand: BoundExpressions,
+        rightOperand: Types,
     ) {
-        const balancedType = this.getBalancedType(leftOperand.type, rightOperand.type);
+        const balancedType = this.getBalancedType(leftOperand, rightOperand);
         if (!balancedType) {
-            throw new Error(`'${operator}' is not valid for '${leftOperand.kind}' and '${rightOperand.kind}'.`);
+            throw new Error(`'${operator}' is not valid for '${leftOperand}' and '${rightOperand}'.`);
         }
 
         switch (balancedType.kind) {
             case TypeKind.Array: {
-                throw new Error(`'${operator}' is not valid for '${leftOperand.kind}' and '${rightOperand.kind}'.`);
+                throw new Error(`'${operator}' is not valid for '${leftOperand}' and '${rightOperand}'.`);
             }
             case TypeKind.Bool:
             case TypeKind.Object: {
@@ -2625,7 +2658,7 @@ export class Binder {
                         break;
                     }
                     default: {
-                        throw new Error(`'${operator}' is not valid for '${leftOperand.kind}' and '${rightOperand.kind}'.`);
+                        throw new Error(`'${operator}' is not valid for '${leftOperand}' and '${rightOperand}'.`);
                     }
                 }
                 break;
@@ -2671,7 +2704,7 @@ export class Binder {
         boundUnaryExpression.operand = getOperand(boundUnaryExpression);
         boundUnaryExpression.type = this.getTypeOfUnaryExpression(
             boundUnaryExpression.operator,
-            boundUnaryExpression.operand,
+            boundUnaryExpression.operand.type,
         );
 
         return boundUnaryExpression;
@@ -2679,26 +2712,26 @@ export class Binder {
 
     private getTypeOfUnaryExpression(
         operator: BoundUnaryExpressionOperator,
-        operand: BoundExpressions,
+        operand: Types,
     ) {
         switch (operator) {
             case BoundUnaryExpressionOperator.UnaryPlus:
             case BoundUnaryExpressionOperator.UnaryMinus: {
-                switch (operand.type.kind) {
+                switch (operand.kind) {
                     case TypeKind.Int:
                     case TypeKind.Float: {
-                        return operand.type;
+                        return operand;
                     }
                     default: {
-                        throw new Error(`Unexpected operand type '${operand.type}' for unary operator '${operator}'.`);
+                        throw new Error(`Unexpected operand type '${operand}' for unary operator '${operator}'.`);
                     }
                 }
             }
             case BoundUnaryExpressionOperator.BitwiseComplement: {
-                if (operand.type.isConvertibleTo(this.project.intTypeDeclaration.type)) {
+                if (operand.isConvertibleTo(this.project.intTypeDeclaration.type)) {
                     return this.project.intTypeDeclaration.type;
                 } else {
-                    throw new Error(`Cannot get bitwise complement of '${operand.type}'. '${operand.type}' is not implicitly convertible to 'Int'.`);
+                    throw new Error(`Cannot get bitwise complement of '${operand}'. '${operand}' is not implicitly convertible to '${this.project.intTypeDeclaration.type}'.`);
                 }
             }
             case BoundUnaryExpressionOperator.BooleanInverse: {
@@ -2993,14 +3026,14 @@ export class Binder {
         expression: IdentifierExpression,
         typeMap: TypeMap | undefined,
         scope?: BoundMemberContainerDeclaration,
-    ): BoundIdentifierExpression {
+    ): BoundIdentifierExpression | BoundInvokeExpression {
         let getTypeArguments: GetBoundNodes<BoundTypeReferenceDeclaration> | undefined = undefined;
         if (expression.typeArguments) {
             const { typeArguments } = expression;
             getTypeArguments = (parent) => this.bindTypeReferenceSequence(parent, typeArguments, typeMap);
         }
 
-        return this.identifierExpression(parent,
+        const identifierExpression = this.identifierExpression(parent,
             (parent) => this.resolveIdentifier(
                 expression.identifier,
                 parent,
@@ -3008,6 +3041,26 @@ export class Binder {
                 getTypeArguments,
             ),
         );
+        const { declaration } = identifierExpression.identifier;
+
+        switch (declaration.kind) {
+            case BoundNodeKind.ExternClassMethodGroupDeclaration:
+            case BoundNodeKind.ClassMethodGroupDeclaration: {
+                for (const [, overload] of declaration.overloads) {
+                    if (overload.isProperty &&
+                        !overload.parameters.length
+                    ) {
+                        return this.invokeExpression(parent,
+                            (parent) => setParent(identifierExpression, parent),
+                            () => [],
+                        );
+                    }
+                }
+                break;
+            }
+        }
+
+        return identifierExpression;
     }
 
     private identifierExpression(
@@ -3140,21 +3193,21 @@ export class Binder {
             throw new Error(`Index expression is '${boundIndexExpression.indexExpressionExpression.type}' but must be '${this.project.intTypeDeclaration.type}'.`);
         }
 
-        boundIndexExpression.type = this.getTypeOfIndexExpression(boundIndexExpression.indexableExpression);
+        boundIndexExpression.type = this.getTypeOfIndexExpression(boundIndexExpression.indexableExpression.type);
 
         return boundIndexExpression;
     }
 
-    private getTypeOfIndexExpression(indexableExpression: BoundExpressions) {
-        switch (indexableExpression.type.kind) {
+    private getTypeOfIndexExpression(indexableExpression: Types) {
+        switch (indexableExpression.kind) {
             case TypeKind.String: {
                 return this.project.intTypeDeclaration.type;
             }
             case TypeKind.Array: {
-                return indexableExpression.type.elementType.type;
+                return indexableExpression.elementType.type;
             }
             default: {
-                throw new Error(`Expressions of type '${indexableExpression.type}' cannot be accessed by index.`);
+                throw new Error(`Expressions of type '${indexableExpression}' cannot be accessed by index.`);
             }
         }
 
@@ -3928,6 +3981,12 @@ export class Binder {
 
 type GetBoundNode<TBoundNode extends BoundNodes> = (parent: BoundNodes) => TBoundNode;
 type GetBoundNodes<TBoundNode extends BoundNodes> = (parent: BoundNodes) => TBoundNode[];
+
+function setParent<TNode extends BoundNodes>(node: TNode, parent: BoundNodes): TNode {
+    node.parent = parent;
+
+    return node;
+}
 
 class TypeMap extends Map<BoundTypeReferenceDeclaration, BoundTypeReferenceDeclaration> {
     get(key: BoundTypeReferenceDeclaration): BoundTypeReferenceDeclaration {

@@ -56,6 +56,7 @@
                                             "type": "Int[]"
                                         }
                                     ],
+                                    "isProperty": false,
                                     "statements": [
                                         {
                                             "kind": "AssignmentStatement",
@@ -104,6 +105,7 @@
                                     "type": "ToArray: Int[]()",
                                     "returnType": "Int[]",
                                     "parameters": [],
+                                    "isProperty": false,
                                     "statements": [
                                         {
                                             "kind": "ReturnStatement",

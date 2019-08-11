@@ -72,7 +72,6 @@
                         },
                         "member": {
                             "kind": "IdentifierExpression",
-                            "newlines": [],
                             "identifier": {
                                 "kind": "Identifier",
                                 "fullStart": 34,
