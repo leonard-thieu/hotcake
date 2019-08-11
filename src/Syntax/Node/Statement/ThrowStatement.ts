@@ -1,7 +1,7 @@
-import { ThrowKeywordToken } from '../../Token/Token';
-import { MissableExpression } from '../Expression/Expression';
-import { NodeKind } from '../NodeKind';
-import { Statement } from './Statement';
+import { ThrowKeywordToken } from '../../Token/Tokens';
+import { MissableExpression } from '../Expression/Expressions';
+import { NodeKind } from '../Nodes';
+import { Statement } from './Statements';
 
 export const ThrowStatementChildNames: ReadonlyArray<keyof ThrowStatement> = [
     'throwKeyword',

@@ -1,56 +1,35 @@
-import { assertNever } from '../../assertNever';
-import { BoundSymbol } from '../BoundSymbol';
-import { BoundNodes } from '../Node/BoundNode';
-import { BoundNodeKind } from '../Node/BoundNodeKind';
-import { BoundClassDeclaration } from '../Node/Declaration/BoundClassDeclaration';
-import { BoundClassMethodDeclaration } from '../Node/Declaration/BoundClassMethodDeclaration';
+import { CONSTRUCTOR_NAME } from '../Binder';
+import { areIdentifiersSame } from '../BoundSymbol';
+import { BoundNodeKind, BoundNodes } from '../Node/BoundNodes';
+import { BoundClassMethodDeclaration } from '../Node/Declaration/BoundClassDeclaration';
 import { BoundFunctionDeclaration } from '../Node/Declaration/BoundFunctionDeclaration';
-import { BoundInterfaceMethodDeclaration } from '../Node/Declaration/BoundInterfaceMethodDeclaration';
-import { BoundExternClassDeclaration } from '../Node/Declaration/Extern/BoundExternClassDeclaration';
-import { BoundExternClassMethodDeclaration } from '../Node/Declaration/Extern/BoundExternClassMethodDeclaration';
+import { BoundFunctionGroupDeclarations, BoundMethodGroupDeclaration } from '../Node/Declaration/BoundFunctionLikeGroupDeclaration';
+import { BoundInterfaceMethodDeclaration } from '../Node/Declaration/BoundInterfaceDeclaration';
+import { BoundExternClassMethodDeclaration } from '../Node/Declaration/Extern/BoundExternClassDeclaration';
 import { BoundExternFunctionDeclaration } from '../Node/Declaration/Extern/BoundExternFunctionDeclaration';
 import { Type } from './Type';
-import { TypeKind } from './TypeKind';
-import { Types } from './Types';
+import { TypeKind, Types } from './Types';
 
-export function isFunctionLike(node: BoundNodes): node is BoundFunctionLikeDeclaration {
-    switch (node.kind) {
-        case BoundNodeKind.ExternFunctionDeclaration:
-        case BoundNodeKind.ExternClassMethodDeclaration:
-        case BoundNodeKind.FunctionDeclaration:
-        case BoundNodeKind.InterfaceMethodDeclaration:
-        case BoundNodeKind.ClassMethodDeclaration: {
-            return true;
-        }
-    }
+// #region Function like
 
-    return false;
+export type FunctionLikeTypes =
+    | FunctionType
+    | MethodType
+    ;
+
+export type BoundFunctionLikeDeclaration =
+    | BoundFunctionDeclarations
+    | BoundMethodDeclaration
+    ;
+
+export function isBoundFunctionLikeDeclaration(node: BoundNodes): node is BoundFunctionLikeDeclaration {
+    return isBoundFunctionDeclarations(node) ||
+        isBoundMethodDeclaration(node);
 }
 
-export class FunctionLikeType extends Type {
-    readonly kind = TypeKind.FunctionLike;
-
-    declaration: BoundFunctionLikeDeclaration = undefined!;
-    returnType: Types = undefined!;
-    parameters: Types[] = undefined!;
-
-    get isMethod() {
-        switch (this.declaration.kind) {
-            case BoundNodeKind.ExternClassMethodDeclaration:
-            case BoundNodeKind.InterfaceMethodDeclaration:
-            case BoundNodeKind.ClassMethodDeclaration: {
-                return true;
-            }
-
-            case BoundNodeKind.ExternFunctionDeclaration:
-            case BoundNodeKind.FunctionDeclaration: {
-                return false;
-            }
-
-            default: {
-                return assertNever(this.declaration);
-            }
-        }
+abstract class FunctionLikeType extends Type {
+    constructor(readonly declaration: BoundFunctionLikeDeclaration) {
+        super();
     }
 
     isConvertibleTo(target: Types): boolean {
@@ -60,43 +39,133 @@ export class FunctionLikeType extends Type {
     toString(): string {
         let str = '';
 
-        const { name } = this.declaration.identifier;
-        if (name.toLowerCase() === 'new') {
-            const parent = this.declaration.parent! as BoundExternClassDeclaration | BoundClassDeclaration;
-            str += `New ${parent.type}`;
-        } else {
-            str += name;
-            str += `: ${this.returnType}`;
-        }
-
+        str += this.declaration.identifier.name;
+        str += `: ${this.declaration.returnType.type}`;
         str += '(';
-        str += this.parameters.join(',');
+        str += this.declaration.parameters.map(p => p.type).join(',');
         str += ')';
 
         return str;
     }
 }
 
-export type BoundFunctionLikeDeclaration =
+// #endregion
+
+// #region Function
+
+export type BoundFunctionDeclarations =
     | BoundExternFunctionDeclaration
-    | BoundExternClassMethodDeclaration
     | BoundFunctionDeclaration
-    | BoundInterfaceMethodDeclaration
-    | BoundClassMethodDeclaration
     ;
 
-export class FunctionLikeGroupType extends Type {
-    constructor(readonly identifier: BoundSymbol) {
+export function isBoundFunctionDeclarations(node: BoundNodes): node is BoundFunctionDeclarations {
+    switch (node.kind) {
+        case BoundNodeKind.ExternFunctionDeclaration:
+        case BoundNodeKind.FunctionDeclaration: {
+            return true;
+        }
+    }
+
+    return false;
+}
+
+export class FunctionType extends FunctionLikeType {
+    constructor(declaration: BoundFunctionDeclarations) {
+        super(declaration);
+    }
+
+    readonly kind = TypeKind.Function;
+}
+
+export class FunctionGroupType extends Type {
+    constructor(readonly declaration: BoundFunctionGroupDeclarations) {
         super();
     }
 
-    readonly kind = TypeKind.FunctionLikeGroup;
+    readonly kind = TypeKind.FunctionGroup;
 
     isConvertibleTo(target: Types): boolean {
         throw new Error('Method not implemented.');
     }
 
     toString(): string {
-        return this.identifier.name;
+        for (const [, overload] of this.declaration.overloads) {
+            return overload.identifier.name;
+        }
+
+        throw new Error(`Function group is empty.`);
     }
 }
+
+// #endregion
+
+// #region Method
+
+export type BoundMethodDeclaration =
+    | BoundExternClassMethodDeclaration
+    | BoundInterfaceMethodDeclaration
+    | BoundClassMethodDeclaration
+    ;
+
+export function isBoundMethodDeclaration(node: BoundNodes): node is BoundMethodDeclaration {
+    switch (node.kind) {
+        case BoundNodeKind.ExternClassMethodDeclaration:
+        case BoundNodeKind.InterfaceMethodDeclaration:
+        case BoundNodeKind.ClassMethodDeclaration: {
+            return true;
+        }
+    }
+
+    return false;
+}
+
+export class MethodType extends FunctionLikeType {
+    constructor(readonly declaration: BoundMethodDeclaration) {
+        super(declaration);
+    }
+
+    readonly kind = TypeKind.Method;
+
+    toString(): string {
+        if (areIdentifiersSame(CONSTRUCTOR_NAME, this.declaration.identifier.name)) {
+            let str = '';
+
+            str += `${CONSTRUCTOR_NAME} ${this.declaration.returnType.type}`;
+            str += '(';
+            str += this.declaration.parameters.map(p => p.type).join(',');
+            str += ')';
+
+            return str;
+        }
+
+        return super.toString();
+    }
+}
+
+export class MethodGroupType extends Type {
+    constructor(readonly declaration: BoundMethodGroupDeclaration) {
+        super();
+    }
+
+    readonly kind = TypeKind.MethodGroup;
+
+    isConvertibleTo(target: Types): boolean {
+        throw new Error('Method not implemented.');
+    }
+
+    toString(): string {
+        for (const [, overload] of this.declaration.overloads) {
+            const name = overload.identifier.name;
+
+            if (areIdentifiersSame(CONSTRUCTOR_NAME, name)) {
+                return `${CONSTRUCTOR_NAME} ${overload.returnType.type}`;
+            }
+
+            return name;
+        }
+
+        throw new Error(`Method group is empty.`);
+    }
+}
+
+// #endregion

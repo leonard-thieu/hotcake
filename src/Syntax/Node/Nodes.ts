@@ -1,3 +1,42 @@
+import { ArrayTypeAnnotation } from './ArrayTypeAnnotation';
+import { CommaSeparator } from './CommaSeparator';
+import { ConfigurationTag } from './ConfigurationTag';
+import { Declarations } from './Declaration/Declarations';
+import { Directives } from './Directive/Directives';
+import { ElseDirective, ElseIfDirective } from './Directive/IfDirective';
+import { Expressions } from './Expression/Expressions';
+import { EscapedIdentifier } from './Identifier';
+import { ModulePath } from './ModulePath';
+import { ElseClause, ElseIfClause } from './Statement/IfStatement';
+import { CaseClause, DefaultClause } from './Statement/SelectStatement';
+import { Statements } from './Statement/Statements';
+import { CatchClause } from './Statement/TryStatement';
+import { TypeAnnotation } from './TypeAnnotation';
+import { TypeReference } from './TypeReference';
+
+export abstract class Node {
+    abstract readonly kind: NodeKind = undefined!;
+    parent?: Nodes = undefined;
+}
+
+export type Nodes =
+    | Declarations
+    | Directives
+    | ElseIfDirective | ElseDirective
+    | Expressions
+    | Statements
+    | ConfigurationTag
+    | ElseIfClause | ElseClause
+    | CaseClause | DefaultClause
+    | CatchClause
+    | ArrayTypeAnnotation
+    | TypeAnnotation
+    | CommaSeparator
+    | EscapedIdentifier
+    | ModulePath
+    | TypeReference
+    ;
+
 export enum NodeKind {
     PreprocessorModuleDeclaration = 'PreprocessorModuleDeclaration',
 
@@ -41,8 +80,8 @@ export enum NodeKind {
     DefaultClause = 'DefaultClause',
     WhileLoop = 'WhileLoop',
     RepeatLoop = 'RepeatLoop',
-    ForLoop = 'ForLoop',
-    NumericForLoopHeader = 'NumericForLoopHeader',
+    NumericForLoop = 'NumericForLoop',
+    ForEachInLoop = 'ForEachInLoop',
     ContinueStatement = 'ContinueStatement',
     ExitStatement = 'ExitStatement',
     ThrowStatement = 'ThrowStatement',
@@ -80,4 +119,8 @@ export enum NodeKind {
     TypeParameter = 'TypeParameter',
     EscapedIdentifier = 'EscapedIdentifier',
     CommaSeparator = 'CommaSeparator',
+}
+
+export type NodeKindToNodeMap = {
+    [K in keyof typeof NodeKind]: Extract<Nodes, { kind: K; }>;
 }

@@ -1,6 +1,5 @@
-import { ConfigurationTagEndToken, ConfigurationTagStartToken, IdentifierToken } from '../Token/Token';
-import { Node } from './Node';
-import { NodeKind } from './NodeKind';
+import { ConfigurationTagEndToken, ConfigurationTagStartToken, IdentifierToken } from '../Token/Tokens';
+import { Node, NodeKind } from './Nodes';
 
 export const ConfigurationTagChildNames: ReadonlyArray<keyof ConfigurationTag> = [
     'startToken',

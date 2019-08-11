@@ -2,30 +2,41 @@
     "kind": "ModuleDeclaration",
     "identifier": "functionDeclaration",
     "locals": [
-        "Encode"
-    ],
-    "members": [
         {
-            "kind": "FunctionDeclaration",
+            "kind": "FunctionGroupDeclaration",
             "identifier": "Encode",
-            "locals": [
-                "place",
-                "percentile"
-            ],
-            "returnType": "Void",
-            "parameters": [
+            "type": "Encode",
+            "overloads": [
                 {
-                    "kind": "DataDeclaration",
-                    "identifier": "place",
-                    "type": "Int"
-                },
-                {
-                    "kind": "DataDeclaration",
-                    "identifier": "percentile",
-                    "type": "Float"
+                    "kind": "FunctionDeclaration",
+                    "identifier": "Encode",
+                    "locals": [
+                        "place",
+                        "percentile"
+                    ],
+                    "type": "Encode: Void(Int,Float)",
+                    "returnType": "Void",
+                    "parameters": [
+                        {
+                            "kind": "DataDeclaration",
+                            "declarationKind": "Parameter",
+                            "identifier": "place",
+                            "typeAnnotation": "Int",
+                            "operator": null,
+                            "type": "Int"
+                        },
+                        {
+                            "kind": "DataDeclaration",
+                            "declarationKind": "Parameter",
+                            "identifier": "percentile",
+                            "typeAnnotation": "Float",
+                            "operator": null,
+                            "type": "Float"
+                        }
+                    ],
+                    "statements": []
                 }
-            ],
-            "statements": []
+            ]
         }
     ]
 }

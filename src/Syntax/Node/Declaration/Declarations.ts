@@ -1,16 +1,15 @@
-import { Node } from '../Node';
+import { Node } from '../Nodes';
 import { AccessibilityDirective } from './AccessibilityDirective';
 import { AliasDirective, AliasDirectiveSequence } from './AliasDirectiveSequence';
-import { ClassDeclaration } from './ClassDeclaration';
-import { ClassMethodDeclaration } from './ClassMethodDeclaration';
+import { ClassDeclaration, ClassMethodDeclaration } from './ClassDeclaration';
 import { DataDeclaration, DataDeclarationSequence } from './DataDeclarationSequence';
+import { ExternClassDeclaration } from './ExternDeclaration/ExternClassDeclaration';
 import { ExternDataDeclarationSequence } from './ExternDeclaration/ExternDataDeclarationSequence';
 import { ExternDeclarations } from './ExternDeclaration/ExternDeclaration';
 import { FriendDirective } from './FriendDirective';
 import { FunctionDeclaration } from './FunctionDeclaration';
 import { ImportStatement } from './ImportStatement';
-import { InterfaceDeclaration } from './InterfaceDeclaration';
-import { InterfaceMethodDeclaration } from './InterfaceMethodDeclaration';
+import { InterfaceDeclaration, InterfaceMethodDeclaration } from './InterfaceDeclaration';
 import { ModuleDeclaration } from './ModuleDeclaration';
 import { PreprocessorModuleDeclaration } from './PreprocessorModuleDeclaration';
 import { StrictDirective } from './StrictDirective';
@@ -34,5 +33,12 @@ export type Declarations =
     | ModuleDeclaration
     | PreprocessorModuleDeclaration
     | StrictDirective
+    | TypeParameter
+    ;
+
+export type TypeDeclaration =
+    | ExternClassDeclaration
+    | InterfaceDeclaration
+    | ClassDeclaration
     | TypeParameter
     ;

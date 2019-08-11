@@ -1,23 +1,22 @@
 import fs = require('fs');
 import path = require('path');
-import { assertNever } from './assertNever';
 import { Binder } from './Binding/Binder';
-import { BoundSymbol, BoundSymbolTable } from './Binding/BoundSymbol';
-import { BoundNodeKind } from './Binding/Node/BoundNodeKind';
+import { BoundSymbol } from './Binding/BoundSymbol';
+import { BoundNodeKind } from './Binding/Node/BoundNodes';
+import { BoundTypeReferenceDeclaration } from './Binding/Node/Declaration/BoundDeclarations';
 import { BoundDirectory } from './Binding/Node/Declaration/BoundDirectory';
+import { BoundIntrinsicTypeDeclaration } from './Binding/Node/Declaration/BoundIntrinsicTypeDeclaration';
 import { BoundModuleDeclaration } from './Binding/Node/Declaration/BoundModuleDeclaration';
-import { ArrayType } from './Binding/Type/ArrayType';
-import { FunctionLikeType } from './Binding/Type/FunctionLikeType';
-import { ObjectType } from './Binding/Type/ObjectType';
-import { StringType } from './Binding/Type/StringType';
-import { TypeKind } from './Binding/Type/TypeKind';
-import { TypeParameterType } from './Binding/Type/TypeParameterType';
-import { Types } from './Binding/Type/Types';
+import { BoundExternClassDeclaration } from './Binding/Node/Declaration/Extern/BoundExternClassDeclaration';
+import { BoolType } from './Binding/Type/BoolType';
+import { FloatType } from './Binding/Type/FloatType';
+import { IntType } from './Binding/Type/IntType';
+import { NullType } from './Binding/Type/NullType';
+import { VoidType } from './Binding/Type/VoidType';
+import { DiagnosticBag } from './Diagnostics';
 import { Parser } from './Syntax/Parser';
 import { PreprocessorParser } from './Syntax/PreprocessorParser';
 import { PreprocessorTokenizer } from './Syntax/PreprocessorTokenizer';
-import { IdentifierToken, PeriodToken } from './Syntax/Token/Token';
-import { TokenKind } from './Syntax/Token/TokenKind';
 import { Tokenizer } from './Syntax/Tokenizer';
 
 const preprocessorTokenizer = new PreprocessorTokenizer();
@@ -34,178 +33,243 @@ export class Project {
     ) {
         this.frameworkDirectory = path.resolve(frameworkDirectory);
 
-        const frameworkModulesDirectory = path.resolve(this.frameworkDirectory, 'modules');
-        this.boundFrameworkModulesDirectory = this.bindDirectory(frameworkModulesDirectory);
+        const frameworkModulesDirectoryName = 'modules';
+        const frameworkModulesDirectory = path.resolve(this.frameworkDirectory, frameworkModulesDirectoryName);
+        this.boundFrameworkModulesDirectory = this.bindDirectory(frameworkModulesDirectoryName, frameworkModulesDirectory);
 
-        this.boundProjectDirectory = this.bindDirectory(path.resolve(projectDirectory));
+        projectDirectory = path.resolve(projectDirectory);
+        const projectDirectoryComponents = projectDirectory.split(path.sep);
+        const projectDirectoryName = projectDirectoryComponents[projectDirectoryComponents.length - 1];
+        this.boundProjectDirectory = this.bindDirectory(projectDirectoryName, projectDirectory);
+
+        this.nullTypeDeclaration = new BoundIntrinsicTypeDeclaration();
+        this.nullTypeDeclaration.identifier = new BoundSymbol('Null', this.nullTypeDeclaration);
+        this.nullTypeDeclaration.type = new NullType(this.nullTypeDeclaration);
+
+        this.voidTypeDeclaration = new BoundIntrinsicTypeDeclaration();
+        this.voidTypeDeclaration.identifier = new BoundSymbol('Void', this.voidTypeDeclaration);
+        this.voidTypeDeclaration.type = new VoidType(this.voidTypeDeclaration);
+
+        this.boolTypeDeclaration = new BoundIntrinsicTypeDeclaration();
+        this.boolTypeDeclaration.identifier = new BoundSymbol('Bool', this.boolTypeDeclaration);
+        this.boolTypeDeclaration.type = new BoolType(this.boolTypeDeclaration);
+
+        this.intTypeDeclaration = new BoundIntrinsicTypeDeclaration();
+        this.intTypeDeclaration.identifier = new BoundSymbol('Int', this.intTypeDeclaration);
+        this.intTypeDeclaration.type = new IntType(this.intTypeDeclaration);
+
+        this.floatTypeDeclaration = new BoundIntrinsicTypeDeclaration();
+        this.floatTypeDeclaration.identifier = new BoundSymbol('Float', this.floatTypeDeclaration);
+        this.floatTypeDeclaration.type = new FloatType(this.floatTypeDeclaration);
     }
+
+    readonly diagnostics = new DiagnosticBag();
 
     readonly boundFrameworkModulesDirectory: BoundDirectory;
     readonly boundProjectDirectory: BoundDirectory;
 
-    readonly stringType = new StringType();
+    readonly nullTypeDeclaration: BoundIntrinsicTypeDeclaration;
+    readonly voidTypeDeclaration: BoundIntrinsicTypeDeclaration;
+    readonly boolTypeDeclaration: BoundIntrinsicTypeDeclaration;
+    readonly intTypeDeclaration: BoundIntrinsicTypeDeclaration;
+    readonly floatTypeDeclaration: BoundIntrinsicTypeDeclaration;
+    stringTypeDeclaration: BoundExternClassDeclaration = undefined!;
+    arrayTypeDeclaration: BoundExternClassDeclaration = undefined!;
+    objectTypeDeclaration: BoundExternClassDeclaration = undefined!;
+    throwableTypeDeclaration: BoundExternClassDeclaration = undefined!;
 
-    importModule(modulePath: string): BoundModuleDeclaration {
-        const document = fs.readFileSync(modulePath, 'utf8');
-        const currentDirectory = path.dirname(modulePath);
+    private readonly moduleCache = new Map<string, BoundModuleDeclaration>();
+    readonly arrayTypeCache = new Map<BoundTypeReferenceDeclaration, BoundExternClassDeclaration>();
 
-        const preprocessorTokens = preprocessorTokenizer.getTokens(document);
-        const preprocessorModuleDeclaration = preprocessorParser.parse(modulePath, document, preprocessorTokens);
-        const tokens = tokenizer.getTokens(preprocessorModuleDeclaration, {
-            HOST: 'winnt',
-            LANG: 'cpp',
-            TARGET: 'glfw',
-            CONFIG: 'debug',
-            CD: currentDirectory,
-            MODPATH: modulePath,
-        });
-        const moduleDeclaration = parser.parse(preprocessorModuleDeclaration, tokens);
+    getLangModule(): BoundModuleDeclaration {
+        const langModulePath = path.resolve(this.boundFrameworkModulesDirectory.fullPath, 'monkey', 'lang' + FILE_EXTENSION);
 
-        const moduleIdentifier = path.basename(modulePath, FILE_EXTENSION);
-        const boundModuleDirectory = this.resolveModuleDirectory(currentDirectory, [], moduleIdentifier);
-        const binder = new Binder();
-        const boundModuleDeclaration = binder.bind(moduleDeclaration, this, boundModuleDirectory, moduleIdentifier);
-
-        return boundModuleDeclaration;
+        return this.importModule(langModulePath);
     }
 
-    // #region Module path
-
-    getModulePathComponents(
-        modulePathChildren: (IdentifierToken | PeriodToken)[],
-        document: string,
-    ): string[] {
-        const modulePathComponents: string[] = [];
-
-        for (const child of modulePathChildren) {
-            switch (child.kind) {
-                case TokenKind.Identifier: {
-                    const modulePathComponent = child.getText(document);
-                    modulePathComponents.push(modulePathComponent);
-                    break;
-                }
-                case TokenKind.Period: { break; }
-                default: {
-                    assertNever(child);
-                    break;
-                }
-            }
-        }
-
-        return modulePathComponents;
+    cacheModule(boundModuleDeclaration: BoundModuleDeclaration): void {
+        const { directory, identifier } = boundModuleDeclaration;
+        const moduleFullPath = path.resolve(directory.fullPath, identifier.name + FILE_EXTENSION);
+        this.moduleCache.set(moduleFullPath, boundModuleDeclaration);
     }
 
-    resolveModuleDirectory(
-        currentDirectory: string,
+    // #region Import module from source
+
+    importModuleFromSource(
+        currentDirectory: BoundDirectory,
         modulePathComponents: string[],
-        moduleIdentifier: string,
+        moduleName: string,
+    ): BoundModuleDeclaration {
+        const boundModuleDirectory = this.resolveModuleDirectory(currentDirectory, modulePathComponents, moduleName);
+        const moduleFilePath = path.resolve(boundModuleDirectory.fullPath, moduleName + FILE_EXTENSION);
+
+        return this.importModule(moduleFilePath);
+    }
+
+    // Location priority:
+    //   1. Current directory (of importing module)
+    //   2. Project directory
+    //   3. Framework modules directory
+    private resolveModuleDirectory(
+        currentDirectory: BoundDirectory,
+        modulePathComponents: string[],
+        moduleName: string,
     ): BoundDirectory {
-        let modulePath: BoundDirectory | undefined;
+        let moduleDirectory: BoundDirectory | undefined;
 
-        const relativePathComponents = path.relative(this.boundProjectDirectory.fullPath, currentDirectory).split(path.sep);
-        if (relativePathComponents.length === 1 &&
-            relativePathComponents[0] === ''
-        ) {
-            relativePathComponents.pop();
-        }
-        const pathComponents = [
-            ...relativePathComponents,
-            ...modulePathComponents,
-        ];
-
-        modulePath = this.resolveModuleDirectory2(this.boundProjectDirectory, pathComponents, moduleIdentifier);
-        if (modulePath) {
-            return modulePath;
+        moduleDirectory = this.resolveModuleDirectory2(currentDirectory, modulePathComponents, moduleName);
+        if (moduleDirectory) {
+            return moduleDirectory;
         }
 
-        if (currentDirectory !== this.boundProjectDirectory.fullPath) {
-            modulePath = this.resolveModuleDirectory2(this.boundProjectDirectory, modulePathComponents, moduleIdentifier);
-            if (modulePath) {
-                return modulePath;
-            }
+        moduleDirectory = this.resolveModuleDirectory2(this.boundProjectDirectory, modulePathComponents, moduleName);
+        if (moduleDirectory) {
+            return moduleDirectory;
         }
 
-        modulePath = this.resolveModuleDirectory2(this.boundFrameworkModulesDirectory, modulePathComponents, moduleIdentifier);
-        if (modulePath) {
-            return modulePath;
+        moduleDirectory = this.resolveModuleDirectory2(this.boundFrameworkModulesDirectory, modulePathComponents, moduleName);
+        if (moduleDirectory) {
+            return moduleDirectory;
         }
 
         // TODO: Handle importing monkeytarget.
 
         const components = [
             ...modulePathComponents,
-            moduleIdentifier,
+            moduleName,
         ];
 
-        throw new Error(`Could not load module '${components.join('.')}'.`);
+        throw new Error(`Could not find module '${components.join('.')}'.`);
     }
 
+    // Tries to import module in directory (<root>/<name>.monkey)
+    // If not found, then tries subdirectory with same name as module (<root>/<name>/<name>.monkey)
     private resolveModuleDirectory2(
         root: BoundDirectory,
         pathComponents: string[],
-        moduleIdentifier: string,
+        name: string,
     ): BoundDirectory | undefined {
         let modulePath: BoundDirectory | undefined;
 
-        modulePath = this.resolveModuleDirectory3(root, pathComponents, moduleIdentifier);
+        modulePath = this.resolveModuleDirectory3(root, pathComponents, name);
         if (modulePath) {
             return modulePath;
         }
 
         pathComponents = [
             ...pathComponents,
-            moduleIdentifier,
+            name,
         ];
 
-        modulePath = this.resolveModuleDirectory3(root, pathComponents, moduleIdentifier);
+        modulePath = this.resolveModuleDirectory3(root, pathComponents, name);
         if (modulePath) {
             return modulePath;
         }
     }
 
+    // Validates the path and binds directories along the path
     private resolveModuleDirectory3(
         root: BoundDirectory,
         pathComponents: string[],
         moduleIdentifier: string,
     ): BoundDirectory | undefined {
-        const moduleFilePath = path.join(root.fullPath, ...pathComponents, moduleIdentifier) + FILE_EXTENSION;
-        if (this.moduleFilePathExists(moduleFilePath)) {
-            let scope = root;
+        const moduleFilePath = path.resolve(
+            root.fullPath,
+            ...pathComponents,
+            moduleIdentifier + FILE_EXTENSION,
+        );
+
+        if (fs.existsSync(moduleFilePath)) {
+            let boundDirectory = root;
+
             for (const component of pathComponents) {
-                const fullPath = path.join(scope.fullPath, component);
-                scope = this.bindDirectory(fullPath, scope);
+                const fullPath = path.resolve(boundDirectory.fullPath, component);
+                boundDirectory = this.bindDirectory(component, fullPath, boundDirectory);
             }
 
-            return scope;
+            return boundDirectory;
         }
     }
 
-    private readonly moduleFilePathCache: Map<string, boolean> = new Map<string, boolean>();
+    // #endregion
 
-    private moduleFilePathExists(moduleFilePath: string) {
-        let exists = this.moduleFilePathCache.get(moduleFilePath);
+    // #region Import module by path
 
-        if (typeof exists === 'undefined') {
-            exists = fs.existsSync(moduleFilePath);
-            this.moduleFilePathCache.set(moduleFilePath, exists);
+    importModule(moduleFilePath: string): BoundModuleDeclaration {
+        moduleFilePath = path.resolve(moduleFilePath);
+
+        let boundModuleDeclaration = this.moduleCache.get(moduleFilePath);
+        if (boundModuleDeclaration) {
+            return boundModuleDeclaration;
         }
 
-        return exists;
+        const document = fs.readFileSync(moduleFilePath, 'utf8');
+        const currentDirectory = path.dirname(moduleFilePath);
+        const boundModuleDirectory = this.bindModuleDirectory(currentDirectory);
+
+        const preprocessorTokens = preprocessorTokenizer.getTokens(document);
+        const preprocessorModuleDeclaration = preprocessorParser.parse(moduleFilePath, document, preprocessorTokens);
+        const tokens = tokenizer.getTokens(preprocessorModuleDeclaration, {
+            HOST: 'winnt',
+            LANG: 'cpp',
+            TARGET: 'glfw',
+            CONFIG: 'debug',
+            CD: currentDirectory,
+            MODPATH: moduleFilePath,
+        });
+        const moduleDeclaration = parser.parse(preprocessorModuleDeclaration, tokens);
+
+        const moduleIdentifier = path.basename(moduleFilePath, FILE_EXTENSION);
+        const binder = new Binder();
+        boundModuleDeclaration = binder.bind(moduleDeclaration, this, boundModuleDirectory, moduleIdentifier);
+
+        return boundModuleDeclaration;
+    }
+
+    private bindModuleDirectory(currentDirectory: string) {
+        let root: BoundDirectory;
+        let relativePathComponents: string[];
+
+        relativePathComponents = this.getRelativePathComponents(this.boundProjectDirectory.fullPath, currentDirectory);
+        if (relativePathComponents[0] !== '..') {
+            root = this.boundProjectDirectory;
+        } else {
+            relativePathComponents = this.getRelativePathComponents(this.boundFrameworkModulesDirectory.fullPath, currentDirectory);
+            if (relativePathComponents[0] !== '..') {
+                root = this.boundFrameworkModulesDirectory;
+            } else {
+                throw new Error(`Module is not within the project or framework modules directory tree.`);
+            }
+        }
+
+        let boundDirectory = root;
+
+        for (const component of relativePathComponents) {
+            const fullPath = path.resolve(boundDirectory.fullPath, component);
+            boundDirectory = this.bindDirectory(component, fullPath, boundDirectory);
+        }
+
+        return boundDirectory;
+    }
+
+    private getRelativePathComponents(baseDirectory: string, currentDirectory: string) {
+        const relativePath = path.relative(baseDirectory, currentDirectory);
+        if (relativePath === '') {
+            return [];
+        }
+
+        return relativePath.split(path.sep);
     }
 
     // #endregion
 
     private bindDirectory(
+        name: string,
         fullPath: string,
-        scope?: {
-            locals: BoundSymbolTable,
-        },
+        parent?: BoundDirectory,
     ): BoundDirectory {
-        const fullPathComponents = fullPath.split(path.sep);
-        const name = fullPathComponents[fullPathComponents.length - 1];
-
-        if (scope) {
-            const existingSymbol = scope.locals.get(name);
+        if (parent) {
+            const existingSymbol = parent.locals.get(name);
             if (existingSymbol) {
                 const { declaration } = existingSymbol;
                 switch (declaration.kind) {
@@ -220,166 +284,15 @@ export class Project {
         }
 
         const boundDirectory = new BoundDirectory();
-        boundDirectory.locals = new BoundSymbolTable();
+        boundDirectory.parent = parent;
+        boundDirectory.identifier = new BoundSymbol(name, boundDirectory);
 
-        const identifier = new BoundSymbol(name, boundDirectory);
-        if (scope) {
-            scope.locals.set(name, identifier);
+        if (parent) {
+            parent.locals.set(boundDirectory.identifier);
         }
-        boundDirectory.identifier = identifier;
 
         boundDirectory.fullPath = fullPath;
 
         return boundDirectory;
     }
-
-    // #region Array types
-
-    private readonly arrayTypes = new Map<Types, ArrayType>();
-
-    /**
-     * Ensures only a single type is created for each unique array type.
-     */
-    getArrayType(type: Types): ArrayType {
-        let arrayType = this.arrayTypes.get(type);
-        if (!arrayType) {
-            arrayType = new ArrayType(type);
-            this.arrayTypes.set(type, arrayType);
-        }
-
-        return arrayType;
-    }
-
-    // #endregion
-
-    // #region Generic types
-
-    private readonly closedTypes = new Map<Types, ClosedTypeInfo[]>();
-
-    closeType(openType: Types, typeMap: Map<TypeParameterType, Types>): Types {
-        // Breaks infinite loops when a type references itself
-        const closedTypeInfos = this.closedTypes.get(openType);
-        if (closedTypeInfos) {
-            const closedTypeInfo = this.getClosedTypeInfo(closedTypeInfos, Array.from(typeMap.values()));
-            if (closedTypeInfo) {
-                return closedTypeInfo.closedType;
-            }
-        }
-
-        switch (openType.kind) {
-            case TypeKind.Bool:
-            case TypeKind.Int:
-            case TypeKind.Float:
-            case TypeKind.String: {
-                return openType;
-            }
-            case TypeKind.TypeParameter: {
-                return typeMap.get(openType)!;
-            }
-            case TypeKind.Object: {
-                return this.closeObjectType(openType, typeMap);
-            }
-            case TypeKind.Array: {
-                return this.getArrayType(this.closeType(openType.elementType, typeMap));
-            }
-            case TypeKind.FunctionLike: {
-                return this.closeFunctionLikeType(openType, typeMap);
-            }
-            case TypeKind.Module:
-            case TypeKind.FunctionLikeGroup:
-            case TypeKind.Void: {
-                throw new Error(`Cannot close '${openType.kind}' type.`);
-            }
-            default: {
-                return assertNever(openType);
-            }
-        }
-    }
-
-    private getClosedTypeInfo(
-        closedTypeInfos: ClosedTypeInfo[],
-        typeArguments: Types[],
-    ): ClosedTypeInfo | undefined {
-        for (const closedTypeInfo of closedTypeInfos) {
-            let isCached = true;
-
-            for (let i = 0; i < closedTypeInfo.typeArguments.length; i++) {
-                if (closedTypeInfo.typeArguments[i] !== typeArguments[i]) {
-                    isCached = false;
-                    break;
-                }
-            }
-
-            if (isCached) {
-                return closedTypeInfo;
-            }
-        }
-    }
-
-    private setClosedTypeInfo(
-        openType: Types,
-        typeArguments: Types[],
-        closedType: Types,
-    ): void {
-        let closedTypeInfos = this.closedTypes.get(openType);
-
-        if (!closedTypeInfos) {
-            closedTypeInfos = [];
-            this.closedTypes.set(openType, closedTypeInfos);
-        }
-
-        closedTypeInfos.push({
-            typeArguments,
-            closedType,
-        });
-    }
-
-    private closeObjectType(openType: ObjectType, typeMap: Map<TypeParameterType, Types>): ObjectType {
-        const closedType = new ObjectType();
-        this.setClosedTypeInfo(openType, Array.from(typeMap.values()), closedType);
-        closedType.declaration = openType.declaration;
-        closedType.identifier = openType.identifier;
-
-        // TODO: Close super type?
-        // TODO: Close implemented types?
-        // TODO: Assert matching number of type parameters/arguments?
-
-        if (openType.typeParameters) {
-            const typeParameters: TypeParameterType[] = [];
-
-            for (const typeParameter of openType.typeParameters) {
-                const typeArgument = typeMap.get(typeParameter)!;
-                if (typeArgument.kind === TypeKind.TypeParameter) {
-                    typeParameters.push(typeArgument);
-                }
-            }
-
-            closedType.typeParameters = typeParameters;
-        }
-
-        return closedType;
-    }
-
-    private closeFunctionLikeType(openType: FunctionLikeType, typeMap: Map<TypeParameterType, Types>): FunctionLikeType {
-        const closedType = new FunctionLikeType();
-        this.setClosedTypeInfo(openType, Array.from(typeMap.values()), closedType);
-        closedType.returnType = this.closeType(openType.returnType, typeMap);
-
-        const parameters: Types[] = [];
-
-        for (const parameter of openType.parameters) {
-            parameters.push(this.closeType(parameter, typeMap));
-        }
-
-        closedType.parameters = parameters;
-
-        return closedType;
-    }
-
-    // #endregion
-}
-
-interface ClosedTypeInfo {
-    typeArguments: Types[];
-    closedType: Types;
 }

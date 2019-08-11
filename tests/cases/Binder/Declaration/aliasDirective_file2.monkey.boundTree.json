@@ -2,13 +2,12 @@
     "kind": "ModuleDeclaration",
     "identifier": "aliasDirective_file2",
     "locals": [
-        "T"
-    ],
-    "members": [
         {
             "kind": "DataDeclaration",
-            "declarationKind": "GlobalKeyword",
+            "declarationKind": "Global",
             "identifier": "T",
+            "typeAnnotation": "Int",
+            "operator": null,
             "type": "Int"
         }
     ]

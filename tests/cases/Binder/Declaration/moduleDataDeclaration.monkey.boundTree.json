@@ -2,29 +2,29 @@
     "kind": "ModuleDeclaration",
     "identifier": "moduleDataDeclaration",
     "locals": [
-        "ScaleX",
-        "Version"
-    ],
-    "members": [
         {
             "kind": "DataDeclaration",
-            "declarationKind": "GlobalKeyword",
+            "declarationKind": "Global",
             "identifier": "ScaleX",
-            "type": "Int",
+            "operator": "ColonEqualsSign",
             "expression": {
                 "kind": "IntegerLiteralExpression",
-                "type": "Int"
-            }
+                "type": "Int",
+                "value": "24"
+            },
+            "type": "Int"
         },
         {
             "kind": "DataDeclaration",
-            "declarationKind": "ConstKeyword",
+            "declarationKind": "Const",
             "identifier": "Version",
-            "type": "String",
+            "operator": "ColonEqualsSign",
             "expression": {
                 "kind": "StringLiteralExpression",
-                "type": "String"
-            }
+                "type": "String",
+                "value": "1.0.4"
+            },
+            "type": "String"
         }
     ]
 }

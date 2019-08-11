@@ -1,8 +1,7 @@
-import { BoundSymbolTable } from '../../../../Binding/BoundSymbol';
 import { MissableToken } from '../../../Token/MissingToken';
-import { ClosingParenthesisToken, FunctionKeywordToken, OpeningParenthesisToken } from '../../../Token/Token';
+import { ClosingParenthesisToken, FunctionKeywordToken, OpeningParenthesisToken } from '../../../Token/Tokens';
 import { MissableIdentifier } from '../../Identifier';
-import { NodeKind } from '../../NodeKind';
+import { NodeKind } from '../../Nodes';
 import { TypeAnnotation } from '../../TypeAnnotation';
 import { DataDeclarationSequence } from '../DataDeclarationSequence';
 import { ExternDeclaration } from './ExternDeclaration';
@@ -27,6 +26,4 @@ export class ExternFunctionDeclaration extends ExternDeclaration {
     openingParenthesis: MissableToken<OpeningParenthesisToken> = undefined!;
     parameters: DataDeclarationSequence = undefined!;
     closingParenthesis: MissableToken<ClosingParenthesisToken> = undefined!;
-
-    locals = new BoundSymbolTable();
 }

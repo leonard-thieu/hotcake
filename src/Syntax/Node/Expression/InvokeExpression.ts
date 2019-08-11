@@ -1,8 +1,8 @@
 import { MissableToken } from '../../Token/MissingToken';
-import { ClosingParenthesisToken, NewlineToken, OpeningParenthesisToken } from '../../Token/Token';
+import { ClosingParenthesisToken, NewlineToken, OpeningParenthesisToken } from '../../Token/Tokens';
 import { CommaSeparator } from '../CommaSeparator';
-import { NodeKind } from '../NodeKind';
-import { Expression, Expressions, MissableExpression } from './Expression';
+import { NodeKind } from '../Nodes';
+import { Expression, Expressions, MissableExpression } from './Expressions';
 
 export const InvokeExpressionChildNames: ReadonlyArray<keyof InvokeExpression> = [
     'newlines',

@@ -4,10 +4,9 @@ import { ErrorDirective } from './Node/Directive/ErrorDirective';
 import { ElseDirective, ElseIfDirective, IfDirective } from './Node/Directive/IfDirective';
 import { PrintDirective } from './Node/Directive/PrintDirective';
 import { RemDirective } from './Node/Directive/RemDirective';
-import { Nodes } from './Node/Node';
+import { Nodes } from './Node/Nodes';
 import { ParseContextElementMapBase, ParseContextKind, ParserBase } from './ParserBase';
-import { ConfigurationVariableToken, ElseDirectiveKeywordToken, ElseIfDirectiveKeywordToken, ErrorDirectiveKeywordToken, IfDirectiveKeywordToken, NumberSignToken, PrintDirectiveKeywordToken, RemDirectiveKeywordToken, Tokens } from './Token/Token';
-import { TokenKind } from './Token/TokenKind';
+import { ConfigurationVariableToken, ElseDirectiveKeywordToken, ElseIfDirectiveKeywordToken, ErrorDirectiveKeywordToken, IfDirectiveKeywordToken, NumberSignToken, PrintDirectiveKeywordToken, RemDirectiveKeywordToken, TokenKind, Tokens } from './Token/Tokens';
 
 export class PreprocessorParser extends ParserBase {
     parse(filePath: string, document: string, tokens: Tokens[]): PreprocessorModuleDeclaration {

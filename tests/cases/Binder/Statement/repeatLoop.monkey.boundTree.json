@@ -2,53 +2,62 @@
     "kind": "ModuleDeclaration",
     "identifier": "repeatLoop",
     "locals": [
-        "Main"
-    ],
-    "members": [
         {
-            "kind": "FunctionDeclaration",
+            "kind": "FunctionGroupDeclaration",
             "identifier": "Main",
-            "locals": [
-                "i"
-            ],
-            "returnType": "Int",
-            "parameters": [],
-            "statements": [
+            "type": "Main",
+            "overloads": [
                 {
-                    "kind": "DataDeclarationStatement",
-                    "declaration": {
-                        "kind": "DataDeclaration",
-                        "declarationKind": "LocalKeyword",
-                        "identifier": "i",
-                        "type": "Int",
-                        "expression": {
-                            "kind": "IntegerLiteralExpression",
-                            "type": "Int"
-                        }
-                    }
-                },
-                {
-                    "kind": "RepeatLoop",
-                    "locals": [],
-                    "expression": {
-                        "kind": "BinaryExpression",
-                        "type": "Bool",
-                        "leftOperand": {
-                            "kind": "IdentifierExpression",
-                            "type": "Int",
-                            "identifier": "i"
+                    "kind": "FunctionDeclaration",
+                    "identifier": "Main",
+                    "locals": [
+                        "i"
+                    ],
+                    "type": "Main: Int()",
+                    "returnType": "Int",
+                    "parameters": [],
+                    "statements": [
+                        {
+                            "kind": "DataDeclarationStatement",
+                            "dataDeclaration": {
+                                "kind": "DataDeclaration",
+                                "declarationKind": "Local",
+                                "identifier": "i",
+                                "operator": "ColonEqualsSign",
+                                "expression": {
+                                    "kind": "IntegerLiteralExpression",
+                                    "type": "Int",
+                                    "value": "0"
+                                },
+                                "type": "Int"
+                            }
                         },
-                        "rightOperand": {
-                            "kind": "IntegerLiteralExpression",
-                            "type": "Int"
+                        {
+                            "kind": "RepeatLoop",
+                            "locals": [],
+                            "untilExpression": {
+                                "kind": "BinaryExpression",
+                                "type": "Bool",
+                                "leftOperand": {
+                                    "kind": "IdentifierExpression",
+                                    "type": "Int",
+                                    "identifier": "i"
+                                },
+                                "operator": "GreaterThan",
+                                "rightOperand": {
+                                    "kind": "IntegerLiteralExpression",
+                                    "type": "Int",
+                                    "value": "5"
+                                }
+                            },
+                            "statements": []
+                        },
+                        {
+                            "kind": "RepeatLoop",
+                            "locals": [],
+                            "statements": []
                         }
-                    },
-                    "statements": []
-                },
-                {
-                    "kind": "RepeatLoop",
-                    "locals": [],
-                    "statements": []
+                    ]
                 }
             ]
         }

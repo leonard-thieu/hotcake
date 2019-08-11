@@ -1,19 +1,28 @@
-import { BoundSymbol } from '../BoundSymbol';
+import { CONSTRUCTOR_NAME } from '../Binder';
+import { BoundTreeWalker } from '../BoundTreeWalker';
+import { BoundNodeKind } from '../Node/BoundNodes';
 import { BoundExternClassDeclaration } from '../Node/Declaration/Extern/BoundExternClassDeclaration';
-import { ObjectType } from './ObjectType';
 import { Type } from './Type';
-import { TypeKind } from './TypeKind';
-import { Types } from './Types';
+import { TypeKind, Types } from './Types';
 
 export class StringType extends Type {
+    constructor(readonly declaration: BoundExternClassDeclaration) {
+        super();
+    }
+
     readonly kind = TypeKind.String;
 
-    declaration: BoundExternClassDeclaration = undefined!;
-    identifier: BoundSymbol = undefined!;
-    superType?: ObjectType = undefined;
-
     isConvertibleTo(target: Types): boolean {
-        // TODO: Boxing conversion
+        switch (target.declaration.kind) {
+            case BoundNodeKind.ExternClassDeclaration:
+            case BoundNodeKind.ClassDeclaration: {
+                const method = BoundTreeWalker.getMethod(target.declaration, CONSTRUCTOR_NAME, undefined, this);
+                if (method) {
+                    return true;
+                }
+                break;
+            }
+        }
 
         switch (target.kind) {
             case TypeKind.String: {

@@ -1,5 +1,4 @@
-import { Token, Tokens } from './Token';
-import { TokenKind } from './TokenKind';
+import { Token, TokenKind, Tokens } from './Tokens';
 
 export class SkippedToken extends Token<TokenKind.Skipped> {
     constructor(readonly originalToken: Tokens) {

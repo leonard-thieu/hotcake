@@ -1,7 +1,7 @@
-import { ReturnKeywordToken } from '../../Token/Token';
-import { MissableExpression } from '../Expression/Expression';
-import { NodeKind } from '../NodeKind';
-import { Statement } from './Statement';
+import { ReturnKeywordToken } from '../../Token/Tokens';
+import { Expressions } from '../Expression/Expressions';
+import { NodeKind } from '../Nodes';
+import { Statement } from './Statements';
 
 export const ReturnStatementChildNames: ReadonlyArray<keyof ReturnStatement> = [
     'returnKeyword',
@@ -13,5 +13,5 @@ export class ReturnStatement extends Statement {
     readonly kind = NodeKind.ReturnStatement;
 
     returnKeyword: ReturnKeywordToken = undefined!;
-    expression?: MissableExpression = undefined;
+    expression?: Expressions = undefined;
 }

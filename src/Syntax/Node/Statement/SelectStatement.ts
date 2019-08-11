@@ -1,12 +1,13 @@
-import { BoundSymbolTable } from '../../../Binding/BoundSymbol';
 import { MissableToken } from '../../Token/MissingToken';
 import { SkippedToken } from '../../Token/SkippedToken';
-import { CaseKeywordToken, DefaultKeywordToken, EndKeywordToken, NewlineToken, SelectKeywordToken } from '../../Token/Token';
+import { CaseKeywordToken, DefaultKeywordToken, EndKeywordToken, NewlineToken, SelectKeywordToken } from '../../Token/Tokens';
 import { CommaSeparator } from '../CommaSeparator';
-import { MissableExpression } from '../Expression/Expression';
-import { Node } from '../Node';
-import { NodeKind } from '../NodeKind';
-import { Statement, Statements } from './Statement';
+import { MissableExpression } from '../Expression/Expressions';
+import { Node } from '../Nodes';
+import { NodeKind } from '../Nodes';
+import { Statement, Statements } from './Statements';
+
+// #region Select statement
 
 export const SelectStatementChildNames: ReadonlyArray<keyof SelectStatement> = [
     'selectKeyword',
@@ -31,6 +32,10 @@ export class SelectStatement extends Statement {
     endSelectKeyword?: SelectKeywordToken = undefined;
 }
 
+// #endregion
+
+// #region Case clause
+
 export const CaseClauseChildNames: ReadonlyArray<keyof CaseClause> = [
     'caseKeyword',
     'expressions',
@@ -43,9 +48,11 @@ export class CaseClause extends Node {
     caseKeyword: CaseKeywordToken = undefined!;
     expressions: (MissableExpression | CommaSeparator)[] = undefined!;
     statements: (Statements | SkippedToken)[] = undefined!;
-
-    locals = new BoundSymbolTable();
 }
+
+// #endregion
+
+// #region Default clause
 
 export const DefaultClauseChildNames: ReadonlyArray<keyof DefaultClause> = [
     'defaultKeyword',
@@ -57,6 +64,6 @@ export class DefaultClause extends Node {
 
     defaultKeyword: DefaultKeywordToken = undefined!;
     statements: (Statements | SkippedToken)[] = undefined!;
-
-    locals = new BoundSymbolTable();
 }
+
+// #endregion

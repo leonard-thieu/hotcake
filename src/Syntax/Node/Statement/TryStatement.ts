@@ -1,11 +1,12 @@
-import { BoundSymbolTable } from '../../../Binding/BoundSymbol';
 import { MissableToken } from '../../Token/MissingToken';
 import { SkippedToken } from '../../Token/SkippedToken';
-import { CatchKeywordToken, EndKeywordToken, TryKeywordToken } from '../../Token/Token';
+import { CatchKeywordToken, EndKeywordToken, TryKeywordToken } from '../../Token/Tokens';
 import { MissableDataDeclaration } from '../Declaration/DataDeclarationSequence';
-import { Node } from '../Node';
-import { NodeKind } from '../NodeKind';
-import { Statement, Statements } from './Statement';
+import { Node } from '../Nodes';
+import { NodeKind } from '../Nodes';
+import { Statement, Statements } from './Statements';
+
+// #region Try statement
 
 export const TryStatementChildNames: ReadonlyArray<keyof TryStatement> = [
     'tryKeyword',
@@ -24,9 +25,11 @@ export class TryStatement extends Statement {
     catchClauses: CatchClause[] = undefined!;
     endKeyword: MissableToken<EndKeywordToken> = undefined!;
     endTryKeyword?: TryKeywordToken = undefined;
-
-    locals = new BoundSymbolTable();
 }
+
+// #endregion
+
+// #region Catch clause
 
 export const CatchClauseChildNames: ReadonlyArray<keyof CatchClause> = [
     'catchKeyword',
@@ -40,6 +43,6 @@ export class CatchClause extends Node {
     catchKeyword: CatchKeywordToken = undefined!;
     parameter: MissableDataDeclaration = undefined!;
     statements: (Statements | SkippedToken)[] = undefined!;
-
-    locals = new BoundSymbolTable();
 }
+
+// #endregion

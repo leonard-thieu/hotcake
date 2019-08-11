@@ -1,41 +1,36 @@
-import { assertNever } from '../assertNever';
-import { Diagnostic } from '../Diagnostic';
-import { DiagnosticKind, DiagnosticKinds } from '../DiagnosticKind';
+import { Diagnostic, DiagnosticKind } from '../Diagnostics';
+import { assertNever } from '../util';
 import { AccessibilityDirective, AccessibilityKeywordToken } from './Node/Declaration/AccessibilityDirective';
-import { AliasDirective, AliasDirectiveSequence, MissableDeclarationReferenceIdentifier } from './Node/Declaration/AliasDirectiveSequence';
-import { ClassDeclaration } from './Node/Declaration/ClassDeclaration';
-import { ClassMethodDeclaration } from './Node/Declaration/ClassMethodDeclaration';
+import { AliasDirective, AliasDirectiveSequence } from './Node/Declaration/AliasDirectiveSequence';
+import { ClassDeclaration, ClassMethodDeclaration } from './Node/Declaration/ClassDeclaration';
 import { DataDeclaration, DataDeclarationKeywordToken, DataDeclarationSequence, MissableDataDeclaration } from './Node/Declaration/DataDeclarationSequence';
-import { ExternClassDeclaration } from './Node/Declaration/ExternDeclaration/ExternClassDeclaration';
-import { ExternClassMethodDeclaration } from './Node/Declaration/ExternDeclaration/ExternClassMethodDeclaration';
+import { ExternClassDeclaration, ExternClassMethodDeclaration } from './Node/Declaration/ExternDeclaration/ExternClassDeclaration';
 import { ExternDataDeclaration, ExternDataDeclarationKeywordToken, ExternDataDeclarationSequence } from './Node/Declaration/ExternDeclaration/ExternDataDeclarationSequence';
 import { ExternFunctionDeclaration } from './Node/Declaration/ExternDeclaration/ExternFunctionDeclaration';
 import { FriendDirective } from './Node/Declaration/FriendDirective';
 import { FunctionDeclaration } from './Node/Declaration/FunctionDeclaration';
 import { ImportStatement } from './Node/Declaration/ImportStatement';
-import { InterfaceDeclaration } from './Node/Declaration/InterfaceDeclaration';
-import { InterfaceMethodDeclaration } from './Node/Declaration/InterfaceMethodDeclaration';
+import { InterfaceDeclaration, InterfaceMethodDeclaration } from './Node/Declaration/InterfaceDeclaration';
 import { ModuleDeclaration } from './Node/Declaration/ModuleDeclaration';
 import { PreprocessorModuleDeclaration } from './Node/Declaration/PreprocessorModuleDeclaration';
 import { StrictDirective } from './Node/Declaration/StrictDirective';
 import { TypeParameter } from './Node/Declaration/TypeParameter';
-import { Expressions, MissableExpression } from './Node/Expression/Expression';
+import { Expressions, MissableExpression } from './Node/Expression/Expressions';
 import { IdentifierStartToken } from './Node/Identifier';
 import { ModulePath } from './Node/ModulePath';
-import { Nodes } from './Node/Node';
-import { NodeKind } from './Node/NodeKind';
+import { NodeKind, Nodes } from './Node/Nodes';
 import { AssignableExpression, AssignmentOperatorToken, AssignmentStatement } from './Node/Statement/AssignmentStatement';
 import { ContinueStatement } from './Node/Statement/ContinueStatement';
 import { DataDeclarationSequenceStatement } from './Node/Statement/DataDeclarationSequenceStatement';
 import { EmptyStatement } from './Node/Statement/EmptyStatement';
 import { ExitStatement } from './Node/Statement/ExitStatement';
 import { ExpressionStatement } from './Node/Statement/ExpressionStatement';
-import { ForLoop, NumericForLoopHeader } from './Node/Statement/ForLoop';
+import { ForEachInLoop, ForLoopOperatorToken, NumericForLoop } from './Node/Statement/ForLoops';
 import { ElseClause, ElseIfClause, IfStatement } from './Node/Statement/IfStatement';
 import { RepeatLoop } from './Node/Statement/RepeatLoop';
 import { ReturnStatement } from './Node/Statement/ReturnStatement';
 import { CaseClause, DefaultClause, SelectStatement } from './Node/Statement/SelectStatement';
-import { Statements } from './Node/Statement/Statement';
+import { Statements } from './Node/Statement/Statements';
 import { ThrowStatement } from './Node/Statement/ThrowStatement';
 import { CatchClause, TryStatement } from './Node/Statement/TryStatement';
 import { WhileLoop } from './Node/Statement/WhileLoop';
@@ -46,8 +41,7 @@ import { ModKeywordEqualsSignToken } from './Token/ModKeywordEqualsSignToken';
 import { ShlKeywordEqualsSignToken } from './Token/ShlKeywordEqualsSignToken';
 import { ShrKeywordEqualsSignToken } from './Token/ShrKeywordEqualsSignToken';
 import { SkippedToken } from './Token/SkippedToken';
-import { AliasKeywordToken, CaseKeywordToken, CatchKeywordToken, ClassKeywordToken, ColonToken, ConstKeywordToken, ContinueKeywordToken, DefaultKeywordToken, ElseIfKeywordToken, ElseKeywordToken, ExitKeywordToken, ForKeywordToken, FriendKeywordToken, FunctionKeywordToken, IfKeywordToken, ImportKeywordToken, InterfaceKeywordToken, LocalKeywordToken, MethodKeywordToken, RepeatKeywordToken, ReturnKeywordToken, SelectKeywordToken, StrictKeywordToken, ThrowKeywordToken, Tokens, TryKeywordToken, WhileKeywordToken } from './Token/Token';
-import { TokenKind } from './Token/TokenKind';
+import { AliasKeywordToken, CaseKeywordToken, CatchKeywordToken, ClassKeywordToken, ColonToken, ConstKeywordToken, ContinueKeywordToken, DefaultKeywordToken, ElseIfKeywordToken, ElseKeywordToken, ExitKeywordToken, ForKeywordToken, FriendKeywordToken, FunctionKeywordToken, IfKeywordToken, ImportKeywordToken, InterfaceKeywordToken, LocalKeywordToken, MethodKeywordToken, RepeatKeywordToken, ReturnKeywordToken, SelectKeywordToken, StrictKeywordToken, ThrowKeywordToken, TokenKind, Tokens, TryKeywordToken, WhileKeywordToken } from './Token/Tokens';
 
 export class Parser extends ParserBase {
     private document: string = undefined!;
@@ -427,13 +421,18 @@ export class Parser extends ParserBase {
         }
 
         // Parse target
-        let target: MissableDeclarationReferenceIdentifier | undefined = this.eatOptional(TokenKind.IntKeyword, TokenKind.FloatKeyword, TokenKind.StringKeyword);
-        if (!target) {
-            target = this.parseMissableIdentifier(aliasDirective);
-        }
-        aliasDirective.target = target;
+        aliasDirective.target = this.parseAliasDirectiveTarget(aliasDirective);
 
         return aliasDirective;
+    }
+
+    private parseAliasDirectiveTarget(aliasDirective: AliasDirective) {
+        const target = this.eatOptional(TokenKind.IntKeyword, TokenKind.FloatKeyword, TokenKind.StringKeyword);
+        if (target) {
+            return target;
+        }
+
+        return this.parseMissableIdentifier(aliasDirective);
     }
 
     // #endregion
@@ -457,7 +456,7 @@ export class Parser extends ParserBase {
 
     // #region Data declaration sequence
 
-    private parseDataDeclarationSequence(parent: Nodes, dataDeclarationKeyword?: DataDeclarationKeywordToken): DataDeclarationSequence {
+    private parseDataDeclarationSequence(parent: Nodes, dataDeclarationKeyword: DataDeclarationKeywordToken | null = null): DataDeclarationSequence {
         const dataDeclarationSequence = new DataDeclarationSequence();
         dataDeclarationSequence.parent = parent;
         dataDeclarationSequence.dataDeclarationKeyword = dataDeclarationKeyword;
@@ -531,17 +530,16 @@ export class Parser extends ParserBase {
         const dataDeclaration = new DataDeclaration();
         dataDeclaration.parent = parent;
         dataDeclaration.identifier = this.parseIdentifier(dataDeclaration, identifierStart);
-        dataDeclaration.type = this.parseTypeAnnotation(dataDeclaration);
+        dataDeclaration.typeAnnotation = this.parseTypeAnnotation(dataDeclaration);
         if (parent.kind === NodeKind.DataDeclarationSequence &&
             parent.dataDeclarationKeyword &&
             parent.dataDeclarationKeyword.kind === TokenKind.ConstKeyword
         ) {
-            dataDeclaration.equalsSign = this.eatMissable(TokenKind.EqualsSign, TokenKind.ColonEqualsSign);
+            dataDeclaration.operator = this.eatMissable(TokenKind.EqualsSign, TokenKind.ColonEqualsSign);
             dataDeclaration.expression = this.parseExpression(dataDeclaration);
         } else {
-            dataDeclaration.equalsSign = this.eatOptional(TokenKind.EqualsSign, TokenKind.ColonEqualsSign);
-            if (dataDeclaration.equalsSign) {
-                dataDeclaration.eachInKeyword = this.eatOptional(TokenKind.EachInKeyword);
+            dataDeclaration.operator = this.eatOptional(TokenKind.EqualsSign, TokenKind.ColonEqualsSign) || null;
+            if (dataDeclaration.operator) {
                 dataDeclaration.expression = this.parseExpression(dataDeclaration);
             }
         }
@@ -613,7 +611,7 @@ export class Parser extends ParserBase {
         const externDataDeclaration = new ExternDataDeclaration();
         externDataDeclaration.parent = parent;
         externDataDeclaration.identifier = this.parseIdentifier(parent, identifierStart);
-        externDataDeclaration.type = this.parseTypeAnnotation(externDataDeclaration);
+        externDataDeclaration.typeAnnotation = this.parseTypeAnnotation(externDataDeclaration);
         externDataDeclaration.equalsSign = this.eatOptional(TokenKind.EqualsSign);
         if (externDataDeclaration.equalsSign) {
             externDataDeclaration.nativeSymbol = this.parseMissableStringLiteralExpression(externDataDeclaration);
@@ -633,10 +631,7 @@ export class Parser extends ParserBase {
         functionDeclaration.parent = parent;
         functionDeclaration.functionKeyword = functionKeyword;
         functionDeclaration.identifier = this.parseMissableIdentifier(functionDeclaration);
-
         functionDeclaration.returnType = this.parseTypeAnnotation(functionDeclaration);
-        this.isReturnStatementExpressionRequired = this.isReturnTypeVoid(functionDeclaration.returnType);
-
         functionDeclaration.openingParenthesis = this.eatMissable(TokenKind.OpeningParenthesis);
         functionDeclaration.parameters = this.parseDataDeclarationSequence(functionDeclaration);
         functionDeclaration.closingParenthesis = this.eatMissable(TokenKind.ClosingParenthesis);
@@ -681,7 +676,7 @@ export class Parser extends ParserBase {
         interfaceDeclaration.identifier = this.parseMissableIdentifier(interfaceDeclaration);
         interfaceDeclaration.extendsKeyword = this.eatOptional(TokenKind.ExtendsKeyword);
         if (interfaceDeclaration.extendsKeyword) {
-            interfaceDeclaration.baseTypes = this.parseList(ParseContextKind.TypeReferenceSequence, interfaceDeclaration, TokenKind.Comma);
+            interfaceDeclaration.implementedTypes = this.parseList(ParseContextKind.TypeReferenceSequence, interfaceDeclaration, TokenKind.Comma);
         }
         interfaceDeclaration.members = this.parseListWithSkippedTokens(ParseContextKind.InterfaceDeclaration, interfaceDeclaration);
         interfaceDeclaration.endKeyword = this.eatMissable(TokenKind.EndKeyword);
@@ -771,7 +766,7 @@ export class Parser extends ParserBase {
 
         classDeclaration.extendsKeyword = this.eatOptional(TokenKind.ExtendsKeyword);
         if (classDeclaration.extendsKeyword) {
-            classDeclaration.baseType = this.parseMissableTypeReference(classDeclaration);
+            classDeclaration.superType = this.parseMissableTypeReference(classDeclaration);
         }
 
         classDeclaration.implementsKeyword = this.eatOptional(TokenKind.ImplementsKeyword);
@@ -918,15 +913,12 @@ export class Parser extends ParserBase {
         const classMethodDeclaration = new ClassMethodDeclaration();
         classMethodDeclaration.parent = parent;
         classMethodDeclaration.methodKeyword = methodKeyword;
-        // TODO: Constructors should probably be a separate type.
         const newKeyword = this.eatOptional(TokenKind.NewKeyword);
         if (newKeyword) {
             classMethodDeclaration.identifier = newKeyword;
         } else {
             classMethodDeclaration.identifier = this.parseMissableIdentifier(classMethodDeclaration);
-
             classMethodDeclaration.returnType = this.parseTypeAnnotation(classMethodDeclaration);
-            this.isReturnStatementExpressionRequired = this.isReturnTypeVoid(classMethodDeclaration.returnType);
         }
         classMethodDeclaration.openingParenthesis = this.eatMissable(TokenKind.OpeningParenthesis);
         classMethodDeclaration.parameters = this.parseDataDeclarationSequence(classMethodDeclaration);
@@ -958,9 +950,9 @@ export class Parser extends ParserBase {
 
         externClassDeclaration.extendsKeyword = this.eatOptional(TokenKind.ExtendsKeyword);
         if (externClassDeclaration.extendsKeyword) {
-            externClassDeclaration.baseType = this.eatOptional(TokenKind.NullKeyword);
-            if (!externClassDeclaration.baseType) {
-                externClassDeclaration.baseType = this.parseMissableTypeReference(externClassDeclaration);
+            externClassDeclaration.superType = this.eatOptional(TokenKind.NullKeyword);
+            if (!externClassDeclaration.superType) {
+                externClassDeclaration.superType = this.parseMissableTypeReference(externClassDeclaration);
             }
         }
 
@@ -1307,26 +1299,15 @@ export class Parser extends ParserBase {
         const returnStatement = new ReturnStatement();
         returnStatement.parent = parent;
         returnStatement.returnKeyword = returnKeyword;
-        if (this.isReturnStatementExpressionRequired) {
-            returnStatement.expression = this.parseExpression(returnStatement);
+
+        const token = this.getToken();
+        if (this.isExpressionStart(token)) {
+            returnStatement.expression = this.parseExpression(returnStatement) as Expressions;
         }
+
         returnStatement.terminator = this.eatStatementTerminator();
 
         return returnStatement;
-    }
-
-    private isReturnStatementExpressionRequired: boolean = false;
-
-    private isReturnTypeVoid(returnType: TypeAnnotation | undefined): boolean {
-        if (returnType &&
-            returnType.kind === NodeKind.LonghandTypeAnnotation &&
-            returnType.typeReference.kind !== TokenKind.Missing &&
-            returnType.typeReference.identifier.kind === TokenKind.VoidKeyword
-        ) {
-            return false;
-        }
-
-        return true;
     }
 
     // #endregion
@@ -1625,11 +1606,73 @@ export class Parser extends ParserBase {
 
     // #region For loop
 
-    private parseForLoop(parent: Nodes, forKeyword: ForKeywordToken): ForLoop {
-        const forLoop = new ForLoop();
-        forLoop.parent = parent;
-        forLoop.forKeyword = forKeyword;
-        forLoop.header = this.parseForLoopHeader(forLoop);
+    private parseForLoop(parent: Nodes, forKeyword: ForKeywordToken): NumericForLoop | ForEachInLoop {
+        let forLoop: NumericForLoop | ForEachInLoop = undefined!;
+
+        const localKeyword = this.eatOptional(TokenKind.LocalKeyword);
+        const indexVariable = this.parseMissableIdentifier(forLoop);
+
+        let typeAnnotation: TypeAnnotation | undefined = undefined;
+        let operator: ForLoopOperatorToken | undefined;
+
+        if (localKeyword) {
+            typeAnnotation = this.parseTypeAnnotation(forLoop);
+            operator = this.eatMissable(TokenKind.EqualsSign, TokenKind.ColonEqualsSign);
+        } else {
+            operator = this.eatAssignmentOperatorTokenOptional();
+            if (!operator) {
+                const token = this.getToken();
+                operator = this.createMissingToken(token.fullStart, TokenKind.EqualsSign);
+            }
+        }
+
+        const eachInKeyword = this.eatOptional(TokenKind.EachInKeyword);
+
+        if (!eachInKeyword) {
+            forLoop = new NumericForLoop();
+            forLoop.parent = parent;
+            forLoop.forKeyword = forKeyword;
+            forLoop.localKeyword = localKeyword;
+
+            if (indexVariable.kind === NodeKind.EscapedIdentifier) {
+                indexVariable.parent = forLoop;
+            }
+            forLoop.indexVariable = indexVariable;
+
+            if (typeAnnotation) {
+                typeAnnotation.parent = forLoop;
+            }
+            forLoop.typeAnnotation = typeAnnotation;
+
+            forLoop.operator = operator;
+            forLoop.firstValueExpression = this.parseExpression(forLoop);
+            forLoop.toOrUntilKeyword = this.eatMissable(TokenKind.ToKeyword, TokenKind.UntilKeyword);
+            forLoop.lastValueExpression = this.parseExpression(forLoop);
+            forLoop.stepKeyword = this.eatOptional(TokenKind.StepKeyword);
+            if (forLoop.stepKeyword) {
+                forLoop.stepValueExpression = this.parseExpression(forLoop);
+            }
+        } else {
+            forLoop = new ForEachInLoop();
+            forLoop.parent = parent;
+            forLoop.forKeyword = forKeyword;
+            forLoop.localKeyword = localKeyword;
+
+            if (indexVariable.kind === NodeKind.EscapedIdentifier) {
+                indexVariable.parent = forLoop;
+            }
+            forLoop.indexVariable = indexVariable;
+
+            if (typeAnnotation) {
+                typeAnnotation.parent = forLoop;
+            }
+
+            forLoop.typeAnnotation = typeAnnotation;
+            forLoop.operator = operator;
+            forLoop.eachInKeyword = eachInKeyword;
+            forLoop.collectionExpression = this.parseExpression(forLoop);
+        }
+
         forLoop.statements = this.parseListWithSkippedTokens(ParseContextKind.ForLoop, forLoop);
         forLoop.endKeyword = this.eatMissable(TokenKind.NextKeyword, TokenKind.EndKeyword);
         if (forLoop.endKeyword.kind === TokenKind.EndKeyword) {
@@ -1638,77 +1681,6 @@ export class Parser extends ParserBase {
         forLoop.terminator = this.eatStatementTerminator();
 
         return forLoop;
-    }
-
-    private parseForLoopHeader(parent: ForLoop) {
-        let loopVariableStatement: DataDeclarationSequenceStatement | AssignmentStatement | undefined;
-
-        const token = this.getToken();
-        if (token.kind === TokenKind.LocalKeyword) {
-            loopVariableStatement = new DataDeclarationSequenceStatement();
-            loopVariableStatement.parent = parent;
-
-            const dataDeclarationSequence = new DataDeclarationSequence();
-            dataDeclarationSequence.parent = loopVariableStatement;
-            dataDeclarationSequence.dataDeclarationKeyword = token;
-
-            const identifierStart = this.getToken(/*offset*/ 1);
-            switch (identifierStart.kind) {
-                case TokenKind.Identifier:
-                case TokenKind.ObjectKeyword:
-                case TokenKind.ThrowableKeyword:
-                case TokenKind.CommercialAt: {
-                    this.advanceToken();
-                    this.advanceToken();
-
-                    const dataDeclaration = this.parseDataDeclaration(parent, identifierStart);
-                    dataDeclarationSequence.children = [dataDeclaration];
-
-                    loopVariableStatement.dataDeclarationSequence = dataDeclarationSequence;
-
-                    if (dataDeclaration.eachInKeyword) {
-                        return loopVariableStatement;
-                    }
-                    break;
-                }
-                default: {
-                    return this.createMissingToken(token.fullStart, TokenKind.ForLoopHeader);
-                }
-            }
-        } else {
-            // TODO: Implement better error handling for incomplete For loop header.
-            //       Returning a MissingToken causes the statement to be parsed as part of the For loop body.
-            //       Possible solutions:
-            //       * Refactor statement parsing to force an (incomplete) AssignmentStatement to be returned.
-            //       * Construct an (incomplete) AssignmentStatement from the statement returned.
-            //       * Return a SkippedToken covering the range of the statement.
-            //         * Requires being able to calculate the length of the statement.
-
-            loopVariableStatement = this.tryParseAssignmentStatement(parent);
-            if (!loopVariableStatement) {
-                return this.createMissingToken(token.fullStart, TokenKind.ForLoopHeader);
-            }
-
-            this.uneatStatementTerminator(loopVariableStatement);
-
-            if (loopVariableStatement.eachInKeyword) {
-                return loopVariableStatement;
-            }
-        }
-
-        const numericForLoopHeader = new NumericForLoopHeader();
-        numericForLoopHeader.parent = parent;
-        numericForLoopHeader.loopVariableStatement = loopVariableStatement;
-
-        numericForLoopHeader.toOrUntilKeyword = this.eatMissable(TokenKind.ToKeyword, TokenKind.UntilKeyword);
-        numericForLoopHeader.lastValueExpression = this.parseExpression(numericForLoopHeader);
-
-        numericForLoopHeader.stepKeyword = this.eatOptional(TokenKind.StepKeyword);
-        if (numericForLoopHeader.stepKeyword) {
-            numericForLoopHeader.stepValueExpression = this.parseExpression(numericForLoopHeader);
-        }
-
-        return numericForLoopHeader;
     }
 
     private isForLoopStatementsListTerminator(token: Tokens): boolean {
@@ -1833,7 +1805,28 @@ export class Parser extends ParserBase {
 
     private tryParseAssignmentStatement(parent: Nodes): AssignmentStatement | undefined {
         const { position } = this;
+
         const expression = this.parsePrimaryExpression(parent);
+        const token = this.eatAssignmentOperatorTokenOptional();
+
+        if (token) {
+            switch (expression.kind) {
+                case NodeKind.IdentifierExpression:
+                case NodeKind.ScopeMemberAccessExpression:
+                case NodeKind.IndexExpression:
+                case NodeKind.GlobalScopeExpression: {
+                    return this.parseAssignmentStatement(parent, expression, token);
+                }
+                default: {
+                    throw new Error(`'${expression.kind}' cannot be assigned to.`);
+                }
+            }
+        }
+
+        this.position = position;
+    }
+
+    private eatAssignmentOperatorTokenOptional() {
         let token = this.getToken();
 
         switch (token.kind) {
@@ -1861,42 +1854,27 @@ export class Parser extends ParserBase {
         }
 
         switch (token.kind) {
-            case TokenKind.VerticalBarEqualsSign:
-            case TokenKind.TildeEqualsSign:
+            case TokenKind.EqualsSign:
             case TokenKind.AmpersandEqualsSign:
-            case TokenKind.HyphenMinusEqualsSign:
-            case TokenKind.PlusSignEqualsSign:
-            case TokenKind.ShrKeywordEqualsSign:
-            case TokenKind.ShlKeywordEqualsSign:
-            case TokenKind.ModKeywordEqualsSign:
-            case TokenKind.SlashEqualsSign:
             case TokenKind.AsteriskEqualsSign:
-            case TokenKind.EqualsSign: {
-                switch (expression.kind) {
-                    case NodeKind.IdentifierExpression:
-                    case NodeKind.ScopeMemberAccessExpression:
-                    case NodeKind.IndexExpression:
-                    case NodeKind.GlobalScopeExpression: {
-                        this.advanceToken();
-                        switch (token.kind) {
-                            case TokenKind.ShlKeywordEqualsSign:
-                            case TokenKind.ShrKeywordEqualsSign:
-                            case TokenKind.ModKeywordEqualsSign: {
-                                this.advanceToken();
-                                break;
-                            }
-                        }
+            case TokenKind.PlusSignEqualsSign:
+            case TokenKind.HyphenMinusEqualsSign:
+            case TokenKind.SlashEqualsSign:
+            case TokenKind.VerticalBarEqualsSign:
+            case TokenKind.TildeEqualsSign: {
+                this.advanceToken();
 
-                        return this.parseAssignmentStatement(parent, expression, token);
-                    }
-                    default: {
-                        throw new Error(`'${expression.kind}' cannot be assigned to.`);
-                    }
-                }
+                return token;
+            }
+            case TokenKind.ShlKeywordEqualsSign:
+            case TokenKind.ShrKeywordEqualsSign:
+            case TokenKind.ModKeywordEqualsSign: {
+                this.advanceToken();
+                this.advanceToken();
+
+                return token;
             }
         }
-
-        this.position = position;
     }
 
     private parseAssignmentStatement(
@@ -1909,7 +1887,6 @@ export class Parser extends ParserBase {
         assignmentStatement.leftOperand = leftOperand;
         leftOperand.parent = assignmentStatement;
         assignmentStatement.operator = token;
-        assignmentStatement.eachInKeyword = this.eatOptional(TokenKind.EachInKeyword);
         assignmentStatement.rightOperand = this.parseExpression(assignmentStatement);
         assignmentStatement.terminator = this.eatStatementTerminator();
 
@@ -2238,13 +2215,9 @@ export class Parser extends ParserBase {
         return super.createSkippedToken(token);
     }
 
-    private addDiagnostic(kind: DiagnosticKinds, message: string, start: number, length: number) {
-        if (!this.moduleDeclaration.parseDiagnostics) {
-            this.moduleDeclaration.parseDiagnostics = [];
-        }
-
+    private addDiagnostic(kind: DiagnosticKind, message: string, start: number, length: number) {
         const diagnostic = new Diagnostic(kind, message, start, length);
-        this.moduleDeclaration.parseDiagnostics.push(diagnostic);
+        this.moduleDeclaration.parseDiagnostics.add(diagnostic);
     }
 
     // #endregion

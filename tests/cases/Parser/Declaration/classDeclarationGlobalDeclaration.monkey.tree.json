@@ -41,7 +41,7 @@
                                 "start": 24,
                                 "length": 10
                             },
-                            "type": {
+                            "typeAnnotation": {
                                 "kind": "ShorthandTypeAnnotation",
                                 "shorthandType": {
                                     "kind": "PercentSign",
@@ -51,7 +51,7 @@
                                 },
                                 "arrayTypeAnnotations": []
                             },
-                            "equalsSign": {
+                            "operator": {
                                 "kind": "EqualsSign",
                                 "fullStart": 34,
                                 "start": 35,

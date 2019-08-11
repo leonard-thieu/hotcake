@@ -1,0 +1,73 @@
+{
+    "kind": "ModuleDeclaration",
+    "identifier": "dataDeclaration",
+    "locals": [
+        {
+            "kind": "ClassDeclaration",
+            "identifier": "List",
+            "type": "List",
+            "superType": "Object",
+            "locals": [
+                {
+                    "kind": "DataDeclaration",
+                    "declarationKind": "Field",
+                    "identifier": "_head",
+                    "typeAnnotation": "HeadNode",
+                    "operator": "EqualsSign",
+                    "expression": {
+                        "kind": "InvokeExpression",
+                        "type": "HeadNode",
+                        "invocationType": "New HeadNode()",
+                        "invokableExpression": {
+                            "kind": "NewExpression",
+                            "type": "New HeadNode",
+                            "typeReference": "HeadNode"
+                        },
+                        "arguments": []
+                    },
+                    "type": "HeadNode"
+                },
+                {
+                    "kind": "ClassMethodGroupDeclaration",
+                    "identifier": "New",
+                    "type": "New List",
+                    "overloads": [
+                        {
+                            "kind": "ClassMethodDeclaration",
+                            "identifier": "New",
+                            "locals": [],
+                            "type": "New List()",
+                            "returnType": "List",
+                            "parameters": [],
+                            "statements": []
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "kind": "ClassDeclaration",
+            "identifier": "HeadNode",
+            "type": "HeadNode",
+            "superType": "Object",
+            "locals": [
+                {
+                    "kind": "ClassMethodGroupDeclaration",
+                    "identifier": "New",
+                    "type": "New HeadNode",
+                    "overloads": [
+                        {
+                            "kind": "ClassMethodDeclaration",
+                            "identifier": "New",
+                            "locals": [],
+                            "type": "New HeadNode()",
+                            "returnType": "HeadNode",
+                            "parameters": [],
+                            "statements": []
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

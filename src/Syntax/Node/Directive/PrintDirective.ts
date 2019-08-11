@@ -1,7 +1,7 @@
-import { PrintDirectiveKeywordToken } from '../../Token/Token';
-import { MissableExpression } from '../Expression/Expression';
-import { NodeKind } from '../NodeKind';
-import { Directive } from './Directive';
+import { PrintDirectiveKeywordToken } from '../../Token/Tokens';
+import { MissableExpression } from '../Expression/Expressions';
+import { NodeKind } from '../Nodes';
+import { Directive } from './Directives';
 
 export const PrintDirectiveChildNames: ReadonlyArray<keyof PrintDirective> = [
     'numberSign',

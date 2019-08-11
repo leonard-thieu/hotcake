@@ -2,24 +2,30 @@
     "kind": "ModuleDeclaration",
     "identifier": "whileLoop",
     "locals": [
-        "Main"
-    ],
-    "members": [
         {
-            "kind": "FunctionDeclaration",
+            "kind": "FunctionGroupDeclaration",
             "identifier": "Main",
-            "locals": [],
-            "returnType": "Int",
-            "parameters": [],
-            "statements": [
+            "type": "Main",
+            "overloads": [
                 {
-                    "kind": "WhileLoop",
+                    "kind": "FunctionDeclaration",
+                    "identifier": "Main",
                     "locals": [],
-                    "expression": {
-                        "kind": "BooleanLiteralExpression",
-                        "type": "Bool"
-                    },
-                    "statements": []
+                    "type": "Main: Int()",
+                    "returnType": "Int",
+                    "parameters": [],
+                    "statements": [
+                        {
+                            "kind": "WhileLoop",
+                            "locals": [],
+                            "expression": {
+                                "kind": "BooleanLiteralExpression",
+                                "type": "Bool",
+                                "value": "True"
+                            },
+                            "statements": []
+                        }
+                    ]
                 }
             ]
         }

@@ -25,6 +25,7 @@
             },
             "parameters": {
                 "kind": "DataDeclarationSequence",
+                "dataDeclarationKeyword": null,
                 "children": []
             },
             "closingParenthesis": {
@@ -44,45 +45,57 @@
                     }
                 },
                 {
-                    "kind": "ForLoop",
+                    "kind": "NumericForLoop",
                     "forKeyword": {
                         "kind": "ForKeyword",
                         "fullStart": 17,
                         "start": 21,
                         "length": 7
                     },
-                    "header": {
-                        "kind": "Missing",
+                    "indexVariable": {
+                        "kind": "Identifier",
                         "fullStart": 24,
-                        "start": 24,
-                        "length": 0,
-                        "originalKind": "ForLoopHeader"
+                        "start": 25,
+                        "length": 2
                     },
-                    "statements": [
-                        {
-                            "kind": "ExpressionStatement",
-                            "expression": {
-                                "kind": "InvokeExpression",
-                                "newlines": [],
-                                "invokableExpression": {
-                                    "kind": "IdentifierExpression",
-                                    "identifier": {
-                                        "kind": "Identifier",
-                                        "fullStart": 24,
-                                        "start": 25,
-                                        "length": 2
-                                    }
-                                },
-                                "arguments": []
-                            },
-                            "terminator": {
+                    "operator": {
+                        "kind": "Missing",
+                        "fullStart": 26,
+                        "start": 26,
+                        "length": 0,
+                        "originalKind": "EqualsSign"
+                    },
+                    "firstValueExpression": {
+                        "kind": "Missing",
+                        "fullStart": 28,
+                        "start": 28,
+                        "length": 0,
+                        "originalKind": "Expression",
+                        "newlines": [
+                            {
                                 "kind": "Newline",
                                 "fullStart": 26,
                                 "start": 27,
                                 "length": 2
                             }
-                        }
-                    ],
+                        ]
+                    },
+                    "toOrUntilKeyword": {
+                        "kind": "Missing",
+                        "fullStart": 28,
+                        "start": 28,
+                        "length": 0,
+                        "originalKind": "ToKeyword"
+                    },
+                    "lastValueExpression": {
+                        "kind": "Missing",
+                        "fullStart": 28,
+                        "start": 28,
+                        "length": 0,
+                        "originalKind": "Expression",
+                        "newlines": []
+                    },
+                    "statements": [],
                     "endKeyword": {
                         "kind": "EndKeyword",
                         "fullStart": 28,

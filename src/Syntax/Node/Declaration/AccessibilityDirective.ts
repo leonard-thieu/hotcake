@@ -1,6 +1,6 @@
-import { ExternKeywordToken, PrivateKeywordToken, ProtectedKeywordToken, PublicKeywordToken } from '../../Token/Token';
-import { NodeKind } from '../NodeKind';
-import { Declaration } from './Declaration';
+import { ExternKeywordToken, PrivateKeywordToken, ProtectedKeywordToken, PublicKeywordToken } from '../../Token/Tokens';
+import { NodeKind } from '../Nodes';
+import { Declaration } from './Declarations';
 
 export const AccessibilityDirectiveChildNames: ReadonlyArray<keyof AccessibilityDirective> = [
     'accessibilityKeyword',

@@ -1,6 +1,6 @@
 import { MissingToken } from '../../Token/MissingToken';
-import { NewlineToken } from '../../Token/Token';
-import { Node } from '../Node';
+import { NewlineToken } from '../../Token/Tokens';
+import { Node } from '../Nodes';
 import { ArrayLiteralExpression } from './ArrayLiteralExpression';
 import { BinaryExpression } from './BinaryExpression';
 import { BooleanLiteralExpression } from './BooleanLiteralExpression';

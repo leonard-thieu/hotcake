@@ -1,6 +1,6 @@
-import { NullKeywordToken } from '../../Token/Token';
-import { NodeKind } from '../NodeKind';
-import { Expression } from './Expression';
+import { NullKeywordToken } from '../../Token/Tokens';
+import { NodeKind } from '../Nodes';
+import { Expression } from './Expressions';
 
 export const NullExpressionChildNames: ReadonlyArray<keyof NullExpression> = [
     'newlines',

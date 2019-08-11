@@ -2,40 +2,49 @@
     "kind": "ModuleDeclaration",
     "identifier": "dataDeclarationStatement",
     "locals": [
-        "Main"
-    ],
-    "members": [
         {
-            "kind": "FunctionDeclaration",
+            "kind": "FunctionGroupDeclaration",
             "identifier": "Main",
-            "locals": [
-                "val",
-                "enableLighting"
-            ],
-            "returnType": "Int",
-            "parameters": [],
-            "statements": [
+            "type": "Main",
+            "overloads": [
                 {
-                    "kind": "DataDeclarationStatement",
-                    "declaration": {
-                        "kind": "DataDeclaration",
-                        "declarationKind": "LocalKeyword",
-                        "identifier": "val",
-                        "type": "Float",
-                        "expression": {
-                            "kind": "FloatLiteralExpression",
-                            "type": "Float"
+                    "kind": "FunctionDeclaration",
+                    "identifier": "Main",
+                    "locals": [
+                        "val",
+                        "enableLighting"
+                    ],
+                    "type": "Main: Int()",
+                    "returnType": "Int",
+                    "parameters": [],
+                    "statements": [
+                        {
+                            "kind": "DataDeclarationStatement",
+                            "dataDeclaration": {
+                                "kind": "DataDeclaration",
+                                "declarationKind": "Local",
+                                "identifier": "val",
+                                "operator": "ColonEqualsSign",
+                                "expression": {
+                                    "kind": "FloatLiteralExpression",
+                                    "type": "Float",
+                                    "value": "24.2"
+                                },
+                                "type": "Float"
+                            }
+                        },
+                        {
+                            "kind": "DataDeclarationStatement",
+                            "dataDeclaration": {
+                                "kind": "DataDeclaration",
+                                "declarationKind": "Local",
+                                "identifier": "enableLighting",
+                                "typeAnnotation": "Bool",
+                                "operator": null,
+                                "type": "Bool"
+                            }
                         }
-                    }
-                },
-                {
-                    "kind": "DataDeclarationStatement",
-                    "declaration": {
-                        "kind": "DataDeclaration",
-                        "declarationKind": "LocalKeyword",
-                        "identifier": "enableLighting",
-                        "type": "Bool"
-                    }
+                    ]
                 }
             ]
         }

@@ -1,8 +1,8 @@
 import { MissableToken } from '../../Token/MissingToken';
-import { ConfigurationVariableToken, EqualsSignToken, PlusSignEqualsSignToken } from '../../Token/Token';
-import { MissableExpression } from '../Expression/Expression';
-import { NodeKind } from '../NodeKind';
-import { Directive } from './Directive';
+import { ConfigurationVariableToken, EqualsSignToken, PlusSignEqualsSignToken } from '../../Token/Tokens';
+import { MissableExpression } from '../Expression/Expressions';
+import { NodeKind } from '../Nodes';
+import { Directive } from './Directives';
 
 export const AssignmentDirectiveChildNames: ReadonlyArray<keyof AssignmentDirective> = [
     'numberSign',

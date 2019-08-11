@@ -1,11 +1,10 @@
 import { MissingToken } from '../Token/MissingToken';
-import { AbstractKeywordToken, AliasKeywordToken, AndKeywordToken, ArrayKeywordToken, BoolKeywordToken, CaseKeywordToken, CatchKeywordToken, ClassKeywordToken, CommercialAtToken, ConstKeywordToken, ContinueKeywordToken, DefaultKeywordToken, EachInKeywordToken, ElseIfKeywordToken, ElseKeywordToken, EndIfKeywordToken, EndKeywordToken, ExitKeywordToken, ExtendsKeywordToken, ExternKeywordToken, FalseKeywordToken, FieldKeywordToken, FinalKeywordToken, FloatKeywordToken, ForeverKeywordToken, ForKeywordToken, FriendKeywordToken, FunctionKeywordToken, GlobalKeywordToken, IdentifierToken, IfKeywordToken, ImplementsKeywordToken, ImportKeywordToken, IncludeKeywordToken, InlineKeywordToken, InterfaceKeywordToken, IntKeywordToken, LocalKeywordToken, MethodKeywordToken, ModKeywordToken, ModuleKeywordToken, NewKeywordToken, NextKeywordToken, NotKeywordToken, NullKeywordToken, ObjectKeywordToken, OrKeywordToken, PrivateKeywordToken, PropertyKeywordToken, ProtectedKeywordToken, PublicKeywordToken, RepeatKeywordToken, ReturnKeywordToken, SelectKeywordToken, SelfKeywordToken, ShlKeywordToken, ShrKeywordToken, StepKeywordToken, StrictKeywordToken, StringKeywordToken, SuperKeywordToken, ThenKeywordToken, ThrowableKeywordToken, ThrowKeywordToken, ToKeywordToken, TrueKeywordToken, TryKeywordToken, UntilKeywordToken, VoidKeywordToken, WendKeywordToken, WhileKeywordToken } from '../Token/Token';
-import { Node } from './Node';
-import { NodeKind } from './NodeKind';
+import { AbstractKeywordToken, AliasKeywordToken, AndKeywordToken, ArrayKeywordToken, BoolKeywordToken, CaseKeywordToken, CatchKeywordToken, ClassKeywordToken, CommercialAtToken, ConstKeywordToken, ContinueKeywordToken, DefaultKeywordToken, EachInKeywordToken, ElseIfKeywordToken, ElseKeywordToken, EndIfKeywordToken, EndKeywordToken, ExitKeywordToken, ExtendsKeywordToken, ExternKeywordToken, FalseKeywordToken, FieldKeywordToken, FinalKeywordToken, FloatKeywordToken, ForeverKeywordToken, ForKeywordToken, FriendKeywordToken, FunctionKeywordToken, GlobalKeywordToken, IdentifierToken, IfKeywordToken, ImplementsKeywordToken, ImportKeywordToken, IncludeKeywordToken, InlineKeywordToken, InterfaceKeywordToken, IntKeywordToken, LocalKeywordToken, MethodKeywordToken, ModKeywordToken, ModuleKeywordToken, NewKeywordToken, NextKeywordToken, NotKeywordToken, NullKeywordToken, ObjectKeywordToken, OrKeywordToken, PrivateKeywordToken, PropertyKeywordToken, ProtectedKeywordToken, PublicKeywordToken, RepeatKeywordToken, ReturnKeywordToken, SelectKeywordToken, SelfKeywordToken, ShlKeywordToken, ShrKeywordToken, StepKeywordToken, StrictKeywordToken, StringKeywordToken, SuperKeywordToken, ThenKeywordToken, ThrowableKeywordToken, ThrowKeywordToken, ToKeywordToken, TrueKeywordToken, TryKeywordToken, UntilKeywordToken, VoidKeywordToken, WendKeywordToken, WhileKeywordToken } from '../Token/Tokens';
+import { Node, NodeKind } from './Nodes';
 
 export type Identifier =
     | EscapedIdentifier
-    | EscapeOptionalIdentifierNameToken
+    | EscapeOptionalIdentifierToken
     ;
 
 export type MissableIdentifier =
@@ -14,7 +13,7 @@ export type MissableIdentifier =
     ;
 
 export type IdentifierStartToken =
-    | EscapeOptionalIdentifierNameToken
+    | EscapeOptionalIdentifierToken
     | CommercialAtToken
     ;
 
@@ -27,21 +26,21 @@ export class EscapedIdentifier extends Node {
     readonly kind = NodeKind.EscapedIdentifier;
 
     commercialAt: CommercialAtToken = undefined!;
-    name: EscapedIdentifierNameToken | MissingToken = undefined!;
+    name: IdentifierTokens | MissingToken = undefined!;
 }
 
-export type EscapedIdentifierNameToken =
-    | EscapeOptionalIdentifierNameToken
-    | EscapeRequiredIdentifierNameToken
+type IdentifierTokens =
+    | EscapeOptionalIdentifierToken
+    | EscapeRequiredIdentifierToken
     ;
 
-export type EscapeOptionalIdentifierNameToken =
+export type EscapeOptionalIdentifierToken =
     | IdentifierToken
     | ObjectKeywordToken
     | ThrowableKeywordToken
     ;
 
-export type EscapeRequiredIdentifierNameToken =
+type EscapeRequiredIdentifierToken =
     | VoidKeywordToken
     | StrictKeywordToken
     | PublicKeywordToken

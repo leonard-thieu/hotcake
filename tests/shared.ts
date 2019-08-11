@@ -1,20 +1,29 @@
 import glob = require('glob');
 import fs = require('fs');
+import os = require('os');
 import path = require('path');
 import process = require('process');
 import mkdirp = require('mkdirp');
 import { orderBy } from 'natural-orderby';
-import { BoundNodeKind } from '../src/Binding/Node/BoundNodeKind';
+import { Scope } from '../src/Binding/Binder';
+import { BoundNodeKind } from '../src/Binding/Node/BoundNodes';
+import { BoundClassDeclaration } from '../src/Binding/Node/Declaration/BoundClassDeclaration';
+import { BoundDirectory } from '../src/Binding/Node/Declaration/BoundDirectory';
+import { BoundFunctionLikeGroupDeclaration } from '../src/Binding/Node/Declaration/BoundFunctionLikeGroupDeclaration';
+import { BoundInterfaceDeclaration } from '../src/Binding/Node/Declaration/BoundInterfaceDeclaration';
 import { BoundModuleDeclaration } from '../src/Binding/Node/Declaration/BoundModuleDeclaration';
 import { Type } from '../src/Binding/Type/Type';
+import { DiagnosticBag, DiagnosticKind, Diagnostic } from '../src/Diagnostics';
 import { Project } from '../src/Project';
 import { ModuleDeclaration } from '../src/Syntax/Node/Declaration/ModuleDeclaration';
 import { PreprocessorModuleDeclaration } from '../src/Syntax/Node/Declaration/PreprocessorModuleDeclaration';
 import { Parser } from '../src/Syntax/Parser';
 import { PreprocessorParser } from '../src/Syntax/PreprocessorParser';
 import { PreprocessorTokenizer } from '../src/Syntax/PreprocessorTokenizer';
-import { Tokens } from '../src/Syntax/Token/Token';
+import { Tokens } from '../src/Syntax/Token/Tokens';
 import { ConfigurationVariables, Tokenizer } from '../src/Syntax/Tokenizer';
+
+const LOG_LEVEL = DiagnosticKind.Error;
 
 interface TestCaseOptions {
     name: string;
@@ -95,10 +104,45 @@ export function executeBaselineTestCase(outputPath: string, testCallback: () => 
         }
     }
 
-    const result = testCallback();
+    try {
+        const result = testCallback();
 
-    const json = JSON.stringify(result, replacer, /*space*/ 4);
-    fs.writeFileSync(outputPath, json);
+        const json = JSON.stringify(result, replacer, /*space*/ 4);
+        fs.writeFileSync(outputPath, json);
+
+        if (result.project) {
+            writeDiagnostics(result.project.diagnostics);
+        }
+    } catch (error) {
+        writeDiagnostics(error.diagnostics);
+
+        throw error;
+    }
+
+    function writeDiagnostics(diagnostics: DiagnosticBag | undefined) {
+        if (diagnostics) {
+            const filteredDiagnostics: Diagnostic[] = [];
+            for (const diagnostic of diagnostics) {
+                // TODO: Need proper handling for severity
+                if (diagnostic.kind === LOG_LEVEL) {
+                    filteredDiagnostics.push(diagnostic);
+                }
+            }
+
+            if (filteredDiagnostics.length) {
+                const diagnosticsOutput = filteredDiagnostics.map((diagnostic) =>
+                    diagnostic.message
+                ).join(os.EOL);
+
+                const outputPathObject = path.parse(outputPath);
+                outputPathObject.base = '';
+                outputPathObject.ext = '.yaml';
+                outputPath = path.format(outputPathObject);
+
+                fs.writeFileSync(outputPath, diagnosticsOutput);
+            }
+        }
+    }
 }
 
 export function executePreprocessorTokenizerTestCases(name: string, casesPath: string): void {
@@ -202,13 +246,12 @@ export function executeBinderTestCases(name: string, casesPath: string): void {
                 executeBaselineTestCase(outputPath, () => {
                     return getBoundTree(path.resolve(casesPath, sourceRelativePath), contents);
                 }, function (this: any, key, value) {
+                    if (!value) {
+                        return value;
+                    }
+
                     switch (this.kind) {
-                        case BoundNodeKind.ModuleDeclaration:
-                        case BoundNodeKind.ExternFunctionDeclaration:
-                        case BoundNodeKind.ExternClassMethodDeclaration:
-                        case BoundNodeKind.FunctionDeclaration:
-                        case BoundNodeKind.InterfaceMethodDeclaration:
-                        case BoundNodeKind.ClassMethodDeclaration: {
+                        case BoundNodeKind.ModuleDeclaration: {
                             switch (key) {
                                 case 'type': {
                                     return undefined;
@@ -220,39 +263,116 @@ export function executeBinderTestCases(name: string, casesPath: string): void {
                     switch (key) {
                         case 'project':
                         case 'directory':
-                        case 'parent': {
+                        case 'parent':
+                        case 'openType': {
                             return undefined;
                         }
-                        case 'declaration': {
-                            if (this.kind !== BoundNodeKind.DataDeclarationStatement) {
-                                if (value &&
-                                    value.kind === BoundNodeKind.ModuleDeclaration &&
-                                    value.identifier
-                                ) {
-                                    return value.identifier.name;
+                        case 'importedModules': {
+                            const serializeAsModulePath = false;
+
+                            const moduleDeclaration = this as BoundModuleDeclaration;
+                            if (moduleDeclaration.identifier.name !== 'smokeTest') {
+                                return undefined;
+                            }
+
+                            if (serializeAsModulePath) {
+                                const importedModules = value as typeof moduleDeclaration[typeof key];
+
+                                return Array.from(importedModules.values()).map(getModulePath);
+                            }
+
+                            // Prevent converting circular structure to JSON
+                            if (getModulePath(moduleDeclaration) === 'monkey.lang') {
+                                return undefined;
+                            }
+
+                            function getModulePath(module: BoundModuleDeclaration) {
+                                const components: string[] = [];
+
+                                let directory: BoundDirectory | undefined = module.directory;
+                                while (directory) {
+                                    components.unshift(directory.identifier.name);
+                                    directory = directory.parent as BoundDirectory | undefined;
                                 }
 
-                                return undefined;
+                                components.shift(); // Take off root directory
+                                components.push(module.identifier.name);
+
+                                return components.join('.');
                             }
                             break;
                         }
+                        case 'declaration': {
+                            if (value.kind === BoundNodeKind.ModuleDeclaration &&
+                                value.identifier
+                            ) {
+                                return value.identifier.name;
+                            }
+
+                            return undefined;
+                        }
                         case 'identifier': {
-                            if (value) {
-                                return value.name;
+                            return value.name;
+                        }
+                        case 'typeParameters': {
+                            const typeParameters = value as BoundClassDeclaration[typeof key];
+
+                            return typeParameters!.map((typeParameter) =>
+                                typeParameter.identifier.name
+                            );
+                        }
+                        case 'typeArguments': {
+                            const typeArguments = value as BoundClassDeclaration[typeof key];
+
+                            return typeArguments!.map((typeArgument) =>
+                                typeArgument.type
+                            );
+                        }
+                        case 'superType':
+                        case 'returnType':
+                        case 'typeAnnotation':
+                        case 'typeReference': {
+                            return value.type.toString();
+                        }
+                        case 'implementedTypes': {
+                            const implementedTypes = value as (BoundClassDeclaration | BoundInterfaceDeclaration)[typeof key];
+                            if (implementedTypes) {
+                                return implementedTypes.map((implementedType) =>
+                                    implementedType.type.toString()
+                                );
                             }
                             break;
                         }
                         case 'locals': {
-                            const names: any[] = [];
-                            for (const [k] of value) {
-                                names.push(k);
+                            const scope = this as Scope;
+                            const locals = value as typeof scope[typeof key];
+
+                            switch (scope.kind) {
+                                case BoundNodeKind.ModuleDeclaration:
+                                case BoundNodeKind.ExternClassDeclaration:
+                                case BoundNodeKind.InterfaceDeclaration:
+                                case BoundNodeKind.ClassDeclaration: {
+                                    return Array.from(locals.values()).map((identifier) =>
+                                        identifier.declaration
+                                    );
+                                }
                             }
-                            return names;
+
+                            return Array.from(locals.keys());
+                        }
+                        case 'overloads': {
+                            const overloads = value as BoundFunctionLikeGroupDeclaration[typeof key];
+
+                            return Array.from(overloads.values() as IterableIterator<any>);
                         }
                     }
 
                     if (value instanceof Type) {
                         return value.toString();
+                    }
+
+                    if (value instanceof Set) {
+                        return Array.from(value.values());
                     }
 
                     return value;
@@ -317,5 +437,11 @@ export function getBoundTree(filePath: string, document: string): BoundModuleDec
     const projectDirectory = path.dirname(filePath);
     const project = new Project(frameworkDirectory, projectDirectory);
 
-    return project.importModule(filePath);
+    try {
+        return project.importModule(filePath);
+    } catch (error) {
+        error.diagnostics = project.diagnostics;
+
+        throw error;
+    }
 }

@@ -2,56 +2,69 @@
     "kind": "ModuleDeclaration",
     "identifier": "assignmentExpression",
     "locals": [
-        "Main"
-    ],
-    "members": [
         {
-            "kind": "FunctionDeclaration",
+            "kind": "FunctionGroupDeclaration",
             "identifier": "Main",
-            "locals": [
-                "val"
-            ],
-            "returnType": "Int",
-            "parameters": [
+            "type": "Main",
+            "overloads": [
                 {
-                    "kind": "DataDeclaration",
-                    "identifier": "val",
-                    "type": "String"
-                }
-            ],
-            "statements": [
-                {
-                    "kind": "AssignmentStatement",
-                    "leftOperand": {
-                        "kind": "IdentifierExpression",
-                        "type": "String",
-                        "identifier": "val"
-                    },
-                    "rightOperand": {
-                        "kind": "StringLiteralExpression",
-                        "type": "String"
-                    }
-                },
-                {
-                    "kind": "AssignmentStatement",
-                    "leftOperand": {
-                        "kind": "IdentifierExpression",
-                        "type": "String",
-                        "identifier": "val"
-                    },
-                    "rightOperand": {
-                        "kind": "BinaryExpression",
-                        "type": "String",
-                        "leftOperand": {
-                            "kind": "IdentifierExpression",
-                            "type": "String",
-                            "identifier": "val"
-                        },
-                        "rightOperand": {
-                            "kind": "IntegerLiteralExpression",
-                            "type": "Int"
+                    "kind": "FunctionDeclaration",
+                    "identifier": "Main",
+                    "locals": [
+                        "val"
+                    ],
+                    "type": "Main: Int(String)",
+                    "returnType": "Int",
+                    "parameters": [
+                        {
+                            "kind": "DataDeclaration",
+                            "declarationKind": "Parameter",
+                            "identifier": "val",
+                            "typeAnnotation": "String",
+                            "operator": null,
+                            "type": "String"
                         }
-                    }
+                    ],
+                    "statements": [
+                        {
+                            "kind": "AssignmentStatement",
+                            "leftOperand": {
+                                "kind": "IdentifierExpression",
+                                "type": "String",
+                                "identifier": "val"
+                            },
+                            "operator": "Assignment",
+                            "rightOperand": {
+                                "kind": "StringLiteralExpression",
+                                "type": "String",
+                                "value": "My example string."
+                            }
+                        },
+                        {
+                            "kind": "AssignmentStatement",
+                            "leftOperand": {
+                                "kind": "IdentifierExpression",
+                                "type": "String",
+                                "identifier": "val"
+                            },
+                            "operator": "AdditionUpdateAssignment",
+                            "rightOperand": {
+                                "kind": "BinaryExpression",
+                                "type": "String",
+                                "leftOperand": {
+                                    "kind": "IdentifierExpression",
+                                    "type": "String",
+                                    "identifier": "val"
+                                },
+                                "operator": "Addition",
+                                "rightOperand": {
+                                    "kind": "IntegerLiteralExpression",
+                                    "type": "Int",
+                                    "value": "2"
+                                }
+                            }
+                        }
+                    ]
                 }
             ]
         }

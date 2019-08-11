@@ -1,9 +1,8 @@
-import { BoundNode } from '../BoundNode';
-import { BoundNodeKind } from '../BoundNodeKind';
+import { BoundNode, BoundNodeKind } from '../BoundNodes';
 import { BoundDataDeclaration } from '../Declaration/BoundDataDeclaration';
 
 export class BoundDataDeclarationStatement extends BoundNode {
     readonly kind = BoundNodeKind.DataDeclarationStatement;
 
-    declaration: BoundDataDeclaration = undefined!;
+    dataDeclaration: BoundDataDeclaration = undefined!;
 }

@@ -1,8 +1,10 @@
 import { MissableToken } from '../../Token/MissingToken';
-import { ElseDirectiveKeywordToken, ElseIfDirectiveKeywordToken, EndDirectiveKeywordToken, IfDirectiveKeywordToken, NumberSignToken, Tokens } from '../../Token/Token';
-import { MissableExpression } from '../Expression/Expression';
-import { NodeKind } from '../NodeKind';
-import { Directive, Directives } from './Directive';
+import { ElseDirectiveKeywordToken, ElseIfDirectiveKeywordToken, EndDirectiveKeywordToken, IfDirectiveKeywordToken, NumberSignToken, Tokens } from '../../Token/Tokens';
+import { MissableExpression } from '../Expression/Expressions';
+import { NodeKind } from '../Nodes';
+import { Directive, Directives } from './Directives';
+
+// #region If directive
 
 export const IfDirectiveChildNames: ReadonlyArray<keyof IfDirective> = [
     'numberSign',
@@ -29,6 +31,10 @@ export class IfDirective extends Directive {
     endIfDirectiveKeyword?: IfDirectiveKeywordToken = undefined;
 }
 
+// #endregion
+
+// #region Else if directive
+
 export const ElseIfDirectiveChildNames: ReadonlyArray<keyof ElseIfDirective> = [
     'numberSign',
     'elseIfDirectiveKeyword',
@@ -46,6 +52,10 @@ export class ElseIfDirective extends Directive {
     members: (Directives | Tokens)[] = undefined!;
 }
 
+// #endregion
+
+// #region Else directive
+
 export const ElseDirectiveChildNames: ReadonlyArray<keyof ElseDirective> = [
     'numberSign',
     'elseDirectiveKeyword',
@@ -58,3 +68,5 @@ export class ElseDirective extends Directive {
     elseDirectiveKeyword: ElseDirectiveKeywordToken = undefined!;
     members: (Directives | Tokens)[] = undefined!;
 }
+
+// #endregion

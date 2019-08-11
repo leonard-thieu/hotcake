@@ -1,75 +1,125 @@
-import { BoundSymbol } from '../BoundSymbol';
+import { BoundTreeWalker } from '../BoundTreeWalker';
+import { BoundNodeKind } from '../Node/BoundNodes';
 import { BoundClassDeclaration } from '../Node/Declaration/BoundClassDeclaration';
 import { BoundInterfaceDeclaration } from '../Node/Declaration/BoundInterfaceDeclaration';
 import { BoundExternClassDeclaration } from '../Node/Declaration/Extern/BoundExternClassDeclaration';
 import { Type } from './Type';
-import { TypeKind } from './TypeKind';
-import { TypeParameterType } from './TypeParameterType';
-import { Types } from './Types';
+import { TypeKind, Types } from './Types';
 
 export class ObjectType extends Type {
-    static readonly type = new ObjectType();
-    static readonly nullType = new ObjectType();
+    constructor(readonly declaration: ObjectTypeDeclaration) {
+        super();
+    }
 
     readonly kind = TypeKind.Object;
 
-    declaration?: ObjectTypeDeclaration = undefined;
-    identifier?: BoundSymbol = undefined;
-    superType?: ObjectType = undefined;
-    typeParameters?: TypeParameterType[] = undefined;
-
     isConvertibleTo(target: Types): boolean {
-        if (this === ObjectType.nullType &&
-            target.kind === TypeKind.Object
-        ) {
-            return true;
-        }
-
-        if (target === ObjectType.nullType) { return true; }
+        if (target.kind === TypeKind.Null) { return true; }
         if (target === this) { return true; }
 
-        // TODO: Implements `target`
+        switch (target.declaration.kind) {
+            case BoundNodeKind.InterfaceDeclaration: {
+                switch (this.declaration.kind) {
+                    case BoundNodeKind.InterfaceDeclaration:
+                    case BoundNodeKind.ClassDeclaration: {
+                        if (this.declaration.implementedTypes) {
+                            for (const implementedType of this.declaration.implementedTypes) {
+                                if (implementedType.type.isConvertibleTo(target)) {
+                                    return true;
+                                }
+                            }
+                        }
 
-        let ancestorType = this.superType;
-        while (ancestorType) {
-            if (target === ancestorType) {
-                return true;
+                        if (this.declaration.kind === BoundNodeKind.ClassDeclaration &&
+                            this.declaration.superType &&
+                            this.declaration.superType.type.isConvertibleTo(target)
+                        ) {
+                            return true;
+                        }
+                        break;
+                    }
+                }
+                break;
             }
-
-            ancestorType = ancestorType.superType;
+            case BoundNodeKind.ExternClassDeclaration:
+            case BoundNodeKind.ClassDeclaration: {
+                switch (this.declaration.kind) {
+                    case BoundNodeKind.ExternClassDeclaration:
+                    case BoundNodeKind.ClassDeclaration: {
+                        if (this.declaration.superType) {
+                            if (this.declaration.superType.type.isConvertibleTo(target)) {
+                                return true;
+                            }
+                        }
+                        break;
+                    }
+                }
+                break;
+            }
         }
 
-        // TODO: Unboxing conversions
+        switch (this.declaration.kind) {
+            case BoundNodeKind.ExternClassDeclaration:
+            case BoundNodeKind.InterfaceDeclaration:
+            case BoundNodeKind.ClassDeclaration: {
+                switch (target.kind) {
+                    case TypeKind.Bool: {
+                        const method = BoundTreeWalker.getMethod(this.declaration, 'ToBool', (type) => type.kind === TypeKind.Bool);
+                        if (method) {
+                            return true;
+                        }
+                        break;
+                    }
+                    case TypeKind.Int: {
+                        const method = BoundTreeWalker.getMethod(this.declaration, 'ToInt', (type) => type.kind === TypeKind.Int);
+                        if (method) {
+                            return true;
+                        }
+                        break;
+                    }
+                    case TypeKind.Float: {
+                        const method = BoundTreeWalker.getMethod(this.declaration, 'ToFloat', (type) => type.kind === TypeKind.Float);
+                        if (method) {
+                            return true;
+                        }
+                        break;
+                    }
+                    case TypeKind.String: {
+                        const method = BoundTreeWalker.getMethod(this.declaration, 'ToString', (type) => type.kind === TypeKind.String);
+                        if (method) {
+                            return true;
+                        }
+                        break;
+                    }
+                }
+                break;
+            }
+        }
 
         return false;
     }
 
     toString(): string {
-        if (this === ObjectType.nullType) {
-            return 'Null';
-        }
+        let str = '';
 
-        if (this.identifier) {
-            let str = this.identifier.name;
+        str += this.declaration.identifier.name;
 
-            if (this.typeParameters &&
-                this.typeParameters.length
-            ) {
+        if (this.declaration.kind === BoundNodeKind.ClassDeclaration) {
+            const typeArguments = this.declaration.typeArguments || this.declaration.typeParameters;
+            if (typeArguments) {
                 str += '<';
 
-                const typeParameterNames: string[] = [];
-                for (const typeParameter of this.typeParameters) {
-                    typeParameterNames.push(typeParameter.identifier.name);
+                const typeArgumentNames: Types[] = [];
+                for (const typeArgument of typeArguments) {
+                    typeArgumentNames.push(typeArgument.type);
                 }
-                str += typeParameterNames.join(',');
+                str += typeArgumentNames.join(',');
 
                 str += '>';
             }
-
-            return str;
         }
 
-        return super.toString();
+        return str;
     }
 }
 

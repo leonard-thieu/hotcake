@@ -1,9 +1,8 @@
-import { BoolType } from '../../Type/BoolType';
-import { BoundNodeKind } from '../BoundNodeKind';
-import { BoundExpression } from './BoundExpression';
+import { BoundNodeKind } from '../BoundNodes';
+import { BoundExpression } from './BoundExpressions';
 
 export class BoundBooleanLiteralExpression extends BoundExpression {
     readonly kind = BoundNodeKind.BooleanLiteralExpression;
 
-    readonly type = BoolType.type;
+    value: string = undefined!;
 }

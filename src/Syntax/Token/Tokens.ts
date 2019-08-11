@@ -1,6 +1,5 @@
 import { MissingTokenKinds, MissingToken } from './MissingToken';
 import { SkippedToken } from './SkippedToken';
-import { TokenKind } from './TokenKind';
 
 export class Token<TTokenKind extends ErrorableTokenKinds> {
     constructor(
@@ -24,6 +23,153 @@ export class Token<TTokenKind extends ErrorableTokenKinds> {
 }
 
 // #region Tokens
+
+export enum TokenKind {
+    Unknown = 'Unknown',
+    EOF = 'EOF',
+    Newline = 'Newline',
+    IntegerLiteral = 'IntegerLiteral',
+    FloatLiteral = 'FloatLiteral',
+
+    StringLiteralText = 'StringLiteralText',
+    EscapeNull = 'EscapeNull',
+    EscapeCharacterTabulation = 'EscapeCharacterTabulation',
+    EscapeLineFeedLf = 'EscapeLineFeedLf',
+    EscapeCarriageReturnCr = 'EscapeCarriageReturnCr',
+    EscapeQuotationMark = 'EscapeQuotationMark',
+    EscapeTilde = 'EscapeTilde',
+    EscapeUnicodeHexValue = 'EscapeUnicodeHexValue',
+    InvalidEscapeSequence = 'InvalidEscapeSequence',
+    ConfigurationTagStart = 'ConfigurationTagStart',
+    ConfigurationTagEnd = 'ConfigurationTagEnd',
+
+    IfDirectiveKeyword = 'IfDirectiveKeyword',
+    ElseIfDirectiveKeyword = 'ElseIfDirectiveKeyword',
+    ElseDirectiveKeyword = 'ElseDirectiveKeyword',
+    EndDirectiveKeyword = 'EndDirectiveKeyword',
+    RemDirectiveKeyword = 'RemDirectiveKeyword',
+    RemDirectiveBody = 'RemDirectiveBody',
+    PrintDirectiveKeyword = 'PrintDirectiveKeyword',
+    ErrorDirectiveKeyword = 'ErrorDirectiveKeyword',
+    ConfigurationVariable = 'ConfigurationVariable',
+
+    QuotationMark = 'QuotationMark',
+    NumberSign = 'NumberSign',
+    DollarSign = 'DollarSign',
+    PercentSign = 'PercentSign',
+    Ampersand = 'Ampersand',
+    OpeningParenthesis = 'OpeningParenthesis',
+    ClosingParenthesis = 'ClosingParenthesis',
+    Asterisk = 'Asterisk',
+    PlusSign = 'PlusSign',
+    Comma = 'Comma',
+    HyphenMinus = 'HyphenMinus',
+    Period = 'Period',
+    Slash = 'Slash',
+    Colon = 'Colon',
+    Semicolon = 'Semicolon',
+    LessThanSign = 'LessThanSign',
+    EqualsSign = 'EqualsSign',
+    GreaterThanSign = 'GreaterThanSign',
+    QuestionMark = 'QuestionMark',
+    CommercialAt = 'CommercialAt',
+    OpeningSquareBracket = 'OpeningSquareBracket',
+    ClosingSquareBracket = 'ClosingSquareBracket',
+    VerticalBar = 'VerticalBar',
+    Tilde = 'Tilde',
+
+    PeriodPeriod = 'PeriodPeriod',
+    AmpersandEqualsSign = 'AmpersandEqualsSign',
+    AsteriskEqualsSign = 'AsteriskEqualsSign',
+    PlusSignEqualsSign = 'PlusSignEqualsSign',
+    HyphenMinusEqualsSign = 'HyphenMinusEqualsSign',
+    SlashEqualsSign = 'SlashEqualsSign',
+    ColonEqualsSign = 'ColonEqualsSign',
+    LessThanSignEqualsSign = 'LessThanSignEqualsSign',
+    GreaterThanSignEqualsSign = 'GreaterThanSignEqualsSign',
+    VerticalBarEqualsSign = 'VerticalBarEqualsSign',
+    TildeEqualsSign = 'TildeEqualsSign',
+    ShlKeywordEqualsSign = 'ShlKeywordEqualsSign',
+    ShrKeywordEqualsSign = 'ShrKeywordEqualsSign',
+    ModKeywordEqualsSign = 'ModKeywordEqualsSign',
+    LessThanSignGreaterThanSign = 'LessThanSignGreaterThanSign',
+
+    Identifier = 'Identifier',
+    VoidKeyword = 'VoidKeyword',
+    StrictKeyword = 'StrictKeyword',
+    PublicKeyword = 'PublicKeyword',
+    PrivateKeyword = 'PrivateKeyword',
+    ProtectedKeyword = 'ProtectedKeyword',
+    FriendKeyword = 'FriendKeyword',
+    PropertyKeyword = 'PropertyKeyword',
+    BoolKeyword = 'BoolKeyword',
+    IntKeyword = 'IntKeyword',
+    FloatKeyword = 'FloatKeyword',
+    StringKeyword = 'StringKeyword',
+    ArrayKeyword = 'ArrayKeyword',
+    ObjectKeyword = 'ObjectKeyword',
+    ModKeyword = 'ModKeyword',
+    ContinueKeyword = 'ContinueKeyword',
+    ExitKeyword = 'ExitKeyword',
+    IncludeKeyword = 'IncludeKeyword',
+    ImportKeyword = 'ImportKeyword',
+    ModuleKeyword = 'ModuleKeyword',
+    ExternKeyword = 'ExternKeyword',
+    NewKeyword = 'NewKeyword',
+    SelfKeyword = 'SelfKeyword',
+    SuperKeyword = 'SuperKeyword',
+    EachInKeyword = 'EachInKeyword',
+    TrueKeyword = 'TrueKeyword',
+    FalseKeyword = 'FalseKeyword',
+    NullKeyword = 'NullKeyword',
+    NotKeyword = 'NotKeyword',
+    ExtendsKeyword = 'ExtendsKeyword',
+    AbstractKeyword = 'AbstractKeyword',
+    FinalKeyword = 'FinalKeyword',
+    SelectKeyword = 'SelectKeyword',
+    CaseKeyword = 'CaseKeyword',
+    DefaultKeyword = 'DefaultKeyword',
+    ConstKeyword = 'ConstKeyword',
+    LocalKeyword = 'LocalKeyword',
+    GlobalKeyword = 'GlobalKeyword',
+    FieldKeyword = 'FieldKeyword',
+    MethodKeyword = 'MethodKeyword',
+    FunctionKeyword = 'FunctionKeyword',
+    ClassKeyword = 'ClassKeyword',
+    AndKeyword = 'AndKeyword',
+    OrKeyword = 'OrKeyword',
+    ShlKeyword = 'ShlKeyword',
+    ShrKeyword = 'ShrKeyword',
+    EndKeyword = 'EndKeyword',
+    IfKeyword = 'IfKeyword',
+    ThenKeyword = 'ThenKeyword',
+    ElseKeyword = 'ElseKeyword',
+    ElseIfKeyword = 'ElseIfKeyword',
+    EndIfKeyword = 'EndIfKeyword',
+    WhileKeyword = 'WhileKeyword',
+    WendKeyword = 'WendKeyword',
+    RepeatKeyword = 'RepeatKeyword',
+    UntilKeyword = 'UntilKeyword',
+    ForeverKeyword = 'ForeverKeyword',
+    ForKeyword = 'ForKeyword',
+    ToKeyword = 'ToKeyword',
+    StepKeyword = 'StepKeyword',
+    NextKeyword = 'NextKeyword',
+    ReturnKeyword = 'ReturnKeyword',
+    InterfaceKeyword = 'InterfaceKeyword',
+    ImplementsKeyword = 'ImplementsKeyword',
+    InlineKeyword = 'InlineKeyword',
+    AliasKeyword = 'AliasKeyword',
+    TryKeyword = 'TryKeyword',
+    CatchKeyword = 'CatchKeyword',
+    ThrowKeyword = 'ThrowKeyword',
+    ThrowableKeyword = 'ThrowableKeyword',
+
+    Missing = 'Missing',
+    Skipped = 'Skipped',
+    Expression = 'Expression',
+    ImportStatementPath = 'ImportStatementPath',
+}
 
 export type UnknownToken = Token<TokenKind.Unknown>;
 export type EOFToken = Token<TokenKind.EOF>;
@@ -160,154 +306,156 @@ export type CatchKeywordToken = Token<TokenKind.CatchKeyword>;
 export type ThrowKeywordToken = Token<TokenKind.ThrowKeyword>;
 export type ThrowableKeywordToken = Token<TokenKind.ThrowableKeyword>;
 
+export type Tokens =
+    | UnknownToken
+    | EOFToken
+    | NewlineToken
+    | IntegerLiteralToken
+    | FloatLiteralToken
+    | StringLiteralTextToken
+    | EscapeNullToken
+    | EscapeCharacterTabulationToken
+    | EscapeLineFeedLfToken
+    | EscapeCarriageReturnCrToken
+    | EscapeQuotationMarkToken
+    | EscapeTildeToken
+    | EscapeUnicodeHexValueToken
+    | InvalidEscapeSequenceToken
+    | ConfigurationTagStartToken
+    | ConfigurationTagEndToken
+    | IfDirectiveKeywordToken
+    | ElseIfDirectiveKeywordToken
+    | ElseDirectiveKeywordToken
+    | EndDirectiveKeywordToken
+    | RemDirectiveKeywordToken
+    | RemDirectiveBodyToken
+    | PrintDirectiveKeywordToken
+    | ErrorDirectiveKeywordToken
+    | ConfigurationVariableToken
+    | QuotationMarkToken
+    | NumberSignToken
+    | DollarSignToken
+    | PercentSignToken
+    | AmpersandToken
+    | OpeningParenthesisToken
+    | ClosingParenthesisToken
+    | AsteriskToken
+    | PlusSignToken
+    | CommaToken
+    | HyphenMinusToken
+    | PeriodToken
+    | SlashToken
+    | ColonToken
+    | SemicolonToken
+    | LessThanSignToken
+    | EqualsSignToken
+    | GreaterThanSignToken
+    | QuestionMarkToken
+    | CommercialAtToken
+    | OpeningSquareBracketToken
+    | ClosingSquareBracketToken
+    | VerticalBarToken
+    | TildeToken
+    | PeriodPeriodToken
+    | AmpersandEqualsSignToken
+    | AsteriskEqualsSignToken
+    | PlusSignEqualsSignToken
+    | HyphenMinusEqualsSignToken
+    | SlashEqualsSignToken
+    | ColonEqualsSignToken
+    | LessThanSignEqualsSignToken
+    | GreaterThanSignEqualsSignToken
+    | VerticalBarEqualsSignToken
+    | TildeEqualsSignToken
+    | ShlKeywordEqualsSignToken
+    | ShrKeywordEqualsSignToken
+    | ModKeywordEqualsSignToken
+    | LessThanSignGreaterThanSignToken
+    | IdentifierToken
+    | VoidKeywordToken
+    | StrictKeywordToken
+    | PublicKeywordToken
+    | PrivateKeywordToken
+    | ProtectedKeywordToken
+    | FriendKeywordToken
+    | PropertyKeywordToken
+    | BoolKeywordToken
+    | IntKeywordToken
+    | FloatKeywordToken
+    | StringKeywordToken
+    | ArrayKeywordToken
+    | ObjectKeywordToken
+    | ModKeywordToken
+    | ContinueKeywordToken
+    | ExitKeywordToken
+    | IncludeKeywordToken
+    | ImportKeywordToken
+    | ModuleKeywordToken
+    | ExternKeywordToken
+    | NewKeywordToken
+    | SelfKeywordToken
+    | SuperKeywordToken
+    | EachInKeywordToken
+    | TrueKeywordToken
+    | FalseKeywordToken
+    | NullKeywordToken
+    | NotKeywordToken
+    | ExtendsKeywordToken
+    | AbstractKeywordToken
+    | FinalKeywordToken
+    | SelectKeywordToken
+    | CaseKeywordToken
+    | DefaultKeywordToken
+    | ConstKeywordToken
+    | LocalKeywordToken
+    | GlobalKeywordToken
+    | FieldKeywordToken
+    | MethodKeywordToken
+    | FunctionKeywordToken
+    | ClassKeywordToken
+    | AndKeywordToken
+    | OrKeywordToken
+    | ShlKeywordToken
+    | ShrKeywordToken
+    | EndKeywordToken
+    | IfKeywordToken
+    | ThenKeywordToken
+    | ElseKeywordToken
+    | ElseIfKeywordToken
+    | EndIfKeywordToken
+    | WhileKeywordToken
+    | WendKeywordToken
+    | RepeatKeywordToken
+    | UntilKeywordToken
+    | ForeverKeywordToken
+    | ForKeywordToken
+    | ToKeywordToken
+    | StepKeywordToken
+    | NextKeywordToken
+    | ReturnKeywordToken
+    | InterfaceKeywordToken
+    | ImplementsKeywordToken
+    | InlineKeywordToken
+    | AliasKeywordToken
+    | TryKeywordToken
+    | CatchKeywordToken
+    | ThrowKeywordToken
+    | ThrowableKeywordToken
+    ;
+
 // #endregion
 
-export interface TokenKindTokenMap {
-    [TokenKind.Unknown]: UnknownToken;
-    [TokenKind.EOF]: EOFToken;
-    [TokenKind.Newline]: NewlineToken;
-    [TokenKind.IntegerLiteral]: IntegerLiteralToken;
-    [TokenKind.FloatLiteral]: FloatLiteralToken;
-    [TokenKind.StringLiteralText]: StringLiteralTextToken;
-    [TokenKind.EscapeNull]: EscapeNullToken;
-    [TokenKind.EscapeCharacterTabulation]: EscapeCharacterTabulationToken;
-    [TokenKind.EscapeLineFeedLf]: EscapeLineFeedLfToken;
-    [TokenKind.EscapeCarriageReturnCr]: EscapeCarriageReturnCrToken;
-    [TokenKind.EscapeQuotationMark]: EscapeQuotationMarkToken;
-    [TokenKind.EscapeTilde]: EscapeTildeToken;
-    [TokenKind.EscapeUnicodeHexValue]: EscapeUnicodeHexValueToken;
-    [TokenKind.InvalidEscapeSequence]: InvalidEscapeSequenceToken;
-    [TokenKind.ConfigurationTagStart]: ConfigurationTagStartToken;
-    [TokenKind.ConfigurationTagEnd]: ConfigurationTagEndToken;
-    [TokenKind.IfDirectiveKeyword]: IfDirectiveKeywordToken;
-    [TokenKind.ElseIfDirectiveKeyword]: ElseIfDirectiveKeywordToken;
-    [TokenKind.ElseDirectiveKeyword]: ElseDirectiveKeywordToken;
-    [TokenKind.EndDirectiveKeyword]: EndDirectiveKeywordToken;
-    [TokenKind.RemDirectiveKeyword]: RemDirectiveKeywordToken;
-    [TokenKind.RemDirectiveBody]: RemDirectiveBodyToken;
-    [TokenKind.PrintDirectiveKeyword]: PrintDirectiveKeywordToken;
-    [TokenKind.ErrorDirectiveKeyword]: ErrorDirectiveKeywordToken;
-    [TokenKind.ConfigurationVariable]: ConfigurationVariableToken;
-    [TokenKind.QuotationMark]: QuotationMarkToken;
-    [TokenKind.NumberSign]: NumberSignToken;
-    [TokenKind.DollarSign]: DollarSignToken;
-    [TokenKind.PercentSign]: PercentSignToken;
-    [TokenKind.Ampersand]: AmpersandToken;
-    [TokenKind.OpeningParenthesis]: OpeningParenthesisToken;
-    [TokenKind.ClosingParenthesis]: ClosingParenthesisToken;
-    [TokenKind.Asterisk]: AsteriskToken;
-    [TokenKind.PlusSign]: PlusSignToken;
-    [TokenKind.Comma]: CommaToken;
-    [TokenKind.HyphenMinus]: HyphenMinusToken;
-    [TokenKind.Period]: PeriodToken;
-    [TokenKind.Slash]: SlashToken;
-    [TokenKind.Colon]: ColonToken;
-    [TokenKind.Semicolon]: SemicolonToken;
-    [TokenKind.LessThanSign]: LessThanSignToken;
-    [TokenKind.EqualsSign]: EqualsSignToken;
-    [TokenKind.GreaterThanSign]: GreaterThanSignToken;
-    [TokenKind.QuestionMark]: QuestionMarkToken;
-    [TokenKind.CommercialAt]: CommercialAtToken;
-    [TokenKind.OpeningSquareBracket]: OpeningSquareBracketToken;
-    [TokenKind.ClosingSquareBracket]: ClosingSquareBracketToken;
-    [TokenKind.VerticalBar]: VerticalBarToken;
-    [TokenKind.Tilde]: TildeToken;
-    [TokenKind.PeriodPeriod]: PeriodPeriodToken;
-    [TokenKind.AmpersandEqualsSign]: AmpersandEqualsSignToken;
-    [TokenKind.AsteriskEqualsSign]: AsteriskEqualsSignToken;
-    [TokenKind.PlusSignEqualsSign]: PlusSignEqualsSignToken;
-    [TokenKind.HyphenMinusEqualsSign]: HyphenMinusEqualsSignToken;
-    [TokenKind.SlashEqualsSign]: SlashEqualsSignToken;
-    [TokenKind.ColonEqualsSign]: ColonEqualsSignToken;
-    [TokenKind.LessThanSignEqualsSign]: LessThanSignEqualsSignToken;
-    [TokenKind.GreaterThanSignEqualsSign]: GreaterThanSignEqualsSignToken;
-    [TokenKind.VerticalBarEqualsSign]: VerticalBarEqualsSignToken;
-    [TokenKind.TildeEqualsSign]: TildeEqualsSignToken;
-    [TokenKind.ShlKeywordEqualsSign]: ShlKeywordEqualsSignToken;
-    [TokenKind.ShrKeywordEqualsSign]: ShrKeywordEqualsSignToken;
-    [TokenKind.ModKeywordEqualsSign]: ModKeywordEqualsSignToken;
-    [TokenKind.LessThanSignGreaterThanSign]: LessThanSignGreaterThanSignToken;
-    [TokenKind.Identifier]: IdentifierToken;
-    [TokenKind.VoidKeyword]: VoidKeywordToken;
-    [TokenKind.StrictKeyword]: StrictKeywordToken;
-    [TokenKind.PublicKeyword]: PublicKeywordToken;
-    [TokenKind.PrivateKeyword]: PrivateKeywordToken;
-    [TokenKind.ProtectedKeyword]: ProtectedKeywordToken;
-    [TokenKind.FriendKeyword]: FriendKeywordToken;
-    [TokenKind.PropertyKeyword]: PropertyKeywordToken;
-    [TokenKind.BoolKeyword]: BoolKeywordToken;
-    [TokenKind.IntKeyword]: IntKeywordToken;
-    [TokenKind.FloatKeyword]: FloatKeywordToken;
-    [TokenKind.StringKeyword]: StringKeywordToken;
-    [TokenKind.ArrayKeyword]: ArrayKeywordToken;
-    [TokenKind.ObjectKeyword]: ObjectKeywordToken;
-    [TokenKind.ModKeyword]: ModKeywordToken;
-    [TokenKind.ContinueKeyword]: ContinueKeywordToken;
-    [TokenKind.ExitKeyword]: ExitKeywordToken;
-    [TokenKind.IncludeKeyword]: IncludeKeywordToken;
-    [TokenKind.ImportKeyword]: ImportKeywordToken;
-    [TokenKind.ModuleKeyword]: ModuleKeywordToken;
-    [TokenKind.ExternKeyword]: ExternKeywordToken;
-    [TokenKind.NewKeyword]: NewKeywordToken;
-    [TokenKind.SelfKeyword]: SelfKeywordToken;
-    [TokenKind.SuperKeyword]: SuperKeywordToken;
-    [TokenKind.EachInKeyword]: EachInKeywordToken;
-    [TokenKind.TrueKeyword]: TrueKeywordToken;
-    [TokenKind.FalseKeyword]: FalseKeywordToken;
-    [TokenKind.NullKeyword]: NullKeywordToken;
-    [TokenKind.NotKeyword]: NotKeywordToken;
-    [TokenKind.ExtendsKeyword]: ExtendsKeywordToken;
-    [TokenKind.AbstractKeyword]: AbstractKeywordToken;
-    [TokenKind.FinalKeyword]: FinalKeywordToken;
-    [TokenKind.SelectKeyword]: SelectKeywordToken;
-    [TokenKind.CaseKeyword]: CaseKeywordToken;
-    [TokenKind.DefaultKeyword]: DefaultKeywordToken;
-    [TokenKind.ConstKeyword]: ConstKeywordToken;
-    [TokenKind.LocalKeyword]: LocalKeywordToken;
-    [TokenKind.GlobalKeyword]: GlobalKeywordToken;
-    [TokenKind.FieldKeyword]: FieldKeywordToken;
-    [TokenKind.MethodKeyword]: MethodKeywordToken;
-    [TokenKind.FunctionKeyword]: FunctionKeywordToken;
-    [TokenKind.ClassKeyword]: ClassKeywordToken;
-    [TokenKind.AndKeyword]: AndKeywordToken;
-    [TokenKind.OrKeyword]: OrKeywordToken;
-    [TokenKind.ShlKeyword]: ShlKeywordToken;
-    [TokenKind.ShrKeyword]: ShrKeywordToken;
-    [TokenKind.EndKeyword]: EndKeywordToken;
-    [TokenKind.IfKeyword]: IfKeywordToken;
-    [TokenKind.ThenKeyword]: ThenKeywordToken;
-    [TokenKind.ElseKeyword]: ElseKeywordToken;
-    [TokenKind.ElseIfKeyword]: ElseIfKeywordToken;
-    [TokenKind.EndIfKeyword]: EndIfKeywordToken;
-    [TokenKind.WhileKeyword]: WhileKeywordToken;
-    [TokenKind.WendKeyword]: WendKeywordToken;
-    [TokenKind.RepeatKeyword]: RepeatKeywordToken;
-    [TokenKind.UntilKeyword]: UntilKeywordToken;
-    [TokenKind.ForeverKeyword]: ForeverKeywordToken;
-    [TokenKind.ForKeyword]: ForKeywordToken;
-    [TokenKind.ToKeyword]: ToKeywordToken;
-    [TokenKind.StepKeyword]: StepKeywordToken;
-    [TokenKind.NextKeyword]: NextKeywordToken;
-    [TokenKind.ReturnKeyword]: ReturnKeywordToken;
-    [TokenKind.InterfaceKeyword]: InterfaceKeywordToken;
-    [TokenKind.ImplementsKeyword]: ImplementsKeywordToken;
-    [TokenKind.InlineKeyword]: InlineKeywordToken;
-    [TokenKind.AliasKeyword]: AliasKeywordToken;
-    [TokenKind.TryKeyword]: TryKeywordToken;
-    [TokenKind.CatchKeyword]: CatchKeywordToken;
-    [TokenKind.ThrowKeyword]: ThrowKeywordToken;
-    [TokenKind.ThrowableKeyword]: ThrowableKeywordToken;
+export type TokenKindToTokenMap = {
+    [Kind in keyof typeof TokenKind]: Extract<Tokens, { kind: Kind; }>;
 }
 
-export type TokenKinds = keyof TokenKindTokenMap;
-export type Tokens = TokenKindTokenMap[TokenKinds];
-
 export type ErrorableTokenKinds =
-    | TokenKinds
+    | TokenKind
     | TokenKind.Missing
     | MissingTokenKinds
     | TokenKind.Skipped
     ;
+
 export type ErrorableToken =
     | Tokens
     | MissingToken

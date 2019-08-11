@@ -1,7 +1,7 @@
 import { MissableToken } from '../../Token/MissingToken';
-import { ClosingParenthesisToken, OpeningParenthesisToken } from '../../Token/Token';
-import { NodeKind } from '../NodeKind';
-import { Expression, MissableExpression } from './Expression';
+import { ClosingParenthesisToken, OpeningParenthesisToken } from '../../Token/Tokens';
+import { NodeKind } from '../Nodes';
+import { Expression, MissableExpression } from './Expressions';
 
 export const GroupingExpressionChildNames: ReadonlyArray<keyof GroupingExpression> = [
     'newlines',

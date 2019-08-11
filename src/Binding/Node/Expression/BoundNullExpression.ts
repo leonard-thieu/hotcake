@@ -1,9 +1,6 @@
-import { ObjectType } from '../../Type/ObjectType';
-import { BoundNodeKind } from '../BoundNodeKind';
-import { BoundExpression } from './BoundExpression';
+import { BoundNodeKind } from '../BoundNodes';
+import { BoundExpression } from './BoundExpressions';
 
 export class BoundNullExpression extends BoundExpression {
     readonly kind = BoundNodeKind.NullExpression;
-
-    readonly type = ObjectType.nullType;
 }

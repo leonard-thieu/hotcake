@@ -1,7 +1,7 @@
 import { MissableToken } from '../../Token/MissingToken';
-import { ClosingSquareBracketToken, OpeningSquareBracketToken, PeriodPeriodToken } from '../../Token/Token';
-import { NodeKind } from '../NodeKind';
-import { Expression, Expressions } from './Expression';
+import { ClosingSquareBracketToken, OpeningSquareBracketToken, PeriodPeriodToken } from '../../Token/Tokens';
+import { NodeKind } from '../Nodes';
+import { Expression, Expressions } from './Expressions';
 
 export const SliceExpressionChildNames: ReadonlyArray<keyof SliceExpression> = [
     'newlines',

@@ -41,7 +41,7 @@
                                 "start": 23,
                                 "length": 5
                             },
-                            "type": {
+                            "typeAnnotation": {
                                 "kind": "LonghandTypeAnnotation",
                                 "colon": {
                                     "kind": "Colon",
@@ -59,7 +59,8 @@
                                     },
                                     "arrayTypeAnnotations": []
                                 }
-                            }
+                            },
+                            "operator": null
                         }
                     ]
                 },

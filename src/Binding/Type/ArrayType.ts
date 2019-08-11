@@ -1,10 +1,13 @@
+import { BoundTypeReferenceDeclaration } from '../Node/Declaration/BoundDeclarations';
+import { BoundExternClassDeclaration } from '../Node/Declaration/Extern/BoundExternClassDeclaration';
 import { Type } from './Type';
-import { TypeKind } from './TypeKind';
-import { Types } from './Types';
-import { VoidType } from './VoidType';
+import { TypeKind, Types } from './Types';
 
 export class ArrayType extends Type {
-    constructor(readonly elementType: Types) {
+    constructor(
+        readonly declaration: BoundExternClassDeclaration,
+        readonly elementType: BoundTypeReferenceDeclaration,
+    ) {
         super();
     }
 
@@ -13,17 +16,17 @@ export class ArrayType extends Type {
     isConvertibleTo(target: Types): boolean {
         if (target.kind === TypeKind.Array) {
             if (target.elementType === this.elementType) { return true; }
-            if (target.elementType === VoidType.type) { return true; }
+            if (target.elementType.type.kind === TypeKind.Void) { return true; }
         }
 
         return false;
     }
 
     toString() {
-        let type = this.elementType;
+        let { type } = this.elementType;
         let i = 1;
         while (type.kind === TypeKind.Array) {
-            type = type.elementType;
+            type = type.elementType.type;
             i++;
         }
 

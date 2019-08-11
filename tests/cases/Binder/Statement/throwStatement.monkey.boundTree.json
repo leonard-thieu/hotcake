@@ -2,47 +2,58 @@
     "kind": "ModuleDeclaration",
     "identifier": "throwStatement",
     "locals": [
-        "Throwable",
-        "Main"
-    ],
-    "members": [
         {
             "kind": "ClassDeclaration",
-            "locals": [
-                "New"
-            ],
             "identifier": "Throwable",
             "type": "Throwable",
-            "baseType": "Object",
-            "members": [
+            "superType": "Object",
+            "locals": [
                 {
-                    "kind": "ClassMethodDeclaration",
+                    "kind": "ClassMethodGroupDeclaration",
                     "identifier": "New",
-                    "locals": [],
-                    "returnType": "Throwable",
-                    "parameters": []
+                    "type": "New Throwable",
+                    "overloads": [
+                        {
+                            "kind": "ClassMethodDeclaration",
+                            "identifier": "New",
+                            "locals": [],
+                            "type": "New Throwable()",
+                            "returnType": "Throwable",
+                            "parameters": [],
+                            "statements": []
+                        }
+                    ]
                 }
             ]
         },
         {
-            "kind": "FunctionDeclaration",
+            "kind": "FunctionGroupDeclaration",
             "identifier": "Main",
-            "locals": [],
-            "returnType": "Int",
-            "parameters": [],
-            "statements": [
+            "type": "Main",
+            "overloads": [
                 {
-                    "kind": "ThrowStatement",
-                    "expression": {
-                        "kind": "InvokeExpression",
-                        "type": "Throwable",
-                        "invocationType": "New Throwable()",
-                        "invokableExpression": {
-                            "kind": "NewExpression",
-                            "type": "New"
-                        },
-                        "arguments": []
-                    }
+                    "kind": "FunctionDeclaration",
+                    "identifier": "Main",
+                    "locals": [],
+                    "type": "Main: Int()",
+                    "returnType": "Int",
+                    "parameters": [],
+                    "statements": [
+                        {
+                            "kind": "ThrowStatement",
+                            "expression": {
+                                "kind": "InvokeExpression",
+                                "type": "Throwable",
+                                "invocationType": "New Throwable()",
+                                "invokableExpression": {
+                                    "kind": "NewExpression",
+                                    "type": "New Throwable",
+                                    "typeReference": "Throwable"
+                                },
+                                "arguments": []
+                            }
+                        }
+                    ]
                 }
             ]
         }

@@ -1,11 +1,9 @@
+import { BoundIntrinsicTypeDeclaration } from '../Node/Declaration/BoundIntrinsicTypeDeclaration';
 import { Type } from './Type';
-import { TypeKind } from './TypeKind';
-import { Types } from './Types';
+import { TypeKind, Types } from './Types';
 
 export class VoidType extends Type {
-    static readonly type = new VoidType();
-
-    private constructor() {
+    constructor(readonly declaration: BoundIntrinsicTypeDeclaration) {
         super();
     }
 

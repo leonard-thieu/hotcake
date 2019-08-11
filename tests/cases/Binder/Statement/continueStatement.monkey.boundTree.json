@@ -2,26 +2,32 @@
     "kind": "ModuleDeclaration",
     "identifier": "continueStatement",
     "locals": [
-        "Main"
-    ],
-    "members": [
         {
-            "kind": "FunctionDeclaration",
+            "kind": "FunctionGroupDeclaration",
             "identifier": "Main",
-            "locals": [],
-            "returnType": "Int",
-            "parameters": [],
-            "statements": [
+            "type": "Main",
+            "overloads": [
                 {
-                    "kind": "WhileLoop",
+                    "kind": "FunctionDeclaration",
+                    "identifier": "Main",
                     "locals": [],
-                    "expression": {
-                        "kind": "BooleanLiteralExpression",
-                        "type": "Bool"
-                    },
+                    "type": "Main: Int()",
+                    "returnType": "Int",
+                    "parameters": [],
                     "statements": [
                         {
-                            "kind": "ContinueStatement"
+                            "kind": "WhileLoop",
+                            "locals": [],
+                            "expression": {
+                                "kind": "BooleanLiteralExpression",
+                                "type": "Bool",
+                                "value": "True"
+                            },
+                            "statements": [
+                                {
+                                    "kind": "ContinueStatement"
+                                }
+                            ]
                         }
                     ]
                 }

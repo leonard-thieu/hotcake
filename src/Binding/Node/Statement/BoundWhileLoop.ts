@@ -1,13 +1,12 @@
 import { BoundSymbolTable } from '../../BoundSymbol';
-import { BoundNode } from '../BoundNode';
-import { BoundNodeKind } from '../BoundNodeKind';
+import { BoundNode, BoundNodeKind } from '../BoundNodes';
 import { BoundExpressions } from '../Expression/BoundExpressions';
 import { BoundStatements } from './BoundStatements';
 
 export class BoundWhileLoop extends BoundNode {
     readonly kind = BoundNodeKind.WhileLoop;
 
-    locals: BoundSymbolTable = undefined!;
+    readonly locals = new BoundSymbolTable();
 
     expression: BoundExpressions = undefined!;
     statements: BoundStatements[] = undefined!;

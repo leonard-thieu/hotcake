@@ -2,29 +2,34 @@
     "kind": "ModuleDeclaration",
     "identifier": "invokeExpression",
     "locals": [
-        "Main"
-    ],
-    "members": [
         {
-            "kind": "FunctionDeclaration",
+            "kind": "FunctionGroupDeclaration",
             "identifier": "Main",
-            "locals": [],
-            "returnType": "Int",
-            "parameters": [],
-            "statements": [
+            "type": "Main",
+            "overloads": [
                 {
-                    "kind": "ExpressionStatement",
-                    "expression": {
-                        "kind": "InvokeExpression",
-                        "type": "Int",
-                        "invocationType": "Main: Int()",
-                        "invokableExpression": {
-                            "kind": "IdentifierExpression",
-                            "type": "Main",
-                            "identifier": "Main"
-                        },
-                        "arguments": []
-                    }
+                    "kind": "FunctionDeclaration",
+                    "identifier": "Main",
+                    "locals": [],
+                    "type": "Main: Int()",
+                    "returnType": "Int",
+                    "parameters": [],
+                    "statements": [
+                        {
+                            "kind": "ExpressionStatement",
+                            "expression": {
+                                "kind": "InvokeExpression",
+                                "type": "Int",
+                                "invocationType": "Main: Int()",
+                                "invokableExpression": {
+                                    "kind": "IdentifierExpression",
+                                    "type": "Main",
+                                    "identifier": "Main"
+                                },
+                                "arguments": []
+                            }
+                        }
+                    ]
                 }
             ]
         }

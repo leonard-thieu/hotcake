@@ -1,7 +1,7 @@
-import { NewKeywordToken } from '../../Token/Token';
-import { NodeKind } from '../NodeKind';
+import { NewKeywordToken } from '../../Token/Tokens';
+import { NodeKind } from '../Nodes';
 import { MissableTypeReference } from '../TypeReference';
-import { Expression } from './Expression';
+import { Expression } from './Expressions';
 
 export const NewExpressionChildNames: ReadonlyArray<keyof NewExpression> = [
     'newlines',

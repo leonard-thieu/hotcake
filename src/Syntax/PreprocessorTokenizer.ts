@@ -1,5 +1,4 @@
-import { Token, Tokens } from './Token/Token';
-import { TokenKind } from './Token/TokenKind';
+import { Token, Tokens, TokenKind } from './Token/Tokens';
 
 export class PreprocessorTokenizer {
     private document: string = undefined!;

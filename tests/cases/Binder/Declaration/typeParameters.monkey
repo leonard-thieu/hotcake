@@ -9,3 +9,7 @@ Class ArrayObject<T>
 		Return value
 	End
 End
+
+Function Main()
+    New ArrayObject<Int>
+End

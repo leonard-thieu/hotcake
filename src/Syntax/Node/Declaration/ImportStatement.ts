@@ -1,9 +1,9 @@
 import { MissingToken } from '../../Token/MissingToken';
-import { ImportKeywordToken } from '../../Token/Token';
+import { ImportKeywordToken } from '../../Token/Tokens';
 import { StringLiteralExpression } from '../Expression/StringLiteralExpression';
 import { ModulePath } from '../ModulePath';
-import { NodeKind } from '../NodeKind';
-import { Declaration } from './Declaration';
+import { NodeKind } from '../Nodes';
+import { Declaration } from './Declarations';
 
 export const ImportStatementChildNames: ReadonlyArray<keyof ImportStatement> = [
     'importKeyword',

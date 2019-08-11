@@ -1,17 +1,17 @@
 import { BoundSymbolTable } from '../../BoundSymbol';
-import { BoundNode } from '../BoundNode';
-import { BoundNodeKind } from '../BoundNodeKind';
-import { BoundExpression } from '../Expression/BoundExpression';
+import { BoundNode, BoundNodeKind } from '../BoundNodes';
+import { BoundExpressions } from '../Expression/BoundExpressions';
+import { BoundAssignmentStatement } from './BoundAssignmentStatement';
 import { BoundStatements } from './BoundStatements';
 
 export class BoundForLoop extends BoundNode {
     readonly kind = BoundNodeKind.ForLoop;
 
-    locals: BoundSymbolTable = undefined!;
+    readonly locals = new BoundSymbolTable();
 
-    statement: BoundStatements = undefined!;
-    lastValueExpression?: BoundExpression = undefined;
-    stepValueExpression?: BoundExpression = undefined;
+    firstValueStatement: BoundStatements = undefined!;
+    lastValueExpression: BoundExpressions = undefined!;
+    stepValueClause: BoundAssignmentStatement = undefined!;
 
     statements: BoundStatements[] = undefined!;
 }

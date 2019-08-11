@@ -1,11 +1,13 @@
-import { MissableToken, MissingToken } from '../../Token/MissingToken';
-import { ColonEqualsSignToken, ConstKeywordToken, EachInKeywordToken, EqualsSignToken, FieldKeywordToken, GlobalKeywordToken, LocalKeywordToken } from '../../Token/Token';
+import { MissingToken } from '../../Token/MissingToken';
+import { ColonEqualsSignToken, ConstKeywordToken, EqualsSignToken, FieldKeywordToken, GlobalKeywordToken, LocalKeywordToken } from '../../Token/Tokens';
 import { CommaSeparator } from '../CommaSeparator';
-import { MissableExpression } from '../Expression/Expression';
+import { MissableExpression } from '../Expression/Expressions';
 import { Identifier } from '../Identifier';
-import { NodeKind } from '../NodeKind';
+import { NodeKind } from '../Nodes';
 import { TypeAnnotation } from '../TypeAnnotation';
-import { Declaration } from './Declaration';
+import { Declaration } from './Declarations';
+
+// #region Data declaration sequence
 
 export const DataDeclarationSequenceChildNames: ReadonlyArray<keyof DataDeclarationSequence> = [
     'dataDeclarationKeyword',
@@ -15,7 +17,8 @@ export const DataDeclarationSequenceChildNames: ReadonlyArray<keyof DataDeclarat
 export class DataDeclarationSequence extends Declaration {
     readonly kind = NodeKind.DataDeclarationSequence;
 
-    dataDeclarationKeyword?: DataDeclarationKeywordToken = undefined;
+    // If this represents a parameter sequence, `dataDeclarationKeyword` will be `null`.
+    dataDeclarationKeyword: DataDeclarationKeywordToken | null = undefined!;
     children: (DataDeclaration | CommaSeparator)[] = undefined!;
 }
 
@@ -26,37 +29,41 @@ export type DataDeclarationKeywordToken =
     | LocalKeywordToken
     ;
 
+// #endregion
+
+// #region Data declaration
+
 export const DataDeclarationChildNames: ReadonlyArray<keyof DataDeclaration> = [
     'identifier',
-    'type',
-    'equalsSign',
-    'eachInKeyword',
+    'typeAnnotation',
+    'operator',
     'expression',
 ];
 
 /**
+ * Default type (Int)
+ *   Identifier = Expression
+ *   Identifier
+ *
  * Explicit type (shorthand)
  *   Identifier(?|%|#|$) = Expression
  *   Identifier(?|%|#|$)
- * 
+ *
  * Explicit type (longhand)
  *   Identifier: Type = Expression
  *   Identifier: Type
- * 
+ *
  * Inferred type
  *   Identifier := Expression
- * 
- * Default type
- *   Identifier = Expression
- *   Identifier
  */
 export class DataDeclaration extends Declaration {
     readonly kind = NodeKind.DataDeclaration;
 
     identifier: Identifier = undefined!;
-    type?: TypeAnnotation = undefined;
-    equalsSign?: MissableToken<EqualsSignToken | ColonEqualsSignToken> = undefined;
-    eachInKeyword?: EachInKeywordToken = undefined;
+    typeAnnotation?: TypeAnnotation = undefined;
+    // Can be missable if this declaration is Const.
+    // If the operator is omitted (declaration without assignment), `operator` will be `null`.
+    operator: null | EqualsSignToken | ColonEqualsSignToken | MissingToken = undefined!;
     expression?: MissableExpression = undefined;
 }
 
@@ -64,3 +71,5 @@ export type MissableDataDeclaration =
     | DataDeclaration
     | MissingToken
     ;
+
+// #endregion

@@ -1,20 +1,21 @@
-import { BoundSymbolTable } from '../../../Binding/BoundSymbol';
 import { MissableToken } from '../../Token/MissingToken';
 import { SkippedToken } from '../../Token/SkippedToken';
-import { EndKeywordToken, ExtendsKeywordToken, InterfaceKeywordToken, NewlineToken } from '../../Token/Token';
+import { ClosingParenthesisToken, EndKeywordToken, ExtendsKeywordToken, InterfaceKeywordToken, MethodKeywordToken, NewlineToken, OpeningParenthesisToken } from '../../Token/Tokens';
 import { CommaSeparator } from '../CommaSeparator';
 import { MissableIdentifier } from '../Identifier';
-import { NodeKind } from '../NodeKind';
+import { NodeKind } from '../Nodes';
+import { TypeAnnotation } from '../TypeAnnotation';
 import { TypeReference } from '../TypeReference';
 import { DataDeclarationSequence } from './DataDeclarationSequence';
-import { Declaration } from './Declaration';
-import { InterfaceMethodDeclaration } from './InterfaceMethodDeclaration';
+import { Declaration } from './Declarations';
+
+// #region Interface declaration
 
 export const InterfaceDeclarationChildNames: ReadonlyArray<keyof InterfaceDeclaration> = [
     'interfaceKeyword',
     'identifier',
     'extendsKeyword',
-    'baseTypes',
+    'implementedTypes',
     'members',
     'endKeyword',
     'endInterfaceKeyword',
@@ -26,12 +27,10 @@ export class InterfaceDeclaration extends Declaration {
     interfaceKeyword: InterfaceKeywordToken = undefined!;
     identifier: MissableIdentifier = undefined!;
     extendsKeyword?: ExtendsKeywordToken = undefined;
-    baseTypes?: (TypeReference | CommaSeparator)[] = undefined;
+    implementedTypes?: (TypeReference | CommaSeparator)[] = undefined;
     members: InterfaceDeclarationMember[] = undefined!;
     endKeyword: MissableToken<EndKeywordToken> = undefined!;
     endInterfaceKeyword?: InterfaceKeywordToken = undefined;
-
-    locals = new BoundSymbolTable();
 }
 
 export type InterfaceDeclarationMember =
@@ -40,3 +39,29 @@ export type InterfaceDeclarationMember =
     | NewlineToken
     | SkippedToken
     ;
+
+// #endregion
+
+// #region Interface method declaration
+
+export const InterfaceMethodDeclarationChildNames: ReadonlyArray<keyof InterfaceMethodDeclaration> = [
+    'methodKeyword',
+    'identifier',
+    'returnType',
+    'openingParenthesis',
+    'parameters',
+    'closingParenthesis',
+];
+
+export class InterfaceMethodDeclaration extends Declaration {
+    readonly kind = NodeKind.InterfaceMethodDeclaration;
+
+    methodKeyword: MethodKeywordToken = undefined!;
+    identifier: MissableIdentifier = undefined!;
+    returnType?: TypeAnnotation = undefined;
+    openingParenthesis: MissableToken<OpeningParenthesisToken> = undefined!;
+    parameters: DataDeclarationSequence = undefined!;
+    closingParenthesis: MissableToken<ClosingParenthesisToken> = undefined!;
+}
+
+// #endregion

@@ -2,33 +2,40 @@
     "kind": "ModuleDeclaration",
     "identifier": "arrayLiteralExpression",
     "locals": [
-        "GetHomeCoords"
-    ],
-    "members": [
         {
-            "kind": "FunctionDeclaration",
+            "kind": "FunctionGroupDeclaration",
             "identifier": "GetHomeCoords",
-            "locals": [],
-            "returnType": "Float[]",
-            "parameters": [],
-            "statements": [
+            "type": "GetHomeCoords",
+            "overloads": [
                 {
-                    "kind": "ReturnStatement",
-                    "type": "Float[]",
-                    "expression": {
-                        "kind": "ArrayLiteralExpression",
-                        "type": "Float[]",
-                        "expressions": [
-                            {
-                                "kind": "FloatLiteralExpression",
-                                "type": "Float"
-                            },
-                            {
-                                "kind": "IntegerLiteralExpression",
-                                "type": "Int"
+                    "kind": "FunctionDeclaration",
+                    "identifier": "GetHomeCoords",
+                    "locals": [],
+                    "type": "GetHomeCoords: Float[]()",
+                    "returnType": "Float[]",
+                    "parameters": [],
+                    "statements": [
+                        {
+                            "kind": "ReturnStatement",
+                            "type": "Float[]",
+                            "expression": {
+                                "kind": "ArrayLiteralExpression",
+                                "type": "Float[]",
+                                "expressions": [
+                                    {
+                                        "kind": "FloatLiteralExpression",
+                                        "type": "Float",
+                                        "value": "127.4"
+                                    },
+                                    {
+                                        "kind": "IntegerLiteralExpression",
+                                        "type": "Int",
+                                        "value": "16"
+                                    }
+                                ]
                             }
-                        ]
-                    }
+                        }
+                    ]
                 }
             ]
         }

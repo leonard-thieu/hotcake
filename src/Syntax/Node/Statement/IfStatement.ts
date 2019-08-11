@@ -1,11 +1,12 @@
-import { BoundSymbolTable } from '../../../Binding/BoundSymbol';
 import { MissableToken } from '../../Token/MissingToken';
 import { SkippedToken } from '../../Token/SkippedToken';
-import { ElseIfKeywordToken, ElseKeywordToken, EndIfKeywordToken, EndKeywordToken, IfKeywordToken, ThenKeywordToken } from '../../Token/Token';
-import { MissableExpression } from '../Expression/Expression';
-import { Node } from '../Node';
-import { NodeKind } from '../NodeKind';
-import { Statement, Statements } from './Statement';
+import { ElseIfKeywordToken, ElseKeywordToken, EndIfKeywordToken, EndKeywordToken, IfKeywordToken, ThenKeywordToken } from '../../Token/Tokens';
+import { MissableExpression } from '../Expression/Expressions';
+import { Node } from '../Nodes';
+import { NodeKind } from '../Nodes';
+import { Statement, Statements } from './Statements';
+
+// #region If statement
 
 export const IfStatementChildNames: ReadonlyArray<keyof IfStatement> = [
     'ifKeyword',
@@ -30,9 +31,11 @@ export class IfStatement extends Statement {
     elseClause?: ElseClause = undefined;
     endKeyword?: MissableToken<EndIfKeywordToken | EndKeywordToken> = undefined;
     endIfKeyword?: IfKeywordToken = undefined;
-
-    locals = new BoundSymbolTable();
 }
+
+// #endregion
+
+// #region Else if clause
 
 export const ElseIfClauseChildNames: ReadonlyArray<keyof ElseIfClause> = [
     'elseIfKeyword',
@@ -50,9 +53,11 @@ export class ElseIfClause extends Node {
     expression: MissableExpression = undefined!;
     thenKeyword?: ThenKeywordToken = undefined;
     statements: (Statements | SkippedToken)[] = undefined!;
-
-    locals = new BoundSymbolTable();
 }
+
+// #endregion
+
+// #region Else clause
 
 export const ElseClauseChildNames: ReadonlyArray<keyof ElseClause> = [
     'elseKeyword',
@@ -64,6 +69,6 @@ export class ElseClause extends Node {
 
     elseKeyword: ElseKeywordToken = undefined!;
     statements: (Statements | SkippedToken)[] = undefined!;
-
-    locals = new BoundSymbolTable();
 }
+
+// #endregion

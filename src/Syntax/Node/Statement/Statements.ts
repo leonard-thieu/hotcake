@@ -1,12 +1,12 @@
-import { NewlineToken, SemicolonToken } from '../../Token/Token';
-import { Node } from '../Node';
+import { NewlineToken, SemicolonToken } from '../../Token/Tokens';
+import { Node } from '../Nodes';
 import { AssignmentStatement } from './AssignmentStatement';
 import { ContinueStatement } from './ContinueStatement';
 import { DataDeclarationSequenceStatement } from './DataDeclarationSequenceStatement';
 import { EmptyStatement } from './EmptyStatement';
 import { ExitStatement } from './ExitStatement';
 import { ExpressionStatement } from './ExpressionStatement';
-import { ForLoop } from './ForLoop';
+import { ForEachInLoop, NumericForLoop } from './ForLoops';
 import { IfStatement } from './IfStatement';
 import { RepeatLoop } from './RepeatLoop';
 import { ReturnStatement } from './ReturnStatement';
@@ -26,7 +26,8 @@ export type Statements =
     | SelectStatement
     | WhileLoop
     | RepeatLoop
-    | ForLoop
+    | NumericForLoop
+    | ForEachInLoop
     | ContinueStatement
     | ExitStatement
     | ThrowStatement

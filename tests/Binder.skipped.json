@@ -1,4 +1,5 @@
 [
-    "Statement/forLoop.monkey",
-    "generics.monkey"
+    "Declaration/aliasDirective.monkey",
+    "Declaration/importStatement.monkey",
+    "smokeTest.monkey"
 ]

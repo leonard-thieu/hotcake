@@ -1,0 +1,682 @@
+{
+    "kind": "ModuleDeclaration",
+    "strictNewlines": [],
+    "headerMembers": [],
+    "members": [
+        {
+            "kind": "FunctionDeclaration",
+            "functionKeyword": {
+                "kind": "FunctionKeyword",
+                "fullStart": 0,
+                "start": 0,
+                "length": 8
+            },
+            "identifier": {
+                "kind": "Identifier",
+                "fullStart": 8,
+                "start": 9,
+                "length": 18
+            },
+            "returnType": {
+                "kind": "LonghandTypeAnnotation",
+                "colon": {
+                    "kind": "Colon",
+                    "fullStart": 26,
+                    "start": 26,
+                    "length": 1
+                },
+                "typeReference": {
+                    "kind": "TypeReference",
+                    "identifier": {
+                        "kind": "BoolKeyword",
+                        "fullStart": 27,
+                        "start": 28,
+                        "length": 5
+                    },
+                    "arrayTypeAnnotations": []
+                }
+            },
+            "openingParenthesis": {
+                "kind": "OpeningParenthesis",
+                "fullStart": 32,
+                "start": 32,
+                "length": 1
+            },
+            "parameters": {
+                "kind": "DataDeclarationSequence",
+                "dataDeclarationKeyword": null,
+                "children": []
+            },
+            "closingParenthesis": {
+                "kind": "ClosingParenthesis",
+                "fullStart": 33,
+                "start": 33,
+                "length": 1
+            },
+            "statements": [
+                {
+                    "kind": "EmptyStatement",
+                    "terminator": {
+                        "kind": "Newline",
+                        "fullStart": 34,
+                        "start": 35,
+                        "length": 2
+                    }
+                },
+                {
+                    "kind": "ReturnStatement",
+                    "returnKeyword": {
+                        "kind": "ReturnKeyword",
+                        "fullStart": 36,
+                        "start": 37,
+                        "length": 7
+                    },
+                    "terminator": {
+                        "kind": "Newline",
+                        "fullStart": 43,
+                        "start": 44,
+                        "length": 2
+                    }
+                }
+            ],
+            "endKeyword": {
+                "kind": "EndKeyword",
+                "fullStart": 45,
+                "start": 45,
+                "length": 3
+            }
+        },
+        {
+            "kind": "Newline",
+            "fullStart": 48,
+            "start": 49,
+            "length": 2
+        },
+        {
+            "kind": "Newline",
+            "fullStart": 50,
+            "start": 51,
+            "length": 2
+        },
+        {
+            "kind": "FunctionDeclaration",
+            "functionKeyword": {
+                "kind": "FunctionKeyword",
+                "fullStart": 52,
+                "start": 52,
+                "length": 8
+            },
+            "identifier": {
+                "kind": "Identifier",
+                "fullStart": 60,
+                "start": 61,
+                "length": 17
+            },
+            "returnType": {
+                "kind": "LonghandTypeAnnotation",
+                "colon": {
+                    "kind": "Colon",
+                    "fullStart": 77,
+                    "start": 77,
+                    "length": 1
+                },
+                "typeReference": {
+                    "kind": "TypeReference",
+                    "identifier": {
+                        "kind": "IntKeyword",
+                        "fullStart": 78,
+                        "start": 79,
+                        "length": 4
+                    },
+                    "arrayTypeAnnotations": []
+                }
+            },
+            "openingParenthesis": {
+                "kind": "OpeningParenthesis",
+                "fullStart": 82,
+                "start": 82,
+                "length": 1
+            },
+            "parameters": {
+                "kind": "DataDeclarationSequence",
+                "dataDeclarationKeyword": null,
+                "children": []
+            },
+            "closingParenthesis": {
+                "kind": "ClosingParenthesis",
+                "fullStart": 83,
+                "start": 83,
+                "length": 1
+            },
+            "statements": [
+                {
+                    "kind": "EmptyStatement",
+                    "terminator": {
+                        "kind": "Newline",
+                        "fullStart": 84,
+                        "start": 85,
+                        "length": 2
+                    }
+                },
+                {
+                    "kind": "ReturnStatement",
+                    "returnKeyword": {
+                        "kind": "ReturnKeyword",
+                        "fullStart": 86,
+                        "start": 87,
+                        "length": 7
+                    },
+                    "terminator": {
+                        "kind": "Newline",
+                        "fullStart": 93,
+                        "start": 94,
+                        "length": 2
+                    }
+                }
+            ],
+            "endKeyword": {
+                "kind": "EndKeyword",
+                "fullStart": 95,
+                "start": 95,
+                "length": 3
+            }
+        },
+        {
+            "kind": "Newline",
+            "fullStart": 98,
+            "start": 99,
+            "length": 2
+        },
+        {
+            "kind": "Newline",
+            "fullStart": 100,
+            "start": 101,
+            "length": 2
+        },
+        {
+            "kind": "FunctionDeclaration",
+            "functionKeyword": {
+                "kind": "FunctionKeyword",
+                "fullStart": 102,
+                "start": 102,
+                "length": 8
+            },
+            "identifier": {
+                "kind": "Identifier",
+                "fullStart": 110,
+                "start": 111,
+                "length": 19
+            },
+            "returnType": {
+                "kind": "LonghandTypeAnnotation",
+                "colon": {
+                    "kind": "Colon",
+                    "fullStart": 129,
+                    "start": 129,
+                    "length": 1
+                },
+                "typeReference": {
+                    "kind": "TypeReference",
+                    "identifier": {
+                        "kind": "FloatKeyword",
+                        "fullStart": 130,
+                        "start": 131,
+                        "length": 6
+                    },
+                    "arrayTypeAnnotations": []
+                }
+            },
+            "openingParenthesis": {
+                "kind": "OpeningParenthesis",
+                "fullStart": 136,
+                "start": 136,
+                "length": 1
+            },
+            "parameters": {
+                "kind": "DataDeclarationSequence",
+                "dataDeclarationKeyword": null,
+                "children": []
+            },
+            "closingParenthesis": {
+                "kind": "ClosingParenthesis",
+                "fullStart": 137,
+                "start": 137,
+                "length": 1
+            },
+            "statements": [
+                {
+                    "kind": "EmptyStatement",
+                    "terminator": {
+                        "kind": "Newline",
+                        "fullStart": 138,
+                        "start": 139,
+                        "length": 2
+                    }
+                },
+                {
+                    "kind": "ReturnStatement",
+                    "returnKeyword": {
+                        "kind": "ReturnKeyword",
+                        "fullStart": 140,
+                        "start": 141,
+                        "length": 7
+                    },
+                    "terminator": {
+                        "kind": "Newline",
+                        "fullStart": 147,
+                        "start": 148,
+                        "length": 2
+                    }
+                }
+            ],
+            "endKeyword": {
+                "kind": "EndKeyword",
+                "fullStart": 149,
+                "start": 149,
+                "length": 3
+            }
+        },
+        {
+            "kind": "Newline",
+            "fullStart": 152,
+            "start": 153,
+            "length": 2
+        },
+        {
+            "kind": "Newline",
+            "fullStart": 154,
+            "start": 155,
+            "length": 2
+        },
+        {
+            "kind": "FunctionDeclaration",
+            "functionKeyword": {
+                "kind": "FunctionKeyword",
+                "fullStart": 156,
+                "start": 156,
+                "length": 8
+            },
+            "identifier": {
+                "kind": "Identifier",
+                "fullStart": 164,
+                "start": 165,
+                "length": 20
+            },
+            "returnType": {
+                "kind": "LonghandTypeAnnotation",
+                "colon": {
+                    "kind": "Colon",
+                    "fullStart": 184,
+                    "start": 184,
+                    "length": 1
+                },
+                "typeReference": {
+                    "kind": "TypeReference",
+                    "identifier": {
+                        "kind": "StringKeyword",
+                        "fullStart": 185,
+                        "start": 186,
+                        "length": 7
+                    },
+                    "arrayTypeAnnotations": []
+                }
+            },
+            "openingParenthesis": {
+                "kind": "OpeningParenthesis",
+                "fullStart": 192,
+                "start": 192,
+                "length": 1
+            },
+            "parameters": {
+                "kind": "DataDeclarationSequence",
+                "dataDeclarationKeyword": null,
+                "children": []
+            },
+            "closingParenthesis": {
+                "kind": "ClosingParenthesis",
+                "fullStart": 193,
+                "start": 193,
+                "length": 1
+            },
+            "statements": [
+                {
+                    "kind": "EmptyStatement",
+                    "terminator": {
+                        "kind": "Newline",
+                        "fullStart": 194,
+                        "start": 195,
+                        "length": 2
+                    }
+                },
+                {
+                    "kind": "ReturnStatement",
+                    "returnKeyword": {
+                        "kind": "ReturnKeyword",
+                        "fullStart": 196,
+                        "start": 197,
+                        "length": 7
+                    },
+                    "terminator": {
+                        "kind": "Newline",
+                        "fullStart": 203,
+                        "start": 204,
+                        "length": 2
+                    }
+                }
+            ],
+            "endKeyword": {
+                "kind": "EndKeyword",
+                "fullStart": 205,
+                "start": 205,
+                "length": 3
+            }
+        },
+        {
+            "kind": "Newline",
+            "fullStart": 208,
+            "start": 209,
+            "length": 2
+        },
+        {
+            "kind": "Newline",
+            "fullStart": 210,
+            "start": 211,
+            "length": 2
+        },
+        {
+            "kind": "FunctionDeclaration",
+            "functionKeyword": {
+                "kind": "FunctionKeyword",
+                "fullStart": 212,
+                "start": 212,
+                "length": 8
+            },
+            "identifier": {
+                "kind": "Identifier",
+                "fullStart": 220,
+                "start": 221,
+                "length": 19
+            },
+            "returnType": {
+                "kind": "LonghandTypeAnnotation",
+                "colon": {
+                    "kind": "Colon",
+                    "fullStart": 239,
+                    "start": 239,
+                    "length": 1
+                },
+                "typeReference": {
+                    "kind": "TypeReference",
+                    "identifier": {
+                        "kind": "VoidKeyword",
+                        "fullStart": 240,
+                        "start": 241,
+                        "length": 5
+                    },
+                    "arrayTypeAnnotations": [
+                        {
+                            "kind": "ArrayTypeAnnotation",
+                            "openingSquareBracket": {
+                                "kind": "OpeningSquareBracket",
+                                "fullStart": 245,
+                                "start": 245,
+                                "length": 1
+                            },
+                            "closingSquareBracket": {
+                                "kind": "ClosingSquareBracket",
+                                "fullStart": 246,
+                                "start": 246,
+                                "length": 1
+                            }
+                        }
+                    ]
+                }
+            },
+            "openingParenthesis": {
+                "kind": "OpeningParenthesis",
+                "fullStart": 247,
+                "start": 247,
+                "length": 1
+            },
+            "parameters": {
+                "kind": "DataDeclarationSequence",
+                "dataDeclarationKeyword": null,
+                "children": []
+            },
+            "closingParenthesis": {
+                "kind": "ClosingParenthesis",
+                "fullStart": 248,
+                "start": 248,
+                "length": 1
+            },
+            "statements": [
+                {
+                    "kind": "EmptyStatement",
+                    "terminator": {
+                        "kind": "Newline",
+                        "fullStart": 249,
+                        "start": 250,
+                        "length": 2
+                    }
+                },
+                {
+                    "kind": "ReturnStatement",
+                    "returnKeyword": {
+                        "kind": "ReturnKeyword",
+                        "fullStart": 251,
+                        "start": 252,
+                        "length": 7
+                    },
+                    "terminator": {
+                        "kind": "Newline",
+                        "fullStart": 258,
+                        "start": 259,
+                        "length": 2
+                    }
+                }
+            ],
+            "endKeyword": {
+                "kind": "EndKeyword",
+                "fullStart": 260,
+                "start": 260,
+                "length": 3
+            }
+        },
+        {
+            "kind": "Newline",
+            "fullStart": 263,
+            "start": 264,
+            "length": 2
+        },
+        {
+            "kind": "Newline",
+            "fullStart": 265,
+            "start": 266,
+            "length": 2
+        },
+        {
+            "kind": "FunctionDeclaration",
+            "functionKeyword": {
+                "kind": "FunctionKeyword",
+                "fullStart": 267,
+                "start": 267,
+                "length": 8
+            },
+            "identifier": {
+                "kind": "Identifier",
+                "fullStart": 275,
+                "start": 276,
+                "length": 20
+            },
+            "returnType": {
+                "kind": "LonghandTypeAnnotation",
+                "colon": {
+                    "kind": "Colon",
+                    "fullStart": 295,
+                    "start": 295,
+                    "length": 1
+                },
+                "typeReference": {
+                    "kind": "TypeReference",
+                    "identifier": {
+                        "kind": "ObjectKeyword",
+                        "fullStart": 296,
+                        "start": 297,
+                        "length": 7
+                    },
+                    "arrayTypeAnnotations": []
+                }
+            },
+            "openingParenthesis": {
+                "kind": "OpeningParenthesis",
+                "fullStart": 303,
+                "start": 303,
+                "length": 1
+            },
+            "parameters": {
+                "kind": "DataDeclarationSequence",
+                "dataDeclarationKeyword": null,
+                "children": []
+            },
+            "closingParenthesis": {
+                "kind": "ClosingParenthesis",
+                "fullStart": 304,
+                "start": 304,
+                "length": 1
+            },
+            "statements": [
+                {
+                    "kind": "EmptyStatement",
+                    "terminator": {
+                        "kind": "Newline",
+                        "fullStart": 305,
+                        "start": 306,
+                        "length": 2
+                    }
+                },
+                {
+                    "kind": "ReturnStatement",
+                    "returnKeyword": {
+                        "kind": "ReturnKeyword",
+                        "fullStart": 307,
+                        "start": 308,
+                        "length": 7
+                    },
+                    "terminator": {
+                        "kind": "Newline",
+                        "fullStart": 314,
+                        "start": 315,
+                        "length": 2
+                    }
+                }
+            ],
+            "endKeyword": {
+                "kind": "EndKeyword",
+                "fullStart": 316,
+                "start": 316,
+                "length": 3
+            }
+        },
+        {
+            "kind": "Newline",
+            "fullStart": 319,
+            "start": 320,
+            "length": 2
+        },
+        {
+            "kind": "Newline",
+            "fullStart": 321,
+            "start": 322,
+            "length": 2
+        },
+        {
+            "kind": "FunctionDeclaration",
+            "functionKeyword": {
+                "kind": "FunctionKeyword",
+                "fullStart": 323,
+                "start": 323,
+                "length": 8
+            },
+            "identifier": {
+                "kind": "Identifier",
+                "fullStart": 331,
+                "start": 332,
+                "length": 18
+            },
+            "returnType": {
+                "kind": "LonghandTypeAnnotation",
+                "colon": {
+                    "kind": "Colon",
+                    "fullStart": 349,
+                    "start": 349,
+                    "length": 1
+                },
+                "typeReference": {
+                    "kind": "TypeReference",
+                    "identifier": {
+                        "kind": "VoidKeyword",
+                        "fullStart": 350,
+                        "start": 351,
+                        "length": 5
+                    },
+                    "arrayTypeAnnotations": []
+                }
+            },
+            "openingParenthesis": {
+                "kind": "OpeningParenthesis",
+                "fullStart": 355,
+                "start": 355,
+                "length": 1
+            },
+            "parameters": {
+                "kind": "DataDeclarationSequence",
+                "dataDeclarationKeyword": null,
+                "children": []
+            },
+            "closingParenthesis": {
+                "kind": "ClosingParenthesis",
+                "fullStart": 356,
+                "start": 356,
+                "length": 1
+            },
+            "statements": [
+                {
+                    "kind": "EmptyStatement",
+                    "terminator": {
+                        "kind": "Newline",
+                        "fullStart": 357,
+                        "start": 358,
+                        "length": 2
+                    }
+                },
+                {
+                    "kind": "ReturnStatement",
+                    "returnKeyword": {
+                        "kind": "ReturnKeyword",
+                        "fullStart": 359,
+                        "start": 360,
+                        "length": 7
+                    },
+                    "terminator": {
+                        "kind": "Newline",
+                        "fullStart": 366,
+                        "start": 367,
+                        "length": 2
+                    }
+                }
+            ],
+            "endKeyword": {
+                "kind": "EndKeyword",
+                "fullStart": 368,
+                "start": 368,
+                "length": 3
+            }
+        }
+    ],
+    "eofToken": {
+        "kind": "EOF",
+        "fullStart": 371,
+        "start": 371,
+        "length": 0
+    }
+}

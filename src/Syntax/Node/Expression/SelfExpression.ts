@@ -1,6 +1,6 @@
-import { SelfKeywordToken } from '../../Token/Token';
-import { NodeKind } from '../NodeKind';
-import { Expression } from './Expression';
+import { SelfKeywordToken } from '../../Token/Tokens';
+import { NodeKind } from '../Nodes';
+import { Expression } from './Expressions';
 
 export const SelfExpressionChildNames: ReadonlyArray<keyof SelfExpression> = [
     'newlines',

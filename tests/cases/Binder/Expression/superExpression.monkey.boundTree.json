@@ -2,61 +2,76 @@
     "kind": "ModuleDeclaration",
     "identifier": "superExpression",
     "locals": [
-        "MyBaseClass",
-        "MyClass"
-    ],
-    "members": [
         {
             "kind": "ClassDeclaration",
-            "locals": [
-                "New"
-            ],
             "identifier": "MyBaseClass",
             "type": "MyBaseClass",
-            "baseType": "Object",
-            "members": [
+            "superType": "Object",
+            "locals": [
                 {
-                    "kind": "ClassMethodDeclaration",
+                    "kind": "ClassMethodGroupDeclaration",
                     "identifier": "New",
-                    "locals": [],
-                    "returnType": "MyBaseClass",
-                    "parameters": []
+                    "type": "New MyBaseClass",
+                    "overloads": [
+                        {
+                            "kind": "ClassMethodDeclaration",
+                            "identifier": "New",
+                            "locals": [],
+                            "type": "New MyBaseClass()",
+                            "returnType": "MyBaseClass",
+                            "parameters": [],
+                            "statements": []
+                        }
+                    ]
                 }
             ]
         },
         {
             "kind": "ClassDeclaration",
-            "locals": [
-                "GetBaseClass",
-                "New"
-            ],
             "identifier": "MyClass",
             "type": "MyClass",
-            "baseType": "MyBaseClass",
-            "members": [
+            "superType": "MyBaseClass",
+            "locals": [
                 {
-                    "kind": "ClassMethodDeclaration",
+                    "kind": "ClassMethodGroupDeclaration",
                     "identifier": "GetBaseClass",
-                    "locals": [],
-                    "returnType": "MyBaseClass",
-                    "parameters": [],
-                    "statements": [
+                    "type": "GetBaseClass",
+                    "overloads": [
                         {
-                            "kind": "ReturnStatement",
-                            "type": "MyBaseClass",
-                            "expression": {
-                                "kind": "SuperExpression",
-                                "type": "MyBaseClass"
-                            }
+                            "kind": "ClassMethodDeclaration",
+                            "identifier": "GetBaseClass",
+                            "locals": [],
+                            "type": "GetBaseClass: MyBaseClass()",
+                            "returnType": "MyBaseClass",
+                            "parameters": [],
+                            "statements": [
+                                {
+                                    "kind": "ReturnStatement",
+                                    "type": "MyBaseClass",
+                                    "expression": {
+                                        "kind": "SuperExpression",
+                                        "type": "MyBaseClass"
+                                    }
+                                }
+                            ]
                         }
                     ]
                 },
                 {
-                    "kind": "ClassMethodDeclaration",
+                    "kind": "ClassMethodGroupDeclaration",
                     "identifier": "New",
-                    "locals": [],
-                    "returnType": "MyClass",
-                    "parameters": []
+                    "type": "New MyClass",
+                    "overloads": [
+                        {
+                            "kind": "ClassMethodDeclaration",
+                            "identifier": "New",
+                            "locals": [],
+                            "type": "New MyClass()",
+                            "returnType": "MyClass",
+                            "parameters": [],
+                            "statements": []
+                        }
+                    ]
                 }
             ]
         }

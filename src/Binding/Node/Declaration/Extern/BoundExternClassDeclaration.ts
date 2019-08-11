@@ -1,12 +1,18 @@
-import { ExternClassDeclaration } from '../../../../Syntax/Node/Declaration/ExternDeclaration/ExternClassDeclaration';
+import { ExternClassDeclaration, ExternClassMethodDeclaration } from '../../../../Syntax/Node/Declaration/ExternDeclaration/ExternClassDeclaration';
 import { BoundSymbol, BoundSymbolTable } from '../../../BoundSymbol';
-import { Types } from '../../../Type/Types';
-import { BoundNode } from '../../BoundNode';
-import { BoundNodeKind } from '../../BoundNodeKind';
+import { ArrayType } from '../../../Type/ArrayType';
+import { MethodType } from '../../../Type/FunctionLikeType';
+import { ObjectType } from '../../../Type/ObjectType';
+import { StringType } from '../../../Type/StringType';
+import { BoundNode, BoundNodeKind } from '../../BoundNodes';
 import { BoundStringLiteralExpression } from '../../Expression/BoundStringLiteralExpression';
-import { BoundExternClassMethodDeclaration } from './BoundExternClassMethodDeclaration';
+import { BoundClassDeclaration } from '../BoundClassDeclaration';
+import { BoundDataDeclaration } from '../BoundDataDeclaration';
+import { BoundTypeReferenceDeclaration } from '../BoundDeclarations';
+import { BoundExternClassMethodGroupDeclaration, BoundExternFunctionGroupDeclaration } from '../BoundFunctionLikeGroupDeclaration';
 import { BoundExternDataDeclaration } from './BoundExternDataDeclaration';
-import { BoundExternFunctionDeclaration } from './BoundExternFunctionDeclaration';
+
+// #region Extern class declaration
 
 export class BoundExternClassDeclaration extends BoundNode {
     readonly kind = BoundNodeKind.ExternClassDeclaration;
@@ -14,18 +20,37 @@ export class BoundExternClassDeclaration extends BoundNode {
     declaration: ExternClassDeclaration = undefined!;
 
     identifier: BoundSymbol = undefined!;
-    locals: BoundSymbolTable = undefined!;
-    type: Types = undefined!;
+    type: ObjectType | StringType | ArrayType = undefined!;
 
-    baseType?: Types = undefined;
-
-    members: BoundExternClassDeclarationMember[] = undefined!;
-
+    superType?: BoundExternClassDeclaration | BoundClassDeclaration = undefined;
     nativeSymbol?: BoundStringLiteralExpression = undefined;
+
+    readonly locals = new BoundSymbolTable();
 }
 
 export type BoundExternClassDeclarationMember =
     | BoundExternDataDeclaration
-    | BoundExternFunctionDeclaration
-    | BoundExternClassMethodDeclaration
+    | BoundExternFunctionGroupDeclaration
+    | BoundExternClassMethodGroupDeclaration
     ;
+
+// #endregion
+
+// #region Extern class method declaration
+
+export class BoundExternClassMethodDeclaration extends BoundNode {
+    readonly kind = BoundNodeKind.ExternClassMethodDeclaration;
+
+    declaration?: ExternClassMethodDeclaration = undefined;
+
+    identifier: BoundSymbol = undefined!;
+    readonly locals = new BoundSymbolTable();
+    type: MethodType = undefined!;
+
+    returnType: BoundTypeReferenceDeclaration = undefined!;
+    parameters: BoundDataDeclaration[] = undefined!;
+
+    nativeSymbol?: BoundStringLiteralExpression = undefined;
+}
+
+// #endregion

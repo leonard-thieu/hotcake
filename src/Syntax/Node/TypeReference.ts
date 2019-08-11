@@ -1,10 +1,9 @@
 import { MissableToken, MissingToken } from '../Token/MissingToken';
-import { BoolKeywordToken, FloatKeywordToken, GreaterThanSignToken, IdentifierToken, IntKeywordToken, LessThanSignToken, PeriodToken, StringKeywordToken, VoidKeywordToken } from '../Token/Token';
+import { BoolKeywordToken, FloatKeywordToken, GreaterThanSignToken, IdentifierToken, IntKeywordToken, LessThanSignToken, PeriodToken, StringKeywordToken, VoidKeywordToken } from '../Token/Tokens';
 import { ArrayTypeAnnotation } from './ArrayTypeAnnotation';
 import { CommaSeparator } from './CommaSeparator';
 import { Identifier, IdentifierStartToken } from './Identifier';
-import { Node } from './Node';
-import { NodeKind } from './NodeKind';
+import { Node, NodeKind } from './Nodes';
 
 export const TypeReferenceChildNames: ReadonlyArray<keyof TypeReference> = [
     'moduleIdentifier',

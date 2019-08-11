@@ -2,43 +2,62 @@
     "kind": "ModuleDeclaration",
     "identifier": "externFunctionDeclaration",
     "locals": [
-        "ReadFile",
-        "WriteFile"
-    ],
-    "members": [
         {
-            "kind": "ExternFunctionDeclaration",
+            "kind": "ExternFunctionGroupDeclaration",
             "identifier": "ReadFile",
-            "locals": [
-                "filePath"
-            ],
-            "returnType": "Int[]",
-            "parameters": [
+            "type": "ReadFile",
+            "overloads": [
                 {
-                    "kind": "DataDeclaration",
-                    "identifier": "filePath",
-                    "type": "String"
+                    "kind": "ExternFunctionDeclaration",
+                    "identifier": "ReadFile",
+                    "locals": [
+                        "filePath"
+                    ],
+                    "type": "ReadFile: Int[](String)",
+                    "returnType": "Int[]",
+                    "parameters": [
+                        {
+                            "kind": "DataDeclaration",
+                            "declarationKind": "Parameter",
+                            "identifier": "filePath",
+                            "typeAnnotation": "String",
+                            "operator": null,
+                            "type": "String"
+                        }
+                    ]
                 }
             ]
         },
         {
-            "kind": "ExternFunctionDeclaration",
+            "kind": "ExternFunctionGroupDeclaration",
             "identifier": "WriteFile",
-            "locals": [
-                "filePath"
-            ],
-            "returnType": "Void",
-            "parameters": [
+            "type": "WriteFile",
+            "overloads": [
                 {
-                    "kind": "DataDeclaration",
-                    "identifier": "filePath",
-                    "type": "String"
+                    "kind": "ExternFunctionDeclaration",
+                    "identifier": "WriteFile",
+                    "locals": [
+                        "filePath"
+                    ],
+                    "type": "WriteFile: Void(String)",
+                    "returnType": "Void",
+                    "parameters": [
+                        {
+                            "kind": "DataDeclaration",
+                            "declarationKind": "Parameter",
+                            "identifier": "filePath",
+                            "typeAnnotation": "String",
+                            "operator": null,
+                            "type": "String"
+                        }
+                    ],
+                    "nativeSymbol": {
+                        "kind": "StringLiteralExpression",
+                        "type": "String",
+                        "value": "WriteFile"
+                    }
                 }
-            ],
-            "nativeSymbol": {
-                "kind": "StringLiteralExpression",
-                "type": "String"
-            }
+            ]
         }
     ]
 }

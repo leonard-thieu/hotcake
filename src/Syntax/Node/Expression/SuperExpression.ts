@@ -1,6 +1,6 @@
-import { SuperKeywordToken } from '../../Token/Token';
-import { NodeKind } from '../NodeKind';
-import { Expression } from './Expression';
+import { SuperKeywordToken } from '../../Token/Tokens';
+import { NodeKind } from '../Nodes';
+import { Expression } from './Expressions';
 
 export const SuperExpressionChildNames: ReadonlyArray<keyof SuperExpression> = [
     'newlines',

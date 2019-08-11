@@ -2,50 +2,59 @@
     "kind": "ModuleDeclaration",
     "identifier": "forwardReferenceOfTypeFromTypeMember",
     "locals": [
-        "List",
-        "Node"
-    ],
-    "members": [
         {
             "kind": "ClassDeclaration",
-            "locals": [
-                "node",
-                "New"
-            ],
             "identifier": "List",
             "type": "List",
-            "baseType": "Object",
-            "members": [
+            "superType": "Object",
+            "locals": [
                 {
                     "kind": "DataDeclaration",
-                    "declarationKind": "FieldKeyword",
+                    "declarationKind": "Field",
                     "identifier": "node",
+                    "typeAnnotation": "Node",
+                    "operator": null,
                     "type": "Node"
                 },
                 {
-                    "kind": "ClassMethodDeclaration",
+                    "kind": "ClassMethodGroupDeclaration",
                     "identifier": "New",
-                    "locals": [],
-                    "returnType": "List",
-                    "parameters": []
+                    "type": "New List",
+                    "overloads": [
+                        {
+                            "kind": "ClassMethodDeclaration",
+                            "identifier": "New",
+                            "locals": [],
+                            "type": "New List()",
+                            "returnType": "List",
+                            "parameters": [],
+                            "statements": []
+                        }
+                    ]
                 }
             ]
         },
         {
             "kind": "ClassDeclaration",
-            "locals": [
-                "New"
-            ],
             "identifier": "Node",
             "type": "Node",
-            "baseType": "Object",
-            "members": [
+            "superType": "Object",
+            "locals": [
                 {
-                    "kind": "ClassMethodDeclaration",
+                    "kind": "ClassMethodGroupDeclaration",
                     "identifier": "New",
-                    "locals": [],
-                    "returnType": "Node",
-                    "parameters": []
+                    "type": "New Node",
+                    "overloads": [
+                        {
+                            "kind": "ClassMethodDeclaration",
+                            "identifier": "New",
+                            "locals": [],
+                            "type": "New Node()",
+                            "returnType": "Node",
+                            "parameters": [],
+                            "statements": []
+                        }
+                    ]
                 }
             ]
         }

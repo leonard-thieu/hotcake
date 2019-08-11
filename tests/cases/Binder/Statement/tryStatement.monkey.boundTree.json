@@ -2,235 +2,314 @@
     "kind": "ModuleDeclaration",
     "identifier": "tryStatement",
     "locals": [
-        "Throwable",
-        "Ex1",
-        "Ex2",
-        "Print",
-        "Main"
-    ],
-    "members": [
         {
             "kind": "ClassDeclaration",
-            "locals": [
-                "New"
-            ],
             "identifier": "Throwable",
             "type": "Throwable",
-            "baseType": "Object",
-            "members": [
+            "superType": "Object",
+            "locals": [
                 {
-                    "kind": "ClassMethodDeclaration",
+                    "kind": "ClassMethodGroupDeclaration",
                     "identifier": "New",
-                    "locals": [],
-                    "returnType": "Throwable",
-                    "parameters": []
+                    "type": "New Throwable",
+                    "overloads": [
+                        {
+                            "kind": "ClassMethodDeclaration",
+                            "identifier": "New",
+                            "locals": [],
+                            "type": "New Throwable()",
+                            "returnType": "Throwable",
+                            "parameters": [],
+                            "statements": []
+                        }
+                    ]
                 }
             ]
         },
         {
             "kind": "ClassDeclaration",
-            "locals": [
-                "New"
-            ],
             "identifier": "Ex1",
             "type": "Ex1",
-            "baseType": "Throwable",
-            "members": [
+            "superType": "Throwable",
+            "locals": [
                 {
-                    "kind": "ClassMethodDeclaration",
+                    "kind": "ClassMethodGroupDeclaration",
                     "identifier": "New",
-                    "locals": [],
-                    "returnType": "Ex1",
-                    "parameters": []
+                    "type": "New Ex1",
+                    "overloads": [
+                        {
+                            "kind": "ClassMethodDeclaration",
+                            "identifier": "New",
+                            "locals": [],
+                            "type": "New Ex1()",
+                            "returnType": "Ex1",
+                            "parameters": [],
+                            "statements": []
+                        }
+                    ]
                 }
             ]
         },
         {
             "kind": "ClassDeclaration",
-            "locals": [
-                "New"
-            ],
             "identifier": "Ex2",
             "type": "Ex2",
-            "baseType": "Throwable",
-            "members": [
+            "superType": "Throwable",
+            "locals": [
                 {
-                    "kind": "ClassMethodDeclaration",
+                    "kind": "ClassMethodGroupDeclaration",
                     "identifier": "New",
-                    "locals": [],
-                    "returnType": "Ex2",
-                    "parameters": []
+                    "type": "New Ex2",
+                    "overloads": [
+                        {
+                            "kind": "ClassMethodDeclaration",
+                            "identifier": "New",
+                            "locals": [],
+                            "type": "New Ex2()",
+                            "returnType": "Ex2",
+                            "parameters": [],
+                            "statements": []
+                        }
+                    ]
                 }
             ]
         },
         {
-            "kind": "FunctionDeclaration",
+            "kind": "FunctionGroupDeclaration",
             "identifier": "Print",
-            "locals": [
-                "message"
-            ],
-            "returnType": "Int",
-            "parameters": [
+            "type": "Print",
+            "overloads": [
                 {
-                    "kind": "DataDeclaration",
-                    "identifier": "message",
-                    "type": "String"
+                    "kind": "FunctionDeclaration",
+                    "identifier": "Print",
+                    "locals": [
+                        "message"
+                    ],
+                    "type": "Print: Int(String)",
+                    "returnType": "Int",
+                    "parameters": [
+                        {
+                            "kind": "DataDeclaration",
+                            "declarationKind": "Parameter",
+                            "identifier": "message",
+                            "typeAnnotation": "String",
+                            "operator": null,
+                            "type": "String"
+                        }
+                    ],
+                    "statements": []
                 }
-            ],
-            "statements": []
+            ]
         },
         {
-            "kind": "FunctionDeclaration",
+            "kind": "FunctionGroupDeclaration",
             "identifier": "Main",
-            "locals": [],
-            "returnType": "Int",
-            "parameters": [],
-            "statements": [
+            "type": "Main",
+            "overloads": [
                 {
-                    "kind": "ForLoop",
-                    "locals": [
-                        "i"
-                    ],
-                    "statement": {
-                        "kind": "DataDeclarationStatement",
-                        "declaration": {
-                            "kind": "DataDeclaration",
-                            "declarationKind": "LocalKeyword",
-                            "identifier": "i",
-                            "type": "Int",
-                            "expression": {
-                                "kind": "IntegerLiteralExpression",
-                                "type": "Int"
-                            }
-                        }
-                    },
-                    "lastValueExpression": {
-                        "kind": "IntegerLiteralExpression",
-                        "type": "Int"
-                    },
+                    "kind": "FunctionDeclaration",
+                    "identifier": "Main",
+                    "locals": [],
+                    "type": "Main: Int()",
+                    "returnType": "Int",
+                    "parameters": [],
                     "statements": [
                         {
-                            "kind": "TryStatement",
-                            "locals": [],
-                            "statements": [
-                                {
-                                    "kind": "IfStatement",
-                                    "locals": [],
+                            "kind": "ForLoop",
+                            "locals": [
+                                "i"
+                            ],
+                            "firstValueStatement": {
+                                "kind": "DataDeclarationStatement",
+                                "dataDeclaration": {
+                                    "kind": "DataDeclaration",
+                                    "declarationKind": "Local",
+                                    "identifier": "i",
+                                    "operator": "ColonEqualsSign",
                                     "expression": {
-                                        "kind": "GroupingExpression",
+                                        "kind": "IntegerLiteralExpression",
                                         "type": "Int",
-                                        "expression": {
-                                            "kind": "BinaryExpression",
-                                            "type": "Int",
-                                            "leftOperand": {
-                                                "kind": "IdentifierExpression",
-                                                "type": "Int",
-                                                "identifier": "i"
-                                            },
-                                            "rightOperand": {
-                                                "kind": "IntegerLiteralExpression",
-                                                "type": "Int"
-                                            }
-                                        }
+                                        "value": "1"
                                     },
-                                    "statements": [
-                                        {
-                                            "kind": "ThrowStatement",
-                                            "expression": {
-                                                "kind": "InvokeExpression",
-                                                "type": "Ex1",
-                                                "invocationType": "New Ex1()",
-                                                "invokableExpression": {
-                                                    "kind": "NewExpression",
-                                                    "type": "New"
-                                                },
-                                                "arguments": []
-                                            }
-                                        }
-                                    ],
-                                    "elseClause": {
-                                        "kind": "ElseClause",
-                                        "locals": [],
-                                        "statements": [
-                                            {
-                                                "kind": "ThrowStatement",
-                                                "expression": {
-                                                    "kind": "InvokeExpression",
-                                                    "type": "Ex2",
-                                                    "invocationType": "New Ex2()",
-                                                    "invokableExpression": {
-                                                        "kind": "NewExpression",
-                                                        "type": "New"
-                                                    },
-                                                    "arguments": []
-                                                }
-                                            }
-                                        ]
+                                    "type": "Int"
+                                }
+                            },
+                            "lastValueExpression": {
+                                "kind": "BinaryExpression",
+                                "type": "Bool",
+                                "leftOperand": {
+                                    "kind": "IdentifierExpression",
+                                    "type": "Int",
+                                    "identifier": "i"
+                                },
+                                "operator": "LessThanOrEquals",
+                                "rightOperand": {
+                                    "kind": "IntegerLiteralExpression",
+                                    "type": "Int",
+                                    "value": "10"
+                                }
+                            },
+                            "stepValueClause": {
+                                "kind": "AssignmentStatement",
+                                "leftOperand": {
+                                    "kind": "IdentifierExpression",
+                                    "type": "Int",
+                                    "identifier": "i"
+                                },
+                                "operator": "AdditionUpdateAssignment",
+                                "rightOperand": {
+                                    "kind": "BinaryExpression",
+                                    "type": "Int",
+                                    "leftOperand": {
+                                        "kind": "IdentifierExpression",
+                                        "type": "Int",
+                                        "identifier": "i"
+                                    },
+                                    "operator": "Addition",
+                                    "rightOperand": {
+                                        "kind": "IntegerLiteralExpression",
+                                        "type": "Int",
+                                        "value": "1"
                                     }
                                 }
-                            ],
-                            "catchClauses": [
+                            },
+                            "statements": [
                                 {
-                                    "kind": "CatchClause",
-                                    "locals": [
-                                        "ex"
-                                    ],
-                                    "parameter": {
-                                        "kind": "DataDeclaration",
-                                        "identifier": "ex",
-                                        "type": "Ex1"
-                                    },
+                                    "kind": "TryStatement",
+                                    "locals": [],
                                     "statements": [
                                         {
-                                            "kind": "ExpressionStatement",
+                                            "kind": "IfStatement",
+                                            "locals": [],
                                             "expression": {
-                                                "kind": "InvokeExpression",
+                                                "kind": "GroupingExpression",
                                                 "type": "Int",
-                                                "invocationType": "Print: Int(String)",
-                                                "invokableExpression": {
-                                                    "kind": "IdentifierExpression",
-                                                    "type": "Print",
-                                                    "identifier": "Print"
-                                                },
-                                                "arguments": [
+                                                "expression": {
+                                                    "kind": "BinaryExpression",
+                                                    "type": "Int",
+                                                    "leftOperand": {
+                                                        "kind": "IdentifierExpression",
+                                                        "type": "Int",
+                                                        "identifier": "i"
+                                                    },
+                                                    "operator": "BitwiseAnd",
+                                                    "rightOperand": {
+                                                        "kind": "IntegerLiteralExpression",
+                                                        "type": "Int",
+                                                        "value": "1"
+                                                    }
+                                                }
+                                            },
+                                            "statements": [
+                                                {
+                                                    "kind": "ThrowStatement",
+                                                    "expression": {
+                                                        "kind": "InvokeExpression",
+                                                        "type": "Ex1",
+                                                        "invocationType": "New Ex1()",
+                                                        "invokableExpression": {
+                                                            "kind": "NewExpression",
+                                                            "type": "New Ex1",
+                                                            "typeReference": "Ex1"
+                                                        },
+                                                        "arguments": []
+                                                    }
+                                                }
+                                            ],
+                                            "elseClause": {
+                                                "kind": "ElseClause",
+                                                "locals": [],
+                                                "statements": [
                                                     {
-                                                        "kind": "StringLiteralExpression",
-                                                        "type": "String"
+                                                        "kind": "ThrowStatement",
+                                                        "expression": {
+                                                            "kind": "InvokeExpression",
+                                                            "type": "Ex2",
+                                                            "invocationType": "New Ex2()",
+                                                            "invokableExpression": {
+                                                                "kind": "NewExpression",
+                                                                "type": "New Ex2",
+                                                                "typeReference": "Ex2"
+                                                            },
+                                                            "arguments": []
+                                                        }
                                                     }
                                                 ]
                                             }
                                         }
-                                    ]
-                                },
-                                {
-                                    "kind": "CatchClause",
-                                    "locals": [
-                                        "ex"
                                     ],
-                                    "parameter": {
-                                        "kind": "DataDeclaration",
-                                        "identifier": "ex",
-                                        "type": "Ex2"
-                                    },
-                                    "statements": [
+                                    "catchClauses": [
                                         {
-                                            "kind": "ExpressionStatement",
-                                            "expression": {
-                                                "kind": "InvokeExpression",
-                                                "type": "Int",
-                                                "invocationType": "Print: Int(String)",
-                                                "invokableExpression": {
-                                                    "kind": "IdentifierExpression",
-                                                    "type": "Print",
-                                                    "identifier": "Print"
-                                                },
-                                                "arguments": [
-                                                    {
-                                                        "kind": "StringLiteralExpression",
-                                                        "type": "String"
+                                            "kind": "CatchClause",
+                                            "locals": [
+                                                "ex"
+                                            ],
+                                            "parameter": {
+                                                "kind": "DataDeclaration",
+                                                "declarationKind": "Parameter",
+                                                "identifier": "ex",
+                                                "typeAnnotation": "Ex1",
+                                                "operator": null,
+                                                "type": "Ex1"
+                                            },
+                                            "statements": [
+                                                {
+                                                    "kind": "ExpressionStatement",
+                                                    "expression": {
+                                                        "kind": "InvokeExpression",
+                                                        "type": "Int",
+                                                        "invocationType": "Print: Int(String)",
+                                                        "invokableExpression": {
+                                                            "kind": "IdentifierExpression",
+                                                            "type": "Print",
+                                                            "identifier": "Print"
+                                                        },
+                                                        "arguments": [
+                                                            {
+                                                                "kind": "StringLiteralExpression",
+                                                                "type": "String",
+                                                                "value": "Caught an ex1!"
+                                                            }
+                                                        ]
                                                     }
-                                                ]
-                                            }
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "kind": "CatchClause",
+                                            "locals": [
+                                                "ex"
+                                            ],
+                                            "parameter": {
+                                                "kind": "DataDeclaration",
+                                                "declarationKind": "Parameter",
+                                                "identifier": "ex",
+                                                "typeAnnotation": "Ex2",
+                                                "operator": null,
+                                                "type": "Ex2"
+                                            },
+                                            "statements": [
+                                                {
+                                                    "kind": "ExpressionStatement",
+                                                    "expression": {
+                                                        "kind": "InvokeExpression",
+                                                        "type": "Int",
+                                                        "invocationType": "Print: Int(String)",
+                                                        "invokableExpression": {
+                                                            "kind": "IdentifierExpression",
+                                                            "type": "Print",
+                                                            "identifier": "Print"
+                                                        },
+                                                        "arguments": [
+                                                            {
+                                                                "kind": "StringLiteralExpression",
+                                                                "type": "String",
+                                                                "value": "Caught an ex2!"
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
                                         }
                                     ]
                                 }

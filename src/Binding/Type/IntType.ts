@@ -1,18 +1,28 @@
+import { CONSTRUCTOR_NAME } from '../Binder';
+import { BoundTreeWalker } from '../BoundTreeWalker';
+import { BoundNodeKind } from '../Node/BoundNodes';
+import { BoundIntrinsicTypeDeclaration } from '../Node/Declaration/BoundIntrinsicTypeDeclaration';
 import { Type } from './Type';
-import { TypeKind } from './TypeKind';
-import { Types } from './Types';
+import { TypeKind, Types } from './Types';
 
 export class IntType extends Type {
-    static readonly type = new IntType();
-
-    private constructor() {
+    constructor(readonly declaration: BoundIntrinsicTypeDeclaration) {
         super();
     }
 
     readonly kind = TypeKind.Int;
 
     isConvertibleTo(target: Types): boolean {
-        // TODO: Boxing conversion
+        switch (target.declaration.kind) {
+            case BoundNodeKind.ExternClassDeclaration:
+            case BoundNodeKind.ClassDeclaration: {
+                const method = BoundTreeWalker.getMethod(target.declaration, CONSTRUCTOR_NAME, undefined, this);
+                if (method) {
+                    return true;
+                }
+                break;
+            }
+        }
 
         switch (target.kind) {
             case TypeKind.Int:

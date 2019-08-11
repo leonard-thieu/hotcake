@@ -1,17 +1,19 @@
-import { BoundSymbolTable } from '../../../Binding/BoundSymbol';
 import { MissableToken } from '../../Token/MissingToken';
 import { SkippedToken } from '../../Token/SkippedToken';
-import { AbstractKeywordToken, ClassKeywordToken, EndKeywordToken, ExtendsKeywordToken, FinalKeywordToken, GreaterThanSignToken, ImplementsKeywordToken, LessThanSignToken, NewlineToken } from '../../Token/Token';
+import { AbstractKeywordToken, ClassKeywordToken, ClosingParenthesisToken, EndKeywordToken, ExtendsKeywordToken, FinalKeywordToken, GreaterThanSignToken, ImplementsKeywordToken, LessThanSignToken, MethodKeywordToken, NewKeywordToken, NewlineToken, OpeningParenthesisToken, PropertyKeywordToken } from '../../Token/Tokens';
 import { CommaSeparator } from '../CommaSeparator';
 import { MissableIdentifier } from '../Identifier';
-import { NodeKind } from '../NodeKind';
+import { NodeKind } from '../Nodes';
+import { Statements } from '../Statement/Statements';
+import { TypeAnnotation } from '../TypeAnnotation';
 import { MissableTypeReference, TypeReference } from '../TypeReference';
 import { AccessibilityDirective } from './AccessibilityDirective';
-import { ClassMethodDeclaration } from './ClassMethodDeclaration';
 import { DataDeclarationSequence } from './DataDeclarationSequence';
-import { Declaration } from './Declaration';
+import { Declaration } from './Declarations';
 import { FunctionDeclaration } from './FunctionDeclaration';
 import { TypeParameter } from './TypeParameter';
+
+// #region Class declaration
 
 export const ClassDeclarationChildNames: ReadonlyArray<keyof ClassDeclaration> = [
     'classKeyword',
@@ -20,7 +22,7 @@ export const ClassDeclarationChildNames: ReadonlyArray<keyof ClassDeclaration> =
     'typeParameters',
     'greaterThanSign',
     'extendsKeyword',
-    'baseType',
+    'superType',
     'implementsKeyword',
     'implementedTypes',
     'attribute',
@@ -42,7 +44,7 @@ export class ClassDeclaration extends Declaration {
 
     // Extends
     extendsKeyword?: ExtendsKeywordToken = undefined;
-    baseType?: MissableTypeReference = undefined;
+    superType?: MissableTypeReference = undefined;
 
     // Implements
     implementsKeyword?: ImplementsKeywordToken = undefined;
@@ -50,11 +52,9 @@ export class ClassDeclaration extends Declaration {
 
     attribute?: AbstractKeywordToken | FinalKeywordToken = undefined;
 
-    members: (ClassDeclarationMember | SkippedToken)[] = undefined!;
+    members: ClassDeclarationMember[] = undefined!;
     endKeyword: MissableToken<EndKeywordToken> = undefined!;
     endClassKeyword?: ClassKeywordToken = undefined;
-
-    locals = new BoundSymbolTable();
 }
 
 export type ClassDeclarationMember =
@@ -63,4 +63,39 @@ export type ClassDeclarationMember =
     | ClassMethodDeclaration
     | AccessibilityDirective
     | NewlineToken
+    | SkippedToken
     ;
+
+// #endregion
+
+// #region Class method declaration
+
+export const ClassMethodDeclarationChildNames: ReadonlyArray<keyof ClassMethodDeclaration> = [
+    'methodKeyword',
+    'identifier',
+    'returnType',
+    'openingParenthesis',
+    'parameters',
+    'closingParenthesis',
+    'attributes',
+    'statements',
+    'endKeyword',
+    'endMethodKeyword',
+];
+
+export class ClassMethodDeclaration extends Declaration {
+    readonly kind = NodeKind.ClassMethodDeclaration;
+
+    methodKeyword: MethodKeywordToken = undefined!;
+    identifier: NewKeywordToken | MissableIdentifier = undefined!;
+    returnType?: TypeAnnotation = undefined;
+    openingParenthesis: MissableToken<OpeningParenthesisToken> = undefined!;
+    parameters: DataDeclarationSequence = undefined!;
+    closingParenthesis: MissableToken<ClosingParenthesisToken> = undefined!;
+    attributes: (AbstractKeywordToken | FinalKeywordToken | PropertyKeywordToken)[] = undefined!;
+    statements?: (Statements | SkippedToken)[] = undefined;
+    endKeyword?: MissableToken<EndKeywordToken> = undefined;
+    endMethodKeyword?: MethodKeywordToken = undefined;
+}
+
+// #endregion

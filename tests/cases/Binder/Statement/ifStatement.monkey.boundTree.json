@@ -2,76 +2,63 @@
     "kind": "ModuleDeclaration",
     "identifier": "ifStatement",
     "locals": [
-        "Print",
-        "Main"
-    ],
-    "members": [
         {
-            "kind": "FunctionDeclaration",
+            "kind": "FunctionGroupDeclaration",
             "identifier": "Print",
-            "locals": [
-                "message"
-            ],
-            "returnType": "Int",
-            "parameters": [
+            "type": "Print",
+            "overloads": [
                 {
-                    "kind": "DataDeclaration",
-                    "identifier": "message",
-                    "type": "String"
-                }
-            ],
-            "statements": []
-        },
-        {
-            "kind": "FunctionDeclaration",
-            "identifier": "Main",
-            "locals": [],
-            "returnType": "Int",
-            "parameters": [],
-            "statements": [
-                {
-                    "kind": "IfStatement",
-                    "locals": [],
-                    "expression": {
-                        "kind": "BinaryExpression",
-                        "type": "Bool",
-                        "leftOperand": {
-                            "kind": "IntegerLiteralExpression",
-                            "type": "Int"
-                        },
-                        "rightOperand": {
-                            "kind": "IntegerLiteralExpression",
-                            "type": "Int"
-                        }
-                    },
-                    "statements": [
+                    "kind": "FunctionDeclaration",
+                    "identifier": "Print",
+                    "locals": [
+                        "message"
+                    ],
+                    "type": "Print: Int(String)",
+                    "returnType": "Int",
+                    "parameters": [
                         {
-                            "kind": "ExpressionStatement",
-                            "expression": {
-                                "kind": "InvokeExpression",
-                                "type": "Int",
-                                "invocationType": "Print: Int(String)",
-                                "invokableExpression": {
-                                    "kind": "IdentifierExpression",
-                                    "type": "Print",
-                                    "identifier": "Print"
-                                },
-                                "arguments": [
-                                    {
-                                        "kind": "StringLiteralExpression",
-                                        "type": "String"
-                                    }
-                                ]
-                            }
+                            "kind": "DataDeclaration",
+                            "declarationKind": "Parameter",
+                            "identifier": "message",
+                            "typeAnnotation": "String",
+                            "operator": null,
+                            "type": "String"
                         }
                     ],
-                    "elseIfClauses": [
+                    "statements": []
+                }
+            ]
+        },
+        {
+            "kind": "FunctionGroupDeclaration",
+            "identifier": "Main",
+            "type": "Main",
+            "overloads": [
+                {
+                    "kind": "FunctionDeclaration",
+                    "identifier": "Main",
+                    "locals": [],
+                    "type": "Main: Int()",
+                    "returnType": "Int",
+                    "parameters": [],
+                    "statements": [
                         {
-                            "kind": "ElseIfClause",
+                            "kind": "IfStatement",
                             "locals": [],
                             "expression": {
-                                "kind": "NullExpression",
-                                "type": "Null"
+                                "kind": "BinaryExpression",
+                                "type": "Bool",
+                                "leftOperand": {
+                                    "kind": "IntegerLiteralExpression",
+                                    "type": "Int",
+                                    "value": "1"
+                                },
+                                "operator": "GreaterThan",
+                                "rightOperand": {
+                                    "kind": "IntegerLiteralExpression",
+                                    "type": "Int",
+                                    "value": "2"
+                                }
                             },
                             "statements": [
                                 {
@@ -88,39 +75,73 @@
                                         "arguments": [
                                             {
                                                 "kind": "StringLiteralExpression",
-                                                "type": "String"
+                                                "type": "String",
+                                                "value": "1 > 2"
                                             }
                                         ]
                                     }
                                 }
-                            ]
-                        }
-                    ],
-                    "elseClause": {
-                        "kind": "ElseClause",
-                        "locals": [],
-                        "statements": [
-                            {
-                                "kind": "ExpressionStatement",
-                                "expression": {
-                                    "kind": "InvokeExpression",
-                                    "type": "Int",
-                                    "invocationType": "Print: Int(String)",
-                                    "invokableExpression": {
-                                        "kind": "IdentifierExpression",
-                                        "type": "Print",
-                                        "identifier": "Print"
+                            ],
+                            "elseIfClauses": [
+                                {
+                                    "kind": "ElseIfClause",
+                                    "locals": [],
+                                    "expression": {
+                                        "kind": "NullExpression",
+                                        "type": "Null"
                                     },
-                                    "arguments": [
+                                    "statements": [
                                         {
-                                            "kind": "StringLiteralExpression",
-                                            "type": "String"
+                                            "kind": "ExpressionStatement",
+                                            "expression": {
+                                                "kind": "InvokeExpression",
+                                                "type": "Int",
+                                                "invocationType": "Print: Int(String)",
+                                                "invokableExpression": {
+                                                    "kind": "IdentifierExpression",
+                                                    "type": "Print",
+                                                    "identifier": "Print"
+                                                },
+                                                "arguments": [
+                                                    {
+                                                        "kind": "StringLiteralExpression",
+                                                        "type": "String",
+                                                        "value": "Null"
+                                                    }
+                                                ]
+                                            }
                                         }
                                     ]
                                 }
+                            ],
+                            "elseClause": {
+                                "kind": "ElseClause",
+                                "locals": [],
+                                "statements": [
+                                    {
+                                        "kind": "ExpressionStatement",
+                                        "expression": {
+                                            "kind": "InvokeExpression",
+                                            "type": "Int",
+                                            "invocationType": "Print: Int(String)",
+                                            "invokableExpression": {
+                                                "kind": "IdentifierExpression",
+                                                "type": "Print",
+                                                "identifier": "Print"
+                                            },
+                                            "arguments": [
+                                                {
+                                                    "kind": "StringLiteralExpression",
+                                                    "type": "String",
+                                                    "value": "Go west"
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
                             }
-                        ]
-                    }
+                        }
+                    ]
                 }
             ]
         }

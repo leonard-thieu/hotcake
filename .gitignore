@@ -9,3 +9,5 @@ node_modules/
 !/scripts/*.js
 *.js.map
 /vscode/syntaxes/*.json
+/tests/cases/**/*.yaml
+/tests/cases/Binder/smokeTest.monkey

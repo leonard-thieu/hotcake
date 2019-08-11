@@ -1,10 +1,9 @@
-import { BoundSymbolTable } from '../../../Binding/BoundSymbol';
 import { MissableToken } from '../../Token/MissingToken';
 import { SkippedToken } from '../../Token/SkippedToken';
-import { ForeverKeywordToken, RepeatKeywordToken, UntilKeywordToken } from '../../Token/Token';
-import { MissableExpression } from '../Expression/Expression';
-import { NodeKind } from '../NodeKind';
-import { Statement, Statements } from './Statement';
+import { ForeverKeywordToken, RepeatKeywordToken, UntilKeywordToken } from '../../Token/Tokens';
+import { MissableExpression } from '../Expression/Expressions';
+import { NodeKind } from '../Nodes';
+import { Statement, Statements } from './Statements';
 
 export const RepeatLoopChildNames: ReadonlyArray<keyof RepeatLoop> = [
     'repeatKeyword',
@@ -21,6 +20,4 @@ export class RepeatLoop extends Statement {
     statements: (Statements | SkippedToken)[] = undefined!;
     foreverOrUntilKeyword: MissableToken<ForeverKeywordToken | UntilKeywordToken> = undefined!;
     untilExpression?: MissableExpression = undefined;
-
-    locals = new BoundSymbolTable();
 }

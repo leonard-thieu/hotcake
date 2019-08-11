@@ -2,51 +2,66 @@
     "kind": "ModuleDeclaration",
     "identifier": "nullExpression",
     "locals": [
-        "UnboxBool",
-        "Main"
-    ],
-    "members": [
         {
-            "kind": "FunctionDeclaration",
+            "kind": "FunctionGroupDeclaration",
             "identifier": "UnboxBool",
-            "locals": [
-                "box"
-            ],
-            "returnType": "Bool",
-            "parameters": [
+            "type": "UnboxBool",
+            "overloads": [
                 {
-                    "kind": "DataDeclaration",
-                    "identifier": "box",
-                    "type": "Object"
+                    "kind": "FunctionDeclaration",
+                    "identifier": "UnboxBool",
+                    "locals": [
+                        "box"
+                    ],
+                    "type": "UnboxBool: Bool(Object)",
+                    "returnType": "Bool",
+                    "parameters": [
+                        {
+                            "kind": "DataDeclaration",
+                            "declarationKind": "Parameter",
+                            "identifier": "box",
+                            "typeAnnotation": "Object",
+                            "operator": null,
+                            "type": "Object"
+                        }
+                    ],
+                    "statements": []
                 }
-            ],
-            "statements": []
+            ]
         },
         {
-            "kind": "FunctionDeclaration",
+            "kind": "FunctionGroupDeclaration",
             "identifier": "Main",
-            "locals": [],
-            "returnType": "Int",
-            "parameters": [],
-            "statements": [
+            "type": "Main",
+            "overloads": [
                 {
-                    "kind": "ExpressionStatement",
-                    "expression": {
-                        "kind": "InvokeExpression",
-                        "type": "Bool",
-                        "invocationType": "UnboxBool: Bool(Object)",
-                        "invokableExpression": {
-                            "kind": "IdentifierExpression",
-                            "type": "UnboxBool",
-                            "identifier": "UnboxBool"
-                        },
-                        "arguments": [
-                            {
-                                "kind": "NullExpression",
-                                "type": "Null"
+                    "kind": "FunctionDeclaration",
+                    "identifier": "Main",
+                    "locals": [],
+                    "type": "Main: Int()",
+                    "returnType": "Int",
+                    "parameters": [],
+                    "statements": [
+                        {
+                            "kind": "ExpressionStatement",
+                            "expression": {
+                                "kind": "InvokeExpression",
+                                "type": "Bool",
+                                "invocationType": "UnboxBool: Bool(Object)",
+                                "invokableExpression": {
+                                    "kind": "IdentifierExpression",
+                                    "type": "UnboxBool",
+                                    "identifier": "UnboxBool"
+                                },
+                                "arguments": [
+                                    {
+                                        "kind": "NullExpression",
+                                        "type": "Null"
+                                    }
+                                ]
                             }
-                        ]
-                    }
+                        }
+                    ]
                 }
             ]
         }

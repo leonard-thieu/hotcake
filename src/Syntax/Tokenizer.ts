@@ -1,14 +1,14 @@
-import { assertNever } from '../assertNever';
+import { Evaluator } from '../Evaluator';
+import { assertNever } from '../util';
 import { PreprocessorModuleDeclaration } from './Node/Declaration/PreprocessorModuleDeclaration';
-import { Directives } from './Node/Directive/Directive';
-import { MissableExpression } from './Node/Expression/Expression';
-import { NodeKind } from './Node/NodeKind';
-import { Tokens } from './Token/Token';
-import { TokenKind } from './Token/TokenKind';
+import { Directives } from './Node/Directive/Directives';
+import { MissableExpression } from './Node/Expression/Expressions';
+import { NodeKind } from './Node/Nodes';
+import { TokenKind, Tokens } from './Token/Tokens';
 
 export class Tokenizer {
     private document: string = undefined!;
-    private configVars: Map<string, any> = undefined!;
+    private configVars: ConfigurationVariableMap = undefined!;
     private tokens: Tokens[] = undefined!;
 
     getTokens(
@@ -16,7 +16,7 @@ export class Tokenizer {
         configVars: ConfigurationVariables,
     ): Tokens[] {
         this.document = preprocessorModuleDeclaration.document;
-        this.configVars = createConfigurationVariableMap(configVars);
+        this.configVars = new ConfigurationVariableMap(Object.entries(configVars));
         this.tokens = [];
 
         this.readMembers(preprocessorModuleDeclaration.members);
@@ -60,7 +60,7 @@ export class Tokenizer {
                      *       Looks like CD and MODPATH are settable but are always overwritten.
                      */
                     const varName = member.name.getText(this.document);
-                    const value = this.eval(member.expression);
+                    let value = this.eval(member.expression);
 
                     const { kind } = member.operator;
                     switch (kind) {
@@ -69,12 +69,12 @@ export class Tokenizer {
                             break;
                         }
                         case TokenKind.PlusSignEqualsSign: {
-                            let v = value as string;
-                            if (!v.startsWith(';')) {
-                                v = ';' + v;
+                            value = value as string;
+                            if (!value.startsWith(';')) {
+                                value = ';' + value;
                             }
-                            v = this.configVars.get(varName) + v;
-                            this.configVars.set(varName, v);
+                            value = this.configVars.get(varName) + value;
+                            this.configVars.set(varName, value);
                             break;
                         }
                         case TokenKind.Missing: {
@@ -206,47 +206,7 @@ export class Tokenizer {
                 }
             }
             case NodeKind.StringLiteralExpression: {
-                let value = '';
-
-                for (const child of expression.children) {
-                    switch (child.kind) {
-                        case TokenKind.StringLiteralText: {
-                            value += child.getFullText(this.document);
-                            break;
-                        }
-                        case TokenKind.EscapeNull: { value += '\0'; break; }
-                        case TokenKind.EscapeCharacterTabulation: { value += '\t'; break; }
-                        case TokenKind.EscapeLineFeedLf: { value += '\n'; break; }
-                        case TokenKind.EscapeCarriageReturnCr: { value += '\r'; break; }
-                        case TokenKind.EscapeQuotationMark: { value += '"'; break; }
-                        case TokenKind.EscapeTilde: { value += '~'; break; }
-                        case TokenKind.EscapeUnicodeHexValue: {
-                            const text = child.getText(this.document);
-                            value += JSON.parse(`"\\${text.slice(/*start*/ 1)}"`);
-                            break;
-                        }
-                        case NodeKind.ConfigurationTag: {
-                            if (child.name) {
-                                const configurationTagName = child.name.getFullText(this.document);
-                                if (this.configVars.has(configurationTagName)) {
-                                    value += this.configVars.get(configurationTagName);
-                                }
-                            }
-                            break;
-                        }
-                        case TokenKind.Skipped:
-                        case TokenKind.InvalidEscapeSequence: {
-                            console.log(`Skipped ${JSON.stringify(child.kind)}`);
-                            break;
-                        }
-                        default: {
-                            assertNever(child);
-                            break;
-                        }
-                    }
-                }
-
-                return value;
+                return Evaluator.evalStringLiteral(expression, this.document, this.configVars);
             }
             case NodeKind.BooleanLiteralExpression: {
                 const { kind } = expression.value;
@@ -307,17 +267,13 @@ export interface ConfigurationVariables {
     [key: string]: any;
 }
 
-function createConfigurationVariableMap(configVars: ConfigurationVariables): Map<string, any> {
-    const configVarMap = new Map<string, any>(Object.entries(configVars));
-    const mapGet = configVarMap.get.bind(configVarMap);
-    configVarMap.get = function get(key: string) {
-        let value = mapGet(key);
+export class ConfigurationVariableMap extends Map<string, any> {
+    get(key: string): any {
+        let value = super.get(key);
         if (typeof value === 'undefined') {
             value = '';
         }
 
         return value;
-    };
-
-    return configVarMap;
+    }
 }

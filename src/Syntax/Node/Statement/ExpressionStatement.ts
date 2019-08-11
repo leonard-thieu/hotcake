@@ -1,6 +1,6 @@
-import { MissableExpression } from '../Expression/Expression';
-import { NodeKind } from '../NodeKind';
-import { Statement } from './Statement';
+import { MissableExpression } from '../Expression/Expressions';
+import { NodeKind } from '../Nodes';
+import { Statement } from './Statements';
 
 export const ExpressionStatementChildNames: ReadonlyArray<keyof ExpressionStatement> = [
     'expression',

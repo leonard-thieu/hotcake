@@ -1,13 +1,12 @@
-import { BoundSymbolTable } from '../../../Binding/BoundSymbol';
-import { Diagnostic } from '../../../Diagnostic';
+import { DiagnosticBag } from '../../../Diagnostics';
 import { SkippedToken } from '../../Token/SkippedToken';
-import { EOFToken, NewlineToken } from '../../Token/Token';
-import { NodeKind } from '../NodeKind';
+import { EOFToken, NewlineToken } from '../../Token/Tokens';
+import { NodeKind } from '../Nodes';
 import { AccessibilityDirective } from './AccessibilityDirective';
 import { AliasDirectiveSequence } from './AliasDirectiveSequence';
 import { ClassDeclaration } from './ClassDeclaration';
 import { DataDeclarationSequence } from './DataDeclarationSequence';
-import { Declaration } from './Declaration';
+import { Declaration } from './Declarations';
 import { ExternClassDeclaration } from './ExternDeclaration/ExternClassDeclaration';
 import { ExternDataDeclarationSequence } from './ExternDeclaration/ExternDataDeclarationSequence';
 import { ExternFunctionDeclaration } from './ExternDeclaration/ExternFunctionDeclaration';
@@ -41,13 +40,11 @@ export class ModuleDeclaration extends Declaration {
 
     strictNewlines: NewlineToken[] = undefined!;
     strictDirective?: StrictDirective = undefined;
-    headerMembers: (ModuleDeclarationHeaderMember | SkippedToken)[] = undefined!;
-    members: (ModuleDeclarationMember | SkippedToken)[] = undefined!;
+    headerMembers: ModuleDeclarationHeaderMember[] = undefined!;
+    members: ModuleDeclarationMember[] = undefined!;
     eofToken: EOFToken = undefined!;
 
-    parseDiagnostics?: Diagnostic[];
-
-    locals = new BoundSymbolTable();
+    readonly parseDiagnostics = new DiagnosticBag();
 }
 
 export type ModuleDeclarationHeaderMember =
@@ -56,6 +53,7 @@ export type ModuleDeclarationHeaderMember =
     | AliasDirectiveSequence
     | AccessibilityDirective
     | NewlineToken
+    | SkippedToken
     ;
 
 export type ModuleDeclarationMember =
@@ -68,4 +66,5 @@ export type ModuleDeclarationMember =
     | ClassDeclaration
     | ExternClassDeclaration
     | NewlineToken
+    | SkippedToken
     ;

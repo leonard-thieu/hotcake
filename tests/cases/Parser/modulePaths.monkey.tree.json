@@ -1237,6 +1237,7 @@
             },
             "parameters": {
                 "kind": "DataDeclarationSequence",
+                "dataDeclarationKeyword": null,
                 "children": []
             },
             "closingParenthesis": {

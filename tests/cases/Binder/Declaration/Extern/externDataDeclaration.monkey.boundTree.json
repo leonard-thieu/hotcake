@@ -2,36 +2,40 @@
     "kind": "ModuleDeclaration",
     "identifier": "externDataDeclaration",
     "locals": [
-        "Driver",
-        "ActiveDriver"
-    ],
-    "members": [
         {
             "kind": "ClassDeclaration",
-            "locals": [
-                "New"
-            ],
             "identifier": "Driver",
             "type": "Driver",
-            "baseType": "Object",
-            "members": [
+            "superType": "Object",
+            "locals": [
                 {
-                    "kind": "ClassMethodDeclaration",
+                    "kind": "ClassMethodGroupDeclaration",
                     "identifier": "New",
-                    "locals": [],
-                    "returnType": "Driver",
-                    "parameters": []
+                    "type": "New Driver",
+                    "overloads": [
+                        {
+                            "kind": "ClassMethodDeclaration",
+                            "identifier": "New",
+                            "locals": [],
+                            "type": "New Driver()",
+                            "returnType": "Driver",
+                            "parameters": [],
+                            "statements": []
+                        }
+                    ]
                 }
             ]
         },
         {
             "kind": "ExternDataDeclaration",
-            "declarationKind": "GlobalKeyword",
+            "declarationKind": "Global",
             "identifier": "ActiveDriver",
+            "typeAnnotation": "Driver",
             "type": "Driver",
             "nativeSymbol": {
                 "kind": "StringLiteralExpression",
-                "type": "String"
+                "type": "String",
+                "value": "xyzActiveDriver"
             }
         }
     ]

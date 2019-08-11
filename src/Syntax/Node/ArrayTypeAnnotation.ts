@@ -1,8 +1,7 @@
 import { MissableToken } from '../Token/MissingToken';
-import { ClosingSquareBracketToken, OpeningSquareBracketToken } from '../Token/Token';
-import { MissableExpression } from './Expression/Expression';
-import { Node } from './Node';
-import { NodeKind } from './NodeKind';
+import { ClosingSquareBracketToken, OpeningSquareBracketToken } from '../Token/Tokens';
+import { MissableExpression } from './Expression/Expressions';
+import { Node, NodeKind } from './Nodes';
 
 export const ArrayTypeAnnotationChildNames: ReadonlyArray<keyof ArrayTypeAnnotation> = [
     'openingSquareBracket',

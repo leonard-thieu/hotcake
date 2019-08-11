@@ -1,10 +1,12 @@
-import { FieldKeywordToken, GlobalKeywordToken } from '../../../Token/Token';
+import { FieldKeywordToken, GlobalKeywordToken } from '../../../Token/Tokens';
 import { CommaSeparator } from '../../CommaSeparator';
 import { Identifier } from '../../Identifier';
-import { NodeKind } from '../../NodeKind';
+import { NodeKind } from '../../Nodes';
 import { TypeAnnotation } from '../../TypeAnnotation';
-import { Declaration } from '../Declaration';
+import { Declaration } from '../Declarations';
 import { ExternDeclaration } from './ExternDeclaration';
+
+// #region Extern data declaration sequence
 
 export const ExternDataDeclarationSequenceChildNames: ReadonlyArray<keyof ExternDataDeclarationSequence> = [
     'dataDeclarationKeyword',
@@ -23,9 +25,13 @@ export type ExternDataDeclarationKeywordToken =
     | FieldKeywordToken
     ;
 
+// #endregion
+
+// #region Extern data declaration
+
 export const ExternDataDeclarationChildNames: ReadonlyArray<keyof ExternDataDeclaration> = [
     'identifier',
-    'type',
+    'typeAnnotation',
     'equalsSign',
     'nativeSymbol',
 ];
@@ -34,5 +40,7 @@ export class ExternDataDeclaration extends ExternDeclaration {
     readonly kind = NodeKind.ExternDataDeclaration;
 
     identifier: Identifier = undefined!;
-    type?: TypeAnnotation = undefined;
+    typeAnnotation?: TypeAnnotation = undefined;
 }
+
+// #endregion

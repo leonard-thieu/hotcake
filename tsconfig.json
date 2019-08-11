@@ -8,6 +8,8 @@
         "strict": true,
         "esModuleInterop": true,
         "inlineSourceMap": true,
-        "inlineSources": true
+        "inlineSources": true,
+        "noFallthroughCasesInSwitch": true,
+        "experimentalDecorators": true
     }
 }

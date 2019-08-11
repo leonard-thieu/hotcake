@@ -25,6 +25,7 @@
             },
             "parameters": {
                 "kind": "DataDeclarationSequence",
+                "dataDeclarationKeyword": null,
                 "children": []
             },
             "closingParenthesis": {
@@ -62,7 +63,7 @@
                                     "start": 27,
                                     "length": 2
                                 },
-                                "type": {
+                                "typeAnnotation": {
                                     "kind": "LonghandTypeAnnotation",
                                     "colon": {
                                         "kind": "Colon",
@@ -80,7 +81,8 @@
                                         },
                                         "arrayTypeAnnotations": []
                                     }
-                                }
+                                },
+                                "operator": null
                             }
                         ]
                     },
@@ -110,7 +112,7 @@
                                     "start": 45,
                                     "length": 2
                                 },
-                                "equalsSign": {
+                                "operator": {
                                     "kind": "ColonEqualsSign",
                                     "fullStart": 46,
                                     "start": 47,

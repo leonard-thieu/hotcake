@@ -2,83 +2,100 @@
     "kind": "ModuleDeclaration",
     "identifier": "newExpression",
     "locals": [
-        "MyClass",
-        "Main",
-        "MyClass2"
-    ],
-    "members": [
         {
             "kind": "ClassDeclaration",
-            "locals": [
-                "New"
-            ],
             "identifier": "MyClass",
             "type": "MyClass",
-            "baseType": "Object",
-            "members": [
+            "superType": "Object",
+            "locals": [
                 {
-                    "kind": "ClassMethodDeclaration",
+                    "kind": "ClassMethodGroupDeclaration",
                     "identifier": "New",
-                    "locals": [],
-                    "returnType": "MyClass",
-                    "parameters": []
+                    "type": "New MyClass",
+                    "overloads": [
+                        {
+                            "kind": "ClassMethodDeclaration",
+                            "identifier": "New",
+                            "locals": [],
+                            "type": "New MyClass()",
+                            "returnType": "MyClass",
+                            "parameters": [],
+                            "statements": []
+                        }
+                    ]
                 }
             ]
         },
         {
-            "kind": "FunctionDeclaration",
+            "kind": "FunctionGroupDeclaration",
             "identifier": "Main",
-            "locals": [],
-            "returnType": "Int",
-            "parameters": [],
-            "statements": [
+            "type": "Main",
+            "overloads": [
                 {
-                    "kind": "ExpressionStatement",
-                    "expression": {
-                        "kind": "InvokeExpression",
-                        "type": "MyClass",
-                        "invocationType": "New MyClass()",
-                        "invokableExpression": {
-                            "kind": "NewExpression",
-                            "type": "New"
-                        },
-                        "arguments": []
-                    }
+                    "kind": "FunctionDeclaration",
+                    "identifier": "Main",
+                    "locals": [],
+                    "type": "Main: Int()",
+                    "returnType": "Int",
+                    "parameters": [],
+                    "statements": [
+                        {
+                            "kind": "ExpressionStatement",
+                            "expression": {
+                                "kind": "InvokeExpression",
+                                "type": "MyClass",
+                                "invocationType": "New MyClass()",
+                                "invokableExpression": {
+                                    "kind": "NewExpression",
+                                    "type": "New MyClass",
+                                    "typeReference": "MyClass"
+                                },
+                                "arguments": []
+                            }
+                        }
+                    ]
                 }
             ]
         },
         {
             "kind": "ClassDeclaration",
-            "locals": [
-                "sibling",
-                "New"
-            ],
             "identifier": "MyClass2",
             "type": "MyClass2",
-            "baseType": "Object",
-            "members": [
+            "superType": "Object",
+            "locals": [
                 {
                     "kind": "DataDeclaration",
-                    "declarationKind": "FieldKeyword",
+                    "declarationKind": "Field",
                     "identifier": "sibling",
-                    "type": "MyClass",
+                    "operator": "ColonEqualsSign",
                     "expression": {
                         "kind": "InvokeExpression",
                         "type": "MyClass",
                         "invocationType": "New MyClass()",
                         "invokableExpression": {
                             "kind": "NewExpression",
-                            "type": "New"
+                            "type": "New MyClass",
+                            "typeReference": "MyClass"
                         },
                         "arguments": []
-                    }
+                    },
+                    "type": "MyClass"
                 },
                 {
-                    "kind": "ClassMethodDeclaration",
+                    "kind": "ClassMethodGroupDeclaration",
                     "identifier": "New",
-                    "locals": [],
-                    "returnType": "MyClass2",
-                    "parameters": []
+                    "type": "New MyClass2",
+                    "overloads": [
+                        {
+                            "kind": "ClassMethodDeclaration",
+                            "identifier": "New",
+                            "locals": [],
+                            "type": "New MyClass2()",
+                            "returnType": "MyClass2",
+                            "parameters": [],
+                            "statements": []
+                        }
+                    ]
                 }
             ]
         }

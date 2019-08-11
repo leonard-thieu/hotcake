@@ -1,9 +1,8 @@
-import { BoundNode } from '../BoundNode';
-import { BoundNodeKind } from '../BoundNodeKind';
-import { BoundExpression } from '../Expression/BoundExpression';
+import { BoundNode, BoundNodeKind } from '../BoundNodes';
+import { BoundExpressions } from '../Expression/BoundExpressions';
 
 export class BoundThrowStatement extends BoundNode {
     readonly kind = BoundNodeKind.ThrowStatement;
 
-    expression: BoundExpression = undefined!;
+    expression: BoundExpressions = undefined!;
 }
