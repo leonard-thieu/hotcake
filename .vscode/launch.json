@@ -18,7 +18,12 @@
                 "${workspaceFolder}/tests/!(MonkeyTests)*.js"
             ],
             "console": "integratedTerminal",
-            "internalConsoleOptions": "neverOpen"
+            "internalConsoleOptions": "neverOpen",
+            "skipFiles": [
+                "${workspaceFolder}/node_modules/**/*.js",
+                "<node_internals>/**/*.js",
+                "${workspaceFolder}/src/Diagnostics.js"
+            ]
         },
         {
             "type": "node",
@@ -34,7 +39,12 @@
                 "${workspaceFolder}/tests/PreprocessorTokenizer*Tests.js"
             ],
             "console": "integratedTerminal",
-            "internalConsoleOptions": "neverOpen"
+            "internalConsoleOptions": "neverOpen",
+            "skipFiles": [
+                "${workspaceFolder}/node_modules/**/*.js",
+                "<node_internals>/**/*.js",
+                "${workspaceFolder}/src/Diagnostics.js"
+            ]
         },
         {
             "type": "node",
@@ -50,7 +60,12 @@
                 "${workspaceFolder}/tests/PreprocessorParserTests.js"
             ],
             "console": "integratedTerminal",
-            "internalConsoleOptions": "neverOpen"
+            "internalConsoleOptions": "neverOpen",
+            "skipFiles": [
+                "${workspaceFolder}/node_modules/**/*.js",
+                "<node_internals>/**/*.js",
+                "${workspaceFolder}/src/Diagnostics.js"
+            ]
         },
         {
             "type": "node",
@@ -66,7 +81,12 @@
                 "${workspaceFolder}/tests/TokenizerTests.js"
             ],
             "console": "integratedTerminal",
-            "internalConsoleOptions": "neverOpen"
+            "internalConsoleOptions": "neverOpen",
+            "skipFiles": [
+                "${workspaceFolder}/node_modules/**/*.js",
+                "<node_internals>/**/*.js",
+                "${workspaceFolder}/src/Diagnostics.js"
+            ]
         },
         {
             "type": "node",
@@ -82,7 +102,12 @@
                 "${workspaceFolder}/tests/ParserTests.js"
             ],
             "console": "integratedTerminal",
-            "internalConsoleOptions": "neverOpen"
+            "internalConsoleOptions": "neverOpen",
+            "skipFiles": [
+                "${workspaceFolder}/node_modules/**/*.js",
+                "<node_internals>/**/*.js",
+                "${workspaceFolder}/src/Diagnostics.js"
+            ]
         },
         {
             "type": "node",
