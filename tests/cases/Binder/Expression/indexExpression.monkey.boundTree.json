@@ -1,0 +1,115 @@
+{
+    "kind": "ModuleDeclaration",
+    "identifier": "indexExpression",
+    "locals": [
+        {
+            "kind": "ClassDeclaration",
+            "identifier": "Stack",
+            "type": "Stack",
+            "superType": "Object",
+            "locals": [
+                {
+                    "kind": "DataDeclaration",
+                    "declarationKind": "Field",
+                    "identifier": "data",
+                    "typeAnnotation": "Int[]",
+                    "operator": null,
+                    "type": "Int[]"
+                },
+                {
+                    "kind": "ClassMethodGroupDeclaration",
+                    "identifier": "New",
+                    "type": "New Stack",
+                    "overloads": [
+                        {
+                            "kind": "ClassMethodDeclaration",
+                            "identifier": "New",
+                            "locals": [],
+                            "type": "New Stack()",
+                            "returnType": "Stack",
+                            "parameters": [],
+                            "statements": []
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "kind": "ClassDeclaration",
+            "identifier": "Enumerator",
+            "type": "Enumerator",
+            "superType": "Object",
+            "locals": [
+                {
+                    "kind": "ClassMethodGroupDeclaration",
+                    "identifier": "NextObject",
+                    "type": "NextObject",
+                    "overloads": [
+                        {
+                            "kind": "ClassMethodDeclaration",
+                            "identifier": "NextObject",
+                            "locals": [],
+                            "type": "NextObject: Int()",
+                            "returnType": "Int",
+                            "parameters": [],
+                            "isProperty": false,
+                            "statements": [
+                                {
+                                    "kind": "ReturnStatement",
+                                    "type": "Int",
+                                    "expression": {
+                                        "kind": "ScopeMemberAccessExpression",
+                                        "type": "Int",
+                                        "scopableExpression": {
+                                            "kind": "IdentifierExpression",
+                                            "type": "Stack",
+                                            "identifier": "stack"
+                                        },
+                                        "member": {
+                                            "kind": "IndexExpression",
+                                            "type": "Int",
+                                            "indexableExpression": {
+                                                "kind": "IdentifierExpression",
+                                                "type": "Int[]",
+                                                "identifier": "data"
+                                            },
+                                            "indexExpressionExpression": {
+                                                "kind": "IntegerLiteralExpression",
+                                                "type": "Int",
+                                                "value": "1"
+                                            }
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "kind": "DataDeclaration",
+                    "declarationKind": "Field",
+                    "identifier": "stack",
+                    "typeAnnotation": "Stack",
+                    "operator": null,
+                    "type": "Stack"
+                },
+                {
+                    "kind": "ClassMethodGroupDeclaration",
+                    "identifier": "New",
+                    "type": "New Enumerator",
+                    "overloads": [
+                        {
+                            "kind": "ClassMethodDeclaration",
+                            "identifier": "New",
+                            "locals": [],
+                            "type": "New Enumerator()",
+                            "returnType": "Enumerator",
+                            "parameters": [],
+                            "statements": []
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

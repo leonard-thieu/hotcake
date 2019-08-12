@@ -2472,7 +2472,7 @@ export class Binder {
                 return this.bindScopeMemberAccessExpression(parent, expression, typeMap, scope);
             }
             case NodeKind.IndexExpression: {
-                return this.bindIndexExpression(parent, expression, typeMap);
+                return this.bindIndexExpression(parent, expression, typeMap, scope);
             }
             case NodeKind.SliceExpression: {
                 return this.bindSliceExpression(parent, expression, typeMap);
@@ -3172,9 +3172,10 @@ export class Binder {
         parent: BoundNodes,
         expression: IndexExpression,
         typeMap: TypeMap | undefined,
+        scope?: BoundMemberContainerDeclaration,
     ): BoundIndexExpression {
         return this.indexExpression(parent,
-            (parent) => this.bindExpression(parent, expression.indexableExpression, typeMap),
+            (parent) => this.bindExpression(parent, expression.indexableExpression, typeMap, scope),
             (parent) => this.bindExpression(parent, expression.indexExpressionExpression, typeMap),
         );
     }
