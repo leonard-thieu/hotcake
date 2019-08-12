@@ -9,8 +9,6 @@ import { BoundStringLiteralExpression } from '../../Expression/BoundStringLitera
 import { BoundClassDeclaration } from '../BoundClassDeclaration';
 import { BoundDataDeclaration } from '../BoundDataDeclaration';
 import { BoundTypeReferenceDeclaration } from '../BoundDeclarations';
-import { BoundExternClassMethodGroupDeclaration, BoundExternFunctionGroupDeclaration } from '../BoundFunctionLikeGroupDeclaration';
-import { BoundExternDataDeclaration } from './BoundExternDataDeclaration';
 
 // #region Extern class declaration
 
@@ -27,12 +25,6 @@ export class BoundExternClassDeclaration extends BoundNode {
 
     readonly locals = new BoundSymbolTable();
 }
-
-export type BoundExternClassDeclarationMember =
-    | BoundExternDataDeclaration
-    | BoundExternFunctionGroupDeclaration
-    | BoundExternClassMethodGroupDeclaration
-    ;
 
 // #endregion
 
