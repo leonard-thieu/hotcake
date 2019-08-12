@@ -13,6 +13,7 @@ import { BoundFunctionLikeGroupDeclaration } from '../src/Binding/Node/Declarati
 import { BoundInterfaceDeclaration } from '../src/Binding/Node/Declaration/BoundInterfaceDeclaration';
 import { BoundModuleDeclaration } from '../src/Binding/Node/Declaration/BoundModuleDeclaration';
 import { Type } from '../src/Binding/Type/Types';
+import { ConfigurationVariables } from "../src/Configuration";
 import { Diagnostic, DiagnosticBag, DiagnosticKind } from '../src/Diagnostics';
 import { Project } from '../src/Project';
 import { ModuleDeclaration } from '../src/Syntax/Node/Declaration/ModuleDeclaration';
@@ -21,7 +22,7 @@ import { Parser } from '../src/Syntax/Parser';
 import { PreprocessorParser } from '../src/Syntax/PreprocessorParser';
 import { PreprocessorTokenizer } from '../src/Syntax/PreprocessorTokenizer';
 import { Tokens } from '../src/Syntax/Token/Tokens';
-import { ConfigurationVariables, Tokenizer } from '../src/Syntax/Tokenizer';
+import { Tokenizer } from '../src/Syntax/Tokenizer';
 
 const LOG_LEVEL = DiagnosticKind.Error;
 
@@ -401,10 +402,8 @@ export function getTokens(filePath: string, document: string): Tokens[] {
     const configVars: ConfigurationVariables = {
         HOST: 'winnt',
         LANG: 'cpp',
-        TARGET: 'glfw',
+        TARGET: 'glfw3',
         CONFIG: 'release',
-        CD: __dirname,
-        MODPATH: __filename,
     };
 
     return tokenizer.getTokens(preprocessorModuleDeclaration, configVars);
@@ -416,10 +415,8 @@ export function getParseTree(filePath: string, document: string): ModuleDeclarat
     const configVars: ConfigurationVariables = {
         HOST: 'winnt',
         LANG: 'cpp',
-        TARGET: 'glfw',
+        TARGET: 'glfw3',
         CONFIG: 'release',
-        CD: __dirname,
-        MODPATH: __filename,
     };
     const tokens = tokenizer.getTokens(preprocessorModuleDeclaration, configVars);
     const parser = new Parser();
@@ -435,7 +432,12 @@ export function getBoundTree(filePath: string, document: string): BoundModuleDec
     frameworkDirectory = path.resolve(frameworkDirectory);
 
     const projectDirectory = path.dirname(filePath);
-    const project = new Project(frameworkDirectory, projectDirectory);
+    const project = new Project(frameworkDirectory, projectDirectory, {
+        HOST: 'winnt',
+        LANG: 'cpp',
+        TARGET: 'glfw3',
+        CONFIG: 'debug',
+    });
 
     try {
         return project.importModule(filePath);

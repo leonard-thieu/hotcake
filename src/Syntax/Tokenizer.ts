@@ -1,3 +1,4 @@
+import { ConfigurationVariableMap, ConfigurationVariables } from '../Configuration';
 import { Evaluator } from '../Evaluator';
 import { assertNever } from '../util';
 import { PreprocessorModuleDeclaration } from './Node/Declaration/PreprocessorModuleDeclaration';
@@ -253,27 +254,5 @@ export class Tokenizer {
         }
 
         return assertNever(expression);
-    }
-}
-
-export interface ConfigurationVariables {
-    HOST: string;
-    LANG: string;
-    TARGET: string;
-    CONFIG: string;
-    CD: string;
-    MODPATH: string;
-
-    [key: string]: any;
-}
-
-export class ConfigurationVariableMap extends Map<string, any> {
-    get(key: string): any {
-        let value = super.get(key);
-        if (typeof value === 'undefined') {
-            value = '';
-        }
-
-        return value;
     }
 }

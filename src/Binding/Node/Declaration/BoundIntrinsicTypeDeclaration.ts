@@ -1,5 +1,4 @@
 import { BoundSymbol } from '../../BoundSymbol';
-import { ArrayType } from '../../Type/ArrayType';
 import { BoolType } from '../../Type/BoolType';
 import { FloatType } from '../../Type/FloatType';
 import { IntType } from '../../Type/IntType';
@@ -20,5 +19,4 @@ type IntrinsicType =
     | IntType
     | FloatType
     | VoidType
-    | ArrayType
     ;
