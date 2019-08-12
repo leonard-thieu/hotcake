@@ -1,5 +1,4 @@
 [
     "Declaration/aliasDirective.monkey",
-    "Declaration/importStatement.monkey",
     "smokeTest.monkey"
 ]

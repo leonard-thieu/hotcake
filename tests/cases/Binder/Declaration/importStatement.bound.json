@@ -2,7 +2,6 @@
     "kind": "ModuleDeclaration",
     "identifier": "importStatement",
     "importedModules": [
-        "monkey.lang",
         "aliasDirective_file2"
     ],
     "locals": []

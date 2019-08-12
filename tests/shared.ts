@@ -267,26 +267,21 @@ export function executeBinderTestCases(name: string, casesPath: string): void {
                             return undefined;
                         }
                         case 'importedModules': {
-                            let serializeAsModulePath = true;
+                            let serializeAsModulePath = false;
 
                             const moduleDeclaration = this as BoundModuleDeclaration;
                             if (moduleDeclaration.identifier.name !== 'smokeTest') {
                                 serializeAsModulePath = true;
                             }
 
-                            if (moduleDeclaration.identifier.name !== 'importStatement') {
-                                return undefined;
-                            }
-
                             if (serializeAsModulePath) {
                                 const importedModules = value as typeof moduleDeclaration[typeof key];
+                                const importedModulesArr = Array.from(importedModules.values());
+                                if (!importedModulesArr.length) {
+                                    return undefined;
+                                }
 
-                                return Array.from(importedModules.values()).map(getModulePath);
-                            }
-
-                            // Prevent converting circular structure to JSON
-                            if (getModulePath(moduleDeclaration) === 'monkey.lang') {
-                                return undefined;
+                                return importedModulesArr.map(getModulePath);
                             }
 
                             function getModulePath(boundModule: BoundModuleDeclaration) {

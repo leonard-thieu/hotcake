@@ -150,7 +150,7 @@ export class Binder {
         this.module = boundModuleDeclaration;
         this.project.cacheModule(boundModuleDeclaration);
 
-        this.importModule(['monkey'], 'lang');
+        this.frameworkModule = this.project.importModuleFromSource(this.module.directory, ['monkey'], 'lang');
 
         this.bindModuleDeclarationHeaderMembers(moduleDeclaration.headerMembers);
 
@@ -324,7 +324,8 @@ export class Binder {
                 }
 
                 const name = moduleIdentifier.getText(document);
-                this.importModule(modulePathComponents, name);
+                const importedModule = this.project.importModuleFromSource(this.module.directory, modulePathComponents, name);
+                this.module.importedModules.add(importedModule);
                 break;
             }
             case TokenKind.Missing: {
@@ -335,15 +336,6 @@ export class Binder {
                 break;
             }
         }
-    }
-
-    private importModule(modulePathComponents: string[], moduleName: string) {
-        const importedModule = this.project.importModuleFromSource(
-            this.module.directory,
-            modulePathComponents,
-            moduleName,
-        );
-        this.module.importedModules.add(importedModule);
     }
 
     // #endregion
@@ -3612,7 +3604,7 @@ export class Binder {
         if (typeReference.moduleIdentifier) {
             const moduleName = typeReference.moduleIdentifier.getText(document);
             let boundModuleDeclaration: BoundModuleDeclaration | undefined = undefined;
-            for (const importedModule of getImportedModules(this.module)) {
+            for (const importedModule of this.getImportedModules()) {
                 if (areIdentifiersSame(moduleName, importedModule.identifier.name)) {
                     boundModuleDeclaration = importedModule;
                     break;
@@ -3656,7 +3648,7 @@ export class Binder {
         }
 
         // Check if it's a type in any imported modules
-        for (const importedModule of getImportedModules(this.module)) {
+        for (const importedModule of this.getImportedModules()) {
             const declaration = importedModule.locals.getDeclaration(name, ...kinds);
             if (declaration) {
                 return declaration;
@@ -3896,7 +3888,7 @@ export class Binder {
 
             switch (scope.kind) {
                 case BoundNodeKind.ModuleDeclaration: {
-                    for (const importedModule of getImportedModules(this.module)) {
+                    for (const importedModule of this.getImportedModules()) {
                         const boundDeclaration = this.resolveIdentifierOnScope(name, importedModule);
                         if (boundDeclaration) {
                             return boundDeclaration;
@@ -3973,6 +3965,29 @@ export class Binder {
         return false;
     }
 
+    private frameworkModule: BoundModuleDeclaration = undefined!;
+
+    private getImportedModules(): Set<BoundModuleDeclaration> {
+        const importedModules = new Set<BoundModuleDeclaration>();
+
+        const boundModule = this.module;
+        getImportedModulesImpl(boundModule, importedModules);
+        importedModules.add(this.frameworkModule);
+        getImportedModulesImpl(this.frameworkModule, importedModules);
+        importedModules.delete(boundModule);
+
+        return importedModules;
+
+        function getImportedModulesImpl(boundModule: BoundModuleDeclaration, importedModules: Set<BoundModuleDeclaration>): void {
+            for (const importedModule of boundModule.importedModules) {
+                if (!importedModules.has(importedModule)) {
+                    importedModules.add(importedModule);
+                    getImportedModulesImpl(importedModule, importedModules);
+                }
+            }
+        }
+    }
+
     // #endregion
 }
 
@@ -3982,24 +3997,6 @@ function deferOrExecute(list: (() => void)[] | undefined, callback: (() => void)
     } else {
         callback();
     }
-}
-
-function getImportedModules(boundModule: BoundModuleDeclaration): Set<BoundModuleDeclaration> {
-    function getImportedModulesImpl(boundModule: BoundModuleDeclaration, importedModules: Set<BoundModuleDeclaration>): void {
-        for (const importedModule of boundModule.importedModules) {
-            if (!importedModules.has(importedModule)) {
-                importedModules.add(importedModule);
-                getImportedModulesImpl(importedModule, importedModules);
-            }
-        }
-    }
-
-    const importedModules = new Set<BoundModuleDeclaration>();
-
-    getImportedModulesImpl(boundModule, importedModules);
-    importedModules.delete(boundModule);
-
-    return importedModules;
 }
 
 type GetBoundNode<TBoundNode extends BoundNodes> = (parent: BoundNodes) => TBoundNode;
