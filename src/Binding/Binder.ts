@@ -59,7 +59,7 @@ import { BoundClassMethodGroupDeclaration, BoundExternClassMethodGroupDeclaratio
 import { BoundInterfaceDeclaration, BoundInterfaceMethodDeclaration } from './Node/Declaration/BoundInterfaceDeclaration';
 import { BoundModuleDeclaration } from './Node/Declaration/BoundModuleDeclaration';
 import { BoundTypeParameter } from './Node/Declaration/BoundTypeParameter';
-import { BoundExternClassDeclaration, BoundExternClassDeclarationMember, BoundExternClassMethodDeclaration } from './Node/Declaration/Extern/BoundExternClassDeclaration';
+import { BoundExternClassDeclaration, BoundExternClassMethodDeclaration } from './Node/Declaration/Extern/BoundExternClassDeclaration';
 import { BoundExternDataDeclaration, BoundExternDataDeclarationKind } from './Node/Declaration/Extern/BoundExternDataDeclaration';
 import { BoundExternFunctionDeclaration } from './Node/Declaration/Extern/BoundExternFunctionDeclaration';
 import { BoundArrayLiteralExpression } from './Node/Expression/BoundArrayLiteralExpression';
@@ -110,9 +110,9 @@ export class Binder {
     private filePath: string = undefined!;
 
     project: Project = undefined!;
-    private bindTypeReferencesCallbackList: (() => void)[] = undefined!;
-    private bindDataDeclarationInitializerList: (() => void)[] = undefined!;
-    private bindStatementsCallbackList: (() => void)[] = undefined!;
+    private bindTypeReferencesCallbackList?: (() => void)[] = undefined;
+    private bindDataDeclarationInitializerList?: (() => void)[] = undefined;
+    private bindStatementsCallbackList?: (() => void)[] = undefined;
     private module: BoundModuleDeclaration = undefined!;
 
     bind(
@@ -172,17 +172,20 @@ export class Binder {
         for (const bindTypeReferencesCallback of this.bindTypeReferencesCallbackList) {
             bindTypeReferencesCallback();
         }
+        this.bindTypeReferencesCallbackList = undefined;
 
         // Phase 3: Evaluate initializers of data declarations
         // - Depends on expressions being bindable
         for (const bindDataDeclarationInitializer of this.bindDataDeclarationInitializerList) {
             bindDataDeclarationInitializer();
         }
+        this.bindDataDeclarationInitializerList = undefined;
 
         // Phase 4: Bind statements
         for (const bindStatementsCallback of this.bindStatementsCallbackList) {
             bindStatementsCallback();
         }
+        this.bindStatementsCallbackList = undefined;
 
         return boundModuleDeclaration;
     }
@@ -400,7 +403,7 @@ export class Binder {
                 boundExternDataDeclaration.nativeSymbol = this.bindStringLiteralExpression(boundExternDataDeclaration, nativeSymbol);
             }
         };
-        this.bindTypeReferencesCallbackList.push(bindTypeReferencesOnExternDataDeclaration);
+        deferOrExecute(this.bindTypeReferencesCallbackList, bindTypeReferencesOnExternDataDeclaration);
 
         return boundExternDataDeclaration;
     }
@@ -437,7 +440,7 @@ export class Binder {
                 boundExternFunctionDeclaration.nativeSymbol = this.bindStringLiteralExpression(boundExternFunctionDeclaration, nativeSymbol);
             }
         };
-        this.bindTypeReferencesCallbackList.push(bindTypeReferencesOnExternFunctionDeclaration);
+        deferOrExecute(this.bindTypeReferencesCallbackList, bindTypeReferencesOnExternFunctionDeclaration);
 
         return boundExternFunctionDeclaration;
     }
@@ -532,7 +535,7 @@ export class Binder {
                 boundExternClassDeclaration.nativeSymbol = this.bindStringLiteralExpression(boundExternClassDeclaration, externClassDeclaration.nativeSymbol);
             }
         };
-        this.bindTypeReferencesCallbackList.push(bindTypeReferencesOnExternClassDeclaration);
+        deferOrExecute(this.bindTypeReferencesCallbackList, bindTypeReferencesOnExternClassDeclaration);
 
         return boundExternClassDeclaration;
     }
@@ -640,7 +643,7 @@ export class Binder {
                 boundExternClassMethodDeclaration.nativeSymbol = this.bindStringLiteralExpression(boundExternClassMethodDeclaration, nativeSymbol);
             }
         };
-        this.bindTypeReferencesCallbackList.push(bindTypeReferencesOnExternClassMethodDeclaration);
+        deferOrExecute(this.bindTypeReferencesCallbackList, bindTypeReferencesOnExternClassMethodDeclaration);
 
         return boundExternClassMethodDeclaration;
     }
@@ -761,29 +764,16 @@ export class Binder {
 
             switch (operator) {
                 case TokenKind.EqualsSign: {
-                    if (!typeMap) {
-                        this.bindTypeReferencesCallbackList.push(bindTypeReferencesOnDataDeclaration);
-                        this.bindDataDeclarationInitializerList.push(bindInitializerOnDataDeclaration);
-                    } else {
-                        bindTypeReferencesOnDataDeclaration();
-                        bindInitializerOnDataDeclaration();
-                    }
+                    deferOrExecute(this.bindTypeReferencesCallbackList, bindTypeReferencesOnDataDeclaration);
+                    deferOrExecute(this.bindDataDeclarationInitializerList, bindInitializerOnDataDeclaration);
                     break;
                 }
                 case TokenKind.ColonEqualsSign: {
-                    if (!typeMap) {
-                        this.bindDataDeclarationInitializerList.push(bindInitializerOnDataDeclaration);
-                    } else {
-                        bindInitializerOnDataDeclaration();
-                    }
+                    deferOrExecute(this.bindDataDeclarationInitializerList, bindInitializerOnDataDeclaration);
                     break;
                 }
                 case null: {
-                    if (!typeMap) {
-                        this.bindTypeReferencesCallbackList.push(bindTypeReferencesOnDataDeclaration);
-                    } else {
-                        bindTypeReferencesOnDataDeclaration();
-                    }
+                    deferOrExecute(this.bindTypeReferencesCallbackList, bindTypeReferencesOnDataDeclaration);
                     break;
                 }
                 case TokenKind.Missing: {
@@ -918,17 +908,12 @@ export class Binder {
         const bindTypeReferencesOnFunctionDeclaration = () => {
             boundFunctionDeclaration.returnType = this.bindTypeAnnotation(boundFunctionDeclaration, functionDeclaration.returnType, typeMap);
         };
-
-        if (!typeMap) {
-            this.bindTypeReferencesCallbackList.push(bindTypeReferencesOnFunctionDeclaration);
-        } else {
-            bindTypeReferencesOnFunctionDeclaration();
-        }
+        deferOrExecute(this.bindTypeReferencesCallbackList, bindTypeReferencesOnFunctionDeclaration);
 
         const bindStatementsOnFunctionDeclaration = () => {
             boundFunctionDeclaration.statements = this.bindStatements(boundFunctionDeclaration, functionDeclaration.statements, typeMap);
         };
-        this.bindStatementsCallbackList.push(bindStatementsOnFunctionDeclaration);
+        deferOrExecute(this.bindStatementsCallbackList, bindStatementsOnFunctionDeclaration);
 
         return boundFunctionDeclaration;
     }
@@ -981,7 +966,7 @@ export class Binder {
                 );
             }
         };
-        this.bindTypeReferencesCallbackList.push(bindTypeReferencesOnInterfaceDeclaration);
+        deferOrExecute(this.bindTypeReferencesCallbackList, bindTypeReferencesOnInterfaceDeclaration);
 
         return boundInterfaceDeclaration;
     }
@@ -1033,7 +1018,7 @@ export class Binder {
         const bindTypeReferencesOnInterfaceMethodDeclaration = () => {
             boundInterfaceMethodDeclaration.returnType = this.bindTypeAnnotation(boundInterfaceMethodDeclaration, interfaceMethodDeclaration.returnType);
         };
-        this.bindTypeReferencesCallbackList.push(bindTypeReferencesOnInterfaceMethodDeclaration);
+        deferOrExecute(this.bindTypeReferencesCallbackList, bindTypeReferencesOnInterfaceMethodDeclaration);
 
         return boundInterfaceMethodDeclaration;
     }
@@ -1108,12 +1093,7 @@ export class Binder {
                 );
             }
         };
-
-        if (!typeMap) {
-            this.bindTypeReferencesCallbackList.push(bindTypeReferencesOnClassDeclaration);
-        } else {
-            bindTypeReferencesOnClassDeclaration();
-        }
+        deferOrExecute(this.bindTypeReferencesCallbackList, bindTypeReferencesOnClassDeclaration);
 
         this.bindClassDeclarationMembers(boundClassDeclaration, classDeclaration.members, typeMap);
 
@@ -1262,19 +1242,14 @@ export class Binder {
                 boundClassMethodDeclaration.returnType = this.bindTypeAnnotation(boundClassMethodDeclaration, classMethodDeclaration.returnType, typeMap);
             }
         };
-
-        if (!typeMap) {
-            this.bindTypeReferencesCallbackList.push(bindTypeReferencesOnClassMethodDeclaration);
-        } else {
-            bindTypeReferencesOnClassMethodDeclaration();
-        }
+        deferOrExecute(this.bindTypeReferencesCallbackList, bindTypeReferencesOnClassMethodDeclaration);
 
         const bindStatementsOnClassMethodDeclaration = () => {
             if (classMethodDeclaration.statements) {
                 boundClassMethodDeclaration.statements = this.bindStatements(boundClassMethodDeclaration, classMethodDeclaration.statements, typeMap);
             }
         }
-        this.bindStatementsCallbackList.push(bindStatementsOnClassMethodDeclaration);
+        deferOrExecute(this.bindStatementsCallbackList, bindStatementsOnClassMethodDeclaration);
 
         return boundClassMethodDeclaration;
     }
@@ -3729,28 +3704,22 @@ export class Binder {
         instantiatedType.parent = openType.parent;
         instantiatedType.identifier = new BoundSymbol(openType.identifier.name, instantiatedType);
         instantiatedType.type = new ArrayType(instantiatedType, elementType);
-        instantiatedType.superType = openType.superType;
+        instantiatedType.superType = openType.superType; // Probably should be deferred but ends up working out because of default
         instantiatedType.nativeSymbol = openType.nativeSymbol;
 
-        for (const [, identifier] of openType.locals) {
-            const declaration = identifier.declaration as BoundExternClassDeclarationMember;
-            switch (declaration.kind) {
-                // We can skip these since we know `Array` doesn't have these kinds of members.
-                case BoundNodeKind.ExternDataDeclaration:
-                case BoundNodeKind.ExternFunctionGroupDeclaration: {
-                    break;
-                }
-                // TODO: Should these be cloned anyway even though they don't take a generic type parameter?
-                case BoundNodeKind.ExternClassMethodGroupDeclaration: {
-                    instantiatedType.locals.set(identifier);
-                    break;
-                }
-                default: {
-                    assertNever(declaration);
-                    break;
-                }
-            }
-        }
+        this.bindExternClassDeclarationMembers(instantiatedType, openType.declaration.members);
+
+        // TODO: This doesn't seem to be the way Monkey X does it. Investigate differences and align implementations if necessary.
+        const fixResizeMethodReturnType = () => {
+            const resizeMethod = BoundTreeWalker.getMethod(
+                instantiatedType!,
+                'Resize',
+                (returnType) => returnType.kind === TypeKind.Array && returnType.elementType.type.kind === TypeKind.Int,
+                this.project.intTypeDeclaration.type,
+            )!;
+            resizeMethod.returnType = instantiatedType!;
+        };
+        deferOrExecute(this.bindTypeReferencesCallbackList, fixResizeMethodReturnType);
 
         return instantiatedType;
     }
@@ -3996,6 +3965,14 @@ export class Binder {
     }
 
     // #endregion
+}
+
+function deferOrExecute(list: (() => void)[] | undefined, callback: (() => void)) {
+    if (list) {
+        list.push(callback);
+    } else {
+        callback();
+    }
 }
 
 function getImportedModules(boundModule: BoundModuleDeclaration): Set<BoundModuleDeclaration> {

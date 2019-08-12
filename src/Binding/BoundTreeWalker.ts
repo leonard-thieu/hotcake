@@ -31,7 +31,7 @@ export namespace BoundTreeWalker {
     export function getMethod(
         methodContainer: BoundMethodContainerDeclaration,
         name: string,
-        checkReturnType: (type: Types) => boolean = () => true,
+        checkReturnType: (returnType: Types) => boolean = () => true,
         ...parameters: Types[]
     ) {
         const methodGroup = methodContainer.locals.get(name);
@@ -54,7 +54,7 @@ export namespace BoundTreeWalker {
 
     function getOverload(
         overloads: BoundMethodGroupDeclaration['overloads'],
-        checkReturnType: (type: Types) => boolean,
+        checkReturnType: (returnType: Types) => boolean,
         parameters: Types[],
     ) {
         for (const [, overload] of overloads) {

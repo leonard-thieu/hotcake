@@ -1,0 +1,81 @@
+{
+    "kind": "ModuleDeclaration",
+    "identifier": "arrayResize",
+    "locals": [
+        {
+            "kind": "FunctionGroupDeclaration",
+            "identifier": "Main",
+            "type": "Main",
+            "overloads": [
+                {
+                    "kind": "FunctionDeclaration",
+                    "identifier": "Main",
+                    "locals": [
+                        "arr"
+                    ],
+                    "type": "Main: Int()",
+                    "returnType": "Int",
+                    "parameters": [],
+                    "statements": [
+                        {
+                            "kind": "DataDeclarationStatement",
+                            "dataDeclaration": {
+                                "kind": "DataDeclaration",
+                                "declarationKind": "Local",
+                                "identifier": "arr",
+                                "operator": "ColonEqualsSign",
+                                "expression": {
+                                    "kind": "ArrayLiteralExpression",
+                                    "type": "Float[]",
+                                    "expressions": [
+                                        {
+                                            "kind": "FloatLiteralExpression",
+                                            "type": "Float",
+                                            "value": ".0"
+                                        }
+                                    ]
+                                },
+                                "type": "Float[]"
+                            }
+                        },
+                        {
+                            "kind": "AssignmentStatement",
+                            "leftOperand": {
+                                "kind": "IdentifierExpression",
+                                "type": "Float[]",
+                                "identifier": "arr"
+                            },
+                            "operator": "Assignment",
+                            "rightOperand": {
+                                "kind": "ScopeMemberAccessExpression",
+                                "type": "Float[]",
+                                "scopableExpression": {
+                                    "kind": "IdentifierExpression",
+                                    "type": "Float[]",
+                                    "identifier": "arr"
+                                },
+                                "member": {
+                                    "kind": "InvokeExpression",
+                                    "type": "Float[]",
+                                    "invocationType": "Resize: Float[](Int)",
+                                    "invokableExpression": {
+                                        "kind": "IdentifierExpression",
+                                        "type": "Resize",
+                                        "identifier": "Resize"
+                                    },
+                                    "arguments": [
+                                        {
+                                            "kind": "IntegerLiteralExpression",
+                                            "type": "Int",
+                                            "value": "2"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}
