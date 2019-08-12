@@ -3349,27 +3349,45 @@ export class Binder {
             }
         }
 
-        let candidate: BoundFunctionLikeDeclaration | undefined = undefined;
+        let candidates: BoundFunctionLikeDeclaration[] = [];
 
         // Search for exactly one match with implicit conversions allowed
         for (const [, overload] of overloads) {
-            // TODO: Support default parameters
-            if (areElementsSame(args, overload.parameters,
-                (arg, param) => arg.type.isConvertibleTo(param.type),
-            )) {
-                if (candidate) {
-                    throw new Error('Multiple overloads matched invoke expression.');
-                }
+            if (overload.parameters.length < args.length) {
+                continue;
+            }
 
-                candidate = overload;
+            let match = true;
+
+            for (let i = 0; i < overload.parameters.length; i++) {
+                const param = overload.parameters[i];
+                const arg = args[i];
+
+                if (!(
+                    arg && arg.type.isConvertibleTo(param.type) ||
+                    param.expression
+                )) {
+                    match = false;
+                    break;
+                }
+            }
+
+            if (match) {
+                candidates.push(overload);
             }
         }
 
-        if (candidate) {
-            return candidate;
+        switch (candidates.length) {
+            case 0: {
+                throw new Error('A matching overload could not be found.');
+            }
+            case 1: {
+                return candidates[0];
+            }
+            default: {
+                throw new Error(`Multiple overloads matched invoke expression (${candidates.map(c => c.type).join(', ')}).`);
+            }
         }
-
-        throw new Error('A matching overload could not be found.');
     }
 
     // #endregion
@@ -3604,7 +3622,7 @@ export class Binder {
         if (typeReference.moduleIdentifier) {
             const moduleName = typeReference.moduleIdentifier.getText(document);
             let boundModuleDeclaration: BoundModuleDeclaration | undefined = undefined;
-            for (const importedModule of this.module.importedModules) {
+            for (const importedModule of getImportedModules(this.module)) {
                 if (areIdentifiersSame(moduleName, importedModule.identifier.name)) {
                     boundModuleDeclaration = importedModule;
                     break;
@@ -3653,7 +3671,7 @@ export class Binder {
         }
 
         // Check if it's a type in any imported modules
-        for (const importedModule of this.module.importedModules) {
+        for (const importedModule of getImportedModules(this.module)) {
             const declaration = importedModule.locals.getDeclaration(name, ...kinds);
             if (declaration) {
                 return declaration;
@@ -3899,7 +3917,7 @@ export class Binder {
 
             switch (scope.kind) {
                 case BoundNodeKind.ModuleDeclaration: {
-                    for (const importedModule of this.module.importedModules) {
+                    for (const importedModule of getImportedModules(this.module)) {
                         const boundDeclaration = this.resolveIdentifierOnScope(name, importedModule);
                         if (boundDeclaration) {
                             return boundDeclaration;
@@ -3977,6 +3995,24 @@ export class Binder {
     }
 
     // #endregion
+}
+
+function getImportedModules(boundModule: BoundModuleDeclaration): Set<BoundModuleDeclaration> {
+    function getImportedModulesImpl(boundModule: BoundModuleDeclaration, importedModules: Set<BoundModuleDeclaration>): void {
+        for (const importedModule of boundModule.importedModules) {
+            if (!importedModules.has(importedModule)) {
+                importedModules.add(importedModule);
+                getImportedModulesImpl(importedModule, importedModules);
+            }
+        }
+    }
+
+    const importedModules = new Set<BoundModuleDeclaration>();
+
+    getImportedModulesImpl(boundModule, importedModules);
+    importedModules.delete(boundModule);
+
+    return importedModules;
 }
 
 type GetBoundNode<TBoundNode extends BoundNodes> = (parent: BoundNodes) => TBoundNode;

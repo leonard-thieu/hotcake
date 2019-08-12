@@ -81,12 +81,6 @@ export class Project {
     private readonly moduleCache = new Map<string, BoundModuleDeclaration>();
     readonly arrayTypeCache = new Map<BoundTypeReferenceDeclaration, BoundExternClassDeclaration>();
 
-    getLangModule(): BoundModuleDeclaration {
-        const langModulePath = path.resolve(this.boundFrameworkModulesDirectory.fullPath, 'monkey', 'lang' + FILE_EXTENSION);
-
-        return this.importModule(langModulePath);
-    }
-
     cacheModule(boundModuleDeclaration: BoundModuleDeclaration): void {
         const { directory, identifier } = boundModuleDeclaration;
         const moduleFullPath = path.resolve(directory.fullPath, identifier.name + FILE_EXTENSION);
