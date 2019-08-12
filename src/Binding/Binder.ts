@@ -149,8 +149,8 @@ export class Binder {
 
         this.module = boundModuleDeclaration;
         this.project.cacheModule(boundModuleDeclaration);
-        const monkeyModule = this.project.importModuleFromSource(boundModuleDeclaration.directory, ['monkey'], 'lang');
-        boundModuleDeclaration.importedModules.add(monkeyModule);
+
+        this.importModule(['monkey'], 'lang');
 
         this.bindModuleDeclarationHeaderMembers(moduleDeclaration.headerMembers);
 
@@ -324,8 +324,7 @@ export class Binder {
                 }
 
                 const name = moduleIdentifier.getText(document);
-                const boundModuleDeclaration = this.project.importModuleFromSource(this.module.directory, modulePathComponents, name);
-                this.module.importedModules.add(boundModuleDeclaration);
+                this.importModule(modulePathComponents, name);
                 break;
             }
             case TokenKind.Missing: {
@@ -336,6 +335,15 @@ export class Binder {
                 break;
             }
         }
+    }
+
+    private importModule(modulePathComponents: string[], moduleName: string) {
+        const importedModule = this.project.importModuleFromSource(
+            this.module.directory,
+            modulePathComponents,
+            moduleName,
+        );
+        this.module.importedModules.add(importedModule);
     }
 
     // #endregion

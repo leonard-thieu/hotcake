@@ -267,10 +267,14 @@ export function executeBinderTestCases(name: string, casesPath: string): void {
                             return undefined;
                         }
                         case 'importedModules': {
-                            const serializeAsModulePath = false;
+                            let serializeAsModulePath = true;
 
                             const moduleDeclaration = this as BoundModuleDeclaration;
                             if (moduleDeclaration.identifier.name !== 'smokeTest') {
+                                serializeAsModulePath = true;
+                            }
+
+                            if (moduleDeclaration.identifier.name !== 'importStatement') {
                                 return undefined;
                             }
 
@@ -285,17 +289,20 @@ export function executeBinderTestCases(name: string, casesPath: string): void {
                                 return undefined;
                             }
 
-                            function getModulePath(module: BoundModuleDeclaration) {
+                            function getModulePath(boundModule: BoundModuleDeclaration) {
                                 const components: string[] = [];
 
-                                let directory: BoundDirectory | undefined = module.directory;
+                                let directory: BoundDirectory | undefined = boundModule.directory;
                                 while (directory) {
                                     components.unshift(directory.identifier.name);
                                     directory = directory.parent as BoundDirectory | undefined;
                                 }
 
                                 components.shift(); // Take off root directory
-                                components.push(module.identifier.name);
+
+                                if (boundModule.identifier.name !== components[components.length - 1]) {
+                                    components.push(boundModule.identifier.name);
+                                }
 
                                 return components.join('.');
                             }
