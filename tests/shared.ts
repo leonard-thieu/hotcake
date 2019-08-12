@@ -30,8 +30,6 @@ interface TestCaseOptions {
     name: string;
     casesPath: string;
     testCallback: TestCallback;
-    beforeCallback?: Mocha.Func;
-    afterCallback?: Mocha.Func;
 }
 
 interface TestContext {
@@ -42,15 +40,13 @@ interface TestContext {
 
 type TestCallback = (context: TestContext) => void;
 
-export function executeTestCases(options: TestCaseOptions): void {
-    const {
+export function executeTestCases(
+    {
         name,
         casesPath,
         testCallback,
-        beforeCallback,
-        afterCallback,
-    } = options;
-
+    }: TestCaseOptions,
+): void {
     let skippedCases: string[];
     try {
         skippedCases = require(`./${name}.skipped.json`);
@@ -64,14 +60,6 @@ export function executeTestCases(options: TestCaseOptions): void {
     }
 
     describe(name, function () {
-        if (beforeCallback) {
-            before(beforeCallback);
-        }
-
-        if (afterCallback) {
-            after(afterCallback);
-        }
-
         const casesGlobPath = path.join(casesPath, '**', '*.monkey');
         const sourcePaths = orderBy(glob.sync(casesGlobPath));
 
@@ -93,7 +81,11 @@ export function executeTestCases(options: TestCaseOptions): void {
     });
 }
 
-export function executeBaselineTestCase(outputPath: string, testCallback: () => any, replacer?: (key: string, value: any) => any): void {
+export function executeBaselineTestCase(
+    outputPath: string,
+    testCallback: (() => any),
+    replacer?: ((key: string, value: any) => any),
+): void {
     mkdirp.sync(path.dirname(outputPath));
 
     try {
