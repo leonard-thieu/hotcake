@@ -3565,6 +3565,12 @@ export class Binder {
             boundDeclaration = this.instantiateArrayType(boundDeclaration);
         }
 
+        if (kinds.length &&
+            !kinds.some((kind) => kind === boundDeclaration.kind)
+        ) {
+            throw new Error(`Expected '${boundDeclaration.identifier.name}' to be '${kinds.join(', ')}' but got '${boundDeclaration.kind}'.`);
+        }
+
         return boundDeclaration;
     }
 
@@ -3630,12 +3636,7 @@ export class Binder {
             if (boundTypeParameter &&
                 boundTypeParameter.declaration.kind === BoundNodeKind.TypeParameter
             ) {
-                if (kinds.length) {
-                    if (!kinds.every((kind) => kind === BoundNodeKind.TypeParameter)) {
-                        throw new Error(`Expected '${name}' to be '${kinds.join(',')}' but got '${boundTypeParameter.declaration.kind}'.`);
-                    }
-                }
-
+                // Ignore `kinds` as the type parameter must still be mapped.
                 return boundTypeParameter.declaration;
             }
         }

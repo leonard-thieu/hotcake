@@ -27,37 +27,6 @@
             ]
         },
         {
-            "kind": "FunctionGroupDeclaration",
-            "identifier": "Main",
-            "type": "Main",
-            "overloads": [
-                {
-                    "kind": "FunctionDeclaration",
-                    "identifier": "Main",
-                    "locals": [],
-                    "type": "Main: Int()",
-                    "returnType": "Int",
-                    "parameters": [],
-                    "statements": [
-                        {
-                            "kind": "ExpressionStatement",
-                            "expression": {
-                                "kind": "InvokeExpression",
-                                "type": "MyClass",
-                                "invocationType": "New MyClass()",
-                                "invokableExpression": {
-                                    "kind": "NewExpression",
-                                    "type": "New MyClass",
-                                    "typeReference": "MyClass"
-                                },
-                                "arguments": []
-                            }
-                        }
-                    ]
-                }
-            ]
-        },
-        {
             "kind": "ClassDeclaration",
             "identifier": "MyClass2",
             "type": "MyClass2",
@@ -94,6 +63,110 @@
                             "returnType": "MyClass2",
                             "parameters": [],
                             "statements": []
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "kind": "ClassDeclaration",
+            "identifier": "MyGenericClass",
+            "type": "MyGenericClass",
+            "locals": [],
+            "instantiatedTypes": [
+                {
+                    "kind": "ClassDeclaration",
+                    "identifier": "MyGenericClass",
+                    "type": "MyGenericClass<MyClass>",
+                    "typeParameters": [
+                        "T"
+                    ],
+                    "typeArguments": [
+                        "MyClass"
+                    ],
+                    "superType": "Object",
+                    "locals": [
+                        {
+                            "kind": "TypeParameter",
+                            "identifier": "T",
+                            "type": "MyGenericClass:T"
+                        },
+                        {
+                            "kind": "ClassMethodGroupDeclaration",
+                            "identifier": "New",
+                            "type": "New MyGenericClass<MyClass>",
+                            "overloads": [
+                                {
+                                    "kind": "ClassMethodDeclaration",
+                                    "identifier": "New",
+                                    "locals": [],
+                                    "type": "New MyGenericClass<MyClass>()",
+                                    "returnType": "MyGenericClass<MyClass>",
+                                    "parameters": [],
+                                    "isProperty": false,
+                                    "statements": [
+                                        {
+                                            "kind": "ExpressionStatement",
+                                            "expression": {
+                                                "kind": "InvokeExpression",
+                                                "type": "MyClass",
+                                                "invocationType": "New MyClass()",
+                                                "invokableExpression": {
+                                                    "kind": "NewExpression",
+                                                    "type": "New MyClass",
+                                                    "typeReference": "MyClass"
+                                                },
+                                                "arguments": []
+                                            }
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "kind": "FunctionGroupDeclaration",
+            "identifier": "Main",
+            "type": "Main",
+            "overloads": [
+                {
+                    "kind": "FunctionDeclaration",
+                    "identifier": "Main",
+                    "locals": [],
+                    "type": "Main: Int()",
+                    "returnType": "Int",
+                    "parameters": [],
+                    "statements": [
+                        {
+                            "kind": "ExpressionStatement",
+                            "expression": {
+                                "kind": "InvokeExpression",
+                                "type": "MyClass",
+                                "invocationType": "New MyClass()",
+                                "invokableExpression": {
+                                    "kind": "NewExpression",
+                                    "type": "New MyClass",
+                                    "typeReference": "MyClass"
+                                },
+                                "arguments": []
+                            }
+                        },
+                        {
+                            "kind": "ExpressionStatement",
+                            "expression": {
+                                "kind": "InvokeExpression",
+                                "type": "MyGenericClass<MyClass>",
+                                "invocationType": "New MyGenericClass<MyClass>()",
+                                "invokableExpression": {
+                                    "kind": "NewExpression",
+                                    "type": "New MyGenericClass<MyClass>",
+                                    "typeReference": "MyGenericClass<MyClass>"
+                                },
+                                "arguments": []
+                            }
                         }
                     ]
                 }
