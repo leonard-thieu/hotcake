@@ -127,11 +127,7 @@ export function executeBaselineTestCase(
                     diagnostic.message
                 ).join(os.EOL);
 
-                const outputPathObject = path.parse(outputPath);
-                outputPathObject.base = '';
-                outputPathObject.ext = '.yaml';
-                outputPath = path.format(outputPathObject);
-
+                outputPath = replaceExt(outputPath, '.yaml');
                 fs.writeFileSync(outputPath, diagnosticsOutput);
             }
         }
@@ -146,7 +142,9 @@ export function executePreprocessorTokenizerTestCases(name: string, casesPath: s
             const { _it, sourceRelativePath, contents } = context;
 
             _it(sourceRelativePath, function () {
-                const outputPath = path.resolve(__dirname, 'cases', name, sourceRelativePath) + '.tokens.json';
+                let outputPath = path.resolve(__dirname, 'cases', name, sourceRelativePath);
+                outputPath = replaceExt(outputPath, '.tokens.json');
+
                 executeBaselineTestCase(outputPath, () => {
                     return getPreprocessorTokens(contents);
                 });
@@ -163,7 +161,9 @@ export function executePreprocessorParserTestCases(name: string, casesPath: stri
             const { _it, sourceRelativePath, contents } = context;
 
             _it(sourceRelativePath, function () {
-                const outputPath = path.resolve(__dirname, 'cases', name, sourceRelativePath) + '.tree.json';
+                let outputPath = path.resolve(__dirname, 'cases', name, sourceRelativePath);
+                outputPath = replaceExt(outputPath, '.parse.json');
+
                 executeBaselineTestCase(outputPath, () => {
                     return getPreprocessorParseTree(sourceRelativePath, contents);
                 }, function (key, value) {
@@ -190,7 +190,9 @@ export function executeTokenizerTestCases(name: string, casesPath: string): void
             const { _it, sourceRelativePath, contents } = context;
 
             _it(sourceRelativePath, function () {
-                const outputPath = path.resolve(__dirname, 'cases', name, sourceRelativePath) + '.tokens.json';
+                let outputPath = path.resolve(__dirname, 'cases', name, sourceRelativePath);
+                outputPath = replaceExt(outputPath, '.tokens.json');
+
                 executeBaselineTestCase(outputPath, () => {
                     return getTokens(sourceRelativePath, contents);
                 });
@@ -207,7 +209,9 @@ export function executeParserTestCases(name: string, casesPath: string): void {
             const { _it, sourceRelativePath, contents } = context;
 
             _it(sourceRelativePath, function () {
-                const outputPath = path.resolve(__dirname, 'cases', name, sourceRelativePath) + '.tree.json';
+                let outputPath = path.resolve(__dirname, 'cases', name, sourceRelativePath);
+                outputPath = replaceExt(outputPath, '.parse.json');
+
                 executeBaselineTestCase(outputPath, () => {
                     return getParseTree(sourceRelativePath, contents);
                 }, function (key, value) {
@@ -235,7 +239,9 @@ export function executeBinderTestCases(name: string, casesPath: string): void {
             const { _it, sourceRelativePath, contents } = context;
 
             _it(sourceRelativePath, function () {
-                const outputPath = path.resolve(__dirname, 'cases', name, sourceRelativePath) + '.boundTree.json';
+                let outputPath = path.resolve(__dirname, 'cases', name, sourceRelativePath);
+                outputPath = replaceExt(outputPath, '.bound.json');
+
                 executeBaselineTestCase(outputPath, () => {
                     return getBoundTree(path.resolve(casesPath, sourceRelativePath), contents);
                 }, function (this: any, key, value) {
@@ -438,4 +444,12 @@ export function getBoundTree(filePath: string, document: string): BoundModuleDec
 
         throw error;
     }
+}
+
+function replaceExt(originalPath: string, ext: string): string {
+    const pathObj = path.parse(originalPath);
+    pathObj.base = '';
+    pathObj.ext = ext;
+
+    return path.format(pathObj);
 }
