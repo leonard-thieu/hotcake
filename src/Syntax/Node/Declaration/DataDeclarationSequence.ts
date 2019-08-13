@@ -60,10 +60,10 @@ export class DataDeclaration extends Declaration {
     readonly kind = NodeKind.DataDeclaration;
 
     identifier: Identifier = undefined!;
-    typeAnnotation?: TypeAnnotation = undefined;
+    typeAnnotation?: TypeAnnotation = undefined!;
     // Can be missable if this declaration is Const.
-    operator?: EqualsSignToken | ColonEqualsSignToken | MissingToken = undefined;
-    expression?: Expressions | MissingToken = undefined;
+    operator?: EqualsSignToken | ColonEqualsSignToken | MissingToken = undefined!;
+    expression?: Expressions | MissingToken = undefined!;
 }
 
 // #endregion

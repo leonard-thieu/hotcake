@@ -26,11 +26,11 @@ export class InterfaceDeclaration extends Declaration {
 
     interfaceKeyword: InterfaceKeywordToken = undefined!;
     identifier: Identifier | MissingToken = undefined!;
-    extendsKeyword?: ExtendsKeywordToken = undefined;
-    implementedTypes?: (TypeReference | CommaSeparator)[] = undefined;
+    extendsKeyword?: ExtendsKeywordToken = undefined!;
+    implementedTypes?: (TypeReference | CommaSeparator)[] = undefined!;
     members: InterfaceDeclarationMember[] = undefined!;
     endKeyword: EndKeywordToken | MissingToken = undefined!;
-    endInterfaceKeyword?: InterfaceKeywordToken = undefined;
+    endInterfaceKeyword?: InterfaceKeywordToken = undefined!;
 }
 
 export type InterfaceDeclarationMember =
@@ -58,7 +58,7 @@ export class InterfaceMethodDeclaration extends Declaration {
 
     methodKeyword: MethodKeywordToken = undefined!;
     identifier: Identifier | MissingToken = undefined!;
-    returnType?: TypeAnnotation = undefined;
+    returnType?: TypeAnnotation = undefined!;
     openingParenthesis: OpeningParenthesisToken | MissingToken = undefined!;
     parameters: DataDeclarationSequence = undefined!;
     closingParenthesis: ClosingParenthesisToken | MissingToken = undefined!;

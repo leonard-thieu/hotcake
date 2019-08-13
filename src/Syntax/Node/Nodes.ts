@@ -16,7 +16,7 @@ import { TypeReference } from './TypeReference';
 
 export abstract class Node {
     abstract readonly kind: NodeKind = undefined!;
-    parent?: Nodes = undefined;
+    parent?: Nodes = undefined!;
 }
 
 export type Nodes =

@@ -114,9 +114,9 @@ export class Binder {
     private filePath: string = undefined!;
 
     project: Project = undefined!;
-    private bindTypeReferencesCallbackList?: (() => void)[] = undefined;
-    private bindDataDeclarationInitializerList?: (() => void)[] = undefined;
-    private bindStatementsCallbackList?: (() => void)[] = undefined;
+    private bindTypeReferencesCallbackList?: (() => void)[] = undefined!;
+    private bindDataDeclarationInitializerList?: (() => void)[] = undefined!;
+    private bindStatementsCallbackList?: (() => void)[] = undefined!;
     private module: BoundModuleDeclaration = undefined!;
 
     bind(

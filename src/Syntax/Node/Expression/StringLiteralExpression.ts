@@ -48,7 +48,7 @@ export class ConfigurationTag extends Node {
     readonly kind = NodeKind.ConfigurationTag;
 
     startToken: ConfigurationTagStartToken = undefined!;
-    name?: IdentifierToken = undefined;
+    name?: IdentifierToken = undefined!;
     endToken: ConfigurationTagEndToken = undefined!;
 }
 

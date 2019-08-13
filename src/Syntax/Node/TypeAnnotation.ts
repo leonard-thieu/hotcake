@@ -19,7 +19,7 @@ export const ShorthandTypeAnnotationChildNames: ReadonlyArray<keyof ShorthandTyp
 export class ShorthandTypeAnnotation extends Node {
     readonly kind = NodeKind.ShorthandTypeAnnotation;
 
-    shorthandType?: ShorthandTypeToken = undefined;
+    shorthandType?: ShorthandTypeToken = undefined!;
     arrayTypeAnnotations: ArrayTypeAnnotation[] = undefined!;
 }
 

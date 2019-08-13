@@ -22,7 +22,7 @@ export class ExternFunctionDeclaration extends ExternDeclaration {
 
     functionKeyword: FunctionKeywordToken = undefined!;
     identifier: Identifier | MissingToken = undefined!;
-    returnType?: TypeAnnotation = undefined;
+    returnType?: TypeAnnotation = undefined!;
     openingParenthesis: OpeningParenthesisToken | MissingToken = undefined!;
     parameters: DataDeclarationSequence = undefined!;
     closingParenthesis: ClosingParenthesisToken | MissingToken = undefined!;

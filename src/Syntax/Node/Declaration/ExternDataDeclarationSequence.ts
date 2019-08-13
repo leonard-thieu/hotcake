@@ -40,7 +40,7 @@ export class ExternDataDeclaration extends ExternDeclaration {
     readonly kind = NodeKind.ExternDataDeclaration;
 
     identifier: Identifier = undefined!;
-    typeAnnotation?: TypeAnnotation = undefined;
+    typeAnnotation?: TypeAnnotation = undefined!;
 }
 
 // #endregion

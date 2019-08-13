@@ -13,6 +13,6 @@ export class ArrayTypeAnnotation extends Node {
     readonly kind = NodeKind.ArrayTypeAnnotation;
 
     openingSquareBracket: OpeningSquareBracketToken = undefined!;
-    expression?: Expressions | MissingToken = undefined;
+    expression?: Expressions | MissingToken = undefined!;
     closingSquareBracket: ClosingSquareBracketToken | MissingToken = undefined!;
 }

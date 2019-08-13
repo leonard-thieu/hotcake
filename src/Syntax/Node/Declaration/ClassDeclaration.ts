@@ -38,23 +38,23 @@ export class ClassDeclaration extends Declaration {
     identifier: Identifier | MissingToken = undefined!;
 
     // Generic
-    lessThanSign?: LessThanSignToken = undefined;
-    typeParameters?: (TypeParameter | CommaSeparator)[] = undefined;
-    greaterThanSign?: GreaterThanSignToken | MissingToken = undefined;
+    lessThanSign?: LessThanSignToken = undefined!;
+    typeParameters?: (TypeParameter | CommaSeparator)[] = undefined!;
+    greaterThanSign?: GreaterThanSignToken | MissingToken = undefined!;
 
     // Extends
-    extendsKeyword?: ExtendsKeywordToken = undefined;
-    superType?: TypeReference | MissingToken = undefined;
+    extendsKeyword?: ExtendsKeywordToken = undefined!;
+    superType?: TypeReference | MissingToken = undefined!;
 
     // Implements
-    implementsKeyword?: ImplementsKeywordToken = undefined;
-    implementedTypes?: (TypeReference | CommaSeparator)[] = undefined;
+    implementsKeyword?: ImplementsKeywordToken = undefined!;
+    implementedTypes?: (TypeReference | CommaSeparator)[] = undefined!;
 
-    attribute?: AbstractKeywordToken | FinalKeywordToken = undefined;
+    attribute?: AbstractKeywordToken | FinalKeywordToken = undefined!;
 
     members: ClassDeclarationMember[] = undefined!;
     endKeyword: EndKeywordToken | MissingToken = undefined!;
-    endClassKeyword?: ClassKeywordToken = undefined;
+    endClassKeyword?: ClassKeywordToken = undefined!;
 }
 
 export type ClassDeclarationMember =
@@ -88,14 +88,14 @@ export class ClassMethodDeclaration extends Declaration {
 
     methodKeyword: MethodKeywordToken = undefined!;
     identifier: Identifier | NewKeywordToken | MissingToken = undefined!;
-    returnType?: TypeAnnotation = undefined;
+    returnType?: TypeAnnotation = undefined!;
     openingParenthesis: OpeningParenthesisToken | MissingToken = undefined!;
     parameters: DataDeclarationSequence = undefined!;
     closingParenthesis: ClosingParenthesisToken | MissingToken = undefined!;
     attributes: (AbstractKeywordToken | FinalKeywordToken | PropertyKeywordToken)[] = undefined!;
-    statements?: (Statements | SkippedToken)[] = undefined;
-    endKeyword?: EndKeywordToken | MissingToken = undefined;
-    endMethodKeyword?: MethodKeywordToken = undefined;
+    statements?: (Statements | SkippedToken)[] = undefined!;
+    endKeyword?: EndKeywordToken | MissingToken = undefined!;
+    endMethodKeyword?: MethodKeywordToken = undefined!;
 }
 
 // #endregion

@@ -12,8 +12,8 @@ export class BoundIfStatement extends BoundNode {
 
     expression: BoundExpressions = undefined!;
     statements: BoundStatements[] = undefined!;
-    elseIfClauses?: BoundElseIfClause[] = undefined;
-    elseClause?: BoundElseClause = undefined;
+    elseIfClauses?: BoundElseIfClause[] = undefined!;
+    elseClause?: BoundElseClause = undefined!;
 }
 
 // #endregion

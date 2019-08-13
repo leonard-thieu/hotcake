@@ -26,9 +26,9 @@ export class SelectStatement extends Statement {
     expression: Expressions | MissingToken = undefined!;
     newlines: NewlineToken[] = undefined!;
     caseClauses: CaseClause[] = undefined!;
-    defaultClause?: DefaultClause = undefined;
+    defaultClause?: DefaultClause = undefined!;
     endKeyword: EndKeywordToken | MissingToken = undefined!;
-    endSelectKeyword?: SelectKeywordToken = undefined;
+    endSelectKeyword?: SelectKeywordToken = undefined!;
 }
 
 // #endregion

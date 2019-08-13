@@ -20,8 +20,8 @@ export class BoundExternClassDeclaration extends BoundNode {
     identifier: BoundSymbol = undefined!;
     type: ObjectType | StringType | ArrayType = undefined!;
 
-    superType?: BoundExternClassDeclaration | BoundClassDeclaration = undefined;
-    nativeSymbol?: BoundStringLiteralExpression = undefined;
+    superType?: BoundExternClassDeclaration | BoundClassDeclaration = undefined!;
+    nativeSymbol?: BoundStringLiteralExpression = undefined!;
 
     readonly locals = new BoundSymbolTable();
 }
@@ -33,7 +33,7 @@ export class BoundExternClassDeclaration extends BoundNode {
 export class BoundExternClassMethodDeclaration extends BoundNode {
     readonly kind = BoundNodeKind.ExternClassMethodDeclaration;
 
-    declaration?: ExternClassMethodDeclaration = undefined;
+    declaration?: ExternClassMethodDeclaration = undefined!;
 
     identifier: BoundSymbol = undefined!;
     readonly locals = new BoundSymbolTable();
@@ -43,7 +43,7 @@ export class BoundExternClassMethodDeclaration extends BoundNode {
     parameters: BoundDataDeclaration[] = undefined!;
     isProperty: boolean = undefined!;
 
-    nativeSymbol?: BoundStringLiteralExpression = undefined;
+    nativeSymbol?: BoundStringLiteralExpression = undefined!;
 }
 
 // #endregion

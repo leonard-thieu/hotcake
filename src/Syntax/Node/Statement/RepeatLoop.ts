@@ -19,5 +19,5 @@ export class RepeatLoop extends Statement {
     repeatKeyword: RepeatKeywordToken = undefined!;
     statements: (Statements | SkippedToken)[] = undefined!;
     foreverOrUntilKeyword: ForeverKeywordToken | UntilKeywordToken | MissingToken = undefined!;
-    untilExpression?: Expressions | MissingToken = undefined;
+    untilExpression?: Expressions | MissingToken = undefined!;
 }

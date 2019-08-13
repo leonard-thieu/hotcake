@@ -21,7 +21,7 @@ export class RemDirective extends Directive {
     children: (RemDirectiveChild | SkippedToken)[] = undefined!;
     endDirectiveNumberSign: NumberSignToken | MissingToken = undefined!;
     endDirectiveKeyword: EndDirectiveKeywordToken | MissingToken = undefined!;
-    endIfDirectiveKeyword?: IfDirectiveKeywordToken = undefined;
+    endIfDirectiveKeyword?: IfDirectiveKeywordToken = undefined!;
 }
 
 export type RemDirectiveChild =

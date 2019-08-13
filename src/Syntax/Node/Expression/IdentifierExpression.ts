@@ -19,9 +19,9 @@ export class IdentifierExpression extends Expression {
     identifier: IdentifierExpressionIdentifier = undefined!;
 
     // Generic type arguments
-    lessThanSign?: LessThanSignToken = undefined;
-    typeArguments?: (TypeReference | CommaSeparator)[] = undefined;
-    greaterThanSign?: GreaterThanSignToken = undefined;
+    lessThanSign?: LessThanSignToken = undefined!;
+    typeArguments?: (TypeReference | CommaSeparator)[] = undefined!;
+    greaterThanSign?: GreaterThanSignToken = undefined!;
 }
 
 export type IdentifierExpressionIdentifier =

@@ -33,14 +33,14 @@ export class ExternClassDeclaration extends ExternDeclaration {
     identifier: Identifier | MissingToken = undefined!;
 
     // Extends
-    extendsKeyword?: ExtendsKeywordToken = undefined;
-    superType?: TypeReference | NullKeywordToken | MissingToken = undefined;
+    extendsKeyword?: ExtendsKeywordToken = undefined!;
+    superType?: TypeReference | NullKeywordToken | MissingToken = undefined!;
 
-    attribute?: AbstractKeywordToken | FinalKeywordToken = undefined;
+    attribute?: AbstractKeywordToken | FinalKeywordToken = undefined!;
 
     members: ExternClassDeclarationMember[] = undefined!;
     endKeyword: EndKeywordToken | MissingToken = undefined!;
-    endClassKeyword?: ClassKeywordToken = undefined;
+    endClassKeyword?: ClassKeywordToken = undefined!;
 }
 
 export type ExternClassDeclarationMember =
@@ -73,7 +73,7 @@ export class ExternClassMethodDeclaration extends ExternDeclaration {
 
     methodKeyword: MethodKeywordToken = undefined!;
     identifier: Identifier | MissingToken = undefined!;
-    returnType?: TypeAnnotation = undefined;
+    returnType?: TypeAnnotation = undefined!;
     openingParenthesis: OpeningParenthesisToken | MissingToken = undefined!;
     parameters: DataDeclarationSequence = undefined!;
     closingParenthesis: ClosingParenthesisToken | MissingToken = undefined!;

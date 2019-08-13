@@ -17,8 +17,8 @@ export class InvokeExpression extends Expression {
     readonly kind = NodeKind.InvokeExpression;
 
     invokableExpression: Expressions = undefined!;
-    openingParenthesis?: OpeningParenthesisToken = undefined;
-    leadingNewlines?: NewlineToken[] = undefined;
+    openingParenthesis?: OpeningParenthesisToken = undefined!;
+    leadingNewlines?: NewlineToken[] = undefined!;
     arguments: (Expressions | MissingToken | CommaSeparator)[] = undefined!;
-    closingParenthesis?: ClosingParenthesisToken | MissingToken = undefined;
+    closingParenthesis?: ClosingParenthesisToken | MissingToken = undefined!;
 }

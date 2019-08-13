@@ -25,11 +25,11 @@ export class FunctionDeclaration extends Declaration {
 
     functionKeyword: FunctionKeywordToken = undefined!;
     identifier: Identifier | MissingToken = undefined!;
-    returnType?: TypeAnnotation = undefined;
+    returnType?: TypeAnnotation = undefined!;
     openingParenthesis: OpeningParenthesisToken | MissingToken = undefined!;
     parameters: DataDeclarationSequence = undefined!;
     closingParenthesis: ClosingParenthesisToken | MissingToken = undefined!;
     statements: (Statements | SkippedToken)[] = undefined!;
     endKeyword: EndKeywordToken | MissingToken = undefined!;
-    endFunctionKeyword?: FunctionKeywordToken = undefined;
+    endFunctionKeyword?: FunctionKeywordToken = undefined!;
 }

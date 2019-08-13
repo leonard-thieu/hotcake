@@ -18,8 +18,8 @@ export class SliceExpression extends Expression {
 
     sliceableExpression: Expressions = undefined!;
     openingSquareBracket: OpeningSquareBracketToken = undefined!;
-    startExpression?: Expressions = undefined;
+    startExpression?: Expressions = undefined!;
     sliceOperator: PeriodPeriodToken = undefined!;
-    endExpression?: Expressions = undefined;
+    endExpression?: Expressions = undefined!;
     closingSquareBracket: ClosingSquareBracketToken | MissingToken = undefined!;
 }

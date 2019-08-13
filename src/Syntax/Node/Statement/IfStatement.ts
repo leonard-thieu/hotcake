@@ -24,12 +24,12 @@ export class IfStatement extends Statement {
 
     ifKeyword: IfKeywordToken = undefined!;
     expression: Expressions | MissingToken = undefined!;
-    thenKeyword?: ThenKeywordToken = undefined;
+    thenKeyword?: ThenKeywordToken = undefined!;
     statements: (Statements | SkippedToken)[] = undefined!;
-    elseIfClauses?: ElseIfClause[] = undefined;
-    elseClause?: ElseClause = undefined;
-    endKeyword?: EndIfKeywordToken | EndKeywordToken | MissingToken = undefined;
-    endIfKeyword?: IfKeywordToken = undefined;
+    elseIfClauses?: ElseIfClause[] = undefined!;
+    elseClause?: ElseClause = undefined!;
+    endKeyword?: EndIfKeywordToken | EndKeywordToken | MissingToken = undefined!;
+    endIfKeyword?: IfKeywordToken = undefined!;
 }
 
 // #endregion
@@ -48,9 +48,9 @@ export class ElseIfClause extends Node {
     readonly kind = NodeKind.ElseIfClause;
 
     elseIfKeyword: ElseIfKeywordToken | ElseKeywordToken = undefined!;
-    ifKeyword?: IfKeywordToken = undefined;
+    ifKeyword?: IfKeywordToken = undefined!;
     expression: Expressions | MissingToken = undefined!;
-    thenKeyword?: ThenKeywordToken = undefined;
+    thenKeyword?: ThenKeywordToken = undefined!;
     statements: (Statements | SkippedToken)[] = undefined!;
 }
 

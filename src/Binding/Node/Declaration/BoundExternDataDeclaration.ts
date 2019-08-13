@@ -9,10 +9,10 @@ export class BoundExternDataDeclaration extends BoundNode {
 
     declarationKind: BoundExternDataDeclarationKind = undefined!;
     identifier: BoundSymbol = undefined!;
-    typeAnnotation?: BoundTypeReferenceDeclaration = undefined;
+    typeAnnotation?: BoundTypeReferenceDeclaration = undefined!;
     type: Types = undefined!;
 
-    nativeSymbol?: BoundStringLiteralExpression = undefined;
+    nativeSymbol?: BoundStringLiteralExpression = undefined!;
 }
 
 export enum BoundExternDataDeclarationKind {

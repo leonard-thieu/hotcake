@@ -39,7 +39,7 @@ export class ModuleDeclaration extends Declaration {
     readonly kind = NodeKind.ModuleDeclaration;
 
     strictNewlines: NewlineToken[] = undefined!;
-    strictDirective?: StrictDirective = undefined;
+    strictDirective?: StrictDirective = undefined!;
     headerMembers: ModuleDeclarationHeaderMember[] = undefined!;
     members: ModuleDeclarationMember[] = undefined!;
     eofToken: EOFToken = undefined!;

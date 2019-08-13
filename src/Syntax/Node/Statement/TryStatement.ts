@@ -23,7 +23,7 @@ export class TryStatement extends Statement {
     statements: (Statements | SkippedToken)[] = undefined!;
     catchClauses: CatchClause[] = undefined!;
     endKeyword: EndKeywordToken | MissingToken = undefined!;
-    endTryKeyword?: TryKeywordToken = undefined;
+    endTryKeyword?: TryKeywordToken = undefined!;
 }
 
 // #endregion

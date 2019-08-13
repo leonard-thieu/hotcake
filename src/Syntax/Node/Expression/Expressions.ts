@@ -20,7 +20,7 @@ import { SuperExpression } from './SuperExpression';
 import { UnaryExpression } from './UnaryExpression';
 
 export abstract class Expression extends Node {
-    newlines?: NewlineToken[] = undefined;
+    newlines?: NewlineToken[] = undefined!;
 }
 
 export type Expressions =

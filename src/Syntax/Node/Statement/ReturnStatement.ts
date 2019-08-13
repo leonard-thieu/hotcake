@@ -13,5 +13,5 @@ export class ReturnStatement extends Statement {
     readonly kind = NodeKind.ReturnStatement;
 
     returnKeyword: ReturnKeywordToken = undefined!;
-    expression?: Expressions = undefined;
+    expression?: Expressions = undefined!;
 }

@@ -25,10 +25,10 @@ export class IfDirective extends Directive {
     expression: Expressions | MissingToken = undefined!;
     members: (Directives | Tokens)[] = undefined!;
     elseIfDirectives: ElseIfDirective[] = undefined!;
-    elseDirective?: ElseDirective = undefined;
+    elseDirective?: ElseDirective = undefined!;
     endDirectiveNumberSign: NumberSignToken | MissingToken = undefined!;
     endDirectiveKeyword: EndDirectiveKeywordToken | MissingToken = undefined!;
-    endIfDirectiveKeyword?: IfDirectiveKeywordToken = undefined;
+    endIfDirectiveKeyword?: IfDirectiveKeywordToken = undefined!;
 }
 
 // #endregion
@@ -47,7 +47,7 @@ export class ElseIfDirective extends Directive {
     readonly kind = NodeKind.ElseIfDirective;
 
     elseIfDirectiveKeyword: ElseIfDirectiveKeywordToken | ElseDirectiveKeywordToken = undefined!;
-    ifDirectiveKeyword?: IfDirectiveKeywordToken = undefined;
+    ifDirectiveKeyword?: IfDirectiveKeywordToken = undefined!;
     expression: Expressions | MissingToken = undefined!;
     members: (Directives | Tokens)[] = undefined!;
 }

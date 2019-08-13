@@ -21,5 +21,5 @@ export class WhileLoop extends Statement {
     expression: Expressions | MissingToken = undefined!;
     statements: (Statements | SkippedToken)[] = undefined!;
     endKeyword: WendKeywordToken | EndKeywordToken | MissingToken = undefined!;
-    endWhileKeyword?: WhileKeywordToken = undefined;
+    endWhileKeyword?: WhileKeywordToken = undefined!;
 }

@@ -11,7 +11,7 @@ export class AccessibilityDirective extends Declaration {
     readonly kind = NodeKind.AccessibilityDirective;
 
     accessibilityKeyword: AccessibilityKeywordToken = undefined!;
-    externPrivateKeyword?: PrivateKeywordToken = undefined;
+    externPrivateKeyword?: PrivateKeywordToken = undefined!;
 }
 
 export type AccessibilityKeywordToken =

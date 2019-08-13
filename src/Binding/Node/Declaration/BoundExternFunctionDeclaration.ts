@@ -18,5 +18,5 @@ export class BoundExternFunctionDeclaration extends BoundNode {
     returnType: BoundTypeReferenceDeclaration = undefined!;
     parameters: BoundDataDeclaration[] = undefined!;
 
-    nativeSymbol?: BoundStringLiteralExpression = undefined;
+    nativeSymbol?: BoundStringLiteralExpression = undefined!;
 }

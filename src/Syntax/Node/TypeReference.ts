@@ -18,14 +18,14 @@ export const TypeReferenceChildNames: ReadonlyArray<keyof TypeReference> = [
 export class TypeReference extends Node {
     readonly kind = NodeKind.TypeReference;
 
-    moduleIdentifier?: IdentifierToken = undefined;
-    scopeMemberAccessOperator?: PeriodToken | MissingToken = undefined;
+    moduleIdentifier?: IdentifierToken = undefined!;
+    scopeMemberAccessOperator?: PeriodToken | MissingToken = undefined!;
     identifier: TypeReferenceIdentifier | IdentifierToken | MissingToken = undefined!;
 
     // Generic type arguments
-    lessThanSign?: LessThanSignToken = undefined;
-    typeArguments?: (TypeReference | CommaSeparator)[] = undefined;
-    greaterThanSign?: GreaterThanSignToken | MissingToken = undefined;
+    lessThanSign?: LessThanSignToken = undefined!;
+    typeArguments?: (TypeReference | CommaSeparator)[] = undefined!;
+    greaterThanSign?: GreaterThanSignToken | MissingToken = undefined!;
 
     arrayTypeAnnotations: ArrayTypeAnnotation[] = undefined!;
 }

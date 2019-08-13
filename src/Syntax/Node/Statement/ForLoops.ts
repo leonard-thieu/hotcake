@@ -31,18 +31,18 @@ export class NumericForLoop extends Statement {
     readonly kind = NodeKind.NumericForLoop;
 
     forKeyword: ForKeywordToken = undefined!;
-    localKeyword?: LocalKeywordToken = undefined;
+    localKeyword?: LocalKeywordToken = undefined!;
     indexVariable: Identifier | MissingToken = undefined!;
-    typeAnnotation?: TypeAnnotation = undefined;
+    typeAnnotation?: TypeAnnotation = undefined!;
     operator: ForLoopOperatorToken = undefined!;
     firstValueExpression: Expressions | MissingToken = undefined!;
     toOrUntilKeyword: ToKeywordToken | UntilKeywordToken | MissingToken = undefined!;
     lastValueExpression: Expressions | MissingToken = undefined!;
-    stepKeyword?: StepKeywordToken = undefined;
-    stepValueExpression?: Expressions | MissingToken = undefined;
+    stepKeyword?: StepKeywordToken = undefined!;
+    stepValueExpression?: Expressions | MissingToken = undefined!;
     statements: (Statements | SkippedToken)[] = undefined!;
     endKeyword: NextKeywordToken | EndKeywordToken | MissingToken = undefined!;
-    endForKeyword?: ForKeywordToken = undefined;
+    endForKeyword?: ForKeywordToken = undefined!;
 }
 
 // #endregion
@@ -67,15 +67,15 @@ export class ForEachInLoop extends Statement {
     readonly kind = NodeKind.ForEachInLoop;
 
     forKeyword: ForKeywordToken = undefined!;
-    localKeyword?: LocalKeywordToken = undefined;
+    localKeyword?: LocalKeywordToken = undefined!;
     indexVariable: Identifier | MissingToken = undefined!;
-    typeAnnotation?: TypeAnnotation = undefined;
+    typeAnnotation?: TypeAnnotation = undefined!;
     operator: ForLoopOperatorToken = undefined!;
     eachInKeyword: EachInKeywordToken = undefined!;
     collectionExpression: Expressions | MissingToken = undefined!;
     statements: (Statements | SkippedToken)[] = undefined!;
     endKeyword: NextKeywordToken | EndKeywordToken | MissingToken = undefined!;
-    endForKeyword?: ForKeywordToken = undefined;
+    endForKeyword?: ForKeywordToken = undefined!;
 }
 
 // #endregion
