@@ -325,7 +325,7 @@ export function executeBinderTestCases(name: string, casesPath: string): void {
                                         if (identifier.declaration.kind === BoundNodeKind.ModuleDeclaration) {
                                             const modulePath = getModulePath(identifier.declaration);
 
-                                            return modulePath !== 'monkey.lang';
+                                            return modulePath !== 'monkey';
                                         }
 
                                         return true;

@@ -154,7 +154,7 @@ export class Binder {
         this.module = boundModuleDeclaration;
         this.project.cacheModule(boundModuleDeclaration);
 
-        boundModuleDeclaration.frameworkModule = this.project.importModuleFromSource(this.module.directory, ['monkey'], 'lang');
+        boundModuleDeclaration.frameworkModule = this.project.importModuleFromSource(this.module.directory, [], 'monkey');
         boundModuleDeclaration.locals.set(boundModuleDeclaration.frameworkModule.identifier);
 
         this.bindModuleDeclarationHeaderMembers(boundModuleDeclaration, moduleDeclaration.headerMembers);
