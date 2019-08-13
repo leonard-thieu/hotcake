@@ -65,12 +65,14 @@
                         "start": 51,
                         "length": 2
                     },
-                    "target": {
-                        "kind": "IntKeyword",
-                        "fullStart": 52,
-                        "start": 53,
-                        "length": 4
-                    }
+                    "children": [
+                        {
+                            "kind": "IntKeyword",
+                            "fullStart": 52,
+                            "start": 53,
+                            "length": 4
+                        }
+                    ]
                 }
             ]
         },

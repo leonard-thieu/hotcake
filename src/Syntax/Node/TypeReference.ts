@@ -20,7 +20,7 @@ export class TypeReference extends Node {
 
     moduleIdentifier?: IdentifierToken = undefined;
     scopeMemberAccessOperator?: MissableToken<PeriodToken> = undefined;
-    identifier: TypeReferenceIdentifier | MissableToken<IdentifierToken> = undefined!;
+    identifier: TypeReferenceIdentifier | IdentifierToken | MissingToken = undefined!;
 
     // Generic type arguments
     lessThanSign?: LessThanSignToken = undefined;

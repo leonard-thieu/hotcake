@@ -270,24 +270,26 @@
                         "start": 854,
                         "length": 1
                     },
-                    "moduleIdentifier": {
-                        "kind": "Identifier",
-                        "fullStart": 855,
-                        "start": 855,
-                        "length": 5
-                    },
-                    "moduleScopeMemberAccessOperator": {
-                        "kind": "Period",
-                        "fullStart": 860,
-                        "start": 860,
-                        "length": 1
-                    },
-                    "target": {
-                        "kind": "Identifier",
-                        "fullStart": 861,
-                        "start": 861,
-                        "length": 1
-                    }
+                    "children": [
+                        {
+                            "kind": "Identifier",
+                            "fullStart": 855,
+                            "start": 855,
+                            "length": 5
+                        },
+                        {
+                            "kind": "Period",
+                            "fullStart": 860,
+                            "start": 860,
+                            "length": 1
+                        },
+                        {
+                            "kind": "Identifier",
+                            "fullStart": 861,
+                            "start": 861,
+                            "length": 1
+                        }
+                    ]
                 }
             ]
         },

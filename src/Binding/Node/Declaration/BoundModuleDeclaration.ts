@@ -14,8 +14,8 @@ export class BoundModuleDeclaration extends BoundNode {
     directory: BoundDirectory = undefined!;
 
     identifier: BoundSymbol = undefined!;
-    readonly importedModules = new Set<BoundModuleDeclaration>();
     type: ModuleType = undefined!;
 
     readonly locals = new BoundSymbolTable();
+    frameworkModule: BoundModuleDeclaration = undefined!;
 }

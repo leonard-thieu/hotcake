@@ -29,7 +29,7 @@ export class EscapedIdentifier extends Node {
     name: IdentifierTokens | MissingToken = undefined!;
 }
 
-type IdentifierTokens =
+export type IdentifierTokens =
     | EscapeOptionalIdentifierToken
     | EscapeRequiredIdentifierToken
     ;

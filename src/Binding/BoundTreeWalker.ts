@@ -36,11 +36,11 @@ export namespace BoundTreeWalker {
     ) {
         const methodGroup = methodContainer.locals.get(name);
         if (methodGroup) {
-            switch (methodGroup.declaration.kind) {
+            switch (methodGroup.kind) {
                 case BoundNodeKind.ExternClassMethodGroupDeclaration:
                 case BoundNodeKind.InterfaceMethodGroupDeclaration:
                 case BoundNodeKind.ClassMethodGroupDeclaration: {
-                    return getOverload(methodGroup.declaration.overloads, checkReturnType, parameters);
+                    return getOverload(methodGroup.overloads, checkReturnType, parameters);
                 }
             }
         }

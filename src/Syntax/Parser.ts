@@ -16,7 +16,6 @@ import { PreprocessorModuleDeclaration } from './Node/Declaration/PreprocessorMo
 import { StrictDirective } from './Node/Declaration/StrictDirective';
 import { TypeParameter } from './Node/Declaration/TypeParameter';
 import { Expressions, MissableExpression } from './Node/Expression/Expressions';
-import { ScopeMemberAccessExpression } from './Node/Expression/ScopeMemberAccessExpression';
 import { IdentifierStartToken } from './Node/Identifier';
 import { ModulePath } from './Node/ModulePath';
 import { NodeKind, Nodes } from './Node/Nodes';
@@ -400,41 +399,59 @@ export class Parser extends ParserBase {
         aliasDirective.parent = parent;
         aliasDirective.identifier = this.parseIdentifier(aliasDirective, identifierStart);
         aliasDirective.equalsSign = this.eatMissable(TokenKind.EqualsSign);
-
-        // Parse module identifier
-        const identifierStartToken1 = this.getToken();
-        if (identifierStartToken1.kind === TokenKind.Identifier &&
-            this.moduleIdentifiers.includes(identifierStartToken1.getText(this.document))
-        ) {
-            this.advanceToken();
-            aliasDirective.moduleIdentifier = identifierStartToken1;
-            aliasDirective.moduleScopeMemberAccessOperator = this.eatMissable(TokenKind.Period);
-        }
-
-        // Parse type identifier
-        const identifierStartToken2 = this.getToken();
-        if ((identifierStartToken2.kind === TokenKind.CommercialAt && this.getToken(/*offset*/ 2).kind === TokenKind.Period) ||
-            (identifierStartToken2.kind === TokenKind.Identifier && this.getToken(/*offset*/ 1).kind === TokenKind.Period)
-        ) {
-            this.advanceToken();
-            aliasDirective.typeIdentifier = this.parseIdentifier(aliasDirective, identifierStartToken2);
-            aliasDirective.typeScopeMemberAccessOperator = this.eat(TokenKind.Period);
-        }
-
-        // Parse target
-        aliasDirective.target = this.parseAliasDirectiveTarget(aliasDirective);
+        aliasDirective.children = this.parseList(ParseContextKind.AliasDirective, aliasDirective, TokenKind.Period);
 
         return aliasDirective;
     }
 
-    private parseAliasDirectiveTarget(aliasDirective: AliasDirective) {
-        const target = this.eatOptional(TokenKind.IntKeyword, TokenKind.FloatKeyword, TokenKind.StringKeyword);
-        if (target) {
-            return target;
+    // #region Alias directive members
+
+    private isAliasDirectiveTerminator(token: Tokens): boolean {
+        return !this.isAliasDirectiveMemberStart(token);
+    }
+
+    private isAliasDirectiveMemberStart(token: Tokens): boolean {
+        switch (token.kind) {
+            case TokenKind.Identifier:
+            case TokenKind.IntKeyword:
+            case TokenKind.FloatKeyword:
+            case TokenKind.StringKeyword:
+            case TokenKind.ObjectKeyword:
+            case TokenKind.ThrowableKeyword:
+            case TokenKind.CommercialAt:
+            case TokenKind.Period: {
+                return true;
+            }
         }
 
-        return this.parseMissableIdentifier(aliasDirective);
+        return false;
     }
+
+    private parseAliasDirectiveMember(parent: Nodes) {
+        const token = this.getToken();
+        switch (token.kind) {
+            case TokenKind.Identifier:
+            case TokenKind.IntKeyword:
+            case TokenKind.FloatKeyword:
+            case TokenKind.StringKeyword:
+            case TokenKind.ObjectKeyword:
+            case TokenKind.ThrowableKeyword:
+            case TokenKind.CommercialAt: {
+                this.advanceToken();
+
+                return this.parseIdentifier(parent, token);
+            }
+            case TokenKind.Period: {
+                this.advanceToken();
+
+                return token;
+            }
+        }
+
+        return this.parseCore(parent, token);
+    }
+
+    // #endregion
 
     // #endregion
 
@@ -1946,6 +1963,21 @@ export class Parser extends ParserBase {
             case ParseContextKind.ModuleDeclaration: {
                 return this.isModuleDeclarationMembersListTerminator();
             }
+            case ParseContextKind.ModuleDeclarationHeader: {
+                return this.isModuleDeclarationHeaderTerminator(token);
+            }
+            case ParseContextKind.ModulePathSequence: {
+                return this.isModulePathSequenceTerminator(token);
+            }
+            case ParseContextKind.DataDeclarationSequence: {
+                return this.isDataDeclarationSequenceTerminator(token);
+            }
+            case ParseContextKind.AliasDirectiveSequence: {
+                return this.isAliasDirectiveSequenceTerminator(token);
+            }
+            case ParseContextKind.AliasDirective: {
+                return this.isAliasDirectiveTerminator(token);
+            }
             case ParseContextKind.ExternDataDeclarationSequence: {
                 return this.isExternDataDeclarationSequenceTerminator(token);
             }
@@ -1958,18 +1990,30 @@ export class Parser extends ParserBase {
             case ParseContextKind.ClassDeclaration: {
                 return this.isClassDeclarationMembersListTerminator(token);
             }
+            case ParseContextKind.TypeParameterSequence: {
+                return this.isTypeParameterSequenceTerminator(token);
+            }
             case ParseContextKind.FunctionDeclaration:
             case ParseContextKind.ClassMethodDeclaration: {
                 return this.isFunctionLikeStatementsListTerminator(token);
+            }
+            case ParseContextKind.ClassMethodAttributes: {
+                return this.isClassMethodAttributesTerminator(token);
             }
             case ParseContextKind.IfStatement:
             case ParseContextKind.ElseIfClause:
             case ParseContextKind.ElseClause: {
                 return this.isIfStatementLikeStatementsListTerminator(token);
             }
+            case ParseContextKind.ElseIfClauseList: {
+                return this.isElseIfClauseListTerminator(token);
+            }
             case ParseContextKind.CaseClause:
             case ParseContextKind.DefaultClause: {
                 return this.isCaseOrDefaultClauseStatementsListTerminator(token);
+            }
+            case ParseContextKind.CaseClauseList: {
+                return this.isCaseClauseListTerminator(token);
             }
             case ParseContextKind.WhileLoop: {
                 return this.isWhileLoopStatementsListTerminator(token);
@@ -1984,30 +2028,6 @@ export class Parser extends ParserBase {
             case ParseContextKind.CatchClause: {
                 return this.isTryStatementStatementsListTerminator(token);
             }
-            case ParseContextKind.AliasDirectiveSequence: {
-                return this.isAliasDirectiveSequenceTerminator(token);
-            }
-            case ParseContextKind.ModuleDeclarationHeader: {
-                return this.isModuleDeclarationHeaderTerminator(token);
-            }
-            case ParseContextKind.ModulePathSequence: {
-                return this.isModulePathSequenceTerminator(token);
-            }
-            case ParseContextKind.DataDeclarationSequence: {
-                return this.isDataDeclarationSequenceTerminator(token);
-            }
-            case ParseContextKind.TypeParameterSequence: {
-                return this.isTypeParameterSequenceTerminator(token);
-            }
-            case ParseContextKind.ClassMethodAttributes: {
-                return this.isClassMethodAttributesTerminator(token);
-            }
-            case ParseContextKind.ElseIfClauseList: {
-                return this.isElseIfClauseListTerminator(token);
-            }
-            case ParseContextKind.CaseClauseList: {
-                return this.isCaseClauseListTerminator(token);
-            }
             case ParseContextKind.CatchClauseList: {
                 return this.isCatchClauseListTerminator(token);
             }
@@ -2021,17 +2041,38 @@ export class Parser extends ParserBase {
             case ParseContextKind.ModuleDeclaration: {
                 return this.isModuleDeclarationMemberStart(token);
             }
+            case ParseContextKind.ModuleDeclarationHeader: {
+                return this.isModuleDeclarationHeaderMemberStart(token);
+            }
+            case ParseContextKind.ModulePathSequence: {
+                return this.isModulePathSequenceMemberStart(token);
+            }
+            case ParseContextKind.AliasDirectiveSequence: {
+                return this.isAliasDirectiveSequenceMemberStart(token);
+            }
+            case ParseContextKind.AliasDirective: {
+                return this.isAliasDirectiveMemberStart(token);
+            }
             case ParseContextKind.ExternDataDeclarationSequence: {
                 return this.isExternDataDeclarationSequenceMemberStart(token);
             }
             case ParseContextKind.ExternClassDeclaration: {
                 return this.isExternClassDeclarationMemberStart(token);
             }
+            case ParseContextKind.DataDeclarationSequence: {
+                return this.isDataDeclarationSequenceMemberStart(token);
+            }
             case ParseContextKind.InterfaceDeclaration: {
                 return this.isInterfaceDeclarationMemberStart(token);
             }
             case ParseContextKind.ClassDeclaration: {
                 return this.isClassDeclarationMemberStart(token);
+            }
+            case ParseContextKind.TypeParameterSequence: {
+                return this.isTypeParameterSequenceMemberStart(token);
+            }
+            case ParseContextKind.ClassMethodAttributes: {
+                return this.isClassMethodAttributeStart(token);
             }
             case ParseContextKind.FunctionDeclaration:
             case ParseContextKind.ClassMethodDeclaration:
@@ -2046,24 +2087,6 @@ export class Parser extends ParserBase {
             case ParseContextKind.TryStatement:
             case ParseContextKind.CatchClause: {
                 return this.isStatementListMemberStart(token);
-            }
-            case ParseContextKind.ModuleDeclarationHeader: {
-                return this.isModuleDeclarationHeaderMemberStart(token);
-            }
-            case ParseContextKind.AliasDirectiveSequence: {
-                return this.isAliasDirectiveSequenceMemberStart(token);
-            }
-            case ParseContextKind.ModulePathSequence: {
-                return this.isModulePathSequenceMemberStart(token);
-            }
-            case ParseContextKind.DataDeclarationSequence: {
-                return this.isDataDeclarationSequenceMemberStart(token);
-            }
-            case ParseContextKind.TypeParameterSequence: {
-                return this.isTypeParameterSequenceMemberStart(token);
-            }
-            case ParseContextKind.ClassMethodAttributes: {
-                return this.isClassMethodAttributeStart(token);
             }
             case ParseContextKind.ElseIfClauseList: {
                 return this.isElseIfClauseListMemberStart(token);
@@ -2084,17 +2107,35 @@ export class Parser extends ParserBase {
             case ParseContextKind.ModuleDeclaration: {
                 return this.parseModuleDeclarationMember(parent);
             }
+            case ParseContextKind.ModuleDeclarationHeader: {
+                return this.parseModuleDeclarationHeaderMember(parent);
+            }
+            case ParseContextKind.ModulePathSequence: {
+                return this.parseModulePathSequenceMember(parent);
+            }
+            case ParseContextKind.AliasDirectiveSequence: {
+                return this.parseAliasDirectiveSequenceMember(parent);
+            }
+            case ParseContextKind.AliasDirective: {
+                return this.parseAliasDirectiveMember(parent);
+            }
             case ParseContextKind.ExternDataDeclarationSequence: {
                 return this.parseExternDataDeclarationSequenceMember(parent);
             }
             case ParseContextKind.ExternClassDeclaration: {
                 return this.parseExternClassDeclarationMember(parent);
             }
+            case ParseContextKind.DataDeclarationSequence: {
+                return this.parseDataDeclarationSequenceMember(parent);
+            }
             case ParseContextKind.InterfaceDeclaration: {
                 return this.parseInterfaceDeclarationMember(parent);
             }
             case ParseContextKind.ClassDeclaration: {
                 return this.parseClassDeclarationMember(parent);
+            }
+            case ParseContextKind.TypeParameterSequence: {
+                return this.parseTypeParameterSequenceMember(parent);
             }
             case ParseContextKind.FunctionDeclaration:
             case ParseContextKind.ClassMethodDeclaration:
@@ -2109,21 +2150,6 @@ export class Parser extends ParserBase {
             case ParseContextKind.TryStatement:
             case ParseContextKind.CatchClause: {
                 return this.parseStatementListMember(parent);
-            }
-            case ParseContextKind.AliasDirectiveSequence: {
-                return this.parseAliasDirectiveSequenceMember(parent);
-            }
-            case ParseContextKind.ModuleDeclarationHeader: {
-                return this.parseModuleDeclarationHeaderMember(parent);
-            }
-            case ParseContextKind.ModulePathSequence: {
-                return this.parseModulePathSequenceMember(parent);
-            }
-            case ParseContextKind.DataDeclarationSequence: {
-                return this.parseDataDeclarationSequenceMember(parent);
-            }
-            case ParseContextKind.TypeParameterSequence: {
-                return this.parseTypeParameterSequenceMember(parent);
             }
             case ParseContextKind.ClassMethodAttributes: {
                 return this.parseClassMethodAttribute(parent);
@@ -2239,6 +2265,8 @@ interface ParserParseContextElementMap extends ParseContextElementMapBase {
     [ParseContextKind.ModuleDeclaration]: ReturnType<Parser['parseModuleDeclarationMember']>;
     [ParseContextKind.ModuleDeclarationHeader]: ReturnType<Parser['parseModuleDeclarationHeaderMember']>;
     [ParseContextKind.ModulePathSequence]: ReturnType<Parser['parseModulePathSequenceMember']>;
+    [ParseContextKind.AliasDirectiveSequence]: ReturnType<Parser['parseAliasDirectiveSequenceMember']>;
+    [ParseContextKind.AliasDirective]: ReturnType<Parser['parseAliasDirectiveMember']>;
     [ParseContextKind.DataDeclarationSequence]: ReturnType<Parser['parseDataDeclarationSequenceMember']>;
     [ParseContextKind.ExternDataDeclarationSequence]: ReturnType<Parser['parseExternDataDeclarationSequenceMember']>;
     [ParseContextKind.FunctionDeclaration]: ReturnType<Parser['parseStatementListMember']>;
@@ -2261,7 +2289,6 @@ interface ParserParseContextElementMap extends ParseContextElementMapBase {
     [ParseContextKind.TryStatement]: ReturnType<Parser['parseStatementListMember']>;
     [ParseContextKind.CatchClauseList]: ReturnType<Parser['parseCatchClauseListMember']>;
     [ParseContextKind.CatchClause]: ReturnType<Parser['parseStatementListMember']>;
-    [ParseContextKind.AliasDirectiveSequence]: ReturnType<Parser['parseAliasDirectiveSequenceMember']>;
 }
 
 type ParserParseContext = keyof ParserParseContextElementMap;
@@ -2270,6 +2297,8 @@ const _ParseContextKind: { -readonly [P in keyof typeof ParseContextKind]: typeo
 _ParseContextKind.ModuleDeclaration = 'ModuleDeclaration' as ParseContextKind.ModuleDeclaration;
 _ParseContextKind.ModuleDeclarationHeader = 'ModuleDeclarationHeader' as ParseContextKind.ModuleDeclarationHeader;
 _ParseContextKind.ModulePathSequence = 'ModulePathSequence' as ParseContextKind.ModulePathSequence;
+_ParseContextKind.AliasDirectiveSequence = 'AliasDirectiveSequence' as ParseContextKind.AliasDirectiveSequence;
+_ParseContextKind.AliasDirective = 'AliasDirective' as ParseContextKind.AliasDirective;
 _ParseContextKind.DataDeclarationSequence = 'DataDeclarationSequence' as ParseContextKind.DataDeclarationSequence;
 _ParseContextKind.ExternDataDeclarationSequence = 'ExternDataDeclarationSequence' as ParseContextKind.ExternDataDeclarationSequence;
 _ParseContextKind.FunctionDeclaration = 'FunctionDeclaration' as ParseContextKind.FunctionDeclaration;
@@ -2292,13 +2321,14 @@ _ParseContextKind.ForLoop = 'ForLoop' as ParseContextKind.ForLoop;
 _ParseContextKind.TryStatement = 'TryStatement' as ParseContextKind.TryStatement;
 _ParseContextKind.CatchClauseList = 'CatchClauseList' as ParseContextKind.CatchClauseList;
 _ParseContextKind.CatchClause = 'CatchClause' as ParseContextKind.CatchClause;
-_ParseContextKind.AliasDirectiveSequence = 'AliasDirectiveSequence' as ParseContextKind.AliasDirectiveSequence;
 
 declare module './ParserBase' {
     enum ParseContextKind {
         ModuleDeclaration = 'ModuleDeclaration',
         ModuleDeclarationHeader = 'ModuleDeclarationHeader',
         ModulePathSequence = 'ModulePathSequence',
+        AliasDirectiveSequence = 'AliasDirectiveSequence',
+        AliasDirective = 'AliasDirective',
         DataDeclarationSequence = 'DataDeclarationSequence',
         ExternDataDeclarationSequence = 'ExternDataDeclarationSequence',
         FunctionDeclaration = 'FunctionDeclaration',
@@ -2321,7 +2351,6 @@ declare module './ParserBase' {
         TryStatement = 'TryStatement',
         CatchClauseList = 'CatchClauseList',
         CatchClause = 'CatchClause',
-        AliasDirectiveSequence = 'AliasDirectiveSequence',
     }
 
     interface ParseContextElementMap extends ParserParseContextElementMap { }

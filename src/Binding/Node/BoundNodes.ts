@@ -25,6 +25,8 @@ export enum BoundNodeKind {
 
     ModuleDeclaration = 'ModuleDeclaration',
 
+    AliasDirective = 'AliasDirective',
+
     ExternDataDeclaration = 'ExternDataDeclaration',
     ExternFunctionDeclaration = 'ExternFunctionDeclaration',
     ExternFunctionGroupDeclaration = 'ExternFunctionGroupDeclaration',

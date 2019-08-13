@@ -1,3 +1,4 @@
+import { BoundAliasDirective } from './BoundAliasDirective';
 import { BoundClassDeclaration, BoundClassMethodDeclaration } from './BoundClassDeclaration';
 import { BoundDataDeclaration } from './BoundDataDeclaration';
 import { BoundDirectory } from './BoundDirectory';
@@ -14,6 +15,7 @@ export type BoundDeclarations =
     | BoundDirectory
     | BoundIntrinsicTypeDeclaration
     | BoundModuleDeclaration
+    | BoundAliasDirective
     | BoundExternDeclarations
     | BoundDataDeclaration
     | BoundFunctionDeclaration

@@ -127,10 +127,10 @@ export class Project {
 
     importModuleFromSource(
         currentDirectory: BoundDirectory,
-        modulePathComponents: string[],
+        modulePathSegments: ReadonlyArray<string>,
         moduleName: string,
     ): BoundModuleDeclaration {
-        const boundModuleDirectory = this.resolveModuleDirectory(currentDirectory, modulePathComponents, moduleName);
+        const boundModuleDirectory = this.resolveModuleDirectory(currentDirectory, modulePathSegments, moduleName);
         const moduleFilePath = path.resolve(boundModuleDirectory.fullPath, moduleName + FILE_EXTENSION);
 
         return this.importModule(moduleFilePath);
@@ -142,10 +142,10 @@ export class Project {
     //   3. Framework modules directory
     private resolveModuleDirectory(
         currentDirectory: BoundDirectory,
-        modulePathComponents: string[],
-        moduleName: string,
+        segments: ReadonlyArray<string>,
+        name: string,
     ): BoundDirectory {
-        const modulePaths = [
+        const moduleDirectoryPaths = [
             currentDirectory,
             this.projectDirectory,
             this.frameworkModulesDirectory,
@@ -153,64 +153,64 @@ export class Project {
             this.targetModulesDirectory,
         ];
 
-        for (const modulePath of modulePaths) {
-            const moduleDirectory = this.resolveModuleDirectory2(modulePath, modulePathComponents, moduleName);
+        for (const moduleDirectoryPath of moduleDirectoryPaths) {
+            const moduleDirectory = this.resolveModuleDirectory2(moduleDirectoryPath, segments, name);
             if (moduleDirectory) {
                 return moduleDirectory;
             }
         }
 
-        const components = [
-            ...modulePathComponents,
-            moduleName,
+        segments = [
+            ...segments,
+            name,
         ];
 
-        throw new Error(`Could not find module '${components.join('.')}'.`);
+        throw new Error(`Could not find module '${segments.join('.')}'.`);
     }
 
     // Tries to import module in directory (<root>/<name>.monkey)
     // If not found, then tries subdirectory with same name as module (<root>/<name>/<name>.monkey)
     private resolveModuleDirectory2(
-        root: BoundDirectory,
-        pathComponents: string[],
+        rootDirectory: BoundDirectory,
+        segments: ReadonlyArray<string>,
         name: string,
     ): BoundDirectory | undefined {
-        let modulePath: BoundDirectory | undefined;
+        let moduleDirectory: BoundDirectory | undefined;
 
-        modulePath = this.resolveModuleDirectory3(root, pathComponents, name);
-        if (modulePath) {
-            return modulePath;
+        moduleDirectory = this.resolveModuleDirectory3(rootDirectory, segments, name);
+        if (moduleDirectory) {
+            return moduleDirectory;
         }
 
-        pathComponents = [
-            ...pathComponents,
+        segments = [
+            ...segments,
             name,
         ];
 
-        modulePath = this.resolveModuleDirectory3(root, pathComponents, name);
-        if (modulePath) {
-            return modulePath;
+        moduleDirectory = this.resolveModuleDirectory3(rootDirectory, segments, name);
+        if (moduleDirectory) {
+            return moduleDirectory;
         }
     }
 
     // Validates the path and binds directories along the path
     private resolveModuleDirectory3(
-        root: BoundDirectory,
-        pathComponents: string[],
-        moduleIdentifier: string,
+        rootDirectory: BoundDirectory,
+        segments: ReadonlyArray<string>,
+        name: string,
     ): BoundDirectory | undefined {
         const moduleFilePath = path.resolve(
-            root.fullPath,
-            ...pathComponents,
-            moduleIdentifier + FILE_EXTENSION,
+            rootDirectory.fullPath,
+            ...segments,
+            name + FILE_EXTENSION,
         );
 
         if (fs.existsSync(moduleFilePath)) {
-            let boundDirectory = root;
+            let boundDirectory = rootDirectory;
 
-            for (const component of pathComponents) {
-                const fullPath = path.resolve(boundDirectory.fullPath, component);
-                boundDirectory = this.bindDirectory(component, fullPath, boundDirectory);
+            for (const segment of segments) {
+                const fullPath = path.resolve(boundDirectory.fullPath, segment);
+                boundDirectory = this.bindDirectory(segment, fullPath, boundDirectory);
             }
 
             return boundDirectory;
@@ -230,8 +230,8 @@ export class Project {
         }
 
         const document = fs.readFileSync(moduleFilePath, 'utf8');
-        const currentDirectory = path.dirname(moduleFilePath);
-        const boundModuleDirectory = this.bindModuleDirectory(currentDirectory);
+        const currentDirectoryPath = path.dirname(moduleFilePath);
+        const boundModuleDirectory = this.bindModuleDirectory(currentDirectoryPath);
 
         const preprocessorTokens = preprocessorTokenizer.getTokens(document);
         const preprocessorModuleDeclaration = preprocessorParser.parse(moduleFilePath, document, preprocessorTokens);
@@ -240,34 +240,34 @@ export class Project {
             LANG: this.lang,
             TARGET: this.target,
             CONFIG: this.config,
-            CD: currentDirectory,
+            CD: currentDirectoryPath,
             MODPATH: moduleFilePath,
         });
         const moduleDeclaration = parser.parse(preprocessorModuleDeclaration, tokens);
 
-        const moduleIdentifier = path.basename(moduleFilePath, FILE_EXTENSION);
+        const moduleName = path.basename(moduleFilePath, FILE_EXTENSION);
         const binder = new Binder();
-        boundModuleDeclaration = binder.bind(moduleDeclaration, this, boundModuleDirectory, moduleIdentifier);
+        boundModuleDeclaration = binder.bind(moduleDeclaration, this, boundModuleDirectory, moduleName);
 
         return boundModuleDeclaration;
     }
 
     private bindModuleDirectory(currentDirectory: string) {
-        const modulePaths = [
+        const moduleDirectoryPaths = [
             this.projectDirectory,
             this.frameworkModulesDirectory,
             this.frameworkTargetsDirectory,
             this.targetModulesDirectory,
         ];
 
-        for (const modulePath of modulePaths) {
-            const relativePathComponents = this.getRelativePathComponents(modulePath.fullPath, currentDirectory);
-            if (relativePathComponents[0] !== '..') {
-                let boundDirectory = modulePath;
+        for (const moduleDirectoryPath of moduleDirectoryPaths) {
+            const relativePathSegments = this.getRelativePathSegments(moduleDirectoryPath.fullPath, currentDirectory);
+            if (relativePathSegments[0] !== '..') {
+                let boundDirectory = moduleDirectoryPath;
 
-                for (const component of relativePathComponents) {
-                    const fullPath = path.resolve(boundDirectory.fullPath, component);
-                    boundDirectory = this.bindDirectory(component, fullPath, boundDirectory);
+                for (const segment of relativePathSegments) {
+                    const fullPath = path.resolve(boundDirectory.fullPath, segment);
+                    boundDirectory = this.bindDirectory(segment, fullPath, boundDirectory);
                 }
 
                 return boundDirectory;
@@ -277,7 +277,7 @@ export class Project {
         throw new Error(`Module is not within the project or framework modules directory tree.`);
     }
 
-    private getRelativePathComponents(baseDirectory: string, currentDirectory: string) {
+    private getRelativePathSegments(baseDirectory: string, currentDirectory: string) {
         const relativePath = path.relative(baseDirectory, currentDirectory);
         if (relativePath === '') {
             return [];
@@ -294,7 +294,7 @@ export class Project {
         parent?: BoundDirectory,
     ): BoundDirectory {
         if (parent) {
-            const boundDirectory = parent.locals.getDeclaration(name, BoundNodeKind.Directory);
+            const boundDirectory = parent.locals.get(name, BoundNodeKind.Directory);
             if (boundDirectory) {
                 return boundDirectory;
             }
@@ -319,8 +319,8 @@ export class Project {
 
     cacheModule(boundModuleDeclaration: BoundModuleDeclaration): void {
         const { directory, identifier } = boundModuleDeclaration;
-        const moduleFullPath = path.resolve(directory.fullPath, identifier.name + FILE_EXTENSION);
-        this.moduleCache.set(moduleFullPath, boundModuleDeclaration);
+        const moduleFilePath = path.resolve(directory.fullPath, identifier.name + FILE_EXTENSION);
+        this.moduleCache.set(moduleFilePath, boundModuleDeclaration);
     }
 
     // #endregion

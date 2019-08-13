@@ -1,8 +1,19 @@
 {
     "kind": "ModuleDeclaration",
     "identifier": "importStatement",
-    "importedModules": [
-        "aliasDirective_file2"
-    ],
-    "locals": []
+    "locals": [
+        {
+            "kind": "ModuleDeclaration",
+            "identifier": "anotherModule",
+            "path": "_importStatement.anotherModule"
+        },
+        {
+            "kind": "DataDeclaration",
+            "declarationKind": "Global",
+            "identifier": "T",
+            "typeAnnotation": "Int",
+            "operator": null,
+            "type": "Int"
+        }
+    ]
 }

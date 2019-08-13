@@ -7,7 +7,9 @@ import mkdirp = require('mkdirp');
 import { orderBy } from 'natural-orderby';
 import { Scope } from '../src/Binding/Binder';
 import { BoundNodeKind } from '../src/Binding/Node/BoundNodes';
+import { BoundAliasDirective } from '../src/Binding/Node/Declaration/BoundAliasDirective';
 import { BoundClassDeclaration } from '../src/Binding/Node/Declaration/BoundClassDeclaration';
+import { BoundDeclarations } from '../src/Binding/Node/Declaration/BoundDeclarations';
 import { BoundDirectory } from '../src/Binding/Node/Declaration/BoundDirectory';
 import { BoundFunctionLikeGroupDeclaration } from '../src/Binding/Node/Declaration/BoundFunctionLikeGroupDeclaration';
 import { BoundInterfaceDeclaration } from '../src/Binding/Node/Declaration/BoundInterfaceDeclaration';
@@ -263,45 +265,9 @@ export function executeBinderTestCases(name: string, casesPath: string): void {
                         case 'project':
                         case 'directory':
                         case 'parent':
-                        case 'openType': {
+                        case 'openType':
+                        case 'frameworkModule': {
                             return undefined;
-                        }
-                        case 'importedModules': {
-                            let serializeAsModulePath = false;
-
-                            const moduleDeclaration = this as BoundModuleDeclaration;
-                            if (moduleDeclaration.identifier.name !== 'smokeTest') {
-                                serializeAsModulePath = true;
-                            }
-
-                            if (serializeAsModulePath) {
-                                const importedModules = value as typeof moduleDeclaration[typeof key];
-                                const importedModulesArr = Array.from(importedModules.values());
-                                if (!importedModulesArr.length) {
-                                    return undefined;
-                                }
-
-                                return importedModulesArr.map(getModulePath);
-                            }
-
-                            function getModulePath(boundModule: BoundModuleDeclaration) {
-                                const components: string[] = [];
-
-                                let directory: BoundDirectory | undefined = boundModule.directory;
-                                while (directory) {
-                                    components.unshift(directory.identifier.name);
-                                    directory = directory.parent as BoundDirectory | undefined;
-                                }
-
-                                components.shift(); // Take off root directory
-
-                                if (boundModule.identifier.name !== components[components.length - 1]) {
-                                    components.push(boundModule.identifier.name);
-                                }
-
-                                return components.join('.');
-                            }
-                            break;
                         }
                         case 'declaration': {
                             if (value.kind === BoundNodeKind.ModuleDeclaration &&
@@ -313,7 +279,9 @@ export function executeBinderTestCases(name: string, casesPath: string): void {
                             return undefined;
                         }
                         case 'identifier': {
-                            return value.name;
+                            const identifier = value as BoundDeclarations[typeof key];
+
+                            return identifier.name;
                         }
                         case 'typeParameters': {
                             const typeParameters = value as BoundClassDeclaration[typeof key];
@@ -353,13 +321,57 @@ export function executeBinderTestCases(name: string, casesPath: string): void {
                                 case BoundNodeKind.ExternClassDeclaration:
                                 case BoundNodeKind.InterfaceDeclaration:
                                 case BoundNodeKind.ClassDeclaration: {
-                                    return Array.from(locals.values()).map((identifier) =>
-                                        identifier.declaration
-                                    );
+                                    return Array.from(locals).filter((identifier) => {
+                                        if (identifier.declaration.kind === BoundNodeKind.ModuleDeclaration) {
+                                            const modulePath = getModulePath(identifier.declaration);
+
+                                            return modulePath !== 'monkey.lang';
+                                        }
+
+                                        return true;
+                                    }).map((identifier) => {
+                                        if (identifier.declaration.kind === BoundNodeKind.ModuleDeclaration) {
+                                            return {
+                                                kind: identifier.declaration.kind,
+                                                identifier,
+                                                path: getModulePath(identifier.declaration),
+                                            };
+                                        }
+
+                                        return identifier.declaration;
+                                    });
                                 }
                             }
 
-                            return Array.from(locals.keys());
+                            return Array.from(locals).map((identifier) =>
+                                identifier.name
+                            );
+
+                            function getModulePath(boundModule: BoundModuleDeclaration) {
+                                const components: string[] = [];
+
+                                let directory: BoundDirectory | undefined = boundModule.directory;
+                                while (directory) {
+                                    components.unshift(directory.identifier.name);
+                                    directory = directory.parent as BoundDirectory | undefined;
+                                }
+
+                                components.shift(); // Take off root directory
+
+                                if (boundModule.identifier.name !== components[components.length - 1]) {
+                                    components.push(boundModule.identifier.name);
+                                }
+
+                                return components.join('.');
+                            }
+                        }
+                        case 'target': {
+                            const target = value as BoundAliasDirective[typeof key];
+
+                            return {
+                                kind: target.kind,
+                                identifier: target.identifier,
+                            };
                         }
                         case 'overloads': {
                             const overloads = value as BoundFunctionLikeGroupDeclaration[typeof key];

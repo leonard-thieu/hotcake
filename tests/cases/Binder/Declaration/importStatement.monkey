@@ -1,1 +1,1 @@
-Import aliasDirective_file2
+Import _importStatement.anotherModule
