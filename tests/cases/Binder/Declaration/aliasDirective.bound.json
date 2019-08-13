@@ -104,7 +104,6 @@
                     "declarationKind": "Global",
                     "identifier": "Global",
                     "typeAnnotation": "Int",
-                    "operator": null,
                     "type": "Int"
                 },
                 {
@@ -128,7 +127,6 @@
                     "declarationKind": "Field",
                     "identifier": "Field",
                     "typeAnnotation": "Int",
-                    "operator": null,
                     "type": "Int"
                 },
                 {
@@ -243,7 +241,6 @@
             "declarationKind": "Global",
             "identifier": "T",
             "typeAnnotation": "Int",
-            "operator": null,
             "type": "Int"
         },
         {
@@ -277,7 +274,6 @@
                     "declarationKind": "Global",
                     "identifier": "Global",
                     "typeAnnotation": "Int",
-                    "operator": null,
                     "type": "Int"
                 },
                 {

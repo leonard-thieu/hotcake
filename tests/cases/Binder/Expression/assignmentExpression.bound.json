@@ -21,7 +21,6 @@
                             "declarationKind": "Parameter",
                             "identifier": "val",
                             "typeAnnotation": "String",
-                            "operator": null,
                             "type": "String"
                         }
                     ],

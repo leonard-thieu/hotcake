@@ -37,7 +37,6 @@
                                     "declarationKind": "Parameter",
                                     "identifier": "length",
                                     "typeAnnotation": "Int",
-                                    "operator": null,
                                     "type": "Int"
                                 }
                             ],
@@ -103,7 +102,6 @@
                                         "declarationKind": "Local",
                                         "identifier": "a",
                                         "typeAnnotation": "Int",
-                                        "operator": null,
                                         "type": "Int"
                                     }
                                 },
@@ -406,7 +404,6 @@
                                 "declarationKind": "Local",
                                 "identifier": "length",
                                 "typeAnnotation": "Int",
-                                "operator": null,
                                 "type": "Int"
                             }
                         },
@@ -547,7 +544,6 @@
                             "declarationKind": "Parameter",
                             "identifier": "val",
                             "typeAnnotation": "Int",
-                            "operator": null,
                             "type": "Int"
                         }
                     ],

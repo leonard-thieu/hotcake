@@ -30,7 +30,6 @@
                             "declarationKind": "Field",
                             "identifier": "value",
                             "typeAnnotation": "String[]",
-                            "operator": null,
                             "type": "String[]"
                         },
                         {
@@ -95,7 +94,6 @@
                                             "declarationKind": "Parameter",
                                             "identifier": "box",
                                             "typeAnnotation": "Object",
-                                            "operator": null,
                                             "type": "Object"
                                         }
                                     ],

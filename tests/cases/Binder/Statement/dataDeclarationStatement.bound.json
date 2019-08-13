@@ -40,7 +40,6 @@
                                 "declarationKind": "Local",
                                 "identifier": "enableLighting",
                                 "typeAnnotation": "Bool",
-                                "operator": null,
                                 "type": "Bool"
                             }
                         }

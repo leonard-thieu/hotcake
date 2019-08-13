@@ -125,7 +125,6 @@
                                             "declarationKind": "Parameter",
                                             "identifier": "list",
                                             "typeAnnotation": "List<Int>",
-                                            "operator": null,
                                             "type": "List<Int>"
                                         }
                                     ],
@@ -163,7 +162,6 @@
                             "declarationKind": "Field",
                             "identifier": "_list",
                             "typeAnnotation": "List<Int>",
-                            "operator": null,
                             "type": "List<Int>"
                         }
                     ]

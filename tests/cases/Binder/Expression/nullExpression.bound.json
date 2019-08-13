@@ -21,7 +21,6 @@
                             "declarationKind": "Parameter",
                             "identifier": "box",
                             "typeAnnotation": "Object",
-                            "operator": null,
                             "type": "Object"
                         }
                     ],

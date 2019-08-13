@@ -27,7 +27,6 @@
                                     "declarationKind": "Parameter",
                                     "identifier": "val",
                                     "typeAnnotation": "Bool",
-                                    "operator": null,
                                     "type": "Bool"
                                 }
                             ],
@@ -48,7 +47,6 @@
                                     "declarationKind": "Parameter",
                                     "identifier": "val",
                                     "typeAnnotation": "Int",
-                                    "operator": null,
                                     "type": "Int"
                                 }
                             ],
@@ -69,7 +67,6 @@
                                     "declarationKind": "Parameter",
                                     "identifier": "val",
                                     "typeAnnotation": "Float",
-                                    "operator": null,
                                     "type": "Float"
                                 }
                             ],
@@ -90,7 +87,6 @@
                                     "declarationKind": "Parameter",
                                     "identifier": "val",
                                     "typeAnnotation": "String",
-                                    "operator": null,
                                     "type": "String"
                                 }
                             ],
@@ -129,7 +125,6 @@
                             "declarationKind": "Parameter",
                             "identifier": "box",
                             "typeAnnotation": "Box",
-                            "operator": null,
                             "type": "Box"
                         }
                     ],

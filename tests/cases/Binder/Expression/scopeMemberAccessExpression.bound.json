@@ -13,7 +13,6 @@
                     "declarationKind": "Global",
                     "identifier": "T",
                     "typeAnnotation": "Int",
-                    "operator": null,
                     "type": "Int"
                 },
                 {
@@ -45,7 +44,6 @@
                     "declarationKind": "Field",
                     "identifier": "_pred",
                     "typeAnnotation": "HeadNode",
-                    "operator": null,
                     "type": "HeadNode"
                 },
                 {
@@ -53,7 +51,6 @@
                     "declarationKind": "Field",
                     "identifier": "_head",
                     "typeAnnotation": "HeadNode",
-                    "operator": null,
                     "type": "HeadNode"
                 },
                 {

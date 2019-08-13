@@ -13,7 +13,6 @@
                     "declarationKind": "Field",
                     "identifier": "id",
                     "typeAnnotation": "Int",
-                    "operator": null,
                     "type": "Int"
                 },
                 {
@@ -70,7 +69,6 @@
                     "declarationKind": "Field",
                     "identifier": "name",
                     "typeAnnotation": "String",
-                    "operator": null,
                     "type": "String"
                 },
                 {
@@ -369,7 +367,6 @@
                             "declarationKind": "Parameter",
                             "identifier": "baseObject",
                             "typeAnnotation": "BaseObject",
-                            "operator": null,
                             "type": "BaseObject"
                         }
                     ],
@@ -436,7 +433,6 @@
                             "declarationKind": "Parameter",
                             "identifier": "speakable",
                             "typeAnnotation": "Speakable",
-                            "operator": null,
                             "type": "Speakable"
                         }
                     ],
@@ -487,7 +483,6 @@
                             "declarationKind": "Parameter",
                             "identifier": "entity",
                             "typeAnnotation": "Entity",
-                            "operator": null,
                             "type": "Entity"
                         }
                     ],
@@ -564,7 +559,6 @@
                             "declarationKind": "Parameter",
                             "identifier": "moveable",
                             "typeAnnotation": "Moveable",
-                            "operator": null,
                             "type": "Moveable"
                         }
                     ],
@@ -615,7 +609,6 @@
                             "declarationKind": "Parameter",
                             "identifier": "drawable",
                             "typeAnnotation": "Drawable",
-                            "operator": null,
                             "type": "Drawable"
                         }
                     ],

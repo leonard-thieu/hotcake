@@ -13,7 +13,6 @@
                     "declarationKind": "Field",
                     "identifier": "data",
                     "typeAnnotation": "Int[]",
-                    "operator": null,
                     "type": "Int[]"
                 },
                 {
@@ -90,7 +89,6 @@
                     "declarationKind": "Field",
                     "identifier": "stack",
                     "typeAnnotation": "Stack",
-                    "operator": null,
                     "type": "Stack"
                 },
                 {

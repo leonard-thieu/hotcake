@@ -30,7 +30,6 @@
                             "declarationKind": "Field",
                             "identifier": "value",
                             "typeAnnotation": "Int[]",
-                            "operator": null,
                             "type": "Int[]"
                         },
                         {
@@ -52,7 +51,6 @@
                                             "declarationKind": "Parameter",
                                             "identifier": "value",
                                             "typeAnnotation": "Int[]",
-                                            "operator": null,
                                             "type": "Int[]"
                                         }
                                     ],

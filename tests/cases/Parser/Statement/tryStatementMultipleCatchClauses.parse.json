@@ -413,8 +413,7 @@
                                                 },
                                                 "arrayTypeAnnotations": []
                                             }
-                                        },
-                                        "operator": null
+                                        }
                                     },
                                     "statements": [
                                         {
@@ -510,8 +509,7 @@
                                                 },
                                                 "arrayTypeAnnotations": []
                                             }
-                                        },
-                                        "operator": null
+                                        }
                                     },
                                     "statements": [
                                         {

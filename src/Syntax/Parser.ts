@@ -556,7 +556,7 @@ export class Parser extends ParserBase {
             dataDeclaration.operator = this.eatMissable(TokenKind.EqualsSign, TokenKind.ColonEqualsSign);
             dataDeclaration.expression = this.parseExpression(dataDeclaration);
         } else {
-            dataDeclaration.operator = this.eatOptional(TokenKind.EqualsSign, TokenKind.ColonEqualsSign) || null;
+            dataDeclaration.operator = this.eatOptional(TokenKind.EqualsSign, TokenKind.ColonEqualsSign);
             if (dataDeclaration.operator) {
                 dataDeclaration.expression = this.parseExpression(dataDeclaration);
             }

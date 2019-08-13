@@ -62,8 +62,7 @@ export class DataDeclaration extends Declaration {
     identifier: Identifier = undefined!;
     typeAnnotation?: TypeAnnotation = undefined;
     // Can be missable if this declaration is Const.
-    // If the operator is omitted (declaration without assignment), `operator` will be `null`.
-    operator: null | EqualsSignToken | ColonEqualsSignToken | MissingToken = undefined!;
+    operator?: EqualsSignToken | ColonEqualsSignToken | MissingToken = undefined;
     expression?: Expressions | MissingToken = undefined;
 }
 

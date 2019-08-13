@@ -521,7 +521,6 @@
                                 "declarationKind": "Local",
                                 "identifier": "val2",
                                 "typeAnnotation": "Int",
-                                "operator": null,
                                 "type": "Int"
                             }
                         },
@@ -611,7 +610,6 @@
                                 "declarationKind": "Local",
                                 "identifier": "val3",
                                 "typeAnnotation": "Int",
-                                "operator": null,
                                 "type": "Int"
                             }
                         },
@@ -787,7 +785,6 @@
                             "declarationKind": "Parameter",
                             "identifier": "val",
                             "typeAnnotation": "Int",
-                            "operator": null,
                             "type": "Int"
                         }
                     ],
@@ -937,7 +934,6 @@
                             "declarationKind": "Parameter",
                             "identifier": "val",
                             "typeAnnotation": "Item",
-                            "operator": null,
                             "type": "Item"
                         }
                     ],

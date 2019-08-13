@@ -12,7 +12,6 @@
             "declarationKind": "Global",
             "identifier": "T",
             "typeAnnotation": "Int",
-            "operator": null,
             "type": "Int"
         }
     ]

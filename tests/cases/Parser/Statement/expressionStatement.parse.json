@@ -215,8 +215,7 @@
                                     "fullStart": 174,
                                     "start": 175,
                                     "length": 10
-                                },
-                                "operator": null
+                                }
                             }
                         ]
                     },
@@ -448,8 +447,7 @@
                             "fullStart": 368,
                             "start": 368,
                             "length": 4
-                        },
-                        "operator": null
+                        }
                     }
                 ]
             },

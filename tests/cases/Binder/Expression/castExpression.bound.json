@@ -27,7 +27,6 @@
                                     "declarationKind": "Parameter",
                                     "identifier": "obj",
                                     "typeAnnotation": "Object",
-                                    "operator": null,
                                     "type": "Object"
                                 }
                             ],

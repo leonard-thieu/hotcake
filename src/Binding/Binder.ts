@@ -850,7 +850,7 @@ export class Binder {
     ): BoundDataDeclaration {
         const name = getText(dataDeclaration.identifier, parent);
 
-        let operator: BoundDataDeclarationOperatorKind = null;
+        let operator: BoundDataDeclarationOperatorKind | undefined = undefined;
         if (dataDeclaration.operator) {
             operator = dataDeclaration.operator.kind;
         }
@@ -858,7 +858,7 @@ export class Binder {
         let getTypeAnnotation: GetBoundNode<BoundTypeReferenceDeclaration> | undefined = undefined;
         switch (operator) {
             case TokenKind.EqualsSign:
-            case null: {
+            case undefined: {
                 getTypeAnnotation = (parent) => this.bindTypeAnnotation(parent, dataDeclaration.typeAnnotation, typeMap);
                 break;
             }
@@ -875,7 +875,7 @@ export class Binder {
         if (isBoundMemberContainerDeclaration(parent) ||
             (isBoundFunctionLikeDeclaration(parent) && declarationKind === BoundDataDeclarationKind.Parameter)
         ) {
-            boundDataDeclaration = this.bindDataDeclarationPhase1(parent, name, declarationKind, operator);
+            boundDataDeclaration = this.bindDataDeclarationPhase1(parent, declarationKind, name, operator);
             const bindTypeReferencesOnDataDeclaration = () => this.bindDataDeclarationTypeAnnotation(boundDataDeclaration, getTypeAnnotation!);
             const bindInitializerOnDataDeclaration = () => this.bindDataDeclarationInitializer(boundDataDeclaration, getExpression!);
 
@@ -889,7 +889,7 @@ export class Binder {
                     deferOrExecute(this.bindDataDeclarationInitializerList, bindInitializerOnDataDeclaration);
                     break;
                 }
-                case null: {
+                case undefined: {
                     deferOrExecute(this.bindTypeReferencesCallbackList, bindTypeReferencesOnDataDeclaration);
                     break;
                 }
@@ -902,13 +902,13 @@ export class Binder {
                 }
             }
         } else {
-            boundDataDeclaration = this.dataDeclaration(parent, {
-                name,
+            boundDataDeclaration = this.dataDeclaration(parent,
                 declarationKind,
+                name,
                 operator,
                 getTypeAnnotation,
                 getExpression,
-            });
+            );
         }
 
         return boundDataDeclaration;
@@ -917,9 +917,9 @@ export class Binder {
     @traceBinding(BoundNodeKind.DataDeclaration)
     private bindDataDeclarationPhase1(
         parent: BoundNodes,
-        name: string,
         declarationKind: BoundDataDeclarationKind,
-        operator: BoundDataDeclarationOperatorKind,
+        name: string,
+        operator: BoundDataDeclarationOperatorKind | undefined,
     ): BoundDataDeclaration {
         const boundDataDeclaration = new BoundDataDeclaration();
         boundDataDeclaration.parent = parent;
@@ -947,7 +947,7 @@ export class Binder {
                 boundDataDeclaration.type = boundDataDeclaration.typeAnnotation.type;
                 break;
             }
-            case null: {
+            case undefined: {
                 boundDataDeclaration.typeAnnotation = getTypeAnnotation(boundDataDeclaration);
                 boundDataDeclaration.type = boundDataDeclaration.typeAnnotation.type;
                 break;
@@ -978,25 +978,32 @@ export class Binder {
 
     private dataDeclaration(
         parent: BoundNodes,
-        {
-            name = ANONYMOUS_NAME,
-            declarationKind = BoundDataDeclarationKind.Local,
-            operator = TokenKind.ColonEqualsSign,
-            getTypeAnnotation,
-            getExpression,
-        }: {
-            name?: string;
-            declarationKind?: BoundDataDeclarationKind;
-            operator?: BoundDataDeclarationOperatorKind;
-            getTypeAnnotation?: GetBoundNode<BoundTypeReferenceDeclaration>;
-            getExpression?: GetBoundNode<BoundExpressions>;
-        },
+        declarationKind: BoundDataDeclarationKind,
+        name: string,
+        operator: BoundDataDeclarationOperatorKind | undefined,
+        getTypeAnnotation: GetBoundNode<BoundTypeReferenceDeclaration> | undefined,
+        getExpression: GetBoundNode<BoundExpressions> | undefined,
     ): BoundDataDeclaration {
-        const boundDataDeclaration = this.bindDataDeclarationPhase1(parent, name, declarationKind, operator);
+        const boundDataDeclaration = this.bindDataDeclarationPhase1(parent, declarationKind, name, operator);
         this.bindDataDeclarationTypeAnnotation(boundDataDeclaration, getTypeAnnotation!);
         this.bindDataDeclarationInitializer(boundDataDeclaration, getExpression!);
 
         return boundDataDeclaration;
+    }
+
+    private localDeclaration(
+        parent: BoundNodes,
+        getExpression: GetBoundNode<BoundExpressions> | undefined,
+        getTypeAnnotation?: GetBoundNode<BoundTypeReferenceDeclaration>,
+        name: string = ANONYMOUS_NAME,
+    ): BoundDataDeclaration {
+        return this.dataDeclaration(parent,
+            BoundDataDeclarationKind.Local,
+            name,
+            TokenKind.ColonEqualsSign,
+            getTypeAnnotation,
+            getExpression,
+        );
     }
 
     // #endregion
@@ -1926,13 +1933,11 @@ export class Binder {
 
             getFirstValueStatement = (parent) => this.dataDeclarationStatement(parent,
                 (parent) => this.dataDeclaration(parent,
-                    {
-                        name: getText(indexVariable, parent),
-                        declarationKind: this.getDataDeclarationKind(numericForLoop.localKeyword!),
-                        operator: operatorToken.kind,
-                        getTypeAnnotation: (parent) => this.bindTypeAnnotation(parent, numericForLoop.typeAnnotation, typeMap),
-                        getExpression: (parent) => this.bindExpression(parent, numericForLoop.firstValueExpression, typeMap),
-                    },
+                    this.getDataDeclarationKind(numericForLoop.localKeyword!),
+                    getText(indexVariable, parent),
+                    operatorToken.kind,
+                    (parent) => this.bindTypeAnnotation(parent, numericForLoop.typeAnnotation, typeMap),
+                    (parent) => this.bindExpression(parent, numericForLoop.firstValueExpression, typeMap),
                 ),
             );
         } else {
@@ -2037,19 +2042,15 @@ export class Binder {
             case TypeKind.String:
             case TypeKind.Array: {
                 const boundCollectionDeclarationStatement = this.dataDeclarationStatement(parent,
-                    (parent) => this.dataDeclaration(parent,
-                        {
-                            getExpression: (parent) => setParent(boundCollectionExpression, parent),
-                        },
+                    (parent) => this.localDeclaration(parent,
+                        (parent) => setParent(boundCollectionExpression, parent),
                     ),
                 );
                 boundStatements.push(boundCollectionDeclarationStatement);
 
                 const firstValueStatement = this.dataDeclarationStatement(parent,
-                    (parent) => this.dataDeclaration(parent,
-                        {
-                            getExpression: (parent) => this.integerLiteral(parent, '0'),
-                        },
+                    (parent) => this.localDeclaration(parent,
+                        (parent) => this.integerLiteral(parent, '0'),
                     ),
                 );
                 boundStatements.push(firstValueStatement);
@@ -2090,19 +2091,18 @@ export class Binder {
 
                     const indexVariableStatement = this.dataDeclarationStatement(boundWhileLoop,
                         (parent) => this.dataDeclaration(parent,
-                            {
-                                name: getText(forEachInLoop.indexVariable, parent),
-                                operator: operatorToken.kind,
-                                getTypeAnnotation: (parent) => this.bindTypeAnnotation(parent, forEachInLoop.typeAnnotation, typeMap),
-                                getExpression: (parent) => this.indexExpression(parent,
-                                    (parent) => this.identifierExpression(parent,
-                                        () => boundCollectionDeclaration,
-                                    ),
-                                    (parent) => this.identifierExpression(parent,
-                                        () => boundIndexDeclaration,
-                                    ),
+                            this.getDataDeclarationKind(forEachInLoop.localKeyword!),
+                            getText(forEachInLoop.indexVariable, parent),
+                            operatorToken.kind,
+                            (parent) => this.bindTypeAnnotation(parent, forEachInLoop.typeAnnotation, typeMap),
+                            (parent) => this.indexExpression(parent,
+                                (parent) => this.identifierExpression(parent,
+                                    () => boundCollectionDeclaration,
                                 ),
-                            },
+                                (parent) => this.identifierExpression(parent,
+                                    () => boundIndexDeclaration,
+                                ),
+                            ),
                         ),
                     );
                     boundWhileLoop.statements.push(indexVariableStatement);
@@ -2143,19 +2143,17 @@ export class Binder {
             }
             case TypeKind.Object: {
                 const boundCollectionDeclarationStatement = this.dataDeclarationStatement(parent,
-                    (parent) => this.dataDeclaration(parent,
-                        {
-                            getExpression: (parent) => this.invokeExpression(parent,
-                                (parent) => this.scopeMemberAccessExpression(parent,
-                                    (parent) => setParent(boundCollectionExpression, parent),
-                                    (parent, scope) => this.identifierExpressionFromName(parent,
-                                        'ObjectEnumerator',
-                                        scope,
-                                    ),
+                    (parent) => this.localDeclaration(parent,
+                        (parent) => this.invokeExpression(parent,
+                            (parent) => this.scopeMemberAccessExpression(parent,
+                                (parent) => setParent(boundCollectionExpression, parent),
+                                (parent, scope) => this.identifierExpressionFromName(parent,
+                                    'ObjectEnumerator',
+                                    scope,
                                 ),
-                                () => [],
                             ),
-                        },
+                            () => [],
+                        ),
                     ),
                 );
                 boundStatements.push(boundCollectionDeclarationStatement);
@@ -2194,23 +2192,22 @@ export class Binder {
 
                     const indexVariableStatement = this.dataDeclarationStatement(boundWhileLoop,
                         (parent) => this.dataDeclaration(parent,
-                            {
-                                name: getText(indexVariable, parent),
-                                operator: operatorToken.kind,
-                                getTypeAnnotation: (parent) => this.bindTypeAnnotation(parent, forEachInLoop.typeAnnotation, typeMap),
-                                getExpression: (parent) => this.invokeExpression(parent,
-                                    (parent) => this.scopeMemberAccessExpression(parent,
-                                        (parent) => this.identifierExpression(parent,
-                                            () => boundEnumeratorDeclaration,
-                                        ),
-                                        (parent, scope) => this.identifierExpressionFromName(parent,
-                                            'NextObject',
-                                            scope,
-                                        ),
+                            this.getDataDeclarationKind(forEachInLoop.localKeyword!),
+                            getText(indexVariable, parent),
+                            operatorToken.kind,
+                            (parent) => this.bindTypeAnnotation(parent, forEachInLoop.typeAnnotation, typeMap),
+                            (parent) => this.invokeExpression(parent,
+                                (parent) => this.scopeMemberAccessExpression(parent,
+                                    (parent) => this.identifierExpression(parent,
+                                        () => boundEnumeratorDeclaration,
                                     ),
-                                    () => [],
+                                    (parent, scope) => this.identifierExpressionFromName(parent,
+                                        'NextObject',
+                                        scope,
+                                    ),
                                 ),
-                            },
+                                () => [],
+                            ),
                         ),
                     );
                     boundWhileLoop.statements.push(indexVariableStatement);
