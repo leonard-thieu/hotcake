@@ -437,11 +437,7 @@ export function getParseTree(filePath: string, document: string): ModuleDeclarat
 }
 
 export function getBoundTree(filePath: string, document: string): BoundModuleDeclaration {
-    let frameworkDirectory = process.env.HOTCAKE_FRAMEWORK_DIR;
-    if (!frameworkDirectory) {
-        throw new Error(`The environment variable 'HOTCAKE_FRAMEWORK_DIR' must be set to the framework root directory.`);
-    }
-    frameworkDirectory = path.resolve(frameworkDirectory);
+    const frameworkDirectory = getFrameworkDirectory();
 
     const projectDirectory = path.dirname(filePath);
     const project = new Project(frameworkDirectory, projectDirectory, {
@@ -458,6 +454,15 @@ export function getBoundTree(filePath: string, document: string): BoundModuleDec
 
         throw error;
     }
+}
+
+export function getFrameworkDirectory(): string {
+    const frameworkDirectory = process.env.HOTCAKE_FRAMEWORK_DIR;
+    if (!frameworkDirectory) {
+        throw new Error(`The environment variable 'HOTCAKE_FRAMEWORK_DIR' must be set to the framework root directory.`);
+    }
+
+    return path.resolve(frameworkDirectory);
 }
 
 function replaceExt(originalPath: string, ext: string): string {
