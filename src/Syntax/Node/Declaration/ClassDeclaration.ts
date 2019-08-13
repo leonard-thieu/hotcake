@@ -58,10 +58,10 @@ export class ClassDeclaration extends Declaration {
 }
 
 export type ClassDeclarationMember =
+    | AccessibilityDirective
     | DataDeclarationSequence
     | FunctionDeclaration
     | ClassMethodDeclaration
-    | AccessibilityDirective
     | NewlineToken
     | SkippedToken
     ;

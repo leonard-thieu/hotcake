@@ -1,9 +1,9 @@
 import { areElementsSame } from '../util';
 import { BoundNodeKind, BoundNodeKindToBoundNodeMap, BoundNodes } from './Node/BoundNodes';
 import { BoundClassDeclaration } from './Node/Declaration/BoundClassDeclaration';
+import { BoundExternClassDeclaration } from './Node/Declaration/BoundExternClassDeclaration';
 import { BoundMethodGroupDeclaration } from './Node/Declaration/BoundFunctionLikeGroupDeclaration';
 import { BoundInterfaceDeclaration } from './Node/Declaration/BoundInterfaceDeclaration';
-import { BoundExternClassDeclaration } from './Node/Declaration/Extern/BoundExternClassDeclaration';
 import { Types } from './Type/Types';
 
 export namespace BoundTreeWalker {

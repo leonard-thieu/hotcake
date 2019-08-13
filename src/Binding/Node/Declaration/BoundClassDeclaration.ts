@@ -6,9 +6,9 @@ import { BoundNode, BoundNodeKind } from '../BoundNodes';
 import { BoundStatements } from '../Statement/BoundStatements';
 import { BoundDataDeclaration } from './BoundDataDeclaration';
 import { BoundTypeReferenceDeclaration } from './BoundDeclarations';
+import { BoundExternClassDeclaration } from './BoundExternClassDeclaration';
 import { BoundInterfaceDeclaration } from './BoundInterfaceDeclaration';
 import { BoundTypeParameter } from './BoundTypeParameter';
-import { BoundExternClassDeclaration } from './Extern/BoundExternClassDeclaration';
 
 // #region Bound class declaration
 

@@ -2,11 +2,11 @@ import { CONSTRUCTOR_NAME } from '../Binder';
 import { areIdentifiersSame } from '../BoundSymbol';
 import { BoundNodeKind, BoundNodes } from '../Node/BoundNodes';
 import { BoundClassMethodDeclaration } from '../Node/Declaration/BoundClassDeclaration';
+import { BoundExternClassMethodDeclaration } from '../Node/Declaration/BoundExternClassDeclaration';
+import { BoundExternFunctionDeclaration } from '../Node/Declaration/BoundExternFunctionDeclaration';
 import { BoundFunctionDeclaration } from '../Node/Declaration/BoundFunctionDeclaration';
 import { BoundFunctionGroupDeclarations, BoundMethodGroupDeclaration } from '../Node/Declaration/BoundFunctionLikeGroupDeclaration';
 import { BoundInterfaceMethodDeclaration } from '../Node/Declaration/BoundInterfaceDeclaration';
-import { BoundExternClassMethodDeclaration } from '../Node/Declaration/Extern/BoundExternClassDeclaration';
-import { BoundExternFunctionDeclaration } from '../Node/Declaration/Extern/BoundExternFunctionDeclaration';
 import { Type, TypeKind, Types } from './Types';
 
 // #region Function like

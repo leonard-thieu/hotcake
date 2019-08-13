@@ -2,10 +2,10 @@ import { BoundSymbol } from '../../BoundSymbol';
 import { BoundFunctionLikeDeclaration, FunctionGroupType, MethodGroupType } from '../../Type/FunctionLikeType';
 import { BoundNode, BoundNodeKind } from '../BoundNodes';
 import { BoundClassMethodDeclaration } from './BoundClassDeclaration';
+import { BoundExternClassMethodDeclaration } from './BoundExternClassDeclaration';
+import { BoundExternFunctionDeclaration } from './BoundExternFunctionDeclaration';
 import { BoundFunctionDeclaration } from './BoundFunctionDeclaration';
 import { BoundInterfaceMethodDeclaration } from './BoundInterfaceDeclaration';
-import { BoundExternClassMethodDeclaration } from './Extern/BoundExternClassDeclaration';
-import { BoundExternFunctionDeclaration } from './Extern/BoundExternFunctionDeclaration';
 
 export type BoundFunctionLikeGroupDeclaration =
     | BoundFunctionGroupDeclarations

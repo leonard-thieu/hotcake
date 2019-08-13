@@ -3,9 +3,8 @@ import { AccessibilityDirective } from './AccessibilityDirective';
 import { AliasDirective, AliasDirectiveSequence } from './AliasDirectiveSequence';
 import { ClassDeclaration, ClassMethodDeclaration } from './ClassDeclaration';
 import { DataDeclaration, DataDeclarationSequence } from './DataDeclarationSequence';
-import { ExternClassDeclaration } from './ExternDeclaration/ExternClassDeclaration';
-import { ExternDataDeclarationSequence } from './ExternDeclaration/ExternDataDeclarationSequence';
-import { ExternDeclarations } from './ExternDeclaration/ExternDeclaration';
+import { ExternClassDeclaration } from './ExternClassDeclaration';
+import { ExternDeclarations } from './ExternDeclarations';
 import { FriendDirective } from './FriendDirective';
 import { FunctionDeclaration } from './FunctionDeclaration';
 import { ImportStatement } from './ImportStatement';
@@ -18,22 +17,18 @@ import { TypeParameter } from './TypeParameter';
 export abstract class Declaration extends Node { }
 
 export type Declarations =
-    | ExternDeclarations
-    | ExternDataDeclarationSequence
-    | AccessibilityDirective
-    | AliasDirectiveSequence | AliasDirective
-    | ClassDeclaration
-    | ClassMethodDeclaration
-    | DataDeclarationSequence | DataDeclaration
-    | FriendDirective
-    | FunctionDeclaration
-    | ImportStatement
-    | InterfaceDeclaration
-    | InterfaceMethodDeclaration
-    | ModuleDeclaration
     | PreprocessorModuleDeclaration
+    | ModuleDeclaration
     | StrictDirective
-    | TypeParameter
+    | AccessibilityDirective
+    | FriendDirective
+    | ImportStatement
+    | AliasDirectiveSequence | AliasDirective
+    | ExternDeclarations
+    | DataDeclarationSequence | DataDeclaration
+    | FunctionDeclaration
+    | InterfaceDeclaration | InterfaceMethodDeclaration
+    | ClassDeclaration | ClassMethodDeclaration | TypeParameter
     ;
 
 export type TypeDeclaration =

@@ -1,8 +1,8 @@
-import { BoundSymbol } from '../../../BoundSymbol';
-import { Types } from '../../../Type/Types';
-import { BoundNode, BoundNodeKind } from '../../BoundNodes';
-import { BoundStringLiteralExpression } from '../../Expression/BoundStringLiteralExpression';
-import { BoundTypeReferenceDeclaration } from '../BoundDeclarations';
+import { BoundSymbol } from '../../BoundSymbol';
+import { Types } from '../../Type/Types';
+import { BoundNode, BoundNodeKind } from '../BoundNodes';
+import { BoundStringLiteralExpression } from '../Expression/BoundStringLiteralExpression';
+import { BoundTypeReferenceDeclaration } from './BoundDeclarations';
 
 export class BoundExternDataDeclaration extends BoundNode {
     readonly kind = BoundNodeKind.ExternDataDeclaration;

@@ -1,14 +1,14 @@
-import { ExternClassDeclaration, ExternClassMethodDeclaration } from '../../../../Syntax/Node/Declaration/ExternDeclaration/ExternClassDeclaration';
-import { BoundSymbol, BoundSymbolTable } from '../../../BoundSymbol';
-import { ArrayType } from '../../../Type/ArrayType';
-import { MethodType } from '../../../Type/FunctionLikeType';
-import { ObjectType } from '../../../Type/ObjectType';
-import { StringType } from '../../../Type/StringType';
-import { BoundNode, BoundNodeKind } from '../../BoundNodes';
-import { BoundStringLiteralExpression } from '../../Expression/BoundStringLiteralExpression';
-import { BoundClassDeclaration } from '../BoundClassDeclaration';
-import { BoundDataDeclaration } from '../BoundDataDeclaration';
-import { BoundTypeReferenceDeclaration } from '../BoundDeclarations';
+import { ExternClassDeclaration, ExternClassMethodDeclaration } from '../../../Syntax/Node/Declaration/ExternClassDeclaration';
+import { BoundSymbol, BoundSymbolTable } from '../../BoundSymbol';
+import { ArrayType } from '../../Type/ArrayType';
+import { MethodType } from '../../Type/FunctionLikeType';
+import { ObjectType } from '../../Type/ObjectType';
+import { StringType } from '../../Type/StringType';
+import { BoundNode, BoundNodeKind } from '../BoundNodes';
+import { BoundStringLiteralExpression } from '../Expression/BoundStringLiteralExpression';
+import { BoundClassDeclaration } from './BoundClassDeclaration';
+import { BoundDataDeclaration } from './BoundDataDeclaration';
+import { BoundTypeReferenceDeclaration } from './BoundDeclarations';
 
 // #region Extern class declaration
 

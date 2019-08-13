@@ -7,9 +7,9 @@ import { AliasDirectiveSequence } from './AliasDirectiveSequence';
 import { ClassDeclaration } from './ClassDeclaration';
 import { DataDeclarationSequence } from './DataDeclarationSequence';
 import { Declaration } from './Declarations';
-import { ExternClassDeclaration } from './ExternDeclaration/ExternClassDeclaration';
-import { ExternDataDeclarationSequence } from './ExternDeclaration/ExternDataDeclarationSequence';
-import { ExternFunctionDeclaration } from './ExternDeclaration/ExternFunctionDeclaration';
+import { ExternClassDeclaration } from './ExternClassDeclaration';
+import { ExternDataDeclarationSequence } from './ExternDataDeclarationSequence';
+import { ExternFunctionDeclaration } from './ExternFunctionDeclaration';
 import { FriendDirective } from './FriendDirective';
 import { FunctionDeclaration } from './FunctionDeclaration';
 import { ImportStatement } from './ImportStatement';
@@ -49,22 +49,22 @@ export class ModuleDeclaration extends Declaration {
 
 export type ModuleDeclarationHeaderMember =
     | ImportStatement
+    | AccessibilityDirective
     | FriendDirective
     | AliasDirectiveSequence
-    | AccessibilityDirective
     | NewlineToken
     | SkippedToken
     ;
 
 export type ModuleDeclarationMember =
     | AccessibilityDirective
-    | DataDeclarationSequence
     | ExternDataDeclarationSequence
-    | FunctionDeclaration
     | ExternFunctionDeclaration
+    | ExternClassDeclaration
+    | DataDeclarationSequence
+    | FunctionDeclaration
     | InterfaceDeclaration
     | ClassDeclaration
-    | ExternClassDeclaration
     | NewlineToken
     | SkippedToken
     ;

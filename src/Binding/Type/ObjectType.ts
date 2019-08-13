@@ -1,8 +1,8 @@
 import { BoundTreeWalker } from '../BoundTreeWalker';
 import { BoundNodeKind } from '../Node/BoundNodes';
 import { BoundClassDeclaration } from '../Node/Declaration/BoundClassDeclaration';
+import { BoundExternClassDeclaration } from '../Node/Declaration/BoundExternClassDeclaration';
 import { BoundInterfaceDeclaration } from '../Node/Declaration/BoundInterfaceDeclaration';
-import { BoundExternClassDeclaration } from '../Node/Declaration/Extern/BoundExternClassDeclaration';
 import { Type, TypeKind, Types } from './Types';
 
 export class ObjectType extends Type {

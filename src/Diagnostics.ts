@@ -25,7 +25,12 @@ export class DiagnosticBag extends Set<Diagnostic> {
     private readonly tab = '  ';
 
     trace(message: string): void {
-        const diagnostic = new Diagnostic(DiagnosticKind.Trace, this.tab.repeat(this.tabLevel) + message, /*start*/ 0, /*length*/ 0);
+        const diagnostic = new Diagnostic(
+            DiagnosticKind.Trace,
+            this.tab.repeat(this.tabLevel) + message,
+            /*start*/ 0,
+            /*length*/ 0,
+        );
         this.add(diagnostic);
     }
 

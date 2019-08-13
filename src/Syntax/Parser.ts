@@ -4,9 +4,9 @@ import { AccessibilityDirective, AccessibilityKeywordToken } from './Node/Declar
 import { AliasDirective, AliasDirectiveSequence } from './Node/Declaration/AliasDirectiveSequence';
 import { ClassDeclaration, ClassMethodDeclaration } from './Node/Declaration/ClassDeclaration';
 import { DataDeclaration, DataDeclarationKeywordToken, DataDeclarationSequence, MissableDataDeclaration } from './Node/Declaration/DataDeclarationSequence';
-import { ExternClassDeclaration, ExternClassMethodDeclaration } from './Node/Declaration/ExternDeclaration/ExternClassDeclaration';
-import { ExternDataDeclaration, ExternDataDeclarationKeywordToken, ExternDataDeclarationSequence } from './Node/Declaration/ExternDeclaration/ExternDataDeclarationSequence';
-import { ExternFunctionDeclaration } from './Node/Declaration/ExternDeclaration/ExternFunctionDeclaration';
+import { ExternClassDeclaration, ExternClassMethodDeclaration } from './Node/Declaration/ExternClassDeclaration';
+import { ExternDataDeclaration, ExternDataDeclarationKeywordToken, ExternDataDeclarationSequence } from './Node/Declaration/ExternDataDeclarationSequence';
+import { ExternFunctionDeclaration } from './Node/Declaration/ExternFunctionDeclaration';
 import { FriendDirective } from './Node/Declaration/FriendDirective';
 import { FunctionDeclaration } from './Node/Declaration/FunctionDeclaration';
 import { ImportStatement } from './Node/Declaration/ImportStatement';
@@ -1835,6 +1835,7 @@ export class Parser extends ParserBase {
         const token = this.eatAssignmentOperatorTokenOptional();
 
         if (token) {
+            // TODO: Is this still correct?
             switch (expression.kind) {
                 case NodeKind.IdentifierExpression:
                 case NodeKind.ScopeMemberAccessExpression:

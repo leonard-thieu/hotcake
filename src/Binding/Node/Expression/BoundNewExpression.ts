@@ -1,6 +1,6 @@
 import { BoundNodeKind } from '../BoundNodes';
 import { BoundClassDeclaration } from '../Declaration/BoundClassDeclaration';
-import { BoundExternClassDeclaration } from '../Declaration/Extern/BoundExternClassDeclaration';
+import { BoundExternClassDeclaration } from '../Declaration/BoundExternClassDeclaration';
 import { BoundExpression } from './BoundExpressions';
 
 export class BoundNewExpression extends BoundExpression {

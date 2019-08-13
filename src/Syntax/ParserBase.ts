@@ -1,7 +1,6 @@
 import { assertNever } from '../util';
 import { ArrayTypeAnnotation } from './Node/ArrayTypeAnnotation';
 import { CommaSeparator } from './Node/CommaSeparator';
-import { ConfigurationTag } from './Node/ConfigurationTag';
 import { ArrayLiteralExpression } from './Node/Expression/ArrayLiteralExpression';
 import { BinaryExpression, BinaryExpressionOperatorToken } from './Node/Expression/BinaryExpression';
 import { BooleanLiteralExpression, BooleanLiteralExpressionValueToken } from './Node/Expression/BooleanLiteralExpression';
@@ -18,7 +17,7 @@ import { NullExpression } from './Node/Expression/NullExpression';
 import { ScopeMemberAccessExpression } from './Node/Expression/ScopeMemberAccessExpression';
 import { SelfExpression } from './Node/Expression/SelfExpression';
 import { SliceExpression } from './Node/Expression/SliceExpression';
-import { MissableStringLiteralExpression, StringLiteralExpression } from './Node/Expression/StringLiteralExpression';
+import { ConfigurationTag, MissableStringLiteralExpression, StringLiteralExpression } from './Node/Expression/StringLiteralExpression';
 import { SuperExpression } from './Node/Expression/SuperExpression';
 import { UnaryExpression, UnaryOperatorToken } from './Node/Expression/UnaryExpression';
 import { EscapedIdentifier, MissableIdentifier } from './Node/Identifier';

@@ -1,10 +1,10 @@
-import { FieldKeywordToken, GlobalKeywordToken } from '../../../Token/Tokens';
-import { CommaSeparator } from '../../CommaSeparator';
-import { Identifier } from '../../Identifier';
-import { NodeKind } from '../../Nodes';
-import { TypeAnnotation } from '../../TypeAnnotation';
-import { Declaration } from '../Declarations';
-import { ExternDeclaration } from './ExternDeclaration';
+import { FieldKeywordToken, GlobalKeywordToken } from '../../Token/Tokens';
+import { CommaSeparator } from '../CommaSeparator';
+import { Identifier } from '../Identifier';
+import { NodeKind } from '../Nodes';
+import { TypeAnnotation } from '../TypeAnnotation';
+import { Declaration } from './Declarations';
+import { ExternDeclaration } from './ExternDeclarations';
 
 // #region Extern data declaration sequence
 

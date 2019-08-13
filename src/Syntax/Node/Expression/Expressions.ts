@@ -25,9 +25,9 @@ export abstract class Expression extends Node {
 }
 
 export type Expressions =
-    | PrimaryExpression
-    | UnaryExpression
     | BinaryExpression
+    | UnaryExpression
+    | PrimaryExpression
     ;
 
 export type MissableExpression =

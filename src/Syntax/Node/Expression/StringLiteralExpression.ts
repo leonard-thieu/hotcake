@@ -1,9 +1,10 @@
 import { MissableToken, MissingToken } from '../../Token/MissingToken';
 import { SkippedToken } from '../../Token/SkippedToken';
-import { EscapeCarriageReturnCrToken, EscapeCharacterTabulationToken, EscapeLineFeedLfToken, EscapeNullToken, EscapeQuotationMarkToken, EscapeTildeToken, EscapeUnicodeHexValueToken, InvalidEscapeSequenceToken, QuotationMarkToken, StringLiteralTextToken } from '../../Token/Tokens';
-import { ConfigurationTag } from '../ConfigurationTag';
-import { NodeKind } from '../Nodes';
+import { ConfigurationTagEndToken, ConfigurationTagStartToken, EscapeCarriageReturnCrToken, EscapeCharacterTabulationToken, EscapeLineFeedLfToken, EscapeNullToken, EscapeQuotationMarkToken, EscapeTildeToken, EscapeUnicodeHexValueToken, IdentifierToken, InvalidEscapeSequenceToken, QuotationMarkToken, StringLiteralTextToken } from '../../Token/Tokens';
+import { Node, NodeKind } from '../Nodes';
 import { Expression } from './Expressions';
+
+// #region String literal expression
 
 export const StringLiteralExpressionChildNames: ReadonlyArray<keyof StringLiteralExpression> = [
     'newlines',
@@ -33,7 +34,27 @@ export type StringLiteralExpressionChild =
     | ConfigurationTag
     ;
 
+// #endregion
+
 export type MissableStringLiteralExpression =
     | StringLiteralExpression
     | MissingToken
     ;
+
+// #region Configuration tag
+
+export const ConfigurationTagChildNames: ReadonlyArray<keyof ConfigurationTag> = [
+    'startToken',
+    'name',
+    'endToken',
+];
+
+export class ConfigurationTag extends Node {
+    readonly kind = NodeKind.ConfigurationTag;
+
+    startToken: ConfigurationTagStartToken = undefined!;
+    name?: IdentifierToken = undefined;
+    endToken: ConfigurationTagEndToken = undefined!;
+}
+
+// #endregion
