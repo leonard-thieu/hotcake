@@ -1,8 +1,8 @@
-import { MissableToken } from '../../Token/MissingToken';
+import { MissingToken } from '../../Token/MissingToken';
 import { ClosingSquareBracketToken, NewlineToken, OpeningSquareBracketToken } from '../../Token/Tokens';
 import { CommaSeparator } from '../CommaSeparator';
 import { NodeKind } from '../Nodes';
-import { Expression, MissableExpression } from './Expressions';
+import { Expression, Expressions } from './Expressions';
 
 export const ArrayLiteralExpressionChildNames: ReadonlyArray<keyof ArrayLiteralExpression> = [
     'newlines',
@@ -17,6 +17,6 @@ export class ArrayLiteralExpression extends Expression {
 
     openingSquareBracket: OpeningSquareBracketToken = undefined!;
     leadingNewlines: NewlineToken[] = undefined!;
-    expressions: (MissableExpression | CommaSeparator)[] = undefined!;
-    closingSquareBracket: MissableToken<ClosingSquareBracketToken> = undefined!;
+    expressions: (Expressions | MissingToken | CommaSeparator)[] = undefined!;
+    closingSquareBracket: ClosingSquareBracketToken | MissingToken = undefined!;
 }

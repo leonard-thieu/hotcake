@@ -1,4 +1,4 @@
-import { MissableToken } from '../../Token/MissingToken';
+import { MissingToken } from '../../Token/MissingToken';
 import { AliasKeywordToken, EqualsSignToken, FloatKeywordToken, IntKeywordToken, PeriodToken, StringKeywordToken } from '../../Token/Tokens';
 import { CommaSeparator } from '../CommaSeparator';
 import { Identifier } from '../Identifier';
@@ -33,7 +33,7 @@ export class AliasDirective extends Declaration {
     readonly kind = NodeKind.AliasDirective;
 
     identifier: Identifier = undefined!;
-    equalsSign: MissableToken<EqualsSignToken> = undefined!;
+    equalsSign: EqualsSignToken | MissingToken = undefined!;
     children: (DeclarationReferenceIdentifier | PeriodToken)[] = undefined!;
 }
 

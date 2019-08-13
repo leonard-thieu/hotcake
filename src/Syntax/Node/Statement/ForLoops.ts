@@ -1,8 +1,8 @@
-import { MissableToken, MissingToken } from '../../Token/MissingToken';
+import { MissingToken } from '../../Token/MissingToken';
 import { SkippedToken } from '../../Token/SkippedToken';
 import { ColonEqualsSignToken, EachInKeywordToken, EndKeywordToken, EqualsSignToken, ForKeywordToken, LocalKeywordToken, NextKeywordToken, StepKeywordToken, ToKeywordToken, UntilKeywordToken } from '../../Token/Tokens';
-import { MissableExpression } from '../Expression/Expressions';
-import { MissableIdentifier } from '../Identifier';
+import { Expressions } from '../Expression/Expressions';
+import { Identifier } from '../Identifier';
 import { NodeKind } from '../Nodes';
 import { TypeAnnotation } from '../TypeAnnotation';
 import { AssignmentOperatorToken } from './AssignmentStatement';
@@ -32,16 +32,16 @@ export class NumericForLoop extends Statement {
 
     forKeyword: ForKeywordToken = undefined!;
     localKeyword?: LocalKeywordToken = undefined;
-    indexVariable: MissableIdentifier = undefined!;
+    indexVariable: Identifier | MissingToken = undefined!;
     typeAnnotation?: TypeAnnotation = undefined;
     operator: ForLoopOperatorToken = undefined!;
-    firstValueExpression: MissableExpression = undefined!;
-    toOrUntilKeyword: MissableToken<ToKeywordToken | UntilKeywordToken> = undefined!;
-    lastValueExpression: MissableExpression = undefined!;
+    firstValueExpression: Expressions | MissingToken = undefined!;
+    toOrUntilKeyword: ToKeywordToken | UntilKeywordToken | MissingToken = undefined!;
+    lastValueExpression: Expressions | MissingToken = undefined!;
     stepKeyword?: StepKeywordToken = undefined;
-    stepValueExpression?: MissableExpression = undefined;
+    stepValueExpression?: Expressions | MissingToken = undefined;
     statements: (Statements | SkippedToken)[] = undefined!;
-    endKeyword: MissableToken<NextKeywordToken | EndKeywordToken> = undefined!;
+    endKeyword: NextKeywordToken | EndKeywordToken | MissingToken = undefined!;
     endForKeyword?: ForKeywordToken = undefined;
 }
 
@@ -68,13 +68,13 @@ export class ForEachInLoop extends Statement {
 
     forKeyword: ForKeywordToken = undefined!;
     localKeyword?: LocalKeywordToken = undefined;
-    indexVariable: MissableIdentifier = undefined!;
+    indexVariable: Identifier | MissingToken = undefined!;
     typeAnnotation?: TypeAnnotation = undefined;
     operator: ForLoopOperatorToken = undefined!;
     eachInKeyword: EachInKeywordToken = undefined!;
-    collectionExpression: MissableExpression = undefined!;
+    collectionExpression: Expressions | MissingToken = undefined!;
     statements: (Statements | SkippedToken)[] = undefined!;
-    endKeyword: MissableToken<NextKeywordToken | EndKeywordToken> = undefined!;
+    endKeyword: NextKeywordToken | EndKeywordToken | MissingToken = undefined!;
     endForKeyword?: ForKeywordToken = undefined;
 }
 

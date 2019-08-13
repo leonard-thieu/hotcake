@@ -1,5 +1,6 @@
+import { MissingToken } from '../../Token/MissingToken';
 import { AmpersandEqualsSignToken, AsteriskEqualsSignToken, EqualsSignToken, HyphenMinusEqualsSignToken, ModKeywordEqualsSignToken, PlusSignEqualsSignToken, ShlKeywordEqualsSignToken, ShrKeywordEqualsSignToken, SlashEqualsSignToken, TildeEqualsSignToken, VerticalBarEqualsSignToken } from '../../Token/Tokens';
-import { MissableExpression } from '../Expression/Expressions';
+import { Expressions } from '../Expression/Expressions';
 import { GlobalScopeExpression } from '../Expression/GlobalScopeExpression';
 import { IdentifierExpression } from '../Expression/IdentifierExpression';
 import { IndexExpression } from '../Expression/IndexExpression';
@@ -19,7 +20,7 @@ export class AssignmentStatement extends Statement {
 
     leftOperand: AssignableExpression = undefined!;
     operator: AssignmentOperatorToken = undefined!;
-    rightOperand: MissableExpression = undefined!;
+    rightOperand: Expressions | MissingToken = undefined!;
 }
 
 export type AssignableExpression =

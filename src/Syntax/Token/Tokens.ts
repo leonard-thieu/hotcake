@@ -1,4 +1,4 @@
-import { MissingTokenKinds, MissingToken } from './MissingToken';
+import { MissingToken, MissingTokenKinds } from './MissingToken';
 import { SkippedToken } from './SkippedToken';
 
 export class Token<TTokenKind extends ErrorableTokenKinds> {
@@ -167,8 +167,6 @@ export enum TokenKind {
 
     Missing = 'Missing',
     Skipped = 'Skipped',
-    Expression = 'Expression',
-    ImportStatementPath = 'ImportStatementPath',
 }
 
 export type UnknownToken = Token<TokenKind.Unknown>;

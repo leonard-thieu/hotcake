@@ -1,7 +1,7 @@
-import { MissableToken } from '../../Token/MissingToken';
+import { MissingToken } from '../../Token/MissingToken';
 import { ClosingSquareBracketToken, OpeningSquareBracketToken } from '../../Token/Tokens';
 import { NodeKind } from '../Nodes';
-import { Expression, Expressions, MissableExpression } from './Expressions';
+import { Expression, Expressions } from './Expressions';
 
 export const IndexExpressionChildNames: ReadonlyArray<keyof IndexExpression> = [
     'newlines',
@@ -16,6 +16,6 @@ export class IndexExpression extends Expression {
 
     indexableExpression: Expressions = undefined!;
     openingSquareBracket: OpeningSquareBracketToken = undefined!;
-    indexExpressionExpression: MissableExpression = undefined!;
-    closingSquareBracket: MissableToken<ClosingSquareBracketToken> = undefined!;
+    indexExpressionExpression: Expressions | MissingToken = undefined!;
+    closingSquareBracket: ClosingSquareBracketToken | MissingToken = undefined!;
 }

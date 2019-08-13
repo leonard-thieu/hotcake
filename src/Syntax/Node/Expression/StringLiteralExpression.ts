@@ -1,4 +1,4 @@
-import { MissableToken, MissingToken } from '../../Token/MissingToken';
+import { MissingToken } from '../../Token/MissingToken';
 import { SkippedToken } from '../../Token/SkippedToken';
 import { ConfigurationTagEndToken, ConfigurationTagStartToken, EscapeCarriageReturnCrToken, EscapeCharacterTabulationToken, EscapeLineFeedLfToken, EscapeNullToken, EscapeQuotationMarkToken, EscapeTildeToken, EscapeUnicodeHexValueToken, IdentifierToken, InvalidEscapeSequenceToken, QuotationMarkToken, StringLiteralTextToken } from '../../Token/Tokens';
 import { Node, NodeKind } from '../Nodes';
@@ -18,7 +18,7 @@ export class StringLiteralExpression extends Expression {
 
     startQuotationMark: QuotationMarkToken = undefined!;
     children: (StringLiteralExpressionChild | SkippedToken)[] = undefined!;
-    endQuotationMark: MissableToken<QuotationMarkToken> = undefined!;
+    endQuotationMark: QuotationMarkToken | MissingToken = undefined!;
 }
 
 export type StringLiteralExpressionChild =
@@ -35,11 +35,6 @@ export type StringLiteralExpressionChild =
     ;
 
 // #endregion
-
-export type MissableStringLiteralExpression =
-    | StringLiteralExpression
-    | MissingToken
-    ;
 
 // #region Configuration tag
 

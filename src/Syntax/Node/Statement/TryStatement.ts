@@ -1,9 +1,8 @@
-import { MissableToken } from '../../Token/MissingToken';
+import { MissingToken } from '../../Token/MissingToken';
 import { SkippedToken } from '../../Token/SkippedToken';
 import { CatchKeywordToken, EndKeywordToken, TryKeywordToken } from '../../Token/Tokens';
-import { MissableDataDeclaration } from '../Declaration/DataDeclarationSequence';
-import { Node } from '../Nodes';
-import { NodeKind } from '../Nodes';
+import { DataDeclaration } from '../Declaration/DataDeclarationSequence';
+import { Node, NodeKind } from '../Nodes';
 import { Statement, Statements } from './Statements';
 
 // #region Try statement
@@ -23,7 +22,7 @@ export class TryStatement extends Statement {
     tryKeyword: TryKeywordToken = undefined!;
     statements: (Statements | SkippedToken)[] = undefined!;
     catchClauses: CatchClause[] = undefined!;
-    endKeyword: MissableToken<EndKeywordToken> = undefined!;
+    endKeyword: EndKeywordToken | MissingToken = undefined!;
     endTryKeyword?: TryKeywordToken = undefined;
 }
 
@@ -41,7 +40,7 @@ export class CatchClause extends Node {
     readonly kind = NodeKind.CatchClause;
 
     catchKeyword: CatchKeywordToken = undefined!;
-    parameter: MissableDataDeclaration = undefined!;
+    parameter: DataDeclaration | MissingToken = undefined!;
     statements: (Statements | SkippedToken)[] = undefined!;
 }
 

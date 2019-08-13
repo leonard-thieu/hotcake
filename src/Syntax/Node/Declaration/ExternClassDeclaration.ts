@@ -1,10 +1,10 @@
-import { MissableToken } from '../../Token/MissingToken';
+import { MissingToken } from '../../Token/MissingToken';
 import { SkippedToken } from '../../Token/SkippedToken';
 import { AbstractKeywordToken, ClassKeywordToken, ClosingParenthesisToken, EndKeywordToken, ExtendsKeywordToken, FinalKeywordToken, MethodKeywordToken, NewlineToken, NullKeywordToken, OpeningParenthesisToken, PropertyKeywordToken } from '../../Token/Tokens';
-import { MissableIdentifier } from '../Identifier';
+import { Identifier } from '../Identifier';
 import { NodeKind } from '../Nodes';
 import { TypeAnnotation } from '../TypeAnnotation';
-import { MissableTypeReference } from '../TypeReference';
+import { TypeReference } from '../TypeReference';
 import { AccessibilityDirective } from './AccessibilityDirective';
 import { DataDeclarationSequence } from './DataDeclarationSequence';
 import { ExternDataDeclarationSequence } from './ExternDataDeclarationSequence';
@@ -30,16 +30,16 @@ export class ExternClassDeclaration extends ExternDeclaration {
     readonly kind = NodeKind.ExternClassDeclaration;
 
     classKeyword: ClassKeywordToken = undefined!;
-    identifier: MissableIdentifier = undefined!;
+    identifier: Identifier | MissingToken = undefined!;
 
     // Extends
     extendsKeyword?: ExtendsKeywordToken = undefined;
-    superType?: MissableTypeReference | NullKeywordToken = undefined;
+    superType?: TypeReference | NullKeywordToken | MissingToken = undefined;
 
     attribute?: AbstractKeywordToken | FinalKeywordToken = undefined;
 
     members: ExternClassDeclarationMember[] = undefined!;
-    endKeyword: MissableToken<EndKeywordToken> = undefined!;
+    endKeyword: EndKeywordToken | MissingToken = undefined!;
     endClassKeyword?: ClassKeywordToken = undefined;
 }
 
@@ -72,11 +72,11 @@ export class ExternClassMethodDeclaration extends ExternDeclaration {
     readonly kind = NodeKind.ExternClassMethodDeclaration;
 
     methodKeyword: MethodKeywordToken = undefined!;
-    identifier: MissableIdentifier = undefined!;
+    identifier: Identifier | MissingToken = undefined!;
     returnType?: TypeAnnotation = undefined;
-    openingParenthesis: MissableToken<OpeningParenthesisToken> = undefined!;
+    openingParenthesis: OpeningParenthesisToken | MissingToken = undefined!;
     parameters: DataDeclarationSequence = undefined!;
-    closingParenthesis: MissableToken<ClosingParenthesisToken> = undefined!;
+    closingParenthesis: ClosingParenthesisToken | MissingToken = undefined!;
     attributes: (AbstractKeywordToken | FinalKeywordToken | PropertyKeywordToken)[] = undefined!;
 }
 

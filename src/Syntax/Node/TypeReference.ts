@@ -1,4 +1,4 @@
-import { MissableToken, MissingToken } from '../Token/MissingToken';
+import { MissingToken } from '../Token/MissingToken';
 import { BoolKeywordToken, FloatKeywordToken, GreaterThanSignToken, IdentifierToken, IntKeywordToken, LessThanSignToken, PeriodToken, StringKeywordToken, VoidKeywordToken } from '../Token/Tokens';
 import { ArrayTypeAnnotation } from './ArrayTypeAnnotation';
 import { CommaSeparator } from './CommaSeparator';
@@ -19,13 +19,13 @@ export class TypeReference extends Node {
     readonly kind = NodeKind.TypeReference;
 
     moduleIdentifier?: IdentifierToken = undefined;
-    scopeMemberAccessOperator?: MissableToken<PeriodToken> = undefined;
+    scopeMemberAccessOperator?: PeriodToken | MissingToken = undefined;
     identifier: TypeReferenceIdentifier | IdentifierToken | MissingToken = undefined!;
 
     // Generic type arguments
     lessThanSign?: LessThanSignToken = undefined;
     typeArguments?: (TypeReference | CommaSeparator)[] = undefined;
-    greaterThanSign?: MissableToken<GreaterThanSignToken> = undefined;
+    greaterThanSign?: GreaterThanSignToken | MissingToken = undefined;
 
     arrayTypeAnnotations: ArrayTypeAnnotation[] = undefined!;
 }
@@ -46,9 +46,4 @@ export type TypeReferenceIdentifierStartToken =
     | FloatKeywordToken
     | StringKeywordToken
     | VoidKeywordToken
-    ;
-
-export type MissableTypeReference =
-    | TypeReference
-    | MissingToken
     ;

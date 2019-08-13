@@ -3,7 +3,7 @@ import { assertNever } from '../util';
 import { AccessibilityDirective, AccessibilityKeywordToken } from './Node/Declaration/AccessibilityDirective';
 import { AliasDirective, AliasDirectiveSequence } from './Node/Declaration/AliasDirectiveSequence';
 import { ClassDeclaration, ClassMethodDeclaration } from './Node/Declaration/ClassDeclaration';
-import { DataDeclaration, DataDeclarationKeywordToken, DataDeclarationSequence, MissableDataDeclaration } from './Node/Declaration/DataDeclarationSequence';
+import { DataDeclaration, DataDeclarationKeywordToken, DataDeclarationSequence } from './Node/Declaration/DataDeclarationSequence';
 import { ExternClassDeclaration, ExternClassMethodDeclaration } from './Node/Declaration/ExternClassDeclaration';
 import { ExternDataDeclaration, ExternDataDeclarationKeywordToken, ExternDataDeclarationSequence } from './Node/Declaration/ExternDataDeclarationSequence';
 import { ExternFunctionDeclaration } from './Node/Declaration/ExternFunctionDeclaration';
@@ -15,7 +15,7 @@ import { ModuleDeclaration } from './Node/Declaration/ModuleDeclaration';
 import { PreprocessorModuleDeclaration } from './Node/Declaration/PreprocessorModuleDeclaration';
 import { StrictDirective } from './Node/Declaration/StrictDirective';
 import { TypeParameter } from './Node/Declaration/TypeParameter';
-import { Expressions, MissableExpression } from './Node/Expression/Expressions';
+import { Expressions } from './Node/Expression/Expressions';
 import { IdentifierStartToken } from './Node/Identifier';
 import { ModulePath } from './Node/ModulePath';
 import { NodeKind, Nodes } from './Node/Nodes';
@@ -36,7 +36,7 @@ import { CatchClause, TryStatement } from './Node/Statement/TryStatement';
 import { WhileLoop } from './Node/Statement/WhileLoop';
 import { LonghandTypeAnnotation, ShorthandTypeAnnotation, ShorthandTypeToken, TypeAnnotation } from './Node/TypeAnnotation';
 import { ParseContextElementMapBase, ParseContextKind, ParserBase } from './ParserBase';
-import { MissingToken, MissingTokenKinds } from './Token/MissingToken';
+import { MissingToken, MissingTokenKind, MissingTokenKinds } from './Token/MissingToken';
 import { ModKeywordEqualsSignToken } from './Token/ModKeywordEqualsSignToken';
 import { ShlKeywordEqualsSignToken } from './Token/ShlKeywordEqualsSignToken';
 import { ShrKeywordEqualsSignToken } from './Token/ShrKeywordEqualsSignToken';
@@ -258,7 +258,7 @@ export class Parser extends ParserBase {
                 break;
             }
             default: {
-                importStatement.path = this.createMissingToken(token.fullStart, TokenKind.ImportStatementPath);
+                importStatement.path = this.createMissingToken(token.fullStart, MissingTokenKind.ImportStatementPath);
                 break;
             }
         }
@@ -528,7 +528,7 @@ export class Parser extends ParserBase {
 
     // #region Data declaration
 
-    private parseMissableDataDeclaration(parent: Nodes): MissableDataDeclaration {
+    private parseMissableDataDeclaration(parent: Nodes): DataDeclaration | MissingToken {
         const name = this.getToken();
         switch (name.kind) {
             case TokenKind.Identifier:
@@ -541,7 +541,7 @@ export class Parser extends ParserBase {
             }
         }
 
-        return this.createMissingToken(name.fullStart, NodeKind.DataDeclaration);
+        return this.createMissingToken(name.fullStart, MissingTokenKind.DataDeclaration);
     }
 
     private parseDataDeclaration(parent: Nodes, identifierStart: IdentifierStartToken): DataDeclaration {
@@ -1925,7 +1925,7 @@ export class Parser extends ParserBase {
 
     private parseExpressionStatement(
         parent: Nodes,
-        expression: MissableExpression,
+        expression: Expressions | MissingToken,
     ): ExpressionStatement {
         const expressionStatement = new ExpressionStatement();
         expressionStatement.parent = parent;

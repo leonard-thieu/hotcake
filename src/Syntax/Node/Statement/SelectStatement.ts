@@ -1,10 +1,9 @@
-import { MissableToken } from '../../Token/MissingToken';
+import { MissingToken } from '../../Token/MissingToken';
 import { SkippedToken } from '../../Token/SkippedToken';
 import { CaseKeywordToken, DefaultKeywordToken, EndKeywordToken, NewlineToken, SelectKeywordToken } from '../../Token/Tokens';
 import { CommaSeparator } from '../CommaSeparator';
-import { MissableExpression } from '../Expression/Expressions';
-import { Node } from '../Nodes';
-import { NodeKind } from '../Nodes';
+import { Expressions } from '../Expression/Expressions';
+import { Node, NodeKind } from '../Nodes';
 import { Statement, Statements } from './Statements';
 
 // #region Select statement
@@ -24,11 +23,11 @@ export class SelectStatement extends Statement {
     readonly kind = NodeKind.SelectStatement;
 
     selectKeyword: SelectKeywordToken = undefined!;
-    expression: MissableExpression = undefined!;
+    expression: Expressions | MissingToken = undefined!;
     newlines: NewlineToken[] = undefined!;
     caseClauses: CaseClause[] = undefined!;
     defaultClause?: DefaultClause = undefined;
-    endKeyword: MissableToken<EndKeywordToken> = undefined!;
+    endKeyword: EndKeywordToken | MissingToken = undefined!;
     endSelectKeyword?: SelectKeywordToken = undefined;
 }
 
@@ -46,7 +45,7 @@ export class CaseClause extends Node {
     readonly kind = NodeKind.CaseClause;
 
     caseKeyword: CaseKeywordToken = undefined!;
-    expressions: (MissableExpression | CommaSeparator)[] = undefined!;
+    expressions: (Expressions | MissingToken | CommaSeparator)[] = undefined!;
     statements: (Statements | SkippedToken)[] = undefined!;
 }
 

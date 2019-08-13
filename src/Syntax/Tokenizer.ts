@@ -3,8 +3,9 @@ import { Evaluator } from '../Evaluator';
 import { assertNever } from '../util';
 import { PreprocessorModuleDeclaration } from './Node/Declaration/PreprocessorModuleDeclaration';
 import { Directives } from './Node/Directive/Directives';
-import { MissableExpression } from './Node/Expression/Expressions';
+import { Expressions } from './Node/Expression/Expressions';
 import { NodeKind } from './Node/Nodes';
+import { MissingToken } from './Token/MissingToken';
 import { TokenKind, Tokens } from './Token/Tokens';
 
 export class Tokenizer {
@@ -110,7 +111,7 @@ export class Tokenizer {
         }
     }
 
-    private eval(expression: MissableExpression): any {
+    private eval(expression: Expressions | MissingToken): any {
         if (expression.kind === TokenKind.Missing) {
             return false;
         }

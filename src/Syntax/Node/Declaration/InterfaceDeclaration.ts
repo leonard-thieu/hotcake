@@ -1,8 +1,8 @@
-import { MissableToken } from '../../Token/MissingToken';
+import { MissingToken } from '../../Token/MissingToken';
 import { SkippedToken } from '../../Token/SkippedToken';
 import { ClosingParenthesisToken, EndKeywordToken, ExtendsKeywordToken, InterfaceKeywordToken, MethodKeywordToken, NewlineToken, OpeningParenthesisToken } from '../../Token/Tokens';
 import { CommaSeparator } from '../CommaSeparator';
-import { MissableIdentifier } from '../Identifier';
+import { Identifier } from '../Identifier';
 import { NodeKind } from '../Nodes';
 import { TypeAnnotation } from '../TypeAnnotation';
 import { TypeReference } from '../TypeReference';
@@ -25,11 +25,11 @@ export class InterfaceDeclaration extends Declaration {
     readonly kind = NodeKind.InterfaceDeclaration;
 
     interfaceKeyword: InterfaceKeywordToken = undefined!;
-    identifier: MissableIdentifier = undefined!;
+    identifier: Identifier | MissingToken = undefined!;
     extendsKeyword?: ExtendsKeywordToken = undefined;
     implementedTypes?: (TypeReference | CommaSeparator)[] = undefined;
     members: InterfaceDeclarationMember[] = undefined!;
-    endKeyword: MissableToken<EndKeywordToken> = undefined!;
+    endKeyword: EndKeywordToken | MissingToken = undefined!;
     endInterfaceKeyword?: InterfaceKeywordToken = undefined;
 }
 
@@ -57,11 +57,11 @@ export class InterfaceMethodDeclaration extends Declaration {
     readonly kind = NodeKind.InterfaceMethodDeclaration;
 
     methodKeyword: MethodKeywordToken = undefined!;
-    identifier: MissableIdentifier = undefined!;
+    identifier: Identifier | MissingToken = undefined!;
     returnType?: TypeAnnotation = undefined;
-    openingParenthesis: MissableToken<OpeningParenthesisToken> = undefined!;
+    openingParenthesis: OpeningParenthesisToken | MissingToken = undefined!;
     parameters: DataDeclarationSequence = undefined!;
-    closingParenthesis: MissableToken<ClosingParenthesisToken> = undefined!;
+    closingParenthesis: ClosingParenthesisToken | MissingToken = undefined!;
 }
 
 // #endregion

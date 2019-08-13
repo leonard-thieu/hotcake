@@ -16,7 +16,7 @@ import { TypeParameter } from '../Syntax/Node/Declaration/TypeParameter';
 import { ArrayLiteralExpression } from '../Syntax/Node/Expression/ArrayLiteralExpression';
 import { BinaryExpression, BinaryExpressionOperatorToken } from '../Syntax/Node/Expression/BinaryExpression';
 import { BooleanLiteralExpression } from '../Syntax/Node/Expression/BooleanLiteralExpression';
-import { MissableExpression } from '../Syntax/Node/Expression/Expressions';
+import { Expressions } from '../Syntax/Node/Expression/Expressions';
 import { FloatLiteralExpression } from '../Syntax/Node/Expression/FloatLiteralExpression';
 import { GroupingExpression } from '../Syntax/Node/Expression/GroupingExpression';
 import { IdentifierExpression, IdentifierExpressionIdentifier } from '../Syntax/Node/Expression/IdentifierExpression';
@@ -44,7 +44,7 @@ import { ThrowStatement } from '../Syntax/Node/Statement/ThrowStatement';
 import { CatchClause, TryStatement } from '../Syntax/Node/Statement/TryStatement';
 import { WhileLoop } from '../Syntax/Node/Statement/WhileLoop';
 import { ShorthandTypeToken, TypeAnnotation } from '../Syntax/Node/TypeAnnotation';
-import { MissableTypeReference, TypeReference, TypeReferenceIdentifier } from '../Syntax/Node/TypeReference';
+import { TypeReference, TypeReferenceIdentifier } from '../Syntax/Node/TypeReference';
 import { MissingToken } from '../Syntax/Token/MissingToken';
 import { SkippedToken } from '../Syntax/Token/SkippedToken';
 import { ColonEqualsSignToken, EqualsSignToken, IdentifierToken, TokenKind } from '../Syntax/Token/Tokens';
@@ -2513,7 +2513,7 @@ export class Binder {
 
     private bindExpression(
         parent: BoundNodes,
-        expression: MissableExpression,
+        expression: Expressions | MissingToken,
         typeMap: TypeMap | undefined,
         scope?: BoundMemberContainerDeclaration,
     ) {
@@ -3487,7 +3487,7 @@ export class Binder {
 
     private bindExpressionSequence(
         parent: BoundNodes,
-        expressions: (MissableExpression | CommaSeparator)[],
+        expressions: (Expressions | MissingToken | CommaSeparator)[],
         typeMap: TypeMap | undefined,
     ): BoundExpressions[] {
         const boundExpressions: BoundExpressions[] = [];
@@ -3620,7 +3620,7 @@ export class Binder {
 
     private bindTypeReference<TKind extends BoundTypeReferenceDeclaration['kind']>(
         node: BoundNodes,
-        typeReference: MissableTypeReference,
+        typeReference: TypeReference | MissingToken,
         typeMap: TypeMap | undefined,
         ...kinds: TKind[]
     ): BoundNodeKindToBoundNodeMap[TKind] {

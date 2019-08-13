@@ -23,11 +23,6 @@ export type Identifier =
     | EscapeOptionalIdentifierToken
     ;
 
-export type MissableIdentifier =
-    | Identifier
-    | MissingToken
-    ;
-
 export type IdentifierStartToken =
     | EscapeOptionalIdentifierToken
     | CommercialAtToken

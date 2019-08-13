@@ -1,6 +1,6 @@
-import { MissableToken } from '../../Token/MissingToken';
+import { MissingToken } from '../../Token/MissingToken';
 import { ClosingParenthesisToken, FunctionKeywordToken, OpeningParenthesisToken } from '../../Token/Tokens';
-import { MissableIdentifier } from '../Identifier';
+import { Identifier } from '../Identifier';
 import { NodeKind } from '../Nodes';
 import { TypeAnnotation } from '../TypeAnnotation';
 import { DataDeclarationSequence } from './DataDeclarationSequence';
@@ -21,9 +21,9 @@ export class ExternFunctionDeclaration extends ExternDeclaration {
     readonly kind = NodeKind.ExternFunctionDeclaration;
 
     functionKeyword: FunctionKeywordToken = undefined!;
-    identifier: MissableIdentifier = undefined!;
+    identifier: Identifier | MissingToken = undefined!;
     returnType?: TypeAnnotation = undefined;
-    openingParenthesis: MissableToken<OpeningParenthesisToken> = undefined!;
+    openingParenthesis: OpeningParenthesisToken | MissingToken = undefined!;
     parameters: DataDeclarationSequence = undefined!;
-    closingParenthesis: MissableToken<ClosingParenthesisToken> = undefined!;
+    closingParenthesis: ClosingParenthesisToken | MissingToken = undefined!;
 }

@@ -1,8 +1,9 @@
 import { Binder } from './Binding/Binder';
 import { BoundNodeKind, BoundNodes } from './Binding/Node/BoundNodes';
 import { BoundDeclarations, BoundTypeReferenceDeclaration } from './Binding/Node/Declaration/BoundDeclarations';
-import { MissableIdentifier } from './Syntax/Node/Identifier';
+import { Identifier } from './Syntax/Node/Identifier';
 import { Nodes } from './Syntax/Node/Nodes';
+import { MissingToken } from './Syntax/Token/MissingToken';
 import { NewKeywordToken } from './Syntax/Token/Tokens';
 import { getText } from './util';
 
@@ -62,7 +63,7 @@ export function traceBinding(kind: BoundNodeKind) {
         type IdentifiableNode = Extract<
             Nodes,
             {
-                identifier: MissableIdentifier | NewKeywordToken;
+                identifier: Identifier | NewKeywordToken | MissingToken;
             }
         >;
         descriptor.value = function (this: Binder, parent: BoundNodes, node: string | IdentifiableNode, ...args: any[]) {

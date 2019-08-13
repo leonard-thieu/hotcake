@@ -1,8 +1,8 @@
-import { MissableToken } from '../../Token/MissingToken';
+import { MissingToken } from '../../Token/MissingToken';
 import { ClosingParenthesisToken, NewlineToken, OpeningParenthesisToken } from '../../Token/Tokens';
 import { CommaSeparator } from '../CommaSeparator';
 import { NodeKind } from '../Nodes';
-import { Expression, Expressions, MissableExpression } from './Expressions';
+import { Expression, Expressions } from './Expressions';
 
 export const InvokeExpressionChildNames: ReadonlyArray<keyof InvokeExpression> = [
     'newlines',
@@ -19,6 +19,6 @@ export class InvokeExpression extends Expression {
     invokableExpression: Expressions = undefined!;
     openingParenthesis?: OpeningParenthesisToken = undefined;
     leadingNewlines?: NewlineToken[] = undefined;
-    arguments: (MissableExpression | CommaSeparator)[] = undefined!;
-    closingParenthesis?: MissableToken<ClosingParenthesisToken> = undefined;
+    arguments: (Expressions | MissingToken | CommaSeparator)[] = undefined!;
+    closingParenthesis?: ClosingParenthesisToken | MissingToken = undefined;
 }

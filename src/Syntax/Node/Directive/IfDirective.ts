@@ -1,6 +1,6 @@
-import { MissableToken } from '../../Token/MissingToken';
+import { MissingToken } from '../../Token/MissingToken';
 import { ElseDirectiveKeywordToken, ElseIfDirectiveKeywordToken, EndDirectiveKeywordToken, IfDirectiveKeywordToken, NumberSignToken, Tokens } from '../../Token/Tokens';
-import { MissableExpression } from '../Expression/Expressions';
+import { Expressions } from '../Expression/Expressions';
 import { NodeKind } from '../Nodes';
 import { Directive, Directives } from './Directives';
 
@@ -22,12 +22,12 @@ export class IfDirective extends Directive {
     readonly kind = NodeKind.IfDirective;
 
     ifDirectiveKeyword: IfDirectiveKeywordToken = undefined!;
-    expression: MissableExpression = undefined!;
+    expression: Expressions | MissingToken = undefined!;
     members: (Directives | Tokens)[] = undefined!;
     elseIfDirectives: ElseIfDirective[] = undefined!;
     elseDirective?: ElseDirective = undefined;
-    endDirectiveNumberSign: MissableToken<NumberSignToken> = undefined!;
-    endDirectiveKeyword: MissableToken<EndDirectiveKeywordToken> = undefined!;
+    endDirectiveNumberSign: NumberSignToken | MissingToken = undefined!;
+    endDirectiveKeyword: EndDirectiveKeywordToken | MissingToken = undefined!;
     endIfDirectiveKeyword?: IfDirectiveKeywordToken = undefined;
 }
 
@@ -48,7 +48,7 @@ export class ElseIfDirective extends Directive {
 
     elseIfDirectiveKeyword: ElseIfDirectiveKeywordToken | ElseDirectiveKeywordToken = undefined!;
     ifDirectiveKeyword?: IfDirectiveKeywordToken = undefined;
-    expression: MissableExpression = undefined!;
+    expression: Expressions | MissingToken = undefined!;
     members: (Directives | Tokens)[] = undefined!;
 }
 

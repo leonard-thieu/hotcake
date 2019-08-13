@@ -1,4 +1,3 @@
-import { MissingToken } from '../../Token/MissingToken';
 import { NewlineToken } from '../../Token/Tokens';
 import { Node } from '../Nodes';
 import { ArrayLiteralExpression } from './ArrayLiteralExpression';
@@ -28,11 +27,6 @@ export type Expressions =
     | BinaryExpression
     | UnaryExpression
     | PrimaryExpression
-    ;
-
-export type MissableExpression =
-    | Expressions
-    | MissingToken
     ;
 
 export type PrimaryExpression =
