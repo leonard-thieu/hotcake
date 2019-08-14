@@ -1,4 +1,4 @@
-import { ConfigurationVariableMap, ConfigurationVariables } from '../Configuration';
+import { ConfigurationVariableMap } from '../Configuration';
 import { Evaluator } from '../Evaluator';
 import { assertNever } from '../util';
 import { PreprocessorModuleDeclaration } from './Node/Declaration/PreprocessorModuleDeclaration';
@@ -10,15 +10,18 @@ import { TokenKind, Tokens } from './Token/Tokens';
 
 export class Tokenizer {
     private document: string = undefined!;
-    private configVars: ConfigurationVariableMap = undefined!;
     private tokens: Tokens[] = undefined!;
 
     getTokens(
         preprocessorModuleDeclaration: PreprocessorModuleDeclaration,
-        configVars: ConfigurationVariables,
+        configVars: ConfigurationVariableMap,
+        currentDirectory: string,
+        moduleFilePath: string,
     ): Tokens[] {
         this.document = preprocessorModuleDeclaration.document;
-        this.configVars = new ConfigurationVariableMap(Object.entries(configVars));
+        this.configVars = configVars;
+        this.currentDirectory = currentDirectory;
+        this.moduleFilePath = moduleFilePath;
         this.tokens = [];
 
         this.readMembers(preprocessorModuleDeclaration.members);
@@ -67,7 +70,7 @@ export class Tokenizer {
                     const { kind } = member.operator;
                     switch (kind) {
                         case TokenKind.EqualsSign: {
-                            this.configVars.set(varName, value);
+                            this.setVar(varName, value);
                             break;
                         }
                         case TokenKind.PlusSignEqualsSign: {
@@ -75,8 +78,8 @@ export class Tokenizer {
                             if (!value.startsWith(';')) {
                                 value = ';' + value;
                             }
-                            value = this.configVars.get(varName) + value;
-                            this.configVars.set(varName, value);
+                            value = this.getVar(varName) + value;
+                            this.setVar(varName, value);
                             break;
                         }
                         case TokenKind.Missing: {
@@ -208,7 +211,7 @@ export class Tokenizer {
                 }
             }
             case NodeKind.StringLiteralExpression: {
-                return Evaluator.evalStringLiteral(expression, this.document, this.configVars);
+                return Evaluator.evalStringLiteral(expression, this.document, this);
             }
             case NodeKind.BooleanLiteralExpression: {
                 const { kind } = expression.value;
@@ -238,7 +241,7 @@ export class Tokenizer {
                     identifierName = expression.identifier.getText(this.document);
                 }
 
-                return this.configVars.get(identifierName);
+                return this.getVar(identifierName);
             }
             case NodeKind.NewExpression:
             case NodeKind.NullExpression:
@@ -256,4 +259,28 @@ export class Tokenizer {
 
         return assertNever(expression);
     }
+
+    // #region Configuration variables
+
+    private configVars: ConfigurationVariableMap = undefined!;
+    private currentDirectory: string = undefined!;
+    private moduleFilePath: string = undefined!;
+
+    getVar(key: string) {
+        switch (key) {
+            case 'CD': { return this.currentDirectory; }
+            case 'MODPATH': { return this.moduleFilePath; }
+            default: { return this.configVars.get(key); }
+        }
+    }
+
+    setVar(key: string, value: any) {
+        switch (key) {
+            case 'CD': { this.currentDirectory = value; break; }
+            case 'MODPATH': { this.moduleFilePath = value; break; }
+            default: { this.configVars.set(key, value); break; }
+        }
+    }
+
+    // #endregion
 }

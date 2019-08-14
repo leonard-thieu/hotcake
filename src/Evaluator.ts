@@ -1,11 +1,11 @@
-import { ConfigurationVariableMap } from './Configuration';
 import { StringLiteralExpression } from './Syntax/Node/Expression/StringLiteralExpression';
 import { NodeKind } from './Syntax/Node/Nodes';
 import { TokenKind } from './Syntax/Token/Tokens';
+import { Tokenizer } from './Syntax/Tokenizer';
 import { assertNever } from './util';
 
 export namespace Evaluator {
-    export function evalStringLiteral(expression: StringLiteralExpression, document: string, configVars?: ConfigurationVariableMap) {
+    export function evalStringLiteral(expression: StringLiteralExpression, document: string, tokenizer?: Tokenizer) {
         let value = '';
 
         for (const child of expression.children) {
@@ -26,7 +26,7 @@ export namespace Evaluator {
                     break;
                 }
                 case NodeKind.ConfigurationTag: {
-                    if (!configVars) {
+                    if (!tokenizer) {
                         // TODO: Are configuration variables allowed outside the preprocessor?
                         //       If so, when are they evaluated? During preprocessing? During binding? Does it matter?
                         value += child.startToken.getText(document);
@@ -37,9 +37,7 @@ export namespace Evaluator {
                     } else {
                         if (child.name) {
                             const configurationTagName = child.name.getFullText(document);
-                            if (configVars.has(configurationTagName)) {
-                                value += configVars.get(configurationTagName);
-                            }
+                            value += tokenizer.getVar(configurationTagName);
                         }
                     }
                     break;

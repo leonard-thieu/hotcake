@@ -15,7 +15,7 @@ import { BoundFunctionLikeGroupDeclaration } from '../src/Binding/Node/Declarati
 import { BoundInterfaceDeclaration } from '../src/Binding/Node/Declaration/BoundInterfaceDeclaration';
 import { BoundModuleDeclaration } from '../src/Binding/Node/Declaration/BoundModuleDeclaration';
 import { Type } from '../src/Binding/Type/Types';
-import { ConfigurationVariables } from "../src/Configuration";
+import { ConfigurationVariableMap } from "../src/Configuration";
 import { Diagnostic, DiagnosticBag, DiagnosticKind } from '../src/Diagnostics';
 import { Project } from '../src/Project';
 import { ModuleDeclaration } from '../src/Syntax/Node/Declaration/ModuleDeclaration';
@@ -124,14 +124,15 @@ export function executeTokenizerTestCases(
 export function getTokens(filePath: string, document: string): Tokens[] {
     const preprocessorModuleDeclaration = getPreprocessorParseTree(filePath, document);
     const tokenizer = new Tokenizer();
-    const configVars: ConfigurationVariables = {
+    const configVars = new ConfigurationVariableMap(Object.entries({
         HOST: 'winnt',
         LANG: 'cpp',
-        TARGET: 'glfw3',
+        TARGET: 'glfw',
         CONFIG: 'release',
-    };
+    }));
+    const currentDirectory = path.dirname(filePath);
 
-    return tokenizer.getTokens(preprocessorModuleDeclaration, configVars);
+    return tokenizer.getTokens(preprocessorModuleDeclaration, configVars, currentDirectory, filePath);
 }
 
 // #endregion
@@ -172,13 +173,14 @@ export function executeParserTestCases(
 export function getParseTree(filePath: string, document: string): ModuleDeclaration {
     const preprocessorModuleDeclaration = getPreprocessorParseTree(filePath, document);
     const tokenizer = new Tokenizer();
-    const configVars: ConfigurationVariables = {
+    const configVars = new ConfigurationVariableMap(Object.entries({
         HOST: 'winnt',
         LANG: 'cpp',
-        TARGET: 'glfw3',
+        TARGET: 'glfw',
         CONFIG: 'release',
-    };
-    const tokens = tokenizer.getTokens(preprocessorModuleDeclaration, configVars);
+    }));
+    const currentDirectory = path.dirname(filePath);
+    const tokens = tokenizer.getTokens(preprocessorModuleDeclaration, configVars, currentDirectory, filePath);
     const parser = new Parser();
 
     return parser.parse(preprocessorModuleDeclaration, tokens);
@@ -358,7 +360,7 @@ export function getBoundTree(filePath: string, document: string): BoundModuleDec
     const project = new Project(frameworkDirectory, projectDirectory, {
         HOST: 'winnt',
         LANG: 'cpp',
-        TARGET: 'glfw3',
+        TARGET: 'glfw',
         CONFIG: 'debug',
     });
 

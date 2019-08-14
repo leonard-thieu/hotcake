@@ -13,7 +13,7 @@ import { FloatType } from './Binding/Type/FloatType';
 import { IntType } from './Binding/Type/IntType';
 import { NullType } from './Binding/Type/NullType';
 import { VoidType } from './Binding/Type/VoidType';
-import { ConfigurationVariables } from './Configuration';
+import { ConfigurationVariableMap, ConfigurationVariables } from './Configuration';
 import { DiagnosticBag } from './Diagnostics';
 import { Parser } from './Syntax/Parser';
 import { PreprocessorParser } from './Syntax/PreprocessorParser';
@@ -31,7 +31,7 @@ export class Project {
     constructor(
         frameworkDirectoryPath: string,
         projectDirectoryPath: string,
-        { HOST, LANG, TARGET, CONFIG }: ConfigurationVariables,
+        configVars: ConfigurationVariables,
     ) {
         frameworkDirectoryPath = path.resolve(frameworkDirectoryPath);
 
@@ -50,10 +50,15 @@ export class Project {
         const projectDirectoryName = projectDirectoryPathComponents[projectDirectoryPathComponents.length - 1];
         this.projectDirectory = this.bindDirectory(projectDirectoryName, projectDirectoryPath);
 
-        this.host = HOST;
-        this.lang = LANG;
-        this.target = TARGET;
-        this.config = CONFIG;
+        this.configVars = new ConfigurationVariableMap(Object.entries(configVars));
+
+        const target = this.configVars.get('TARGET');
+        const targetDirectoryPath = path.resolve(this.frameworkTargetsDirectory.fullPath, target);
+        this.targetDirectory = this.bindDirectory(target, targetDirectoryPath, this.frameworkTargetsDirectory);
+
+        const targetModulesDirectoryName = 'modules';
+        const targetModulesDirectoryPath = path.resolve(this.targetDirectory.fullPath, targetModulesDirectoryName);
+        this.targetModulesDirectory = this.bindDirectory(targetModulesDirectoryName, targetModulesDirectoryPath, this.targetDirectory);
 
         this.nullTypeDeclaration = new BoundIntrinsicTypeDeclaration();
         this.nullTypeDeclaration.identifier = new BoundSymbol('Null', this.nullTypeDeclaration);
@@ -81,35 +86,10 @@ export class Project {
     private readonly frameworkModulesDirectory: BoundDirectory;
     private readonly frameworkTargetsDirectory: BoundDirectory;
     private readonly projectDirectory: BoundDirectory;
+    private readonly targetDirectory: BoundDirectory;
+    private readonly targetModulesDirectory: BoundDirectory;
 
-    private host: string = undefined!;
-    private lang: string = undefined!;
-
-    // #region Target
-
-    private targetDirectory: BoundDirectory = undefined!;
-    private targetModulesDirectory: BoundDirectory = undefined!;
-
-    private _target: string = undefined!;
-
-    get target() {
-        return this._target;
-    }
-
-    set target(target: string) {
-        this._target = target;
-
-        const targetDirectoryPath = path.resolve(this.frameworkTargetsDirectory.fullPath, target);
-        this.targetDirectory = this.bindDirectory(target, targetDirectoryPath, this.frameworkTargetsDirectory);
-
-        const targetModulesDirectoryName = 'modules';
-        const targetModulesDirectoryPath = path.resolve(this.targetDirectory.fullPath, targetModulesDirectoryName);
-        this.targetModulesDirectory = this.bindDirectory(targetModulesDirectoryName, targetModulesDirectoryPath, this.targetDirectory);
-    }
-
-    // #endregion
-
-    private config: string = undefined!;
+    private readonly configVars: ConfigurationVariableMap;
 
     readonly nullTypeDeclaration: BoundIntrinsicTypeDeclaration;
     readonly voidTypeDeclaration: BoundIntrinsicTypeDeclaration;
@@ -235,14 +215,12 @@ export class Project {
 
         const preprocessorTokens = preprocessorTokenizer.getTokens(document);
         const preprocessorModuleDeclaration = preprocessorParser.parse(moduleFilePath, document, preprocessorTokens);
-        const tokens = tokenizer.getTokens(preprocessorModuleDeclaration, {
-            HOST: this.host,
-            LANG: this.lang,
-            TARGET: this.target,
-            CONFIG: this.config,
-            CD: currentDirectoryPath,
-            MODPATH: moduleFilePath,
-        });
+        const tokens = tokenizer.getTokens(
+            preprocessorModuleDeclaration,
+            this.configVars,
+            currentDirectoryPath,
+            moduleFilePath,
+        );
         const moduleDeclaration = parser.parse(preprocessorModuleDeclaration, tokens);
 
         const moduleName = path.basename(moduleFilePath, FILE_EXTENSION);

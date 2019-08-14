@@ -1,5 +1,6 @@
 import path = require('path');
 import { createConnection, Diagnostic, ProposedFeatures, Range, TextDocument, TextDocuments } from 'vscode-languageserver';
+import { ConfigurationVariableMap } from '../../../src/Configuration';
 import { Parser } from '../../../src/Syntax/Parser';
 import { ParseTreeVisitor } from '../../../src/Syntax/ParseTreeVisitor';
 import { PreprocessorParser } from '../../../src/Syntax/PreprocessorParser';
@@ -40,14 +41,18 @@ async function validateTextDocument(textDocument: TextDocument): Promise<void> {
     const text = textDocument.getText();
     const preprocessorTokens = preprocessorTokenizer.getTokens(text);
     const preprocessorModuleDeclaration = preprocessorParser.parse(textDocument.uri, text, preprocessorTokens);
-    const tokens = tokenizer.getTokens(preprocessorModuleDeclaration, {
+    const configVars = new ConfigurationVariableMap(Object.entries({
         HOST: 'winnt',
         LANG: 'cpp',
         TARGET: 'glfw',
         CONFIG: 'release',
-        CD: path.dirname(textDocument.uri),
-        MODPATH: textDocument.uri,
-    });
+    }))
+    const tokens = tokenizer.getTokens(
+        preprocessorModuleDeclaration,
+        configVars,
+        path.dirname(textDocument.uri),
+        textDocument.uri,
+    );
     const moduleDeclaration = parser.parse(preprocessorModuleDeclaration, tokens);
 
     if (moduleDeclaration.parseDiagnostics) {
@@ -74,14 +79,18 @@ connection.onHover((params) => {
     const text = textDocument.getText();
     const preprocessorTokens = preprocessorTokenizer.getTokens(text);
     const preprocessorModuleDeclaration = preprocessorParser.parse(textDocument.uri, text, preprocessorTokens);
-    const tokens = tokenizer.getTokens(preprocessorModuleDeclaration, {
+    const configVars = new ConfigurationVariableMap(Object.entries({
         HOST: 'winnt',
         LANG: 'cpp',
         TARGET: 'glfw',
         CONFIG: 'release',
-        CD: path.dirname(textDocument.uri),
-        MODPATH: textDocument.uri,
-    });
+    }))
+    const tokens = tokenizer.getTokens(
+        preprocessorModuleDeclaration,
+        configVars,
+        path.dirname(textDocument.uri),
+        textDocument.uri,
+    );
     const moduleDeclaration = parser.parse(preprocessorModuleDeclaration, tokens);
 
     const containingNode = ParseTreeVisitor.getNodeAt(moduleDeclaration, offset);

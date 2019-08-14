@@ -22,7 +22,7 @@ function deleteFilesRecursive(targetPath, targetExtensions) {
 }
 
 deleteFilesRecursive('src', ['.js', '.js.map']);
+deleteFilesRecursive('tests', ['.js', '.js.map', 'yaml']);
 deleteFilesRecursive('vscode/client/src', ['.js', '.js.map']);
 deleteFilesRecursive('vscode/server/src', ['.js', '.js.map']);
 deleteFilesRecursive('vscode/syntaxes', ['.tmLanguage.json']);
-deleteFilesRecursive('tests', ['yaml']);

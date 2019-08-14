@@ -64,8 +64,8 @@ End
 
 Function Eat()
     ' Directive
-    #If TARGET <> "glfw3"
-        Print("Not glfw3")
+    #If MY_CONFIG_VAR <> "a value"
+        Print("Not set to 'a value'")
     #End
 
     ' Statement
