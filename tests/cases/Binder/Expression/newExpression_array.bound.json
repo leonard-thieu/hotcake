@@ -1,0 +1,55 @@
+{
+    "kind": "ModuleDeclaration",
+    "identifier": "newExpression_array",
+    "locals": [
+        {
+            "kind": "ClassDeclaration",
+            "identifier": "GraphicsContext",
+            "type": "GraphicsContext",
+            "superType": "Object",
+            "locals": [
+                {
+                    "kind": "DataDeclaration",
+                    "declarationKind": "Field",
+                    "identifier": "matrixStack",
+                    "operator": "ColonEqualsSign",
+                    "expression": {
+                        "kind": "InvokeExpression",
+                        "type": "Float[]",
+                        "invocationType": "New Float[]()",
+                        "invokableExpression": {
+                            "kind": "NewExpression",
+                            "type": "New Float[]",
+                            "typeReference": "Float[]"
+                        },
+                        "arguments": []
+                    },
+                    "type": "Float[]"
+                },
+                {
+                    "kind": "DataDeclaration",
+                    "declarationKind": "Field",
+                    "identifier": "matrixSp",
+                    "typeAnnotation": "Int",
+                    "type": "Int"
+                },
+                {
+                    "kind": "ClassMethodGroupDeclaration",
+                    "identifier": "New",
+                    "type": "New GraphicsContext",
+                    "overloads": [
+                        {
+                            "kind": "ClassMethodDeclaration",
+                            "identifier": "New",
+                            "locals": [],
+                            "type": "New GraphicsContext()",
+                            "returnType": "GraphicsContext",
+                            "parameters": [],
+                            "statements": []
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}
