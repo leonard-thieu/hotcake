@@ -1,0 +1,84 @@
+{
+    "kind": "ModuleDeclaration",
+    "identifier": "globalScopeExpression",
+    "locals": [
+        {
+            "kind": "DataDeclaration",
+            "declarationKind": "Global",
+            "identifier": "T",
+            "typeAnnotation": "Int",
+            "type": "Int"
+        },
+        {
+            "kind": "ClassDeclaration",
+            "identifier": "Actor",
+            "type": "Actor",
+            "superType": "Object",
+            "locals": [
+                {
+                    "kind": "DataDeclaration",
+                    "declarationKind": "Global",
+                    "identifier": "T",
+                    "typeAnnotation": "Int[]",
+                    "type": "Int[]"
+                },
+                {
+                    "kind": "ClassMethodGroupDeclaration",
+                    "identifier": "Act",
+                    "type": "Act",
+                    "overloads": [
+                        {
+                            "kind": "ClassMethodDeclaration",
+                            "identifier": "Act",
+                            "locals": [],
+                            "type": "Act: Int()",
+                            "returnType": "Int",
+                            "parameters": [],
+                            "isProperty": false,
+                            "statements": [
+                                {
+                                    "kind": "AssignmentStatement",
+                                    "leftOperand": {
+                                        "kind": "ScopeMemberAccessExpression",
+                                        "type": "Int",
+                                        "scopableExpression": {
+                                            "kind": "GlobalScopeExpression",
+                                            "type": "Module"
+                                        },
+                                        "member": {
+                                            "kind": "IdentifierExpression",
+                                            "type": "Int",
+                                            "identifier": "T"
+                                        }
+                                    },
+                                    "operator": "Assignment",
+                                    "rightOperand": {
+                                        "kind": "IntegerLiteralExpression",
+                                        "type": "Int",
+                                        "value": "10"
+                                    }
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "kind": "ClassMethodGroupDeclaration",
+                    "identifier": "New",
+                    "type": "New Actor",
+                    "overloads": [
+                        {
+                            "kind": "ClassMethodDeclaration",
+                            "identifier": "New",
+                            "locals": [],
+                            "type": "New Actor()",
+                            "returnType": "Actor",
+                            "parameters": [],
+                            "statements": []
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

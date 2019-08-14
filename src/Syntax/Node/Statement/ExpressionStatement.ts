@@ -1,4 +1,5 @@
-import { MissableExpression } from '../Expression/Expressions';
+import { MissingToken } from '../../Token/MissingToken';
+import { Expressions } from '../Expression/Expressions';
 import { NodeKind } from '../Nodes';
 import { Statement } from './Statements';
 
@@ -10,5 +11,5 @@ export const ExpressionStatementChildNames: ReadonlyArray<keyof ExpressionStatem
 export class ExpressionStatement extends Statement {
     readonly kind = NodeKind.ExpressionStatement;
 
-    expression: MissableExpression = undefined!;
+    expression: Expressions | MissingToken = undefined!;
 }

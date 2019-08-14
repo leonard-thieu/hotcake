@@ -1,7 +1,7 @@
 import { CONSTRUCTOR_NAME } from '../Binder';
 import { BoundTreeWalker } from '../BoundTreeWalker';
 import { BoundNodeKind } from '../Node/BoundNodes';
-import { BoundExternClassDeclaration } from '../Node/Declaration/Extern/BoundExternClassDeclaration';
+import { BoundExternClassDeclaration } from '../Node/Declaration/BoundExternClassDeclaration';
 import { Type, TypeKind, Types } from './Types';
 
 export class StringType extends Type {

@@ -1,14 +1,13 @@
 import { assertNever } from '../util';
 import { ArrayTypeAnnotationChildNames } from './Node/ArrayTypeAnnotation';
 import { CommaSeparatorChildNames } from './Node/CommaSeparator';
-import { ConfigurationTagChildNames } from './Node/ConfigurationTag';
 import { AccessibilityDirectiveChildNames } from './Node/Declaration/AccessibilityDirective';
 import { AliasDirectiveChildNames, AliasDirectiveSequenceChildNames } from './Node/Declaration/AliasDirectiveSequence';
 import { ClassDeclarationChildNames, ClassMethodDeclarationChildNames } from './Node/Declaration/ClassDeclaration';
 import { DataDeclarationChildNames, DataDeclarationSequenceChildNames } from './Node/Declaration/DataDeclarationSequence';
-import { ExternClassDeclarationChildNames, ExternClassMethodDeclarationChildNames } from './Node/Declaration/ExternDeclaration/ExternClassDeclaration';
-import { ExternDataDeclarationChildNames, ExternDataDeclarationSequenceChildNames } from './Node/Declaration/ExternDeclaration/ExternDataDeclarationSequence';
-import { ExternFunctionDeclarationChildNames } from './Node/Declaration/ExternDeclaration/ExternFunctionDeclaration';
+import { ExternClassDeclarationChildNames, ExternClassMethodDeclarationChildNames } from './Node/Declaration/ExternClassDeclaration';
+import { ExternDataDeclarationChildNames, ExternDataDeclarationSequenceChildNames } from './Node/Declaration/ExternDataDeclarationSequence';
+import { ExternFunctionDeclarationChildNames } from './Node/Declaration/ExternFunctionDeclaration';
 import { FriendDirectiveChildNames } from './Node/Declaration/FriendDirective';
 import { FunctionDeclarationChildNames } from './Node/Declaration/FunctionDeclaration';
 import { ImportStatementChildNames } from './Node/Declaration/ImportStatement';
@@ -37,7 +36,7 @@ import { NullExpressionChildNames } from './Node/Expression/NullExpression';
 import { ScopeMemberAccessExpressionChildNames } from './Node/Expression/ScopeMemberAccessExpression';
 import { SelfExpressionChildNames } from './Node/Expression/SelfExpression';
 import { SliceExpressionChildNames } from './Node/Expression/SliceExpression';
-import { StringLiteralExpressionChildNames } from './Node/Expression/StringLiteralExpression';
+import { ConfigurationTagChildNames, StringLiteralExpressionChildNames } from './Node/Expression/StringLiteralExpression';
 import { SuperExpressionChildNames } from './Node/Expression/SuperExpression';
 import { UnaryExpressionChildNames } from './Node/Expression/UnaryExpression';
 import { EscapedIdentifierChildNames } from './Node/Identifier';
@@ -278,6 +277,8 @@ export namespace ParseTreeVisitor {
             case NodeKind.ExpressionStatement: { return ExpressionStatementChildNames; }
             case NodeKind.EmptyStatement: { return EmptyStatementChildNames; }
 
+            case NodeKind.BinaryExpression: { return BinaryExpressionChildNames; }
+            case NodeKind.UnaryExpression: { return UnaryExpressionChildNames; }
             case NodeKind.NewExpression: { return NewExpressionChildNames; }
             case NodeKind.NullExpression: { return NullExpressionChildNames; }
             case NodeKind.BooleanLiteralExpression: { return BooleanLiteralExpressionChildNames; }
@@ -294,17 +295,15 @@ export namespace ParseTreeVisitor {
             case NodeKind.IndexExpression: { return IndexExpressionChildNames; }
             case NodeKind.SliceExpression: { return SliceExpressionChildNames; }
             case NodeKind.GroupingExpression: { return GroupingExpressionChildNames; }
-            case NodeKind.UnaryExpression: { return UnaryExpressionChildNames; }
-            case NodeKind.BinaryExpression: { return BinaryExpressionChildNames; }
             case NodeKind.GlobalScopeExpression: { return GlobalScopeExpressionChildNames; }
 
+            case NodeKind.EscapedIdentifier: { return EscapedIdentifierChildNames; }
             case NodeKind.ModulePath: { return ModulePathChildNames; }
             case NodeKind.ArrayTypeAnnotation: { return ArrayTypeAnnotationChildNames; }
             case NodeKind.ShorthandTypeAnnotation: { return ShorthandTypeAnnotationChildNames; }
             case NodeKind.LonghandTypeAnnotation: { return LonghandTypeAnnotationChildNames; }
             case NodeKind.TypeReference: { return TypeReferenceChildNames; }
             case NodeKind.TypeParameter: { return TypeParameterChildNames; }
-            case NodeKind.EscapedIdentifier: { return EscapedIdentifierChildNames; }
             case NodeKind.CommaSeparator: { return CommaSeparatorChildNames; }
 
             default: {

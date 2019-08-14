@@ -5,6 +5,6 @@ export class BoundSliceExpression extends BoundExpression {
     readonly kind = BoundNodeKind.SliceExpression;
 
     sliceableExpression: BoundExpressions = undefined!;
-    startExpression?: BoundExpressions = undefined;
-    endExpression?: BoundExpressions = undefined;
+    startExpression?: BoundExpressions = undefined!;
+    endExpression?: BoundExpressions = undefined!;
 }

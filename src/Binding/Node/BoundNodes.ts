@@ -7,7 +7,7 @@ import { BoundCatchClause } from './Statement/BoundTryStatement';
 
 export abstract class BoundNode {
     abstract readonly kind: BoundNodeKind = undefined!;
-    parent?: BoundNodes = undefined;
+    parent?: BoundNodes = undefined!;
 }
 
 export type BoundNodes =
@@ -24,6 +24,8 @@ export enum BoundNodeKind {
     Directory = 'Directory',
 
     ModuleDeclaration = 'ModuleDeclaration',
+
+    AliasDirective = 'AliasDirective',
 
     ExternDataDeclaration = 'ExternDataDeclaration',
     ExternFunctionDeclaration = 'ExternFunctionDeclaration',

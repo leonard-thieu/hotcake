@@ -10,7 +10,7 @@ export class BoundSelectStatement extends BoundNode {
 
     expression: BoundExpressions = undefined!;
     caseClauses: BoundCaseClause[] = undefined!;
-    defaultClause?: BoundDefaultClause = undefined;
+    defaultClause?: BoundDefaultClause = undefined!;
 }
 
 // #endregion

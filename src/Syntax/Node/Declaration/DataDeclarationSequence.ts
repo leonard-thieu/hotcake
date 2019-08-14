@@ -1,7 +1,7 @@
 import { MissingToken } from '../../Token/MissingToken';
 import { ColonEqualsSignToken, ConstKeywordToken, EqualsSignToken, FieldKeywordToken, GlobalKeywordToken, LocalKeywordToken } from '../../Token/Tokens';
 import { CommaSeparator } from '../CommaSeparator';
-import { MissableExpression } from '../Expression/Expressions';
+import { Expressions } from '../Expression/Expressions';
 import { Identifier } from '../Identifier';
 import { NodeKind } from '../Nodes';
 import { TypeAnnotation } from '../TypeAnnotation';
@@ -60,16 +60,10 @@ export class DataDeclaration extends Declaration {
     readonly kind = NodeKind.DataDeclaration;
 
     identifier: Identifier = undefined!;
-    typeAnnotation?: TypeAnnotation = undefined;
+    typeAnnotation?: TypeAnnotation = undefined!;
     // Can be missable if this declaration is Const.
-    // If the operator is omitted (declaration without assignment), `operator` will be `null`.
-    operator: null | EqualsSignToken | ColonEqualsSignToken | MissingToken = undefined!;
-    expression?: MissableExpression = undefined;
+    operator?: EqualsSignToken | ColonEqualsSignToken | MissingToken = undefined!;
+    expression?: Expressions | MissingToken = undefined!;
 }
-
-export type MissableDataDeclaration =
-    | DataDeclaration
-    | MissingToken
-    ;
 
 // #endregion

@@ -1,6 +1,6 @@
-import { MissableToken } from '../Token/MissingToken';
+import { MissingToken } from '../Token/MissingToken';
 import { ClosingSquareBracketToken, OpeningSquareBracketToken } from '../Token/Tokens';
-import { MissableExpression } from './Expression/Expressions';
+import { Expressions } from './Expression/Expressions';
 import { Node, NodeKind } from './Nodes';
 
 export const ArrayTypeAnnotationChildNames: ReadonlyArray<keyof ArrayTypeAnnotation> = [
@@ -13,6 +13,6 @@ export class ArrayTypeAnnotation extends Node {
     readonly kind = NodeKind.ArrayTypeAnnotation;
 
     openingSquareBracket: OpeningSquareBracketToken = undefined!;
-    expression?: MissableExpression = undefined;
-    closingSquareBracket: MissableToken<ClosingSquareBracketToken> = undefined!;
+    expression?: Expressions | MissingToken = undefined!;
+    closingSquareBracket: ClosingSquareBracketToken | MissingToken = undefined!;
 }

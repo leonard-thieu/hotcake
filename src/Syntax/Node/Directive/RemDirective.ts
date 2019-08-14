@@ -1,4 +1,4 @@
-import { MissableToken } from '../../Token/MissingToken';
+import { MissingToken } from '../../Token/MissingToken';
 import { SkippedToken } from '../../Token/SkippedToken';
 import { EndDirectiveKeywordToken, IfDirectiveKeywordToken, NumberSignToken, RemDirectiveBodyToken, RemDirectiveKeywordToken } from '../../Token/Tokens';
 import { NodeKind } from '../Nodes';
@@ -19,9 +19,9 @@ export class RemDirective extends Directive {
 
     remDirectiveKeyword: RemDirectiveKeywordToken = undefined!;
     children: (RemDirectiveChild | SkippedToken)[] = undefined!;
-    endDirectiveNumberSign: MissableToken<NumberSignToken> = undefined!;
-    endDirectiveKeyword: MissableToken<EndDirectiveKeywordToken> = undefined!;
-    endIfDirectiveKeyword?: IfDirectiveKeywordToken = undefined;
+    endDirectiveNumberSign: NumberSignToken | MissingToken = undefined!;
+    endDirectiveKeyword: EndDirectiveKeywordToken | MissingToken = undefined!;
+    endIfDirectiveKeyword?: IfDirectiveKeywordToken = undefined!;
 }
 
 export type RemDirectiveChild =

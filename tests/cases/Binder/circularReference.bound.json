@@ -1,0 +1,203 @@
+{
+    "kind": "ModuleDeclaration",
+    "identifier": "circularReference",
+    "locals": [
+        {
+            "kind": "ClassDeclaration",
+            "identifier": "List",
+            "type": "List",
+            "locals": [],
+            "instantiatedTypes": [
+                {
+                    "kind": "ClassDeclaration",
+                    "identifier": "List",
+                    "type": "List<Int>",
+                    "typeParameters": [
+                        "T"
+                    ],
+                    "typeArguments": [
+                        "Int"
+                    ],
+                    "superType": "Object",
+                    "locals": [
+                        {
+                            "kind": "TypeParameter",
+                            "identifier": "T",
+                            "type": "List:T"
+                        },
+                        {
+                            "kind": "ClassMethodGroupDeclaration",
+                            "identifier": "ObjectEnumerator",
+                            "type": "ObjectEnumerator",
+                            "overloads": [
+                                {
+                                    "kind": "ClassMethodDeclaration",
+                                    "identifier": "ObjectEnumerator",
+                                    "locals": [],
+                                    "type": "ObjectEnumerator: Enumerator<Int>()",
+                                    "returnType": "Enumerator<Int>",
+                                    "parameters": [],
+                                    "isProperty": false,
+                                    "statements": [
+                                        {
+                                            "kind": "ReturnStatement",
+                                            "type": "Enumerator<Int>",
+                                            "expression": {
+                                                "kind": "InvokeExpression",
+                                                "type": "Enumerator<Int>",
+                                                "invocationType": "New Enumerator<Int>(List<Int>)",
+                                                "invokableExpression": {
+                                                    "kind": "NewExpression",
+                                                    "type": "New Enumerator<Int>",
+                                                    "typeReference": "Enumerator<Int>"
+                                                },
+                                                "arguments": [
+                                                    {
+                                                        "kind": "SelfExpression",
+                                                        "type": "List<Int>"
+                                                    }
+                                                ]
+                                            }
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "kind": "ClassMethodGroupDeclaration",
+                            "identifier": "New",
+                            "type": "New List<Int>",
+                            "overloads": [
+                                {
+                                    "kind": "ClassMethodDeclaration",
+                                    "identifier": "New",
+                                    "locals": [],
+                                    "type": "New List<Int>()",
+                                    "returnType": "List<Int>",
+                                    "parameters": [],
+                                    "statements": []
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "kind": "ClassDeclaration",
+            "identifier": "Enumerator",
+            "type": "Enumerator",
+            "locals": [],
+            "instantiatedTypes": [
+                {
+                    "kind": "ClassDeclaration",
+                    "identifier": "Enumerator",
+                    "type": "Enumerator<Int>",
+                    "typeParameters": [
+                        "T"
+                    ],
+                    "typeArguments": [
+                        "Int"
+                    ],
+                    "superType": "Object",
+                    "locals": [
+                        {
+                            "kind": "TypeParameter",
+                            "identifier": "T",
+                            "type": "Enumerator:T"
+                        },
+                        {
+                            "kind": "ClassMethodGroupDeclaration",
+                            "identifier": "New",
+                            "type": "New Enumerator<Int>",
+                            "overloads": [
+                                {
+                                    "kind": "ClassMethodDeclaration",
+                                    "identifier": "New",
+                                    "locals": [
+                                        "list"
+                                    ],
+                                    "type": "New Enumerator<Int>(List<Int>)",
+                                    "returnType": "Enumerator<Int>",
+                                    "parameters": [
+                                        {
+                                            "kind": "DataDeclaration",
+                                            "declarationKind": "Parameter",
+                                            "identifier": "list",
+                                            "typeAnnotation": "List<Int>",
+                                            "type": "List<Int>"
+                                        }
+                                    ],
+                                    "isProperty": false,
+                                    "statements": [
+                                        {
+                                            "kind": "AssignmentStatement",
+                                            "leftOperand": {
+                                                "kind": "IdentifierExpression",
+                                                "type": "List<Int>",
+                                                "identifier": "_list"
+                                            },
+                                            "operator": "Assignment",
+                                            "rightOperand": {
+                                                "kind": "IdentifierExpression",
+                                                "type": "List<Int>",
+                                                "identifier": "list"
+                                            }
+                                        }
+                                    ]
+                                },
+                                {
+                                    "kind": "ClassMethodDeclaration",
+                                    "identifier": "New",
+                                    "locals": [],
+                                    "type": "New Enumerator<Int>()",
+                                    "returnType": "Enumerator<Int>",
+                                    "parameters": [],
+                                    "statements": []
+                                }
+                            ]
+                        },
+                        {
+                            "kind": "DataDeclaration",
+                            "declarationKind": "Field",
+                            "identifier": "_list",
+                            "typeAnnotation": "List<Int>",
+                            "type": "List<Int>"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "kind": "FunctionGroupDeclaration",
+            "identifier": "Main",
+            "type": "Main",
+            "overloads": [
+                {
+                    "kind": "FunctionDeclaration",
+                    "identifier": "Main",
+                    "locals": [],
+                    "type": "Main: Int()",
+                    "returnType": "Int",
+                    "parameters": [],
+                    "statements": [
+                        {
+                            "kind": "ExpressionStatement",
+                            "expression": {
+                                "kind": "InvokeExpression",
+                                "type": "List<Int>",
+                                "invocationType": "New List<Int>()",
+                                "invokableExpression": {
+                                    "kind": "NewExpression",
+                                    "type": "New List<Int>",
+                                    "typeReference": "List<Int>"
+                                },
+                                "arguments": []
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

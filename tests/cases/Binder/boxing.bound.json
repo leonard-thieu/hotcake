@@ -1,0 +1,233 @@
+{
+    "kind": "ModuleDeclaration",
+    "identifier": "boxing",
+    "locals": [
+        {
+            "kind": "ClassDeclaration",
+            "identifier": "Box",
+            "type": "Box",
+            "superType": "Object",
+            "locals": [
+                {
+                    "kind": "ClassMethodGroupDeclaration",
+                    "identifier": "New",
+                    "type": "New Box",
+                    "overloads": [
+                        {
+                            "kind": "ClassMethodDeclaration",
+                            "identifier": "New",
+                            "locals": [
+                                "val"
+                            ],
+                            "type": "New Box(Bool)",
+                            "returnType": "Box",
+                            "parameters": [
+                                {
+                                    "kind": "DataDeclaration",
+                                    "declarationKind": "Parameter",
+                                    "identifier": "val",
+                                    "typeAnnotation": "Bool",
+                                    "type": "Bool"
+                                }
+                            ],
+                            "isProperty": false,
+                            "statements": []
+                        },
+                        {
+                            "kind": "ClassMethodDeclaration",
+                            "identifier": "New",
+                            "locals": [
+                                "val"
+                            ],
+                            "type": "New Box(Int)",
+                            "returnType": "Box",
+                            "parameters": [
+                                {
+                                    "kind": "DataDeclaration",
+                                    "declarationKind": "Parameter",
+                                    "identifier": "val",
+                                    "typeAnnotation": "Int",
+                                    "type": "Int"
+                                }
+                            ],
+                            "isProperty": false,
+                            "statements": []
+                        },
+                        {
+                            "kind": "ClassMethodDeclaration",
+                            "identifier": "New",
+                            "locals": [
+                                "val"
+                            ],
+                            "type": "New Box(Float)",
+                            "returnType": "Box",
+                            "parameters": [
+                                {
+                                    "kind": "DataDeclaration",
+                                    "declarationKind": "Parameter",
+                                    "identifier": "val",
+                                    "typeAnnotation": "Float",
+                                    "type": "Float"
+                                }
+                            ],
+                            "isProperty": false,
+                            "statements": []
+                        },
+                        {
+                            "kind": "ClassMethodDeclaration",
+                            "identifier": "New",
+                            "locals": [
+                                "val"
+                            ],
+                            "type": "New Box(String)",
+                            "returnType": "Box",
+                            "parameters": [
+                                {
+                                    "kind": "DataDeclaration",
+                                    "declarationKind": "Parameter",
+                                    "identifier": "val",
+                                    "typeAnnotation": "String",
+                                    "type": "String"
+                                }
+                            ],
+                            "isProperty": false,
+                            "statements": []
+                        },
+                        {
+                            "kind": "ClassMethodDeclaration",
+                            "identifier": "New",
+                            "locals": [],
+                            "type": "New Box()",
+                            "returnType": "Box",
+                            "parameters": [],
+                            "statements": []
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "kind": "FunctionGroupDeclaration",
+            "identifier": "CheckBox",
+            "type": "CheckBox",
+            "overloads": [
+                {
+                    "kind": "FunctionDeclaration",
+                    "identifier": "CheckBox",
+                    "locals": [
+                        "box"
+                    ],
+                    "type": "CheckBox: Int(Box)",
+                    "returnType": "Int",
+                    "parameters": [
+                        {
+                            "kind": "DataDeclaration",
+                            "declarationKind": "Parameter",
+                            "identifier": "box",
+                            "typeAnnotation": "Box",
+                            "type": "Box"
+                        }
+                    ],
+                    "statements": []
+                }
+            ]
+        },
+        {
+            "kind": "FunctionGroupDeclaration",
+            "identifier": "Main",
+            "type": "Main",
+            "overloads": [
+                {
+                    "kind": "FunctionDeclaration",
+                    "identifier": "Main",
+                    "locals": [],
+                    "type": "Main: Int()",
+                    "returnType": "Int",
+                    "parameters": [],
+                    "statements": [
+                        {
+                            "kind": "ExpressionStatement",
+                            "expression": {
+                                "kind": "InvokeExpression",
+                                "type": "Int",
+                                "invocationType": "CheckBox: Int(Box)",
+                                "invokableExpression": {
+                                    "kind": "IdentifierExpression",
+                                    "type": "CheckBox",
+                                    "identifier": "CheckBox"
+                                },
+                                "arguments": [
+                                    {
+                                        "kind": "BooleanLiteralExpression",
+                                        "type": "Bool",
+                                        "value": "True"
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "kind": "ExpressionStatement",
+                            "expression": {
+                                "kind": "InvokeExpression",
+                                "type": "Int",
+                                "invocationType": "CheckBox: Int(Box)",
+                                "invokableExpression": {
+                                    "kind": "IdentifierExpression",
+                                    "type": "CheckBox",
+                                    "identifier": "CheckBox"
+                                },
+                                "arguments": [
+                                    {
+                                        "kind": "IntegerLiteralExpression",
+                                        "type": "Int",
+                                        "value": "2"
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "kind": "ExpressionStatement",
+                            "expression": {
+                                "kind": "InvokeExpression",
+                                "type": "Int",
+                                "invocationType": "CheckBox: Int(Box)",
+                                "invokableExpression": {
+                                    "kind": "IdentifierExpression",
+                                    "type": "CheckBox",
+                                    "identifier": "CheckBox"
+                                },
+                                "arguments": [
+                                    {
+                                        "kind": "FloatLiteralExpression",
+                                        "type": "Float",
+                                        "value": "3.14"
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "kind": "ExpressionStatement",
+                            "expression": {
+                                "kind": "InvokeExpression",
+                                "type": "Int",
+                                "invocationType": "CheckBox: Int(Box)",
+                                "invokableExpression": {
+                                    "kind": "IdentifierExpression",
+                                    "type": "CheckBox",
+                                    "identifier": "CheckBox"
+                                },
+                                "arguments": [
+                                    {
+                                        "kind": "StringLiteralExpression",
+                                        "type": "String",
+                                        "value": "this string"
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

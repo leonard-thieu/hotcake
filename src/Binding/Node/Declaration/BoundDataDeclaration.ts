@@ -10,9 +10,9 @@ export class BoundDataDeclaration extends BoundNode {
 
     declarationKind: BoundDataDeclarationKind = undefined!;
     identifier: BoundSymbol = undefined!;
-    typeAnnotation?: BoundTypeReferenceDeclaration = undefined;
-    operator: BoundDataDeclarationOperatorKind = undefined!;
-    expression?: BoundExpressions = undefined;
+    typeAnnotation?: BoundTypeReferenceDeclaration = undefined!;
+    operator?: BoundDataDeclarationOperatorKind = undefined!;
+    expression?: BoundExpressions = undefined!;
     type: Types = undefined!;
 }
 
@@ -24,4 +24,4 @@ export enum BoundDataDeclarationKind {
     Parameter = 'Parameter',
 }
 
-export type BoundDataDeclarationOperatorKind = NonNullable<DataDeclaration['operator']>['kind'] | null;
+export type BoundDataDeclarationOperatorKind = NonNullable<DataDeclaration['operator']>['kind'];

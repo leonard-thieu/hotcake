@@ -7,12 +7,15 @@ import mkdirp = require('mkdirp');
 import { orderBy } from 'natural-orderby';
 import { Scope } from '../src/Binding/Binder';
 import { BoundNodeKind } from '../src/Binding/Node/BoundNodes';
+import { BoundAliasDirective } from '../src/Binding/Node/Declaration/BoundAliasDirective';
 import { BoundClassDeclaration } from '../src/Binding/Node/Declaration/BoundClassDeclaration';
+import { BoundDeclarations } from '../src/Binding/Node/Declaration/BoundDeclarations';
 import { BoundDirectory } from '../src/Binding/Node/Declaration/BoundDirectory';
 import { BoundFunctionLikeGroupDeclaration } from '../src/Binding/Node/Declaration/BoundFunctionLikeGroupDeclaration';
 import { BoundInterfaceDeclaration } from '../src/Binding/Node/Declaration/BoundInterfaceDeclaration';
 import { BoundModuleDeclaration } from '../src/Binding/Node/Declaration/BoundModuleDeclaration';
 import { Type } from '../src/Binding/Type/Types';
+import { ConfigurationVariables } from "../src/Configuration";
 import { Diagnostic, DiagnosticBag, DiagnosticKind } from '../src/Diagnostics';
 import { Project } from '../src/Project';
 import { ModuleDeclaration } from '../src/Syntax/Node/Declaration/ModuleDeclaration';
@@ -21,7 +24,7 @@ import { Parser } from '../src/Syntax/Parser';
 import { PreprocessorParser } from '../src/Syntax/PreprocessorParser';
 import { PreprocessorTokenizer } from '../src/Syntax/PreprocessorTokenizer';
 import { Tokens } from '../src/Syntax/Token/Tokens';
-import { ConfigurationVariables, Tokenizer } from '../src/Syntax/Tokenizer';
+import { Tokenizer } from '../src/Syntax/Tokenizer';
 
 const LOG_LEVEL = DiagnosticKind.Error;
 
@@ -29,8 +32,6 @@ interface TestCaseOptions {
     name: string;
     casesPath: string;
     testCallback: TestCallback;
-    beforeCallback?: Mocha.Func;
-    afterCallback?: Mocha.Func;
 }
 
 interface TestContext {
@@ -41,15 +42,13 @@ interface TestContext {
 
 type TestCallback = (context: TestContext) => void;
 
-export function executeTestCases(options: TestCaseOptions): void {
-    const {
+export function executeTestCases(
+    {
         name,
         casesPath,
         testCallback,
-        beforeCallback,
-        afterCallback,
-    } = options;
-
+    }: TestCaseOptions,
+): void {
     let skippedCases: string[];
     try {
         skippedCases = require(`./${name}.skipped.json`);
@@ -63,14 +62,6 @@ export function executeTestCases(options: TestCaseOptions): void {
     }
 
     describe(name, function () {
-        if (beforeCallback) {
-            before(beforeCallback);
-        }
-
-        if (afterCallback) {
-            after(afterCallback);
-        }
-
         const casesGlobPath = path.join(casesPath, '**', '*.monkey');
         const sourcePaths = orderBy(glob.sync(casesGlobPath));
 
@@ -92,7 +83,11 @@ export function executeTestCases(options: TestCaseOptions): void {
     });
 }
 
-export function executeBaselineTestCase(outputPath: string, testCallback: () => any, replacer?: (key: string, value: any) => any): void {
+export function executeBaselineTestCase(
+    outputPath: string,
+    testCallback: (() => any),
+    replacer?: ((key: string, value: any) => any),
+): void {
     mkdirp.sync(path.dirname(outputPath));
 
     try {
@@ -134,11 +129,7 @@ export function executeBaselineTestCase(outputPath: string, testCallback: () => 
                     diagnostic.message
                 ).join(os.EOL);
 
-                const outputPathObject = path.parse(outputPath);
-                outputPathObject.base = '';
-                outputPathObject.ext = '.yaml';
-                outputPath = path.format(outputPathObject);
-
+                outputPath = replaceExt(outputPath, '.yaml');
                 fs.writeFileSync(outputPath, diagnosticsOutput);
             }
         }
@@ -153,7 +144,9 @@ export function executePreprocessorTokenizerTestCases(name: string, casesPath: s
             const { _it, sourceRelativePath, contents } = context;
 
             _it(sourceRelativePath, function () {
-                const outputPath = path.resolve(__dirname, 'cases', name, sourceRelativePath) + '.tokens.json';
+                let outputPath = path.resolve(__dirname, 'cases', name, sourceRelativePath);
+                outputPath = replaceExt(outputPath, '.tokens.json');
+
                 executeBaselineTestCase(outputPath, () => {
                     return getPreprocessorTokens(contents);
                 });
@@ -170,7 +163,9 @@ export function executePreprocessorParserTestCases(name: string, casesPath: stri
             const { _it, sourceRelativePath, contents } = context;
 
             _it(sourceRelativePath, function () {
-                const outputPath = path.resolve(__dirname, 'cases', name, sourceRelativePath) + '.tree.json';
+                let outputPath = path.resolve(__dirname, 'cases', name, sourceRelativePath);
+                outputPath = replaceExt(outputPath, '.parse.json');
+
                 executeBaselineTestCase(outputPath, () => {
                     return getPreprocessorParseTree(sourceRelativePath, contents);
                 }, function (key, value) {
@@ -197,7 +192,9 @@ export function executeTokenizerTestCases(name: string, casesPath: string): void
             const { _it, sourceRelativePath, contents } = context;
 
             _it(sourceRelativePath, function () {
-                const outputPath = path.resolve(__dirname, 'cases', name, sourceRelativePath) + '.tokens.json';
+                let outputPath = path.resolve(__dirname, 'cases', name, sourceRelativePath);
+                outputPath = replaceExt(outputPath, '.tokens.json');
+
                 executeBaselineTestCase(outputPath, () => {
                     return getTokens(sourceRelativePath, contents);
                 });
@@ -214,7 +211,9 @@ export function executeParserTestCases(name: string, casesPath: string): void {
             const { _it, sourceRelativePath, contents } = context;
 
             _it(sourceRelativePath, function () {
-                const outputPath = path.resolve(__dirname, 'cases', name, sourceRelativePath) + '.tree.json';
+                let outputPath = path.resolve(__dirname, 'cases', name, sourceRelativePath);
+                outputPath = replaceExt(outputPath, '.parse.json');
+
                 executeBaselineTestCase(outputPath, () => {
                     return getParseTree(sourceRelativePath, contents);
                 }, function (key, value) {
@@ -242,7 +241,9 @@ export function executeBinderTestCases(name: string, casesPath: string): void {
             const { _it, sourceRelativePath, contents } = context;
 
             _it(sourceRelativePath, function () {
-                const outputPath = path.resolve(__dirname, 'cases', name, sourceRelativePath) + '.boundTree.json';
+                let outputPath = path.resolve(__dirname, 'cases', name, sourceRelativePath);
+                outputPath = replaceExt(outputPath, '.bound.json');
+
                 executeBaselineTestCase(outputPath, () => {
                     return getBoundTree(path.resolve(casesPath, sourceRelativePath), contents);
                 }, function (this: any, key, value) {
@@ -264,43 +265,9 @@ export function executeBinderTestCases(name: string, casesPath: string): void {
                         case 'project':
                         case 'directory':
                         case 'parent':
-                        case 'openType': {
+                        case 'openType':
+                        case 'frameworkModule': {
                             return undefined;
-                        }
-                        case 'importedModules': {
-                            const serializeAsModulePath = false;
-
-                            const moduleDeclaration = this as BoundModuleDeclaration;
-                            if (moduleDeclaration.identifier.name !== 'smokeTest') {
-                                return undefined;
-                            }
-
-                            if (serializeAsModulePath) {
-                                const importedModules = value as typeof moduleDeclaration[typeof key];
-
-                                return Array.from(importedModules.values()).map(getModulePath);
-                            }
-
-                            // Prevent converting circular structure to JSON
-                            if (getModulePath(moduleDeclaration) === 'monkey.lang') {
-                                return undefined;
-                            }
-
-                            function getModulePath(module: BoundModuleDeclaration) {
-                                const components: string[] = [];
-
-                                let directory: BoundDirectory | undefined = module.directory;
-                                while (directory) {
-                                    components.unshift(directory.identifier.name);
-                                    directory = directory.parent as BoundDirectory | undefined;
-                                }
-
-                                components.shift(); // Take off root directory
-                                components.push(module.identifier.name);
-
-                                return components.join('.');
-                            }
-                            break;
                         }
                         case 'declaration': {
                             if (value.kind === BoundNodeKind.ModuleDeclaration &&
@@ -312,7 +279,9 @@ export function executeBinderTestCases(name: string, casesPath: string): void {
                             return undefined;
                         }
                         case 'identifier': {
-                            return value.name;
+                            const identifier = value as BoundDeclarations[typeof key];
+
+                            return identifier.name;
                         }
                         case 'typeParameters': {
                             const typeParameters = value as BoundClassDeclaration[typeof key];
@@ -352,13 +321,57 @@ export function executeBinderTestCases(name: string, casesPath: string): void {
                                 case BoundNodeKind.ExternClassDeclaration:
                                 case BoundNodeKind.InterfaceDeclaration:
                                 case BoundNodeKind.ClassDeclaration: {
-                                    return Array.from(locals.values()).map((identifier) =>
-                                        identifier.declaration
-                                    );
+                                    return Array.from(locals).filter((identifier) => {
+                                        if (identifier.declaration.kind === BoundNodeKind.ModuleDeclaration) {
+                                            const modulePath = getModulePath(identifier.declaration);
+
+                                            return modulePath !== 'monkey';
+                                        }
+
+                                        return true;
+                                    }).map((identifier) => {
+                                        if (identifier.declaration.kind === BoundNodeKind.ModuleDeclaration) {
+                                            return {
+                                                kind: identifier.declaration.kind,
+                                                identifier,
+                                                path: getModulePath(identifier.declaration),
+                                            };
+                                        }
+
+                                        return identifier.declaration;
+                                    });
                                 }
                             }
 
-                            return Array.from(locals.keys());
+                            return Array.from(locals).map((identifier) =>
+                                identifier.name
+                            );
+
+                            function getModulePath(boundModule: BoundModuleDeclaration) {
+                                const components: string[] = [];
+
+                                let directory: BoundDirectory | undefined = boundModule.directory;
+                                while (directory) {
+                                    components.unshift(directory.identifier.name);
+                                    directory = directory.parent as BoundDirectory | undefined;
+                                }
+
+                                components.shift(); // Take off root directory
+
+                                if (boundModule.identifier.name !== components[components.length - 1]) {
+                                    components.push(boundModule.identifier.name);
+                                }
+
+                                return components.join('.');
+                            }
+                        }
+                        case 'target': {
+                            const target = value as BoundAliasDirective[typeof key];
+
+                            return {
+                                kind: target.kind,
+                                identifier: target.identifier,
+                            };
                         }
                         case 'overloads': {
                             const overloads = value as BoundFunctionLikeGroupDeclaration[typeof key];
@@ -401,10 +414,8 @@ export function getTokens(filePath: string, document: string): Tokens[] {
     const configVars: ConfigurationVariables = {
         HOST: 'winnt',
         LANG: 'cpp',
-        TARGET: 'glfw',
+        TARGET: 'glfw3',
         CONFIG: 'release',
-        CD: __dirname,
-        MODPATH: __filename,
     };
 
     return tokenizer.getTokens(preprocessorModuleDeclaration, configVars);
@@ -416,10 +427,8 @@ export function getParseTree(filePath: string, document: string): ModuleDeclarat
     const configVars: ConfigurationVariables = {
         HOST: 'winnt',
         LANG: 'cpp',
-        TARGET: 'glfw',
+        TARGET: 'glfw3',
         CONFIG: 'release',
-        CD: __dirname,
-        MODPATH: __filename,
     };
     const tokens = tokenizer.getTokens(preprocessorModuleDeclaration, configVars);
     const parser = new Parser();
@@ -428,14 +437,15 @@ export function getParseTree(filePath: string, document: string): ModuleDeclarat
 }
 
 export function getBoundTree(filePath: string, document: string): BoundModuleDeclaration {
-    let frameworkDirectory = process.env.HOTCAKE_FRAMEWORK_DIR;
-    if (!frameworkDirectory) {
-        throw new Error(`The environment variable 'HOTCAKE_FRAMEWORK_DIR' must be set to the framework root directory.`);
-    }
-    frameworkDirectory = path.resolve(frameworkDirectory);
+    const frameworkDirectory = getFrameworkDirectory();
 
     const projectDirectory = path.dirname(filePath);
-    const project = new Project(frameworkDirectory, projectDirectory);
+    const project = new Project(frameworkDirectory, projectDirectory, {
+        HOST: 'winnt',
+        LANG: 'cpp',
+        TARGET: 'glfw3',
+        CONFIG: 'debug',
+    });
 
     try {
         return project.importModule(filePath);
@@ -444,4 +454,21 @@ export function getBoundTree(filePath: string, document: string): BoundModuleDec
 
         throw error;
     }
+}
+
+export function getFrameworkDirectory(): string {
+    const frameworkDirectory = process.env.HOTCAKE_FRAMEWORK_DIR;
+    if (!frameworkDirectory) {
+        throw new Error(`The environment variable 'HOTCAKE_FRAMEWORK_DIR' must be set to the framework root directory.`);
+    }
+
+    return path.resolve(frameworkDirectory);
+}
+
+function replaceExt(originalPath: string, ext: string): string {
+    const pathObj = path.parse(originalPath);
+    pathObj.base = '';
+    pathObj.ext = ext;
+
+    return path.format(pathObj);
 }

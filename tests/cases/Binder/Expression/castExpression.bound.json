@@ -1,0 +1,78 @@
+{
+    "kind": "ModuleDeclaration",
+    "identifier": "castExpression",
+    "locals": [
+        {
+            "kind": "ClassDeclaration",
+            "identifier": "MyClass",
+            "type": "MyClass",
+            "superType": "Object",
+            "locals": [
+                {
+                    "kind": "ClassMethodGroupDeclaration",
+                    "identifier": "Cast",
+                    "type": "Cast",
+                    "overloads": [
+                        {
+                            "kind": "ClassMethodDeclaration",
+                            "identifier": "Cast",
+                            "locals": [
+                                "obj"
+                            ],
+                            "type": "Cast: MyClass(Object)",
+                            "returnType": "MyClass",
+                            "parameters": [
+                                {
+                                    "kind": "DataDeclaration",
+                                    "declarationKind": "Parameter",
+                                    "identifier": "obj",
+                                    "typeAnnotation": "Object",
+                                    "type": "Object"
+                                }
+                            ],
+                            "isProperty": false,
+                            "statements": [
+                                {
+                                    "kind": "ReturnStatement",
+                                    "type": "MyClass",
+                                    "expression": {
+                                        "kind": "InvokeExpression",
+                                        "type": "MyClass",
+                                        "invokableExpression": {
+                                            "kind": "IdentifierExpression",
+                                            "type": "MyClass",
+                                            "identifier": "MyClass"
+                                        },
+                                        "arguments": [
+                                            {
+                                                "kind": "IdentifierExpression",
+                                                "type": "Object",
+                                                "identifier": "obj"
+                                            }
+                                        ]
+                                    }
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "kind": "ClassMethodGroupDeclaration",
+                    "identifier": "New",
+                    "type": "New MyClass",
+                    "overloads": [
+                        {
+                            "kind": "ClassMethodDeclaration",
+                            "identifier": "New",
+                            "locals": [],
+                            "type": "New MyClass()",
+                            "returnType": "MyClass",
+                            "parameters": [],
+                            "statements": []
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

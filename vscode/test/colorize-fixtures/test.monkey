@@ -64,8 +64,8 @@ End
 
 Function Eat()
     ' Directive
-    #If TARGET <> "glfw"
-        Print("Not glfw")
+    #If TARGET <> "glfw3"
+        Print("Not glfw3")
     #End
 
     ' Statement
@@ -114,7 +114,7 @@ End
 Class Pointer Abstract  ' Class declaration (Abstract)
 
     Method Reset() Abstract                 ' Abstract method
-    
+
     Method IsReset() Property Abstract      ' Abstract property
 
     Method IsNotReset() Abstract Property   ' Abstract property
@@ -181,7 +181,7 @@ Function IfStatement(val: String)
     Else If val <> ""
         ' Do things if val <> ""
     End If
-    
+
     If val = "myVal1"
         ' Do things if val = "myVal1"
     Else If val <> ""

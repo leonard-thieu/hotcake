@@ -1,1 +1,1 @@
-Import monkey.lang
+Import _importStatement.anotherModule

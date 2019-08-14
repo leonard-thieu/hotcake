@@ -5,14 +5,15 @@ import { BoundSymbol } from './Binding/BoundSymbol';
 import { BoundNodeKind } from './Binding/Node/BoundNodes';
 import { BoundTypeReferenceDeclaration } from './Binding/Node/Declaration/BoundDeclarations';
 import { BoundDirectory } from './Binding/Node/Declaration/BoundDirectory';
+import { BoundExternClassDeclaration } from './Binding/Node/Declaration/BoundExternClassDeclaration';
 import { BoundIntrinsicTypeDeclaration } from './Binding/Node/Declaration/BoundIntrinsicTypeDeclaration';
 import { BoundModuleDeclaration } from './Binding/Node/Declaration/BoundModuleDeclaration';
-import { BoundExternClassDeclaration } from './Binding/Node/Declaration/Extern/BoundExternClassDeclaration';
 import { BoolType } from './Binding/Type/BoolType';
 import { FloatType } from './Binding/Type/FloatType';
 import { IntType } from './Binding/Type/IntType';
 import { NullType } from './Binding/Type/NullType';
 import { VoidType } from './Binding/Type/VoidType';
+import { ConfigurationVariables } from './Configuration';
 import { DiagnosticBag } from './Diagnostics';
 import { Parser } from './Syntax/Parser';
 import { PreprocessorParser } from './Syntax/PreprocessorParser';
@@ -28,19 +29,31 @@ export const FILE_EXTENSION = '.monkey';
 
 export class Project {
     constructor(
-        private readonly frameworkDirectory: string,
-        projectDirectory: string,
+        frameworkDirectoryPath: string,
+        projectDirectoryPath: string,
+        { HOST, LANG, TARGET, CONFIG }: ConfigurationVariables,
     ) {
-        this.frameworkDirectory = path.resolve(frameworkDirectory);
+        frameworkDirectoryPath = path.resolve(frameworkDirectoryPath);
 
         const frameworkModulesDirectoryName = 'modules';
-        const frameworkModulesDirectory = path.resolve(this.frameworkDirectory, frameworkModulesDirectoryName);
-        this.boundFrameworkModulesDirectory = this.bindDirectory(frameworkModulesDirectoryName, frameworkModulesDirectory);
+        const frameworkModulesDirectoryPath = path.resolve(frameworkDirectoryPath, frameworkModulesDirectoryName);
+        this.frameworkModulesDirectory = this.bindDirectory(frameworkModulesDirectoryName, frameworkModulesDirectoryPath);
 
-        projectDirectory = path.resolve(projectDirectory);
-        const projectDirectoryComponents = projectDirectory.split(path.sep);
-        const projectDirectoryName = projectDirectoryComponents[projectDirectoryComponents.length - 1];
-        this.boundProjectDirectory = this.bindDirectory(projectDirectoryName, projectDirectory);
+        // Does `transcc` actually use this? Specific targets will have their own directories referenced and the `targets`
+        // directory only contains targets.
+        const frameworkTargetsDirectoryName = 'targets';
+        const frameworkTargetsDirectoryPath = path.resolve(frameworkDirectoryPath, frameworkTargetsDirectoryName);
+        this.frameworkTargetsDirectory = this.bindDirectory(frameworkTargetsDirectoryName, frameworkTargetsDirectoryPath);
+
+        projectDirectoryPath = path.resolve(projectDirectoryPath);
+        const projectDirectoryPathComponents = projectDirectoryPath.split(path.sep);
+        const projectDirectoryName = projectDirectoryPathComponents[projectDirectoryPathComponents.length - 1];
+        this.projectDirectory = this.bindDirectory(projectDirectoryName, projectDirectoryPath);
+
+        this.host = HOST;
+        this.lang = LANG;
+        this.target = TARGET;
+        this.config = CONFIG;
 
         this.nullTypeDeclaration = new BoundIntrinsicTypeDeclaration();
         this.nullTypeDeclaration.identifier = new BoundSymbol('Null', this.nullTypeDeclaration);
@@ -65,8 +78,38 @@ export class Project {
 
     readonly diagnostics = new DiagnosticBag();
 
-    readonly boundFrameworkModulesDirectory: BoundDirectory;
-    readonly boundProjectDirectory: BoundDirectory;
+    private readonly frameworkModulesDirectory: BoundDirectory;
+    private readonly frameworkTargetsDirectory: BoundDirectory;
+    private readonly projectDirectory: BoundDirectory;
+
+    private host: string = undefined!;
+    private lang: string = undefined!;
+
+    // #region Target
+
+    private targetDirectory: BoundDirectory = undefined!;
+    private targetModulesDirectory: BoundDirectory = undefined!;
+
+    private _target: string = undefined!;
+
+    get target() {
+        return this._target;
+    }
+
+    set target(target: string) {
+        this._target = target;
+
+        const targetDirectoryPath = path.resolve(this.frameworkTargetsDirectory.fullPath, target);
+        this.targetDirectory = this.bindDirectory(target, targetDirectoryPath, this.frameworkTargetsDirectory);
+
+        const targetModulesDirectoryName = 'modules';
+        const targetModulesDirectoryPath = path.resolve(this.targetDirectory.fullPath, targetModulesDirectoryName);
+        this.targetModulesDirectory = this.bindDirectory(targetModulesDirectoryName, targetModulesDirectoryPath, this.targetDirectory);
+    }
+
+    // #endregion
+
+    private config: string = undefined!;
 
     readonly nullTypeDeclaration: BoundIntrinsicTypeDeclaration;
     readonly voidTypeDeclaration: BoundIntrinsicTypeDeclaration;
@@ -78,29 +121,16 @@ export class Project {
     objectTypeDeclaration: BoundExternClassDeclaration = undefined!;
     throwableTypeDeclaration: BoundExternClassDeclaration = undefined!;
 
-    private readonly moduleCache = new Map<string, BoundModuleDeclaration>();
     readonly arrayTypeCache = new Map<BoundTypeReferenceDeclaration, BoundExternClassDeclaration>();
-
-    getLangModule(): BoundModuleDeclaration {
-        const langModulePath = path.resolve(this.boundFrameworkModulesDirectory.fullPath, 'monkey', 'lang' + FILE_EXTENSION);
-
-        return this.importModule(langModulePath);
-    }
-
-    cacheModule(boundModuleDeclaration: BoundModuleDeclaration): void {
-        const { directory, identifier } = boundModuleDeclaration;
-        const moduleFullPath = path.resolve(directory.fullPath, identifier.name + FILE_EXTENSION);
-        this.moduleCache.set(moduleFullPath, boundModuleDeclaration);
-    }
 
     // #region Import module from source
 
     importModuleFromSource(
         currentDirectory: BoundDirectory,
-        modulePathComponents: string[],
+        modulePathSegments: ReadonlyArray<string>,
         moduleName: string,
     ): BoundModuleDeclaration {
-        const boundModuleDirectory = this.resolveModuleDirectory(currentDirectory, modulePathComponents, moduleName);
+        const boundModuleDirectory = this.resolveModuleDirectory(currentDirectory, modulePathSegments, moduleName);
         const moduleFilePath = path.resolve(boundModuleDirectory.fullPath, moduleName + FILE_EXTENSION);
 
         return this.importModule(moduleFilePath);
@@ -112,79 +142,75 @@ export class Project {
     //   3. Framework modules directory
     private resolveModuleDirectory(
         currentDirectory: BoundDirectory,
-        modulePathComponents: string[],
-        moduleName: string,
+        segments: ReadonlyArray<string>,
+        name: string,
     ): BoundDirectory {
-        let moduleDirectory: BoundDirectory | undefined;
-
-        moduleDirectory = this.resolveModuleDirectory2(currentDirectory, modulePathComponents, moduleName);
-        if (moduleDirectory) {
-            return moduleDirectory;
-        }
-
-        moduleDirectory = this.resolveModuleDirectory2(this.boundProjectDirectory, modulePathComponents, moduleName);
-        if (moduleDirectory) {
-            return moduleDirectory;
-        }
-
-        moduleDirectory = this.resolveModuleDirectory2(this.boundFrameworkModulesDirectory, modulePathComponents, moduleName);
-        if (moduleDirectory) {
-            return moduleDirectory;
-        }
-
-        // TODO: Handle importing monkeytarget.
-
-        const components = [
-            ...modulePathComponents,
-            moduleName,
+        const moduleDirectoryPaths = [
+            currentDirectory,
+            this.projectDirectory,
+            this.frameworkModulesDirectory,
+            this.frameworkTargetsDirectory,
+            this.targetModulesDirectory,
         ];
 
-        throw new Error(`Could not find module '${components.join('.')}'.`);
+        for (const moduleDirectoryPath of moduleDirectoryPaths) {
+            const moduleDirectory = this.resolveModuleDirectory2(moduleDirectoryPath, segments, name);
+            if (moduleDirectory) {
+                return moduleDirectory;
+            }
+        }
+
+        segments = [
+            ...segments,
+            name,
+        ];
+
+        throw new Error(`Could not find module '${segments.join('.')}'.`);
     }
 
     // Tries to import module in directory (<root>/<name>.monkey)
     // If not found, then tries subdirectory with same name as module (<root>/<name>/<name>.monkey)
     private resolveModuleDirectory2(
-        root: BoundDirectory,
-        pathComponents: string[],
+        rootDirectory: BoundDirectory,
+        segments: ReadonlyArray<string>,
         name: string,
     ): BoundDirectory | undefined {
-        let modulePath: BoundDirectory | undefined;
+        let moduleDirectory: BoundDirectory | undefined;
 
-        modulePath = this.resolveModuleDirectory3(root, pathComponents, name);
-        if (modulePath) {
-            return modulePath;
+        moduleDirectory = this.resolveModuleDirectory3(rootDirectory, segments, name);
+        if (moduleDirectory) {
+            return moduleDirectory;
         }
 
-        pathComponents = [
-            ...pathComponents,
+        segments = [
+            ...segments,
             name,
         ];
 
-        modulePath = this.resolveModuleDirectory3(root, pathComponents, name);
-        if (modulePath) {
-            return modulePath;
+        moduleDirectory = this.resolveModuleDirectory3(rootDirectory, segments, name);
+        if (moduleDirectory) {
+            return moduleDirectory;
         }
     }
 
     // Validates the path and binds directories along the path
     private resolveModuleDirectory3(
-        root: BoundDirectory,
-        pathComponents: string[],
-        moduleIdentifier: string,
+        rootDirectory: BoundDirectory,
+        segments: ReadonlyArray<string>,
+        name: string,
     ): BoundDirectory | undefined {
         const moduleFilePath = path.resolve(
-            root.fullPath,
-            ...pathComponents,
-            moduleIdentifier + FILE_EXTENSION,
+            rootDirectory.fullPath,
+            ...segments,
+            name + FILE_EXTENSION,
         );
 
         if (fs.existsSync(moduleFilePath)) {
-            let boundDirectory = root;
+            let boundDirectory = rootDirectory;
 
-            for (const component of pathComponents) {
-                const fullPath = path.resolve(boundDirectory.fullPath, component);
-                boundDirectory = this.bindDirectory(component, fullPath, boundDirectory);
+            for (const segment of segments) {
+                const fullPath = path.resolve(boundDirectory.fullPath, segment);
+                boundDirectory = this.bindDirectory(segment, fullPath, boundDirectory);
             }
 
             return boundDirectory;
@@ -204,55 +230,54 @@ export class Project {
         }
 
         const document = fs.readFileSync(moduleFilePath, 'utf8');
-        const currentDirectory = path.dirname(moduleFilePath);
-        const boundModuleDirectory = this.bindModuleDirectory(currentDirectory);
+        const currentDirectoryPath = path.dirname(moduleFilePath);
+        const boundModuleDirectory = this.bindModuleDirectory(currentDirectoryPath);
 
         const preprocessorTokens = preprocessorTokenizer.getTokens(document);
         const preprocessorModuleDeclaration = preprocessorParser.parse(moduleFilePath, document, preprocessorTokens);
         const tokens = tokenizer.getTokens(preprocessorModuleDeclaration, {
-            HOST: 'winnt',
-            LANG: 'cpp',
-            TARGET: 'glfw',
-            CONFIG: 'debug',
-            CD: currentDirectory,
+            HOST: this.host,
+            LANG: this.lang,
+            TARGET: this.target,
+            CONFIG: this.config,
+            CD: currentDirectoryPath,
             MODPATH: moduleFilePath,
         });
         const moduleDeclaration = parser.parse(preprocessorModuleDeclaration, tokens);
 
-        const moduleIdentifier = path.basename(moduleFilePath, FILE_EXTENSION);
+        const moduleName = path.basename(moduleFilePath, FILE_EXTENSION);
         const binder = new Binder();
-        boundModuleDeclaration = binder.bind(moduleDeclaration, this, boundModuleDirectory, moduleIdentifier);
+        boundModuleDeclaration = binder.bind(moduleDeclaration, this, boundModuleDirectory, moduleName);
 
         return boundModuleDeclaration;
     }
 
     private bindModuleDirectory(currentDirectory: string) {
-        let root: BoundDirectory;
-        let relativePathComponents: string[];
+        const moduleDirectoryPaths = [
+            this.projectDirectory,
+            this.frameworkModulesDirectory,
+            this.frameworkTargetsDirectory,
+            this.targetModulesDirectory,
+        ];
 
-        relativePathComponents = this.getRelativePathComponents(this.boundProjectDirectory.fullPath, currentDirectory);
-        if (relativePathComponents[0] !== '..') {
-            root = this.boundProjectDirectory;
-        } else {
-            relativePathComponents = this.getRelativePathComponents(this.boundFrameworkModulesDirectory.fullPath, currentDirectory);
-            if (relativePathComponents[0] !== '..') {
-                root = this.boundFrameworkModulesDirectory;
-            } else {
-                throw new Error(`Module is not within the project or framework modules directory tree.`);
+        for (const moduleDirectoryPath of moduleDirectoryPaths) {
+            const relativePathSegments = this.getRelativePathSegments(moduleDirectoryPath.fullPath, currentDirectory);
+            if (relativePathSegments[0] !== '..') {
+                let boundDirectory = moduleDirectoryPath;
+
+                for (const segment of relativePathSegments) {
+                    const fullPath = path.resolve(boundDirectory.fullPath, segment);
+                    boundDirectory = this.bindDirectory(segment, fullPath, boundDirectory);
+                }
+
+                return boundDirectory;
             }
         }
 
-        let boundDirectory = root;
-
-        for (const component of relativePathComponents) {
-            const fullPath = path.resolve(boundDirectory.fullPath, component);
-            boundDirectory = this.bindDirectory(component, fullPath, boundDirectory);
-        }
-
-        return boundDirectory;
+        throw new Error(`Module is not within the project or framework modules directory tree.`);
     }
 
-    private getRelativePathComponents(baseDirectory: string, currentDirectory: string) {
+    private getRelativePathSegments(baseDirectory: string, currentDirectory: string) {
         const relativePath = path.relative(baseDirectory, currentDirectory);
         if (relativePath === '') {
             return [];
@@ -269,17 +294,9 @@ export class Project {
         parent?: BoundDirectory,
     ): BoundDirectory {
         if (parent) {
-            const existingSymbol = parent.locals.get(name);
-            if (existingSymbol) {
-                const { declaration } = existingSymbol;
-                switch (declaration.kind) {
-                    case BoundNodeKind.Directory: {
-                        return declaration;
-                    }
-                    default: {
-                        throw new Error(`'${name}' should be '${BoundNodeKind.Directory}' but is '${declaration.kind}'.`);
-                    }
-                }
+            const boundDirectory = parent.locals.get(name, BoundNodeKind.Directory);
+            if (boundDirectory) {
+                return boundDirectory;
             }
         }
 
@@ -295,4 +312,16 @@ export class Project {
 
         return boundDirectory;
     }
+
+    // #region Module cache
+
+    private readonly moduleCache = new Map<string, BoundModuleDeclaration>();
+
+    cacheModule(boundModuleDeclaration: BoundModuleDeclaration): void {
+        const { directory, identifier } = boundModuleDeclaration;
+        const moduleFilePath = path.resolve(directory.fullPath, identifier.name + FILE_EXTENSION);
+        this.moduleCache.set(moduleFilePath, boundModuleDeclaration);
+    }
+
+    // #endregion
 }

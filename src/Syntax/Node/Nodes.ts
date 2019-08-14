@@ -1,10 +1,10 @@
 import { ArrayTypeAnnotation } from './ArrayTypeAnnotation';
 import { CommaSeparator } from './CommaSeparator';
-import { ConfigurationTag } from './ConfigurationTag';
 import { Declarations } from './Declaration/Declarations';
 import { Directives } from './Directive/Directives';
 import { ElseDirective, ElseIfDirective } from './Directive/IfDirective';
 import { Expressions } from './Expression/Expressions';
+import { ConfigurationTag } from './Expression/StringLiteralExpression';
 import { EscapedIdentifier } from './Identifier';
 import { ModulePath } from './ModulePath';
 import { ElseClause, ElseIfClause } from './Statement/IfStatement';
@@ -16,25 +16,24 @@ import { TypeReference } from './TypeReference';
 
 export abstract class Node {
     abstract readonly kind: NodeKind = undefined!;
-    parent?: Nodes = undefined;
+    parent?: Nodes = undefined!;
 }
 
 export type Nodes =
     | Declarations
     | Directives
     | ElseIfDirective | ElseDirective
-    | Expressions
     | Statements
-    | ConfigurationTag
     | ElseIfClause | ElseClause
     | CaseClause | DefaultClause
     | CatchClause
-    | ArrayTypeAnnotation
-    | TypeAnnotation
-    | CommaSeparator
+    | Expressions
+    | ConfigurationTag
     | EscapedIdentifier
     | ModulePath
+    | TypeAnnotation | ArrayTypeAnnotation
     | TypeReference
+    | CommaSeparator
     ;
 
 export enum NodeKind {
@@ -91,6 +90,8 @@ export enum NodeKind {
     ExpressionStatement = 'ExpressionStatement',
     EmptyStatement = 'EmptyStatement',
 
+    BinaryExpression = 'BinaryExpression',
+    UnaryExpression = 'UnaryExpression',
     NewExpression = 'NewExpression',
     NullExpression = 'NullExpression',
     BooleanLiteralExpression = 'BooleanLiteralExpression',
@@ -106,18 +107,16 @@ export enum NodeKind {
     InvokeExpression = 'InvokeExpression',
     IndexExpression = 'IndexExpression',
     SliceExpression = 'SliceExpression',
-    GroupingExpression = 'GroupingExpression',
-    UnaryExpression = 'UnaryExpression',
-    BinaryExpression = 'BinaryExpression',
     GlobalScopeExpression = 'GlobalScopeExpression',
+    GroupingExpression = 'GroupingExpression',
 
+    EscapedIdentifier = 'EscapedIdentifier',
     ModulePath = 'ModulePath',
-    ArrayTypeAnnotation = 'ArrayTypeAnnotation',
     ShorthandTypeAnnotation = 'ShorthandTypeAnnotation',
     LonghandTypeAnnotation = 'LonghandTypeAnnotation',
+    ArrayTypeAnnotation = 'ArrayTypeAnnotation',
     TypeReference = 'TypeReference',
     TypeParameter = 'TypeParameter',
-    EscapedIdentifier = 'EscapedIdentifier',
     CommaSeparator = 'CommaSeparator',
 }
 

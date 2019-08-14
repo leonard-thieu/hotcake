@@ -1,7 +1,7 @@
-import { MissableToken } from '../../Token/MissingToken';
+import { MissingToken } from '../../Token/MissingToken';
 import { SkippedToken } from '../../Token/SkippedToken';
 import { ClosingParenthesisToken, EndKeywordToken, FunctionKeywordToken, OpeningParenthesisToken } from '../../Token/Tokens';
-import { MissableIdentifier } from '../Identifier';
+import { Identifier } from '../Identifier';
 import { NodeKind } from '../Nodes';
 import { Statements } from '../Statement/Statements';
 import { TypeAnnotation } from '../TypeAnnotation';
@@ -24,12 +24,12 @@ export class FunctionDeclaration extends Declaration {
     readonly kind = NodeKind.FunctionDeclaration;
 
     functionKeyword: FunctionKeywordToken = undefined!;
-    identifier: MissableIdentifier = undefined!;
-    returnType?: TypeAnnotation = undefined;
-    openingParenthesis: MissableToken<OpeningParenthesisToken> = undefined!;
+    identifier: Identifier | MissingToken = undefined!;
+    returnType?: TypeAnnotation = undefined!;
+    openingParenthesis: OpeningParenthesisToken | MissingToken = undefined!;
     parameters: DataDeclarationSequence = undefined!;
-    closingParenthesis: MissableToken<ClosingParenthesisToken> = undefined!;
+    closingParenthesis: ClosingParenthesisToken | MissingToken = undefined!;
     statements: (Statements | SkippedToken)[] = undefined!;
-    endKeyword: MissableToken<EndKeywordToken> = undefined!;
-    endFunctionKeyword?: FunctionKeywordToken = undefined;
+    endKeyword: EndKeywordToken | MissingToken = undefined!;
+    endFunctionKeyword?: FunctionKeywordToken = undefined!;
 }

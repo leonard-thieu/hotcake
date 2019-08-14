@@ -1,9 +1,9 @@
-import path = require('path');
-import { executeParserTestCases, executePreprocessorParserTestCases, executePreprocessorTokenizerTestCases } from './shared';
+import { executeBinderTestCases, executeParserTestCases, executePreprocessorParserTestCases, executePreprocessorTokenizerTestCases, getFrameworkDirectory } from './shared';
 
 const name = 'MonkeyX';
-const casesPath = path.resolve('..', '..', 'blitz-research', 'monkey');
+const casesPath = getFrameworkDirectory();
 
 executePreprocessorTokenizerTestCases(name, casesPath);
 executePreprocessorParserTestCases(name, casesPath);
 executeParserTestCases(name, casesPath);
+executeBinderTestCases(name, casesPath);

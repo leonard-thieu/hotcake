@@ -8,6 +8,6 @@ export class BoundRepeatLoop extends BoundNode {
 
     readonly locals = new BoundSymbolTable();
 
-    untilExpression?: BoundExpressions = undefined;
+    untilExpression?: BoundExpressions = undefined!;
     statements: BoundStatements[] = undefined!;
 }

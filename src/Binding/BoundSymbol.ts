@@ -1,4 +1,4 @@
-import { BoundNodeKindToBoundNodeMap, BoundNodes } from './Node/BoundNodes';
+import { BoundNodeKind, BoundNodeKindToBoundNodeMap, BoundNodes } from './Node/BoundNodes';
 import { BoundDeclarations } from './Node/Declaration/BoundDeclarations';
 
 export class BoundSymbol {
@@ -12,21 +12,45 @@ export class BoundSymbol {
 
 export const ANONYMOUS_NAME = '';
 
-export class BoundSymbolTable extends Map<string, BoundSymbol> {
-    get(key: string): BoundSymbol | undefined {
-        key = normalizeIdentifier(key);
+export class BoundSymbolTable {
+    private readonly _values = new Set<BoundSymbol>();
+    private anonymousSymbolCount = 0;
 
-        return super.get(key);
+    set(value: BoundSymbol): void {
+        let key = value.name;
+
+        if (key === ANONYMOUS_NAME) {
+            this.anonymousSymbolCount++;
+
+            if (this.anonymousSymbolCount > 1) {
+                key += this.anonymousSymbolCount;
+            }
+
+            value.name = key;
+        }
+
+        this._values.add(value);
     }
 
-    getDeclaration<TKind extends BoundSymbol['declaration']['kind']>(
+    get<TKind extends BoundSymbol['declaration']['kind']>(
         key: string,
         ...kinds: TKind[]
     ): BoundNodeKindToBoundNodeMap[TKind] | undefined {
-        const value = this.get(key);
+        const vals = Array.from(this._values).filter((value) =>
+            areIdentifiersSame(key, value.name)
+        );
 
-        if (!value) {
-            return value;
+        if (!vals.length) {
+            return undefined;
+        }
+
+        if (vals.length > 1) {
+            throw new Error(`Multiple declarations found for '${key}'.`);
+        }
+
+        let value = vals[0];
+        while (value.declaration.kind === BoundNodeKind.AliasDirective) {
+            value = value.declaration.target.identifier;
         }
 
         if (kinds.length) {
@@ -36,47 +60,14 @@ export class BoundSymbolTable extends Map<string, BoundSymbol> {
                 }
             }
 
-            throw new Error(`Expected '${key}' to be '${kinds.join(',')}' but got '${value.declaration.kind}'.`);
+            throw new Error(`Expected '${key}' to be '${kinds.join(', ')}' but got '${value.declaration.kind}'.`);
         }
 
         return value.declaration;
     }
 
-    private anonymousSymbolCount = 0;
-
-    set(value: BoundSymbol): this;
-    set(key: string, value: BoundSymbol): this;
-    set(key_value: string | BoundSymbol, value?: BoundSymbol): this {
-        let key: string;
-
-        if (typeof key_value === 'string') {
-            key = key_value;
-            value = value as BoundSymbol;
-        } else {
-            key = key_value.name;
-            value = key_value;
-        }
-
-        if (key === ANONYMOUS_NAME) {
-            this.anonymousSymbolCount++;
-
-            if (this.anonymousSymbolCount > 1) {
-                key += this.anonymousSymbolCount;
-            }
-        } else {
-            key = normalizeIdentifier(key);
-
-            const existingSymbol = this.get(key);
-            if (existingSymbol &&
-                existingSymbol !== value
-            ) {
-                throw new Error(`Duplicate symbol '${key}'.`);
-            }
-        }
-
-        value.name = key;
-
-        return super.set(key, value);
+    [Symbol.iterator]() {
+        return this._values[Symbol.iterator]();
     }
 }
 

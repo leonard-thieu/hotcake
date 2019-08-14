@@ -1,5 +1,6 @@
+import { MissingToken } from '../../Token/MissingToken';
 import { PrintDirectiveKeywordToken } from '../../Token/Tokens';
-import { MissableExpression } from '../Expression/Expressions';
+import { Expressions } from '../Expression/Expressions';
 import { NodeKind } from '../Nodes';
 import { Directive } from './Directives';
 
@@ -13,5 +14,5 @@ export class PrintDirective extends Directive {
     readonly kind = NodeKind.PrintDirective;
 
     printDirectiveKeyword: PrintDirectiveKeywordToken = undefined!;
-    expression: MissableExpression = undefined!;
+    expression: Expressions | MissingToken = undefined!;
 }

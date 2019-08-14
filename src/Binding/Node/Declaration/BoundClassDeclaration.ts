@@ -6,9 +6,9 @@ import { BoundNode, BoundNodeKind } from '../BoundNodes';
 import { BoundStatements } from '../Statement/BoundStatements';
 import { BoundDataDeclaration } from './BoundDataDeclaration';
 import { BoundTypeReferenceDeclaration } from './BoundDeclarations';
+import { BoundExternClassDeclaration } from './BoundExternClassDeclaration';
 import { BoundInterfaceDeclaration } from './BoundInterfaceDeclaration';
 import { BoundTypeParameter } from './BoundTypeParameter';
-import { BoundExternClassDeclaration } from './Extern/BoundExternClassDeclaration';
 
 // #region Bound class declaration
 
@@ -18,16 +18,16 @@ export class BoundClassDeclaration extends BoundNode {
     identifier: BoundSymbol = undefined!;
     type: ObjectType = undefined!;
 
-    typeParameters?: BoundTypeParameter[] = undefined;
-    typeArguments?: BoundTypeReferenceDeclaration[] = undefined;
-    superType?: BoundExternClassDeclaration | BoundClassDeclaration = undefined;
-    implementedTypes?: BoundInterfaceDeclaration[] = undefined;
+    typeParameters?: BoundTypeParameter[] = undefined!;
+    typeArguments?: BoundTypeReferenceDeclaration[] = undefined!;
+    superType?: BoundExternClassDeclaration | BoundClassDeclaration = undefined!;
+    implementedTypes?: BoundInterfaceDeclaration[] = undefined!;
 
     readonly locals = new BoundSymbolTable();
 
     declaration: ClassDeclaration = undefined!;
-    openType?: BoundClassDeclaration = undefined;
-    instantiatedTypes?: BoundClassDeclaration[] = undefined;
+    openType?: BoundClassDeclaration = undefined!;
+    instantiatedTypes?: BoundClassDeclaration[] = undefined!;
 }
 
 // #endregion
@@ -37,7 +37,7 @@ export class BoundClassDeclaration extends BoundNode {
 export class BoundClassMethodDeclaration extends BoundNode {
     readonly kind = BoundNodeKind.ClassMethodDeclaration;
 
-    declaration?: ClassMethodDeclaration = undefined;
+    declaration?: ClassMethodDeclaration = undefined!;
 
     identifier: BoundSymbol = undefined!;
     readonly locals = new BoundSymbolTable();
@@ -46,7 +46,7 @@ export class BoundClassMethodDeclaration extends BoundNode {
     returnType: BoundTypeReferenceDeclaration = undefined!;
     parameters: BoundDataDeclaration[] = undefined!;
     isProperty: boolean = undefined!;
-    statements?: BoundStatements[] = undefined;
+    statements?: BoundStatements[] = undefined!;
 }
 
 // #endregion

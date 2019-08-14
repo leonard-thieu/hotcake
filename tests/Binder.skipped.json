@@ -1,5 +1,10 @@
 [
-    "Declaration/aliasDirective.monkey",
-    "Declaration/importStatement.monkey",
+    "Declaration/_aliasDirective/directory/file.monkey",
+    "Declaration/_aliasDirective/directory_and_module/directory_and_module2/directory_and_module2.monkey",
+    "Declaration/_aliasDirective/directory_and_module/directory_and_module2/file2.monkey",
+    "Declaration/_aliasDirective/directory_and_module/directory_and_module.monkey",
+    "Declaration/_aliasDirective/_aliasDirective.monkey",
+    "Declaration/_aliasDirective/_module.monkey",
+    "Declaration/_importStatement/anotherModule.monkey",
     "smokeTest.monkey"
 ]

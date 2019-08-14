@@ -1,7 +1,8 @@
+import { MissingToken } from '../Token/MissingToken';
 import { ColonToken, DollarSignToken, NumberSignToken, PercentSignToken, QuestionMarkToken } from '../Token/Tokens';
 import { ArrayTypeAnnotation } from './ArrayTypeAnnotation';
 import { Node, NodeKind } from './Nodes';
-import { MissableTypeReference } from './TypeReference';
+import { TypeReference } from './TypeReference';
 
 export type TypeAnnotation =
     | ShorthandTypeAnnotation
@@ -18,7 +19,7 @@ export const ShorthandTypeAnnotationChildNames: ReadonlyArray<keyof ShorthandTyp
 export class ShorthandTypeAnnotation extends Node {
     readonly kind = NodeKind.ShorthandTypeAnnotation;
 
-    shorthandType?: ShorthandTypeToken = undefined;
+    shorthandType?: ShorthandTypeToken = undefined!;
     arrayTypeAnnotations: ArrayTypeAnnotation[] = undefined!;
 }
 
@@ -42,7 +43,7 @@ export class LonghandTypeAnnotation extends Node {
     readonly kind = NodeKind.LonghandTypeAnnotation;
 
     colon: ColonToken = undefined!;
-    typeReference: MissableTypeReference = undefined!;
+    typeReference: TypeReference | MissingToken = undefined!;
 }
 
 // #endregion

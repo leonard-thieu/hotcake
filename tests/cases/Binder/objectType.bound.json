@@ -1,0 +1,784 @@
+{
+    "kind": "ModuleDeclaration",
+    "identifier": "objectType",
+    "locals": [
+        {
+            "kind": "ClassDeclaration",
+            "identifier": "BaseObject",
+            "type": "BaseObject",
+            "superType": "Object",
+            "locals": [
+                {
+                    "kind": "DataDeclaration",
+                    "declarationKind": "Field",
+                    "identifier": "id",
+                    "typeAnnotation": "Int",
+                    "type": "Int"
+                },
+                {
+                    "kind": "ClassMethodGroupDeclaration",
+                    "identifier": "New",
+                    "type": "New BaseObject",
+                    "overloads": [
+                        {
+                            "kind": "ClassMethodDeclaration",
+                            "identifier": "New",
+                            "locals": [],
+                            "type": "New BaseObject()",
+                            "returnType": "BaseObject",
+                            "parameters": [],
+                            "statements": []
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "kind": "InterfaceDeclaration",
+            "identifier": "Speakable",
+            "type": "Speakable",
+            "locals": [
+                {
+                    "kind": "InterfaceMethodGroupDeclaration",
+                    "identifier": "Speak",
+                    "type": "Speak",
+                    "overloads": [
+                        {
+                            "kind": "InterfaceMethodDeclaration",
+                            "identifier": "Speak",
+                            "locals": [],
+                            "type": "Speak: Int()",
+                            "returnType": "Int",
+                            "parameters": []
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "kind": "ClassDeclaration",
+            "identifier": "Entity",
+            "type": "Entity",
+            "superType": "BaseObject",
+            "implementedTypes": [
+                "Speakable"
+            ],
+            "locals": [
+                {
+                    "kind": "DataDeclaration",
+                    "declarationKind": "Field",
+                    "identifier": "name",
+                    "typeAnnotation": "String",
+                    "type": "String"
+                },
+                {
+                    "kind": "ClassMethodGroupDeclaration",
+                    "identifier": "Speak",
+                    "type": "Speak",
+                    "overloads": [
+                        {
+                            "kind": "ClassMethodDeclaration",
+                            "identifier": "Speak",
+                            "locals": [],
+                            "type": "Speak: Int()",
+                            "returnType": "Int",
+                            "parameters": [],
+                            "isProperty": false,
+                            "statements": [
+                                {
+                                    "kind": "ExpressionStatement",
+                                    "expression": {
+                                        "kind": "InvokeExpression",
+                                        "type": "Int",
+                                        "invocationType": "Print: Int(String)",
+                                        "invokableExpression": {
+                                            "kind": "IdentifierExpression",
+                                            "type": "Print",
+                                            "identifier": "Print"
+                                        },
+                                        "arguments": [
+                                            {
+                                                "kind": "BinaryExpression",
+                                                "type": "String",
+                                                "leftOperand": {
+                                                    "kind": "StringLiteralExpression",
+                                                    "type": "String",
+                                                    "value": "Hello, my name is "
+                                                },
+                                                "operator": "Addition",
+                                                "rightOperand": {
+                                                    "kind": "IdentifierExpression",
+                                                    "type": "String",
+                                                    "identifier": "name"
+                                                }
+                                            }
+                                        ]
+                                    }
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "kind": "ClassMethodGroupDeclaration",
+                    "identifier": "New",
+                    "type": "New Entity",
+                    "overloads": [
+                        {
+                            "kind": "ClassMethodDeclaration",
+                            "identifier": "New",
+                            "locals": [],
+                            "type": "New Entity()",
+                            "returnType": "Entity",
+                            "parameters": [],
+                            "statements": []
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "kind": "InterfaceDeclaration",
+            "identifier": "Moveable",
+            "type": "Moveable",
+            "locals": [
+                {
+                    "kind": "InterfaceMethodGroupDeclaration",
+                    "identifier": "Move",
+                    "type": "Move",
+                    "overloads": [
+                        {
+                            "kind": "InterfaceMethodDeclaration",
+                            "identifier": "Move",
+                            "locals": [],
+                            "type": "Move: Int()",
+                            "returnType": "Int",
+                            "parameters": []
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "kind": "InterfaceDeclaration",
+            "identifier": "Drawable",
+            "type": "Drawable",
+            "locals": [
+                {
+                    "kind": "InterfaceMethodGroupDeclaration",
+                    "identifier": "Draw",
+                    "type": "Draw",
+                    "overloads": [
+                        {
+                            "kind": "InterfaceMethodDeclaration",
+                            "identifier": "Draw",
+                            "locals": [],
+                            "type": "Draw: Int()",
+                            "returnType": "Int",
+                            "parameters": []
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "kind": "InterfaceDeclaration",
+            "identifier": "Shadeable",
+            "type": "Shadeable",
+            "implementedTypes": [
+                "Drawable"
+            ],
+            "locals": [
+                {
+                    "kind": "InterfaceMethodGroupDeclaration",
+                    "identifier": "Shade",
+                    "type": "Shade",
+                    "overloads": [
+                        {
+                            "kind": "InterfaceMethodDeclaration",
+                            "identifier": "Shade",
+                            "locals": [],
+                            "type": "Shade: Int()",
+                            "returnType": "Int",
+                            "parameters": []
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "kind": "ClassDeclaration",
+            "identifier": "Actor",
+            "type": "Actor",
+            "superType": "Entity",
+            "implementedTypes": [
+                "Moveable",
+                "Shadeable"
+            ],
+            "locals": [
+                {
+                    "kind": "ClassMethodGroupDeclaration",
+                    "identifier": "Move",
+                    "type": "Move",
+                    "overloads": [
+                        {
+                            "kind": "ClassMethodDeclaration",
+                            "identifier": "Move",
+                            "locals": [],
+                            "type": "Move: Int()",
+                            "returnType": "Int",
+                            "parameters": [],
+                            "isProperty": false,
+                            "statements": [
+                                {
+                                    "kind": "ExpressionStatement",
+                                    "expression": {
+                                        "kind": "InvokeExpression",
+                                        "type": "Int",
+                                        "invocationType": "Print: Int(String)",
+                                        "invokableExpression": {
+                                            "kind": "IdentifierExpression",
+                                            "type": "Print",
+                                            "identifier": "Print"
+                                        },
+                                        "arguments": [
+                                            {
+                                                "kind": "StringLiteralExpression",
+                                                "type": "String",
+                                                "value": "Actor.Move()"
+                                            }
+                                        ]
+                                    }
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "kind": "ClassMethodGroupDeclaration",
+                    "identifier": "Draw",
+                    "type": "Draw",
+                    "overloads": [
+                        {
+                            "kind": "ClassMethodDeclaration",
+                            "identifier": "Draw",
+                            "locals": [],
+                            "type": "Draw: Int()",
+                            "returnType": "Int",
+                            "parameters": [],
+                            "isProperty": false,
+                            "statements": [
+                                {
+                                    "kind": "ExpressionStatement",
+                                    "expression": {
+                                        "kind": "InvokeExpression",
+                                        "type": "Int",
+                                        "invocationType": "Print: Int(String)",
+                                        "invokableExpression": {
+                                            "kind": "IdentifierExpression",
+                                            "type": "Print",
+                                            "identifier": "Print"
+                                        },
+                                        "arguments": [
+                                            {
+                                                "kind": "StringLiteralExpression",
+                                                "type": "String",
+                                                "value": "Actor.Draw()"
+                                            }
+                                        ]
+                                    }
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "kind": "ClassMethodGroupDeclaration",
+                    "identifier": "Shade",
+                    "type": "Shade",
+                    "overloads": [
+                        {
+                            "kind": "ClassMethodDeclaration",
+                            "identifier": "Shade",
+                            "locals": [],
+                            "type": "Shade: Int()",
+                            "returnType": "Int",
+                            "parameters": [],
+                            "isProperty": false,
+                            "statements": [
+                                {
+                                    "kind": "ExpressionStatement",
+                                    "expression": {
+                                        "kind": "InvokeExpression",
+                                        "type": "Int",
+                                        "invocationType": "Print: Int(String)",
+                                        "invokableExpression": {
+                                            "kind": "IdentifierExpression",
+                                            "type": "Print",
+                                            "identifier": "Print"
+                                        },
+                                        "arguments": [
+                                            {
+                                                "kind": "StringLiteralExpression",
+                                                "type": "String",
+                                                "value": "Actor.Shade()"
+                                            }
+                                        ]
+                                    }
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "kind": "ClassMethodGroupDeclaration",
+                    "identifier": "New",
+                    "type": "New Actor",
+                    "overloads": [
+                        {
+                            "kind": "ClassMethodDeclaration",
+                            "identifier": "New",
+                            "locals": [],
+                            "type": "New Actor()",
+                            "returnType": "Actor",
+                            "parameters": [],
+                            "statements": []
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "kind": "FunctionGroupDeclaration",
+            "identifier": "Check",
+            "type": "Check",
+            "overloads": [
+                {
+                    "kind": "FunctionDeclaration",
+                    "identifier": "Check",
+                    "locals": [
+                        "baseObject"
+                    ],
+                    "type": "Check: Int(BaseObject)",
+                    "returnType": "Int",
+                    "parameters": [
+                        {
+                            "kind": "DataDeclaration",
+                            "declarationKind": "Parameter",
+                            "identifier": "baseObject",
+                            "typeAnnotation": "BaseObject",
+                            "type": "BaseObject"
+                        }
+                    ],
+                    "statements": [
+                        {
+                            "kind": "ExpressionStatement",
+                            "expression": {
+                                "kind": "InvokeExpression",
+                                "type": "Int",
+                                "invocationType": "Print: Int(String)",
+                                "invokableExpression": {
+                                    "kind": "IdentifierExpression",
+                                    "type": "Print",
+                                    "identifier": "Print"
+                                },
+                                "arguments": [
+                                    {
+                                        "kind": "BinaryExpression",
+                                        "type": "String",
+                                        "leftOperand": {
+                                            "kind": "StringLiteralExpression",
+                                            "type": "String",
+                                            "value": "Object has id: "
+                                        },
+                                        "operator": "Addition",
+                                        "rightOperand": {
+                                            "kind": "ScopeMemberAccessExpression",
+                                            "type": "Int",
+                                            "scopableExpression": {
+                                                "kind": "IdentifierExpression",
+                                                "type": "BaseObject",
+                                                "identifier": "baseObject"
+                                            },
+                                            "member": {
+                                                "kind": "IdentifierExpression",
+                                                "type": "Int",
+                                                "identifier": "id"
+                                            }
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "kind": "FunctionGroupDeclaration",
+            "identifier": "Speak",
+            "type": "Speak",
+            "overloads": [
+                {
+                    "kind": "FunctionDeclaration",
+                    "identifier": "Speak",
+                    "locals": [
+                        "speakable"
+                    ],
+                    "type": "Speak: Int(Speakable)",
+                    "returnType": "Int",
+                    "parameters": [
+                        {
+                            "kind": "DataDeclaration",
+                            "declarationKind": "Parameter",
+                            "identifier": "speakable",
+                            "typeAnnotation": "Speakable",
+                            "type": "Speakable"
+                        }
+                    ],
+                    "statements": [
+                        {
+                            "kind": "ExpressionStatement",
+                            "expression": {
+                                "kind": "ScopeMemberAccessExpression",
+                                "type": "Int",
+                                "scopableExpression": {
+                                    "kind": "IdentifierExpression",
+                                    "type": "Speakable",
+                                    "identifier": "speakable"
+                                },
+                                "member": {
+                                    "kind": "InvokeExpression",
+                                    "type": "Int",
+                                    "invocationType": "Speak: Int()",
+                                    "invokableExpression": {
+                                        "kind": "IdentifierExpression",
+                                        "type": "Speak",
+                                        "identifier": "Speak"
+                                    },
+                                    "arguments": []
+                                }
+                            }
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "kind": "FunctionGroupDeclaration",
+            "identifier": "Hire",
+            "type": "Hire",
+            "overloads": [
+                {
+                    "kind": "FunctionDeclaration",
+                    "identifier": "Hire",
+                    "locals": [
+                        "entity"
+                    ],
+                    "type": "Hire: Int(Entity)",
+                    "returnType": "Int",
+                    "parameters": [
+                        {
+                            "kind": "DataDeclaration",
+                            "declarationKind": "Parameter",
+                            "identifier": "entity",
+                            "typeAnnotation": "Entity",
+                            "type": "Entity"
+                        }
+                    ],
+                    "statements": [
+                        {
+                            "kind": "ExpressionStatement",
+                            "expression": {
+                                "kind": "InvokeExpression",
+                                "type": "Int",
+                                "invocationType": "Print: Int(String)",
+                                "invokableExpression": {
+                                    "kind": "IdentifierExpression",
+                                    "type": "Print",
+                                    "identifier": "Print"
+                                },
+                                "arguments": [
+                                    {
+                                        "kind": "BinaryExpression",
+                                        "type": "String",
+                                        "leftOperand": {
+                                            "kind": "BinaryExpression",
+                                            "type": "String",
+                                            "leftOperand": {
+                                                "kind": "StringLiteralExpression",
+                                                "type": "String",
+                                                "value": "You're hired, "
+                                            },
+                                            "operator": "Addition",
+                                            "rightOperand": {
+                                                "kind": "ScopeMemberAccessExpression",
+                                                "type": "String",
+                                                "scopableExpression": {
+                                                    "kind": "IdentifierExpression",
+                                                    "type": "Entity",
+                                                    "identifier": "entity"
+                                                },
+                                                "member": {
+                                                    "kind": "IdentifierExpression",
+                                                    "type": "String",
+                                                    "identifier": "name"
+                                                }
+                                            }
+                                        },
+                                        "operator": "Addition",
+                                        "rightOperand": {
+                                            "kind": "StringLiteralExpression",
+                                            "type": "String",
+                                            "value": "!"
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "kind": "FunctionGroupDeclaration",
+            "identifier": "Move",
+            "type": "Move",
+            "overloads": [
+                {
+                    "kind": "FunctionDeclaration",
+                    "identifier": "Move",
+                    "locals": [
+                        "moveable"
+                    ],
+                    "type": "Move: Int(Moveable)",
+                    "returnType": "Int",
+                    "parameters": [
+                        {
+                            "kind": "DataDeclaration",
+                            "declarationKind": "Parameter",
+                            "identifier": "moveable",
+                            "typeAnnotation": "Moveable",
+                            "type": "Moveable"
+                        }
+                    ],
+                    "statements": [
+                        {
+                            "kind": "ExpressionStatement",
+                            "expression": {
+                                "kind": "ScopeMemberAccessExpression",
+                                "type": "Int",
+                                "scopableExpression": {
+                                    "kind": "IdentifierExpression",
+                                    "type": "Moveable",
+                                    "identifier": "moveable"
+                                },
+                                "member": {
+                                    "kind": "InvokeExpression",
+                                    "type": "Int",
+                                    "invocationType": "Move: Int()",
+                                    "invokableExpression": {
+                                        "kind": "IdentifierExpression",
+                                        "type": "Move",
+                                        "identifier": "Move"
+                                    },
+                                    "arguments": []
+                                }
+                            }
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "kind": "FunctionGroupDeclaration",
+            "identifier": "Draw",
+            "type": "Draw",
+            "overloads": [
+                {
+                    "kind": "FunctionDeclaration",
+                    "identifier": "Draw",
+                    "locals": [
+                        "drawable"
+                    ],
+                    "type": "Draw: Int(Drawable)",
+                    "returnType": "Int",
+                    "parameters": [
+                        {
+                            "kind": "DataDeclaration",
+                            "declarationKind": "Parameter",
+                            "identifier": "drawable",
+                            "typeAnnotation": "Drawable",
+                            "type": "Drawable"
+                        }
+                    ],
+                    "statements": [
+                        {
+                            "kind": "ExpressionStatement",
+                            "expression": {
+                                "kind": "ScopeMemberAccessExpression",
+                                "type": "Int",
+                                "scopableExpression": {
+                                    "kind": "IdentifierExpression",
+                                    "type": "Drawable",
+                                    "identifier": "drawable"
+                                },
+                                "member": {
+                                    "kind": "InvokeExpression",
+                                    "type": "Int",
+                                    "invocationType": "Draw: Int()",
+                                    "invokableExpression": {
+                                        "kind": "IdentifierExpression",
+                                        "type": "Draw",
+                                        "identifier": "Draw"
+                                    },
+                                    "arguments": []
+                                }
+                            }
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "kind": "FunctionGroupDeclaration",
+            "identifier": "Main",
+            "type": "Main",
+            "overloads": [
+                {
+                    "kind": "FunctionDeclaration",
+                    "identifier": "Main",
+                    "locals": [
+                        "actor"
+                    ],
+                    "type": "Main: Int()",
+                    "returnType": "Int",
+                    "parameters": [],
+                    "statements": [
+                        {
+                            "kind": "DataDeclarationStatement",
+                            "dataDeclaration": {
+                                "kind": "DataDeclaration",
+                                "declarationKind": "Local",
+                                "identifier": "actor",
+                                "operator": "ColonEqualsSign",
+                                "expression": {
+                                    "kind": "InvokeExpression",
+                                    "type": "Actor",
+                                    "invocationType": "New Actor()",
+                                    "invokableExpression": {
+                                        "kind": "NewExpression",
+                                        "type": "New Actor",
+                                        "typeReference": "Actor"
+                                    },
+                                    "arguments": []
+                                },
+                                "type": "Actor"
+                            }
+                        },
+                        {
+                            "kind": "ExpressionStatement",
+                            "expression": {
+                                "kind": "InvokeExpression",
+                                "type": "Int",
+                                "invocationType": "Check: Int(BaseObject)",
+                                "invokableExpression": {
+                                    "kind": "IdentifierExpression",
+                                    "type": "Check",
+                                    "identifier": "Check"
+                                },
+                                "arguments": [
+                                    {
+                                        "kind": "IdentifierExpression",
+                                        "type": "Actor",
+                                        "identifier": "actor"
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "kind": "ExpressionStatement",
+                            "expression": {
+                                "kind": "InvokeExpression",
+                                "type": "Int",
+                                "invocationType": "Speak: Int(Speakable)",
+                                "invokableExpression": {
+                                    "kind": "IdentifierExpression",
+                                    "type": "Speak",
+                                    "identifier": "Speak"
+                                },
+                                "arguments": [
+                                    {
+                                        "kind": "IdentifierExpression",
+                                        "type": "Actor",
+                                        "identifier": "actor"
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "kind": "ExpressionStatement",
+                            "expression": {
+                                "kind": "InvokeExpression",
+                                "type": "Int",
+                                "invocationType": "Hire: Int(Entity)",
+                                "invokableExpression": {
+                                    "kind": "IdentifierExpression",
+                                    "type": "Hire",
+                                    "identifier": "Hire"
+                                },
+                                "arguments": [
+                                    {
+                                        "kind": "IdentifierExpression",
+                                        "type": "Actor",
+                                        "identifier": "actor"
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "kind": "ExpressionStatement",
+                            "expression": {
+                                "kind": "InvokeExpression",
+                                "type": "Int",
+                                "invocationType": "Move: Int(Moveable)",
+                                "invokableExpression": {
+                                    "kind": "IdentifierExpression",
+                                    "type": "Move",
+                                    "identifier": "Move"
+                                },
+                                "arguments": [
+                                    {
+                                        "kind": "IdentifierExpression",
+                                        "type": "Actor",
+                                        "identifier": "actor"
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "kind": "ExpressionStatement",
+                            "expression": {
+                                "kind": "InvokeExpression",
+                                "type": "Int",
+                                "invocationType": "Draw: Int(Drawable)",
+                                "invokableExpression": {
+                                    "kind": "IdentifierExpression",
+                                    "type": "Draw",
+                                    "identifier": "Draw"
+                                },
+                                "arguments": [
+                                    {
+                                        "kind": "IdentifierExpression",
+                                        "type": "Actor",
+                                        "identifier": "actor"
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

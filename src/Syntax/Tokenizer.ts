@@ -1,9 +1,11 @@
+import { ConfigurationVariableMap, ConfigurationVariables } from '../Configuration';
 import { Evaluator } from '../Evaluator';
 import { assertNever } from '../util';
 import { PreprocessorModuleDeclaration } from './Node/Declaration/PreprocessorModuleDeclaration';
 import { Directives } from './Node/Directive/Directives';
-import { MissableExpression } from './Node/Expression/Expressions';
+import { Expressions } from './Node/Expression/Expressions';
 import { NodeKind } from './Node/Nodes';
+import { MissingToken } from './Token/MissingToken';
 import { TokenKind, Tokens } from './Token/Tokens';
 
 export class Tokenizer {
@@ -109,7 +111,7 @@ export class Tokenizer {
         }
     }
 
-    private eval(expression: MissableExpression): any {
+    private eval(expression: Expressions | MissingToken): any {
         if (expression.kind === TokenKind.Missing) {
             return false;
         }
@@ -253,27 +255,5 @@ export class Tokenizer {
         }
 
         return assertNever(expression);
-    }
-}
-
-export interface ConfigurationVariables {
-    HOST: string;
-    LANG: string;
-    TARGET: string;
-    CONFIG: string;
-    CD: string;
-    MODPATH: string;
-
-    [key: string]: any;
-}
-
-export class ConfigurationVariableMap extends Map<string, any> {
-    get(key: string): any {
-        let value = super.get(key);
-        if (typeof value === 'undefined') {
-            value = '';
-        }
-
-        return value;
     }
 }

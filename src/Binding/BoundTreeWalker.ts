@@ -1,9 +1,9 @@
 import { areElementsSame } from '../util';
 import { BoundNodeKind, BoundNodeKindToBoundNodeMap, BoundNodes } from './Node/BoundNodes';
 import { BoundClassDeclaration } from './Node/Declaration/BoundClassDeclaration';
+import { BoundExternClassDeclaration } from './Node/Declaration/BoundExternClassDeclaration';
 import { BoundMethodGroupDeclaration } from './Node/Declaration/BoundFunctionLikeGroupDeclaration';
 import { BoundInterfaceDeclaration } from './Node/Declaration/BoundInterfaceDeclaration';
-import { BoundExternClassDeclaration } from './Node/Declaration/Extern/BoundExternClassDeclaration';
 import { Types } from './Type/Types';
 
 export namespace BoundTreeWalker {
@@ -31,16 +31,16 @@ export namespace BoundTreeWalker {
     export function getMethod(
         methodContainer: BoundMethodContainerDeclaration,
         name: string,
-        checkReturnType: (type: Types) => boolean = () => true,
+        checkReturnType: (returnType: Types) => boolean = () => true,
         ...parameters: Types[]
     ) {
         const methodGroup = methodContainer.locals.get(name);
         if (methodGroup) {
-            switch (methodGroup.declaration.kind) {
+            switch (methodGroup.kind) {
                 case BoundNodeKind.ExternClassMethodGroupDeclaration:
                 case BoundNodeKind.InterfaceMethodGroupDeclaration:
                 case BoundNodeKind.ClassMethodGroupDeclaration: {
-                    return getOverload(methodGroup.declaration.overloads, checkReturnType, parameters);
+                    return getOverload(methodGroup.overloads, checkReturnType, parameters);
                 }
             }
         }
@@ -54,7 +54,7 @@ export namespace BoundTreeWalker {
 
     function getOverload(
         overloads: BoundMethodGroupDeclaration['overloads'],
-        checkReturnType: (type: Types) => boolean,
+        checkReturnType: (returnType: Types) => boolean,
         parameters: Types[],
     ) {
         for (const [, overload] of overloads) {

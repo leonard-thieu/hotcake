@@ -1,0 +1,117 @@
+{
+    "kind": "ModuleDeclaration",
+    "identifier": "identityExpression",
+    "locals": [
+        {
+            "kind": "FunctionGroupDeclaration",
+            "identifier": "Print",
+            "type": "Print",
+            "overloads": [
+                {
+                    "kind": "FunctionDeclaration",
+                    "identifier": "Print",
+                    "locals": [
+                        "val"
+                    ],
+                    "type": "Print: Void(String)",
+                    "returnType": "Void",
+                    "parameters": [
+                        {
+                            "kind": "DataDeclaration",
+                            "declarationKind": "Parameter",
+                            "identifier": "val",
+                            "typeAnnotation": "String",
+                            "type": "String"
+                        }
+                    ],
+                    "statements": []
+                }
+            ]
+        },
+        {
+            "kind": "FunctionGroupDeclaration",
+            "identifier": "Encode",
+            "type": "Encode",
+            "overloads": [
+                {
+                    "kind": "FunctionDeclaration",
+                    "identifier": "Encode",
+                    "locals": [
+                        "place",
+                        "percentile"
+                    ],
+                    "type": "Encode: Void(Int,Float)",
+                    "returnType": "Void",
+                    "parameters": [
+                        {
+                            "kind": "DataDeclaration",
+                            "declarationKind": "Parameter",
+                            "identifier": "place",
+                            "typeAnnotation": "Int",
+                            "type": "Int"
+                        },
+                        {
+                            "kind": "DataDeclaration",
+                            "declarationKind": "Parameter",
+                            "identifier": "percentile",
+                            "typeAnnotation": "Float",
+                            "type": "Float"
+                        }
+                    ],
+                    "statements": [
+                        {
+                            "kind": "ExpressionStatement",
+                            "expression": {
+                                "kind": "InvokeExpression",
+                                "type": "Void",
+                                "invocationType": "Print: Void(String)",
+                                "invokableExpression": {
+                                    "kind": "IdentifierExpression",
+                                    "type": "Print",
+                                    "identifier": "Print"
+                                },
+                                "arguments": [
+                                    {
+                                        "kind": "BinaryExpression",
+                                        "type": "String",
+                                        "leftOperand": {
+                                            "kind": "BinaryExpression",
+                                            "type": "String",
+                                            "leftOperand": {
+                                                "kind": "BinaryExpression",
+                                                "type": "String",
+                                                "leftOperand": {
+                                                    "kind": "IdentifierExpression",
+                                                    "type": "Int",
+                                                    "identifier": "place"
+                                                },
+                                                "operator": "Addition",
+                                                "rightOperand": {
+                                                    "kind": "StringLiteralExpression",
+                                                    "type": "String",
+                                                    "value": "th "
+                                                }
+                                            },
+                                            "operator": "Addition",
+                                            "rightOperand": {
+                                                "kind": "IdentifierExpression",
+                                                "type": "Float",
+                                                "identifier": "percentile"
+                                            }
+                                        },
+                                        "operator": "Addition",
+                                        "rightOperand": {
+                                            "kind": "StringLiteralExpression",
+                                            "type": "String",
+                                            "value": "%"
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

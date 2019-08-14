@@ -1,0 +1,942 @@
+{
+    "kind": "ModuleDeclaration",
+    "strictNewlines": [
+        {
+            "kind": "Newline",
+            "fullStart": 0,
+            "start": 67,
+            "length": 68
+        },
+        {
+            "kind": "Newline",
+            "fullStart": 68,
+            "start": 69,
+            "length": 2
+        }
+    ],
+    "headerMembers": [
+        {
+            "kind": "ImportStatement",
+            "importKeyword": {
+                "kind": "ImportKeyword",
+                "fullStart": 70,
+                "start": 70,
+                "length": 6
+            },
+            "path": {
+                "kind": "ModulePath",
+                "children": [],
+                "moduleIdentifier": {
+                    "kind": "Identifier",
+                    "fullStart": 76,
+                    "start": 77,
+                    "length": 20
+                }
+            }
+        },
+        {
+            "kind": "Newline",
+            "fullStart": 96,
+            "start": 97,
+            "length": 2
+        },
+        {
+            "kind": "ImportStatement",
+            "importKeyword": {
+                "kind": "ImportKeyword",
+                "fullStart": 98,
+                "start": 98,
+                "length": 6
+            },
+            "path": {
+                "kind": "ModulePath",
+                "children": [
+                    {
+                        "kind": "Identifier",
+                        "fullStart": 104,
+                        "start": 105,
+                        "length": 9
+                    },
+                    {
+                        "kind": "Period",
+                        "fullStart": 113,
+                        "start": 113,
+                        "length": 1
+                    },
+                    {
+                        "kind": "Identifier",
+                        "fullStart": 114,
+                        "start": 114,
+                        "length": 6
+                    },
+                    {
+                        "kind": "Period",
+                        "fullStart": 120,
+                        "start": 120,
+                        "length": 1
+                    }
+                ],
+                "moduleIdentifier": {
+                    "kind": "Identifier",
+                    "fullStart": 121,
+                    "start": 121,
+                    "length": 5
+                }
+            }
+        },
+        {
+            "kind": "Newline",
+            "fullStart": 126,
+            "start": 127,
+            "length": 2
+        },
+        {
+            "kind": "Newline",
+            "fullStart": 128,
+            "start": 177,
+            "length": 50
+        },
+        {
+            "kind": "Newline",
+            "fullStart": 178,
+            "start": 207,
+            "length": 30
+        },
+        {
+            "kind": "Newline",
+            "fullStart": 208,
+            "start": 226,
+            "length": 19
+        },
+        {
+            "kind": "Newline",
+            "fullStart": 227,
+            "start": 228,
+            "length": 2
+        }
+    ],
+    "members": [
+        {
+            "kind": "FunctionDeclaration",
+            "functionKeyword": {
+                "kind": "FunctionKeyword",
+                "fullStart": 229,
+                "start": 229,
+                "length": 8
+            },
+            "identifier": {
+                "kind": "Identifier",
+                "fullStart": 237,
+                "start": 238,
+                "length": 5
+            },
+            "openingParenthesis": {
+                "kind": "OpeningParenthesis",
+                "fullStart": 242,
+                "start": 242,
+                "length": 1
+            },
+            "parameters": {
+                "kind": "DataDeclarationSequence",
+                "dataDeclarationKeyword": null,
+                "children": []
+            },
+            "closingParenthesis": {
+                "kind": "ClosingParenthesis",
+                "fullStart": 243,
+                "start": 243,
+                "length": 1
+            },
+            "statements": [
+                {
+                    "kind": "EmptyStatement",
+                    "terminator": {
+                        "kind": "Newline",
+                        "fullStart": 244,
+                        "start": 245,
+                        "length": 2
+                    }
+                },
+                {
+                    "kind": "EmptyStatement",
+                    "terminator": {
+                        "kind": "Newline",
+                        "fullStart": 246,
+                        "start": 286,
+                        "length": 41
+                    }
+                },
+                {
+                    "kind": "EmptyStatement",
+                    "terminator": {
+                        "kind": "Newline",
+                        "fullStart": 287,
+                        "start": 305,
+                        "length": 19
+                    }
+                },
+                {
+                    "kind": "ExpressionStatement",
+                    "expression": {
+                        "kind": "ScopeMemberAccessExpression",
+                        "newlines": [],
+                        "scopableExpression": {
+                            "kind": "GlobalScopeExpression"
+                        },
+                        "scopeMemberAccessOperator": {
+                            "kind": "Period",
+                            "fullStart": 306,
+                            "start": 310,
+                            "length": 5
+                        },
+                        "member": {
+                            "kind": "ScopeMemberAccessExpression",
+                            "scopableExpression": {
+                                "kind": "IdentifierExpression",
+                                "identifier": {
+                                    "kind": "EscapedIdentifier",
+                                    "commercialAt": {
+                                        "kind": "CommercialAt",
+                                        "fullStart": 311,
+                                        "start": 311,
+                                        "length": 1
+                                    },
+                                    "name": {
+                                        "kind": "InlineKeyword",
+                                        "fullStart": 312,
+                                        "start": 312,
+                                        "length": 6
+                                    }
+                                }
+                            },
+                            "scopeMemberAccessOperator": {
+                                "kind": "Period",
+                                "fullStart": 318,
+                                "start": 318,
+                                "length": 1
+                            },
+                            "member": {
+                                "kind": "InvokeExpression",
+                                "invokableExpression": {
+                                    "kind": "IdentifierExpression",
+                                    "identifier": {
+                                        "kind": "Identifier",
+                                        "fullStart": 319,
+                                        "start": 319,
+                                        "length": 4
+                                    }
+                                },
+                                "arguments": []
+                            }
+                        }
+                    },
+                    "terminator": {
+                        "kind": "Newline",
+                        "fullStart": 323,
+                        "start": 324,
+                        "length": 2
+                    }
+                },
+                {
+                    "kind": "EmptyStatement",
+                    "terminator": {
+                        "kind": "Newline",
+                        "fullStart": 325,
+                        "start": 326,
+                        "length": 2
+                    }
+                },
+                {
+                    "kind": "ExpressionStatement",
+                    "expression": {
+                        "kind": "InvokeExpression",
+                        "newlines": [],
+                        "invokableExpression": {
+                            "kind": "IdentifierExpression",
+                            "identifier": {
+                                "kind": "Identifier",
+                                "fullStart": 327,
+                                "start": 331,
+                                "length": 9
+                            }
+                        },
+                        "arguments": [
+                            {
+                                "kind": "ScopeMemberAccessExpression",
+                                "newlines": [],
+                                "scopableExpression": {
+                                    "kind": "IdentifierExpression",
+                                    "identifier": {
+                                        "kind": "Identifier",
+                                        "fullStart": 336,
+                                        "start": 337,
+                                        "length": 20
+                                    }
+                                },
+                                "scopeMemberAccessOperator": {
+                                    "kind": "Period",
+                                    "fullStart": 356,
+                                    "start": 356,
+                                    "length": 1
+                                },
+                                "member": {
+                                    "kind": "ScopeMemberAccessExpression",
+                                    "scopableExpression": {
+                                        "kind": "IdentifierExpression",
+                                        "identifier": {
+                                            "kind": "EscapedIdentifier",
+                                            "commercialAt": {
+                                                "kind": "CommercialAt",
+                                                "fullStart": 357,
+                                                "start": 357,
+                                                "length": 1
+                                            },
+                                            "name": {
+                                                "kind": "InlineKeyword",
+                                                "fullStart": 358,
+                                                "start": 358,
+                                                "length": 6
+                                            }
+                                        }
+                                    },
+                                    "scopeMemberAccessOperator": {
+                                        "kind": "Period",
+                                        "fullStart": 364,
+                                        "start": 364,
+                                        "length": 1
+                                    },
+                                    "member": {
+                                        "kind": "IdentifierExpression",
+                                        "identifier": {
+                                            "kind": "Identifier",
+                                            "fullStart": 365,
+                                            "start": 365,
+                                            "length": 8
+                                        }
+                                    }
+                                }
+                            }
+                        ]
+                    },
+                    "terminator": {
+                        "kind": "Newline",
+                        "fullStart": 373,
+                        "start": 374,
+                        "length": 2
+                    }
+                },
+                {
+                    "kind": "EmptyStatement",
+                    "terminator": {
+                        "kind": "Newline",
+                        "fullStart": 375,
+                        "start": 427,
+                        "length": 53
+                    }
+                },
+                {
+                    "kind": "EmptyStatement",
+                    "terminator": {
+                        "kind": "Newline",
+                        "fullStart": 428,
+                        "start": 457,
+                        "length": 30
+                    }
+                },
+                {
+                    "kind": "ExpressionStatement",
+                    "expression": {
+                        "kind": "InvokeExpression",
+                        "newlines": [],
+                        "invokableExpression": {
+                            "kind": "IdentifierExpression",
+                            "identifier": {
+                                "kind": "Identifier",
+                                "fullStart": 458,
+                                "start": 462,
+                                "length": 9
+                            }
+                        },
+                        "openingParenthesis": {
+                            "kind": "OpeningParenthesis",
+                            "fullStart": 467,
+                            "start": 467,
+                            "length": 1
+                        },
+                        "leadingNewlines": [],
+                        "arguments": [
+                            {
+                                "kind": "ScopeMemberAccessExpression",
+                                "newlines": [],
+                                "scopableExpression": {
+                                    "kind": "GlobalScopeExpression"
+                                },
+                                "scopeMemberAccessOperator": {
+                                    "kind": "Period",
+                                    "fullStart": 468,
+                                    "start": 468,
+                                    "length": 1
+                                },
+                                "member": {
+                                    "kind": "ScopeMemberAccessExpression",
+                                    "scopableExpression": {
+                                        "kind": "IdentifierExpression",
+                                        "identifier": {
+                                            "kind": "EscapedIdentifier",
+                                            "commercialAt": {
+                                                "kind": "CommercialAt",
+                                                "fullStart": 469,
+                                                "start": 469,
+                                                "length": 1
+                                            },
+                                            "name": {
+                                                "kind": "InlineKeyword",
+                                                "fullStart": 470,
+                                                "start": 470,
+                                                "length": 6
+                                            }
+                                        }
+                                    },
+                                    "scopeMemberAccessOperator": {
+                                        "kind": "Period",
+                                        "fullStart": 476,
+                                        "start": 476,
+                                        "length": 1
+                                    },
+                                    "member": {
+                                        "kind": "IdentifierExpression",
+                                        "identifier": {
+                                            "kind": "Identifier",
+                                            "fullStart": 477,
+                                            "start": 477,
+                                            "length": 8
+                                        }
+                                    }
+                                }
+                            }
+                        ],
+                        "closingParenthesis": {
+                            "kind": "ClosingParenthesis",
+                            "fullStart": 485,
+                            "start": 485,
+                            "length": 1
+                        }
+                    },
+                    "terminator": {
+                        "kind": "Newline",
+                        "fullStart": 486,
+                        "start": 487,
+                        "length": 2
+                    }
+                },
+                {
+                    "kind": "EmptyStatement",
+                    "terminator": {
+                        "kind": "Newline",
+                        "fullStart": 488,
+                        "start": 489,
+                        "length": 2
+                    }
+                },
+                {
+                    "kind": "ExpressionStatement",
+                    "expression": {
+                        "kind": "InvokeExpression",
+                        "newlines": [],
+                        "invokableExpression": {
+                            "kind": "IdentifierExpression",
+                            "identifier": {
+                                "kind": "Identifier",
+                                "fullStart": 490,
+                                "start": 494,
+                                "length": 9
+                            }
+                        },
+                        "arguments": [
+                            {
+                                "kind": "ScopeMemberAccessExpression",
+                                "newlines": [],
+                                "scopableExpression": {
+                                    "kind": "IdentifierExpression",
+                                    "identifier": {
+                                        "kind": "Identifier",
+                                        "fullStart": 499,
+                                        "start": 500,
+                                        "length": 20
+                                    }
+                                },
+                                "scopeMemberAccessOperator": {
+                                    "kind": "Period",
+                                    "fullStart": 519,
+                                    "start": 519,
+                                    "length": 1
+                                },
+                                "member": {
+                                    "kind": "ScopeMemberAccessExpression",
+                                    "scopableExpression": {
+                                        "kind": "IdentifierExpression",
+                                        "identifier": {
+                                            "kind": "EscapedIdentifier",
+                                            "commercialAt": {
+                                                "kind": "CommercialAt",
+                                                "fullStart": 520,
+                                                "start": 520,
+                                                "length": 1
+                                            },
+                                            "name": {
+                                                "kind": "InlineKeyword",
+                                                "fullStart": 521,
+                                                "start": 521,
+                                                "length": 6
+                                            }
+                                        }
+                                    },
+                                    "scopeMemberAccessOperator": {
+                                        "kind": "Period",
+                                        "fullStart": 527,
+                                        "start": 527,
+                                        "length": 1
+                                    },
+                                    "member": {
+                                        "kind": "IdentifierExpression",
+                                        "identifier": {
+                                            "kind": "Identifier",
+                                            "fullStart": 528,
+                                            "start": 528,
+                                            "length": 9
+                                        }
+                                    }
+                                }
+                            }
+                        ]
+                    },
+                    "terminator": {
+                        "kind": "Newline",
+                        "fullStart": 537,
+                        "start": 538,
+                        "length": 2
+                    }
+                },
+                {
+                    "kind": "ExpressionStatement",
+                    "expression": {
+                        "kind": "InvokeExpression",
+                        "newlines": [],
+                        "invokableExpression": {
+                            "kind": "IdentifierExpression",
+                            "identifier": {
+                                "kind": "Identifier",
+                                "fullStart": 539,
+                                "start": 543,
+                                "length": 9
+                            }
+                        },
+                        "openingParenthesis": {
+                            "kind": "OpeningParenthesis",
+                            "fullStart": 548,
+                            "start": 548,
+                            "length": 1
+                        },
+                        "leadingNewlines": [],
+                        "arguments": [
+                            {
+                                "kind": "ScopeMemberAccessExpression",
+                                "newlines": [],
+                                "scopableExpression": {
+                                    "kind": "GlobalScopeExpression"
+                                },
+                                "scopeMemberAccessOperator": {
+                                    "kind": "Period",
+                                    "fullStart": 549,
+                                    "start": 549,
+                                    "length": 1
+                                },
+                                "member": {
+                                    "kind": "ScopeMemberAccessExpression",
+                                    "scopableExpression": {
+                                        "kind": "IdentifierExpression",
+                                        "identifier": {
+                                            "kind": "EscapedIdentifier",
+                                            "commercialAt": {
+                                                "kind": "CommercialAt",
+                                                "fullStart": 550,
+                                                "start": 550,
+                                                "length": 1
+                                            },
+                                            "name": {
+                                                "kind": "InlineKeyword",
+                                                "fullStart": 551,
+                                                "start": 551,
+                                                "length": 6
+                                            }
+                                        }
+                                    },
+                                    "scopeMemberAccessOperator": {
+                                        "kind": "Period",
+                                        "fullStart": 557,
+                                        "start": 557,
+                                        "length": 1
+                                    },
+                                    "member": {
+                                        "kind": "IdentifierExpression",
+                                        "identifier": {
+                                            "kind": "Identifier",
+                                            "fullStart": 558,
+                                            "start": 558,
+                                            "length": 9
+                                        }
+                                    }
+                                }
+                            }
+                        ],
+                        "closingParenthesis": {
+                            "kind": "ClosingParenthesis",
+                            "fullStart": 567,
+                            "start": 567,
+                            "length": 1
+                        }
+                    },
+                    "terminator": {
+                        "kind": "Newline",
+                        "fullStart": 568,
+                        "start": 569,
+                        "length": 2
+                    }
+                },
+                {
+                    "kind": "EmptyStatement",
+                    "terminator": {
+                        "kind": "Newline",
+                        "fullStart": 570,
+                        "start": 571,
+                        "length": 2
+                    }
+                },
+                {
+                    "kind": "EmptyStatement",
+                    "terminator": {
+                        "kind": "Newline",
+                        "fullStart": 572,
+                        "start": 581,
+                        "length": 10
+                    }
+                },
+                {
+                    "kind": "EmptyStatement",
+                    "terminator": {
+                        "kind": "Newline",
+                        "fullStart": 582,
+                        "start": 583,
+                        "length": 2
+                    }
+                },
+                {
+                    "kind": "ExpressionStatement",
+                    "expression": {
+                        "kind": "ScopeMemberAccessExpression",
+                        "newlines": [],
+                        "scopableExpression": {
+                            "kind": "IdentifierExpression",
+                            "identifier": {
+                                "kind": "Identifier",
+                                "fullStart": 584,
+                                "start": 588,
+                                "length": 23
+                            }
+                        },
+                        "scopeMemberAccessOperator": {
+                            "kind": "Period",
+                            "fullStart": 607,
+                            "start": 607,
+                            "length": 1
+                        },
+                        "member": {
+                            "kind": "InvokeExpression",
+                            "invokableExpression": {
+                                "kind": "IdentifierExpression",
+                                "identifier": {
+                                    "kind": "ObjectKeyword",
+                                    "fullStart": 608,
+                                    "start": 608,
+                                    "length": 6
+                                }
+                            },
+                            "arguments": []
+                        }
+                    },
+                    "terminator": {
+                        "kind": "Newline",
+                        "fullStart": 614,
+                        "start": 615,
+                        "length": 2
+                    }
+                },
+                {
+                    "kind": "EmptyStatement",
+                    "terminator": {
+                        "kind": "Newline",
+                        "fullStart": 616,
+                        "start": 718,
+                        "length": 103
+                    }
+                },
+                {
+                    "kind": "EmptyStatement",
+                    "terminator": {
+                        "kind": "Newline",
+                        "fullStart": 719,
+                        "start": 731,
+                        "length": 13
+                    }
+                },
+                {
+                    "kind": "EmptyStatement",
+                    "terminator": {
+                        "kind": "Newline",
+                        "fullStart": 732,
+                        "start": 745,
+                        "length": 14
+                    }
+                },
+                {
+                    "kind": "EmptyStatement",
+                    "terminator": {
+                        "kind": "Newline",
+                        "fullStart": 746,
+                        "start": 760,
+                        "length": 15
+                    }
+                },
+                {
+                    "kind": "EmptyStatement",
+                    "terminator": {
+                        "kind": "Newline",
+                        "fullStart": 761,
+                        "start": 762,
+                        "length": 2
+                    }
+                },
+                {
+                    "kind": "ExpressionStatement",
+                    "expression": {
+                        "kind": "InvokeExpression",
+                        "newlines": [],
+                        "invokableExpression": {
+                            "kind": "IdentifierExpression",
+                            "identifier": {
+                                "kind": "Identifier",
+                                "fullStart": 763,
+                                "start": 767,
+                                "length": 9
+                            }
+                        },
+                        "arguments": [
+                            {
+                                "kind": "ScopeMemberAccessExpression",
+                                "newlines": [],
+                                "scopableExpression": {
+                                    "kind": "IdentifierExpression",
+                                    "identifier": {
+                                        "kind": "Identifier",
+                                        "fullStart": 772,
+                                        "start": 773,
+                                        "length": 20
+                                    }
+                                },
+                                "scopeMemberAccessOperator": {
+                                    "kind": "Period",
+                                    "fullStart": 792,
+                                    "start": 792,
+                                    "length": 1
+                                },
+                                "member": {
+                                    "kind": "IdentifierExpression",
+                                    "identifier": {
+                                        "kind": "Identifier",
+                                        "fullStart": 793,
+                                        "start": 793,
+                                        "length": 8
+                                    }
+                                }
+                            }
+                        ]
+                    },
+                    "terminator": {
+                        "kind": "Newline",
+                        "fullStart": 801,
+                        "start": 802,
+                        "length": 2
+                    }
+                },
+                {
+                    "kind": "ExpressionStatement",
+                    "expression": {
+                        "kind": "InvokeExpression",
+                        "newlines": [],
+                        "invokableExpression": {
+                            "kind": "IdentifierExpression",
+                            "identifier": {
+                                "kind": "Identifier",
+                                "fullStart": 803,
+                                "start": 807,
+                                "length": 9
+                            }
+                        },
+                        "arguments": [
+                            {
+                                "kind": "IdentifierExpression",
+                                "newlines": [],
+                                "identifier": {
+                                    "kind": "Identifier",
+                                    "fullStart": 812,
+                                    "start": 813,
+                                    "length": 9
+                                }
+                            }
+                        ]
+                    },
+                    "terminator": {
+                        "kind": "Newline",
+                        "fullStart": 821,
+                        "start": 822,
+                        "length": 2
+                    }
+                },
+                {
+                    "kind": "EmptyStatement",
+                    "terminator": {
+                        "kind": "Newline",
+                        "fullStart": 823,
+                        "start": 824,
+                        "length": 2
+                    }
+                },
+                {
+                    "kind": "ExpressionStatement",
+                    "expression": {
+                        "kind": "InvokeExpression",
+                        "newlines": [],
+                        "invokableExpression": {
+                            "kind": "IdentifierExpression",
+                            "identifier": {
+                                "kind": "Identifier",
+                                "fullStart": 825,
+                                "start": 829,
+                                "length": 9
+                            }
+                        },
+                        "arguments": [
+                            {
+                                "kind": "ScopeMemberAccessExpression",
+                                "newlines": [],
+                                "scopableExpression": {
+                                    "kind": "IdentifierExpression",
+                                    "identifier": {
+                                        "kind": "Identifier",
+                                        "fullStart": 834,
+                                        "start": 835,
+                                        "length": 20
+                                    }
+                                },
+                                "scopeMemberAccessOperator": {
+                                    "kind": "Period",
+                                    "fullStart": 854,
+                                    "start": 854,
+                                    "length": 1
+                                },
+                                "member": {
+                                    "kind": "IdentifierExpression",
+                                    "identifier": {
+                                        "kind": "Identifier",
+                                        "fullStart": 855,
+                                        "start": 855,
+                                        "length": 9
+                                    }
+                                }
+                            }
+                        ]
+                    },
+                    "terminator": {
+                        "kind": "Newline",
+                        "fullStart": 864,
+                        "start": 865,
+                        "length": 2
+                    }
+                },
+                {
+                    "kind": "ExpressionStatement",
+                    "expression": {
+                        "kind": "InvokeExpression",
+                        "newlines": [],
+                        "invokableExpression": {
+                            "kind": "IdentifierExpression",
+                            "identifier": {
+                                "kind": "Identifier",
+                                "fullStart": 866,
+                                "start": 870,
+                                "length": 9
+                            }
+                        },
+                        "arguments": [
+                            {
+                                "kind": "IdentifierExpression",
+                                "newlines": [],
+                                "identifier": {
+                                    "kind": "Identifier",
+                                    "fullStart": 875,
+                                    "start": 876,
+                                    "length": 10
+                                }
+                            }
+                        ]
+                    },
+                    "terminator": {
+                        "kind": "Newline",
+                        "fullStart": 885,
+                        "start": 886,
+                        "length": 2
+                    }
+                },
+                {
+                    "kind": "EmptyStatement",
+                    "terminator": {
+                        "kind": "Newline",
+                        "fullStart": 887,
+                        "start": 888,
+                        "length": 2
+                    }
+                },
+                {
+                    "kind": "EmptyStatement",
+                    "terminator": {
+                        "kind": "Newline",
+                        "fullStart": 889,
+                        "start": 933,
+                        "length": 45
+                    }
+                },
+                {
+                    "kind": "EmptyStatement",
+                    "terminator": {
+                        "kind": "Newline",
+                        "fullStart": 934,
+                        "start": 954,
+                        "length": 21
+                    }
+                }
+            ],
+            "endKeyword": {
+                "kind": "EndKeyword",
+                "fullStart": 955,
+                "start": 955,
+                "length": 3
+            }
+        }
+    ],
+    "eofToken": {
+        "kind": "EOF",
+        "fullStart": 958,
+        "start": 958,
+        "length": 0
+    }
+}

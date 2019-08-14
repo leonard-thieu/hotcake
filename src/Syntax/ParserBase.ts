@@ -1,11 +1,10 @@
 import { assertNever } from '../util';
 import { ArrayTypeAnnotation } from './Node/ArrayTypeAnnotation';
 import { CommaSeparator } from './Node/CommaSeparator';
-import { ConfigurationTag } from './Node/ConfigurationTag';
 import { ArrayLiteralExpression } from './Node/Expression/ArrayLiteralExpression';
 import { BinaryExpression, BinaryExpressionOperatorToken } from './Node/Expression/BinaryExpression';
 import { BooleanLiteralExpression, BooleanLiteralExpressionValueToken } from './Node/Expression/BooleanLiteralExpression';
-import { Expressions, MissableExpression, PrimaryExpression } from './Node/Expression/Expressions';
+import { Expressions, PrimaryExpression } from './Node/Expression/Expressions';
 import { FloatLiteralExpression } from './Node/Expression/FloatLiteralExpression';
 import { GlobalScopeExpression } from './Node/Expression/GlobalScopeExpression';
 import { GroupingExpression } from './Node/Expression/GroupingExpression';
@@ -18,14 +17,14 @@ import { NullExpression } from './Node/Expression/NullExpression';
 import { ScopeMemberAccessExpression } from './Node/Expression/ScopeMemberAccessExpression';
 import { SelfExpression } from './Node/Expression/SelfExpression';
 import { SliceExpression } from './Node/Expression/SliceExpression';
-import { MissableStringLiteralExpression, StringLiteralExpression } from './Node/Expression/StringLiteralExpression';
+import { ConfigurationTag, StringLiteralExpression } from './Node/Expression/StringLiteralExpression';
 import { SuperExpression } from './Node/Expression/SuperExpression';
 import { UnaryExpression, UnaryOperatorToken } from './Node/Expression/UnaryExpression';
-import { EscapedIdentifier, MissableIdentifier } from './Node/Identifier';
+import { EscapedIdentifier, Identifier } from './Node/Identifier';
 import { NodeKind, Nodes } from './Node/Nodes';
-import { MissableTypeReference, TypeReference, TypeReferenceIdentifierStartToken } from './Node/TypeReference';
+import { TypeReference, TypeReferenceIdentifierStartToken } from './Node/TypeReference';
 import { GreaterThanSignEqualsSignToken } from './Token/GreaterThanSignEqualsSignToken';
-import { MissingToken, MissingTokenKinds } from './Token/MissingToken';
+import { MissingToken, MissingTokenKind, MissingTokenKinds } from './Token/MissingToken';
 import { SkippedToken } from './Token/SkippedToken';
 import { CommaToken, CommercialAtToken, ConfigurationTagStartToken, FloatLiteralToken, IntegerLiteralToken, NewKeywordToken, NullKeywordToken, OpeningParenthesisToken, OpeningSquareBracketToken, PeriodPeriodToken, PeriodToken, QuotationMarkToken, SelfKeywordToken, SuperKeywordToken, TokenKind, TokenKindToTokenMap, Tokens } from './Token/Tokens';
 
@@ -105,7 +104,7 @@ export abstract class ParserBase {
     // #region Binary expressions
 
     private parseBinaryExpressionOrHigher(precedence: Precedence, parent: Nodes) {
-        let expression: MissableExpression = this.parseUnaryExpressionOrHigher(parent);
+        let expression: Expressions | MissingToken = this.parseUnaryExpressionOrHigher(parent);
         let [prevNewPrecedence, prevAssociativity] = UnknownPrecedenceAndAssociativity;
 
         while (true) {
@@ -177,7 +176,7 @@ export abstract class ParserBase {
 
     private parseBinaryExpression(
         parent: Nodes,
-        leftOperand: MissableExpression,
+        leftOperand: Expressions | MissingToken,
         operator: BinaryExpressionOperatorToken,
         newPrecedence: Precedence,
     ): BinaryExpression {
@@ -345,7 +344,7 @@ export abstract class ParserBase {
             }
         }
 
-        return this.createMissingToken(token.fullStart, TokenKind.Expression);
+        return this.createMissingToken(token.fullStart, MissingTokenKind.Expression);
     }
 
     protected parseNewExpression(parent: Nodes, newKeyword: NewKeywordToken): NewExpression {
@@ -391,7 +390,7 @@ export abstract class ParserBase {
 
     // #region String literal expression
 
-    protected parseMissableStringLiteralExpression(parent: Nodes): MissableStringLiteralExpression {
+    protected parseMissableStringLiteralExpression(parent: Nodes): StringLiteralExpression | MissingToken {
         const token = this.getToken();
         switch (token.kind) {
             case TokenKind.QuotationMark: {
@@ -401,7 +400,7 @@ export abstract class ParserBase {
             }
         }
 
-        return this.createMissingToken(token.fullStart, NodeKind.StringLiteralExpression);
+        return this.createMissingToken(token.fullStart, MissingTokenKind.StringLiteralExpression);
     }
 
     protected parseStringLiteralExpression(parent: Nodes, startQuotationMark: QuotationMarkToken): StringLiteralExpression {
@@ -592,7 +591,7 @@ export abstract class ParserBase {
     }
 
     protected parseIndexOrSliceExpression(expression: Expressions, openingSquareBracket: OpeningSquareBracketToken) {
-        let indexExpressionExpression_startExpression: MissableExpression | undefined = undefined;
+        let indexExpressionExpression_startExpression: Expressions | MissingToken | undefined = undefined;
         const token = this.getToken();
         if (this.isExpressionStart(token)) {
             indexExpressionExpression_startExpression = this.parseExpression(/*parent*/ undefined!) as Expressions;
@@ -601,7 +600,7 @@ export abstract class ParserBase {
         const sliceOperator = this.eatOptional(TokenKind.PeriodPeriod);
         if (!sliceOperator) {
             if (!indexExpressionExpression_startExpression) {
-                indexExpressionExpression_startExpression = this.createMissingToken(token.fullStart, TokenKind.Expression);
+                indexExpressionExpression_startExpression = this.createMissingToken(token.fullStart, MissingTokenKind.Expression);
             }
 
             return this.parseIndexExpression(expression, openingSquareBracket, indexExpressionExpression_startExpression);
@@ -613,7 +612,7 @@ export abstract class ParserBase {
     protected parseIndexExpression(
         expression: Expressions,
         openingSquareBracket: OpeningSquareBracketToken,
-        indexExpressionExpression: MissableExpression,
+        indexExpressionExpression: Expressions | MissingToken,
     ): IndexExpression {
         const indexExpression = new IndexExpression();
         indexExpression.parent = expression.parent;
@@ -768,7 +767,7 @@ export abstract class ParserBase {
         return false;
     }
 
-    protected parseMissableTypeReference(parent: Nodes): MissableTypeReference {
+    protected parseMissableTypeReference(parent: Nodes): TypeReference | MissingToken {
         const token = this.getToken();
         if (this.isTypeReferenceStart(token)) {
             this.advanceToken();
@@ -776,7 +775,7 @@ export abstract class ParserBase {
             return this.parseTypeReference(parent, token);
         }
 
-        return this.createMissingToken(token.fullStart, NodeKind.TypeReference);
+        return this.createMissingToken(token.fullStart, MissingTokenKind.TypeReference);
     }
 
     protected parseTypeReference(parent: Nodes, typeReferenceStart: TypeReferenceIdentifierStartToken | PeriodToken): TypeReference {
@@ -900,7 +899,7 @@ export abstract class ParserBase {
 
     // #region Identifier
 
-    protected parseMissableIdentifier(parent: Nodes): MissableIdentifier {
+    protected parseMissableIdentifier(parent: Nodes): Identifier | MissingToken {
         const token = this.getToken();
         switch (token.kind) {
             case TokenKind.Identifier:

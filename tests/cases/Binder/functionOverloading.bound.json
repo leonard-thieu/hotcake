@@ -1,0 +1,147 @@
+{
+    "kind": "ModuleDeclaration",
+    "identifier": "functionOverloading",
+    "locals": [
+        {
+            "kind": "FunctionGroupDeclaration",
+            "identifier": "Add",
+            "type": "Add",
+            "overloads": [
+                {
+                    "kind": "FunctionDeclaration",
+                    "identifier": "Add",
+                    "locals": [
+                        "value"
+                    ],
+                    "type": "Add: Int(Int)",
+                    "returnType": "Int",
+                    "parameters": [
+                        {
+                            "kind": "DataDeclaration",
+                            "declarationKind": "Parameter",
+                            "identifier": "value",
+                            "typeAnnotation": "Int",
+                            "type": "Int"
+                        }
+                    ],
+                    "statements": []
+                },
+                {
+                    "kind": "FunctionDeclaration",
+                    "identifier": "Add",
+                    "locals": [
+                        "value"
+                    ],
+                    "type": "Add: Int(Float)",
+                    "returnType": "Int",
+                    "parameters": [
+                        {
+                            "kind": "DataDeclaration",
+                            "declarationKind": "Parameter",
+                            "identifier": "value",
+                            "typeAnnotation": "Float",
+                            "type": "Float"
+                        }
+                    ],
+                    "statements": []
+                },
+                {
+                    "kind": "FunctionDeclaration",
+                    "identifier": "Add",
+                    "locals": [
+                        "value"
+                    ],
+                    "type": "Add: Int(String)",
+                    "returnType": "Int",
+                    "parameters": [
+                        {
+                            "kind": "DataDeclaration",
+                            "declarationKind": "Parameter",
+                            "identifier": "value",
+                            "typeAnnotation": "String",
+                            "type": "String"
+                        }
+                    ],
+                    "statements": []
+                }
+            ]
+        },
+        {
+            "kind": "FunctionGroupDeclaration",
+            "identifier": "Main",
+            "type": "Main",
+            "overloads": [
+                {
+                    "kind": "FunctionDeclaration",
+                    "identifier": "Main",
+                    "locals": [],
+                    "type": "Main: Int()",
+                    "returnType": "Int",
+                    "parameters": [],
+                    "statements": [
+                        {
+                            "kind": "ExpressionStatement",
+                            "expression": {
+                                "kind": "InvokeExpression",
+                                "type": "Int",
+                                "invocationType": "Add: Int(Int)",
+                                "invokableExpression": {
+                                    "kind": "IdentifierExpression",
+                                    "type": "Add",
+                                    "identifier": "Add"
+                                },
+                                "arguments": [
+                                    {
+                                        "kind": "IntegerLiteralExpression",
+                                        "type": "Int",
+                                        "value": "10"
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "kind": "ExpressionStatement",
+                            "expression": {
+                                "kind": "InvokeExpression",
+                                "type": "Int",
+                                "invocationType": "Add: Int(Float)",
+                                "invokableExpression": {
+                                    "kind": "IdentifierExpression",
+                                    "type": "Add",
+                                    "identifier": "Add"
+                                },
+                                "arguments": [
+                                    {
+                                        "kind": "FloatLiteralExpression",
+                                        "type": "Float",
+                                        "value": "10.0"
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "kind": "ExpressionStatement",
+                            "expression": {
+                                "kind": "InvokeExpression",
+                                "type": "Int",
+                                "invocationType": "Add: Int(String)",
+                                "invokableExpression": {
+                                    "kind": "IdentifierExpression",
+                                    "type": "Add",
+                                    "identifier": "Add"
+                                },
+                                "arguments": [
+                                    {
+                                        "kind": "StringLiteralExpression",
+                                        "type": "String",
+                                        "value": "10"
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

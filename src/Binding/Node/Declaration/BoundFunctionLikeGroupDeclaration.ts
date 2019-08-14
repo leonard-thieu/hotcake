@@ -2,10 +2,10 @@ import { BoundSymbol } from '../../BoundSymbol';
 import { BoundFunctionLikeDeclaration, FunctionGroupType, MethodGroupType } from '../../Type/FunctionLikeType';
 import { BoundNode, BoundNodeKind } from '../BoundNodes';
 import { BoundClassMethodDeclaration } from './BoundClassDeclaration';
+import { BoundExternClassMethodDeclaration } from './BoundExternClassDeclaration';
+import { BoundExternFunctionDeclaration } from './BoundExternFunctionDeclaration';
 import { BoundFunctionDeclaration } from './BoundFunctionDeclaration';
 import { BoundInterfaceMethodDeclaration } from './BoundInterfaceDeclaration';
-import { BoundExternClassMethodDeclaration } from './Extern/BoundExternClassDeclaration';
-import { BoundExternFunctionDeclaration } from './Extern/BoundExternFunctionDeclaration';
 
 export type BoundFunctionLikeGroupDeclaration =
     | BoundFunctionGroupDeclarations
@@ -66,7 +66,8 @@ export class BoundClassMethodGroupDeclaration extends BoundNode {
 export class Overloads<
     TBound extends BoundFunctionLikeDeclaration,
     TSyntax extends TBound['declaration'] = TBound['declaration'],
-    > extends Map<TSyntax, TBound> {
+    > extends Map<TSyntax, TBound>
+{
     set(value: TBound): this;
     set(key: TSyntax, value: TBound): this;
     set(key_value: TSyntax | TBound, value?: TBound): this {

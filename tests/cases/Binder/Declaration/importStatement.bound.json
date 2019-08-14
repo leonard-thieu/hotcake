@@ -1,0 +1,18 @@
+{
+    "kind": "ModuleDeclaration",
+    "identifier": "importStatement",
+    "locals": [
+        {
+            "kind": "ModuleDeclaration",
+            "identifier": "anotherModule",
+            "path": "_importStatement.anotherModule"
+        },
+        {
+            "kind": "DataDeclaration",
+            "declarationKind": "Global",
+            "identifier": "T",
+            "typeAnnotation": "Int",
+            "type": "Int"
+        }
+    ]
+}

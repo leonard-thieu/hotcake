@@ -1,7 +1,7 @@
-import { MissableToken, MissingToken } from '../../Token/MissingToken';
-import { AliasKeywordToken, EqualsSignToken, FloatKeywordToken, IdentifierToken, IntKeywordToken, PeriodToken, StringKeywordToken } from '../../Token/Tokens';
+import { MissingToken } from '../../Token/MissingToken';
+import { AliasKeywordToken, EqualsSignToken, FloatKeywordToken, IntKeywordToken, PeriodToken, StringKeywordToken } from '../../Token/Tokens';
 import { CommaSeparator } from '../CommaSeparator';
-import { EscapedIdentifier, Identifier } from '../Identifier';
+import { Identifier } from '../Identifier';
 import { NodeKind } from '../Nodes';
 import { Declaration } from './Declarations';
 
@@ -26,29 +26,18 @@ export class AliasDirectiveSequence extends Declaration {
 export const AliasDirectiveChildNames: ReadonlyArray<keyof AliasDirective> = [
     'identifier',
     'equalsSign',
-    'moduleIdentifier',
-    'moduleScopeMemberAccessOperator',
-    'typeIdentifier',
-    'typeScopeMemberAccessOperator',
-    'target',
+    'children',
 ];
 
 export class AliasDirective extends Declaration {
     readonly kind = NodeKind.AliasDirective;
 
     identifier: Identifier = undefined!;
-    equalsSign: MissableToken<EqualsSignToken> = undefined!;
-
-    moduleIdentifier?: IdentifierToken = undefined;
-    moduleScopeMemberAccessOperator?: MissableToken<PeriodToken> = undefined;
-
-    typeIdentifier?: EscapedIdentifier | IdentifierToken = undefined;
-    typeScopeMemberAccessOperator?: PeriodToken = undefined;
-
-    target: DeclarationReferenceIdentifier | MissingToken = undefined!;
+    equalsSign: EqualsSignToken | MissingToken = undefined!;
+    children: (DeclarationReferenceIdentifier | PeriodToken)[] = undefined!;
 }
 
-// NOTE: Does not include BoolKeywordToken.
+// NOTE: Does not include `Void`, `Bool`, or `Array`.
 type DeclarationReferenceIdentifier =
     | Identifier
     | IntKeywordToken

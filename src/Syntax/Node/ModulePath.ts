@@ -1,4 +1,4 @@
-import { MissableToken } from '../Token/MissingToken';
+import { MissingToken } from '../Token/MissingToken';
 import { IdentifierToken, PeriodToken } from '../Token/Tokens';
 import { Node, NodeKind } from './Nodes';
 
@@ -11,5 +11,5 @@ export class ModulePath extends Node {
     readonly kind = NodeKind.ModulePath;
 
     children: (IdentifierToken | PeriodToken)[] = undefined!;
-    moduleIdentifier: MissableToken<IdentifierToken> = undefined!;
+    moduleIdentifier: IdentifierToken | MissingToken = undefined!;
 }

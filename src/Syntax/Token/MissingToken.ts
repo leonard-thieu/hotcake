@@ -1,5 +1,4 @@
-import { NodeKind } from '../Node/Nodes';
-import { NewlineToken, Token, TokenKind, TokenKindToTokenMap, Tokens } from './Tokens';
+import { NewlineToken, Token, TokenKind } from './Tokens';
 
 export class MissingToken extends Token<TokenKind.Missing> {
     constructor(
@@ -19,14 +18,13 @@ export class MissingToken extends Token<TokenKind.Missing> {
 
 export type MissingTokenKinds =
     | TokenKind
-    | TokenKind.Expression
-    | TokenKind.ImportStatementPath
-    | NodeKind.DataDeclaration
-    | NodeKind.StringLiteralExpression
-    | NodeKind.TypeReference
+    | MissingTokenKind
     ;
 
-export type MissableToken<TToken extends Tokens> =
-    | TokenKindToTokenMap[TToken['kind']]
-    | MissingToken
-    ;
+export enum MissingTokenKind {
+    Expression = 'Expression',
+    ImportStatementPath = 'ImportStatementPath',
+    DataDeclaration = 'DataDeclaration',
+    StringLiteralExpression = 'StringLiteralExpression',
+    TypeReference = 'TypeReference',
+}

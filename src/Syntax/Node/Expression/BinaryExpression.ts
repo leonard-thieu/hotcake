@@ -1,6 +1,7 @@
+import { MissingToken } from '../../Token/MissingToken';
 import { AmpersandToken, AndKeywordToken, AsteriskToken, EqualsSignToken, GreaterThanSignEqualsSignToken, GreaterThanSignToken, HyphenMinusToken, LessThanSignEqualsSignToken, LessThanSignGreaterThanSignToken, LessThanSignToken, ModKeywordToken, OrKeywordToken, PlusSignToken, ShlKeywordToken, ShrKeywordToken, SlashToken, TildeToken, VerticalBarToken } from '../../Token/Tokens';
 import { NodeKind } from '../Nodes';
-import { Expression, MissableExpression } from './Expressions';
+import { Expression, Expressions } from './Expressions';
 
 export const BinaryExpressionChildNames: ReadonlyArray<keyof BinaryExpression> = [
     'newlines',
@@ -12,9 +13,9 @@ export const BinaryExpressionChildNames: ReadonlyArray<keyof BinaryExpression> =
 export class BinaryExpression extends Expression {
     readonly kind = NodeKind.BinaryExpression;
 
-    leftOperand: MissableExpression = undefined!;
+    leftOperand: Expressions | MissingToken = undefined!;
     operator: BinaryExpressionOperatorToken = undefined!;
-    rightOperand: MissableExpression = undefined!;
+    rightOperand: Expressions | MissingToken = undefined!;
 }
 
 export type BinaryExpressionOperatorToken =
