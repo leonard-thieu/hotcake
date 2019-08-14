@@ -1,7 +1,16 @@
 import path = require('path');
-import { executeParserTestCases } from './shared';
+import { executeParserTestCases, getCasePaths } from './shared';
 
 const name = 'Parser';
 
-executeParserTestCases(name, path.resolve(__dirname, '..', 'vscode', 'test', 'colorize-fixtures'));
-executeParserTestCases(name, path.resolve(__dirname, 'cases', name));
+{
+    const rootPath = path.resolve(__dirname, '..', 'vscode', 'test', 'colorize-fixtures');
+    const casePaths = getCasePaths(rootPath);
+    executeParserTestCases(name, rootPath, casePaths);
+}
+
+{
+    const rootPath = path.resolve(__dirname, 'cases', name);
+    const casePaths = getCasePaths(rootPath);
+    executeParserTestCases(name, rootPath, casePaths);
+}

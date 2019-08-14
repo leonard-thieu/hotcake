@@ -1,9 +1,88 @@
+import path = require('path');
 import { executeBinderTestCases, executeParserTestCases, executePreprocessorParserTestCases, executePreprocessorTokenizerTestCases, getFrameworkDirectory } from './shared';
 
 const name = 'MonkeyX';
-const casesPath = getFrameworkDirectory();
+const rootPath = getFrameworkDirectory();
+const casePaths = [
+    path.resolve(rootPath, 'bananas/beaker/angelfont_example/angelfont_example.monkey'),
+    path.resolve(rootPath, 'bananas/devolonter/matchup/fontmachine/bitmapfont.monkey'),
+    path.resolve(rootPath, 'bananas/devolonter/matchup/matchup.monkey'),
+    path.resolve(rootPath, 'bananas/difference/champagne/champagne.monkey'),
+    path.resolve(rootPath, 'bananas/difference/clock/clock.monkey'),
+    path.resolve(rootPath, 'bananas/mak/acceltest/acceltest.monkey'),
+    path.resolve(rootPath, 'bananas/mak/admobtest/admobtest.monkey'),
+    path.resolve(rootPath, 'bananas/mak/audiotest/audiotest.monkey'),
+    path.resolve(rootPath, 'bananas/mak/bbgametest/bbgametest.monkey'),
+    path.resolve(rootPath, 'bananas/mak/bouncyaliens/bouncyaliens.monkey'),
+    path.resolve(rootPath, 'bananas/mak/dynamicimage/dynamicimage.monkey'),
+    path.resolve(rootPath, 'bananas/mak/echoserver_tcp/echoserver_tcp.monkey'),
+    path.resolve(rootPath, 'bananas/mak/echoserver_udp/echoserver_udp.monkey'),
+    path.resolve(rootPath, 'bananas/mak/exceptions/exceptions.monkey'),
+    path.resolve(rootPath, 'bananas/mak/fileiotest/fileiotest.monkey'),
+    path.resolve(rootPath, 'bananas/mak/filetest/filetest.monkey'),
+    path.resolve(rootPath, 'bananas/mak/firepaint/firepaint.monkey'),
+    path.resolve(rootPath, 'bananas/mak/fpstest/fpstest.monkey'),
+    path.resolve(rootPath, 'bananas/mak/gles20cube/gles20cube.monkey'),
+    path.resolve(rootPath, 'bananas/mak/httprequest/httprequest.monkey'),
+    path.resolve(rootPath, 'bananas/mak/iaptest/iaptest.monkey'),
+    path.resolve(rootPath, 'bananas/mak/ifacetest/ifacetest.monkey'),
+    path.resolve(rootPath, 'bananas/mak/ifacetest/ifacetest2.monkey'),
+    path.resolve(rootPath, 'bananas/mak/joytest/joytest.monkey'),
+    path.resolve(rootPath, 'bananas/mak/jsonstream/jsonstream.monkey'),
+    path.resolve(rootPath, 'bananas/mak/keyboardtest/keyboardtest.monkey'),
+    path.resolve(rootPath, 'bananas/mak/mojotest/mojotest.monkey'),
+    path.resolve(rootPath, 'bananas/mak/opengltest/opengltest.monkey'),
+    path.resolve(rootPath, 'bananas/mak/reflectiontest/reflectiontest.monkey'),
+    path.resolve(rootPath, 'bananas/mak/smoothscroll/smoothscroll.monkey'),
+    path.resolve(rootPath, 'bananas/mak/suspendtest/suspendtest.monkey'),
+    path.resolve(rootPath, 'bananas/mak/unicodetest/unicodetest.monkey'),
+    path.resolve(rootPath, 'bananas/origaming/DegreeAndRadian/DegreeAndRadian.monkey'),
+    path.resolve(rootPath, 'bananas/origaming/FollowMouse/FollowMouse.monkey'),
+    path.resolve(rootPath, 'bananas/origaming/MacOsMenu/MacOsMenu.monkey'),
+    path.resolve(rootPath, 'bananas/origaming/RotatingObjects/rotatingObjects.monkey'),
+    path.resolve(rootPath, 'bananas/Richard_Betson/glfw_diffusion/glfw_diffusion_example.monkey'),
+    path.resolve(rootPath, 'bananas/Richard_Betson/line_v_circle_collision/line_v_circle_collision.monkey'),
+    path.resolve(rootPath, 'bananas/Richard_Betson/mirror_fx_transform/mirror_fx_transform.monkey'),
+    path.resolve(rootPath, 'bananas/Richard_Betson/simple_verlet_physics/simple_verlet_physics.monkey'),
+    path.resolve(rootPath, 'bananas/Richard_Betson/TileImage/TileImage.monkey'),
+    path.resolve(rootPath, 'bananas/skn3/config/configdemo.monkey'),
+    path.resolve(rootPath, 'bananas/skn3/gamepad/gamepad.monkey'),
+    path.resolve(rootPath, 'bananas/skn3/monkenstein/monkenstein.monkey'),
+    path.resolve(rootPath, 'bananas/skn3/spiralmatrix/spiralmatrix.monkey'),
+    path.resolve(rootPath, 'bananas/skn3/texteffect/texteffect.monkey'),
+    path.resolve(rootPath, 'bananas/skn3/tweening/tweendemo.monkey'),
+    path.resolve(rootPath, 'bananas/warpy/bezier/bezier.monkey'),
+    path.resolve(rootPath, 'bananas/warpy/hilbert/hilbert.monkey'),
+    path.resolve(rootPath, 'bananas/warpy/horsey/horsey.monkey'),
+    path.resolve(rootPath, 'bananas/warpy/json/json.monkey'),
+    path.resolve(rootPath, 'bananas/warpy/monkeypuzzle/monkeypuzzle.monkey'),
+    path.resolve(rootPath, 'bananas/warpy/pegs/pegs.monkey'),
+    path.resolve(rootPath, 'bananas/warpy/transform/transform_mouse.monkey'),
+    path.resolve(rootPath, 'bananas/warpy/transform/transform.monkey'),
+    path.resolve(rootPath, 'docs/monkeydoc/Tutorials/First monkey steps.data/spiral/spiral.monkey'),
+    path.resolve(rootPath, 'modules/dom/gldemo.monkey'),
+    path.resolve(rootPath, 'modules/dom/mkwebgl.monkey'),
+    path.resolve(rootPath, 'modules/dom/sockdemo.monkey'),
+    path.resolve(rootPath, 'modules/mojo2/bananas/bouncyaliens/bouncyaliens.monkey'),
+    path.resolve(rootPath, 'modules/mojo2/bananas/bumptest/bumptest.monkey'),
+    path.resolve(rootPath, 'modules/mojo2/bananas/directlight/directlight.monkey'),
+    path.resolve(rootPath, 'modules/mojo2/bananas/drawprimitives/drawprimitives.monkey'),
+    path.resolve(rootPath, 'modules/mojo2/bananas/helloworld/helloworld.monkey'),
+    path.resolve(rootPath, 'modules/mojo2/bananas/letterbox/letterbox.monkey'),
+    path.resolve(rootPath, 'modules/mojo2/bananas/mojotest/mojotest.monkey'),
+    path.resolve(rootPath, 'modules/mojo2/bananas/renderdrawlist/renderdrawlist.monkey'),
+    path.resolve(rootPath, 'modules/mojo2/bananas/rendererdemo/rendererdemo.monkey'),
+    path.resolve(rootPath, 'modules/mojo2/bananas/rendertoimage/rendertoimage.monkey'),
+    path.resolve(rootPath, 'modules/mojo2/bananas/shadereffect/shadereffect.monkey'),
+    path.resolve(rootPath, 'modules/mojo2/bananas/writepixels/writepixels.monkey'),
+    path.resolve(rootPath, 'modules/opengl/makeglxx.monkey'),
+    path.resolve(rootPath, 'src/launcher/launcher.monkey'),
+    path.resolve(rootPath, 'src/mserver/mserver.monkey'),
+    path.resolve(rootPath, 'src/rebuildall.monkey'),
+    path.resolve(rootPath, 'src/transcc/transcc.monkey'),
+];
 
-executePreprocessorTokenizerTestCases(name, casesPath);
-executePreprocessorParserTestCases(name, casesPath);
-executeParserTestCases(name, casesPath);
-executeBinderTestCases(name, casesPath);
+executePreprocessorTokenizerTestCases(name, rootPath, casePaths);
+executePreprocessorParserTestCases(name, rootPath, casePaths);
+executeParserTestCases(name, rootPath, casePaths);
+executeBinderTestCases(name, rootPath, casePaths);
