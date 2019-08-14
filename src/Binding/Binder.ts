@@ -3130,6 +3130,29 @@ export class Binder {
             }
         }
 
+        switch (declaration.kind) {
+            case BoundNodeKind.FunctionGroupDeclaration:
+            case BoundNodeKind.ExternClassMethodGroupDeclaration:
+            case BoundNodeKind.InterfaceMethodGroupDeclaration:
+            case BoundNodeKind.ClassMethodGroupDeclaration: {
+                if (parent.kind !== BoundNodeKind.InvokeExpression ||
+                    parent.invokableExpression
+                ) {
+                    for (const [, overload] of declaration.overloads) {
+                        if (!overload.parameters.length) {
+                            return this.invokeExpression(parent,
+                                (parent) => setParent(identifierExpression, parent),
+                                () => [],
+                            );
+                        }
+                    }
+
+                    throw new Error(`Could not find a matching overload for '${declaration.identifier.name}'.`);
+                }
+                break;
+            }
+        }
+
         return identifierExpression;
     }
 
