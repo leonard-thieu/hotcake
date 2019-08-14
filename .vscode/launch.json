@@ -7,7 +7,7 @@
         {
             "type": "node",
             "request": "launch",
-            "name": "Mocha All",
+            "name": "Test",
             "program": "${workspaceFolder}/node_modules/mocha/bin/_mocha",
             "args": [
                 "--timeout",
@@ -28,7 +28,7 @@
         {
             "type": "node",
             "request": "launch",
-            "name": "Mocha Preprocessor Tokenizer",
+            "name": "Test Monkey Projects",
             "program": "${workspaceFolder}/node_modules/mocha/bin/_mocha",
             "args": [
                 "--timeout",
@@ -36,7 +36,7 @@
                 "--colors",
                 "--require",
                 "source-map-support/register",
-                "${workspaceFolder}/tests/PreprocessorTokenizer*Tests.js"
+                "${workspaceFolder}/tests/MonkeyTests.js"
             ],
             "console": "integratedTerminal",
             "internalConsoleOptions": "neverOpen",
@@ -49,7 +49,28 @@
         {
             "type": "node",
             "request": "launch",
-            "name": "Mocha Preprocessor Parser",
+            "name": "Test Preprocessor Tokenizer",
+            "program": "${workspaceFolder}/node_modules/mocha/bin/_mocha",
+            "args": [
+                "--timeout",
+                "999999",
+                "--colors",
+                "--require",
+                "source-map-support/register",
+                "${workspaceFolder}/tests/PreprocessorTokenizerTests.js"
+            ],
+            "console": "integratedTerminal",
+            "internalConsoleOptions": "neverOpen",
+            "skipFiles": [
+                "${workspaceFolder}/node_modules/**/*.js",
+                "<node_internals>/**/*.js",
+                "${workspaceFolder}/src/Diagnostics.js"
+            ]
+        },
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "Test Preprocessor Parser",
             "program": "${workspaceFolder}/node_modules/mocha/bin/_mocha",
             "args": [
                 "--timeout",
@@ -70,7 +91,7 @@
         {
             "type": "node",
             "request": "launch",
-            "name": "Mocha Tokenizer",
+            "name": "Test Tokenizer",
             "program": "${workspaceFolder}/node_modules/mocha/bin/_mocha",
             "args": [
                 "--timeout",
@@ -91,7 +112,7 @@
         {
             "type": "node",
             "request": "launch",
-            "name": "Mocha Parser",
+            "name": "Test Parser",
             "program": "${workspaceFolder}/node_modules/mocha/bin/_mocha",
             "args": [
                 "--timeout",
@@ -112,7 +133,7 @@
         {
             "type": "node",
             "request": "launch",
-            "name": "Mocha Binder",
+            "name": "Test Binder",
             "program": "${workspaceFolder}/node_modules/mocha/bin/_mocha",
             "args": [
                 "--timeout",

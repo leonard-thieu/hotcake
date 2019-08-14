@@ -662,6 +662,17 @@ export abstract class ParserBase {
         expression.parent = invokeExpression;
         invokeExpression.invokableExpression = expression;
         invokeExpression.invokableExpression.parent = invokeExpression;
+
+        // e.g. `New Float[6*32]`
+        if (expression.kind === NodeKind.NewExpression &&
+            expression.type.kind === NodeKind.TypeReference &&
+            expression.type.arrayTypeAnnotations.length
+        ) {
+            invokeExpression.arguments = [];
+
+            return invokeExpression;
+        }
+
         invokeExpression.openingParenthesis = this.eatOptional(TokenKind.OpeningParenthesis);
         if (invokeExpression.openingParenthesis) {
             invokeExpression.leadingNewlines = this.parseList(ParseContextKind.NewlineList, invokeExpression);
