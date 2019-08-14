@@ -1,6 +1,8 @@
 import path = require('path');
-import { executeBinderTestCases } from './shared';
+import { executeBinderTestCases, getCasePaths } from './shared';
 
 const name = 'Binder';
+const rootPath = path.resolve(__dirname, 'cases', name);
+const casePaths = getCasePaths(rootPath);
 
-executeBinderTestCases(name, path.resolve(__dirname, 'cases', name));
+executeBinderTestCases(name, rootPath, casePaths);

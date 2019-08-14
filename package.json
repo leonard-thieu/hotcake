@@ -13,7 +13,7 @@
         "clean": "node scripts/clean.js",
         "test": "mocha --require source-map-support/register \"./tests/!(MonkeyTests)*.js\"",
         "test:monkey": "mocha --require source-map-support/register \"./tests/MonkeyTests.js\"",
-        "test:preprocessorTokenizer": "mocha --require source-map-support/register \"./tests/PreprocessorTokenizer*Tests.js\"",
+        "test:preprocessorTokenizer": "mocha --require source-map-support/register \"./tests/PreprocessorTokenizerTests.js\"",
         "test:preprocessorParser": "mocha --require source-map-support/register \"./tests/PreprocessorParserTests.js\"",
         "test:tokenizer": "mocha --require source-map-support/register \"./tests/TokenizerTests.js\"",
         "test:parser": "mocha --require source-map-support/register \"./tests/ParserTests.js\"",
