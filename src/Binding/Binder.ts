@@ -1685,6 +1685,11 @@ export class Binder {
         const boundIfStatement = new BoundIfStatement();
         boundIfStatement.parent = parent;
         boundIfStatement.expression = getExpression(boundIfStatement);
+
+        if (!this.isExplicitlyConvertible(boundIfStatement.expression.type, this.project.boolTypeDeclaration.type)) {
+            throw new Error(`'${boundIfStatement.expression.type}' is not convertible to '${this.project.boolTypeDeclaration.type}'.`);
+        }
+
         boundIfStatement.statements = getStatements(boundIfStatement);
         if (getElseIfClauses) {
             boundIfStatement.elseIfClauses = getElseIfClauses(boundIfStatement);
@@ -1715,6 +1720,11 @@ export class Binder {
         const boundElseIfClause = new BoundElseIfClause();
         boundElseIfClause.parent = parent;
         boundElseIfClause.expression = getExpression(boundElseIfClause);
+
+        if (!this.isExplicitlyConvertible(boundElseIfClause.expression.type, this.project.boolTypeDeclaration.type)) {
+            throw new Error(`'${boundElseIfClause.expression.type}' is not convertible to '${this.project.boolTypeDeclaration.type}'.`);
+        }
+
         boundElseIfClause.statements = getStatements(boundElseIfClause);
 
         return boundElseIfClause;
@@ -1849,6 +1859,11 @@ export class Binder {
         const boundWhileLoop = new BoundWhileLoop();
         boundWhileLoop.parent = parent;
         boundWhileLoop.expression = getExpression(boundWhileLoop);
+
+        if (!this.isExplicitlyConvertible(boundWhileLoop.expression.type, this.project.boolTypeDeclaration.type)) {
+            throw new Error(`'${boundWhileLoop.expression.type}' is not convertible to '${this.project.boolTypeDeclaration.type}'.`);
+        }
+
         boundWhileLoop.statements = getStatements(boundWhileLoop);
 
         return boundWhileLoop;
@@ -1882,9 +1897,15 @@ export class Binder {
     ): BoundRepeatLoop {
         const boundRepeatLoop = new BoundRepeatLoop();
         boundRepeatLoop.parent = parent;
+
         if (getUntilExpression) {
             boundRepeatLoop.untilExpression = getUntilExpression(boundRepeatLoop);
+
+            if (!this.isExplicitlyConvertible(boundRepeatLoop.untilExpression.type, this.project.boolTypeDeclaration.type)) {
+                throw new Error(`'${boundRepeatLoop.untilExpression.type}' is not convertible to '${this.project.boolTypeDeclaration.type}'.`);
+            }
         }
+
         boundRepeatLoop.statements = getStatements(boundRepeatLoop);
 
         return boundRepeatLoop;
@@ -2608,6 +2629,21 @@ export class Binder {
         boundBinaryExpression.leftOperand = getLeftOperand(boundBinaryExpression);
         boundBinaryExpression.operator = operator;
         boundBinaryExpression.rightOperand = getRightOperand(boundBinaryExpression);
+
+        switch (operator) {
+            case BoundBinaryExpressionOperator.ConditionalOr:
+            case BoundBinaryExpressionOperator.ConditionalAnd: {
+                if (!this.isExplicitlyConvertible(boundBinaryExpression.leftOperand.type, this.project.boolTypeDeclaration.type)) {
+                    throw new Error(`'${boundBinaryExpression.leftOperand.type}' is not convertible to '${this.project.boolTypeDeclaration.type}'.`);
+                }
+
+                if (!this.isExplicitlyConvertible(boundBinaryExpression.rightOperand.type, this.project.boolTypeDeclaration.type)) {
+                    throw new Error(`'${boundBinaryExpression.rightOperand.type}' is not convertible to '${this.project.boolTypeDeclaration.type}'.`);
+                }
+                break;
+            }
+        }
+
         boundBinaryExpression.type = this.getTypeOfBinaryExpression(
             boundBinaryExpression.leftOperand.type,
             boundBinaryExpression.operator,
@@ -2772,6 +2808,13 @@ export class Binder {
         boundUnaryExpression.parent = parent;
         boundUnaryExpression.operator = operator;
         boundUnaryExpression.operand = getOperand(boundUnaryExpression);
+
+        if (operator === BoundUnaryExpressionOperator.BooleanInverse) {
+            if (!this.isExplicitlyConvertible(boundUnaryExpression.operand.type, this.project.boolTypeDeclaration.type)) {
+                throw new Error(`'${boundUnaryExpression.operand.type}' is not convertible to '${this.project.boolTypeDeclaration.type}'.`);
+            }
+        }
+
         boundUnaryExpression.type = this.getTypeOfUnaryExpression(
             boundUnaryExpression.operator,
             boundUnaryExpression.operand.type,
@@ -3769,6 +3812,49 @@ export class Binder {
         if (rightOperandType.isConvertibleTo(leftOperandType)) {
             return leftOperandType;
         }
+    }
+
+    private isExplicitlyConvertible(from: Types, to: Types) {
+        if (from === to) { return true; }
+
+        switch (from.kind) {
+            case TypeKind.Int:
+            case TypeKind.Float:
+            case TypeKind.Array: {
+                return to.kind === TypeKind.Bool;
+            }
+            case TypeKind.String: {
+                switch (to.kind) {
+                    case TypeKind.Bool:
+                    case TypeKind.Int:
+                    case TypeKind.Float: {
+                        return true;
+                    }
+                }
+                break;
+            }
+            case TypeKind.Object: {
+                if (to.kind === TypeKind.Bool) { return true; }
+
+                switch (to.declaration.kind) {
+                    case BoundNodeKind.ExternClassDeclaration:
+                    case BoundNodeKind.ClassDeclaration: {
+                        let ancestor: BoundExternClassDeclaration | BoundClassDeclaration | undefined = to.declaration;
+                        while (ancestor) {
+                            if (from.declaration === ancestor) {
+                                return true;
+                            }
+
+                            ancestor = ancestor.superType;
+                        }
+                        break;
+                    }
+                }
+                break;
+            }
+        }
+
+        throw new Error(`'${from}' is not explicitly convertible to '${to}'.`);
     }
 
     // #endregion
