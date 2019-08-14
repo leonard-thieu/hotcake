@@ -8,13 +8,8 @@ import { BoundFunctionDeclaration } from './BoundFunctionDeclaration';
 import { BoundInterfaceMethodDeclaration } from './BoundInterfaceDeclaration';
 
 export type BoundFunctionLikeGroupDeclaration =
-    | BoundFunctionGroupDeclarations
-    | BoundMethodGroupDeclaration
-    ;
-
-export type BoundFunctionGroupDeclarations =
-    | BoundExternFunctionGroupDeclaration
     | BoundFunctionGroupDeclaration
+    | BoundMethodGroupDeclaration
     ;
 
 export type BoundMethodGroupDeclaration =
@@ -22,14 +17,6 @@ export type BoundMethodGroupDeclaration =
     | BoundInterfaceMethodGroupDeclaration
     | BoundClassMethodGroupDeclaration
     ;
-
-export class BoundExternFunctionGroupDeclaration extends BoundNode {
-    readonly kind = BoundNodeKind.ExternFunctionGroupDeclaration;
-
-    identifier: BoundSymbol = undefined!;
-    type: FunctionGroupType = undefined!;
-    readonly overloads = new Overloads<BoundExternFunctionDeclaration>();
-}
 
 export class BoundExternClassMethodGroupDeclaration extends BoundNode {
     readonly kind = BoundNodeKind.ExternClassMethodGroupDeclaration;
@@ -44,7 +31,7 @@ export class BoundFunctionGroupDeclaration extends BoundNode {
 
     identifier: BoundSymbol = undefined!;
     type: FunctionGroupType = undefined!;
-    readonly overloads = new Overloads<BoundFunctionDeclaration>();
+    readonly overloads = new Overloads<BoundExternFunctionDeclaration | BoundFunctionDeclaration>();
 }
 
 export class BoundInterfaceMethodGroupDeclaration extends BoundNode {

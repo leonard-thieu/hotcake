@@ -4,7 +4,7 @@ import { BoundClassDeclaration } from './BoundClassDeclaration';
 import { BoundDataDeclaration } from './BoundDataDeclaration';
 import { BoundExternClassDeclaration } from './BoundExternClassDeclaration';
 import { BoundExternDataDeclaration } from './BoundExternDataDeclaration';
-import { BoundClassMethodGroupDeclaration, BoundExternClassMethodGroupDeclaration, BoundExternFunctionGroupDeclaration, BoundFunctionGroupDeclaration, BoundInterfaceMethodGroupDeclaration } from './BoundFunctionLikeGroupDeclaration';
+import { BoundClassMethodGroupDeclaration, BoundExternClassMethodGroupDeclaration, BoundFunctionGroupDeclaration, BoundInterfaceMethodGroupDeclaration } from './BoundFunctionLikeGroupDeclaration';
 import { BoundInterfaceDeclaration } from './BoundInterfaceDeclaration';
 import { BoundIntrinsicTypeDeclaration } from './BoundIntrinsicTypeDeclaration';
 import { BoundModuleDeclaration } from './BoundModuleDeclaration';
@@ -22,7 +22,6 @@ export type BoundAliasDirectiveTarget =
     | BoundExternClassDeclaration
     | BoundInterfaceDeclaration
     | BoundClassDeclaration
-    | BoundExternFunctionGroupDeclaration
     | BoundFunctionGroupDeclaration
     | BoundExternClassMethodGroupDeclaration
     | BoundInterfaceMethodGroupDeclaration

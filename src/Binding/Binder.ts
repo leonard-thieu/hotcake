@@ -62,7 +62,7 @@ import { BoundExternClassDeclaration, BoundExternClassMethodDeclaration } from '
 import { BoundExternDataDeclaration, BoundExternDataDeclarationKind } from './Node/Declaration/BoundExternDataDeclaration';
 import { BoundExternFunctionDeclaration } from './Node/Declaration/BoundExternFunctionDeclaration';
 import { BoundFunctionDeclaration } from './Node/Declaration/BoundFunctionDeclaration';
-import { BoundClassMethodGroupDeclaration, BoundExternClassMethodGroupDeclaration, BoundExternFunctionGroupDeclaration, BoundFunctionGroupDeclaration, BoundFunctionLikeGroupDeclaration, BoundInterfaceMethodGroupDeclaration } from './Node/Declaration/BoundFunctionLikeGroupDeclaration';
+import { BoundClassMethodGroupDeclaration, BoundExternClassMethodGroupDeclaration, BoundFunctionGroupDeclaration, BoundFunctionLikeGroupDeclaration, BoundInterfaceMethodGroupDeclaration } from './Node/Declaration/BoundFunctionLikeGroupDeclaration';
 import { BoundInterfaceDeclaration, BoundInterfaceMethodDeclaration } from './Node/Declaration/BoundInterfaceDeclaration';
 import { BoundModuleDeclaration } from './Node/Declaration/BoundModuleDeclaration';
 import { BoundTypeParameter } from './Node/Declaration/BoundTypeParameter';
@@ -418,7 +418,6 @@ export class Binder {
                             BoundNodeKind.ExternClassDeclaration,
                             BoundNodeKind.InterfaceDeclaration,
                             BoundNodeKind.ClassDeclaration,
-                            BoundNodeKind.ExternFunctionGroupDeclaration,
                             BoundNodeKind.FunctionGroupDeclaration,
                             BoundNodeKind.ExternClassMethodGroupDeclaration,
                             BoundNodeKind.InterfaceMethodGroupDeclaration,
@@ -535,12 +534,12 @@ export class Binder {
         externFunctionDeclaration: ExternFunctionDeclaration,
     ): BoundExternFunctionDeclaration {
         const name = getText(externFunctionDeclaration.identifier, parent);
-        const boundExternFunctionGroupDeclaration = this.bindExternFunctionGroupDeclaration(parent, name);
+        const boundFunctionGroupDeclaration = this.bindFunctionGroupDeclaration(parent, name);
 
         const boundExternFunctionDeclaration = new BoundExternFunctionDeclaration();
         boundExternFunctionDeclaration.declaration = externFunctionDeclaration;
-        boundExternFunctionGroupDeclaration.overloads.set(boundExternFunctionDeclaration);
-        boundExternFunctionDeclaration.parent = boundExternFunctionGroupDeclaration;
+        boundFunctionGroupDeclaration.overloads.set(boundExternFunctionDeclaration);
+        boundExternFunctionDeclaration.parent = boundFunctionGroupDeclaration;
         boundExternFunctionDeclaration.type = new FunctionType(boundExternFunctionDeclaration);
         boundExternFunctionDeclaration.identifier = new BoundSymbol(name, boundExternFunctionDeclaration);
         boundExternFunctionDeclaration.parameters = this.bindDataDeclarationSequence(boundExternFunctionDeclaration, externFunctionDeclaration.parameters);
@@ -560,24 +559,6 @@ export class Binder {
         deferOrExecute(this.bindTypeReferencesCallbackList, bindTypeReferencesOnExternFunctionDeclaration);
 
         return boundExternFunctionDeclaration;
-    }
-
-    private bindExternFunctionGroupDeclaration(
-        parent: BoundModuleDeclaration | BoundExternClassDeclaration,
-        name: string,
-    ): BoundExternFunctionGroupDeclaration {
-        let boundExternFunctionGroupDeclaration = parent.locals.get(name, BoundNodeKind.ExternFunctionGroupDeclaration);
-        if (boundExternFunctionGroupDeclaration) {
-            return boundExternFunctionGroupDeclaration;
-        }
-
-        boundExternFunctionGroupDeclaration = new BoundExternFunctionGroupDeclaration();
-        boundExternFunctionGroupDeclaration.parent = parent;
-        boundExternFunctionGroupDeclaration.type = new FunctionGroupType(boundExternFunctionGroupDeclaration);
-        boundExternFunctionGroupDeclaration.identifier = new BoundSymbol(name, boundExternFunctionGroupDeclaration);
-        parent.locals.set(boundExternFunctionGroupDeclaration.identifier);
-
-        return boundExternFunctionGroupDeclaration;
     }
 
     // #endregion
@@ -1043,7 +1024,7 @@ export class Binder {
     }
 
     private bindFunctionGroupDeclaration(
-        parent: BoundModuleDeclaration | BoundClassDeclaration,
+        parent: BoundModuleDeclaration | BoundExternClassDeclaration | BoundClassDeclaration,
         name: string,
     ): BoundFunctionGroupDeclaration {
         let boundFunctionGroupDeclaration = parent.locals.get(name, BoundNodeKind.FunctionGroupDeclaration);
