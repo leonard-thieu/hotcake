@@ -3,7 +3,7 @@
     "identifier": "externFunctionDeclaration",
     "locals": [
         {
-            "kind": "ExternFunctionGroupDeclaration",
+            "kind": "FunctionGroupDeclaration",
             "identifier": "ReadFile",
             "type": "ReadFile",
             "overloads": [
@@ -28,7 +28,7 @@
             ]
         },
         {
-            "kind": "ExternFunctionGroupDeclaration",
+            "kind": "FunctionGroupDeclaration",
             "identifier": "WriteFile",
             "type": "WriteFile",
             "overloads": [

@@ -29,7 +29,6 @@ export enum BoundNodeKind {
 
     ExternDataDeclaration = 'ExternDataDeclaration',
     ExternFunctionDeclaration = 'ExternFunctionDeclaration',
-    ExternFunctionGroupDeclaration = 'ExternFunctionGroupDeclaration',
     ExternClassDeclaration = 'ExternClassDeclaration',
     ExternClassMethodDeclaration = 'ExternClassMethodDeclaration',
     ExternClassMethodGroupDeclaration = 'ExternClassMethodGroupDeclaration',

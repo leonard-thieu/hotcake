@@ -5,7 +5,7 @@ import { BoundClassMethodDeclaration } from '../Node/Declaration/BoundClassDecla
 import { BoundExternClassMethodDeclaration } from '../Node/Declaration/BoundExternClassDeclaration';
 import { BoundExternFunctionDeclaration } from '../Node/Declaration/BoundExternFunctionDeclaration';
 import { BoundFunctionDeclaration } from '../Node/Declaration/BoundFunctionDeclaration';
-import { BoundFunctionGroupDeclarations, BoundMethodGroupDeclaration } from '../Node/Declaration/BoundFunctionLikeGroupDeclaration';
+import { BoundFunctionGroupDeclaration, BoundMethodGroupDeclaration } from '../Node/Declaration/BoundFunctionLikeGroupDeclaration';
 import { BoundInterfaceMethodDeclaration } from '../Node/Declaration/BoundInterfaceDeclaration';
 import { Type, TypeKind, Types } from './Types';
 
@@ -79,7 +79,7 @@ export class FunctionType extends FunctionLikeType {
 }
 
 export class FunctionGroupType extends Type {
-    constructor(readonly declaration: BoundFunctionGroupDeclarations) {
+    constructor(readonly declaration: BoundFunctionGroupDeclaration) {
         super();
     }
 

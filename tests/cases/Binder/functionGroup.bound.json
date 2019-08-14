@@ -1,0 +1,72 @@
+{
+    "kind": "ModuleDeclaration",
+    "identifier": "functionGroup",
+    "locals": [
+        {
+            "kind": "FunctionGroupDeclaration",
+            "identifier": "LoadDir",
+            "type": "LoadDir",
+            "overloads": [
+                {
+                    "kind": "ExternFunctionDeclaration",
+                    "identifier": "LoadDir",
+                    "locals": [
+                        "path"
+                    ],
+                    "type": "LoadDir: String[](String)",
+                    "returnType": "String[]",
+                    "parameters": [
+                        {
+                            "kind": "DataDeclaration",
+                            "declarationKind": "Parameter",
+                            "identifier": "path",
+                            "typeAnnotation": "String",
+                            "type": "String"
+                        }
+                    ]
+                },
+                {
+                    "kind": "FunctionDeclaration",
+                    "identifier": "LoadDir",
+                    "locals": [
+                        "path",
+                        "recursive",
+                        "hidden"
+                    ],
+                    "type": "LoadDir: String[](String,Bool,Bool)",
+                    "returnType": "String[]",
+                    "parameters": [
+                        {
+                            "kind": "DataDeclaration",
+                            "declarationKind": "Parameter",
+                            "identifier": "path",
+                            "typeAnnotation": "String",
+                            "type": "String"
+                        },
+                        {
+                            "kind": "DataDeclaration",
+                            "declarationKind": "Parameter",
+                            "identifier": "recursive",
+                            "typeAnnotation": "Bool",
+                            "type": "Bool"
+                        },
+                        {
+                            "kind": "DataDeclaration",
+                            "declarationKind": "Parameter",
+                            "identifier": "hidden",
+                            "typeAnnotation": "Bool",
+                            "operator": "EqualsSign",
+                            "expression": {
+                                "kind": "BooleanLiteralExpression",
+                                "type": "Bool",
+                                "value": "False"
+                            },
+                            "type": "Bool"
+                        }
+                    ],
+                    "statements": []
+                }
+            ]
+        }
+    ]
+}
