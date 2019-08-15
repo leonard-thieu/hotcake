@@ -461,6 +461,216 @@ export class Parser extends ParserBase {
 
     // #endregion
 
+    // #region Extern data declaration sequence
+
+    private parseExternDataDeclarationSequence(parent: Nodes, dataDeclarationKeyword: ExternDataDeclarationKeywordToken): ExternDataDeclarationSequence {
+        const externDataDeclarationSequence = new ExternDataDeclarationSequence();
+        externDataDeclarationSequence.parent = parent;
+        externDataDeclarationSequence.dataDeclarationKeyword = dataDeclarationKeyword;
+        externDataDeclarationSequence.children = this.parseList(ParseContextKind.ExternDataDeclarationSequence, externDataDeclarationSequence, TokenKind.Comma);
+
+        return externDataDeclarationSequence;
+    }
+
+    // #region Extern data declaration sequence members
+
+    private isExternDataDeclarationSequenceTerminator(token: Tokens): boolean {
+        return !this.isExternDataDeclarationSequenceMemberStart(token);
+    }
+
+    private isExternDataDeclarationSequenceMemberStart(token: Tokens): boolean {
+        switch (token.kind) {
+            case TokenKind.Identifier:
+            case TokenKind.ObjectKeyword:
+            case TokenKind.ThrowableKeyword:
+            case TokenKind.CommercialAt:
+            case TokenKind.Comma: {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    private parseExternDataDeclarationSequenceMember(parent: Nodes) {
+        const token = this.getToken();
+        switch (token.kind) {
+            case TokenKind.Identifier:
+            case TokenKind.ObjectKeyword:
+            case TokenKind.ThrowableKeyword:
+            case TokenKind.CommercialAt: {
+                this.advanceToken();
+
+                return this.parseExternDataDeclaration(parent, token);
+            }
+            case TokenKind.Comma: {
+                this.advanceToken();
+
+                return this.parseCommaSeparator(parent, token);
+            }
+        }
+
+        return this.parseCore(parent, token);
+    }
+
+    // #endregion
+
+    // #region Extern data declaration
+
+    private parseExternDataDeclaration(parent: Nodes, identifierStart: IdentifierStartToken): ExternDataDeclaration {
+        const externDataDeclaration = new ExternDataDeclaration();
+        externDataDeclaration.parent = parent;
+        externDataDeclaration.identifier = this.parseIdentifier(parent, identifierStart);
+        externDataDeclaration.typeAnnotation = this.parseTypeAnnotation(externDataDeclaration);
+        externDataDeclaration.equalsSign = this.eatOptional(TokenKind.EqualsSign);
+        if (externDataDeclaration.equalsSign) {
+            externDataDeclaration.nativeSymbol = this.parseMissableStringLiteralExpression(externDataDeclaration);
+        }
+
+        return externDataDeclaration;
+    }
+
+    // #endregion
+
+    // #endregion
+
+    // #region Extern function declaration
+
+    private parseExternFunctionDeclaration(parent: Nodes, functionKeyword: FunctionKeywordToken): ExternFunctionDeclaration {
+        const externFunctionDeclaration = new ExternFunctionDeclaration();
+        externFunctionDeclaration.parent = parent;
+        externFunctionDeclaration.functionKeyword = functionKeyword;
+        externFunctionDeclaration.identifier = this.parseMissableIdentifier(externFunctionDeclaration)
+        externFunctionDeclaration.returnType = this.parseTypeAnnotation(externFunctionDeclaration);
+        externFunctionDeclaration.openingParenthesis = this.eatMissable(TokenKind.OpeningParenthesis);
+        externFunctionDeclaration.parameters = this.parseDataDeclarationSequence(externFunctionDeclaration);
+        externFunctionDeclaration.closingParenthesis = this.eatMissable(TokenKind.ClosingParenthesis);
+        externFunctionDeclaration.equalsSign = this.eatOptional(TokenKind.EqualsSign);
+        if (externFunctionDeclaration.equalsSign) {
+            externFunctionDeclaration.nativeSymbol = this.parseMissableStringLiteralExpression(externFunctionDeclaration);
+        }
+
+        return externFunctionDeclaration;
+    }
+
+    // #endregion
+
+    // #region Extern class declaration
+
+    private parseExternClassDeclaration(parent: Nodes, classKeyword: ClassKeywordToken): ExternClassDeclaration {
+        const externClassDeclaration = new ExternClassDeclaration();
+        externClassDeclaration.parent = parent;
+        externClassDeclaration.classKeyword = classKeyword;
+        externClassDeclaration.identifier = this.parseMissableIdentifier(externClassDeclaration);
+
+        externClassDeclaration.extendsKeyword = this.eatOptional(TokenKind.ExtendsKeyword);
+        if (externClassDeclaration.extendsKeyword) {
+            externClassDeclaration.superType = this.eatOptional(TokenKind.NullKeyword);
+            if (!externClassDeclaration.superType) {
+                externClassDeclaration.superType = this.parseMissableTypeReference(externClassDeclaration);
+            }
+        }
+
+        externClassDeclaration.attribute = this.eatOptional(TokenKind.AbstractKeyword, TokenKind.FinalKeyword);
+        externClassDeclaration.equalsSign = this.eatOptional(TokenKind.EqualsSign);
+        if (externClassDeclaration.equalsSign) {
+            externClassDeclaration.nativeSymbol = this.parseMissableStringLiteralExpression(externClassDeclaration);
+        }
+        externClassDeclaration.members = this.parseListWithSkippedTokens(ParseContextKind.ExternClassDeclaration, externClassDeclaration);
+        externClassDeclaration.endKeyword = this.eatMissable(TokenKind.EndKeyword);
+        if (externClassDeclaration.endKeyword.kind === TokenKind.EndKeyword) {
+            externClassDeclaration.endClassKeyword = this.eatOptional(TokenKind.ClassKeyword);
+        }
+
+        return externClassDeclaration;
+    }
+
+    // #region Extern class declaration members
+
+    private isExternClassDeclarationMembersListTerminator(token: Tokens): boolean {
+        switch (token.kind) {
+            case TokenKind.EndKeyword: {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    private isExternClassDeclarationMemberStart(token: Tokens): boolean {
+        switch (token.kind) {
+            case TokenKind.PrivateKeyword:
+            case TokenKind.PublicKeyword:
+            case TokenKind.ProtectedKeyword:
+            case TokenKind.GlobalKeyword:
+            case TokenKind.FieldKeyword:
+            case TokenKind.FunctionKeyword:
+            case TokenKind.MethodKeyword:
+            case TokenKind.Newline: {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    private parseExternClassDeclarationMember(parent: Nodes) {
+        const token = this.getToken();
+        switch (token.kind) {
+            case TokenKind.PrivateKeyword:
+            case TokenKind.PublicKeyword:
+            case TokenKind.ProtectedKeyword: {
+                this.advanceToken();
+
+                return this.parseAccessibilityDirective(parent, token);
+            }
+            case TokenKind.GlobalKeyword:
+            case TokenKind.FieldKeyword: {
+                this.advanceToken();
+
+                return this.parseExternDataDeclarationSequence(parent, token);
+            }
+            case TokenKind.FunctionKeyword: {
+                this.advanceToken();
+
+                return this.parseExternFunctionDeclaration(parent, token);
+            }
+            case TokenKind.MethodKeyword: {
+                this.advanceToken();
+
+                return this.parseExternClassMethodDeclaration(parent, token);
+            }
+        }
+
+        return this.parseNewlineListMember(parent);
+    }
+
+    // #endregion
+
+    // #region Extern class method declaration
+
+    private parseExternClassMethodDeclaration(parent: Nodes, methodKeyword: MethodKeywordToken): ExternClassMethodDeclaration {
+        const externClassMethodDeclaration = new ExternClassMethodDeclaration();
+        externClassMethodDeclaration.parent = parent;
+        externClassMethodDeclaration.methodKeyword = methodKeyword;
+        externClassMethodDeclaration.identifier = this.parseMissableIdentifier(externClassMethodDeclaration);
+        externClassMethodDeclaration.returnType = this.parseTypeAnnotation(externClassMethodDeclaration);
+        externClassMethodDeclaration.openingParenthesis = this.eatMissable(TokenKind.OpeningParenthesis);
+        externClassMethodDeclaration.parameters = this.parseDataDeclarationSequence(externClassMethodDeclaration);
+        externClassMethodDeclaration.closingParenthesis = this.eatMissable(TokenKind.ClosingParenthesis);
+        externClassMethodDeclaration.attributes = this.parseList(ParseContextKind.ClassMethodAttributes, externClassMethodDeclaration);
+        externClassMethodDeclaration.equalsSign = this.eatOptional(TokenKind.EqualsSign);
+        if (externClassMethodDeclaration.equalsSign) {
+            externClassMethodDeclaration.nativeSymbol = this.parseMissableStringLiteralExpression(externClassMethodDeclaration);
+        }
+
+        return externClassMethodDeclaration;
+    }
+
+    // #endregion
+
+    // #endregion
+
     // #region Data declaration sequence
 
     private parseDataDeclarationSequence(parent: Nodes, dataDeclarationKeyword: DataDeclarationKeywordToken | null = null): DataDeclarationSequence {
@@ -558,79 +768,6 @@ export class Parser extends ParserBase {
 
     // #endregion
 
-    // #region Extern data declaration sequence
-
-    private parseExternDataDeclarationSequence(parent: Nodes, dataDeclarationKeyword: ExternDataDeclarationKeywordToken): ExternDataDeclarationSequence {
-        const externDataDeclarationSequence = new ExternDataDeclarationSequence();
-        externDataDeclarationSequence.parent = parent;
-        externDataDeclarationSequence.dataDeclarationKeyword = dataDeclarationKeyword;
-        externDataDeclarationSequence.children = this.parseList(ParseContextKind.ExternDataDeclarationSequence, externDataDeclarationSequence, TokenKind.Comma);
-
-        return externDataDeclarationSequence;
-    }
-
-    // #region Extern data declaration sequence members
-
-    private isExternDataDeclarationSequenceTerminator(token: Tokens): boolean {
-        return !this.isExternDataDeclarationSequenceMemberStart(token);
-    }
-
-    private isExternDataDeclarationSequenceMemberStart(token: Tokens): boolean {
-        switch (token.kind) {
-            case TokenKind.Identifier:
-            case TokenKind.ObjectKeyword:
-            case TokenKind.ThrowableKeyword:
-            case TokenKind.CommercialAt:
-            case TokenKind.Comma: {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    private parseExternDataDeclarationSequenceMember(parent: Nodes) {
-        const token = this.getToken();
-        switch (token.kind) {
-            case TokenKind.Identifier:
-            case TokenKind.ObjectKeyword:
-            case TokenKind.ThrowableKeyword:
-            case TokenKind.CommercialAt: {
-                this.advanceToken();
-
-                return this.parseExternDataDeclaration(parent, token);
-            }
-            case TokenKind.Comma: {
-                this.advanceToken();
-
-                return this.parseCommaSeparator(parent, token);
-            }
-        }
-
-        return this.parseCore(parent, token);
-    }
-
-    // #endregion
-
-    // #region Extern data declaration
-
-    private parseExternDataDeclaration(parent: Nodes, identifierStart: IdentifierStartToken): ExternDataDeclaration {
-        const externDataDeclaration = new ExternDataDeclaration();
-        externDataDeclaration.parent = parent;
-        externDataDeclaration.identifier = this.parseIdentifier(parent, identifierStart);
-        externDataDeclaration.typeAnnotation = this.parseTypeAnnotation(externDataDeclaration);
-        externDataDeclaration.equalsSign = this.eatOptional(TokenKind.EqualsSign);
-        if (externDataDeclaration.equalsSign) {
-            externDataDeclaration.nativeSymbol = this.parseMissableStringLiteralExpression(externDataDeclaration);
-        }
-
-        return externDataDeclaration;
-    }
-
-    // #endregion
-
-    // #endregion
-
     // #region Function declaration
 
     private parseFunctionDeclaration(parent: Nodes, functionKeyword: FunctionKeywordToken): FunctionDeclaration {
@@ -649,27 +786,6 @@ export class Parser extends ParserBase {
         }
 
         return functionDeclaration;
-    }
-
-    // #endregion
-
-    // #region Extern function declaration
-
-    private parseExternFunctionDeclaration(parent: Nodes, functionKeyword: FunctionKeywordToken): ExternFunctionDeclaration {
-        const externFunctionDeclaration = new ExternFunctionDeclaration();
-        externFunctionDeclaration.parent = parent;
-        externFunctionDeclaration.functionKeyword = functionKeyword;
-        externFunctionDeclaration.identifier = this.parseMissableIdentifier(externFunctionDeclaration)
-        externFunctionDeclaration.returnType = this.parseTypeAnnotation(externFunctionDeclaration);
-        externFunctionDeclaration.openingParenthesis = this.eatMissable(TokenKind.OpeningParenthesis);
-        externFunctionDeclaration.parameters = this.parseDataDeclarationSequence(externFunctionDeclaration);
-        externFunctionDeclaration.closingParenthesis = this.eatMissable(TokenKind.ClosingParenthesis);
-        externFunctionDeclaration.equalsSign = this.eatOptional(TokenKind.EqualsSign);
-        if (externFunctionDeclaration.equalsSign) {
-            externFunctionDeclaration.nativeSymbol = this.parseMissableStringLiteralExpression(externFunctionDeclaration);
-        }
-
-        return externFunctionDeclaration;
     }
 
     // #endregion
@@ -947,122 +1063,6 @@ export class Parser extends ParserBase {
 
     // #endregion
 
-    // #region Extern class declaration
-
-    private parseExternClassDeclaration(parent: Nodes, classKeyword: ClassKeywordToken): ExternClassDeclaration {
-        const externClassDeclaration = new ExternClassDeclaration();
-        externClassDeclaration.parent = parent;
-        externClassDeclaration.classKeyword = classKeyword;
-        externClassDeclaration.identifier = this.parseMissableIdentifier(externClassDeclaration);
-
-        externClassDeclaration.extendsKeyword = this.eatOptional(TokenKind.ExtendsKeyword);
-        if (externClassDeclaration.extendsKeyword) {
-            externClassDeclaration.superType = this.eatOptional(TokenKind.NullKeyword);
-            if (!externClassDeclaration.superType) {
-                externClassDeclaration.superType = this.parseMissableTypeReference(externClassDeclaration);
-            }
-        }
-
-        externClassDeclaration.attribute = this.eatOptional(TokenKind.AbstractKeyword, TokenKind.FinalKeyword);
-        externClassDeclaration.equalsSign = this.eatOptional(TokenKind.EqualsSign);
-        if (externClassDeclaration.equalsSign) {
-            externClassDeclaration.nativeSymbol = this.parseMissableStringLiteralExpression(externClassDeclaration);
-        }
-        externClassDeclaration.members = this.parseListWithSkippedTokens(ParseContextKind.ExternClassDeclaration, externClassDeclaration);
-        externClassDeclaration.endKeyword = this.eatMissable(TokenKind.EndKeyword);
-        if (externClassDeclaration.endKeyword.kind === TokenKind.EndKeyword) {
-            externClassDeclaration.endClassKeyword = this.eatOptional(TokenKind.ClassKeyword);
-        }
-
-        return externClassDeclaration;
-    }
-
-    // #region Extern class declaration members
-
-    private isExternClassDeclarationMembersListTerminator(token: Tokens): boolean {
-        switch (token.kind) {
-            case TokenKind.EndKeyword: {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    private isExternClassDeclarationMemberStart(token: Tokens): boolean {
-        switch (token.kind) {
-            case TokenKind.PrivateKeyword:
-            case TokenKind.PublicKeyword:
-            case TokenKind.ProtectedKeyword:
-            case TokenKind.GlobalKeyword:
-            case TokenKind.FieldKeyword:
-            case TokenKind.FunctionKeyword:
-            case TokenKind.MethodKeyword:
-            case TokenKind.Newline: {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    private parseExternClassDeclarationMember(parent: Nodes) {
-        const token = this.getToken();
-        switch (token.kind) {
-            case TokenKind.PrivateKeyword:
-            case TokenKind.PublicKeyword:
-            case TokenKind.ProtectedKeyword: {
-                this.advanceToken();
-
-                return this.parseAccessibilityDirective(parent, token);
-            }
-            case TokenKind.GlobalKeyword:
-            case TokenKind.FieldKeyword: {
-                this.advanceToken();
-
-                return this.parseExternDataDeclarationSequence(parent, token);
-            }
-            case TokenKind.FunctionKeyword: {
-                this.advanceToken();
-
-                return this.parseExternFunctionDeclaration(parent, token);
-            }
-            case TokenKind.MethodKeyword: {
-                this.advanceToken();
-
-                return this.parseExternClassMethodDeclaration(parent, token);
-            }
-        }
-
-        return this.parseNewlineListMember(parent);
-    }
-
-    // #endregion
-
-    // #region Extern class method declaration
-
-    private parseExternClassMethodDeclaration(parent: Nodes, methodKeyword: MethodKeywordToken): ExternClassMethodDeclaration {
-        const externClassMethodDeclaration = new ExternClassMethodDeclaration();
-        externClassMethodDeclaration.parent = parent;
-        externClassMethodDeclaration.methodKeyword = methodKeyword;
-        externClassMethodDeclaration.identifier = this.parseMissableIdentifier(externClassMethodDeclaration);
-        externClassMethodDeclaration.returnType = this.parseTypeAnnotation(externClassMethodDeclaration);
-        externClassMethodDeclaration.openingParenthesis = this.eatMissable(TokenKind.OpeningParenthesis);
-        externClassMethodDeclaration.parameters = this.parseDataDeclarationSequence(externClassMethodDeclaration);
-        externClassMethodDeclaration.closingParenthesis = this.eatMissable(TokenKind.ClosingParenthesis);
-        externClassMethodDeclaration.attributes = this.parseList(ParseContextKind.ClassMethodAttributes, externClassMethodDeclaration);
-        externClassMethodDeclaration.equalsSign = this.eatOptional(TokenKind.EqualsSign);
-        if (externClassMethodDeclaration.equalsSign) {
-            externClassMethodDeclaration.nativeSymbol = this.parseMissableStringLiteralExpression(externClassMethodDeclaration);
-        }
-
-        return externClassMethodDeclaration;
-    }
-
-    // #endregion
-
-    // #endregion
-
     // #region Class method attributes
 
     private isClassMethodAttributesTerminator(token: Tokens): boolean {
@@ -1094,52 +1094,6 @@ export class Parser extends ParserBase {
         }
 
         return this.parseCore(parent, token);
-    }
-
-    // #endregion
-
-    // #region Type annotation
-
-    private parseTypeAnnotation(parent: Nodes) {
-        const token = this.getToken();
-        switch (token.kind) {
-            case TokenKind.QuestionMark:
-            case TokenKind.PercentSign:
-            case TokenKind.NumberSign:
-            case TokenKind.DollarSign: {
-                this.advanceToken();
-
-                return this.parseShorthandTypeAnnotation(parent, token);
-            }
-            case TokenKind.OpeningSquareBracket: {
-                return this.parseShorthandTypeAnnotation(parent);
-            }
-            case TokenKind.Colon: {
-                this.advanceToken();
-
-                return this.parseLonghandTypeAnnotation(parent, token);
-            }
-        }
-
-        return undefined;
-    }
-
-    private parseShorthandTypeAnnotation(parent: Nodes, shorthandType?: ShorthandTypeToken): ShorthandTypeAnnotation {
-        const shorthandTypeAnnotation = new ShorthandTypeAnnotation();
-        shorthandTypeAnnotation.parent = parent;
-        shorthandTypeAnnotation.shorthandType = shorthandType;
-        shorthandTypeAnnotation.arrayTypeAnnotations = this.parseList(ParseContextKind.ArrayTypeAnnotationList, shorthandTypeAnnotation);
-
-        return shorthandTypeAnnotation;
-    }
-
-    private parseLonghandTypeAnnotation(parent: Nodes, colon: ColonToken): LonghandTypeAnnotation {
-        const longhandTypeAnnotation = new LonghandTypeAnnotation();
-        longhandTypeAnnotation.parent = parent;
-        longhandTypeAnnotation.colon = colon;
-        longhandTypeAnnotation.typeReference = this.parseMissableTypeReference(longhandTypeAnnotation);
-
-        return longhandTypeAnnotation;
     }
 
     // #endregion
@@ -1937,6 +1891,52 @@ export class Parser extends ParserBase {
     }
 
     // #endregion
+
+    // #endregion
+
+    // #region Type annotation
+
+    private parseTypeAnnotation(parent: Nodes) {
+        const token = this.getToken();
+        switch (token.kind) {
+            case TokenKind.QuestionMark:
+            case TokenKind.PercentSign:
+            case TokenKind.NumberSign:
+            case TokenKind.DollarSign: {
+                this.advanceToken();
+
+                return this.parseShorthandTypeAnnotation(parent, token);
+            }
+            case TokenKind.OpeningSquareBracket: {
+                return this.parseShorthandTypeAnnotation(parent);
+            }
+            case TokenKind.Colon: {
+                this.advanceToken();
+
+                return this.parseLonghandTypeAnnotation(parent, token);
+            }
+        }
+
+        return undefined;
+    }
+
+    private parseShorthandTypeAnnotation(parent: Nodes, shorthandType?: ShorthandTypeToken): ShorthandTypeAnnotation {
+        const shorthandTypeAnnotation = new ShorthandTypeAnnotation();
+        shorthandTypeAnnotation.parent = parent;
+        shorthandTypeAnnotation.shorthandType = shorthandType;
+        shorthandTypeAnnotation.arrayTypeAnnotations = this.parseList(ParseContextKind.ArrayTypeAnnotationList, shorthandTypeAnnotation);
+
+        return shorthandTypeAnnotation;
+    }
+
+    private parseLonghandTypeAnnotation(parent: Nodes, colon: ColonToken): LonghandTypeAnnotation {
+        const longhandTypeAnnotation = new LonghandTypeAnnotation();
+        longhandTypeAnnotation.parent = parent;
+        longhandTypeAnnotation.colon = colon;
+        longhandTypeAnnotation.typeReference = this.parseMissableTypeReference(longhandTypeAnnotation);
+
+        return longhandTypeAnnotation;
+    }
 
     // #endregion
 
