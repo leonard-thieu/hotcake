@@ -583,7 +583,6 @@ export abstract class ParserBase {
         scopeMemberAccessExpression.parent = expression.parent;
         expression.parent = scopeMemberAccessExpression;
         scopeMemberAccessExpression.scopableExpression = expression;
-        scopeMemberAccessExpression.scopableExpression.parent = scopeMemberAccessExpression;
         scopeMemberAccessExpression.scopeMemberAccessOperator = scopeMemberAccessOperator;
         scopeMemberAccessExpression.member = this.parsePrimaryExpression(scopeMemberAccessExpression);
 
@@ -618,7 +617,6 @@ export abstract class ParserBase {
         indexExpression.parent = expression.parent;
         expression.parent = indexExpression;
         indexExpression.indexableExpression = expression;
-        indexExpression.indexableExpression.parent = indexExpression;
         indexExpression.openingSquareBracket = openingSquareBracket;
         indexExpression.indexExpressionExpression = indexExpressionExpression;
         if (indexExpression.indexExpressionExpression.kind !== TokenKind.Missing) {
@@ -639,7 +637,6 @@ export abstract class ParserBase {
         sliceExpression.parent = expression.parent;
         expression.parent = sliceExpression;
         sliceExpression.sliceableExpression = expression;
-        sliceExpression.sliceableExpression.parent = sliceExpression;
         sliceExpression.openingSquareBracket = openingSquareBracket;
         sliceExpression.startExpression = startExpression;
         if (sliceExpression.startExpression) {
@@ -661,7 +658,6 @@ export abstract class ParserBase {
         invokeExpression.parent = expression.parent;
         expression.parent = invokeExpression;
         invokeExpression.invokableExpression = expression;
-        invokeExpression.invokableExpression.parent = invokeExpression;
 
         // e.g. `New Float[6*32]`
         if (expression.kind === NodeKind.NewExpression &&
