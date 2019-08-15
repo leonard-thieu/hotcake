@@ -44,18 +44,14 @@ import { SkippedToken } from './Token/SkippedToken';
 import { AliasKeywordToken, CaseKeywordToken, CatchKeywordToken, ClassKeywordToken, ColonToken, ConstKeywordToken, ContinueKeywordToken, DefaultKeywordToken, ElseIfKeywordToken, ElseKeywordToken, ExitKeywordToken, ForKeywordToken, FriendKeywordToken, FunctionKeywordToken, IfKeywordToken, ImportKeywordToken, InterfaceKeywordToken, LocalKeywordToken, MethodKeywordToken, RepeatKeywordToken, ReturnKeywordToken, SelectKeywordToken, StrictKeywordToken, ThrowKeywordToken, TokenKind, Tokens, TryKeywordToken, WhileKeywordToken } from './Token/Tokens';
 
 export class Parser extends ParserBase {
-    private document: string = undefined!;
     private accessibility: AccessibilityKeywordToken['kind'] = undefined!;
-    private moduleIdentifiers: string[] = undefined!;
     private moduleDeclaration: ModuleDeclaration = undefined!;
 
     parse(preprocessorModuleDeclaration: PreprocessorModuleDeclaration, tokens: Tokens[]): ModuleDeclaration {
         this.tokens = [...tokens];
         this.position = 0;
         this.parseContexts = [];
-        this.document = preprocessorModuleDeclaration.document;
         this.accessibility = TokenKind.PublicKeyword;
-        this.moduleIdentifiers = [];
 
         return this.parseModuleDeclaration(preprocessorModuleDeclaration);
     }
@@ -248,13 +244,6 @@ export class Parser extends ParserBase {
             // Module path
             case TokenKind.Identifier: {
                 importStatement.path = this.parseModulePath(importStatement);
-
-                // Needed when parsing Alias directives.
-                // Allows disambiguation between a module identifier and a type identifier.
-                const { moduleIdentifier } = importStatement.path;
-                if (moduleIdentifier.kind === TokenKind.Identifier) {
-                    this.moduleIdentifiers.push(moduleIdentifier.getText(this.document));
-                }
                 break;
             }
             default: {
