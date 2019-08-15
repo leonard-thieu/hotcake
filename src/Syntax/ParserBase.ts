@@ -236,7 +236,7 @@ export abstract class ParserBase {
 
     // Without the return type annotation, TypeScript seems to think it can eliminate `InvokeExpression`, `IndexExpression`, and
     // `SliceExpression` from the return type.
-    protected parsePrimaryExpression(parent: Nodes): PrimaryExpression | MissingToken {
+    protected parsePrimaryExpression(parent: Nodes, isStatement?: true): PrimaryExpression | MissingToken {
         let primaryExpression: PrimaryExpression | MissingToken = this.parsePrimaryExpressionCore(parent);
 
         while (true) {
@@ -249,7 +249,7 @@ export abstract class ParserBase {
                 break;
             }
 
-            const postfixExpression = this.parsePostfixExpression(expression);
+            const postfixExpression = this.parsePostfixExpression(expression, isStatement);
             if (!postfixExpression) {
                 break;
             }
@@ -558,7 +558,7 @@ export abstract class ParserBase {
 
     // #region Postfix expressions
 
-    protected parsePostfixExpression(expression: Expressions) {
+    protected parsePostfixExpression(expression: Expressions, isStatement?: true) {
         const token = this.getToken();
         switch (token.kind) {
             case TokenKind.Period: {
@@ -574,7 +574,7 @@ export abstract class ParserBase {
         }
 
         if (this.isInvokeExpressionStart(token, expression)) {
-            return this.parseInvokeExpression(expression);
+            return this.parseInvokeExpression(expression, isStatement);
         }
     }
 
@@ -653,7 +653,7 @@ export abstract class ParserBase {
 
     protected abstract isInvokeExpressionStart(token: Tokens, expression: Expressions): boolean;
 
-    protected parseInvokeExpression(expression: Expressions): InvokeExpression {
+    protected parseInvokeExpression(expression: Expressions, isStatement?: true): InvokeExpression {
         const invokeExpression = new InvokeExpression();
         invokeExpression.parent = expression.parent;
         expression.parent = invokeExpression;
@@ -673,7 +673,13 @@ export abstract class ParserBase {
         if (invokeExpression.openingParenthesis) {
             invokeExpression.leadingNewlines = this.parseList(ParseContextKind.NewlineList, invokeExpression);
         }
-        invokeExpression.arguments = this.parseList(ParseContextKind.ExpressionSequence, invokeExpression, TokenKind.Comma, MissingTokenKind.Expression);
+
+        if (isStatement || invokeExpression.openingParenthesis) {
+            invokeExpression.arguments = this.parseList(ParseContextKind.ExpressionSequence, invokeExpression, TokenKind.Comma, MissingTokenKind.Expression);
+        } else {
+            invokeExpression.arguments = this.parseList(ParseContextKind.ExpressionSequence, invokeExpression, TokenKind.Comma);
+        }
+
         if (invokeExpression.openingParenthesis) {
             invokeExpression.closingParenthesis = this.eatMissable(TokenKind.ClosingParenthesis);
         }

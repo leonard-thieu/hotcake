@@ -1270,7 +1270,7 @@ export class Parser extends ParserBase {
         }
 
         const newlines = this.parseList(ParseContextKind.NewlineList, parent);
-        let expression = this.parsePrimaryExpression(parent);
+        let expression = this.parsePrimaryExpression(parent, /*isStatement*/ true);
 
         let rightExpression = expression;
         while (rightExpression.kind === NodeKind.ScopeMemberAccessExpression) {
@@ -1278,7 +1278,7 @@ export class Parser extends ParserBase {
         }
 
         if (rightExpression.kind === NodeKind.IdentifierExpression) {
-            rightExpression = this.parseInvokeExpression(rightExpression);
+            rightExpression = this.parseInvokeExpression(rightExpression, /*isStatement*/ true);
 
             if (rightExpression.parent &&
                 rightExpression.parent.kind === NodeKind.ScopeMemberAccessExpression
