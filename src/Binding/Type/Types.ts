@@ -1,5 +1,6 @@
 import { ArrayType } from './ArrayType';
 import { BoolType } from './BoolType';
+import { DeferredType } from './DeferredType';
 import { FloatType } from './FloatType';
 import { FunctionGroupType, FunctionType, MethodGroupType, MethodType } from './FunctionLikeType';
 import { IntType } from './IntType';
@@ -23,6 +24,7 @@ export abstract class Type {
 export enum TypeKind {
     Array = 'Array',
     Bool = 'Bool',
+    Deferred = 'Deferred',
     Float = 'Float',
     Function = 'Function',
     FunctionGroup = 'FunctionGroup',
@@ -40,6 +42,7 @@ export enum TypeKind {
 export type Types =
     | ArrayType
     | BoolType
+    | DeferredType
     | FloatType
     | FunctionType
     | FunctionGroupType

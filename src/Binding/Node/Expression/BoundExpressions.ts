@@ -12,6 +12,7 @@ import { BoundIntegerLiteralExpression } from './BoundIntegerLiteralExpression';
 import { BoundInvokeExpression } from './BoundInvokeExpression';
 import { BoundNewExpression } from './BoundNewExpression';
 import { BoundNullExpression } from './BoundNullExpression';
+import { BoundPlaceholderExpression } from './BoundPlaceholderExpression';
 import { BoundScopeMemberAccessExpression } from './BoundScopeMemberAccessExpression';
 import { BoundSelfExpression } from './BoundSelfExpression';
 import { BoundSliceExpression } from './BoundSliceExpression';
@@ -42,4 +43,5 @@ export type BoundExpressions =
     | BoundIndexExpression
     | BoundSliceExpression
     | BoundInvokeExpression
+    | BoundPlaceholderExpression
     ;

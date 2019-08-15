@@ -79,6 +79,7 @@ import { BoundIntegerLiteralExpression } from './Node/Expression/BoundIntegerLit
 import { BoundInvokeExpression } from './Node/Expression/BoundInvokeExpression';
 import { BoundNewExpression } from './Node/Expression/BoundNewExpression';
 import { BoundNullExpression } from './Node/Expression/BoundNullExpression';
+import { BoundPlaceholderExpression } from './Node/Expression/BoundPlaceholderExpression';
 import { BoundScopeMemberAccessExpression } from './Node/Expression/BoundScopeMemberAccessExpression';
 import { BoundSelfExpression } from './Node/Expression/BoundSelfExpression';
 import { BoundSliceExpression } from './Node/Expression/BoundSliceExpression';
@@ -100,6 +101,7 @@ import { BoundThrowStatement } from './Node/Statement/BoundThrowStatement';
 import { BoundCatchClause, BoundTryStatement } from './Node/Statement/BoundTryStatement';
 import { BoundWhileLoop } from './Node/Statement/BoundWhileLoop';
 import { ArrayType } from './Type/ArrayType';
+import { DeferredType } from './Type/DeferredType';
 import { BoundFunctionLikeDeclaration, FunctionGroupType, FunctionType, isBoundFunctionLikeDeclaration, MethodGroupType, MethodType } from './Type/FunctionLikeType';
 import { ModuleType } from './Type/ModuleType';
 import { ObjectType } from './Type/ObjectType';
@@ -3451,6 +3453,20 @@ export class Binder {
                     type.declaration.overloads,
                     boundInvokeExpression.arguments,
                 );
+
+                // Copy in default parameters
+                for (let i = 0; i < overload.parameters.length; i++) {
+                    const parameter = overload.parameters[i];
+                    const argument = boundInvokeExpression.arguments[i];
+
+                    if (!argument) {
+                        // TODO: Should the expression be cloned?
+                        boundInvokeExpression.arguments.push(parameter.expression!);
+                    } else if (argument.kind === BoundNodeKind.PlaceholderExpression) {
+                        boundInvokeExpression.arguments[i] = parameter.expression!;
+                    }
+                }
+
                 boundInvokeExpression.invocationType = overload.type;
                 boundInvokeExpression.type = overload.returnType.type;
                 break;
@@ -3561,10 +3577,16 @@ export class Binder {
                     break;
                 }
 
-                case NodeKind.CommaSeparator:
                 case TokenKind.Missing: {
+                    const placeholderExpression = new BoundPlaceholderExpression();
+                    placeholderExpression.parent = parent;
+                    placeholderExpression.type = new DeferredType();
+
+                    boundExpressions.push(placeholderExpression);
                     break;
                 }
+
+                case NodeKind.CommaSeparator: { break; }
 
                 default: {
                     assertNever(expression);

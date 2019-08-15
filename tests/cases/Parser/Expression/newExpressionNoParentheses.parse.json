@@ -104,6 +104,13 @@
                                 "newlines": []
                             },
                             {
+                                "kind": "Missing",
+                                "fullStart": 38,
+                                "start": 38,
+                                "length": 0,
+                                "originalKind": "Expression"
+                            },
+                            {
                                 "kind": "CommaSeparator",
                                 "separator": {
                                     "kind": "Comma",

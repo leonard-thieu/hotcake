@@ -1,0 +1,101 @@
+{
+    "kind": "ModuleDeclaration",
+    "identifier": "defaultParameters",
+    "locals": [
+        {
+            "kind": "FunctionGroupDeclaration",
+            "identifier": "Sum",
+            "type": "Sum",
+            "overloads": [
+                {
+                    "kind": "FunctionDeclaration",
+                    "identifier": "Sum",
+                    "locals": [
+                        "x",
+                        "y",
+                        "z"
+                    ],
+                    "type": "Sum: Int(Int,Int,Int)",
+                    "returnType": "Int",
+                    "parameters": [
+                        {
+                            "kind": "DataDeclaration",
+                            "declarationKind": "Parameter",
+                            "identifier": "x",
+                            "typeAnnotation": "Int",
+                            "type": "Int"
+                        },
+                        {
+                            "kind": "DataDeclaration",
+                            "declarationKind": "Parameter",
+                            "identifier": "y",
+                            "typeAnnotation": "Int",
+                            "operator": "EqualsSign",
+                            "expression": {
+                                "kind": "IntegerLiteralExpression",
+                                "type": "Int",
+                                "value": "0"
+                            },
+                            "type": "Int"
+                        },
+                        {
+                            "kind": "DataDeclaration",
+                            "declarationKind": "Parameter",
+                            "identifier": "z",
+                            "typeAnnotation": "Int",
+                            "type": "Int"
+                        }
+                    ],
+                    "statements": []
+                }
+            ]
+        },
+        {
+            "kind": "FunctionGroupDeclaration",
+            "identifier": "Main",
+            "type": "Main",
+            "overloads": [
+                {
+                    "kind": "FunctionDeclaration",
+                    "identifier": "Main",
+                    "locals": [],
+                    "type": "Main: Int()",
+                    "returnType": "Int",
+                    "parameters": [],
+                    "statements": [
+                        {
+                            "kind": "ExpressionStatement",
+                            "expression": {
+                                "kind": "InvokeExpression",
+                                "type": "Int",
+                                "invocationType": "Sum: Int(Int,Int,Int)",
+                                "invokableExpression": {
+                                    "kind": "IdentifierExpression",
+                                    "type": "Sum",
+                                    "identifier": "Sum"
+                                },
+                                "arguments": [
+                                    {
+                                        "kind": "IntegerLiteralExpression",
+                                        "type": "Int",
+                                        "value": "10"
+                                    },
+                                    {
+                                        "kind": "IntegerLiteralExpression",
+                                        "type": "Int",
+                                        "value": "0"
+                                    },
+                                    {
+                                        "kind": "IntegerLiteralExpression",
+                                        "type": "Int",
+                                        "value": "30"
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

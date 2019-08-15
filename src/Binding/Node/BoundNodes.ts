@@ -81,6 +81,7 @@ export enum BoundNodeKind {
     IndexExpression = 'IndexExpression',
     SliceExpression = 'SliceExpression',
     InvokeExpression = 'InvokeExpression',
+    PlaceholderExpression = 'PlaceholderExpression',
 }
 
 export type BoundNodeKindToBoundNodeMap = {

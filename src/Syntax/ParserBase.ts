@@ -677,7 +677,7 @@ export abstract class ParserBase {
         if (invokeExpression.openingParenthesis) {
             invokeExpression.leadingNewlines = this.parseList(ParseContextKind.NewlineList, invokeExpression);
         }
-        invokeExpression.arguments = this.parseList(ParseContextKind.ExpressionSequence, invokeExpression, TokenKind.Comma, /*allowEmpty*/ true);
+        invokeExpression.arguments = this.parseList(ParseContextKind.ExpressionSequence, invokeExpression, TokenKind.Comma, MissingTokenKind.Expression);
         if (invokeExpression.openingParenthesis) {
             invokeExpression.closingParenthesis = this.eatMissable(TokenKind.ClosingParenthesis);
         }
@@ -1037,9 +1037,9 @@ export abstract class ParserBase {
         parseContext: TParseContext,
         parent: Nodes,
         delimiter?: TokenKind,
-        allowEmpty?: boolean,
+        placeholderKind?: MissingTokenKinds,
     ) {
-        return this.parseListCore(parseContext, parent, delimiter, allowEmpty) as ParseContextElementMap[TParseContext][];
+        return this.parseListCore(parseContext, parent, delimiter, placeholderKind) as ParseContextElementMap[TParseContext][];
     }
 
     protected parseListWithSkippedTokens<TParseContext extends ParseContext>(
@@ -1053,7 +1053,7 @@ export abstract class ParserBase {
         parseContext: TParseContext,
         parent: Nodes,
         delimiter?: TokenKind,
-        allowEmpty?: boolean,
+        placeholderKind?: MissingTokenKinds,
     ) {
         if (typeof parseContext === 'undefined') {
             throw new Error('parseContext is undefined.');
@@ -1062,7 +1062,7 @@ export abstract class ParserBase {
         this.parseContexts.push(parseContext);
 
         const nodes: (ParseContextElementMap[TParseContext] | SkippedToken)[] = [];
-        let isLastNodeDelimiter: boolean = false;
+        let isLastNodeDelimiter = true;
         while (true) {
             const token = this.getToken();
 
@@ -1073,15 +1073,16 @@ export abstract class ParserBase {
             if (this.isValidListElement(parseContext, token)) {
                 if (delimiter) {
                     const isCurrentNodeDelimiter = token.kind === delimiter;
-                    if (nodes.length === 0 ||
-                        (!isCurrentNodeDelimiter && isLastNodeDelimiter) ||
-                        allowEmpty ||
-                        (isCurrentNodeDelimiter && !isLastNodeDelimiter)
-                    ) {
-                        isLastNodeDelimiter = isCurrentNodeDelimiter;
-                    } else {
-                        break;
+                    if (isLastNodeDelimiter === isCurrentNodeDelimiter) {
+                        if (placeholderKind && isCurrentNodeDelimiter) {
+                            const placeholder = this.createMissingToken(token.fullStart, placeholderKind);
+                            nodes.push(placeholder);
+                        } else {
+                            break;
+                        }
                     }
+
+                    isLastNodeDelimiter = isCurrentNodeDelimiter;
                 }
 
                 const node = this.parseListElement(parseContext, parent);
