@@ -3855,6 +3855,7 @@ export class Binder {
                 }
                 break;
             }
+            case TypeKind.Null:
             case TypeKind.Object: {
                 if (to.kind === TypeKind.Bool) { return true; }
 
