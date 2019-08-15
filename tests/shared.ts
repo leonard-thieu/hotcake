@@ -43,9 +43,12 @@ export function executePreprocessorTokenizerTestCases(
             let outputPath = path.resolve(__dirname, 'cases', name, sourceRelativePath);
             outputPath = replaceExt(outputPath, '.tokens.json');
 
-            executeBaselineTestCase(outputPath, () => {
-                return getPreprocessorTokens(document);
-            });
+            executeBaselineTestCase(
+                outputPath,
+                () => {
+                    return getPreprocessorTokens(document);
+                },
+            );
         },
     );
 }
@@ -73,19 +76,13 @@ export function executePreprocessorParserTestCases(
             let outputPath = path.resolve(__dirname, 'cases', name, sourceRelativePath);
             outputPath = replaceExt(outputPath, '.parse.json');
 
-            executeBaselineTestCase(outputPath, () => {
-                return getPreprocessorParseTree(sourceRelativePath, document);
-            }, function (key, value) {
-                switch (key) {
-                    case 'filePath':
-                    case 'document':
-                    case 'parent': {
-                        return undefined;
-                    }
-                }
-
-                return value;
-            });
+            executeBaselineTestCase(
+                outputPath,
+                () => {
+                    return getPreprocessorParseTree(sourceRelativePath, document);
+                },
+                preprocessorParserTestOutputReplacer,
+            );
         },
     );
 }
@@ -95,6 +92,18 @@ export function getPreprocessorParseTree(filePath: string, document: string): Pr
     const tokens = getPreprocessorTokens(document);
 
     return parser.parse(filePath, document, tokens);
+}
+
+function preprocessorParserTestOutputReplacer(key: string, value: any) {
+    switch (key) {
+        case 'filePath':
+        case 'document':
+        case 'parent': {
+            return undefined;
+        }
+    }
+
+    return value;
 }
 
 // #endregion
@@ -114,9 +123,12 @@ export function executeTokenizerTestCases(
             let outputPath = path.resolve(__dirname, 'cases', name, sourceRelativePath);
             outputPath = replaceExt(outputPath, '.tokens.json');
 
-            executeBaselineTestCase(outputPath, () => {
-                return getTokens(sourceRelativePath, document);
-            });
+            executeBaselineTestCase(
+                outputPath,
+                () => {
+                    return getTokens(sourceRelativePath, document);
+                },
+            );
         },
     );
 }
@@ -152,20 +164,13 @@ export function executeParserTestCases(
             let outputPath = path.resolve(__dirname, 'cases', name, sourceRelativePath);
             outputPath = replaceExt(outputPath, '.parse.json');
 
-            executeBaselineTestCase(outputPath, () => {
-                return getParseTree(sourceRelativePath, document);
-            }, function (key, value) {
-                switch (key) {
-                    case 'preprocessorModuleDeclaration':
-                    case 'parent':
-                    case 'parseDiagnostics':
-                    case 'locals': {
-                        return undefined;
-                    }
-                }
-
-                return value;
-            });
+            executeBaselineTestCase(
+                outputPath,
+                () => {
+                    return getParseTree(sourceRelativePath, document);
+                },
+                parserTestOutputReplacer,
+            );
         }
     );
 }
@@ -186,6 +191,19 @@ export function getParseTree(filePath: string, document: string): ModuleDeclarat
     return parser.parse(preprocessorModuleDeclaration, tokens);
 }
 
+function parserTestOutputReplacer(key: string, value: any) {
+    switch (key) {
+        case 'preprocessorModuleDeclaration':
+        case 'parent':
+        case 'parseDiagnostics':
+        case 'locals': {
+            return undefined;
+        }
+    }
+
+    return value;
+}
+
 // #endregion
 
 // #region Binder
@@ -203,152 +221,13 @@ export function executeBinderTestCases(
             let outputPath = path.resolve(__dirname, 'cases', name, sourceRelativePath);
             outputPath = replaceExt(outputPath, '.bound.json');
 
-            executeBaselineTestCase(outputPath, () => {
-                return getBoundTree(path.resolve(rootPath, sourceRelativePath), document);
-            }, function (this: any, key, value) {
-                if (!value) {
-                    return value;
-                }
-
-                switch (this.kind) {
-                    case BoundNodeKind.ModuleDeclaration: {
-                        switch (key) {
-                            case 'type': {
-                                return undefined;
-                            }
-                        }
-                    }
-                }
-
-                switch (key) {
-                    case 'project':
-                    case 'directory':
-                    case 'parent':
-                    case 'openType':
-                    case 'frameworkModule': {
-                        return undefined;
-                    }
-                    case 'declaration': {
-                        if (value.kind === BoundNodeKind.ModuleDeclaration &&
-                            value.identifier
-                        ) {
-                            return value.identifier.name;
-                        }
-
-                        return undefined;
-                    }
-                    case 'identifier': {
-                        const identifier = value as BoundDeclarations[typeof key];
-
-                        return identifier.name;
-                    }
-                    case 'typeParameters': {
-                        const typeParameters = value as BoundClassDeclaration[typeof key];
-
-                        return typeParameters!.map((typeParameter) =>
-                            typeParameter.identifier.name
-                        );
-                    }
-                    case 'typeArguments': {
-                        const typeArguments = value as BoundClassDeclaration[typeof key];
-
-                        return typeArguments!.map((typeArgument) =>
-                            typeArgument.type
-                        );
-                    }
-                    case 'superType':
-                    case 'returnType':
-                    case 'typeAnnotation':
-                    case 'typeReference': {
-                        return value.type.toString();
-                    }
-                    case 'implementedTypes': {
-                        const implementedTypes = value as (BoundClassDeclaration | BoundInterfaceDeclaration)[typeof key];
-                        if (implementedTypes) {
-                            return implementedTypes.map((implementedType) =>
-                                implementedType.type.toString()
-                            );
-                        }
-                        break;
-                    }
-                    case 'locals': {
-                        const scope = this as Scope;
-                        const locals = value as typeof scope[typeof key];
-
-                        switch (scope.kind) {
-                            case BoundNodeKind.ModuleDeclaration:
-                            case BoundNodeKind.ExternClassDeclaration:
-                            case BoundNodeKind.InterfaceDeclaration:
-                            case BoundNodeKind.ClassDeclaration: {
-                                return Array.from(locals).filter((identifier) => {
-                                    if (identifier.declaration.kind === BoundNodeKind.ModuleDeclaration) {
-                                        const modulePath = getModulePath(identifier.declaration);
-
-                                        return modulePath !== 'monkey';
-                                    }
-
-                                    return true;
-                                }).map((identifier) => {
-                                    if (identifier.declaration.kind === BoundNodeKind.ModuleDeclaration) {
-                                        return {
-                                            kind: identifier.declaration.kind,
-                                            identifier,
-                                            path: getModulePath(identifier.declaration),
-                                        };
-                                    }
-
-                                    return identifier.declaration;
-                                });
-                            }
-                        }
-
-                        return Array.from(locals).map((identifier) =>
-                            identifier.name
-                        );
-
-                        function getModulePath(boundModule: BoundModuleDeclaration) {
-                            const components: string[] = [];
-
-                            let directory: BoundDirectory | undefined = boundModule.directory;
-                            while (directory) {
-                                components.unshift(directory.identifier.name);
-                                directory = directory.parent as BoundDirectory | undefined;
-                            }
-
-                            components.shift(); // Take off root directory
-
-                            if (boundModule.identifier.name !== components[components.length - 1]) {
-                                components.push(boundModule.identifier.name);
-                            }
-
-                            return components.join('.');
-                        }
-                    }
-                    case 'target': {
-                        const target = value as BoundAliasDirective[typeof key];
-
-                        return {
-                            kind: target.kind,
-                            identifier: target.identifier,
-                        };
-                    }
-                    case 'overloads': {
-                        const overloads = value as BoundFunctionLikeGroupDeclaration[typeof key];
-
-                        return Array.from(overloads.values() as IterableIterator<any>);
-                    }
-                }
-
-                if (value instanceof Type) {
-                    return value.toString();
-                }
-
-                if (value instanceof Set) {
-                    return Array.from(value.values());
-                }
-
-                return value;
-            });
+            executeBaselineTestCase(
+                outputPath,
+                () => {
+                    return getBoundTree(path.resolve(rootPath, sourceRelativePath), document);
+                },
+                binderTestOutputReplacer,
+            );
         },
     );
 }
@@ -371,6 +250,151 @@ export function getBoundTree(filePath: string, document: string): BoundModuleDec
 
         throw error;
     }
+}
+
+function binderTestOutputReplacer(this: any, key: string, value: any) {
+    if (!value) {
+        return value;
+    }
+
+    switch (this.kind) {
+        case BoundNodeKind.ModuleDeclaration: {
+            switch (key) {
+                case 'type': {
+                    return undefined;
+                }
+            }
+        }
+    }
+
+    switch (key) {
+        case 'project':
+        case 'directory':
+        case 'parent':
+        case 'openType':
+        case 'frameworkModule': {
+            return undefined;
+        }
+        case 'declaration': {
+            if (value.kind === BoundNodeKind.ModuleDeclaration &&
+                value.identifier
+            ) {
+                return value.identifier.name;
+            }
+
+            return undefined;
+        }
+        case 'identifier': {
+            const identifier = value as BoundDeclarations[typeof key];
+
+            return identifier.name;
+        }
+        case 'typeParameters': {
+            const typeParameters = value as BoundClassDeclaration[typeof key];
+
+            return typeParameters!.map((typeParameter) =>
+                typeParameter.identifier.name
+            );
+        }
+        case 'typeArguments': {
+            const typeArguments = value as BoundClassDeclaration[typeof key];
+
+            return typeArguments!.map((typeArgument) =>
+                typeArgument.type
+            );
+        }
+        case 'superType':
+        case 'returnType':
+        case 'typeAnnotation':
+        case 'typeReference': {
+            return value.type.toString();
+        }
+        case 'implementedTypes': {
+            const implementedTypes = value as (BoundClassDeclaration | BoundInterfaceDeclaration)[typeof key];
+            if (implementedTypes) {
+                return implementedTypes.map((implementedType) =>
+                    implementedType.type.toString()
+                );
+            }
+            break;
+        }
+        case 'locals': {
+            const scope = this as Scope;
+            const locals = value as typeof scope[typeof key];
+
+            switch (scope.kind) {
+                case BoundNodeKind.ModuleDeclaration:
+                case BoundNodeKind.ExternClassDeclaration:
+                case BoundNodeKind.InterfaceDeclaration:
+                case BoundNodeKind.ClassDeclaration: {
+                    return Array.from(locals).filter((identifier) => {
+                        if (identifier.declaration.kind === BoundNodeKind.ModuleDeclaration) {
+                            const modulePath = getModulePath(identifier.declaration);
+
+                            return modulePath !== 'monkey';
+                        }
+
+                        return true;
+                    }).map((identifier) => {
+                        if (identifier.declaration.kind === BoundNodeKind.ModuleDeclaration) {
+                            return {
+                                kind: identifier.declaration.kind,
+                                identifier,
+                                path: getModulePath(identifier.declaration),
+                            };
+                        }
+
+                        return identifier.declaration;
+                    });
+                }
+            }
+
+            return Array.from(locals).map((identifier) =>
+                identifier.name
+            );
+
+            function getModulePath(boundModule: BoundModuleDeclaration) {
+                const components: string[] = [];
+
+                let directory: BoundDirectory | undefined = boundModule.directory;
+                while (directory) {
+                    components.unshift(directory.identifier.name);
+                    directory = directory.parent as BoundDirectory | undefined;
+                }
+
+                components.shift(); // Take off root directory
+
+                if (boundModule.identifier.name !== components[components.length - 1]) {
+                    components.push(boundModule.identifier.name);
+                }
+
+                return components.join('.');
+            }
+        }
+        case 'target': {
+            const target = value as BoundAliasDirective[typeof key];
+
+            return {
+                kind: target.kind,
+                identifier: target.identifier,
+            };
+        }
+        case 'overloads': {
+            const overloads = value as BoundFunctionLikeGroupDeclaration[typeof key];
+
+            return Array.from(overloads.values() as IterableIterator<any>);
+        }
+    }
+
+    if (value instanceof Type) {
+        return value.toString();
+    }
+
+    if (value instanceof Set) {
+        return Array.from(value.values());
+    }
+
+    return value;
 }
 
 // #endregion
