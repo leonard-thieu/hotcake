@@ -16,6 +16,7 @@ export class BoundModuleDeclaration extends BoundNode {
     identifier: BoundSymbol = undefined!;
     type: ModuleType = undefined!;
 
-    readonly locals = new BoundSymbolTable();
     frameworkModule: BoundModuleDeclaration = undefined!;
+    readonly importedModules = new Set<BoundModuleDeclaration>();
+    readonly locals = new BoundSymbolTable();
 }

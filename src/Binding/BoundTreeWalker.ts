@@ -4,6 +4,7 @@ import { BoundClassDeclaration } from './Node/Declaration/BoundClassDeclaration'
 import { BoundExternClassDeclaration } from './Node/Declaration/BoundExternClassDeclaration';
 import { BoundMethodGroupDeclaration } from './Node/Declaration/BoundFunctionLikeGroupDeclaration';
 import { BoundInterfaceDeclaration } from './Node/Declaration/BoundInterfaceDeclaration';
+import { BoundModuleDeclaration } from './Node/Declaration/BoundModuleDeclaration';
 import { Types } from './Type/Types';
 
 export namespace BoundTreeWalker {
@@ -26,6 +27,29 @@ export namespace BoundTreeWalker {
 
             closest = closest.parent;
         } while (closest);
+    }
+
+    export function getModule(node: BoundNodes): BoundModuleDeclaration {
+        return getClosest(node, BoundNodeKind.ModuleDeclaration)!;
+    }
+
+    export function getImportedModules(boundModule: BoundModuleDeclaration) {
+        function getImportedModulesImpl(boundModule: BoundModuleDeclaration) {
+            importedModules.add(boundModule);
+
+            for (const importedModule of boundModule.importedModules) {
+                if (!importedModules.has(importedModule)) {
+                    getImportedModulesImpl(importedModule);
+                }
+            }
+        }
+
+        const importedModules = new Set<BoundModuleDeclaration>();
+
+        getImportedModulesImpl(boundModule);
+        importedModules.delete(boundModule);
+
+        return importedModules;
     }
 
     export function getMethod(

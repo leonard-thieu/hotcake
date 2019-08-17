@@ -400,44 +400,39 @@ export class Binder {
                         throw new Error(`'${target.identifier.name}' has no members.`);
                     }
 
-                    let member = getDeclaration(target.locals);
+                    const scope: BoundMemberContainerDeclaration | undefined = target === parent ?
+                        undefined :
+                        target;
 
-                    if (!member) {
-                        member = getDeclaration(parent.frameworkModule.locals);
-                    }
-
+                    const member: BoundAliasDirectiveTarget | undefined = this.resolveIdentifierName(memberName, parent, scope, undefined,
+                        BoundNodeKind.ModuleDeclaration,
+                        BoundNodeKind.ExternClassDeclaration,
+                        BoundNodeKind.InterfaceDeclaration,
+                        BoundNodeKind.ClassDeclaration,
+                        BoundNodeKind.FunctionGroupDeclaration,
+                        BoundNodeKind.ExternClassMethodGroupDeclaration,
+                        BoundNodeKind.InterfaceMethodGroupDeclaration,
+                        BoundNodeKind.ClassMethodGroupDeclaration,
+                        BoundNodeKind.ExternDataDeclaration,
+                        BoundNodeKind.DataDeclaration,
+                    );
                     if (!member) {
                         throw new Error(`'${memberName}' does not exist in '${target.identifier.name}'.`);
                     }
 
                     target = member;
-
-                    function getDeclaration(locals: BoundSymbolTable) {
-                        return locals.get(memberName,
-                            BoundNodeKind.ModuleDeclaration,
-                            BoundNodeKind.ExternClassDeclaration,
-                            BoundNodeKind.InterfaceDeclaration,
-                            BoundNodeKind.ClassDeclaration,
-                            BoundNodeKind.FunctionGroupDeclaration,
-                            BoundNodeKind.ExternClassMethodGroupDeclaration,
-                            BoundNodeKind.InterfaceMethodGroupDeclaration,
-                            BoundNodeKind.ClassMethodGroupDeclaration,
-                            BoundNodeKind.ExternDataDeclaration,
-                            BoundNodeKind.DataDeclaration,
-                        );
-                    }
                     break;
                 }
                 case TokenKind.IntKeyword: {
-                    target = this.project.intTypeDeclaration;
+                    target = parent.project.intTypeDeclaration;
                     break;
                 }
                 case TokenKind.FloatKeyword: {
-                    target = this.project.floatTypeDeclaration;
+                    target = parent.project.floatTypeDeclaration;
                     break;
                 }
                 case TokenKind.StringKeyword: {
-                    target = this.project.stringTypeDeclaration;
+                    target = parent.project.stringTypeDeclaration;
                     break;
                 }
                 case TokenKind.Period: { break; }
@@ -622,7 +617,7 @@ export class Binder {
                     );
                 }
             } else {
-                boundExternClassDeclaration.superType = this.project.objectTypeDeclaration;
+                boundExternClassDeclaration.superType = parent.project.objectTypeDeclaration;
             }
 
             if (externClassDeclaration.nativeSymbol) {
@@ -2991,7 +2986,7 @@ export class Binder {
         parent: BoundNodes,
         expression: StringLiteralExpression,
     ): BoundStringLiteralExpression {
-        const { document } = BoundTreeWalker.getClosest(parent, BoundNodeKind.ModuleDeclaration)!.declaration;
+        const { document } = BoundTreeWalker.getModule(parent).declaration;
 
         return this.stringLiteral(parent,
             Evaluator.evalStringLiteral(expression, document),
@@ -3694,6 +3689,13 @@ export class Binder {
             throw new Error('Type reference is missing.');
         }
 
+        if (typeMap && kinds.length) {
+            kinds = [
+                ...kinds,
+                BoundNodeKind.TypeParameter,
+            ] as TKind[];
+        }
+
         let boundDeclaration: BoundTypeReferenceDeclaration = this.resolveTypeReference(node, typeReference, kinds);
 
         if (typeReference.typeArguments) {
@@ -3706,8 +3708,10 @@ export class Binder {
         } else if (typeMap) {
             switch (boundDeclaration.kind) {
                 case BoundNodeKind.ClassDeclaration: {
-                    const boundTypeArguments = Array.from(typeMap.values());
-                    boundDeclaration = this.instantiateGenericType(boundDeclaration, boundTypeArguments);
+                    if (boundDeclaration.declaration.typeParameters) {
+                        const boundTypeArguments = Array.from(typeMap.values());
+                        boundDeclaration = this.instantiateGenericType(boundDeclaration, boundTypeArguments);
+                    }
                     break;
                 }
                 case BoundNodeKind.TypeParameter: {
@@ -3752,60 +3756,36 @@ export class Binder {
             identifier = identifier.name;
         }
 
-        const boundModule = BoundTreeWalker.getClosest(node, BoundNodeKind.ModuleDeclaration)!;
-        const name = getText(identifier, boundModule);
+        const name = getText(identifier, node);
 
         // Module is specified
         if (typeReference.moduleIdentifier) {
-            const moduleName = getText(typeReference.moduleIdentifier, boundModule);
-            let importedModule = boundModule.locals.get(moduleName, BoundNodeKind.ModuleDeclaration);
-
+            const moduleName = getText(typeReference.moduleIdentifier, node);
+            const importedModule = this.resolveIdentifierName(moduleName, node, undefined, undefined, BoundNodeKind.ModuleDeclaration);
             if (!importedModule) {
-                importedModule = boundModule.frameworkModule.locals.get(moduleName, BoundNodeKind.ModuleDeclaration);
-
-                if (!importedModule) {
-                    throw new Error(`The '${moduleName}' module is not imported.`);
-                }
+                throw new Error(`The '${moduleName}' module is not imported.`);
             }
 
-            const declaration = importedModule.locals.get(name, ...kinds);
-            if (!declaration) {
+            const boundDeclaration = this.resolveIdentifierName(name, importedModule, undefined, undefined, ...kinds);
+            if (!boundDeclaration) {
                 throw new Error(`Could not find '${name}' in '${moduleName}'.`);
             }
 
-            return declaration;
+            return boundDeclaration;
         }
 
-        // If we're in a class, check if it's a type parameter
-        const boundClassDeclaration = BoundTreeWalker.getClosest(node, BoundNodeKind.ClassDeclaration);
-        if (boundClassDeclaration) {
-            const boundTypeParameter = boundClassDeclaration.locals.get(name);
-            // TODO: Is this not supposed to hard fail?
-            if (boundTypeParameter &&
-                boundTypeParameter.kind === BoundNodeKind.TypeParameter
-            ) {
-                // Ignore `kinds` as the type parameter must still be mapped.
-                return boundTypeParameter;
+        const boundDeclaration = this.resolveIdentifierName(name, node, undefined, undefined, ...kinds);
+        if (!boundDeclaration) {
+            throw new Error(`Could not find '${name}'.`);
+        }
+
+        if (kinds.length) {
+            if (!kinds.some((kind) => boundDeclaration.kind === kind)) {
+                throw new Error(`Expected '${name}' to be '${kinds.join(', ')}' but got '${boundDeclaration.kind}'.`);
             }
         }
 
-        // Check if it's a type in this module or any imported modules
-        {
-            const declaration = boundModule.locals.get(name, ...kinds);
-            if (declaration) {
-                return declaration;
-            }
-        }
-
-        // Check if it's a type in any framework modules
-        {
-            const declaration = boundModule.frameworkModule.locals.get(name, ...kinds);
-            if (declaration) {
-                return declaration;
-            }
-        }
-
-        throw new Error(`Could not find '${name}'.`);
+        return boundDeclaration;
     }
 
     private getBalancedType(leftOperandType: Types, rightOperandType: Types) {
@@ -3983,121 +3963,115 @@ export class Binder {
 
     // #region Symbols
 
-    private resolveIdentifier(
+    private resolveIdentifier<TKind extends BoundDeclarations['kind']>(
         identifier: IdentifierExpressionIdentifier,
         node: BoundNodes,
         scope?: BoundMemberContainerDeclaration,
         getTypeArguments?: GetBoundNodes<BoundTypeReferenceDeclaration>,
-    ) {
-        // When binding `member` on `ScopeMemberAccessExpression`.
+        ...kinds: TKind[]
+    ): BoundNodeKindToBoundNodeMap[TKind] {
         if (scope) {
             switch (identifier.kind) {
+                // TODO: Is this caught by the parser?
                 case TokenKind.BoolKeyword:
                 case TokenKind.IntKeyword:
                 case TokenKind.FloatKeyword:
                 case TokenKind.StringKeyword: {
                     throw new Error(`'${identifier.kind}' is a reserved keyword.`);
                 }
-                default: {
-                    const name = getText(identifier, node);
-
-                    return this.resolveIdentifierName(name, node, scope, getTypeArguments);
-                }
             }
         } else {
             switch (identifier.kind) {
-                case TokenKind.BoolKeyword: {
-                    return this.project.boolTypeDeclaration;
-                }
-                case TokenKind.IntKeyword: {
-                    return this.project.intTypeDeclaration;
-                }
-                case TokenKind.FloatKeyword: {
-                    return this.project.floatTypeDeclaration;
-                }
-                case TokenKind.StringKeyword: {
-                    return this.project.stringTypeDeclaration;
-                }
-                case TokenKind.Identifier:
-                case TokenKind.ObjectKeyword:
-                case TokenKind.ThrowableKeyword:
-                case TokenKind.NewKeyword:
-                case NodeKind.EscapedIdentifier: {
-                    const name = getText(identifier, node);
-
-                    return this.resolveIdentifierName(name, node, scope, getTypeArguments);
-                }
-                default: {
-                    return assertNever(identifier);
-                }
+                case TokenKind.BoolKeyword: { return this.project.boolTypeDeclaration; }
+                case TokenKind.IntKeyword: { return this.project.intTypeDeclaration; }
+                case TokenKind.FloatKeyword: { return this.project.floatTypeDeclaration; }
+                case TokenKind.StringKeyword: { return this.project.stringTypeDeclaration; }
             }
         }
+
+        const name = getText(identifier, node);
+
+        return this.resolveIdentifierName(name, node, scope, getTypeArguments, ...kinds);
     }
 
-    private resolveIdentifierName(
+    private resolveIdentifierName<TKind extends BoundDeclarations['kind']>(
         name: string,
         node: BoundNodes,
         scope?: BoundMemberContainerDeclaration,
         getTypeArguments?: GetBoundNodes<BoundTypeReferenceDeclaration>,
-    ) {
+        ...kinds: TKind[]
+    ): BoundNodeKindToBoundNodeMap[TKind] {
+        let boundDeclaration: BoundDeclarations | undefined;
+
         if (scope) {
-            const boundDeclaration = this.resolveIdentifierOnScope(name, scope);
+            boundDeclaration = this.resolveIdentifierNameOnScope(name, scope, kinds);
             if (!boundDeclaration) {
-                throw new Error(`'${name}' does not exist on '${scope.type}'.`);
+                throw new Error(`'${name}' does not exist on '${scope.identifier.name}'.`);
             }
 
             return boundDeclaration;
         } else {
-            let boundDeclaration = this.resolveIdentifierFromNode(name, node);
+            boundDeclaration = this.resolveIdentifierNameFromNode(name, node, kinds);
             if (!boundDeclaration) {
                 throw new Error(`Could not find '${name}'.`);
             }
+        }
 
-            // Cast expression
-            if (getTypeArguments) {
-                if (boundDeclaration.kind !== BoundNodeKind.ClassDeclaration ||
-                    !boundDeclaration.declaration.typeParameters
-                ) {
-                    throw new Error(`'${name}' is not a generic class.`);
-                }
-
-                const typeArguments = getTypeArguments(node);
-                boundDeclaration = this.instantiateGenericType(boundDeclaration, typeArguments);
+        // Cast expression
+        if (getTypeArguments) {
+            if (boundDeclaration.kind !== BoundNodeKind.ClassDeclaration ||
+                !boundDeclaration.declaration.typeParameters
+            ) {
+                throw new Error(`'${name}' is not a generic class.`);
             }
 
-            return boundDeclaration;
+            const typeArguments = getTypeArguments(node);
+            boundDeclaration = this.instantiateGenericType(boundDeclaration, typeArguments);
         }
+
+        return boundDeclaration;
     }
 
-    private resolveIdentifierFromNode(
+    private resolveIdentifierNameFromNode<TKind extends BoundDeclarations['kind']>(
         name: string,
         node: BoundNodes,
-    ): BoundDeclarations | undefined {
-        let scope = this.getScope(node);
+        kinds: TKind[],
+    ): BoundNodeKindToBoundNodeMap[TKind] | undefined {
+        let scope: Scope | undefined;
+        if (this.isScope(node)) {
+            scope = node;
+        } else {
+            scope = this.getScope(node);
+        }
+
         while (scope) {
-            const boundDeclaration = this.resolveIdentifierOnScope(name, scope);
+            const boundDeclaration = this.resolveIdentifierNameOnScope(name, scope, kinds);
             if (boundDeclaration) {
                 return boundDeclaration;
             }
 
             switch (scope.kind) {
                 case BoundNodeKind.ModuleDeclaration: {
-                    const boundDeclaration = this.resolveIdentifierOnScope(name, scope.frameworkModule);
-                    if (boundDeclaration) {
-                        return boundDeclaration;
-                    }
-                    break;
-                }
-                case BoundNodeKind.ExternClassDeclaration:
-                case BoundNodeKind.ClassDeclaration: {
-                    let { superType } = scope;
-                    while (superType) {
-                        const boundDeclaration = this.resolveIdentifierOnScope(name, superType);
+                    const boundDeclarations: BoundNodeKindToBoundNodeMap[TKind][] = [];
+
+                    for (const importedModule of BoundTreeWalker.getImportedModules(scope)) {
+                        const boundDeclaration = this.resolveIdentifierNameOnScope(name, importedModule, kinds);
                         if (boundDeclaration) {
-                            return boundDeclaration;
+                            boundDeclarations.push(boundDeclaration);
+                        }
+                    }
+
+                    if (boundDeclarations.length === 1) {
+                        return boundDeclarations[0];
+                    } else if (boundDeclarations.length > 1) {
+                        // TODO: Verify how this is supposed to work
+                        if (boundDeclarations.every((boundDeclaration) =>
+                            boundDeclarations[0] === boundDeclaration)
+                        ) {
+                            return boundDeclarations[0];
                         }
 
-                        superType = superType.superType;
+                        throw new Error(`Multiple declarations found for '${name}'.`);
                     }
                     break;
                 }
@@ -4107,13 +4081,38 @@ export class Binder {
         }
     }
 
-    private resolveIdentifierOnScope(
+    private resolveIdentifierNameOnScope<TKind extends BoundDeclarations['kind']>(
         name: string,
         scope: Scope,
-    ) {
-        const boundDeclaration = scope.locals.get(name);
+        kinds: TKind[],
+    ): BoundNodeKindToBoundNodeMap[TKind] | undefined {
+        const boundDeclaration = scope.locals.get(name, ...kinds);
         if (boundDeclaration) {
             return boundDeclaration;
+        }
+
+        switch (scope.kind) {
+            case BoundNodeKind.ExternClassDeclaration:
+            case BoundNodeKind.ClassDeclaration: {
+                if (scope.superType) {
+                    const boundDeclaration = this.resolveIdentifierNameOnScope(name, scope.superType, kinds);
+                    if (boundDeclaration) {
+                        return boundDeclaration;
+                    }
+                }
+                break;
+            }
+            case BoundNodeKind.InterfaceDeclaration: {
+                if (scope.implementedTypes) {
+                    for (const implementedType of scope.implementedTypes) {
+                        const boundDeclaration = this.resolveIdentifierNameOnScope(name, implementedType, kinds);
+                        if (boundDeclaration) {
+                            return boundDeclaration;
+                        }
+                    }
+                }
+                break;
+            }
         }
     }
 

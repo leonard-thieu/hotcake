@@ -272,7 +272,8 @@ function binderTestOutputReplacer(this: any, key: string, value: any) {
         case 'directory':
         case 'parent':
         case 'openType':
-        case 'frameworkModule': {
+        case 'frameworkModule':
+        case 'importedModules': {
             return undefined;
         }
         case 'declaration': {

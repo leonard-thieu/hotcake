@@ -1,5 +1,5 @@
 import { BoundTreeWalker } from './Binding/BoundTreeWalker';
-import { BoundNodeKind, BoundNodes } from './Binding/Node/BoundNodes';
+import { BoundNodes } from './Binding/Node/BoundNodes';
 import { EscapedIdentifier } from './Syntax/Node/Identifier';
 import { NodeKind } from './Syntax/Node/Nodes';
 import { MissingToken } from './Syntax/Token/MissingToken';
@@ -10,7 +10,7 @@ export function assertNever(x: never): never {
 }
 
 export function getText(identifier: EscapedIdentifier | Tokens | MissingToken, node: BoundNodes) {
-    const { document } = BoundTreeWalker.getClosest(node, BoundNodeKind.ModuleDeclaration)!.declaration;
+    const { document } = BoundTreeWalker.getModule(node).declaration;
 
     switch (identifier.kind) {
         case NodeKind.EscapedIdentifier: {
