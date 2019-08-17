@@ -2577,7 +2577,7 @@ export class Binder {
                 return this.bindIndexExpression(parent, expression, typeMap, scope);
             }
             case NodeKind.SliceExpression: {
-                return this.bindSliceExpression(parent, expression, typeMap);
+                return this.bindSliceExpression(parent, expression, typeMap, scope);
             }
             case NodeKind.InvokeExpression: {
                 return this.bindInvokeExpression(parent, expression, typeMap, scope);
@@ -3371,6 +3371,7 @@ export class Binder {
         parent: BoundNodes,
         expression: SliceExpression,
         typeMap: TypeMap | undefined,
+        scope?: BoundMemberContainerDeclaration,
     ): BoundSliceExpression {
         let getStartExpression: GetBoundNode<BoundExpressions> | undefined = undefined;
         if (expression.startExpression) {
@@ -3385,7 +3386,7 @@ export class Binder {
         }
 
         return this.sliceExpression(parent,
-            (parent) => this.bindExpression(parent, expression.sliceableExpression, typeMap),
+            (parent) => this.bindExpression(parent, expression.sliceableExpression, typeMap, scope),
             getStartExpression,
             getEndExpression,
         );
