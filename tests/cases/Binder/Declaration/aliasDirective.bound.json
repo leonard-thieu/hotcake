@@ -3,530 +3,274 @@
     "identifier": "aliasDirective",
     "locals": [
         {
-            "kind": "ModuleDeclaration",
+            "kind": "AliasDirective",
+            "identifier": "monkey",
+            "target": {
+                "kind": "ModuleDeclaration",
+                "identifier": "monkey"
+            },
+            "type": "Module"
+        },
+        {
+            "kind": "AliasDirective",
             "identifier": "_module",
-            "path": "_aliasDirective._module"
-        },
-        {
-            "kind": "DataDeclaration",
-            "declarationKind": "Const",
-            "identifier": "Const",
-            "operator": "ColonEqualsSign",
-            "expression": {
-                "kind": "IntegerLiteralExpression",
-                "type": "Int",
-                "value": "2"
+            "target": {
+                "kind": "ModuleDeclaration",
+                "identifier": "_module"
             },
-            "type": "Int"
+            "type": "Module"
         },
         {
-            "kind": "DataDeclaration",
-            "declarationKind": "Global",
-            "identifier": "Global",
-            "operator": "ColonEqualsSign",
-            "expression": {
-                "kind": "IntegerLiteralExpression",
-                "type": "Int",
-                "value": "3"
-            },
-            "type": "Int"
-        },
-        {
-            "kind": "FunctionGroupDeclaration",
-            "identifier": "Function",
-            "type": "Function",
-            "overloads": [
-                {
-                    "kind": "FunctionDeclaration",
-                    "identifier": "Function",
-                    "locals": [],
-                    "type": "Function: Int()",
-                    "returnType": "Int",
-                    "parameters": [],
-                    "statements": []
-                }
-            ]
-        },
-        {
-            "kind": "InterfaceDeclaration",
-            "identifier": "Interface",
-            "type": "Interface",
-            "locals": [
-                {
-                    "kind": "DataDeclaration",
-                    "declarationKind": "Const",
-                    "identifier": "Const",
-                    "operator": "ColonEqualsSign",
-                    "expression": {
-                        "kind": "IntegerLiteralExpression",
-                        "type": "Int",
-                        "value": "2"
-                    },
-                    "type": "Int"
-                },
-                {
-                    "kind": "InterfaceMethodGroupDeclaration",
-                    "identifier": "Method",
-                    "type": "Method",
-                    "overloads": [
-                        {
-                            "kind": "InterfaceMethodDeclaration",
-                            "identifier": "Method",
-                            "locals": [],
-                            "type": "Method: Int()",
-                            "returnType": "Int",
-                            "parameters": []
-                        }
-                    ]
-                }
-            ]
-        },
-        {
-            "kind": "ClassDeclaration",
-            "identifier": "Class",
-            "type": "Class",
-            "superType": "Object",
-            "locals": [
-                {
-                    "kind": "DataDeclaration",
-                    "declarationKind": "Const",
-                    "identifier": "Const",
-                    "operator": "ColonEqualsSign",
-                    "expression": {
-                        "kind": "IntegerLiteralExpression",
-                        "type": "Int",
-                        "value": "2"
-                    },
-                    "type": "Int"
-                },
-                {
-                    "kind": "DataDeclaration",
-                    "declarationKind": "Global",
-                    "identifier": "Global",
-                    "typeAnnotation": "Int",
-                    "type": "Int"
-                },
-                {
-                    "kind": "FunctionGroupDeclaration",
-                    "identifier": "Function",
-                    "type": "Function",
-                    "overloads": [
-                        {
-                            "kind": "FunctionDeclaration",
-                            "identifier": "Function",
-                            "locals": [],
-                            "type": "Function: Int()",
-                            "returnType": "Int",
-                            "parameters": [],
-                            "statements": []
-                        }
-                    ]
-                },
-                {
-                    "kind": "DataDeclaration",
-                    "declarationKind": "Field",
-                    "identifier": "Field",
-                    "typeAnnotation": "Int",
-                    "type": "Int"
-                },
-                {
-                    "kind": "ClassMethodGroupDeclaration",
-                    "identifier": "Method",
-                    "type": "Method",
-                    "overloads": [
-                        {
-                            "kind": "ClassMethodDeclaration",
-                            "identifier": "Method",
-                            "locals": [],
-                            "type": "Method: Int()",
-                            "returnType": "Int",
-                            "parameters": [],
-                            "isProperty": false,
-                            "statements": []
-                        }
-                    ]
-                },
-                {
-                    "kind": "ClassMethodGroupDeclaration",
-                    "identifier": "New",
-                    "type": "New Class",
-                    "overloads": [
-                        {
-                            "kind": "ClassMethodDeclaration",
-                            "identifier": "New",
-                            "locals": [],
-                            "type": "New Class()",
-                            "returnType": "Class",
-                            "parameters": [],
-                            "statements": []
-                        }
-                    ]
-                }
-            ]
-        },
-        {
-            "kind": "ClassDeclaration",
-            "identifier": "GenericClass",
-            "type": "GenericClass",
-            "locals": [],
-            "instantiatedTypes": [
-                {
-                    "kind": "ClassDeclaration",
-                    "identifier": "GenericClass",
-                    "type": "GenericClass<Int>",
-                    "typeParameters": [
-                        "T"
-                    ],
-                    "typeArguments": [
-                        "Int"
-                    ],
-                    "superType": "Object",
-                    "locals": [
-                        {
-                            "kind": "TypeParameter",
-                            "identifier": "T",
-                            "type": "GenericClass:T"
-                        },
-                        {
-                            "kind": "ClassMethodGroupDeclaration",
-                            "identifier": "New",
-                            "type": "New GenericClass<Int>",
-                            "overloads": [
-                                {
-                                    "kind": "ClassMethodDeclaration",
-                                    "identifier": "New",
-                                    "locals": [],
-                                    "type": "New GenericClass<Int>()",
-                                    "returnType": "GenericClass<Int>",
-                                    "parameters": [],
-                                    "statements": []
-                                }
-                            ]
-                        }
-                    ]
-                }
-            ]
-        },
-        {
-            "kind": "ClassDeclaration",
-            "identifier": "Array",
-            "type": "Array",
-            "superType": "Object",
-            "locals": [
-                {
-                    "kind": "ClassMethodGroupDeclaration",
-                    "identifier": "New",
-                    "type": "New Array",
-                    "overloads": [
-                        {
-                            "kind": "ClassMethodDeclaration",
-                            "identifier": "New",
-                            "locals": [],
-                            "type": "New Array()",
-                            "returnType": "Array",
-                            "parameters": [],
-                            "statements": []
-                        }
-                    ]
-                }
-            ]
-        },
-        {
-            "kind": "ModuleDeclaration",
+            "kind": "AliasDirective",
             "identifier": "file",
-            "path": "_aliasDirective.directory.file"
+            "target": {
+                "kind": "ModuleDeclaration",
+                "identifier": "file"
+            },
+            "type": "Module"
         },
         {
-            "kind": "DataDeclaration",
-            "declarationKind": "Global",
-            "identifier": "T",
-            "typeAnnotation": "Int",
-            "type": "Int"
-        },
-        {
-            "kind": "ModuleDeclaration",
+            "kind": "AliasDirective",
             "identifier": "_aliasDirective",
-            "path": "_aliasDirective"
-        },
-        {
-            "kind": "ModuleDeclaration",
-            "identifier": "directory_and_module",
-            "path": "_aliasDirective.directory_and_module"
-        },
-        {
-            "kind": "ModuleDeclaration",
-            "identifier": "directory_and_module2",
-            "path": "_aliasDirective.directory_and_module.directory_and_module2"
-        },
-        {
-            "kind": "ModuleDeclaration",
-            "identifier": "file2",
-            "path": "_aliasDirective.directory_and_module.directory_and_module2.file2"
-        },
-        {
-            "kind": "ClassDeclaration",
-            "identifier": "Class2",
-            "type": "Class2",
-            "superType": "Object",
-            "locals": [
-                {
-                    "kind": "DataDeclaration",
-                    "declarationKind": "Global",
-                    "identifier": "Global",
-                    "typeAnnotation": "Int",
-                    "type": "Int"
-                },
-                {
-                    "kind": "ClassMethodGroupDeclaration",
-                    "identifier": "New",
-                    "type": "New Class2",
-                    "overloads": [
-                        {
-                            "kind": "ClassMethodDeclaration",
-                            "identifier": "New",
-                            "locals": [],
-                            "type": "New Class2()",
-                            "returnType": "Class2",
-                            "parameters": [],
-                            "statements": []
-                        }
-                    ]
-                }
-            ]
+            "target": {
+                "kind": "ModuleDeclaration",
+                "identifier": "_aliasDirective"
+            },
+            "type": "Module"
         },
         {
             "kind": "AliasDirective",
             "identifier": "ImportedModule",
-            "type": "Module",
             "target": {
                 "kind": "ModuleDeclaration",
                 "identifier": "_module"
-            }
+            },
+            "type": "Module"
         },
         {
             "kind": "AliasDirective",
             "identifier": "ImportedInterface",
-            "type": "Interface",
             "target": {
                 "kind": "InterfaceDeclaration",
                 "identifier": "Interface"
-            }
+            },
+            "type": "Interface"
         },
         {
             "kind": "AliasDirective",
             "identifier": "ImportedClassGlobal",
-            "type": "Int",
             "target": {
                 "kind": "DataDeclaration",
                 "identifier": "Global"
-            }
+            },
+            "type": "Int"
         },
         {
             "kind": "AliasDirective",
             "identifier": "ModuleConst",
-            "type": "Int",
             "target": {
                 "kind": "DataDeclaration",
                 "identifier": "Const"
-            }
+            },
+            "type": "Int"
         },
         {
             "kind": "AliasDirective",
             "identifier": "ModuleGlobal",
-            "type": "Int",
             "target": {
                 "kind": "DataDeclaration",
                 "identifier": "Global"
-            }
+            },
+            "type": "Int"
         },
         {
             "kind": "AliasDirective",
             "identifier": "ModuleFunction",
-            "type": "Function",
             "target": {
                 "kind": "FunctionGroupDeclaration",
                 "identifier": "Function"
-            }
+            },
+            "type": "Function"
         },
         {
             "kind": "AliasDirective",
             "identifier": "ModuleInterface",
-            "type": "Interface",
             "target": {
                 "kind": "InterfaceDeclaration",
                 "identifier": "Interface"
-            }
+            },
+            "type": "Interface"
         },
         {
             "kind": "AliasDirective",
             "identifier": "ModuleInterfaceConst",
-            "type": "Int",
             "target": {
                 "kind": "DataDeclaration",
                 "identifier": "Const"
-            }
+            },
+            "type": "Int"
         },
         {
             "kind": "AliasDirective",
             "identifier": "ModuleInterfaceGlobal",
-            "type": "Method",
             "target": {
                 "kind": "InterfaceMethodGroupDeclaration",
                 "identifier": "Method"
-            }
+            },
+            "type": "Method"
         },
         {
             "kind": "AliasDirective",
             "identifier": "ModuleClass",
-            "type": "Class",
             "target": {
                 "kind": "ClassDeclaration",
                 "identifier": "Class"
-            }
+            },
+            "type": "Class"
         },
         {
             "kind": "AliasDirective",
             "identifier": "ModuleClassFunction",
-            "type": "Function",
             "target": {
                 "kind": "FunctionGroupDeclaration",
                 "identifier": "Function"
-            }
+            },
+            "type": "Function"
         },
         {
             "kind": "AliasDirective",
             "identifier": "ModuleClassConst",
-            "type": "Int",
             "target": {
                 "kind": "DataDeclaration",
                 "identifier": "Const"
-            }
+            },
+            "type": "Int"
         },
         {
             "kind": "AliasDirective",
             "identifier": "ModuleClassGlobal",
-            "type": "Int",
             "target": {
                 "kind": "DataDeclaration",
                 "identifier": "Global"
-            }
+            },
+            "type": "Int"
         },
         {
             "kind": "AliasDirective",
             "identifier": "ModuleClassField",
-            "type": "Int",
             "target": {
                 "kind": "DataDeclaration",
                 "identifier": "Field"
-            }
+            },
+            "type": "Int"
         },
         {
             "kind": "AliasDirective",
             "identifier": "ModuleClassMethod",
-            "type": "Method",
             "target": {
                 "kind": "ClassMethodGroupDeclaration",
                 "identifier": "Method"
-            }
+            },
+            "type": "Method"
         },
         {
             "kind": "AliasDirective",
             "identifier": "Generic",
-            "type": "GenericClass",
             "target": {
                 "kind": "ClassDeclaration",
                 "identifier": "GenericClass"
-            }
+            },
+            "type": "GenericClass"
         },
         {
             "kind": "AliasDirective",
             "identifier": "ImportedIdentifiersInPath",
-            "type": "Int",
             "target": {
                 "kind": "DataDeclaration",
                 "identifier": "Global"
-            }
+            },
+            "type": "Int"
         },
         {
             "kind": "AliasDirective",
             "identifier": "LocalIntroducedByImport",
-            "type": "Int",
             "target": {
                 "kind": "DataDeclaration",
                 "identifier": "Global"
-            }
+            },
+            "type": "Int"
         },
         {
             "kind": "AliasDirective",
             "identifier": "LocalIntroducedByImportOfImport",
-            "type": "Int",
             "target": {
                 "kind": "DataDeclaration",
                 "identifier": "Global"
-            }
+            },
+            "type": "Int"
         },
         {
             "kind": "AliasDirective",
             "identifier": "EscapedModuleIdentifiersAllowedInPath",
-            "type": "Int",
             "target": {
                 "kind": "DataDeclaration",
                 "identifier": "Global"
-            }
+            },
+            "type": "Int"
         },
         {
             "kind": "AliasDirective",
             "identifier": "LangTypeInt",
-            "type": "Int",
             "target": {
                 "kind": "IntrinsicType",
                 "identifier": "Int"
-            }
+            },
+            "type": "Int"
         },
         {
             "kind": "AliasDirective",
             "identifier": "LangTypeFloat",
-            "type": "Float",
             "target": {
                 "kind": "IntrinsicType",
                 "identifier": "Float"
-            }
+            },
+            "type": "Float"
         },
         {
             "kind": "AliasDirective",
             "identifier": "LangTypeString",
-            "type": "String",
             "target": {
                 "kind": "ExternClassDeclaration",
                 "identifier": "String"
-            }
+            },
+            "type": "String"
         },
         {
             "kind": "AliasDirective",
             "identifier": "LangTypeObject",
-            "type": "Object",
             "target": {
                 "kind": "ExternClassDeclaration",
                 "identifier": "Object"
-            }
+            },
+            "type": "Object"
         },
         {
             "kind": "AliasDirective",
             "identifier": "LangTypeThrowable",
-            "type": "Throwable",
             "target": {
                 "kind": "ExternClassDeclaration",
                 "identifier": "Throwable"
-            }
+            },
+            "type": "Throwable"
         },
         {
             "kind": "AliasDirective",
             "identifier": "AliasedAlias",
-            "type": "Int",
             "target": {
                 "kind": "DataDeclaration",
                 "identifier": "Const"
-            }
+            },
+            "type": "Int"
         },
         {
             "kind": "ClassDeclaration",

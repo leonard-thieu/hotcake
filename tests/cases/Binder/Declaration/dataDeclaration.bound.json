@@ -3,6 +3,15 @@
     "identifier": "dataDeclaration",
     "locals": [
         {
+            "kind": "AliasDirective",
+            "identifier": "monkey",
+            "target": {
+                "kind": "ModuleDeclaration",
+                "identifier": "monkey"
+            },
+            "type": "Module"
+        },
+        {
             "kind": "ClassDeclaration",
             "identifier": "List",
             "type": "List",

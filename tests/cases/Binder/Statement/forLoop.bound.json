@@ -3,6 +3,15 @@
     "identifier": "forLoop",
     "locals": [
         {
+            "kind": "AliasDirective",
+            "identifier": "monkey",
+            "target": {
+                "kind": "ModuleDeclaration",
+                "identifier": "monkey"
+            },
+            "type": "Module"
+        },
+        {
             "kind": "FunctionGroupDeclaration",
             "identifier": "Main",
             "type": "Main",

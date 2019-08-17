@@ -3,6 +3,15 @@
     "identifier": "literalExpression",
     "locals": [
         {
+            "kind": "AliasDirective",
+            "identifier": "monkey",
+            "target": {
+                "kind": "ModuleDeclaration",
+                "identifier": "monkey"
+            },
+            "type": "Module"
+        },
+        {
             "kind": "FunctionGroupDeclaration",
             "identifier": "BoxBool",
             "type": "BoxBool",

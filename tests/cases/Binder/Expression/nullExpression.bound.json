@@ -3,6 +3,15 @@
     "identifier": "nullExpression",
     "locals": [
         {
+            "kind": "AliasDirective",
+            "identifier": "monkey",
+            "target": {
+                "kind": "ModuleDeclaration",
+                "identifier": "monkey"
+            },
+            "type": "Module"
+        },
+        {
             "kind": "FunctionGroupDeclaration",
             "identifier": "UnboxBool",
             "type": "UnboxBool",

@@ -3,6 +3,15 @@
     "identifier": "throwStatement",
     "locals": [
         {
+            "kind": "AliasDirective",
+            "identifier": "monkey",
+            "target": {
+                "kind": "ModuleDeclaration",
+                "identifier": "monkey"
+            },
+            "type": "Module"
+        },
+        {
             "kind": "ClassDeclaration",
             "identifier": "Throwable",
             "type": "Throwable",

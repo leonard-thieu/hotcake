@@ -3,6 +3,15 @@
     "identifier": "unboxing",
     "locals": [
         {
+            "kind": "AliasDirective",
+            "identifier": "monkey",
+            "target": {
+                "kind": "ModuleDeclaration",
+                "identifier": "monkey"
+            },
+            "type": "Module"
+        },
+        {
             "kind": "ClassDeclaration",
             "identifier": "Box",
             "type": "Box",
