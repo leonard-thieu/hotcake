@@ -1134,7 +1134,10 @@ export class Parser extends ParserBase {
             case TokenKind.SelfKeyword:
             case TokenKind.SuperKeyword:
             case TokenKind.Period:
-            case TokenKind.Identifier: {
+            // Escaped identifiers (prefixed with '@') cannot start an expression statement
+            case TokenKind.Identifier:
+            case TokenKind.ObjectKeyword:
+            case TokenKind.ThrowableKeyword: {
                 return true;
             }
         }
@@ -1238,7 +1241,8 @@ export class Parser extends ParserBase {
             return this.parseExpressionStatement(parent, expression);
         }
 
-        console.warn(`Expression cannot be used as a statement.`);
+        // TODO: Should be a diagnostic
+        console.warn(`${expression.kind} cannot be used as a statement.`);
 
         return this.parseExpressionStatement(parent, expression);
     }
