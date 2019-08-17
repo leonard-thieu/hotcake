@@ -154,9 +154,8 @@ export class Binder {
 
         this.project.cacheModule(boundModuleDeclaration);
 
-        boundModuleDeclaration.frameworkModule = this.project.importModuleFromSource(directory, [], 'monkey');
-        // TODO: Probably should be an alias?
-        boundModuleDeclaration.locals.set(boundModuleDeclaration.frameworkModule.identifier);
+        const frameworkModuleAlias = this.importModule(boundModuleDeclaration, [], 'monkey');
+        boundModuleDeclaration.frameworkModule = frameworkModuleAlias.target as BoundModuleDeclaration;
 
         this.bindModuleDeclarationHeaderMembers(boundModuleDeclaration, moduleDeclaration.headerMembers);
 
@@ -284,7 +283,7 @@ export class Binder {
     private bindImportStatement(
         parent: BoundModuleDeclaration,
         importStatement: ImportStatement,
-    ): void {
+    ) {
         const { path } = importStatement;
         switch (path.kind) {
             case NodeKind.StringLiteralExpression: {
@@ -294,12 +293,7 @@ export class Binder {
             case NodeKind.ModulePath: {
                 const { segments, name } = this.bindModulePath(parent, path);
 
-                const importedModule = parent.project.importModuleFromSource(parent.directory, segments, name);
-
-                for (const identifier of importedModule.locals) {
-                    parent.locals.set(identifier);
-                }
-                break;
+                return this.importModule(parent, segments, name);
             }
             case TokenKind.Missing: { break; }
             default: {
@@ -307,6 +301,24 @@ export class Binder {
                 break;
             }
         }
+    }
+
+    private importModule(
+        parent: BoundModuleDeclaration,
+        segments: string[],
+        name: string,
+    ): BoundAliasDirective {
+        const importedModule = parent.project.importModuleFromSource(parent.directory, segments, name);
+        parent.importedModules.add(importedModule);
+
+        const boundAliasDirective = new BoundAliasDirective();
+        boundAliasDirective.parent = parent;
+        boundAliasDirective.identifier = new BoundSymbol(importedModule.identifier.name, boundAliasDirective);
+        parent.locals.set(boundAliasDirective.identifier);
+        boundAliasDirective.target = importedModule;
+        boundAliasDirective.type = importedModule.type;
+
+        return boundAliasDirective;
     }
 
     // #endregion
