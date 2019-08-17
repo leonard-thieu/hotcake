@@ -119,7 +119,6 @@ export class Binder {
     private bindTypeReferencesCallbackList?: (() => void)[] = undefined!;
     private bindDataDeclarationInitializerList?: (() => void)[] = undefined!;
     private bindStatementsCallbackList?: (() => void)[] = undefined!;
-    private module: BoundModuleDeclaration = undefined!;
 
     bind(
         moduleDeclaration: ModuleDeclaration,
@@ -153,10 +152,10 @@ export class Binder {
         boundModuleDeclaration.identifier = new BoundSymbol(name, boundModuleDeclaration);
         directory.locals.set(boundModuleDeclaration.identifier);
 
-        this.module = boundModuleDeclaration;
         this.project.cacheModule(boundModuleDeclaration);
 
-        boundModuleDeclaration.frameworkModule = this.project.importModuleFromSource(this.module.directory, [], 'monkey');
+        boundModuleDeclaration.frameworkModule = this.project.importModuleFromSource(directory, [], 'monkey');
+        // TODO: Probably should be an alias?
         boundModuleDeclaration.locals.set(boundModuleDeclaration.frameworkModule.identifier);
 
         this.bindModuleDeclarationHeaderMembers(boundModuleDeclaration, moduleDeclaration.headerMembers);
@@ -172,7 +171,7 @@ export class Binder {
         this.bindModuleDeclarationMembers(boundModuleDeclaration, moduleDeclaration.members);
 
         // Phase 2: Bind type references on member declarations
-        // - Includes super types, implemented types, and native symbols (depends on `String`)
+        // - Includes super types, implemented types, alias targets, and native symbols (depends on `String`)
         // - Includes type annotations
         // - Makes overload resolution possible
         // - Depends on types being resolvable
@@ -295,8 +294,7 @@ export class Binder {
             case NodeKind.ModulePath: {
                 const { segments, name } = this.bindModulePath(parent, path);
 
-                const importedModule = this.project.importModuleFromSource(parent.directory, segments, name);
-                parent.locals.set(importedModule.identifier);
+                const importedModule = parent.project.importModuleFromSource(parent.directory, segments, name);
 
                 for (const identifier of importedModule.locals) {
                     parent.locals.set(identifier);
@@ -3127,7 +3125,9 @@ export class Binder {
     ): BoundGlobalScopeExpression {
         const boundGlobalScopeExpression = new BoundGlobalScopeExpression();
         boundGlobalScopeExpression.parent = parent;
-        boundGlobalScopeExpression.type = this.module.type;
+
+        const boundModule = BoundTreeWalker.getModule(parent);
+        boundGlobalScopeExpression.type = boundModule.type;
 
         return boundGlobalScopeExpression;
     }
