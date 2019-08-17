@@ -28,7 +28,7 @@ import { ScopeMemberAccessExpression } from '../Syntax/Node/Expression/ScopeMemb
 import { SliceExpression } from '../Syntax/Node/Expression/SliceExpression';
 import { StringLiteralExpression } from '../Syntax/Node/Expression/StringLiteralExpression';
 import { UnaryExpression, UnaryOperatorToken } from '../Syntax/Node/Expression/UnaryExpression';
-import { IdentifierTokens } from '../Syntax/Node/Identifier';
+import { Identifier, IdentifierTokens } from '../Syntax/Node/Identifier';
 import { ModulePath } from '../Syntax/Node/ModulePath';
 import { NodeKind } from '../Syntax/Node/Nodes';
 import { AssignmentOperatorToken, AssignmentStatement } from '../Syntax/Node/Statement/AssignmentStatement';
@@ -2079,6 +2079,10 @@ export class Binder {
 
                 boundWhileLoop.statements = [];
 
+                if (forEachInLoop.indexVariable.kind === TokenKind.Missing) {
+                    throw new Error(`Index variable is missing.`);
+                }
+
                 if (forEachInLoop.operator.kind === TokenKind.Missing) {
                     throw new Error(`Operator is missing.`);
                 }
@@ -2108,7 +2112,7 @@ export class Binder {
 
                     const indexVariableStatement = this.assignmentStatement(boundWhileLoop,
                         (parent) => this.identifierExpression(parent,
-                            () => boundIndexDeclaration,
+                            (parent) => this.resolveIdentifier(forEachInLoop.indexVariable as Identifier, parent),
                         ),
                         this.getAssignmentStatementOperator(operatorToken.kind),
                         (parent) => this.indexExpression(parent,
