@@ -3507,9 +3507,31 @@ export class Binder {
     ): BoundFunctionLikeDeclaration {
         // Search for an exact match (cannot use default parameters)
         for (const [, overload] of overloads) {
-            if (areElementsSame(args, overload.parameters,
-                (arg, param) => arg.type === param.type,
-            )) {
+            if (overload.parameters.length < args.length) {
+                continue;
+            }
+
+            let matchedArgCount = 0;
+
+            for (; matchedArgCount < overload.parameters.length; matchedArgCount++) {
+                const param = overload.parameters[matchedArgCount];
+                const arg = args[matchedArgCount];
+
+                if (arg) {
+                    if (arg.kind === BoundNodeKind.PlaceholderExpression ||
+                        arg.type !== param.type
+                    ) {
+                        break;
+                    }
+                } else {
+                    // Trailing default parameters still counts as an "exact" match
+                    if (!param.expression) {
+                        break;
+                    }
+                }
+            }
+
+            if (matchedArgCount === overload.parameters.length) {
                 return overload;
             }
         }
@@ -3544,7 +3566,17 @@ export class Binder {
 
         switch (candidates.length) {
             case 0: {
-                throw new Error('A matching overload could not be found.');
+                let name: string = undefined!;
+                const overloadStrs: string[] = [''];
+
+                for (const [, overload] of overloads) {
+                    name = overload.identifier.name;
+                    overloadStrs.push(overload.type.toString());
+                }
+
+                const nameWithArgs = `${name}(${args.map(a => a.type).join(',')})`;
+
+                throw new Error(`A matching overload could not be found for ${nameWithArgs}.${overloadStrs.join('\n')}`);
             }
             case 1: {
                 return candidates[0];
