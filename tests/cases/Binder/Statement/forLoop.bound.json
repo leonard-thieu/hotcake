@@ -707,7 +707,7 @@
                                     "leftOperand": {
                                         "kind": "IdentifierExpression",
                                         "type": "Int",
-                                        "identifier": "7"
+                                        "identifier": "val3"
                                     },
                                     "operator": "Assignment",
                                     "rightOperand": {
