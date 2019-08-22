@@ -101,7 +101,7 @@ export class Tokenizer {
                 }
                 case NodeKind.ErrorDirective: {
                     const message = this.eval(member.expression);
-                    console.error(message);
+                    console.error(`Error: ${message}`);
                     break;
                 }
                 case NodeKind.RemDirective: {
