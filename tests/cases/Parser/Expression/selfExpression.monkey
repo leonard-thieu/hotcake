@@ -1,5 +1,8 @@
 Class Actor
     Method Move()
-        Self
+        CheckActor Self
     End
+End
+
+Function CheckActor(actor: Actor)
 End

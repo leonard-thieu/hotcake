@@ -3,6 +3,7 @@ import { BoundNode } from '../BoundNodes';
 import { BoundArrayLiteralExpression } from './BoundArrayLiteralExpression';
 import { BoundBinaryExpression } from './BoundBinaryExpression';
 import { BoundBooleanLiteralExpression } from './BoundBooleanLiteralExpression';
+import { BoundCastExpression } from "./BoundCastExpression";
 import { BoundFloatLiteralExpression } from './BoundFloatLiteralExpression';
 import { BoundGlobalScopeExpression } from './BoundGlobalScopeExpression';
 import { BoundGroupingExpression } from './BoundGroupingExpression';
@@ -43,5 +44,6 @@ export type BoundExpressions =
     | BoundIndexExpression
     | BoundSliceExpression
     | BoundInvokeExpression
+    | BoundCastExpression
     | BoundPlaceholderExpression
     ;

@@ -29,8 +29,8 @@
                             "expression": {
                                 "kind": "InvokeExpression",
                                 "type": "Int",
-                                "invocationType": "Test: Int()",
-                                "invokableExpression": {
+                                "overload": "Test: Int()",
+                                "invocableExpression": {
                                     "kind": "IdentifierExpression",
                                     "type": "Test",
                                     "identifier": "Test"

@@ -214,8 +214,8 @@
                                                     "expression": {
                                                         "kind": "InvokeExpression",
                                                         "type": "Ex1",
-                                                        "invocationType": "New Ex1()",
-                                                        "invokableExpression": {
+                                                        "overload": "New Ex1()",
+                                                        "invocableExpression": {
                                                             "kind": "NewExpression",
                                                             "type": "New Ex1",
                                                             "typeReference": "Ex1"
@@ -233,8 +233,8 @@
                                                         "expression": {
                                                             "kind": "InvokeExpression",
                                                             "type": "Ex2",
-                                                            "invocationType": "New Ex2()",
-                                                            "invokableExpression": {
+                                                            "overload": "New Ex2()",
+                                                            "invocableExpression": {
                                                                 "kind": "NewExpression",
                                                                 "type": "New Ex2",
                                                                 "typeReference": "Ex2"
@@ -265,8 +265,8 @@
                                                     "expression": {
                                                         "kind": "InvokeExpression",
                                                         "type": "Int",
-                                                        "invocationType": "Print: Int(String)",
-                                                        "invokableExpression": {
+                                                        "overload": "Print: Int(String)",
+                                                        "invocableExpression": {
                                                             "kind": "IdentifierExpression",
                                                             "type": "Print",
                                                             "identifier": "Print"
@@ -300,8 +300,8 @@
                                                     "expression": {
                                                         "kind": "InvokeExpression",
                                                         "type": "Int",
-                                                        "invocationType": "Print: Int(String)",
-                                                        "invokableExpression": {
+                                                        "overload": "Print: Int(String)",
+                                                        "invocableExpression": {
                                                             "kind": "IdentifierExpression",
                                                             "type": "Print",
                                                             "identifier": "Print"

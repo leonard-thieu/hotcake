@@ -90,7 +90,7 @@
                         },
                         "member": {
                             "kind": "InvokeExpression",
-                            "invokableExpression": {
+                            "invocableExpression": {
                                 "kind": "IdentifierExpression",
                                 "identifier": {
                                     "kind": "Identifier",

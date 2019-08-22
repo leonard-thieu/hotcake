@@ -114,20 +114,18 @@
                                                 "kind": "ScopeMemberAccessExpression",
                                                 "type": "String[]",
                                                 "scopableExpression": {
-                                                    "kind": "InvokeExpression",
+                                                    "kind": "CastExpression",
                                                     "type": "ArrayObject<String>",
-                                                    "invokableExpression": {
+                                                    "invocableExpression": {
                                                         "kind": "IdentifierExpression",
                                                         "type": "ArrayObject<String>",
                                                         "identifier": "ArrayObject"
                                                     },
-                                                    "arguments": [
-                                                        {
-                                                            "kind": "IdentifierExpression",
-                                                            "type": "Object",
-                                                            "identifier": "box"
-                                                        }
-                                                    ]
+                                                    "argument": {
+                                                        "kind": "IdentifierExpression",
+                                                        "type": "Object",
+                                                        "identifier": "box"
+                                                    }
                                                 },
                                                 "member": {
                                                     "kind": "IdentifierExpression",
@@ -178,8 +176,8 @@
                             "expression": {
                                 "kind": "InvokeExpression",
                                 "type": "ArrayBoxer<String>",
-                                "invocationType": "New ArrayBoxer<String>()",
-                                "invokableExpression": {
+                                "overload": "New ArrayBoxer<String>()",
+                                "invocableExpression": {
                                     "kind": "NewExpression",
                                     "type": "New ArrayBoxer<String>",
                                     "typeReference": "ArrayBoxer<String>"

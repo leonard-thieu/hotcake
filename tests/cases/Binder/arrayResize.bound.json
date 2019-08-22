@@ -66,8 +66,8 @@
                                 "member": {
                                     "kind": "InvokeExpression",
                                     "type": "Float[]",
-                                    "invocationType": "Resize: Float[](Int)",
-                                    "invokableExpression": {
+                                    "overload": "Resize: Float[](Int)",
+                                    "invocableExpression": {
                                         "kind": "IdentifierExpression",
                                         "type": "Resize",
                                         "identifier": "Resize"

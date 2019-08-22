@@ -26,8 +26,8 @@
                     "expression": {
                         "kind": "InvokeExpression",
                         "type": "HeadNode",
-                        "invocationType": "New HeadNode()",
-                        "invokableExpression": {
+                        "overload": "New HeadNode()",
+                        "invocableExpression": {
                             "kind": "NewExpression",
                             "type": "New HeadNode",
                             "typeReference": "HeadNode"

@@ -86,8 +86,8 @@
                                             "expression": {
                                                 "kind": "InvokeExpression",
                                                 "type": "Int",
-                                                "invocationType": "Print: Int(String)",
-                                                "invokableExpression": {
+                                                "overload": "Print: Int(String)",
+                                                "invocableExpression": {
                                                     "kind": "IdentifierExpression",
                                                     "type": "Print",
                                                     "identifier": "Print"
@@ -124,8 +124,8 @@
                                             "expression": {
                                                 "kind": "InvokeExpression",
                                                 "type": "Int",
-                                                "invocationType": "Print: Int(String)",
-                                                "invokableExpression": {
+                                                "overload": "Print: Int(String)",
+                                                "invocableExpression": {
                                                     "kind": "IdentifierExpression",
                                                     "type": "Print",
                                                     "identifier": "Print"
@@ -151,8 +151,8 @@
                                         "expression": {
                                             "kind": "InvokeExpression",
                                             "type": "Int",
-                                            "invocationType": "Print: Int(String)",
-                                            "invokableExpression": {
+                                            "overload": "Print: Int(String)",
+                                            "invocableExpression": {
                                                 "kind": "IdentifierExpression",
                                                 "type": "Print",
                                                 "identifier": "Print"

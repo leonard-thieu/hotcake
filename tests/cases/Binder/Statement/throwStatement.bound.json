@@ -53,8 +53,8 @@
                             "expression": {
                                 "kind": "InvokeExpression",
                                 "type": "Throwable",
-                                "invocationType": "New Throwable()",
-                                "invokableExpression": {
+                                "overload": "New Throwable()",
+                                "invocableExpression": {
                                     "kind": "NewExpression",
                                     "type": "New Throwable",
                                     "typeReference": "Throwable"

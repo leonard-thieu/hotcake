@@ -1218,33 +1218,48 @@ export class Parser extends ParserBase {
         const newlines = this.parseList(ParseContextKind.NewlineList, parent);
         let expression = this.parsePrimaryExpression(parent, /*isStatement*/ true);
 
-        let rightExpression = expression;
-        while (rightExpression.kind === NodeKind.ScopeMemberAccessExpression) {
-            rightExpression = rightExpression.member;
+        const rightExpression: Expressions | MissingToken = this.getRightExpression(expression);
+        if (rightExpression.kind === TokenKind.Missing) {
+            throw new Error(`Expression is missing.`);
         }
 
-        if (rightExpression.kind === NodeKind.IdentifierExpression) {
-            rightExpression = this.parseInvokeExpression(rightExpression, /*isStatement*/ true);
+        const rightParent = rightExpression.parent!;
 
-            if (rightExpression.parent &&
-                rightExpression.parent.kind === NodeKind.ScopeMemberAccessExpression
-            ) {
-                rightExpression.parent.member = rightExpression;
+        if (rightExpression.kind === NodeKind.IdentifierExpression &&
+            rightParent.kind !== NodeKind.InvokeExpression
+        ) {
+            const invokeExpression = this.parseInvokeExpression(rightExpression, /*isStatement*/ true);
+
+            if (rightExpression === expression) {
+                expression = invokeExpression;
             } else {
-                expression = rightExpression;
+                switch (rightParent.kind) {
+                    case NodeKind.ScopeMemberAccessExpression: { rightParent.member = invokeExpression; break; }
+                    case NodeKind.IndexExpression: { rightParent.indexableExpression = invokeExpression; break; }
+                    case NodeKind.SliceExpression: { rightParent.sliceableExpression = invokeExpression; break; }
+                }
             }
         }
 
         expression.newlines = newlines;
 
-        if (rightExpression.kind === NodeKind.InvokeExpression) {
-            return this.parseExpressionStatement(parent, expression);
+        if (rightExpression.parent!.kind !== NodeKind.InvokeExpression) {
+            throw new Error(`${expression.kind} cannot be used as a statement.`);
         }
 
-        // TODO: Should be a diagnostic
-        console.warn(`${expression.kind} cannot be used as a statement.`);
-
         return this.parseExpressionStatement(parent, expression);
+    }
+
+    private getRightExpression(expression: Expressions | MissingToken) {
+        while (true) {
+            switch (expression.kind) {
+                case NodeKind.ScopeMemberAccessExpression: { expression = expression.member; break; }
+                case NodeKind.IndexExpression: { expression = expression.indexableExpression; break; }
+                case NodeKind.SliceExpression: { expression = expression.sliceableExpression; break; }
+                case NodeKind.InvokeExpression: { expression = expression.invocableExpression; break; }
+                default: { return expression; }
+            }
+        }
     }
 
     // #endregion

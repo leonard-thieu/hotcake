@@ -14,6 +14,7 @@ import { BoundDirectory } from '../src/Binding/Node/Declaration/BoundDirectory';
 import { BoundFunctionLikeGroupDeclaration } from '../src/Binding/Node/Declaration/BoundFunctionLikeGroupDeclaration';
 import { BoundInterfaceDeclaration } from '../src/Binding/Node/Declaration/BoundInterfaceDeclaration';
 import { BoundModuleDeclaration } from '../src/Binding/Node/Declaration/BoundModuleDeclaration';
+import { BoundInvokeExpression } from '../src/Binding/Node/Expression/BoundInvokeExpression';
 import { Type } from '../src/Binding/Type/Types';
 import { ConfigurationVariableMap } from "../src/Configuration";
 import { Diagnostic, DiagnosticBag, DiagnosticKind } from '../src/Diagnostics';
@@ -139,7 +140,7 @@ export function getTokens(filePath: string, document: string): Tokens[] {
     const configVars = new ConfigurationVariableMap(Object.entries({
         HOST: 'winnt',
         LANG: 'cpp',
-        TARGET: 'glfw',
+        TARGET: 'html5',
         CONFIG: 'release',
     }));
     const currentDirectory = path.dirname(filePath);
@@ -181,7 +182,7 @@ export function getParseTree(filePath: string, document: string): ModuleDeclarat
     const configVars = new ConfigurationVariableMap(Object.entries({
         HOST: 'winnt',
         LANG: 'cpp',
-        TARGET: 'glfw',
+        TARGET: 'html5',
         CONFIG: 'release',
     }));
     const currentDirectory = path.dirname(filePath);
@@ -239,7 +240,7 @@ export function getBoundTree(filePath: string, document: string): BoundModuleDec
     const project = new Project(frameworkDirectory, projectDirectory, {
         HOST: 'winnt',
         LANG: 'cpp',
-        TARGET: 'glfw',
+        TARGET: 'html5',
         CONFIG: 'debug',
     });
 
@@ -379,6 +380,11 @@ function binderTestOutputReplacer(this: any, key: string, value: any) {
                 kind: target.kind,
                 identifier: target.identifier,
             };
+        }
+        case 'overload': {
+            const overload = value as BoundInvokeExpression[typeof key];
+
+            return overload.type.toString();
         }
         case 'overloads': {
             const overloads = value as BoundFunctionLikeGroupDeclaration[typeof key];

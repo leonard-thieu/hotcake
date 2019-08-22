@@ -6,7 +6,7 @@ import { Expression, Expressions } from './Expressions';
 
 export const InvokeExpressionChildNames: ReadonlyArray<keyof InvokeExpression> = [
     'newlines',
-    'invokableExpression',
+    'invocableExpression',
     'openingParenthesis',
     'leadingNewlines',
     'arguments',
@@ -16,7 +16,7 @@ export const InvokeExpressionChildNames: ReadonlyArray<keyof InvokeExpression> =
 export class InvokeExpression extends Expression {
     readonly kind = NodeKind.InvokeExpression;
 
-    invokableExpression: Expressions = undefined!;
+    invocableExpression: Expressions = undefined!;
     openingParenthesis?: OpeningParenthesisToken = undefined!;
     leadingNewlines?: NewlineToken[] = undefined!;
     arguments: (Expressions | MissingToken | CommaSeparator)[] = undefined!;

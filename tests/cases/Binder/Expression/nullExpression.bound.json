@@ -55,8 +55,8 @@
                             "expression": {
                                 "kind": "InvokeExpression",
                                 "type": "Bool",
-                                "invocationType": "UnboxBool: Bool(Object)",
-                                "invokableExpression": {
+                                "overload": "UnboxBool: Bool(Object)",
+                                "invocableExpression": {
                                     "kind": "IdentifierExpression",
                                     "type": "UnboxBool",
                                     "identifier": "UnboxBool"

@@ -412,7 +412,7 @@
                                 "expression": {
                                     "kind": "InvokeExpression",
                                     "newlines": [],
-                                    "invokableExpression": {
+                                    "invocableExpression": {
                                         "kind": "NewExpression",
                                         "newKeyword": {
                                             "kind": "NewKeyword",
@@ -465,7 +465,7 @@
                         },
                         "member": {
                             "kind": "InvokeExpression",
-                            "invokableExpression": {
+                            "invocableExpression": {
                                 "kind": "IdentifierExpression",
                                 "identifier": {
                                     "kind": "Identifier",
@@ -523,7 +523,7 @@
                             },
                             "member": {
                                 "kind": "InvokeExpression",
-                                "invokableExpression": {
+                                "invocableExpression": {
                                     "kind": "IdentifierExpression",
                                     "identifier": {
                                         "kind": "Identifier",
@@ -599,7 +599,7 @@
                                 },
                                 "member": {
                                     "kind": "InvokeExpression",
-                                    "invokableExpression": {
+                                    "invocableExpression": {
                                         "kind": "IdentifierExpression",
                                         "identifier": {
                                             "kind": "Identifier",

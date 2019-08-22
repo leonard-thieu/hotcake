@@ -217,7 +217,7 @@
                             },
                             "member": {
                                 "kind": "InvokeExpression",
-                                "invokableExpression": {
+                                "invocableExpression": {
                                     "kind": "IdentifierExpression",
                                     "identifier": {
                                         "kind": "Identifier",
@@ -251,7 +251,7 @@
                     "expression": {
                         "kind": "InvokeExpression",
                         "newlines": [],
-                        "invokableExpression": {
+                        "invocableExpression": {
                             "kind": "IdentifierExpression",
                             "identifier": {
                                 "kind": "Identifier",
@@ -348,7 +348,7 @@
                     "expression": {
                         "kind": "InvokeExpression",
                         "newlines": [],
-                        "invokableExpression": {
+                        "invocableExpression": {
                             "kind": "IdentifierExpression",
                             "identifier": {
                                 "kind": "Identifier",
@@ -443,7 +443,7 @@
                     "expression": {
                         "kind": "InvokeExpression",
                         "newlines": [],
-                        "invokableExpression": {
+                        "invocableExpression": {
                             "kind": "IdentifierExpression",
                             "identifier": {
                                 "kind": "Identifier",
@@ -522,7 +522,7 @@
                     "expression": {
                         "kind": "InvokeExpression",
                         "newlines": [],
-                        "invokableExpression": {
+                        "invocableExpression": {
                             "kind": "IdentifierExpression",
                             "identifier": {
                                 "kind": "Identifier",
@@ -652,7 +652,7 @@
                         },
                         "member": {
                             "kind": "InvokeExpression",
-                            "invokableExpression": {
+                            "invocableExpression": {
                                 "kind": "IdentifierExpression",
                                 "identifier": {
                                     "kind": "ObjectKeyword",
@@ -721,7 +721,7 @@
                     "expression": {
                         "kind": "InvokeExpression",
                         "newlines": [],
-                        "invokableExpression": {
+                        "invocableExpression": {
                             "kind": "IdentifierExpression",
                             "identifier": {
                                 "kind": "Identifier",
@@ -773,7 +773,7 @@
                     "expression": {
                         "kind": "InvokeExpression",
                         "newlines": [],
-                        "invokableExpression": {
+                        "invocableExpression": {
                             "kind": "IdentifierExpression",
                             "identifier": {
                                 "kind": "Identifier",
@@ -816,7 +816,7 @@
                     "expression": {
                         "kind": "InvokeExpression",
                         "newlines": [],
-                        "invokableExpression": {
+                        "invocableExpression": {
                             "kind": "IdentifierExpression",
                             "identifier": {
                                 "kind": "Identifier",
@@ -868,7 +868,7 @@
                     "expression": {
                         "kind": "InvokeExpression",
                         "newlines": [],
-                        "invokableExpression": {
+                        "invocableExpression": {
                             "kind": "IdentifierExpression",
                             "identifier": {
                                 "kind": "Identifier",

@@ -81,6 +81,7 @@ export enum BoundNodeKind {
     IndexExpression = 'IndexExpression',
     SliceExpression = 'SliceExpression',
     InvokeExpression = 'InvokeExpression',
+    CastExpression = 'CastExpression',
     PlaceholderExpression = 'PlaceholderExpression',
 }
 

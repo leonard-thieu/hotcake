@@ -1,10 +1,9 @@
 import { areElementsSame } from '../util';
 import { BoundNodeKind, BoundNodeKindToBoundNodeMap, BoundNodes } from './Node/BoundNodes';
-import { BoundClassDeclaration } from './Node/Declaration/BoundClassDeclaration';
-import { BoundExternClassDeclaration } from './Node/Declaration/BoundExternClassDeclaration';
+import { BoundMethodContainerDeclaration } from './Node/Declaration/BoundDeclarations';
 import { BoundMethodGroupDeclaration } from './Node/Declaration/BoundFunctionLikeGroupDeclaration';
-import { BoundInterfaceDeclaration } from './Node/Declaration/BoundInterfaceDeclaration';
 import { BoundModuleDeclaration } from './Node/Declaration/BoundModuleDeclaration';
+import { BoundIdentifierExpression } from './Node/Expression/BoundIdentifierExpression';
 import { Types } from './Type/Types';
 
 export namespace BoundTreeWalker {
@@ -70,12 +69,6 @@ export namespace BoundTreeWalker {
         }
     }
 
-    type BoundMethodContainerDeclaration =
-        | BoundExternClassDeclaration
-        | BoundInterfaceDeclaration
-        | BoundClassDeclaration
-        ;
-
     function getOverload(
         overloads: BoundMethodGroupDeclaration['overloads'],
         checkReturnType: (returnType: Types) => boolean,
@@ -90,5 +83,24 @@ export namespace BoundTreeWalker {
                 }
             }
         }
+    }
+
+    export function isInvoked(identifierExpression: BoundIdentifierExpression): boolean {
+        let { parent } = identifierExpression;
+
+        while (parent) {
+            switch (parent.kind) {
+                case BoundNodeKind.ScopeMemberAccessExpression:
+                case BoundNodeKind.IndexExpression:
+                case BoundNodeKind.SliceExpression: {
+                    parent = parent.parent;
+                    break;
+                }
+                case BoundNodeKind.InvokeExpression: { return !parent.invocableExpression; }
+                default: { return false; }
+            }
+        }
+
+        return false;
     }
 }

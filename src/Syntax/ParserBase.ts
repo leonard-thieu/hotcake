@@ -234,33 +234,17 @@ export abstract class ParserBase {
 
     // #region Primary expressions
 
-    // Without the return type annotation, TypeScript seems to think it can eliminate `InvokeExpression`, `IndexExpression`, and
-    // `SliceExpression` from the return type.
-    protected parsePrimaryExpression(parent: Nodes, isStatement?: true): PrimaryExpression | MissingToken {
+    protected parsePrimaryExpression(parent: Nodes, isStatement?: true) {
         let primaryExpression: PrimaryExpression | MissingToken = this.parsePrimaryExpressionCore(parent);
-
-        while (true) {
-            let expression = primaryExpression;
-            if (primaryExpression.kind === NodeKind.ScopeMemberAccessExpression) {
-                expression = primaryExpression.member;
-            }
-
-            if (expression.kind === TokenKind.Missing) {
-                break;
-            }
-
-            const postfixExpression = this.parsePostfixExpression(expression, isStatement);
-            if (!postfixExpression) {
-                break;
-            }
-
-            if (expression.kind === NodeKind.ScopeMemberAccessExpression) {
-                postfixExpression.parent = expression;
-                expression.member = postfixExpression;
-            } else {
-                primaryExpression = postfixExpression;
-            }
+        if (primaryExpression.kind === TokenKind.Missing) {
+            return primaryExpression;
         }
+
+        let postfixExpression: PrimaryExpression | undefined = primaryExpression;
+        do {
+            primaryExpression = postfixExpression;
+            postfixExpression = this.parsePostfixExpression(primaryExpression, isStatement);
+        } while (postfixExpression);
 
         return primaryExpression;
     }
@@ -657,7 +641,7 @@ export abstract class ParserBase {
         const invokeExpression = new InvokeExpression();
         invokeExpression.parent = expression.parent;
         expression.parent = invokeExpression;
-        invokeExpression.invokableExpression = expression;
+        invokeExpression.invocableExpression = expression;
 
         // e.g. `New Float[6*32]`
         if (expression.kind === NodeKind.NewExpression &&

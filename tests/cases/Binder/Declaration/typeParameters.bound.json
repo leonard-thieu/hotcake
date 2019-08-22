@@ -149,8 +149,8 @@
                             "expression": {
                                 "kind": "InvokeExpression",
                                 "type": "ArrayObject<Int>",
-                                "invocationType": "New ArrayObject<Int>()",
-                                "invokableExpression": {
+                                "overload": "New ArrayObject<Int>()",
+                                "invocableExpression": {
                                     "kind": "NewExpression",
                                     "type": "New ArrayObject<Int>",
                                     "typeReference": "ArrayObject<Int>"

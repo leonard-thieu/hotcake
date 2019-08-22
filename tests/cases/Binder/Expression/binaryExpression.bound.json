@@ -133,8 +133,8 @@
                             "expression": {
                                 "kind": "InvokeExpression",
                                 "type": "Object",
-                                "invocationType": "BoxInt: Object(Int)",
-                                "invokableExpression": {
+                                "overload": "BoxInt: Object(Int)",
+                                "invocableExpression": {
                                     "kind": "IdentifierExpression",
                                     "type": "BoxInt",
                                     "identifier": "BoxInt"
@@ -163,8 +163,8 @@
                             "expression": {
                                 "kind": "InvokeExpression",
                                 "type": "Object",
-                                "invocationType": "BoxInt: Object(Int)",
-                                "invokableExpression": {
+                                "overload": "BoxInt: Object(Int)",
+                                "invocableExpression": {
                                     "kind": "IdentifierExpression",
                                     "type": "BoxInt",
                                     "identifier": "BoxInt"
@@ -193,8 +193,8 @@
                             "expression": {
                                 "kind": "InvokeExpression",
                                 "type": "Object",
-                                "invocationType": "BoxFloat: Object(Float)",
-                                "invokableExpression": {
+                                "overload": "BoxFloat: Object(Float)",
+                                "invocableExpression": {
                                     "kind": "IdentifierExpression",
                                     "type": "BoxFloat",
                                     "identifier": "BoxFloat"
@@ -223,8 +223,8 @@
                             "expression": {
                                 "kind": "InvokeExpression",
                                 "type": "Object",
-                                "invocationType": "BoxFloat: Object(Float)",
-                                "invokableExpression": {
+                                "overload": "BoxFloat: Object(Float)",
+                                "invocableExpression": {
                                     "kind": "IdentifierExpression",
                                     "type": "BoxFloat",
                                     "identifier": "BoxFloat"
@@ -253,8 +253,8 @@
                             "expression": {
                                 "kind": "InvokeExpression",
                                 "type": "Object",
-                                "invocationType": "BoxFloat: Object(Float)",
-                                "invokableExpression": {
+                                "overload": "BoxFloat: Object(Float)",
+                                "invocableExpression": {
                                     "kind": "IdentifierExpression",
                                     "type": "BoxFloat",
                                     "identifier": "BoxFloat"
@@ -283,8 +283,8 @@
                             "expression": {
                                 "kind": "InvokeExpression",
                                 "type": "Object",
-                                "invocationType": "BoxInt: Object(Int)",
-                                "invokableExpression": {
+                                "overload": "BoxInt: Object(Int)",
+                                "invocableExpression": {
                                     "kind": "IdentifierExpression",
                                     "type": "BoxInt",
                                     "identifier": "BoxInt"
@@ -313,8 +313,8 @@
                             "expression": {
                                 "kind": "InvokeExpression",
                                 "type": "Object",
-                                "invocationType": "BoxInt: Object(Int)",
-                                "invokableExpression": {
+                                "overload": "BoxInt: Object(Int)",
+                                "invocableExpression": {
                                     "kind": "IdentifierExpression",
                                     "type": "BoxInt",
                                     "identifier": "BoxInt"
@@ -343,8 +343,8 @@
                             "expression": {
                                 "kind": "InvokeExpression",
                                 "type": "Object",
-                                "invocationType": "BoxInt: Object(Int)",
-                                "invokableExpression": {
+                                "overload": "BoxInt: Object(Int)",
+                                "invocableExpression": {
                                     "kind": "IdentifierExpression",
                                     "type": "BoxInt",
                                     "identifier": "BoxInt"
@@ -373,8 +373,8 @@
                             "expression": {
                                 "kind": "InvokeExpression",
                                 "type": "Object",
-                                "invocationType": "BoxInt: Object(Int)",
-                                "invokableExpression": {
+                                "overload": "BoxInt: Object(Int)",
+                                "invocableExpression": {
                                     "kind": "IdentifierExpression",
                                     "type": "BoxInt",
                                     "identifier": "BoxInt"
@@ -403,8 +403,8 @@
                             "expression": {
                                 "kind": "InvokeExpression",
                                 "type": "Object",
-                                "invocationType": "BoxInt: Object(Int)",
-                                "invokableExpression": {
+                                "overload": "BoxInt: Object(Int)",
+                                "invocableExpression": {
                                     "kind": "IdentifierExpression",
                                     "type": "BoxInt",
                                     "identifier": "BoxInt"
@@ -433,8 +433,8 @@
                             "expression": {
                                 "kind": "InvokeExpression",
                                 "type": "Object",
-                                "invocationType": "BoxBool: Object(Bool)",
-                                "invokableExpression": {
+                                "overload": "BoxBool: Object(Bool)",
+                                "invocableExpression": {
                                     "kind": "IdentifierExpression",
                                     "type": "BoxBool",
                                     "identifier": "BoxBool"
@@ -463,8 +463,8 @@
                             "expression": {
                                 "kind": "InvokeExpression",
                                 "type": "Object",
-                                "invocationType": "BoxBool: Object(Bool)",
-                                "invokableExpression": {
+                                "overload": "BoxBool: Object(Bool)",
+                                "invocableExpression": {
                                     "kind": "IdentifierExpression",
                                     "type": "BoxBool",
                                     "identifier": "BoxBool"
@@ -493,8 +493,8 @@
                             "expression": {
                                 "kind": "InvokeExpression",
                                 "type": "Object",
-                                "invocationType": "BoxBool: Object(Bool)",
-                                "invokableExpression": {
+                                "overload": "BoxBool: Object(Bool)",
+                                "invocableExpression": {
                                     "kind": "IdentifierExpression",
                                     "type": "BoxBool",
                                     "identifier": "BoxBool"
@@ -523,8 +523,8 @@
                             "expression": {
                                 "kind": "InvokeExpression",
                                 "type": "Object",
-                                "invocationType": "BoxBool: Object(Bool)",
-                                "invokableExpression": {
+                                "overload": "BoxBool: Object(Bool)",
+                                "invocableExpression": {
                                     "kind": "IdentifierExpression",
                                     "type": "BoxBool",
                                     "identifier": "BoxBool"
@@ -553,8 +553,8 @@
                             "expression": {
                                 "kind": "InvokeExpression",
                                 "type": "Object",
-                                "invocationType": "BoxBool: Object(Bool)",
-                                "invokableExpression": {
+                                "overload": "BoxBool: Object(Bool)",
+                                "invocableExpression": {
                                     "kind": "IdentifierExpression",
                                     "type": "BoxBool",
                                     "identifier": "BoxBool"
@@ -583,8 +583,8 @@
                             "expression": {
                                 "kind": "InvokeExpression",
                                 "type": "Object",
-                                "invocationType": "BoxBool: Object(Bool)",
-                                "invokableExpression": {
+                                "overload": "BoxBool: Object(Bool)",
+                                "invocableExpression": {
                                     "kind": "IdentifierExpression",
                                     "type": "BoxBool",
                                     "identifier": "BoxBool"
@@ -613,8 +613,8 @@
                             "expression": {
                                 "kind": "InvokeExpression",
                                 "type": "Object",
-                                "invocationType": "BoxBool: Object(Bool)",
-                                "invokableExpression": {
+                                "overload": "BoxBool: Object(Bool)",
+                                "invocableExpression": {
                                     "kind": "IdentifierExpression",
                                     "type": "BoxBool",
                                     "identifier": "BoxBool"
@@ -643,8 +643,8 @@
                             "expression": {
                                 "kind": "InvokeExpression",
                                 "type": "Object",
-                                "invocationType": "BoxBool: Object(Bool)",
-                                "invokableExpression": {
+                                "overload": "BoxBool: Object(Bool)",
+                                "invocableExpression": {
                                     "kind": "IdentifierExpression",
                                     "type": "BoxBool",
                                     "identifier": "BoxBool"
@@ -673,8 +673,8 @@
                             "expression": {
                                 "kind": "InvokeExpression",
                                 "type": "Object",
-                                "invocationType": "BoxString: Object(String)",
-                                "invokableExpression": {
+                                "overload": "BoxString: Object(String)",
+                                "invocableExpression": {
                                     "kind": "IdentifierExpression",
                                     "type": "BoxString",
                                     "identifier": "BoxString"
@@ -703,8 +703,8 @@
                             "expression": {
                                 "kind": "InvokeExpression",
                                 "type": "Object",
-                                "invocationType": "BoxString: Object(String)",
-                                "invokableExpression": {
+                                "overload": "BoxString: Object(String)",
+                                "invocableExpression": {
                                     "kind": "IdentifierExpression",
                                     "type": "BoxString",
                                     "identifier": "BoxString"
@@ -733,8 +733,8 @@
                             "expression": {
                                 "kind": "InvokeExpression",
                                 "type": "Object",
-                                "invocationType": "BoxString: Object(String)",
-                                "invokableExpression": {
+                                "overload": "BoxString: Object(String)",
+                                "invocableExpression": {
                                     "kind": "IdentifierExpression",
                                     "type": "BoxString",
                                     "identifier": "BoxString"

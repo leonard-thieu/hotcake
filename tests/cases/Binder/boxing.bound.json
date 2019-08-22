@@ -159,8 +159,8 @@
                             "expression": {
                                 "kind": "InvokeExpression",
                                 "type": "Int",
-                                "invocationType": "CheckBox: Int(Box)",
-                                "invokableExpression": {
+                                "overload": "CheckBox: Int(Box)",
+                                "invocableExpression": {
                                     "kind": "IdentifierExpression",
                                     "type": "CheckBox",
                                     "identifier": "CheckBox"
@@ -179,8 +179,8 @@
                             "expression": {
                                 "kind": "InvokeExpression",
                                 "type": "Int",
-                                "invocationType": "CheckBox: Int(Box)",
-                                "invokableExpression": {
+                                "overload": "CheckBox: Int(Box)",
+                                "invocableExpression": {
                                     "kind": "IdentifierExpression",
                                     "type": "CheckBox",
                                     "identifier": "CheckBox"
@@ -199,8 +199,8 @@
                             "expression": {
                                 "kind": "InvokeExpression",
                                 "type": "Int",
-                                "invocationType": "CheckBox: Int(Box)",
-                                "invokableExpression": {
+                                "overload": "CheckBox: Int(Box)",
+                                "invocableExpression": {
                                     "kind": "IdentifierExpression",
                                     "type": "CheckBox",
                                     "identifier": "CheckBox"
@@ -219,8 +219,8 @@
                             "expression": {
                                 "kind": "InvokeExpression",
                                 "type": "Int",
-                                "invocationType": "CheckBox: Int(Box)",
-                                "invokableExpression": {
+                                "overload": "CheckBox: Int(Box)",
+                                "invocableExpression": {
                                     "kind": "IdentifierExpression",
                                     "type": "CheckBox",
                                     "identifier": "CheckBox"

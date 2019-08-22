@@ -77,8 +77,8 @@
                             "expression": {
                                 "kind": "InvokeExpression",
                                 "type": "Int",
-                                "invocationType": "Sum: Int(Int,Int,Int)",
-                                "invokableExpression": {
+                                "overload": "Sum: Int(Int,Int,Int)",
+                                "invocableExpression": {
                                     "kind": "IdentifierExpression",
                                     "type": "Sum",
                                     "identifier": "Sum"

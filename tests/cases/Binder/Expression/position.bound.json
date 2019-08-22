@@ -105,8 +105,8 @@
                             "expression": {
                                 "kind": "InvokeExpression",
                                 "type": "Int",
-                                "invocationType": "arr: Int()",
-                                "invokableExpression": {
+                                "overload": "arr: Int()",
+                                "invocableExpression": {
                                     "kind": "IdentifierExpression",
                                     "type": "arr",
                                     "identifier": "arr"

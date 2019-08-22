@@ -300,8 +300,8 @@
                                     "expression": {
                                         "kind": "InvokeExpression",
                                         "type": "Int",
-                                        "invocationType": "Method: Int()",
-                                        "invokableExpression": {
+                                        "overload": "Method: Int()",
+                                        "invocableExpression": {
                                             "kind": "IdentifierExpression",
                                             "type": "Method",
                                             "identifier": "Method"
@@ -333,8 +333,8 @@
                             "expression": {
                                 "kind": "InvokeExpression",
                                 "type": "Class",
-                                "invocationType": "New Class()",
-                                "invokableExpression": {
+                                "overload": "New Class()",
+                                "invocableExpression": {
                                     "kind": "NewExpression",
                                     "type": "New Class",
                                     "typeReference": "Class"
@@ -347,8 +347,8 @@
                             "expression": {
                                 "kind": "InvokeExpression",
                                 "type": "Class",
-                                "invocationType": "New Class()",
-                                "invokableExpression": {
+                                "overload": "New Class()",
+                                "invocableExpression": {
                                     "kind": "NewExpression",
                                     "type": "New Class",
                                     "typeReference": "Class"
@@ -361,8 +361,8 @@
                             "expression": {
                                 "kind": "InvokeExpression",
                                 "type": "GenericClass<Int>",
-                                "invocationType": "New GenericClass<Int>()",
-                                "invokableExpression": {
+                                "overload": "New GenericClass<Int>()",
+                                "invocableExpression": {
                                     "kind": "NewExpression",
                                     "type": "New GenericClass<Int>",
                                     "typeReference": "GenericClass<Int>"
@@ -375,8 +375,8 @@
                             "expression": {
                                 "kind": "InvokeExpression",
                                 "type": "ExtendAliasedClass",
-                                "invocationType": "New ExtendAliasedClass()",
-                                "invokableExpression": {
+                                "overload": "New ExtendAliasedClass()",
+                                "invocableExpression": {
                                     "kind": "NewExpression",
                                     "type": "New ExtendAliasedClass",
                                     "typeReference": "ExtendAliasedClass"
@@ -389,8 +389,8 @@
                             "expression": {
                                 "kind": "InvokeExpression",
                                 "type": "Int",
-                                "invocationType": "Print: Int(String)",
-                                "invokableExpression": {
+                                "overload": "Print: Int(String)",
+                                "invocableExpression": {
                                     "kind": "IdentifierExpression",
                                     "type": "Print",
                                     "identifier": "Print"
@@ -409,8 +409,8 @@
                             "expression": {
                                 "kind": "InvokeExpression",
                                 "type": "Int",
-                                "invocationType": "Print: Int(String)",
-                                "invokableExpression": {
+                                "overload": "Print: Int(String)",
+                                "invocableExpression": {
                                     "kind": "IdentifierExpression",
                                     "type": "Print",
                                     "identifier": "Print"
@@ -429,8 +429,8 @@
                             "expression": {
                                 "kind": "InvokeExpression",
                                 "type": "Int",
-                                "invocationType": "Print: Int(String)",
-                                "invokableExpression": {
+                                "overload": "Print: Int(String)",
+                                "invocableExpression": {
                                     "kind": "IdentifierExpression",
                                     "type": "Print",
                                     "identifier": "Print"
@@ -449,8 +449,8 @@
                             "expression": {
                                 "kind": "InvokeExpression",
                                 "type": "Int",
-                                "invocationType": "Print: Int(String)",
-                                "invokableExpression": {
+                                "overload": "Print: Int(String)",
+                                "invocableExpression": {
                                     "kind": "IdentifierExpression",
                                     "type": "Print",
                                     "identifier": "Print"
@@ -469,8 +469,8 @@
                             "expression": {
                                 "kind": "InvokeExpression",
                                 "type": "Int",
-                                "invocationType": "Print: Int(String)",
-                                "invokableExpression": {
+                                "overload": "Print: Int(String)",
+                                "invocableExpression": {
                                     "kind": "IdentifierExpression",
                                     "type": "Print",
                                     "identifier": "Print"

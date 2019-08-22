@@ -45,20 +45,18 @@
                                     "kind": "ReturnStatement",
                                     "type": "MyClass",
                                     "expression": {
-                                        "kind": "InvokeExpression",
+                                        "kind": "CastExpression",
                                         "type": "MyClass",
-                                        "invokableExpression": {
+                                        "invocableExpression": {
                                             "kind": "IdentifierExpression",
                                             "type": "MyClass",
                                             "identifier": "MyClass"
                                         },
-                                        "arguments": [
-                                            {
-                                                "kind": "IdentifierExpression",
-                                                "type": "Object",
-                                                "identifier": "obj"
-                                            }
-                                        ]
+                                        "argument": {
+                                            "kind": "IdentifierExpression",
+                                            "type": "Object",
+                                            "identifier": "obj"
+                                        }
                                     }
                                 }
                             ]

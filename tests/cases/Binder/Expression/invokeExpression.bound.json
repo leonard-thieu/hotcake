@@ -29,8 +29,8 @@
                             "expression": {
                                 "kind": "InvokeExpression",
                                 "type": "Int",
-                                "invocationType": "Main: Int()",
-                                "invokableExpression": {
+                                "overload": "Main: Int()",
+                                "invocableExpression": {
                                     "kind": "IdentifierExpression",
                                     "type": "Main",
                                     "identifier": "Main"

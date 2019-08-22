@@ -125,8 +125,8 @@
                                     "rightOperand": {
                                         "kind": "InvokeExpression",
                                         "type": "Int",
-                                        "invocationType": "Length: Int()",
-                                        "invokableExpression": {
+                                        "overload": "Length: Int()",
+                                        "invocableExpression": {
                                             "kind": "IdentifierExpression",
                                             "type": "Length",
                                             "identifier": "Length"
@@ -152,8 +152,8 @@
                                         "member": {
                                             "kind": "InvokeExpression",
                                             "type": "Int",
-                                            "invocationType": "Length: Int()",
-                                            "invokableExpression": {
+                                            "overload": "Length: Int()",
+                                            "invocableExpression": {
                                                 "kind": "IdentifierExpression",
                                                 "type": "Length",
                                                 "identifier": "Length"
@@ -183,8 +183,8 @@
                                             "scopableExpression": {
                                                 "kind": "InvokeExpression",
                                                 "type": "MyClass",
-                                                "invocationType": "Parent: MyClass()",
-                                                "invokableExpression": {
+                                                "overload": "Parent: MyClass()",
+                                                "invocableExpression": {
                                                     "kind": "IdentifierExpression",
                                                     "type": "Parent",
                                                     "identifier": "Parent"
@@ -194,8 +194,8 @@
                                             "member": {
                                                 "kind": "InvokeExpression",
                                                 "type": "Int",
-                                                "invocationType": "Length: Int()",
-                                                "invokableExpression": {
+                                                "overload": "Length: Int()",
+                                                "invocableExpression": {
                                                     "kind": "IdentifierExpression",
                                                     "type": "Length",
                                                     "identifier": "Length"
@@ -226,8 +226,8 @@
                                             "scopableExpression": {
                                                 "kind": "InvokeExpression",
                                                 "type": "MyClass",
-                                                "invocationType": "Parent: MyClass()",
-                                                "invokableExpression": {
+                                                "overload": "Parent: MyClass()",
+                                                "invocableExpression": {
                                                     "kind": "IdentifierExpression",
                                                     "type": "Parent",
                                                     "identifier": "Parent"
@@ -240,16 +240,11 @@
                                                 "scopableExpression": {
                                                     "kind": "InvokeExpression",
                                                     "type": "MyClass",
-                                                    "invokableExpression": {
-                                                        "kind": "InvokeExpression",
-                                                        "type": "MyClass",
-                                                        "invocationType": "Parent: MyClass()",
-                                                        "invokableExpression": {
-                                                            "kind": "IdentifierExpression",
-                                                            "type": "Parent",
-                                                            "identifier": "Parent"
-                                                        },
-                                                        "arguments": []
+                                                    "overload": "Parent: MyClass()",
+                                                    "invocableExpression": {
+                                                        "kind": "IdentifierExpression",
+                                                        "type": "Parent",
+                                                        "identifier": "Parent"
                                                     },
                                                     "arguments": []
                                                 },
@@ -259,8 +254,8 @@
                                                     "scopableExpression": {
                                                         "kind": "InvokeExpression",
                                                         "type": "MyClass",
-                                                        "invocationType": "Parent: MyClass()",
-                                                        "invokableExpression": {
+                                                        "overload": "Parent: MyClass()",
+                                                        "invocableExpression": {
                                                             "kind": "IdentifierExpression",
                                                             "type": "Parent",
                                                             "identifier": "Parent"
@@ -270,8 +265,8 @@
                                                     "member": {
                                                         "kind": "InvokeExpression",
                                                         "type": "Int",
-                                                        "invocationType": "Test: Int()",
-                                                        "invokableExpression": {
+                                                        "overload": "Test: Int()",
+                                                        "invocableExpression": {
                                                             "kind": "IdentifierExpression",
                                                             "type": "Test",
                                                             "identifier": "Test"
@@ -331,8 +326,8 @@
                                 "expression": {
                                     "kind": "InvokeExpression",
                                     "type": "MyClass",
-                                    "invocationType": "New MyClass()",
-                                    "invokableExpression": {
+                                    "overload": "New MyClass()",
+                                    "invocableExpression": {
                                         "kind": "NewExpression",
                                         "type": "New MyClass",
                                         "typeReference": "MyClass"
@@ -347,8 +342,8 @@
                             "expression": {
                                 "kind": "InvokeExpression",
                                 "type": "Int",
-                                "invocationType": "CheckInt: Int(Int)",
-                                "invokableExpression": {
+                                "overload": "CheckInt: Int(Int)",
+                                "invocableExpression": {
                                     "kind": "IdentifierExpression",
                                     "type": "CheckInt",
                                     "identifier": "CheckInt"
@@ -365,8 +360,8 @@
                                         "member": {
                                             "kind": "InvokeExpression",
                                             "type": "Int",
-                                            "invocationType": "Length: Int()",
-                                            "invokableExpression": {
+                                            "overload": "Length: Int()",
+                                            "invocableExpression": {
                                                 "kind": "IdentifierExpression",
                                                 "type": "Length",
                                                 "identifier": "Length"
@@ -378,32 +373,32 @@
                             }
                         },
                         {
-                            "kind": "AssignmentStatement",
-                            "leftOperand": {
-                                "kind": "ScopeMemberAccessExpression",
+                            "kind": "ExpressionStatement",
+                            "expression": {
+                                "kind": "InvokeExpression",
                                 "type": "Int",
-                                "scopableExpression": {
-                                    "kind": "IdentifierExpression",
-                                    "type": "MyClass",
-                                    "identifier": "myClass"
-                                },
-                                "member": {
-                                    "kind": "InvokeExpression",
-                                    "type": "Int",
-                                    "invocationType": "Length: Int()",
-                                    "invokableExpression": {
+                                "overload": "Length: Int(Int)",
+                                "invocableExpression": {
+                                    "kind": "ScopeMemberAccessExpression",
+                                    "type": "Length",
+                                    "scopableExpression": {
+                                        "kind": "IdentifierExpression",
+                                        "type": "MyClass",
+                                        "identifier": "myClass"
+                                    },
+                                    "member": {
                                         "kind": "IdentifierExpression",
                                         "type": "Length",
                                         "identifier": "Length"
-                                    },
-                                    "arguments": []
-                                }
-                            },
-                            "operator": "Assignment",
-                            "rightOperand": {
-                                "kind": "IntegerLiteralExpression",
-                                "type": "Int",
-                                "value": "1"
+                                    }
+                                },
+                                "arguments": [
+                                    {
+                                        "kind": "IntegerLiteralExpression",
+                                        "type": "Int",
+                                        "value": "1"
+                                    }
+                                ]
                             }
                         },
                         {
@@ -435,8 +430,8 @@
                                 "member": {
                                     "kind": "InvokeExpression",
                                     "type": "Int",
-                                    "invocationType": "Length: Int()",
-                                    "invokableExpression": {
+                                    "overload": "Length: Int()",
+                                    "invocableExpression": {
                                         "kind": "IdentifierExpression",
                                         "type": "Length",
                                         "identifier": "Length"
@@ -468,8 +463,8 @@
                                             "member": {
                                                 "kind": "InvokeExpression",
                                                 "type": "Int",
-                                                "invocationType": "LongLength: Int()",
-                                                "invokableExpression": {
+                                                "overload": "LongLength: Int()",
+                                                "invocableExpression": {
                                                     "kind": "IdentifierExpression",
                                                     "type": "LongLength",
                                                     "identifier": "LongLength"
@@ -489,8 +484,8 @@
                                             "member": {
                                                 "kind": "InvokeExpression",
                                                 "type": "Int",
-                                                "invocationType": "Length: Int()",
-                                                "invokableExpression": {
+                                                "overload": "Length: Int()",
+                                                "invocableExpression": {
                                                     "kind": "IdentifierExpression",
                                                     "type": "Length",
                                                     "identifier": "Length"
@@ -516,8 +511,8 @@
                                         "member": {
                                             "kind": "InvokeExpression",
                                             "type": "Int",
-                                            "invocationType": "Length: Int()",
-                                            "invokableExpression": {
+                                            "overload": "Length: Int()",
+                                            "invocableExpression": {
                                                 "kind": "IdentifierExpression",
                                                 "type": "Length",
                                                 "identifier": "Length"

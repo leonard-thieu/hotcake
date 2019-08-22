@@ -73,7 +73,7 @@
                             "expression": {
                                 "kind": "InvokeExpression",
                                 "newlines": [],
-                                "invokableExpression": {
+                                "invocableExpression": {
                                     "kind": "NewExpression",
                                     "newKeyword": {
                                         "kind": "NewKeyword",

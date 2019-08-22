@@ -1,3 +1,5 @@
 [
-    
+    "Expression/indexExpressionMissingClosingSquareBracket.monkey",
+    "Expression/indexExpressionMissingExpression.monkey",
+    "Expression/indexExpressionMissingExpressionAndClosingSquareBracket.monkey"
 ]

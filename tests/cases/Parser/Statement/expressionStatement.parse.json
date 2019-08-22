@@ -58,7 +58,7 @@
                     "expression": {
                         "kind": "InvokeExpression",
                         "newlines": [],
-                        "invokableExpression": {
+                        "invocableExpression": {
                             "kind": "IdentifierExpression",
                             "identifier": {
                                 "kind": "Identifier",
