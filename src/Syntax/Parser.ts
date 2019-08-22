@@ -1130,6 +1130,7 @@ export class Parser extends ParserBase {
             case TokenKind.Newline:
 
             // Expression statement start
+            case TokenKind.OpeningParenthesis:
             case TokenKind.NewKeyword:
             case TokenKind.SelfKeyword:
             case TokenKind.SuperKeyword:
