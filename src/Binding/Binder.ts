@@ -2077,7 +2077,7 @@ export class Binder {
                         () => boundIndexDeclaration,
                     ),
                     BoundBinaryExpressionOperator.LessThan,
-                    (parent) => this.invokeMethod(parent,
+                    (parent) => this.invokeSpecialMethod(parent,
                         boundCollectionDeclaration,
                         'Length',
                         (returnType) => returnType.kind === TypeKind.Int,
@@ -2157,7 +2157,7 @@ export class Binder {
                 // Local _AnonymousCollection_ := _CollectionExpression_.ObjectEnumerator()
                 const boundCollectionDeclarationStatement = this.dataDeclarationStatement(parent,
                     (parent) => this.localDeclaration(parent,
-                        (parent) => this.invokeMethod(parent,
+                        (parent) => this.invokeSpecialMethod(parent,
                             boundCollectionExpression,
                             'ObjectEnumerator',
                             // Don't need to explicitly check that the return type has `HasNext()` and `NextObject()`.
@@ -2172,7 +2172,7 @@ export class Binder {
                 const boundWhileLoop = new BoundWhileLoop();
                 boundWhileLoop.parent = parent;
 
-                boundWhileLoop.expression = this.invokeMethod(boundWhileLoop,
+                boundWhileLoop.expression = this.invokeSpecialMethod(boundWhileLoop,
                     boundCollectionDeclaration,
                     'HasNext',
                     (returnType) => returnType.kind === TypeKind.Bool,
@@ -2199,7 +2199,7 @@ export class Binder {
                             getText(indexVariable, parent),
                             operatorToken.kind,
                             (parent) => this.bindTypeAnnotation(parent, forEachInLoop.typeAnnotation, typeMap),
-                            (parent) => this.invokeMethod(parent,
+                            (parent) => this.invokeSpecialMethod(parent,
                                 boundCollectionDeclaration,
                                 'NextObject',
                             ),
@@ -2215,7 +2215,7 @@ export class Binder {
                             (parent) => this.resolveIdentifier(indexVariable, parent),
                         ),
                         this.getAssignmentStatementOperator(operatorToken.kind),
-                        (parent) => this.invokeMethod(parent,
+                        (parent) => this.invokeSpecialMethod(parent,
                             boundCollectionDeclaration,
                             'NextObject',
                         ),
@@ -3617,7 +3617,7 @@ export class Binder {
         return argsWithDefaults;
     }
 
-    private invokeMethod(
+    private invokeSpecialMethod(
         parent: BoundNodes,
         instanceVariable_collectionExpression: BoundDataDeclaration | BoundExpressions,
         methodName: string,
@@ -3629,7 +3629,7 @@ export class Binder {
             throw new Error(`'${methodContainer.identifier.name}' does not have member '${methodName}'.`);
         }
 
-        const overload = BoundTreeWalker.getMethod(methodContainer, methodName, checkReturnType, ...args.map((arg) => arg.type));
+        const overload = BoundTreeWalker.getSpecialMethod(methodContainer, methodName, checkReturnType, ...args.map((arg) => arg.type));
         if (!overload) {
             throw new Error(`'${methodContainer.identifier.name}' does not have member '${methodName}'.`);
         }
@@ -4028,7 +4028,7 @@ export class Binder {
 
         // TODO: This doesn't seem to be the way Monkey X does it. Investigate differences and align implementations if necessary.
         const fixResizeMethodReturnType = () => {
-            const resizeMethod = BoundTreeWalker.getMethod(
+            const resizeMethod = BoundTreeWalker.getSpecialMethod(
                 instantiatedType!,
                 'Resize',
                 (returnType) => returnType.kind === TypeKind.Array && returnType.elementType.type.kind === TypeKind.Int,

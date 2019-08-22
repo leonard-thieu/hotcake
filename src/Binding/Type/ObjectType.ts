@@ -63,28 +63,28 @@ export class ObjectType extends Type {
             case BoundNodeKind.ClassDeclaration: {
                 switch (target.kind) {
                     case TypeKind.Bool: {
-                        const method = BoundTreeWalker.getMethod(this.declaration, 'ToBool', (type) => type.kind === TypeKind.Bool);
+                        const method = BoundTreeWalker.getSpecialMethod(this.declaration, 'ToBool', (type) => type.kind === TypeKind.Bool);
                         if (method) {
                             return true;
                         }
                         break;
                     }
                     case TypeKind.Int: {
-                        const method = BoundTreeWalker.getMethod(this.declaration, 'ToInt', (type) => type.kind === TypeKind.Int);
+                        const method = BoundTreeWalker.getSpecialMethod(this.declaration, 'ToInt', (type) => type.kind === TypeKind.Int);
                         if (method) {
                             return true;
                         }
                         break;
                     }
                     case TypeKind.Float: {
-                        const method = BoundTreeWalker.getMethod(this.declaration, 'ToFloat', (type) => type.kind === TypeKind.Float);
+                        const method = BoundTreeWalker.getSpecialMethod(this.declaration, 'ToFloat', (type) => type.kind === TypeKind.Float);
                         if (method) {
                             return true;
                         }
                         break;
                     }
                     case TypeKind.String: {
-                        const method = BoundTreeWalker.getMethod(this.declaration, 'ToString', (type) => type.kind === TypeKind.String);
+                        const method = BoundTreeWalker.getSpecialMethod(this.declaration, 'ToString', (type) => type.kind === TypeKind.String);
                         if (method) {
                             return true;
                         }
