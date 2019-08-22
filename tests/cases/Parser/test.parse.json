@@ -83,7 +83,7 @@
             "length": 6
         }
     },
-    "headerMembers": [
+    "members": [
         {
             "kind": "Newline",
             "fullStart": 603,
@@ -319,9 +319,7 @@
             "fullStart": 906,
             "start": 935,
             "length": 30
-        }
-    ],
-    "members": [
+        },
         {
             "kind": "AccessibilityDirective",
             "accessibilityKeyword": {

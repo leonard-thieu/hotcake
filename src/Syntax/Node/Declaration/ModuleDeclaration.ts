@@ -20,7 +20,6 @@ import { StrictDirective } from './StrictDirective';
 export const ModuleDeclarationChildNames: ReadonlyArray<keyof ModuleDeclaration> = [
     'strictNewlines',
     'strictDirective',
-    'headerMembers',
     'members',
     'eofToken',
 ];
@@ -40,24 +39,17 @@ export class ModuleDeclaration extends Declaration {
 
     strictNewlines: NewlineToken[] = undefined!;
     strictDirective?: StrictDirective = undefined!;
-    headerMembers: ModuleDeclarationHeaderMember[] = undefined!;
     members: ModuleDeclarationMember[] = undefined!;
     eofToken: EOFToken = undefined!;
 
     readonly parseDiagnostics = new DiagnosticBag();
 }
 
-export type ModuleDeclarationHeaderMember =
-    | ImportStatement
-    | AccessibilityDirective
-    | FriendDirective
-    | AliasDirectiveSequence
-    | NewlineToken
-    | SkippedToken
-    ;
-
 export type ModuleDeclarationMember =
     | AccessibilityDirective
+    | ImportStatement
+    | FriendDirective
+    | AliasDirectiveSequence
     | ExternDataDeclarationSequence
     | ExternFunctionDeclaration
     | ExternClassDeclaration

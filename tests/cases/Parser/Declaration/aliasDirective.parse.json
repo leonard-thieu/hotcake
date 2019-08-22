@@ -1,7 +1,7 @@
 {
     "kind": "ModuleDeclaration",
     "strictNewlines": [],
-    "headerMembers": [
+    "members": [
         {
             "kind": "ImportStatement",
             "importKeyword": {
@@ -2114,9 +2114,7 @@
             "fullStart": 2707,
             "start": 2708,
             "length": 2
-        }
-    ],
-    "members": [
+        },
         {
             "kind": "ClassDeclaration",
             "classKeyword": {

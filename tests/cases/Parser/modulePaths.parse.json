@@ -14,7 +14,7 @@
             "length": 2
         }
     ],
-    "headerMembers": [
+    "members": [
         {
             "kind": "ImportStatement",
             "importKeyword": {
@@ -113,9 +113,7 @@
             "fullStart": 227,
             "start": 228,
             "length": 2
-        }
-    ],
-    "members": [
+        },
         {
             "kind": "FunctionDeclaration",
             "functionKeyword": {

@@ -11,7 +11,7 @@ import { ExternFunctionDeclaration } from '../Syntax/Node/Declaration/ExternFunc
 import { FunctionDeclaration } from '../Syntax/Node/Declaration/FunctionDeclaration';
 import { ImportStatement } from '../Syntax/Node/Declaration/ImportStatement';
 import { InterfaceDeclaration, InterfaceDeclarationMember, InterfaceMethodDeclaration } from '../Syntax/Node/Declaration/InterfaceDeclaration';
-import { ModuleDeclaration, ModuleDeclarationHeaderMember, ModuleDeclarationMember } from '../Syntax/Node/Declaration/ModuleDeclaration';
+import { ModuleDeclaration, ModuleDeclarationMember } from '../Syntax/Node/Declaration/ModuleDeclaration';
 import { TypeParameter } from '../Syntax/Node/Declaration/TypeParameter';
 import { ArrayLiteralExpression } from '../Syntax/Node/Expression/ArrayLiteralExpression';
 import { BinaryExpression, BinaryExpressionOperatorToken } from '../Syntax/Node/Expression/BinaryExpression';
@@ -158,8 +158,6 @@ export class Binder {
         const frameworkModuleAlias = this.importModule(boundModuleDeclaration, [], 'monkey');
         boundModuleDeclaration.frameworkModule = frameworkModuleAlias.target as BoundModuleDeclaration;
 
-        this.bindModuleDeclarationHeaderMembers(boundModuleDeclaration, moduleDeclaration.headerMembers);
-
         this.bindTypeReferencesCallbackList = [];
         this.bindDataDeclarationInitializerList = [];
         this.bindStatementsCallbackList = [];
@@ -196,9 +194,9 @@ export class Binder {
         return boundModuleDeclaration;
     }
 
-    private bindModuleDeclarationHeaderMembers(
+    private bindModuleDeclarationMembers(
         parent: BoundModuleDeclaration,
-        members: ModuleDeclarationHeaderMember[],
+        members: ModuleDeclarationMember[],
     ): void {
         for (const member of members) {
             switch (member.kind) {
@@ -213,28 +211,6 @@ export class Binder {
                 case NodeKind.FriendDirective:
                 case NodeKind.AccessibilityDirective: {
                     // console.warn('Method not implemented.');
-                    break;
-                }
-                case TokenKind.Newline:
-                case TokenKind.Skipped: {
-                    break;
-                }
-                default: {
-                    assertNever(member);
-                    break;
-                }
-            }
-        }
-    }
-
-    private bindModuleDeclarationMembers(
-        parent: BoundModuleDeclaration,
-        members: ModuleDeclarationMember[],
-    ): void {
-        for (const member of members) {
-            switch (member.kind) {
-                case NodeKind.AccessibilityDirective: {
-                    // console.warn(`Binding accessibility directives is not implemented.`);
                     break;
                 }
                 case NodeKind.ExternDataDeclarationSequence: {

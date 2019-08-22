@@ -1,7 +1,7 @@
 {
     "kind": "ModuleDeclaration",
     "strictNewlines": [],
-    "headerMembers": [
+    "members": [
         {
             "kind": "AccessibilityDirective",
             "accessibilityKeyword": {
@@ -12,7 +12,6 @@
             }
         }
     ],
-    "members": [],
     "eofToken": {
         "kind": "EOF",
         "fullStart": 6,

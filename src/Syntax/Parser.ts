@@ -70,8 +70,8 @@ export class Parser extends ParserBase {
 
             moduleDeclaration.strictDirective = this.parseStrictDirective(moduleDeclaration, strictKeyword);
         }
-        moduleDeclaration.headerMembers = this.parseListWithSkippedTokens(ParseContextKind.ModuleDeclarationHeader, moduleDeclaration);
-        moduleDeclaration.members = this.parseListWithSkippedTokens(ParseContextKind.ModuleDeclaration, moduleDeclaration);
+        moduleDeclaration.members = this.parseListWithSkippedTokens(ParseContextKind.ModuleDeclarationHeader, moduleDeclaration);
+        moduleDeclaration.members.push(...this.parseListWithSkippedTokens(ParseContextKind.ModuleDeclaration, moduleDeclaration));
         moduleDeclaration.eofToken = this.eat(TokenKind.EOF);
 
         return moduleDeclaration;
