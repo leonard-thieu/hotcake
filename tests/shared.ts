@@ -233,7 +233,7 @@ export function executeBinderTestCases(
     );
 }
 
-export function getBoundTree(filePath: string, document: string): BoundModuleDeclaration {
+export function getBoundTree(filePath: string, _document: string): BoundModuleDeclaration {
     const frameworkDirectory = getFrameworkDirectory();
 
     const projectDirectory = path.dirname(filePath);

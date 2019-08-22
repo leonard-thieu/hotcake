@@ -12,6 +12,7 @@ const casePaths = getCasePaths(rootPath).filter((casePath) => {
         case path.normalize('bananas/skn3/gamepad/gamepad.monkey'):                         // Requires non-existent module (mojo2)
         case path.normalize('bananas/skn3/monkenstein/monkenstein.monkey'):                 // Requires non-existent variable (level)
         case path.normalize('bananas/skn3/texteffect/texteffect.monkey'):                   // Requires non-existent function (print)
+        case path.normalize('docs/html/examples/mojo_app_OpenUrl.monkey'):                  // Uses Markdown to escape '<'
         case path.normalize('modules/dom/mkwebgl.monkey'):                                  // Requires non-existent module (trans.system)
         case path.normalize('src/rebuildall.monkey'):                                       // Cannot build on Windows
             return false;
