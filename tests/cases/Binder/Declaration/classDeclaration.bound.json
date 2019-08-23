@@ -3,6 +3,15 @@
     "identifier": "classDeclaration",
     "locals": [
         {
+            "kind": "AliasDirective",
+            "identifier": "monkey",
+            "target": {
+                "kind": "ModuleDeclaration",
+                "identifier": "monkey"
+            },
+            "type": "Module"
+        },
+        {
             "kind": "InterfaceDeclaration",
             "identifier": "Moveable",
             "type": "Moveable",

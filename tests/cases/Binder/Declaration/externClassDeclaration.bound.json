@@ -3,6 +3,15 @@
     "identifier": "externClassDeclaration",
     "locals": [
         {
+            "kind": "AliasDirective",
+            "identifier": "monkey",
+            "target": {
+                "kind": "ModuleDeclaration",
+                "identifier": "monkey"
+            },
+            "type": "Module"
+        },
+        {
             "kind": "ExternClassDeclaration",
             "identifier": "Driver",
             "type": "Driver",

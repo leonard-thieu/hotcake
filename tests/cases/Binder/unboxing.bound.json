@@ -3,6 +3,15 @@
     "identifier": "unboxing",
     "locals": [
         {
+            "kind": "AliasDirective",
+            "identifier": "monkey",
+            "target": {
+                "kind": "ModuleDeclaration",
+                "identifier": "monkey"
+            },
+            "type": "Module"
+        },
+        {
             "kind": "ClassDeclaration",
             "identifier": "Box",
             "type": "Box",
@@ -223,8 +232,8 @@
                                 "expression": {
                                     "kind": "InvokeExpression",
                                     "type": "Box",
-                                    "invocationType": "New Box()",
-                                    "invokableExpression": {
+                                    "overload": "New Box()",
+                                    "invocableExpression": {
                                         "kind": "NewExpression",
                                         "type": "New Box",
                                         "typeReference": "Box"
@@ -239,8 +248,8 @@
                             "expression": {
                                 "kind": "InvokeExpression",
                                 "type": "Int",
-                                "invocationType": "CheckBool: Int(Bool)",
-                                "invokableExpression": {
+                                "overload": "CheckBool: Int(Bool)",
+                                "invocableExpression": {
                                     "kind": "IdentifierExpression",
                                     "type": "CheckBool",
                                     "identifier": "CheckBool"
@@ -259,8 +268,8 @@
                             "expression": {
                                 "kind": "InvokeExpression",
                                 "type": "Int",
-                                "invocationType": "CheckInt: Int(Int)",
-                                "invokableExpression": {
+                                "overload": "CheckInt: Int(Int)",
+                                "invocableExpression": {
                                     "kind": "IdentifierExpression",
                                     "type": "CheckInt",
                                     "identifier": "CheckInt"
@@ -279,8 +288,8 @@
                             "expression": {
                                 "kind": "InvokeExpression",
                                 "type": "Int",
-                                "invocationType": "CheckFloat: Int(Float)",
-                                "invokableExpression": {
+                                "overload": "CheckFloat: Int(Float)",
+                                "invocableExpression": {
                                     "kind": "IdentifierExpression",
                                     "type": "CheckFloat",
                                     "identifier": "CheckFloat"
@@ -299,8 +308,8 @@
                             "expression": {
                                 "kind": "InvokeExpression",
                                 "type": "Int",
-                                "invocationType": "CheckString: Int(String)",
-                                "invokableExpression": {
+                                "overload": "CheckString: Int(String)",
+                                "invocableExpression": {
                                     "kind": "IdentifierExpression",
                                     "type": "CheckString",
                                     "identifier": "CheckString"

@@ -234,33 +234,17 @@ export abstract class ParserBase {
 
     // #region Primary expressions
 
-    // Without the return type annotation, TypeScript seems to think it can eliminate `InvokeExpression`, `IndexExpression`, and
-    // `SliceExpression` from the return type.
-    protected parsePrimaryExpression(parent: Nodes): PrimaryExpression | MissingToken {
+    protected parsePrimaryExpression(parent: Nodes, isStatement?: true) {
         let primaryExpression: PrimaryExpression | MissingToken = this.parsePrimaryExpressionCore(parent);
-
-        while (true) {
-            let expression = primaryExpression;
-            if (primaryExpression.kind === NodeKind.ScopeMemberAccessExpression) {
-                expression = primaryExpression.member;
-            }
-
-            if (expression.kind === TokenKind.Missing) {
-                break;
-            }
-
-            const postfixExpression = this.parsePostfixExpression(expression);
-            if (!postfixExpression) {
-                break;
-            }
-
-            if (expression.kind === NodeKind.ScopeMemberAccessExpression) {
-                postfixExpression.parent = expression;
-                expression.member = postfixExpression;
-            } else {
-                primaryExpression = postfixExpression;
-            }
+        if (primaryExpression.kind === TokenKind.Missing) {
+            return primaryExpression;
         }
+
+        let postfixExpression: PrimaryExpression | undefined = primaryExpression;
+        do {
+            primaryExpression = postfixExpression;
+            postfixExpression = this.parsePostfixExpression(primaryExpression, isStatement);
+        } while (postfixExpression);
 
         return primaryExpression;
     }
@@ -558,7 +542,7 @@ export abstract class ParserBase {
 
     // #region Postfix expressions
 
-    protected parsePostfixExpression(expression: Expressions) {
+    protected parsePostfixExpression(expression: Expressions, isStatement?: true) {
         const token = this.getToken();
         switch (token.kind) {
             case TokenKind.Period: {
@@ -574,7 +558,7 @@ export abstract class ParserBase {
         }
 
         if (this.isInvokeExpressionStart(token, expression)) {
-            return this.parseInvokeExpression(expression);
+            return this.parseInvokeExpression(expression, isStatement);
         }
     }
 
@@ -583,7 +567,6 @@ export abstract class ParserBase {
         scopeMemberAccessExpression.parent = expression.parent;
         expression.parent = scopeMemberAccessExpression;
         scopeMemberAccessExpression.scopableExpression = expression;
-        scopeMemberAccessExpression.scopableExpression.parent = scopeMemberAccessExpression;
         scopeMemberAccessExpression.scopeMemberAccessOperator = scopeMemberAccessOperator;
         scopeMemberAccessExpression.member = this.parsePrimaryExpression(scopeMemberAccessExpression);
 
@@ -618,7 +601,6 @@ export abstract class ParserBase {
         indexExpression.parent = expression.parent;
         expression.parent = indexExpression;
         indexExpression.indexableExpression = expression;
-        indexExpression.indexableExpression.parent = indexExpression;
         indexExpression.openingSquareBracket = openingSquareBracket;
         indexExpression.indexExpressionExpression = indexExpressionExpression;
         if (indexExpression.indexExpressionExpression.kind !== TokenKind.Missing) {
@@ -639,7 +621,6 @@ export abstract class ParserBase {
         sliceExpression.parent = expression.parent;
         expression.parent = sliceExpression;
         sliceExpression.sliceableExpression = expression;
-        sliceExpression.sliceableExpression.parent = sliceExpression;
         sliceExpression.openingSquareBracket = openingSquareBracket;
         sliceExpression.startExpression = startExpression;
         if (sliceExpression.startExpression) {
@@ -656,12 +637,11 @@ export abstract class ParserBase {
 
     protected abstract isInvokeExpressionStart(token: Tokens, expression: Expressions): boolean;
 
-    protected parseInvokeExpression(expression: Expressions): InvokeExpression {
+    protected parseInvokeExpression(expression: Expressions, isStatement?: true): InvokeExpression {
         const invokeExpression = new InvokeExpression();
         invokeExpression.parent = expression.parent;
         expression.parent = invokeExpression;
-        invokeExpression.invokableExpression = expression;
-        invokeExpression.invokableExpression.parent = invokeExpression;
+        invokeExpression.invocableExpression = expression;
 
         // e.g. `New Float[6*32]`
         if (expression.kind === NodeKind.NewExpression &&
@@ -677,7 +657,13 @@ export abstract class ParserBase {
         if (invokeExpression.openingParenthesis) {
             invokeExpression.leadingNewlines = this.parseList(ParseContextKind.NewlineList, invokeExpression);
         }
-        invokeExpression.arguments = this.parseList(ParseContextKind.ExpressionSequence, invokeExpression, TokenKind.Comma, /*allowEmpty*/ true);
+
+        if (isStatement || invokeExpression.openingParenthesis) {
+            invokeExpression.arguments = this.parseList(ParseContextKind.ExpressionSequence, invokeExpression, TokenKind.Comma, MissingTokenKind.Expression);
+        } else {
+            invokeExpression.arguments = this.parseList(ParseContextKind.ExpressionSequence, invokeExpression, TokenKind.Comma);
+        }
+
         if (invokeExpression.openingParenthesis) {
             invokeExpression.closingParenthesis = this.eatMissable(TokenKind.ClosingParenthesis);
         }
@@ -1037,9 +1023,9 @@ export abstract class ParserBase {
         parseContext: TParseContext,
         parent: Nodes,
         delimiter?: TokenKind,
-        allowEmpty?: boolean,
+        placeholderKind?: MissingTokenKinds,
     ) {
-        return this.parseListCore(parseContext, parent, delimiter, allowEmpty) as ParseContextElementMap[TParseContext][];
+        return this.parseListCore(parseContext, parent, delimiter, placeholderKind) as ParseContextElementMap[TParseContext][];
     }
 
     protected parseListWithSkippedTokens<TParseContext extends ParseContext>(
@@ -1053,7 +1039,7 @@ export abstract class ParserBase {
         parseContext: TParseContext,
         parent: Nodes,
         delimiter?: TokenKind,
-        allowEmpty?: boolean,
+        placeholderKind?: MissingTokenKinds,
     ) {
         if (typeof parseContext === 'undefined') {
             throw new Error('parseContext is undefined.');
@@ -1062,7 +1048,7 @@ export abstract class ParserBase {
         this.parseContexts.push(parseContext);
 
         const nodes: (ParseContextElementMap[TParseContext] | SkippedToken)[] = [];
-        let isLastNodeDelimiter: boolean = false;
+        let isLastNodeDelimiter = true;
         while (true) {
             const token = this.getToken();
 
@@ -1073,15 +1059,16 @@ export abstract class ParserBase {
             if (this.isValidListElement(parseContext, token)) {
                 if (delimiter) {
                     const isCurrentNodeDelimiter = token.kind === delimiter;
-                    if (nodes.length === 0 ||
-                        (!isCurrentNodeDelimiter && isLastNodeDelimiter) ||
-                        allowEmpty ||
-                        (isCurrentNodeDelimiter && !isLastNodeDelimiter)
-                    ) {
-                        isLastNodeDelimiter = isCurrentNodeDelimiter;
-                    } else {
-                        break;
+                    if (isLastNodeDelimiter === isCurrentNodeDelimiter) {
+                        if (placeholderKind && isCurrentNodeDelimiter) {
+                            const placeholder = this.createMissingToken(token.fullStart, placeholderKind);
+                            nodes.push(placeholder);
+                        } else {
+                            break;
+                        }
                     }
+
+                    isLastNodeDelimiter = isCurrentNodeDelimiter;
                 }
 
                 const node = this.parseListElement(parseContext, parent);

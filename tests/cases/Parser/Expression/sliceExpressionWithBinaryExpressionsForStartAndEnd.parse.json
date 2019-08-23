@@ -1,7 +1,6 @@
 {
     "kind": "ModuleDeclaration",
     "strictNewlines": [],
-    "headerMembers": [],
     "members": [
         {
             "kind": "FunctionDeclaration",
@@ -15,23 +14,42 @@
                 "kind": "Identifier",
                 "fullStart": 8,
                 "start": 9,
-                "length": 5
+                "length": 12
             },
             "openingParenthesis": {
                 "kind": "OpeningParenthesis",
-                "fullStart": 13,
-                "start": 13,
+                "fullStart": 20,
+                "start": 20,
                 "length": 1
             },
             "parameters": {
                 "kind": "DataDeclarationSequence",
-                "dataDeclarationKeyword": null,
-                "children": []
+                "children": [
+                    {
+                        "kind": "DataDeclaration",
+                        "identifier": {
+                            "kind": "Identifier",
+                            "fullStart": 21,
+                            "start": 21,
+                            "length": 3
+                        },
+                        "typeAnnotation": {
+                            "kind": "ShorthandTypeAnnotation",
+                            "shorthandType": {
+                                "kind": "DollarSign",
+                                "fullStart": 24,
+                                "start": 24,
+                                "length": 1
+                            },
+                            "arrayTypeAnnotations": []
+                        }
+                    }
+                ]
             },
             "closingParenthesis": {
                 "kind": "ClosingParenthesis",
-                "fullStart": 14,
-                "start": 14,
+                "fullStart": 25,
+                "start": 25,
                 "length": 1
             },
             "statements": [
@@ -39,122 +57,310 @@
                     "kind": "EmptyStatement",
                     "terminator": {
                         "kind": "Newline",
-                        "fullStart": 15,
-                        "start": 16,
-                        "length": 2
-                    }
-                },
-                {
-                    "kind": "ExpressionStatement",
-                    "expression": {
-                        "kind": "SliceExpression",
-                        "newlines": [],
-                        "sliceableExpression": {
-                            "kind": "IdentifierExpression",
-                            "identifier": {
-                                "kind": "Identifier",
-                                "fullStart": 17,
-                                "start": 21,
-                                "length": 8
-                            }
-                        },
-                        "openingSquareBracket": {
-                            "kind": "OpeningSquareBracket",
-                            "fullStart": 25,
-                            "start": 25,
-                            "length": 1
-                        },
-                        "startExpression": {
-                            "kind": "BinaryExpression",
-                            "leftOperand": {
-                                "kind": "IdentifierExpression",
-                                "newlines": [],
-                                "identifier": {
-                                    "kind": "Identifier",
-                                    "fullStart": 26,
-                                    "start": 26,
-                                    "length": 1
-                                }
-                            },
-                            "operator": {
-                                "kind": "PlusSign",
-                                "fullStart": 27,
-                                "start": 27,
-                                "length": 1
-                            },
-                            "rightOperand": {
-                                "kind": "IntegerLiteralExpression",
-                                "newlines": [],
-                                "value": {
-                                    "kind": "IntegerLiteral",
-                                    "fullStart": 28,
-                                    "start": 28,
-                                    "length": 1
-                                }
-                            }
-                        },
-                        "sliceOperator": {
-                            "kind": "PeriodPeriod",
-                            "fullStart": 29,
-                            "start": 29,
-                            "length": 2
-                        },
-                        "endExpression": {
-                            "kind": "BinaryExpression",
-                            "leftOperand": {
-                                "kind": "IdentifierExpression",
-                                "newlines": [],
-                                "identifier": {
-                                    "kind": "Identifier",
-                                    "fullStart": 31,
-                                    "start": 31,
-                                    "length": 1
-                                }
-                            },
-                            "operator": {
-                                "kind": "PlusSign",
-                                "fullStart": 32,
-                                "start": 32,
-                                "length": 1
-                            },
-                            "rightOperand": {
-                                "kind": "IntegerLiteralExpression",
-                                "newlines": [],
-                                "value": {
-                                    "kind": "IntegerLiteral",
-                                    "fullStart": 33,
-                                    "start": 33,
-                                    "length": 1
-                                }
-                            }
-                        },
-                        "closingSquareBracket": {
-                            "kind": "ClosingSquareBracket",
-                            "fullStart": 34,
-                            "start": 34,
-                            "length": 1
-                        }
-                    },
-                    "terminator": {
-                        "kind": "Newline",
-                        "fullStart": 35,
-                        "start": 36,
+                        "fullStart": 26,
+                        "start": 27,
                         "length": 2
                     }
                 }
             ],
             "endKeyword": {
                 "kind": "EndKeyword",
-                "fullStart": 37,
-                "start": 37,
+                "fullStart": 28,
+                "start": 28,
+                "length": 3
+            }
+        },
+        {
+            "kind": "Newline",
+            "fullStart": 31,
+            "start": 32,
+            "length": 2
+        },
+        {
+            "kind": "Newline",
+            "fullStart": 33,
+            "start": 34,
+            "length": 2
+        },
+        {
+            "kind": "FunctionDeclaration",
+            "functionKeyword": {
+                "kind": "FunctionKeyword",
+                "fullStart": 35,
+                "start": 35,
+                "length": 8
+            },
+            "identifier": {
+                "kind": "Identifier",
+                "fullStart": 43,
+                "start": 44,
+                "length": 5
+            },
+            "openingParenthesis": {
+                "kind": "OpeningParenthesis",
+                "fullStart": 48,
+                "start": 48,
+                "length": 1
+            },
+            "parameters": {
+                "kind": "DataDeclarationSequence",
+                "children": []
+            },
+            "closingParenthesis": {
+                "kind": "ClosingParenthesis",
+                "fullStart": 49,
+                "start": 49,
+                "length": 1
+            },
+            "statements": [
+                {
+                    "kind": "EmptyStatement",
+                    "terminator": {
+                        "kind": "Newline",
+                        "fullStart": 50,
+                        "start": 51,
+                        "length": 2
+                    }
+                },
+                {
+                    "kind": "DataDeclarationSequenceStatement",
+                    "dataDeclarationSequence": {
+                        "kind": "DataDeclarationSequence",
+                        "dataDeclarationKeyword": {
+                            "kind": "LocalKeyword",
+                            "fullStart": 52,
+                            "start": 56,
+                            "length": 9
+                        },
+                        "children": [
+                            {
+                                "kind": "DataDeclaration",
+                                "identifier": {
+                                    "kind": "Identifier",
+                                    "fullStart": 61,
+                                    "start": 62,
+                                    "length": 5
+                                },
+                                "operator": {
+                                    "kind": "ColonEqualsSign",
+                                    "fullStart": 66,
+                                    "start": 67,
+                                    "length": 3
+                                },
+                                "expression": {
+                                    "kind": "StringLiteralExpression",
+                                    "newlines": [],
+                                    "startQuotationMark": {
+                                        "kind": "QuotationMark",
+                                        "fullStart": 69,
+                                        "start": 70,
+                                        "length": 2
+                                    },
+                                    "children": [
+                                        {
+                                            "kind": "StringLiteralText",
+                                            "fullStart": 71,
+                                            "start": 71,
+                                            "length": 7
+                                        }
+                                    ],
+                                    "endQuotationMark": {
+                                        "kind": "QuotationMark",
+                                        "fullStart": 78,
+                                        "start": 78,
+                                        "length": 1
+                                    }
+                                }
+                            }
+                        ]
+                    },
+                    "terminator": {
+                        "kind": "Newline",
+                        "fullStart": 79,
+                        "start": 80,
+                        "length": 2
+                    }
+                },
+                {
+                    "kind": "DataDeclarationSequenceStatement",
+                    "dataDeclarationSequence": {
+                        "kind": "DataDeclarationSequence",
+                        "dataDeclarationKeyword": {
+                            "kind": "LocalKeyword",
+                            "fullStart": 81,
+                            "start": 85,
+                            "length": 9
+                        },
+                        "children": [
+                            {
+                                "kind": "DataDeclaration",
+                                "identifier": {
+                                    "kind": "Identifier",
+                                    "fullStart": 90,
+                                    "start": 91,
+                                    "length": 2
+                                },
+                                "operator": {
+                                    "kind": "ColonEqualsSign",
+                                    "fullStart": 92,
+                                    "start": 93,
+                                    "length": 3
+                                },
+                                "expression": {
+                                    "kind": "IntegerLiteralExpression",
+                                    "newlines": [],
+                                    "value": {
+                                        "kind": "IntegerLiteral",
+                                        "fullStart": 95,
+                                        "start": 96,
+                                        "length": 2
+                                    }
+                                }
+                            }
+                        ]
+                    },
+                    "terminator": {
+                        "kind": "Newline",
+                        "fullStart": 97,
+                        "start": 98,
+                        "length": 2
+                    }
+                },
+                {
+                    "kind": "EmptyStatement",
+                    "terminator": {
+                        "kind": "Newline",
+                        "fullStart": 99,
+                        "start": 100,
+                        "length": 2
+                    }
+                },
+                {
+                    "kind": "ExpressionStatement",
+                    "expression": {
+                        "kind": "InvokeExpression",
+                        "newlines": [],
+                        "invocableExpression": {
+                            "kind": "IdentifierExpression",
+                            "identifier": {
+                                "kind": "Identifier",
+                                "fullStart": 101,
+                                "start": 105,
+                                "length": 15
+                            }
+                        },
+                        "arguments": [
+                            {
+                                "kind": "SliceExpression",
+                                "newlines": [],
+                                "sliceableExpression": {
+                                    "kind": "IdentifierExpression",
+                                    "identifier": {
+                                        "kind": "Identifier",
+                                        "fullStart": 116,
+                                        "start": 117,
+                                        "length": 5
+                                    }
+                                },
+                                "openingSquareBracket": {
+                                    "kind": "OpeningSquareBracket",
+                                    "fullStart": 121,
+                                    "start": 121,
+                                    "length": 1
+                                },
+                                "startExpression": {
+                                    "kind": "BinaryExpression",
+                                    "leftOperand": {
+                                        "kind": "IdentifierExpression",
+                                        "newlines": [],
+                                        "identifier": {
+                                            "kind": "Identifier",
+                                            "fullStart": 122,
+                                            "start": 122,
+                                            "length": 1
+                                        }
+                                    },
+                                    "operator": {
+                                        "kind": "PlusSign",
+                                        "fullStart": 123,
+                                        "start": 123,
+                                        "length": 1
+                                    },
+                                    "rightOperand": {
+                                        "kind": "IntegerLiteralExpression",
+                                        "newlines": [],
+                                        "value": {
+                                            "kind": "IntegerLiteral",
+                                            "fullStart": 124,
+                                            "start": 124,
+                                            "length": 1
+                                        }
+                                    }
+                                },
+                                "sliceOperator": {
+                                    "kind": "PeriodPeriod",
+                                    "fullStart": 125,
+                                    "start": 125,
+                                    "length": 2
+                                },
+                                "endExpression": {
+                                    "kind": "BinaryExpression",
+                                    "leftOperand": {
+                                        "kind": "IdentifierExpression",
+                                        "newlines": [],
+                                        "identifier": {
+                                            "kind": "Identifier",
+                                            "fullStart": 127,
+                                            "start": 127,
+                                            "length": 1
+                                        }
+                                    },
+                                    "operator": {
+                                        "kind": "PlusSign",
+                                        "fullStart": 128,
+                                        "start": 128,
+                                        "length": 1
+                                    },
+                                    "rightOperand": {
+                                        "kind": "IntegerLiteralExpression",
+                                        "newlines": [],
+                                        "value": {
+                                            "kind": "IntegerLiteral",
+                                            "fullStart": 129,
+                                            "start": 129,
+                                            "length": 1
+                                        }
+                                    }
+                                },
+                                "closingSquareBracket": {
+                                    "kind": "ClosingSquareBracket",
+                                    "fullStart": 130,
+                                    "start": 130,
+                                    "length": 1
+                                }
+                            }
+                        ]
+                    },
+                    "terminator": {
+                        "kind": "Newline",
+                        "fullStart": 131,
+                        "start": 132,
+                        "length": 2
+                    }
+                }
+            ],
+            "endKeyword": {
+                "kind": "EndKeyword",
+                "fullStart": 133,
+                "start": 133,
                 "length": 3
             }
         }
     ],
     "eofToken": {
         "kind": "EOF",
-        "fullStart": 40,
-        "start": 40,
+        "fullStart": 136,
+        "start": 136,
         "length": 0
     }
 }

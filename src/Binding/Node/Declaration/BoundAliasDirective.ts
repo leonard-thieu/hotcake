@@ -13,8 +13,8 @@ export class BoundAliasDirective extends BoundNode {
     readonly kind = BoundNodeKind.AliasDirective;
 
     identifier: BoundSymbol = undefined!;
-    type: BoundAliasDirectiveTarget['type'] = undefined!;
     target: BoundAliasDirectiveTarget = undefined!;
+    type: BoundAliasDirectiveTarget['type'] = undefined!;
 }
 
 export type BoundAliasDirectiveTarget =

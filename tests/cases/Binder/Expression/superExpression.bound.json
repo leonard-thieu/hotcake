@@ -3,6 +3,15 @@
     "identifier": "superExpression",
     "locals": [
         {
+            "kind": "AliasDirective",
+            "identifier": "monkey",
+            "target": {
+                "kind": "ModuleDeclaration",
+                "identifier": "monkey"
+            },
+            "type": "Module"
+        },
+        {
             "kind": "ClassDeclaration",
             "identifier": "MyBaseClass",
             "type": "MyBaseClass",

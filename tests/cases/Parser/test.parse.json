@@ -83,7 +83,7 @@
             "length": 6
         }
     },
-    "headerMembers": [
+    "members": [
         {
             "kind": "Newline",
             "fullStart": 603,
@@ -319,9 +319,7 @@
             "fullStart": 906,
             "start": 935,
             "length": 30
-        }
-    ],
-    "members": [
+        },
         {
             "kind": "AccessibilityDirective",
             "accessibilityKeyword": {
@@ -1160,7 +1158,6 @@
             },
             "parameters": {
                 "kind": "DataDeclarationSequence",
-                "dataDeclarationKeyword": null,
                 "children": [
                     {
                         "kind": "DataDeclaration",
@@ -1259,7 +1256,6 @@
             },
             "parameters": {
                 "kind": "DataDeclarationSequence",
-                "dataDeclarationKeyword": null,
                 "children": [
                     {
                         "kind": "DataDeclaration",
@@ -1387,7 +1383,6 @@
             },
             "parameters": {
                 "kind": "DataDeclarationSequence",
-                "dataDeclarationKeyword": null,
                 "children": []
             },
             "closingParenthesis": {
@@ -1457,7 +1452,6 @@
             },
             "parameters": {
                 "kind": "DataDeclarationSequence",
-                "dataDeclarationKeyword": null,
                 "children": []
             },
             "closingParenthesis": {
@@ -1499,7 +1493,7 @@
                     "expression": {
                         "kind": "InvokeExpression",
                         "newlines": [],
-                        "invokableExpression": {
+                        "invocableExpression": {
                             "kind": "IdentifierExpression",
                             "identifier": {
                                 "kind": "Identifier",
@@ -1634,7 +1628,7 @@
                             "expression": {
                                 "kind": "InvokeExpression",
                                 "newlines": [],
-                                "invokableExpression": {
+                                "invocableExpression": {
                                     "kind": "IdentifierExpression",
                                     "identifier": {
                                         "kind": "Identifier",
@@ -1784,7 +1778,6 @@
                     },
                     "parameters": {
                         "kind": "DataDeclarationSequence",
-                        "dataDeclarationKeyword": null,
                         "children": [
                             {
                                 "kind": "DataDeclaration",
@@ -1937,7 +1930,6 @@
                     },
                     "parameters": {
                         "kind": "DataDeclarationSequence",
-                        "dataDeclarationKeyword": null,
                         "children": []
                     },
                     "closingParenthesis": {
@@ -2082,7 +2074,6 @@
                     },
                     "parameters": {
                         "kind": "DataDeclarationSequence",
-                        "dataDeclarationKeyword": null,
                         "children": []
                     },
                     "closingParenthesis": {
@@ -2272,7 +2263,6 @@
                     },
                     "parameters": {
                         "kind": "DataDeclarationSequence",
-                        "dataDeclarationKeyword": null,
                         "children": [
                             {
                                 "kind": "DataDeclaration",
@@ -2384,7 +2374,6 @@
                     },
                     "parameters": {
                         "kind": "DataDeclarationSequence",
-                        "dataDeclarationKeyword": null,
                         "children": []
                     },
                     "closingParenthesis": {
@@ -2934,7 +2923,6 @@
                     },
                     "parameters": {
                         "kind": "DataDeclarationSequence",
-                        "dataDeclarationKeyword": null,
                         "children": []
                     },
                     "closingParenthesis": {
@@ -2986,7 +2974,6 @@
                     },
                     "parameters": {
                         "kind": "DataDeclarationSequence",
-                        "dataDeclarationKeyword": null,
                         "children": []
                     },
                     "closingParenthesis": {
@@ -3044,7 +3031,6 @@
                     },
                     "parameters": {
                         "kind": "DataDeclarationSequence",
-                        "dataDeclarationKeyword": null,
                         "children": []
                     },
                     "closingParenthesis": {
@@ -3102,7 +3088,6 @@
                     },
                     "parameters": {
                         "kind": "DataDeclarationSequence",
-                        "dataDeclarationKeyword": null,
                         "children": [
                             {
                                 "kind": "DataDeclaration",
@@ -3227,7 +3212,6 @@
                     },
                     "parameters": {
                         "kind": "DataDeclarationSequence",
-                        "dataDeclarationKeyword": null,
                         "children": []
                     },
                     "closingParenthesis": {
@@ -3349,7 +3333,6 @@
                     },
                     "parameters": {
                         "kind": "DataDeclarationSequence",
-                        "dataDeclarationKeyword": null,
                         "children": []
                     },
                     "closingParenthesis": {
@@ -3414,7 +3397,6 @@
                     },
                     "parameters": {
                         "kind": "DataDeclarationSequence",
-                        "dataDeclarationKeyword": null,
                         "children": []
                     },
                     "closingParenthesis": {
@@ -4239,7 +4221,6 @@
             },
             "parameters": {
                 "kind": "DataDeclarationSequence",
-                "dataDeclarationKeyword": null,
                 "children": [
                     {
                         "kind": "DataDeclaration",
@@ -5129,7 +5110,6 @@
             },
             "parameters": {
                 "kind": "DataDeclarationSequence",
-                "dataDeclarationKeyword": null,
                 "children": [
                     {
                         "kind": "DataDeclaration",
@@ -5362,7 +5342,6 @@
             },
             "parameters": {
                 "kind": "DataDeclarationSequence",
-                "dataDeclarationKeyword": null,
                 "children": []
             },
             "closingParenthesis": {
@@ -5732,7 +5711,6 @@
             },
             "parameters": {
                 "kind": "DataDeclarationSequence",
-                "dataDeclarationKeyword": null,
                 "children": []
             },
             "closingParenthesis": {
@@ -6242,7 +6220,6 @@
             },
             "parameters": {
                 "kind": "DataDeclarationSequence",
-                "dataDeclarationKeyword": null,
                 "children": []
             },
             "closingParenthesis": {

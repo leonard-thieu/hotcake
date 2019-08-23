@@ -15,7 +15,7 @@ export class BoolType extends Type {
         switch (target.declaration.kind) {
             case BoundNodeKind.ExternClassDeclaration:
             case BoundNodeKind.ClassDeclaration: {
-                const method = BoundTreeWalker.getMethod(target.declaration, CONSTRUCTOR_NAME, undefined, this);
+                const method = BoundTreeWalker.getSpecialMethod(target.declaration, CONSTRUCTOR_NAME, undefined, this);
                 if (method) {
                     return true;
                 }

@@ -1,0 +1,140 @@
+{
+    "kind": "ModuleDeclaration",
+    "identifier": "position",
+    "locals": [
+        {
+            "kind": "AliasDirective",
+            "identifier": "monkey",
+            "target": {
+                "kind": "ModuleDeclaration",
+                "identifier": "monkey"
+            },
+            "type": "Module"
+        },
+        {
+            "kind": "FunctionGroupDeclaration",
+            "identifier": "AsArray",
+            "type": "AsArray",
+            "overloads": [
+                {
+                    "kind": "FunctionDeclaration",
+                    "identifier": "AsArray",
+                    "locals": [
+                        "arr"
+                    ],
+                    "type": "AsArray: Int()",
+                    "returnType": "Int",
+                    "parameters": [],
+                    "statements": [
+                        {
+                            "kind": "DataDeclarationStatement",
+                            "dataDeclaration": {
+                                "kind": "DataDeclaration",
+                                "declarationKind": "Local",
+                                "identifier": "arr",
+                                "operator": "ColonEqualsSign",
+                                "expression": {
+                                    "kind": "ArrayLiteralExpression",
+                                    "type": "Int[]",
+                                    "expressions": [
+                                        {
+                                            "kind": "IntegerLiteralExpression",
+                                            "type": "Int",
+                                            "value": "1"
+                                        },
+                                        {
+                                            "kind": "IntegerLiteralExpression",
+                                            "type": "Int",
+                                            "value": "2"
+                                        },
+                                        {
+                                            "kind": "IntegerLiteralExpression",
+                                            "type": "Int",
+                                            "value": "3"
+                                        },
+                                        {
+                                            "kind": "IntegerLiteralExpression",
+                                            "type": "Int",
+                                            "value": "4"
+                                        }
+                                    ]
+                                },
+                                "type": "Int[]"
+                            }
+                        },
+                        {
+                            "kind": "IfStatement",
+                            "locals": [],
+                            "expression": {
+                                "kind": "IndexExpression",
+                                "type": "Int",
+                                "indexableExpression": {
+                                    "kind": "IdentifierExpression",
+                                    "type": "Int[]",
+                                    "identifier": "arr"
+                                },
+                                "indexExpressionExpression": {
+                                    "kind": "IntegerLiteralExpression",
+                                    "type": "Int",
+                                    "value": "0"
+                                }
+                            },
+                            "statements": [],
+                            "elseIfClauses": []
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "kind": "FunctionGroupDeclaration",
+            "identifier": "AsFunction",
+            "type": "AsFunction",
+            "overloads": [
+                {
+                    "kind": "FunctionDeclaration",
+                    "identifier": "AsFunction",
+                    "locals": [],
+                    "type": "AsFunction: Int()",
+                    "returnType": "Int",
+                    "parameters": [],
+                    "statements": [
+                        {
+                            "kind": "IfStatement",
+                            "locals": [],
+                            "expression": {
+                                "kind": "InvokeExpression",
+                                "type": "Int",
+                                "overload": "arr: Int()",
+                                "invocableExpression": {
+                                    "kind": "IdentifierExpression",
+                                    "type": "arr",
+                                    "identifier": "arr"
+                                },
+                                "arguments": []
+                            },
+                            "statements": [],
+                            "elseIfClauses": []
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "kind": "FunctionGroupDeclaration",
+            "identifier": "arr",
+            "type": "arr",
+            "overloads": [
+                {
+                    "kind": "FunctionDeclaration",
+                    "identifier": "arr",
+                    "locals": [],
+                    "type": "arr: Int()",
+                    "returnType": "Int",
+                    "parameters": [],
+                    "statements": []
+                }
+            ]
+        }
+    ]
+}

@@ -14,8 +14,8 @@ export class ArrayType extends Type {
 
     isConvertibleTo(target: Types): boolean {
         if (target.kind === TypeKind.Array) {
+            if (this.elementType.type.kind === TypeKind.Void) { return true; }
             if (target.elementType === this.elementType) { return true; }
-            if (target.elementType.type.kind === TypeKind.Void) { return true; }
         }
 
         return false;

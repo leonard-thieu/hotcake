@@ -1,7 +1,7 @@
 {
     "kind": "ModuleDeclaration",
     "strictNewlines": [],
-    "headerMembers": [
+    "members": [
         {
             "kind": "ImportStatement",
             "importKeyword": {
@@ -87,9 +87,7 @@
             "fullStart": 58,
             "start": 59,
             "length": 2
-        }
-    ],
-    "members": [
+        },
         {
             "kind": "FunctionDeclaration",
             "functionKeyword": {
@@ -112,7 +110,6 @@
             },
             "parameters": {
                 "kind": "DataDeclarationSequence",
-                "dataDeclarationKeyword": null,
                 "children": []
             },
             "closingParenthesis": {
@@ -2863,7 +2860,7 @@
                     "expression": {
                         "kind": "InvokeExpression",
                         "newlines": [],
-                        "invokableExpression": {
+                        "invocableExpression": {
                             "kind": "NewExpression",
                             "newKeyword": {
                                 "kind": "NewKeyword",
@@ -3331,7 +3328,7 @@
                         },
                         "member": {
                             "kind": "InvokeExpression",
-                            "invokableExpression": {
+                            "invocableExpression": {
                                 "kind": "IdentifierExpression",
                                 "identifier": {
                                     "kind": "EscapedIdentifier",
@@ -3390,7 +3387,7 @@
                         },
                         "member": {
                             "kind": "InvokeExpression",
-                            "invokableExpression": {
+                            "invocableExpression": {
                                 "kind": "IdentifierExpression",
                                 "identifier": {
                                     "kind": "EscapedIdentifier",
@@ -3486,7 +3483,7 @@
                                 "expression": {
                                     "kind": "InvokeExpression",
                                     "newlines": [],
-                                    "invokableExpression": {
+                                    "invocableExpression": {
                                         "kind": "NewExpression",
                                         "newKeyword": {
                                             "kind": "NewKeyword",
@@ -3539,7 +3536,7 @@
                         },
                         "member": {
                             "kind": "InvokeExpression",
-                            "invokableExpression": {
+                            "invocableExpression": {
                                 "kind": "IdentifierExpression",
                                 "identifier": {
                                     "kind": "EscapedIdentifier",
@@ -3674,7 +3671,7 @@
                     "expression": {
                         "kind": "InvokeExpression",
                         "newlines": [],
-                        "invokableExpression": {
+                        "invocableExpression": {
                             "kind": "IdentifierExpression",
                             "identifier": {
                                 "kind": "Identifier",
@@ -3860,7 +3857,7 @@
                             },
                             "member": {
                                 "kind": "InvokeExpression",
-                                "invokableExpression": {
+                                "invocableExpression": {
                                     "kind": "IdentifierExpression",
                                     "identifier": {
                                         "kind": "Identifier",
@@ -3952,7 +3949,6 @@
                     },
                     "parameters": {
                         "kind": "DataDeclarationSequence",
-                        "dataDeclarationKeyword": null,
                         "children": []
                     },
                     "closingParenthesis": {
@@ -3982,7 +3978,7 @@
                             "expression": {
                                 "kind": "InvokeExpression",
                                 "newlines": [],
-                                "invokableExpression": {
+                                "invocableExpression": {
                                     "kind": "NewExpression",
                                     "newKeyword": {
                                         "kind": "NewKeyword",
@@ -4100,7 +4096,6 @@
                     },
                     "parameters": {
                         "kind": "DataDeclarationSequence",
-                        "dataDeclarationKeyword": null,
                         "children": []
                     },
                     "closingParenthesis": {
@@ -4130,7 +4125,7 @@
                             "expression": {
                                 "kind": "InvokeExpression",
                                 "newlines": [],
-                                "invokableExpression": {
+                                "invocableExpression": {
                                     "kind": "NewExpression",
                                     "newKeyword": {
                                         "kind": "NewKeyword",
@@ -4222,7 +4217,6 @@
                     },
                     "parameters": {
                         "kind": "DataDeclarationSequence",
-                        "dataDeclarationKeyword": null,
                         "children": []
                     },
                     "closingParenthesis": {
@@ -4252,7 +4246,7 @@
                             "expression": {
                                 "kind": "InvokeExpression",
                                 "newlines": [],
-                                "invokableExpression": {
+                                "invocableExpression": {
                                     "kind": "NewExpression",
                                     "newKeyword": {
                                         "kind": "NewKeyword",
@@ -4344,7 +4338,6 @@
                     },
                     "parameters": {
                         "kind": "DataDeclarationSequence",
-                        "dataDeclarationKeyword": null,
                         "children": [
                             {
                                 "kind": "DataDeclaration",
@@ -4443,7 +4436,6 @@
                     },
                     "parameters": {
                         "kind": "DataDeclarationSequence",
-                        "dataDeclarationKeyword": null,
                         "children": [
                             {
                                 "kind": "DataDeclaration",

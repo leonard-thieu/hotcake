@@ -1,7 +1,7 @@
 {
     "kind": "ModuleDeclaration",
     "strictNewlines": [],
-    "headerMembers": [
+    "members": [
         {
             "kind": "FriendDirective",
             "friendKeyword": {
@@ -35,7 +35,6 @@
             }
         }
     ],
-    "members": [],
     "eofToken": {
         "kind": "EOF",
         "fullStart": 25,

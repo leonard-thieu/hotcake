@@ -3,6 +3,15 @@
     "identifier": "arrayResize",
     "locals": [
         {
+            "kind": "AliasDirective",
+            "identifier": "monkey",
+            "target": {
+                "kind": "ModuleDeclaration",
+                "identifier": "monkey"
+            },
+            "type": "Module"
+        },
+        {
             "kind": "FunctionGroupDeclaration",
             "identifier": "Main",
             "type": "Main",
@@ -57,8 +66,8 @@
                                 "member": {
                                     "kind": "InvokeExpression",
                                     "type": "Float[]",
-                                    "invocationType": "Resize: Float[](Int)",
-                                    "invokableExpression": {
+                                    "overload": "Resize: Float[](Int)",
+                                    "invocableExpression": {
                                         "kind": "IdentifierExpression",
                                         "type": "Resize",
                                         "identifier": "Resize"

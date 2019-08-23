@@ -3,6 +3,15 @@
     "identifier": "nullExpression",
     "locals": [
         {
+            "kind": "AliasDirective",
+            "identifier": "monkey",
+            "target": {
+                "kind": "ModuleDeclaration",
+                "identifier": "monkey"
+            },
+            "type": "Module"
+        },
+        {
             "kind": "FunctionGroupDeclaration",
             "identifier": "UnboxBool",
             "type": "UnboxBool",
@@ -46,8 +55,8 @@
                             "expression": {
                                 "kind": "InvokeExpression",
                                 "type": "Bool",
-                                "invocationType": "UnboxBool: Bool(Object)",
-                                "invokableExpression": {
+                                "overload": "UnboxBool: Bool(Object)",
+                                "invocableExpression": {
                                     "kind": "IdentifierExpression",
                                     "type": "UnboxBool",
                                     "identifier": "UnboxBool"

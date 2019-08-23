@@ -3,16 +3,22 @@
     "identifier": "importStatement",
     "locals": [
         {
-            "kind": "ModuleDeclaration",
-            "identifier": "anotherModule",
-            "path": "_importStatement.anotherModule"
+            "kind": "AliasDirective",
+            "identifier": "monkey",
+            "target": {
+                "kind": "ModuleDeclaration",
+                "identifier": "monkey"
+            },
+            "type": "Module"
         },
         {
-            "kind": "DataDeclaration",
-            "declarationKind": "Global",
-            "identifier": "T",
-            "typeAnnotation": "Int",
-            "type": "Int"
+            "kind": "AliasDirective",
+            "identifier": "anotherModule",
+            "target": {
+                "kind": "ModuleDeclaration",
+                "identifier": "anotherModule"
+            },
+            "type": "Module"
         }
     ]
 }

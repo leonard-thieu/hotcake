@@ -3,6 +3,15 @@
     "identifier": "forLoop",
     "locals": [
         {
+            "kind": "AliasDirective",
+            "identifier": "monkey",
+            "target": {
+                "kind": "ModuleDeclaration",
+                "identifier": "monkey"
+            },
+            "type": "Module"
+        },
+        {
             "kind": "FunctionGroupDeclaration",
             "identifier": "Main",
             "type": "Main",
@@ -95,8 +104,8 @@
                                     "expression": {
                                         "kind": "InvokeExpression",
                                         "type": "Int",
-                                        "invocationType": "CheckInt: Int(Int)",
-                                        "invokableExpression": {
+                                        "overload": "CheckInt: Int(Int)",
+                                        "invocableExpression": {
                                             "kind": "IdentifierExpression",
                                             "type": "CheckInt",
                                             "identifier": "CheckInt"
@@ -159,8 +168,8 @@
                                 "rightOperand": {
                                     "kind": "InvokeExpression",
                                     "type": "Int",
-                                    "invocationType": "Length: Int()",
-                                    "invokableExpression": {
+                                    "overload": "Length: Int()",
+                                    "invocableExpression": {
                                         "kind": "ScopeMemberAccessExpression",
                                         "type": "Length",
                                         "scopableExpression": {
@@ -231,8 +240,8 @@
                                     "expression": {
                                         "kind": "InvokeExpression",
                                         "type": "Int",
-                                        "invocationType": "CheckInt: Int(Int)",
-                                        "invokableExpression": {
+                                        "overload": "CheckInt: Int(Int)",
+                                        "invocableExpression": {
                                             "kind": "IdentifierExpression",
                                             "type": "CheckInt",
                                             "identifier": "CheckInt"
@@ -311,8 +320,8 @@
                                 "rightOperand": {
                                     "kind": "InvokeExpression",
                                     "type": "Int",
-                                    "invocationType": "Length: Int()",
-                                    "invokableExpression": {
+                                    "overload": "Length: Int()",
+                                    "invocableExpression": {
                                         "kind": "ScopeMemberAccessExpression",
                                         "type": "Length",
                                         "scopableExpression": {
@@ -383,8 +392,8 @@
                                     "expression": {
                                         "kind": "InvokeExpression",
                                         "type": "Int",
-                                        "invocationType": "CheckInt: Int(Int)",
-                                        "invokableExpression": {
+                                        "overload": "CheckInt: Int(Int)",
+                                        "invocableExpression": {
                                             "kind": "IdentifierExpression",
                                             "type": "CheckInt",
                                             "identifier": "CheckInt"
@@ -410,15 +419,15 @@
                                 "expression": {
                                     "kind": "InvokeExpression",
                                     "type": "CollectionEnumerator",
-                                    "invocationType": "ObjectEnumerator: CollectionEnumerator()",
-                                    "invokableExpression": {
+                                    "overload": "ObjectEnumerator: CollectionEnumerator()",
+                                    "invocableExpression": {
                                         "kind": "ScopeMemberAccessExpression",
                                         "type": "ObjectEnumerator",
                                         "scopableExpression": {
                                             "kind": "InvokeExpression",
                                             "type": "Collection",
-                                            "invocationType": "New Collection()",
-                                            "invokableExpression": {
+                                            "overload": "New Collection()",
+                                            "invocableExpression": {
                                                 "kind": "NewExpression",
                                                 "type": "New Collection",
                                                 "typeReference": "Collection"
@@ -444,8 +453,8 @@
                             "expression": {
                                 "kind": "InvokeExpression",
                                 "type": "Bool",
-                                "invocationType": "HasNext: Bool()",
-                                "invokableExpression": {
+                                "overload": "HasNext: Bool()",
+                                "invocableExpression": {
                                     "kind": "ScopeMemberAccessExpression",
                                     "type": "HasNext",
                                     "scopableExpression": {
@@ -472,8 +481,8 @@
                                         "expression": {
                                             "kind": "InvokeExpression",
                                             "type": "Item",
-                                            "invocationType": "NextObject: Item()",
-                                            "invokableExpression": {
+                                            "overload": "NextObject: Item()",
+                                            "invocableExpression": {
                                                 "kind": "ScopeMemberAccessExpression",
                                                 "type": "NextObject",
                                                 "scopableExpression": {
@@ -497,8 +506,8 @@
                                     "expression": {
                                         "kind": "InvokeExpression",
                                         "type": "Int",
-                                        "invocationType": "CheckItem: Int(Item)",
-                                        "invokableExpression": {
+                                        "overload": "CheckItem: Int(Item)",
+                                        "invocableExpression": {
                                             "kind": "IdentifierExpression",
                                             "type": "CheckItem",
                                             "identifier": "CheckItem"
@@ -586,8 +595,8 @@
                                     "expression": {
                                         "kind": "InvokeExpression",
                                         "type": "Int",
-                                        "invocationType": "CheckInt: Int(Int)",
-                                        "invokableExpression": {
+                                        "overload": "CheckInt: Int(Int)",
+                                        "invocableExpression": {
                                             "kind": "IdentifierExpression",
                                             "type": "CheckInt",
                                             "identifier": "CheckInt"
@@ -674,8 +683,8 @@
                                 "rightOperand": {
                                     "kind": "InvokeExpression",
                                     "type": "Int",
-                                    "invocationType": "Length: Int()",
-                                    "invokableExpression": {
+                                    "overload": "Length: Int()",
+                                    "invocableExpression": {
                                         "kind": "ScopeMemberAccessExpression",
                                         "type": "Length",
                                         "scopableExpression": {
@@ -698,7 +707,7 @@
                                     "leftOperand": {
                                         "kind": "IdentifierExpression",
                                         "type": "Int",
-                                        "identifier": "7"
+                                        "identifier": "val3"
                                     },
                                     "operator": "Assignment",
                                     "rightOperand": {
@@ -745,8 +754,8 @@
                                     "expression": {
                                         "kind": "InvokeExpression",
                                         "type": "Int",
-                                        "invocationType": "CheckInt: Int(Int)",
-                                        "invokableExpression": {
+                                        "overload": "CheckInt: Int(Int)",
+                                        "invocableExpression": {
                                             "kind": "IdentifierExpression",
                                             "type": "CheckInt",
                                             "identifier": "CheckInt"

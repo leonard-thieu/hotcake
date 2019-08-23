@@ -3,6 +3,15 @@
     "identifier": "returnStatement",
     "locals": [
         {
+            "kind": "AliasDirective",
+            "identifier": "monkey",
+            "target": {
+                "kind": "ModuleDeclaration",
+                "identifier": "monkey"
+            },
+            "type": "Module"
+        },
+        {
             "kind": "FunctionGroupDeclaration",
             "identifier": "DefaultReturnBool",
             "type": "DefaultReturnBool",

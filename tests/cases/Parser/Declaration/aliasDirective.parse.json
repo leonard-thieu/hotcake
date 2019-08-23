@@ -1,7 +1,7 @@
 {
     "kind": "ModuleDeclaration",
     "strictNewlines": [],
-    "headerMembers": [
+    "members": [
         {
             "kind": "ImportStatement",
             "importKeyword": {
@@ -2114,9 +2114,7 @@
             "fullStart": 2707,
             "start": 2708,
             "length": 2
-        }
-    ],
-    "members": [
+        },
         {
             "kind": "ClassDeclaration",
             "classKeyword": {
@@ -2194,7 +2192,6 @@
                     },
                     "parameters": {
                         "kind": "DataDeclarationSequence",
-                        "dataDeclarationKeyword": null,
                         "children": []
                     },
                     "closingParenthesis": {
@@ -2219,7 +2216,7 @@
                             "expression": {
                                 "kind": "InvokeExpression",
                                 "newlines": [],
-                                "invokableExpression": {
+                                "invocableExpression": {
                                     "kind": "IdentifierExpression",
                                     "identifier": {
                                         "kind": "Identifier",
@@ -2347,7 +2344,6 @@
             },
             "parameters": {
                 "kind": "DataDeclarationSequence",
-                "dataDeclarationKeyword": null,
                 "children": []
             },
             "closingParenthesis": {
@@ -2371,7 +2367,7 @@
                     "expression": {
                         "kind": "InvokeExpression",
                         "newlines": [],
-                        "invokableExpression": {
+                        "invocableExpression": {
                             "kind": "NewExpression",
                             "newKeyword": {
                                 "kind": "NewKeyword",
@@ -2425,7 +2421,7 @@
                     "expression": {
                         "kind": "InvokeExpression",
                         "newlines": [],
-                        "invokableExpression": {
+                        "invocableExpression": {
                             "kind": "NewExpression",
                             "newKeyword": {
                                 "kind": "NewKeyword",
@@ -2458,7 +2454,7 @@
                     "expression": {
                         "kind": "InvokeExpression",
                         "newlines": [],
-                        "invokableExpression": {
+                        "invocableExpression": {
                             "kind": "NewExpression",
                             "newKeyword": {
                                 "kind": "NewKeyword",
@@ -2515,7 +2511,7 @@
                     "expression": {
                         "kind": "InvokeExpression",
                         "newlines": [],
-                        "invokableExpression": {
+                        "invocableExpression": {
                             "kind": "NewExpression",
                             "newKeyword": {
                                 "kind": "NewKeyword",
@@ -2557,7 +2553,7 @@
                     "expression": {
                         "kind": "InvokeExpression",
                         "newlines": [],
-                        "invokableExpression": {
+                        "invocableExpression": {
                             "kind": "IdentifierExpression",
                             "identifier": {
                                 "kind": "Identifier",
@@ -2591,7 +2587,7 @@
                     "expression": {
                         "kind": "InvokeExpression",
                         "newlines": [],
-                        "invokableExpression": {
+                        "invocableExpression": {
                             "kind": "IdentifierExpression",
                             "identifier": {
                                 "kind": "Identifier",
@@ -2625,7 +2621,7 @@
                     "expression": {
                         "kind": "InvokeExpression",
                         "newlines": [],
-                        "invokableExpression": {
+                        "invocableExpression": {
                             "kind": "IdentifierExpression",
                             "identifier": {
                                 "kind": "Identifier",
@@ -2659,7 +2655,7 @@
                     "expression": {
                         "kind": "InvokeExpression",
                         "newlines": [],
-                        "invokableExpression": {
+                        "invocableExpression": {
                             "kind": "IdentifierExpression",
                             "identifier": {
                                 "kind": "Identifier",
@@ -2702,7 +2698,7 @@
                     "expression": {
                         "kind": "InvokeExpression",
                         "newlines": [],
-                        "invokableExpression": {
+                        "invocableExpression": {
                             "kind": "IdentifierExpression",
                             "identifier": {
                                 "kind": "Identifier",

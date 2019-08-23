@@ -3,6 +3,15 @@
     "identifier": "functionOverloading",
     "locals": [
         {
+            "kind": "AliasDirective",
+            "identifier": "monkey",
+            "target": {
+                "kind": "ModuleDeclaration",
+                "identifier": "monkey"
+            },
+            "type": "Module"
+        },
+        {
             "kind": "FunctionGroupDeclaration",
             "identifier": "Add",
             "type": "Add",
@@ -84,8 +93,8 @@
                             "expression": {
                                 "kind": "InvokeExpression",
                                 "type": "Int",
-                                "invocationType": "Add: Int(Int)",
-                                "invokableExpression": {
+                                "overload": "Add: Int(Int)",
+                                "invocableExpression": {
                                     "kind": "IdentifierExpression",
                                     "type": "Add",
                                     "identifier": "Add"
@@ -104,8 +113,8 @@
                             "expression": {
                                 "kind": "InvokeExpression",
                                 "type": "Int",
-                                "invocationType": "Add: Int(Float)",
-                                "invokableExpression": {
+                                "overload": "Add: Int(Float)",
+                                "invocableExpression": {
                                     "kind": "IdentifierExpression",
                                     "type": "Add",
                                     "identifier": "Add"
@@ -124,8 +133,8 @@
                             "expression": {
                                 "kind": "InvokeExpression",
                                 "type": "Int",
-                                "invocationType": "Add: Int(String)",
-                                "invokableExpression": {
+                                "overload": "Add: Int(String)",
+                                "invocableExpression": {
                                     "kind": "IdentifierExpression",
                                     "type": "Add",
                                     "identifier": "Add"

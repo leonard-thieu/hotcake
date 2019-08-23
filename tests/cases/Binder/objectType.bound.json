@@ -3,6 +3,15 @@
     "identifier": "objectType",
     "locals": [
         {
+            "kind": "AliasDirective",
+            "identifier": "monkey",
+            "target": {
+                "kind": "ModuleDeclaration",
+                "identifier": "monkey"
+            },
+            "type": "Module"
+        },
+        {
             "kind": "ClassDeclaration",
             "identifier": "BaseObject",
             "type": "BaseObject",
@@ -90,8 +99,8 @@
                                     "expression": {
                                         "kind": "InvokeExpression",
                                         "type": "Int",
-                                        "invocationType": "Print: Int(String)",
-                                        "invokableExpression": {
+                                        "overload": "Print: Int(String)",
+                                        "invocableExpression": {
                                             "kind": "IdentifierExpression",
                                             "type": "Print",
                                             "identifier": "Print"
@@ -235,8 +244,8 @@
                                     "expression": {
                                         "kind": "InvokeExpression",
                                         "type": "Int",
-                                        "invocationType": "Print: Int(String)",
-                                        "invokableExpression": {
+                                        "overload": "Print: Int(String)",
+                                        "invocableExpression": {
                                             "kind": "IdentifierExpression",
                                             "type": "Print",
                                             "identifier": "Print"
@@ -273,8 +282,8 @@
                                     "expression": {
                                         "kind": "InvokeExpression",
                                         "type": "Int",
-                                        "invocationType": "Print: Int(String)",
-                                        "invokableExpression": {
+                                        "overload": "Print: Int(String)",
+                                        "invocableExpression": {
                                             "kind": "IdentifierExpression",
                                             "type": "Print",
                                             "identifier": "Print"
@@ -311,8 +320,8 @@
                                     "expression": {
                                         "kind": "InvokeExpression",
                                         "type": "Int",
-                                        "invocationType": "Print: Int(String)",
-                                        "invokableExpression": {
+                                        "overload": "Print: Int(String)",
+                                        "invocableExpression": {
                                             "kind": "IdentifierExpression",
                                             "type": "Print",
                                             "identifier": "Print"
@@ -376,8 +385,8 @@
                             "expression": {
                                 "kind": "InvokeExpression",
                                 "type": "Int",
-                                "invocationType": "Print: Int(String)",
-                                "invokableExpression": {
+                                "overload": "Print: Int(String)",
+                                "invocableExpression": {
                                     "kind": "IdentifierExpression",
                                     "type": "Print",
                                     "identifier": "Print"
@@ -450,8 +459,8 @@
                                 "member": {
                                     "kind": "InvokeExpression",
                                     "type": "Int",
-                                    "invocationType": "Speak: Int()",
-                                    "invokableExpression": {
+                                    "overload": "Speak: Int()",
+                                    "invocableExpression": {
                                         "kind": "IdentifierExpression",
                                         "type": "Speak",
                                         "identifier": "Speak"
@@ -492,8 +501,8 @@
                             "expression": {
                                 "kind": "InvokeExpression",
                                 "type": "Int",
-                                "invocationType": "Print: Int(String)",
-                                "invokableExpression": {
+                                "overload": "Print: Int(String)",
+                                "invocableExpression": {
                                     "kind": "IdentifierExpression",
                                     "type": "Print",
                                     "identifier": "Print"
@@ -576,8 +585,8 @@
                                 "member": {
                                     "kind": "InvokeExpression",
                                     "type": "Int",
-                                    "invocationType": "Move: Int()",
-                                    "invokableExpression": {
+                                    "overload": "Move: Int()",
+                                    "invocableExpression": {
                                         "kind": "IdentifierExpression",
                                         "type": "Move",
                                         "identifier": "Move"
@@ -626,8 +635,8 @@
                                 "member": {
                                     "kind": "InvokeExpression",
                                     "type": "Int",
-                                    "invocationType": "Draw: Int()",
-                                    "invokableExpression": {
+                                    "overload": "Draw: Int()",
+                                    "invocableExpression": {
                                         "kind": "IdentifierExpression",
                                         "type": "Draw",
                                         "identifier": "Draw"
@@ -665,8 +674,8 @@
                                 "expression": {
                                     "kind": "InvokeExpression",
                                     "type": "Actor",
-                                    "invocationType": "New Actor()",
-                                    "invokableExpression": {
+                                    "overload": "New Actor()",
+                                    "invocableExpression": {
                                         "kind": "NewExpression",
                                         "type": "New Actor",
                                         "typeReference": "Actor"
@@ -681,8 +690,8 @@
                             "expression": {
                                 "kind": "InvokeExpression",
                                 "type": "Int",
-                                "invocationType": "Check: Int(BaseObject)",
-                                "invokableExpression": {
+                                "overload": "Check: Int(BaseObject)",
+                                "invocableExpression": {
                                     "kind": "IdentifierExpression",
                                     "type": "Check",
                                     "identifier": "Check"
@@ -701,8 +710,8 @@
                             "expression": {
                                 "kind": "InvokeExpression",
                                 "type": "Int",
-                                "invocationType": "Speak: Int(Speakable)",
-                                "invokableExpression": {
+                                "overload": "Speak: Int(Speakable)",
+                                "invocableExpression": {
                                     "kind": "IdentifierExpression",
                                     "type": "Speak",
                                     "identifier": "Speak"
@@ -721,8 +730,8 @@
                             "expression": {
                                 "kind": "InvokeExpression",
                                 "type": "Int",
-                                "invocationType": "Hire: Int(Entity)",
-                                "invokableExpression": {
+                                "overload": "Hire: Int(Entity)",
+                                "invocableExpression": {
                                     "kind": "IdentifierExpression",
                                     "type": "Hire",
                                     "identifier": "Hire"
@@ -741,8 +750,8 @@
                             "expression": {
                                 "kind": "InvokeExpression",
                                 "type": "Int",
-                                "invocationType": "Move: Int(Moveable)",
-                                "invokableExpression": {
+                                "overload": "Move: Int(Moveable)",
+                                "invocableExpression": {
                                     "kind": "IdentifierExpression",
                                     "type": "Move",
                                     "identifier": "Move"
@@ -761,8 +770,8 @@
                             "expression": {
                                 "kind": "InvokeExpression",
                                 "type": "Int",
-                                "invocationType": "Draw: Int(Drawable)",
-                                "invokableExpression": {
+                                "overload": "Draw: Int(Drawable)",
+                                "invocableExpression": {
                                     "kind": "IdentifierExpression",
                                     "type": "Draw",
                                     "identifier": "Draw"

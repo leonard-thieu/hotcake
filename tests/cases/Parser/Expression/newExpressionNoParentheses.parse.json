@@ -1,7 +1,6 @@
 {
     "kind": "ModuleDeclaration",
     "strictNewlines": [],
-    "headerMembers": [],
     "members": [
         {
             "kind": "FunctionDeclaration",
@@ -25,7 +24,6 @@
             },
             "parameters": {
                 "kind": "DataDeclarationSequence",
-                "dataDeclarationKeyword": null,
                 "children": []
             },
             "closingParenthesis": {
@@ -49,7 +47,7 @@
                     "expression": {
                         "kind": "InvokeExpression",
                         "newlines": [],
-                        "invokableExpression": {
+                        "invocableExpression": {
                             "kind": "NewExpression",
                             "newKeyword": {
                                 "kind": "NewKeyword",
@@ -102,6 +100,13 @@
                                     "length": 1
                                 },
                                 "newlines": []
+                            },
+                            {
+                                "kind": "Missing",
+                                "fullStart": 38,
+                                "start": 38,
+                                "length": 0,
+                                "originalKind": "Expression"
                             },
                             {
                                 "kind": "CommaSeparator",

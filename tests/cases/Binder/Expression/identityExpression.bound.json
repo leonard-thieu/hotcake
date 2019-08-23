@@ -3,6 +3,15 @@
     "identifier": "identityExpression",
     "locals": [
         {
+            "kind": "AliasDirective",
+            "identifier": "monkey",
+            "target": {
+                "kind": "ModuleDeclaration",
+                "identifier": "monkey"
+            },
+            "type": "Module"
+        },
+        {
             "kind": "FunctionGroupDeclaration",
             "identifier": "Print",
             "type": "Print",
@@ -64,8 +73,8 @@
                             "expression": {
                                 "kind": "InvokeExpression",
                                 "type": "Void",
-                                "invocationType": "Print: Void(String)",
-                                "invokableExpression": {
+                                "overload": "Print: Void(String)",
+                                "invocableExpression": {
                                     "kind": "IdentifierExpression",
                                     "type": "Print",
                                     "identifier": "Print"

@@ -1,0 +1,177 @@
+{
+    "kind": "ModuleDeclaration",
+    "accessibility": "Public",
+    "identifier": "arrayTypeConversion",
+    "locals": [
+        {
+            "kind": "AliasDirective",
+            "accessibility": "Public",
+            "identifier": "monkey",
+            "target": {
+                "kind": "ModuleDeclaration",
+                "identifier": "monkey"
+            },
+            "type": "Module"
+        },
+        {
+            "kind": "FunctionGroupDeclaration",
+            "accessibility": "Public",
+            "identifier": "CheckIntArray",
+            "type": "CheckIntArray",
+            "overloads": [
+                {
+                    "kind": "FunctionDeclaration",
+                    "accessibility": "Public",
+                    "identifier": "CheckIntArray",
+                    "locals": [
+                        "val"
+                    ],
+                    "type": "CheckIntArray: Int(Int[])",
+                    "returnType": "Int",
+                    "parameters": [
+                        {
+                            "kind": "DataDeclaration",
+                            "declarationKind": "Parameter",
+                            "identifier": "val",
+                            "typeAnnotation": "Int[]",
+                            "type": "Int[]"
+                        }
+                    ],
+                    "statements": []
+                }
+            ]
+        },
+        {
+            "kind": "FunctionGroupDeclaration",
+            "accessibility": "Public",
+            "identifier": "Main",
+            "type": "Main",
+            "overloads": [
+                {
+                    "kind": "FunctionDeclaration",
+                    "accessibility": "Public",
+                    "identifier": "Main",
+                    "locals": [
+                        "assignVoidArrayToIntArray",
+                        "assignSameArrayType",
+                        "voidArray"
+                    ],
+                    "type": "Main: Int()",
+                    "returnType": "Int",
+                    "parameters": [],
+                    "statements": [
+                        {
+                            "kind": "DataDeclarationStatement",
+                            "dataDeclaration": {
+                                "kind": "DataDeclaration",
+                                "declarationKind": "Local",
+                                "identifier": "assignVoidArrayToIntArray",
+                                "typeAnnotation": "Int[]",
+                                "operator": "EqualsSign",
+                                "expression": {
+                                    "kind": "ArrayLiteralExpression",
+                                    "type": "Void[]",
+                                    "expressions": []
+                                },
+                                "type": "Int[]"
+                            }
+                        },
+                        {
+                            "kind": "DataDeclarationStatement",
+                            "dataDeclaration": {
+                                "kind": "DataDeclaration",
+                                "declarationKind": "Local",
+                                "identifier": "assignSameArrayType",
+                                "typeAnnotation": "Float[]",
+                                "operator": "EqualsSign",
+                                "expression": {
+                                    "kind": "ArrayLiteralExpression",
+                                    "type": "Float[]",
+                                    "expressions": [
+                                        {
+                                            "kind": "FloatLiteralExpression",
+                                            "type": "Float",
+                                            "value": ".1"
+                                        }
+                                    ]
+                                },
+                                "type": "Float[]"
+                            }
+                        },
+                        {
+                            "kind": "DataDeclarationStatement",
+                            "dataDeclaration": {
+                                "kind": "DataDeclaration",
+                                "declarationKind": "Local",
+                                "identifier": "voidArray",
+                                "typeAnnotation": "Void[]",
+                                "operator": "EqualsSign",
+                                "expression": {
+                                    "kind": "ArrayLiteralExpression",
+                                    "type": "Void[]",
+                                    "expressions": []
+                                },
+                                "type": "Void[]"
+                            }
+                        },
+                        {
+                            "kind": "AssignmentStatement",
+                            "leftOperand": {
+                                "kind": "IdentifierExpression",
+                                "type": "Void[]",
+                                "identifier": "voidArray"
+                            },
+                            "operator": "Assignment",
+                            "rightOperand": {
+                                "kind": "ScopeMemberAccessExpression",
+                                "type": "Void[]",
+                                "scopableExpression": {
+                                    "kind": "IdentifierExpression",
+                                    "type": "Void[]",
+                                    "identifier": "voidArray"
+                                },
+                                "member": {
+                                    "kind": "InvokeExpression",
+                                    "type": "Void[]",
+                                    "overload": "Resize: Void[](Int)",
+                                    "invocableExpression": {
+                                        "kind": "IdentifierExpression",
+                                        "type": "Resize",
+                                        "identifier": "Resize"
+                                    },
+                                    "arguments": [
+                                        {
+                                            "kind": "IntegerLiteralExpression",
+                                            "type": "Int",
+                                            "value": "2"
+                                        }
+                                    ]
+                                }
+                            }
+                        },
+                        {
+                            "kind": "ExpressionStatement",
+                            "expression": {
+                                "kind": "InvokeExpression",
+                                "type": "Int",
+                                "overload": "CheckIntArray: Int(Int[])",
+                                "invocableExpression": {
+                                    "kind": "IdentifierExpression",
+                                    "type": "CheckIntArray",
+                                    "identifier": "CheckIntArray"
+                                },
+                                "arguments": [
+                                    {
+                                        "kind": "IdentifierExpression",
+                                        "type": "Void[]",
+                                        "identifier": "voidArray"
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

@@ -70,7 +70,9 @@ export class Tokenizer {
                     const { kind } = member.operator;
                     switch (kind) {
                         case TokenKind.EqualsSign: {
-                            this.setVar(varName, value);
+                            if (this.getVar(varName) === '') {
+                                this.setVar(varName, value);
+                            }
                             break;
                         }
                         case TokenKind.PlusSignEqualsSign: {
@@ -99,7 +101,7 @@ export class Tokenizer {
                 }
                 case NodeKind.ErrorDirective: {
                     const message = this.eval(member.expression);
-                    console.error(message);
+                    console.error(`Error: ${message}`);
                     break;
                 }
                 case NodeKind.RemDirective: {

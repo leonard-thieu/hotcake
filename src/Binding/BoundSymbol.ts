@@ -41,7 +41,7 @@ export class BoundSymbolTable {
         );
 
         if (!vals.length) {
-            return undefined;
+            return;
         }
 
         if (vals.length > 1) {

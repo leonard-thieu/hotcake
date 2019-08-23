@@ -3,6 +3,15 @@
     "identifier": "invokeExpression",
     "locals": [
         {
+            "kind": "AliasDirective",
+            "identifier": "monkey",
+            "target": {
+                "kind": "ModuleDeclaration",
+                "identifier": "monkey"
+            },
+            "type": "Module"
+        },
+        {
             "kind": "FunctionGroupDeclaration",
             "identifier": "Main",
             "type": "Main",
@@ -20,8 +29,8 @@
                             "expression": {
                                 "kind": "InvokeExpression",
                                 "type": "Int",
-                                "invocationType": "Main: Int()",
-                                "invokableExpression": {
+                                "overload": "Main: Int()",
+                                "invocableExpression": {
                                     "kind": "IdentifierExpression",
                                     "type": "Main",
                                     "identifier": "Main"

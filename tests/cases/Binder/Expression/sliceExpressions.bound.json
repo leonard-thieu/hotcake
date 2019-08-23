@@ -3,6 +3,15 @@
     "identifier": "sliceExpressions",
     "locals": [
         {
+            "kind": "AliasDirective",
+            "identifier": "monkey",
+            "target": {
+                "kind": "ModuleDeclaration",
+                "identifier": "monkey"
+            },
+            "type": "Module"
+        },
+        {
             "kind": "FunctionGroupDeclaration",
             "identifier": "Print",
             "type": "Print",
@@ -65,8 +74,8 @@
                             "expression": {
                                 "kind": "InvokeExpression",
                                 "type": "Int",
-                                "invocationType": "Print: Int(String)",
-                                "invokableExpression": {
+                                "overload": "Print: Int(String)",
+                                "invocableExpression": {
                                     "kind": "IdentifierExpression",
                                     "type": "Print",
                                     "identifier": "Print"
@@ -99,8 +108,8 @@
                             "expression": {
                                 "kind": "InvokeExpression",
                                 "type": "Int",
-                                "invocationType": "Print: Int(String)",
-                                "invokableExpression": {
+                                "overload": "Print: Int(String)",
+                                "invocableExpression": {
                                     "kind": "IdentifierExpression",
                                     "type": "Print",
                                     "identifier": "Print"
@@ -128,8 +137,8 @@
                             "expression": {
                                 "kind": "InvokeExpression",
                                 "type": "Int",
-                                "invocationType": "Print: Int(String)",
-                                "invokableExpression": {
+                                "overload": "Print: Int(String)",
+                                "invocableExpression": {
                                     "kind": "IdentifierExpression",
                                     "type": "Print",
                                     "identifier": "Print"
@@ -157,8 +166,8 @@
                             "expression": {
                                 "kind": "InvokeExpression",
                                 "type": "Int",
-                                "invocationType": "Print: Int(String)",
-                                "invokableExpression": {
+                                "overload": "Print: Int(String)",
+                                "invocableExpression": {
                                     "kind": "IdentifierExpression",
                                     "type": "Print",
                                     "identifier": "Print"
@@ -181,8 +190,8 @@
                             "expression": {
                                 "kind": "InvokeExpression",
                                 "type": "Int",
-                                "invocationType": "Print: Int(String[])",
-                                "invokableExpression": {
+                                "overload": "Print: Int(String[])",
+                                "invocableExpression": {
                                     "kind": "IdentifierExpression",
                                     "type": "Print",
                                     "identifier": "Print"
@@ -231,8 +240,8 @@
                             "expression": {
                                 "kind": "InvokeExpression",
                                 "type": "Int",
-                                "invocationType": "Print: Int(String[])",
-                                "invokableExpression": {
+                                "overload": "Print: Int(String[])",
+                                "invocableExpression": {
                                     "kind": "IdentifierExpression",
                                     "type": "Print",
                                     "identifier": "Print"
@@ -276,8 +285,8 @@
                             "expression": {
                                 "kind": "InvokeExpression",
                                 "type": "Int",
-                                "invocationType": "Print: Int(String[])",
-                                "invokableExpression": {
+                                "overload": "Print: Int(String[])",
+                                "invocableExpression": {
                                     "kind": "IdentifierExpression",
                                     "type": "Print",
                                     "identifier": "Print"
@@ -321,8 +330,8 @@
                             "expression": {
                                 "kind": "InvokeExpression",
                                 "type": "Int",
-                                "invocationType": "Print: Int(String[])",
-                                "invokableExpression": {
+                                "overload": "Print: Int(String[])",
+                                "invocableExpression": {
                                     "kind": "IdentifierExpression",
                                     "type": "Print",
                                     "identifier": "Print"

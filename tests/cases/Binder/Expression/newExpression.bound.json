@@ -3,6 +3,15 @@
     "identifier": "newExpression",
     "locals": [
         {
+            "kind": "AliasDirective",
+            "identifier": "monkey",
+            "target": {
+                "kind": "ModuleDeclaration",
+                "identifier": "monkey"
+            },
+            "type": "Module"
+        },
+        {
             "kind": "ClassDeclaration",
             "identifier": "MyClass",
             "type": "MyClass",
@@ -40,8 +49,8 @@
                     "expression": {
                         "kind": "InvokeExpression",
                         "type": "MyClass",
-                        "invocationType": "New MyClass()",
-                        "invokableExpression": {
+                        "overload": "New MyClass()",
+                        "invocableExpression": {
                             "kind": "NewExpression",
                             "type": "New MyClass",
                             "typeReference": "MyClass"
@@ -110,8 +119,8 @@
                                             "expression": {
                                                 "kind": "InvokeExpression",
                                                 "type": "MyClass",
-                                                "invocationType": "New MyClass()",
-                                                "invokableExpression": {
+                                                "overload": "New MyClass()",
+                                                "invocableExpression": {
                                                     "kind": "NewExpression",
                                                     "type": "New MyClass",
                                                     "typeReference": "MyClass"
@@ -145,8 +154,8 @@
                             "expression": {
                                 "kind": "InvokeExpression",
                                 "type": "MyClass",
-                                "invocationType": "New MyClass()",
-                                "invokableExpression": {
+                                "overload": "New MyClass()",
+                                "invocableExpression": {
                                     "kind": "NewExpression",
                                     "type": "New MyClass",
                                     "typeReference": "MyClass"
@@ -159,8 +168,8 @@
                             "expression": {
                                 "kind": "InvokeExpression",
                                 "type": "MyGenericClass<MyClass>",
-                                "invocationType": "New MyGenericClass<MyClass>()",
-                                "invokableExpression": {
+                                "overload": "New MyGenericClass<MyClass>()",
+                                "invocableExpression": {
                                     "kind": "NewExpression",
                                     "type": "New MyGenericClass<MyClass>",
                                     "typeReference": "MyGenericClass<MyClass>"

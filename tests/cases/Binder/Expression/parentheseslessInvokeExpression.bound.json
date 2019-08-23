@@ -1,0 +1,515 @@
+{
+    "kind": "ModuleDeclaration",
+    "identifier": "parentheseslessInvokeExpression",
+    "locals": [
+        {
+            "kind": "AliasDirective",
+            "identifier": "monkey",
+            "target": {
+                "kind": "ModuleDeclaration",
+                "identifier": "monkey"
+            },
+            "type": "Module"
+        },
+        {
+            "kind": "FunctionGroupDeclaration",
+            "identifier": "NoParams",
+            "type": "NoParams",
+            "overloads": [
+                {
+                    "kind": "FunctionDeclaration",
+                    "identifier": "NoParams",
+                    "locals": [],
+                    "type": "NoParams: Int()",
+                    "returnType": "Int",
+                    "parameters": [],
+                    "statements": []
+                }
+            ]
+        },
+        {
+            "kind": "FunctionGroupDeclaration",
+            "identifier": "AllParamsHaveDefaults",
+            "type": "AllParamsHaveDefaults",
+            "overloads": [
+                {
+                    "kind": "FunctionDeclaration",
+                    "identifier": "AllParamsHaveDefaults",
+                    "locals": [
+                        "p1",
+                        "p2"
+                    ],
+                    "type": "AllParamsHaveDefaults: Int(Int,Int)",
+                    "returnType": "Int",
+                    "parameters": [
+                        {
+                            "kind": "DataDeclaration",
+                            "declarationKind": "Parameter",
+                            "identifier": "p1",
+                            "typeAnnotation": "Int",
+                            "operator": "EqualsSign",
+                            "expression": {
+                                "kind": "IntegerLiteralExpression",
+                                "type": "Int",
+                                "value": "1"
+                            },
+                            "type": "Int"
+                        },
+                        {
+                            "kind": "DataDeclaration",
+                            "declarationKind": "Parameter",
+                            "identifier": "p2",
+                            "typeAnnotation": "Int",
+                            "operator": "EqualsSign",
+                            "expression": {
+                                "kind": "IntegerLiteralExpression",
+                                "type": "Int",
+                                "value": "2"
+                            },
+                            "type": "Int"
+                        }
+                    ],
+                    "statements": []
+                }
+            ]
+        },
+        {
+            "kind": "ClassDeclaration",
+            "identifier": "InScope",
+            "type": "InScope",
+            "superType": "Object",
+            "locals": [
+                {
+                    "kind": "FunctionGroupDeclaration",
+                    "identifier": "NoParams",
+                    "type": "NoParams",
+                    "overloads": [
+                        {
+                            "kind": "FunctionDeclaration",
+                            "identifier": "NoParams",
+                            "locals": [],
+                            "type": "NoParams: Int()",
+                            "returnType": "Int",
+                            "parameters": [],
+                            "statements": []
+                        }
+                    ]
+                },
+                {
+                    "kind": "FunctionGroupDeclaration",
+                    "identifier": "AllParamsHaveDefaults",
+                    "type": "AllParamsHaveDefaults",
+                    "overloads": [
+                        {
+                            "kind": "FunctionDeclaration",
+                            "identifier": "AllParamsHaveDefaults",
+                            "locals": [
+                                "p1",
+                                "p2"
+                            ],
+                            "type": "AllParamsHaveDefaults: Int(Int,Int)",
+                            "returnType": "Int",
+                            "parameters": [
+                                {
+                                    "kind": "DataDeclaration",
+                                    "declarationKind": "Parameter",
+                                    "identifier": "p1",
+                                    "typeAnnotation": "Int",
+                                    "operator": "EqualsSign",
+                                    "expression": {
+                                        "kind": "IntegerLiteralExpression",
+                                        "type": "Int",
+                                        "value": "1"
+                                    },
+                                    "type": "Int"
+                                },
+                                {
+                                    "kind": "DataDeclaration",
+                                    "declarationKind": "Parameter",
+                                    "identifier": "p2",
+                                    "typeAnnotation": "Int",
+                                    "operator": "EqualsSign",
+                                    "expression": {
+                                        "kind": "IntegerLiteralExpression",
+                                        "type": "Int",
+                                        "value": "2"
+                                    },
+                                    "type": "Int"
+                                }
+                            ],
+                            "statements": []
+                        }
+                    ]
+                },
+                {
+                    "kind": "FunctionGroupDeclaration",
+                    "identifier": "GetSomethingElse",
+                    "type": "GetSomethingElse",
+                    "overloads": [
+                        {
+                            "kind": "FunctionDeclaration",
+                            "identifier": "GetSomethingElse",
+                            "locals": [],
+                            "type": "GetSomethingElse: SomethingElse()",
+                            "returnType": "SomethingElse",
+                            "parameters": [],
+                            "statements": [
+                                {
+                                    "kind": "ReturnStatement",
+                                    "type": "SomethingElse",
+                                    "expression": {
+                                        "kind": "InvokeExpression",
+                                        "type": "SomethingElse",
+                                        "overload": "New SomethingElse()",
+                                        "invocableExpression": {
+                                            "kind": "NewExpression",
+                                            "type": "New SomethingElse",
+                                            "typeReference": "SomethingElse"
+                                        },
+                                        "arguments": []
+                                    }
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "kind": "ClassMethodGroupDeclaration",
+                    "identifier": "New",
+                    "type": "New InScope",
+                    "overloads": [
+                        {
+                            "kind": "ClassMethodDeclaration",
+                            "identifier": "New",
+                            "locals": [],
+                            "type": "New InScope()",
+                            "returnType": "InScope",
+                            "parameters": [],
+                            "statements": []
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "kind": "ClassDeclaration",
+            "identifier": "SomethingElse",
+            "type": "SomethingElse",
+            "superType": "Object",
+            "locals": [
+                {
+                    "kind": "ClassMethodGroupDeclaration",
+                    "identifier": "Detect",
+                    "type": "Detect",
+                    "overloads": [
+                        {
+                            "kind": "ClassMethodDeclaration",
+                            "identifier": "Detect",
+                            "locals": [
+                                "smoke"
+                            ],
+                            "type": "Detect: Int(Bool)",
+                            "returnType": "Int",
+                            "parameters": [
+                                {
+                                    "kind": "DataDeclaration",
+                                    "declarationKind": "Parameter",
+                                    "identifier": "smoke",
+                                    "typeAnnotation": "Bool",
+                                    "operator": "EqualsSign",
+                                    "expression": {
+                                        "kind": "BooleanLiteralExpression",
+                                        "type": "Bool",
+                                        "value": "False"
+                                    },
+                                    "type": "Bool"
+                                }
+                            ],
+                            "isProperty": false,
+                            "statements": []
+                        }
+                    ]
+                },
+                {
+                    "kind": "ClassMethodGroupDeclaration",
+                    "identifier": "New",
+                    "type": "New SomethingElse",
+                    "overloads": [
+                        {
+                            "kind": "ClassMethodDeclaration",
+                            "identifier": "New",
+                            "locals": [],
+                            "type": "New SomethingElse()",
+                            "returnType": "SomethingElse",
+                            "parameters": [],
+                            "statements": []
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "kind": "FunctionGroupDeclaration",
+            "identifier": "Main",
+            "type": "Main",
+            "overloads": [
+                {
+                    "kind": "FunctionDeclaration",
+                    "identifier": "Main",
+                    "locals": [],
+                    "type": "Main: Int()",
+                    "returnType": "Int",
+                    "parameters": [],
+                    "statements": [
+                        {
+                            "kind": "ExpressionStatement",
+                            "expression": {
+                                "kind": "InvokeExpression",
+                                "type": "Int",
+                                "overload": "NoParams: Int()",
+                                "invocableExpression": {
+                                    "kind": "IdentifierExpression",
+                                    "type": "NoParams",
+                                    "identifier": "NoParams"
+                                },
+                                "arguments": []
+                            }
+                        },
+                        {
+                            "kind": "ExpressionStatement",
+                            "expression": {
+                                "kind": "InvokeExpression",
+                                "type": "Int",
+                                "overload": "AllParamsHaveDefaults: Int(Int,Int)",
+                                "invocableExpression": {
+                                    "kind": "IdentifierExpression",
+                                    "type": "AllParamsHaveDefaults",
+                                    "identifier": "AllParamsHaveDefaults"
+                                },
+                                "arguments": [
+                                    {
+                                        "kind": "IntegerLiteralExpression",
+                                        "type": "Int",
+                                        "value": "1"
+                                    },
+                                    {
+                                        "kind": "IntegerLiteralExpression",
+                                        "type": "Int",
+                                        "value": "2"
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "kind": "ExpressionStatement",
+                            "expression": {
+                                "kind": "ScopeMemberAccessExpression",
+                                "type": "Int",
+                                "scopableExpression": {
+                                    "kind": "IdentifierExpression",
+                                    "type": "InScope",
+                                    "identifier": "InScope"
+                                },
+                                "member": {
+                                    "kind": "InvokeExpression",
+                                    "type": "Int",
+                                    "overload": "NoParams: Int()",
+                                    "invocableExpression": {
+                                        "kind": "IdentifierExpression",
+                                        "type": "NoParams",
+                                        "identifier": "NoParams"
+                                    },
+                                    "arguments": []
+                                }
+                            }
+                        },
+                        {
+                            "kind": "ExpressionStatement",
+                            "expression": {
+                                "kind": "ScopeMemberAccessExpression",
+                                "type": "Int",
+                                "scopableExpression": {
+                                    "kind": "IdentifierExpression",
+                                    "type": "InScope",
+                                    "identifier": "InScope"
+                                },
+                                "member": {
+                                    "kind": "InvokeExpression",
+                                    "type": "Int",
+                                    "overload": "AllParamsHaveDefaults: Int(Int,Int)",
+                                    "invocableExpression": {
+                                        "kind": "IdentifierExpression",
+                                        "type": "AllParamsHaveDefaults",
+                                        "identifier": "AllParamsHaveDefaults"
+                                    },
+                                    "arguments": [
+                                        {
+                                            "kind": "IntegerLiteralExpression",
+                                            "type": "Int",
+                                            "value": "1"
+                                        },
+                                        {
+                                            "kind": "IntegerLiteralExpression",
+                                            "type": "Int",
+                                            "value": "2"
+                                        }
+                                    ]
+                                }
+                            }
+                        },
+                        {
+                            "kind": "WhileLoop",
+                            "locals": [],
+                            "expression": {
+                                "kind": "InvokeExpression",
+                                "type": "Int",
+                                "overload": "NoParams: Int()",
+                                "invocableExpression": {
+                                    "kind": "IdentifierExpression",
+                                    "type": "NoParams",
+                                    "identifier": "NoParams"
+                                },
+                                "arguments": []
+                            },
+                            "statements": []
+                        },
+                        {
+                            "kind": "WhileLoop",
+                            "locals": [],
+                            "expression": {
+                                "kind": "InvokeExpression",
+                                "type": "Int",
+                                "overload": "AllParamsHaveDefaults: Int(Int,Int)",
+                                "invocableExpression": {
+                                    "kind": "IdentifierExpression",
+                                    "type": "AllParamsHaveDefaults",
+                                    "identifier": "AllParamsHaveDefaults"
+                                },
+                                "arguments": [
+                                    {
+                                        "kind": "IntegerLiteralExpression",
+                                        "type": "Int",
+                                        "value": "1"
+                                    },
+                                    {
+                                        "kind": "IntegerLiteralExpression",
+                                        "type": "Int",
+                                        "value": "2"
+                                    }
+                                ]
+                            },
+                            "statements": []
+                        },
+                        {
+                            "kind": "WhileLoop",
+                            "locals": [],
+                            "expression": {
+                                "kind": "ScopeMemberAccessExpression",
+                                "type": "Int",
+                                "scopableExpression": {
+                                    "kind": "IdentifierExpression",
+                                    "type": "InScope",
+                                    "identifier": "InScope"
+                                },
+                                "member": {
+                                    "kind": "InvokeExpression",
+                                    "type": "Int",
+                                    "overload": "NoParams: Int()",
+                                    "invocableExpression": {
+                                        "kind": "IdentifierExpression",
+                                        "type": "NoParams",
+                                        "identifier": "NoParams"
+                                    },
+                                    "arguments": []
+                                }
+                            },
+                            "statements": []
+                        },
+                        {
+                            "kind": "WhileLoop",
+                            "locals": [],
+                            "expression": {
+                                "kind": "ScopeMemberAccessExpression",
+                                "type": "Int",
+                                "scopableExpression": {
+                                    "kind": "IdentifierExpression",
+                                    "type": "InScope",
+                                    "identifier": "InScope"
+                                },
+                                "member": {
+                                    "kind": "InvokeExpression",
+                                    "type": "Int",
+                                    "overload": "AllParamsHaveDefaults: Int(Int,Int)",
+                                    "invocableExpression": {
+                                        "kind": "IdentifierExpression",
+                                        "type": "AllParamsHaveDefaults",
+                                        "identifier": "AllParamsHaveDefaults"
+                                    },
+                                    "arguments": [
+                                        {
+                                            "kind": "IntegerLiteralExpression",
+                                            "type": "Int",
+                                            "value": "1"
+                                        },
+                                        {
+                                            "kind": "IntegerLiteralExpression",
+                                            "type": "Int",
+                                            "value": "2"
+                                        }
+                                    ]
+                                }
+                            },
+                            "statements": []
+                        },
+                        {
+                            "kind": "WhileLoop",
+                            "locals": [],
+                            "expression": {
+                                "kind": "ScopeMemberAccessExpression",
+                                "type": "Int",
+                                "scopableExpression": {
+                                    "kind": "IdentifierExpression",
+                                    "type": "InScope",
+                                    "identifier": "InScope"
+                                },
+                                "member": {
+                                    "kind": "ScopeMemberAccessExpression",
+                                    "type": "Int",
+                                    "scopableExpression": {
+                                        "kind": "InvokeExpression",
+                                        "type": "SomethingElse",
+                                        "overload": "GetSomethingElse: SomethingElse()",
+                                        "invocableExpression": {
+                                            "kind": "IdentifierExpression",
+                                            "type": "GetSomethingElse",
+                                            "identifier": "GetSomethingElse"
+                                        },
+                                        "arguments": []
+                                    },
+                                    "member": {
+                                        "kind": "InvokeExpression",
+                                        "type": "Int",
+                                        "overload": "Detect: Int(Bool)",
+                                        "invocableExpression": {
+                                            "kind": "IdentifierExpression",
+                                            "type": "Detect",
+                                            "identifier": "Detect"
+                                        },
+                                        "arguments": [
+                                            {
+                                                "kind": "BooleanLiteralExpression",
+                                                "type": "Bool",
+                                                "value": "False"
+                                            }
+                                        ]
+                                    }
+                                }
+                            },
+                            "statements": []
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}
