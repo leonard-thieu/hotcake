@@ -17,8 +17,8 @@ export const DataDeclarationSequenceChildNames: ReadonlyArray<keyof DataDeclarat
 export class DataDeclarationSequence extends Declaration {
     readonly kind = NodeKind.DataDeclarationSequence;
 
-    // If this represents a parameter sequence, `dataDeclarationKeyword` will be `null`.
-    dataDeclarationKeyword: DataDeclarationKeywordToken | null = undefined!;
+    // If this represents a parameter sequence, `dataDeclarationKeyword` will be `undefined`.
+    dataDeclarationKeyword?: DataDeclarationKeywordToken = undefined!;
     children: (DataDeclaration | CommaSeparator)[] = undefined!;
 }
 

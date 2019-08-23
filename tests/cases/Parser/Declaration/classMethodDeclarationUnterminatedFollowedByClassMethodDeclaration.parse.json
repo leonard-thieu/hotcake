@@ -45,7 +45,6 @@
                     },
                     "parameters": {
                         "kind": "DataDeclarationSequence",
-                        "dataDeclarationKeyword": null,
                         "children": []
                     },
                     "closingParenthesis": {
@@ -105,7 +104,6 @@
                     },
                     "parameters": {
                         "kind": "DataDeclarationSequence",
-                        "dataDeclarationKeyword": null,
                         "children": []
                     },
                     "closingParenthesis": {

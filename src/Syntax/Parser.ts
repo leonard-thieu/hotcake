@@ -673,7 +673,7 @@ export class Parser extends ParserBase {
 
     // #region Data declaration sequence
 
-    private parseDataDeclarationSequence(parent: Nodes, dataDeclarationKeyword: DataDeclarationKeywordToken | null = null): DataDeclarationSequence {
+    private parseDataDeclarationSequence(parent: Nodes, dataDeclarationKeyword?: DataDeclarationKeywordToken): DataDeclarationSequence {
         const dataDeclarationSequence = new DataDeclarationSequence();
         dataDeclarationSequence.parent = parent;
         dataDeclarationSequence.dataDeclarationKeyword = dataDeclarationKeyword;

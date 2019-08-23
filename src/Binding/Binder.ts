@@ -770,37 +770,22 @@ export class Binder {
                     break;
                 }
                 case NodeKind.CommaSeparator: { break; }
-                default: {
-                    assertNever(dataDeclaration);
-                    break;
-                }
+                default: { return assertNever(dataDeclaration); }
             }
         }
 
         return boundDataDeclarations;
     }
 
-    private getDataDeclarationKind(dataDeclarationKeyword: DataDeclarationKeywordToken | null) {
-        if (!dataDeclarationKeyword) {
-            return BoundDataDeclarationKind.Parameter;
-        }
+    private getDataDeclarationKind(dataDeclarationKeyword: DataDeclarationKeywordToken | undefined) {
+        if (!dataDeclarationKeyword) { return BoundDataDeclarationKind.Parameter; }
 
         switch (dataDeclarationKeyword.kind) {
-            case TokenKind.ConstKeyword: {
-                return BoundDataDeclarationKind.Const;
-            }
-            case TokenKind.GlobalKeyword: {
-                return BoundDataDeclarationKind.Global;
-            }
-            case TokenKind.FieldKeyword: {
-                return BoundDataDeclarationKind.Field;
-            }
-            case TokenKind.LocalKeyword: {
-                return BoundDataDeclarationKind.Local;
-            }
-            default: {
-                return assertNever(dataDeclarationKeyword);
-            }
+            case TokenKind.ConstKeyword: { return BoundDataDeclarationKind.Const; }
+            case TokenKind.GlobalKeyword: { return BoundDataDeclarationKind.Global; }
+            case TokenKind.FieldKeyword: { return BoundDataDeclarationKind.Field; }
+            case TokenKind.LocalKeyword: { return BoundDataDeclarationKind.Local; }
+            default: { return assertNever(dataDeclarationKeyword); }
         }
     }
 
