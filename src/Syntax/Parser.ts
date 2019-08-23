@@ -1936,8 +1936,6 @@ export class Parser extends ParserBase {
                 return this.parseLonghandTypeAnnotation(parent, token);
             }
         }
-
-        return undefined;
     }
 
     private parseShorthandTypeAnnotation(parent: Nodes, shorthandType?: ShorthandTypeToken): ShorthandTypeAnnotation {

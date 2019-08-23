@@ -100,7 +100,7 @@ function preprocessorParserTestOutputReplacer(key: string, value: any) {
         case 'filePath':
         case 'document':
         case 'parent': {
-            return undefined;
+            return;
         }
     }
 
@@ -198,7 +198,7 @@ function parserTestOutputReplacer(key: string, value: any) {
         case 'parent':
         case 'parseDiagnostics':
         case 'locals': {
-            return undefined;
+            return;
         }
     }
 
@@ -262,7 +262,7 @@ function binderTestOutputReplacer(this: any, key: string, value: any) {
         case BoundNodeKind.ModuleDeclaration: {
             switch (key) {
                 case 'type': {
-                    return undefined;
+                    return;
                 }
             }
         }
@@ -275,7 +275,7 @@ function binderTestOutputReplacer(this: any, key: string, value: any) {
         case 'openType':
         case 'frameworkModule':
         case 'importedModules': {
-            return undefined;
+            return;
         }
         case 'declaration': {
             if (value.kind === BoundNodeKind.ModuleDeclaration &&
@@ -284,7 +284,7 @@ function binderTestOutputReplacer(this: any, key: string, value: any) {
                 return value.identifier.name;
             }
 
-            return undefined;
+            return;
         }
         case 'identifier': {
             const identifier = value as BoundDeclarations[typeof key];

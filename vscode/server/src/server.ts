@@ -20,7 +20,7 @@ connection.onInitialize(() => {
         capabilities: {
             textDocumentSync: documents.syncKind,
             hoverProvider: true,
-        }
+        },
     };
 });
 
@@ -61,7 +61,7 @@ async function validateTextDocument(textDocument: TextDocument): Promise<void> {
                 message: parseDiagnostic.message,
                 range: Range.create(
                     textDocument.positionAt(parseDiagnostic.start),
-                    textDocument.positionAt(parseDiagnostic.start + parseDiagnostic.length)
+                    textDocument.positionAt(parseDiagnostic.start + parseDiagnostic.length),
                 ),
             });
         }
